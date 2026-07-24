@@ -4,24 +4,52 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 void main() {
   group('MboaTheme', () {
-    test('builds light and dark themes from a seed', () {
-      final light = MboaTheme.light(MboaColors.userSeed);
-      final dark = MboaTheme.dark(MboaColors.proSeed);
+    test('light/dark register the brand token extensions', () {
+      final light = MboaTheme.light();
+      final dark = MboaTheme.dark();
 
       expect(light.useMaterial3, isTrue);
       expect(light.colorScheme.brightness, Brightness.light);
       expect(dark.colorScheme.brightness, Brightness.dark);
+
+      // Brand palette from Doc 05 is mapped onto Material + the extension.
+      expect(light.colorScheme.primary, MboaPalette.forest);
+      expect(light.colorScheme.secondary, MboaPalette.coral);
+      expect(light.extension<MboaColorScheme>(), isNotNull);
+      expect(light.extension<MboaTextTheme>(), isNotNull);
+    });
+  });
+
+  group('token accessors', () {
+    testWidgets('context.mboaColors / context.mboaText read the extensions',
+        (tester) async {
+      late Color primary;
+      late double h1Size;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: MboaTheme.light(),
+          home: Builder(
+            builder: (context) {
+              primary = context.mboaColors.primary;
+              h1Size = context.mboaText.h1.fontSize!;
+              return const SizedBox();
+            },
+          ),
+        ),
+      );
+
+      expect(primary, MboaPalette.forest);
+      expect(h1Size, 28); // Doc 05 §3.2
     });
   });
 
   group('MboaSplashView', () {
     testWidgets('shows a custom logo, spinner and footer', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: MboaSplashView(
-            logo: Text('MBOA'),
-            footer: Text('v1.0.0'),
-          ),
+        MaterialApp(
+          theme: MboaTheme.light(),
+          home: const MboaSplashView(logo: Text('MBOA'), footer: Text('v1.0.0')),
         ),
       );
 
@@ -32,8 +60,9 @@ void main() {
 
     testWidgets('hides the spinner when showProgress is false', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: MboaSplashView(logo: Text('MBOA'), showProgress: false),
+        MaterialApp(
+          theme: MboaTheme.light(),
+          home: const MboaSplashView(logo: Text('MBOA'), showProgress: false),
         ),
       );
 
@@ -46,6 +75,7 @@ void main() {
       var tapped = false;
       await tester.pumpWidget(
         MaterialApp(
+          theme: MboaTheme.light(),
           home: Scaffold(
             body: PrimaryButton(
               label: 'Valider',
@@ -58,15 +88,15 @@ void main() {
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('Valider'), findsNothing);
-
       await tester.tap(find.byType(PrimaryButton));
-      expect(tapped, isFalse); // disabled while loading
+      expect(tapped, isFalse);
     });
 
     testWidgets('fires onPressed when idle', (tester) async {
       var tapped = false;
       await tester.pumpWidget(
         MaterialApp(
+          theme: MboaTheme.light(),
           home: Scaffold(
             body: PrimaryButton(label: 'Valider', onPressed: () => tapped = true),
           ),

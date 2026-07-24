@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'mboa_logo.dart';
+import 'package:mboa_ui/mboa_ui.dart';
 
 /// Presentational splash screen shared by both apps.
 ///
@@ -31,9 +30,8 @@ class MboaSplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: backgroundColor ?? theme.colorScheme.surface,
+      backgroundColor: context.mboaColors.primaryDark,
       body: SafeArea(
         child: Stack(
           children: [
@@ -41,7 +39,7 @@ class MboaSplashView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  logo ?? const MboaLogo(size: 120),
+                  logo ?? const MboaLogo(size: 80),
                   if (showProgress) ...[
                     const SizedBox(height: 32),
                     const SizedBox.square(
