@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mboa_ui/mboa_ui.dart';
+
+import '../bloc/login_bloc.dart';
+import '../login_flow_controller.dart';
+
+/// Phone-number entry — the shared entry point of the SMS OTP flow.
+///
+/// This is a plain widget (no routing annotations): each app embeds it in its
+/// own `@RoutePage` adapter, so routing stays app-specific while the flow's UI
+/// and logic are shared. Navigation is delegated via [LoginFlowController].
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<LoginBloc>(
+      create: (_) => GetIt.I<LoginBloc>(),
+      child: const _LoginForm(),
+    );
+  }
+}
+
+class _LoginForm extends StatefulWidget {
+  const _LoginForm();
+
+  @override
+  State<_LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<_LoginForm> {
+  final _controller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      context.read<LoginBloc>().add(LoginOtpRequested(_controller.text.trim()));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Connexion')),
+      body: BlocConsumer<LoginBloc, LoginState>(
+        listenWhen: (prev, curr) => curr is LoginOtpSent || curr is LoginFailure,
+        listener: (context, state) {
+          switch (state) {
+            case LoginOtpSent(:final session):
+              GetIt.I<LoginFlowController>().openOtp(context, session);
+            case LoginFailure(:final message):
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(content: Text(message)));
+            default:
+              break;
+          }
+        },
+        builder: (context, state) {
+          final loading = state is LoginInProgress;
+          return Padding(
+            padding: const EdgeInsets.all(Dimens.lg),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: Dimens.xl),
+                  const Center(child: MboaLogo()),
+                  const SizedBox(height: Dimens.xl),
+                  Text(
+                    'Entrez votre numéro de téléphone',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: Dimens.md),
+                  TextFormField(
+                    controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    enabled: !loading,
+                    decoration: const InputDecoration(
+                      labelText: 'Téléphone',
+                      hintText: '+237 6XX XX XX XX',
+                    ),
+                    validator: (v) => (v == null || v.trim().length < 8)
+                        ? 'Numéro invalide'
+                        : null,
+                  ),
+                  const SizedBox(height: Dimens.lg),
+                  PrimaryButton(
+                    label: 'Recevoir le code',
+                    isLoading: loading,
+                    onPressed: _submit,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

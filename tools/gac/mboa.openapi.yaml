@@ -1,0 +1,585 @@
+openapi: 3.0.3
+info:
+  title: Mboa API
+  description: >
+    Seed OpenAPI spec for the Mboa mobile monorepo. Covers the authentication
+    surface used by the reference Auth/OTP vertical slice. Replace this file
+    with the canonical spec exported from the Spring Boot backend once it is
+    available — `make gen-api` regenerates `packages/api_client` from it.
+  license:
+    name: Proprietary
+  version: v1
+servers:
+  - url: https://api.mboa.cm/api/v1
+    description: production
+  - url: https://staging.api.mboa.cm/api/v1
+    description: staging
+  - url: http://localhost:8080/api/v1
+    description: dev
+security:
+  - bearerAuth: []
+tags:
+  - name: KYC
+    description: Identity verification
+  - name: Current user
+    description: The authenticated account's identity
+  - name: Media
+    description: Direct-to-R2 uploads via pre-signed URLs
+  - name: Authentication
+    description: "Phone-OTP login, token refresh and logout"
+  - name: Admin — KYC
+    description: Review identity-verification submissions
+
+paths:
+  /api/v1/media/uploads:
+    post:
+      tags:
+        - Media
+      summary: Get a pre-signed URL to upload a file directly to storage
+      operationId: createUpload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUploadRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PresignedUpload"
+  /api/v1/kyc:
+    post:
+      tags:
+        - KYC
+      summary: Submit KYC documents (R2 object keys) for verification
+      operationId: submit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitKycRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KycStatusResponse"
+  /api/v1/auth/token/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Exchange a refresh token for a new token pair
+      operationId: refresh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthTokens"
+  /api/v1/auth/social/login:
+    post:
+      tags:
+        - Authentication
+      summary: Log in with a Google or Apple ID token
+      operationId: socialLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SocialLoginRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthTokens"
+  /api/v1/auth/register/professional:
+    post:
+      tags:
+        - Authentication
+      summary: Register a professional (AGENT or PRESTATAIRE); sends an OTP to verify
+        the phone
+      operationId: registerProfessional
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterProfessionalRequest"
+        required: true
+      responses:
+        "202":
+          description: Accepted
+  /api/v1/auth/otp/verify:
+    post:
+      tags:
+        - Authentication
+      summary: Verify an OTP and obtain access + refresh tokens
+      operationId: verifyOtp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyOtpRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthTokens"
+  /api/v1/auth/otp/request:
+    post:
+      tags:
+        - Authentication
+      summary: Request an OTP for a phone number
+      operationId: requestOtp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendOtpRequest"
+        required: true
+      responses:
+        "202":
+          description: Accepted
+  /api/v1/auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Revoke a refresh token (logout)
+      operationId: logout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LogoutRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: "Credential login step 1: verify email + password, sends an OTP second\
+        \ factor"
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "202":
+          description: Accepted
+  /api/v1/auth/login/verify:
+    post:
+      tags:
+        - Authentication
+      summary: "Credential login step 2: verify the OTP and obtain access + refresh\
+        \ tokens"
+      operationId: verifyLoginOtp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginOtpRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthTokens"
+  /api/v1/admin/kyc/{id}/reject:
+    post:
+      tags:
+        - Admin — KYC
+      summary: Reject a KYC submission with a reason
+      operationId: reject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RejectKycRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KycStatusResponse"
+  /api/v1/admin/kyc/{id}/approve:
+    post:
+      tags:
+        - Admin — KYC
+      summary: Approve a KYC submission and activate the account
+      operationId: approve
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KycStatusResponse"
+  /api/v1/me:
+    get:
+      tags:
+        - Current user
+      summary: Get the currently authenticated account
+      operationId: me
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MeResponse"
+  /api/v1/kyc/me:
+    get:
+      tags:
+        - KYC
+      summary: Get the authenticated account's KYC status
+      operationId: myStatus
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KycStatusResponse"
+  /api/v1/admin/kyc:
+    get:
+      tags:
+        - Admin — KYC
+      summary: List pending KYC submissions (with pre-signed document URLs)
+      operationId: listPending
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseKycReviewItem"
+components:
+  schemas:
+    CreateUploadRequest:
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+            - KYC_DOCUMENT
+            - LISTING_PHOTO
+            - PROFILE_PHOTO
+            - VISIT_REPORT
+        contentType:
+          type: string
+          minLength: 1
+      required:
+        - category
+        - contentType
+    PresignedUpload:
+      type: object
+      properties:
+        uploadUrl:
+          type: string
+        method:
+          type: string
+        objectKey:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+    SubmitKycRequest:
+      type: object
+      properties:
+        idDocumentFrontKey:
+          type: string
+          minLength: 1
+        idDocumentBackKey:
+          type: string
+          minLength: 1
+        selfieKey:
+          type: string
+          minLength: 1
+      required:
+        - idDocumentBackKey
+        - idDocumentFrontKey
+        - selfieKey
+    KycStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        submittedAt:
+          type: string
+          format: date-time
+        reviewedAt:
+          type: string
+          format: date-time
+        rejectionReason:
+          type: string
+    RefreshTokenRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          minLength: 1
+      required:
+        - refreshToken
+    AuthTokens:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        accessTokenExpiresAt:
+          type: string
+          format: date-time
+        refreshTokenExpiresAt:
+          type: string
+          format: date-time
+    SocialLoginRequest:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+            - PHONE
+            - GOOGLE
+            - APPLE
+        idToken:
+          type: string
+          minLength: 1
+      required:
+        - idToken
+        - provider
+    RegisterProfessionalRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - USER
+            - PRESTATAIRE
+            - AGENT
+            - ADMIN
+        email:
+          type: string
+          maxLength: 320
+          minLength: 0
+        password:
+          type: string
+          maxLength: 72
+          minLength: 8
+        phoneNumber:
+          type: string
+          minLength: 1
+          pattern: "^\\+[1-9]\\d{7,14}$"
+      required:
+        - email
+        - password
+        - phoneNumber
+        - role
+    VerifyOtpRequest:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          minLength: 1
+          pattern: "^\\+[1-9]\\d{7,14}$"
+        code:
+          type: string
+          minLength: 1
+          pattern: "^\\d{6}$"
+      required:
+        - code
+        - phoneNumber
+    SendOtpRequest:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+          minLength: 1
+          pattern: "^\\+[1-9]\\d{7,14}$"
+      required:
+        - phoneNumber
+    LogoutRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          minLength: 1
+      required:
+        - refreshToken
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+      required:
+        - email
+        - password
+    LoginOtpRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 1
+        code:
+          type: string
+          minLength: 1
+          pattern: "^\\d{6}$"
+      required:
+        - code
+        - email
+    RejectKycRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 0
+      required:
+        - reason
+    MeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+            - USER
+            - PRESTATAIRE
+            - AGENT
+            - ADMIN
+        status:
+          type: string
+          enum:
+            - PENDING
+            - ACTIVE
+            - SUSPENDED
+            - DELETED
+        authProvider:
+          type: string
+          enum:
+            - PHONE
+            - GOOGLE
+            - APPLE
+        emailVerified:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    Pageable:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 0
+        size:
+          type: integer
+          format: int32
+          minimum: 1
+        sort:
+          type: array
+          items:
+            type: string
+    KycReviewItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        accountId:
+          type: string
+          format: uuid
+        status:
+          type: string
+        submittedAt:
+          type: string
+          format: date-time
+        idDocumentFrontUrl:
+          type: string
+        idDocumentBackUrl:
+          type: string
+        selfieUrl:
+          type: string
+    PageResponseKycReviewItem:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/KycReviewItem"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

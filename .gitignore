@@ -1,0 +1,32 @@
+# Dart/Flutter
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+
+# In a pub workspace only the root has a lockfile, and it IS committed for
+# reproducible app builds. (Member packages have none.)
+
+# Generated code is committed (auto_route .gr.dart, built_value .g.dart,
+# api_client) so CI does not need the generators — but coverage output is not.
+coverage/
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+
+# Flutter tool
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Secrets / local env
+*.env
+**/android/key.properties
+**/android/app/google-services.json
+**/ios/Runner/GoogleService-Info.plist

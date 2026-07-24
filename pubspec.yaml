@@ -1,0 +1,19 @@
+name: mboa_mobile_workspace
+publish_to: none
+
+# Dart pub workspace (Dart >= 3.6). All member packages resolve against a
+# single, shared lockfile so mboa_core / api_client versions never drift
+# between the two apps.
+environment:
+  sdk: ^3.10.0
+
+workspace:
+  - packages/mboa_core
+  - packages/api_client
+  - packages/mboa_ui
+  - packages/mboa_shared
+  - apps/mboa_user
+  - apps/mboa_pro
+
+dev_dependencies:
+  flutter_lints: ^6.0.0

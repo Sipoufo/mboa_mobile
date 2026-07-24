@@ -1,0 +1,10 @@
+# openapi-generator config for the Mboa typed API client.
+# Run via: make gen-api  (wraps scripts/gen_api_client.sh)
+inputSpec: tools/gac/mboa.openapi.yaml
+generatorName: dart-dio
+outputDir: packages/api_client
+enumUnknownDefaultCase: true
+additionalProperties:
+  pubName: api_client
+  pubVersion: 1.0.0
+  nullableFields: true

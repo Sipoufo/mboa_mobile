@@ -1,0 +1,36 @@
+name: mboa_shared
+description: Features shared identically by both Mboa apps (e.g. the login flow).
+version: 0.1.0
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.10.0
+  flutter: '>=3.38.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  mboa_core:
+    path: ../mboa_core
+  mboa_ui:
+    path: ../mboa_ui
+
+  flutter_bloc: ^9.0.0
+  bloc: ^9.0.0
+  equatable: ^2.0.0
+  get_it: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
+  dio: ^5.7.0
+  # Test-only: build the AuthTokens DTO (hidden from the mboa_core barrel) to
+  # stub the verifyOtp response.
+  api_client:
+    path: ../api_client
