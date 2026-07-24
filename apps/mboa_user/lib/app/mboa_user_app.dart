@@ -43,8 +43,8 @@ class _MboaUserAppState extends State<MboaUserApp> {
         child: MaterialApp.router(
           onGenerateTitle: (context) => I18n.of(context).appName,
           debugShowCheckedModeBanner: false,
-          theme: MboaTheme.light(MboaColors.userSeed),
-          darkTheme: MboaTheme.dark(MboaColors.userSeed),
+          theme: MboaTheme.light(),
+          darkTheme: MboaTheme.dark(),
           localizationsDelegates: MboaLocalizations.delegates,
           supportedLocales: MboaLocalizations.supportedLocales,
           routerConfig: _router.config(),

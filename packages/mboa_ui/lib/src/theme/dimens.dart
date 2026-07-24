@@ -1,13 +1,41 @@
 /// Shared spacing / sizing scale so widgets never hardcode magic numbers.
-class Dimens {
-  const Dimens._();
+abstract final class Dimens {
+  // Spacing scale
+  static const double spacingXs = 4;
+  static const double spacingSm = 8;
+  static const double spacingMd = 12;
+  static const double spacing = 16;
+  static const double spacingLg = 24;
+  static const double spacingXl = 32;
+  static const double spacingXxl = 48;
 
-  static const double xs = 4;
-  static const double sm = 8;
-  static const double md = 16;
-  static const double lg = 24;
-  static const double xl = 32;
+  // Back-compat aliases (earlier widgets used these names).
+  static const double xs = spacingXs;
+  static const double sm = spacingSm;
+  static const double md = spacing;
+  static const double lg = spacingLg;
+  static const double xl = spacingXl;
 
-  static const double buttonHeight = 52;
+  // Radius scale
+  static const double radiusSm = 8;
   static const double radius = 12;
+  static const double radiusMd = 16;
+  static const double radiusLg = 24;
+  static const double radiusFull = 999;
+
+  // Icons
+  static const double iconSm = 16;
+  static const double icon = 20;
+  static const double iconMd = 24;
+  static const double iconLg = 32;
+
+  // Controls
+  static const double buttonHeight = 52;
+  static const double buttonHeightSm = 44;
+  static const double inputHeight = 52;
+
+  // Misc
+  static const double avatar = 44;
+  static const double logo = 96;
+  static const double loader = 24;
 }
