@@ -46,18 +46,19 @@ flutter:
 
 # Native (OS-level) splash shown before Flutter boots. Regenerate native assets
 # with: dart run flutter_native_splash:create
-# Background matches MboaSplashView's surface for a seamless hand-off to the
-# Flutter splash. Restyle here, then re-run create.
+# Background is Vert Forêt Foncé (#0F3829, MboaColors.primaryDark) with the white
+# logo, matching MboaSplashView for a seamless hand-off. Restyle here, then
+# re-run create.
 flutter_native_splash:
-  color: "#FFFFFF"
-  color_dark: "#111417"
+  color: "#0F3829"
+  color_dark: "#0F3829"
   image: assets/splash/splash_logo.png
-  image_dark: assets/splash/splash_logo_dark.png
+  image_dark: assets/splash/splash_logo.png
   android_12:
     image: assets/splash/splash_logo.png
-    image_dark: assets/splash/splash_logo_dark.png
-    color: "#FFFFFF"
-    color_dark: "#111417"
+    image_dark: assets/splash/splash_logo.png
+    color: "#0F3829"
+    color_dark: "#0F3829"
   android: true
   ios: true
   web: false

@@ -15,7 +15,8 @@ void main() {
     'emits [Loading, Authenticated] when the session resolves as authenticated',
     setUp: () => when(session.resolve)
         .thenAnswer((_) async => const SessionAuthenticated()),
-    build: () => SplashCubit(sessionRepository: session),
+    build: () =>
+        SplashCubit(sessionRepository: session, minimumDisplay: Duration.zero),
     act: (cubit) => cubit.initialize(),
     expect: () => const [SplashLoading(), SplashAuthenticated()],
   );
@@ -24,7 +25,8 @@ void main() {
     'emits [Loading, Unauthenticated] when there is no session',
     setUp: () => when(session.resolve)
         .thenAnswer((_) async => const SessionUnauthenticated()),
-    build: () => SplashCubit(sessionRepository: session),
+    build: () =>
+        SplashCubit(sessionRepository: session, minimumDisplay: Duration.zero),
     act: (cubit) => cubit.initialize(),
     expect: () => const [SplashLoading(), SplashUnauthenticated()],
   );
@@ -33,7 +35,8 @@ void main() {
     'emits [Loading, Failure] on a check error',
     setUp: () => when(session.resolve)
         .thenAnswer((_) async => const SessionCheckError()),
-    build: () => SplashCubit(sessionRepository: session),
+    build: () =>
+        SplashCubit(sessionRepository: session, minimumDisplay: Duration.zero),
     act: (cubit) => cubit.initialize(),
     expect: () => const [SplashLoading(), SplashFailure()],
   );
