@@ -11,6 +11,10 @@ class StorageKeys {
   // flutter_secure_storage keys — the ONLY place JWT tokens ever live.
   static const String accessToken = 'mboa.access_token';
   static const String refreshToken = 'mboa.refresh_token';
+  // Token expiries (epoch millis), persisted so the session check can reject a
+  // definitively-expired refresh token locally before any network call.
+  static const String accessTokenExpiresAt = 'mboa.access_token_expires_at';
+  static const String refreshTokenExpiresAt = 'mboa.refresh_token_expires_at';
 
   // Hive box names.
   static const String viewedBox = 'viewedBox';

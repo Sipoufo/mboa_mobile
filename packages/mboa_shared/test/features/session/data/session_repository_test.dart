@@ -17,6 +17,12 @@ DioException _dio(String path, {int? status, DioExceptionType type = DioExceptio
   );
 }
 
+AuthTokens _tokens({DateTime? refreshExpiry}) => AuthTokens(
+      accessToken: 'a',
+      refreshToken: 'r',
+      refreshTokenExpiresAt: refreshExpiry,
+    );
+
 void main() {
   late MockDioClient dioClient;
   late MockApiClient apiClient;
@@ -24,6 +30,9 @@ void main() {
   late MockSecureTokenStorage storage;
   late MockNetworkMonitor network;
   late SessionRepository repository;
+
+  final future = DateTime.now().add(const Duration(days: 7));
+  final past = DateTime.now().subtract(const Duration(days: 1));
 
   setUp(() {
     dioClient = MockDioClient();
@@ -43,14 +52,22 @@ void main() {
   });
 
   test('no token → unauthenticated (no network call)', () async {
-    when(storage.hasTokens).thenAnswer((_) async => false);
+    when(storage.readTokens).thenAnswer((_) async => null);
 
     expect(await repository.resolve(), isA<SessionUnauthenticated>());
     verifyNever(() => dioClient.api);
   });
 
+  test('refresh token already expired → unauthenticated locally (no call)', () async {
+    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: past));
+
+    expect(await repository.resolve(), isA<SessionUnauthenticated>());
+    verifyNever(() => network.isOnline);
+    verifyNever(currentUserApi.me);
+  });
+
   test('token + offline → authenticated from cache (offline-first)', () async {
-    when(storage.hasTokens).thenAnswer((_) async => true);
+    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => false);
 
     final result = await repository.resolve();
@@ -60,8 +77,8 @@ void main() {
     verifyNever(currentUserApi.me);
   });
 
-  test('token + online + /me 200 → authenticated', () async {
-    when(storage.hasTokens).thenAnswer((_) async => true);
+  test('token (unexpired) + online + /me 200 → authenticated', () async {
+    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
     when(currentUserApi.me).thenAnswer(
       (_) async => Response<MeResponse>(requestOptions: RequestOptions(path: '/me')),
@@ -73,8 +90,19 @@ void main() {
     expect((result as SessionAuthenticated).fromCache, isFalse);
   });
 
+  test('token with null expiry falls through to /me (backward compatible)', () async {
+    when(storage.readTokens).thenAnswer((_) async => _tokens());
+    when(() => network.isOnline).thenAnswer((_) async => true);
+    when(currentUserApi.me).thenAnswer(
+      (_) async => Response<MeResponse>(requestOptions: RequestOptions(path: '/me')),
+    );
+
+    expect(await repository.resolve(), isA<SessionAuthenticated>());
+    verify(currentUserApi.me).called(1);
+  });
+
   test('token + online + /me 401 → unauthenticated (refresh already failed)', () async {
-    when(storage.hasTokens).thenAnswer((_) async => true);
+    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
     when(currentUserApi.me).thenThrow(_dio('/me', status: 401));
 
@@ -82,7 +110,7 @@ void main() {
   });
 
   test('token + online + connectivity error → authenticated from cache', () async {
-    when(storage.hasTokens).thenAnswer((_) async => true);
+    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
     when(currentUserApi.me)
         .thenThrow(_dio('/me', type: DioExceptionType.connectionError));
@@ -94,7 +122,7 @@ void main() {
   });
 
   test('token + online + server error → retryable check error', () async {
-    when(storage.hasTokens).thenAnswer((_) async => true);
+    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
     when(currentUserApi.me).thenThrow(_dio('/me', status: 500));
 

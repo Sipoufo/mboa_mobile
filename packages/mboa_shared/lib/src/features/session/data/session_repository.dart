@@ -5,15 +5,20 @@ import '../models/session_result.dart';
 
 /// Resolves the startup session status, shared by both apps' splash features.
 ///
-/// Strategy (offline-aware, per the /me validation decision):
-///  - no token           → [SessionUnauthenticated]
-///  - token + offline    → [SessionAuthenticated] (fromCache: true)
-///  - token + online     → validate with `GET /me`
+/// Strategy (layered — a cheap local pre-filter, then offline-aware /me):
+///  - no token                       → [SessionUnauthenticated]
+///  - refresh token already expired  → [SessionUnauthenticated] (local, no call)
+///  - token + offline                → [SessionAuthenticated] (fromCache: true)
+///  - token + online                 → validate with `GET /me`
 ///      · 200            → [SessionAuthenticated]
 ///      · 401            → refresh already failed in the interceptor and tokens
 ///                         were cleared → [SessionUnauthenticated]
 ///      · network/timeout→ [SessionAuthenticated] (fromCache: true) — offline-first
 ///      · other          → [SessionCheckError] (retryable)
+///
+/// The local expiry check only rejects a definitively-dead token to avoid a
+/// doomed network round-trip; it can't detect server-side revocation, so a live
+/// token is still validated with `/me`.
 class SessionRepository {
   SessionRepository({
     required DioClient dioClient,
@@ -28,7 +33,16 @@ class SessionRepository {
   final NetworkMonitor _networkMonitor;
 
   Future<SessionResult> resolve() async {
-    if (!await _tokenStorage.hasTokens()) {
+    final tokens = await _tokenStorage.readTokens();
+    if (tokens == null) {
+      return const SessionUnauthenticated();
+    }
+
+    // Fast-path: a refresh token past its own expiry is definitively dead — the
+    // refresh (and thus /me) would 401, so reject locally without a call. A null
+    // expiry (older tokens / backend omitted it) falls through to /me.
+    final refreshExpiry = tokens.refreshTokenExpiresAt;
+    if (refreshExpiry != null && !refreshExpiry.isAfter(DateTime.now())) {
       return const SessionUnauthenticated();
     }
 
