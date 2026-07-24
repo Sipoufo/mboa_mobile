@@ -29,7 +29,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final session = await _repository.requestOtp(event.phoneNumber);
       emit(LoginOtpSent(session));
     } catch (_) {
-      emit(const LoginFailure('Impossible d’envoyer le code. Réessayez.'));
+      emit(const LoginFailure(LoginError.otpRequestFailed));
     }
   }
 
@@ -39,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _repository.verifyOtp(session: event.session, code: event.code);
       emit(const LoginSuccess());
     } catch (_) {
-      emit(LoginFailure('Code invalide. Réessayez.', session: event.session));
+      emit(LoginFailure(LoginError.invalidCode, session: event.session));
     }
   }
 }

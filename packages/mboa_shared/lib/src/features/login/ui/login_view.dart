@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/login_bloc.dart';
@@ -48,18 +49,19 @@ class _LoginFormState extends State<_LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Connexion')),
+      appBar: AppBar(title: Text(l10n.loginTitle)),
       body: BlocConsumer<LoginBloc, LoginState>(
         listenWhen: (prev, curr) => curr is LoginOtpSent || curr is LoginFailure,
         listener: (context, state) {
           switch (state) {
             case LoginOtpSent(:final session):
               GetIt.I<LoginFlowController>().openOtp(context, session);
-            case LoginFailure(:final message):
+            case LoginFailure(:final error):
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
-                ..showSnackBar(SnackBar(content: Text(message)));
+                ..showSnackBar(SnackBar(content: Text(_errorText(l10n, error))));
             default:
               break;
           }
@@ -77,7 +79,7 @@ class _LoginFormState extends State<_LoginForm> {
                   const Center(child: MboaLogo()),
                   const SizedBox(height: Dimens.xl),
                   Text(
-                    'Entrez votre numéro de téléphone',
+                    l10n.loginEnterPhone,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: Dimens.md),
@@ -85,17 +87,17 @@ class _LoginFormState extends State<_LoginForm> {
                     controller: _controller,
                     keyboardType: TextInputType.phone,
                     enabled: !loading,
-                    decoration: const InputDecoration(
-                      labelText: 'Téléphone',
-                      hintText: '+237 6XX XX XX XX',
+                    decoration: InputDecoration(
+                      labelText: l10n.loginPhoneLabel,
+                      hintText: l10n.loginPhoneHint,
                     ),
                     validator: (v) => (v == null || v.trim().length < 8)
-                        ? 'Numéro invalide'
+                        ? l10n.loginPhoneInvalid
                         : null,
                   ),
                   const SizedBox(height: Dimens.lg),
                   PrimaryButton(
-                    label: 'Recevoir le code',
+                    label: l10n.loginRequestCode,
                     isLoading: loading,
                     onPressed: _submit,
                   ),
@@ -107,4 +109,9 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
   }
+
+  String _errorText(I18n l10n, LoginError error) => switch (error) {
+        LoginError.otpRequestFailed => l10n.loginOtpSendError,
+        LoginError.invalidCode => l10n.otpInvalidCode,
+      };
 }

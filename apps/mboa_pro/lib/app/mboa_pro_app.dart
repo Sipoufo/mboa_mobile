@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../features/auth/bloc/auth_bloc.dart';
 import 'router/app_router.dart';
+import 'router/app_router.gr.dart';
 
-/// App Mboa Pro root.
+/// App Mboa Pro root. Owns the router and the global [AuthBloc]; startup routing
+/// is handled by the splash feature, runtime session changes by [AuthBloc].
 class MboaProApp extends StatefulWidget {
   const MboaProApp({super.key});
 
@@ -16,12 +22,31 @@ class _MboaProAppState extends State<MboaProApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Mboa Pro',
-      debugShowCheckedModeBanner: false,
-      theme: MboaTheme.light(MboaColors.proSeed),
-      darkTheme: MboaTheme.dark(MboaColors.proSeed),
-      routerConfig: _router.config(),
+    return BlocProvider<AuthBloc>(
+      create: (_) => getIt<AuthBloc>(),
+      child: BlocListener<AuthBloc, AuthState>(
+        listenWhen: (prev, curr) =>
+            curr is AuthAuthenticated || curr is AuthUnauthenticated,
+        listener: (context, state) {
+          switch (state) {
+            case AuthAuthenticated():
+              _router.replaceAll([const HomeRoute()]);
+            case AuthUnauthenticated():
+              _router.replaceAll([const LoginRoute()]);
+            default:
+              break;
+          }
+        },
+        child: MaterialApp.router(
+          onGenerateTitle: (context) => I18n.of(context).appNamePro,
+          debugShowCheckedModeBanner: false,
+          theme: MboaTheme.light(MboaColors.proSeed),
+          darkTheme: MboaTheme.dark(MboaColors.proSeed),
+          localizationsDelegates: MboaLocalizations.delegates,
+          supportedLocales: MboaLocalizations.supportedLocales,
+          routerConfig: _router.config(),
+        ),
+      ),
     );
   }
 }

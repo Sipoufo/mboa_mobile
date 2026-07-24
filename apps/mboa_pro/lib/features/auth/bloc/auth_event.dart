@@ -1,0 +1,19 @@
+part of 'auth_bloc.dart';
+
+/// Events for App Mboa Pro's session gate.
+sealed class AuthEvent extends Equatable {
+  const AuthEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+/// The shared login flow persisted tokens — promote the session.
+final class AuthSessionEstablished extends AuthEvent {
+  const AuthSessionEstablished();
+}
+
+/// Clean logout (also triggered by the interceptor on refresh failure).
+final class AuthLogoutRequested extends AuthEvent {
+  const AuthLogoutRequested();
+}

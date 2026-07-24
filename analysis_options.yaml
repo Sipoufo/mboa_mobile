@@ -13,6 +13,7 @@ analyzer:
     - "**.config.dart"
     - "packages/api_client/**"   # openapi-generator output
     - "**/l10n/**"
+    - "**/generated/**"          # intl_utils output (mboa_l10n)
   errors:
     invalid_annotation_target: ignore
     # Treat these as build-breaking to keep the tree honest.

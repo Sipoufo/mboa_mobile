@@ -3,6 +3,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
+import '../../features/splash/logic/splash_cubit.dart';
 import '../login_flow_controller_impl.dart';
 
 /// Registers App-Mboa-specific dependencies on top of the shared core module.
@@ -17,6 +18,12 @@ void registerAppModule() {
   // The global AuthBloc is a singleton — the one BLoC shared app-wide.
   getIt.registerLazySingleton<AuthBloc>(
     () => AuthBloc(repository: getIt<AuthRepository>()),
+  );
+
+  // Shared session check + startup splash controller.
+  registerSessionModule(getIt);
+  getIt.registerFactory<SplashCubit>(
+    () => SplashCubit(sessionRepository: getIt<SessionRepository>()),
   );
 
   // Shared login feature + this app's binding for its navigation/session.

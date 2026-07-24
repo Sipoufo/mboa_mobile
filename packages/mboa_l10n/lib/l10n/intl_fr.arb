@@ -1,0 +1,32 @@
+{
+  "@@locale": "fr",
+  "appName": "Mboa",
+  "appNamePro": "Mboa Pro",
+
+  "commonRetry": "Réessayer",
+  "commonError": "Une erreur est survenue. Réessayez.",
+
+  "loginTitle": "Connexion",
+  "loginEnterPhone": "Entrez votre numéro de téléphone",
+  "loginPhoneLabel": "Téléphone",
+  "loginPhoneHint": "+237 6XX XX XX XX",
+  "loginPhoneInvalid": "Numéro invalide",
+  "loginRequestCode": "Recevoir le code",
+  "loginOtpSendError": "Impossible d’envoyer le code. Réessayez.",
+
+  "otpTitle": "Vérification",
+  "otpCodeSentTo": "Code envoyé au {phone}",
+  "@otpCodeSentTo": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpCodeLabel": "Code à 6 chiffres",
+  "otpValidate": "Valider",
+  "otpInvalidCode": "Code invalide. Réessayez.",
+
+  "homeUserWelcome": "Bienvenue sur Mboa 👋",
+  "homeProWelcome": "Bienvenue sur Mboa Pro 👋"
+}

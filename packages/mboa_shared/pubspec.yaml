@@ -17,11 +17,15 @@ dependencies:
     path: ../mboa_core
   mboa_ui:
     path: ../mboa_ui
+  mboa_l10n:
+    path: ../mboa_l10n
 
   flutter_bloc: ^9.0.0
   bloc: ^9.0.0
   equatable: ^2.0.0
   get_it: ^8.0.0
+  # SessionRepository inspects DioException types for offline-aware validation.
+  dio: ^5.7.0
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +33,6 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
-  dio: ^5.7.0
   # Test-only: build the AuthTokens DTO (hidden from the mboa_core barrel) to
   # stub the verifyOtp response.
   api_client:

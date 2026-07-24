@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/auth/bloc/auth_bloc.dart';
@@ -21,8 +22,11 @@ class _MboaUserAppState extends State<MboaUserApp> {
 
   @override
   Widget build(BuildContext context) {
+    // Startup routing is owned by the splash feature (SplashCubit). AuthBloc
+    // here handles only *runtime* session changes: login-success → Home, and
+    // forced logout / refresh-failure → Login.
     return BlocProvider<AuthBloc>(
-      create: (_) => getIt<AuthBloc>()..add(const AuthStarted()),
+      create: (_) => getIt<AuthBloc>(),
       child: BlocListener<AuthBloc, AuthState>(
         listenWhen: (prev, curr) =>
             curr is AuthAuthenticated || curr is AuthUnauthenticated,
@@ -37,10 +41,12 @@ class _MboaUserAppState extends State<MboaUserApp> {
           }
         },
         child: MaterialApp.router(
-          title: 'Mboa',
+          onGenerateTitle: (context) => I18n.of(context).appName,
           debugShowCheckedModeBanner: false,
           theme: MboaTheme.light(MboaColors.userSeed),
           darkTheme: MboaTheme.dark(MboaColors.userSeed),
+          localizationsDelegates: MboaLocalizations.delegates,
+          supportedLocales: MboaLocalizations.supportedLocales,
           routerConfig: _router.config(),
         ),
       ),

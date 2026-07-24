@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/login_bloc.dart';
@@ -52,18 +53,27 @@ class _OtpFormState extends State<_OtpForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Vérification')),
+      appBar: AppBar(title: Text(l10n.otpTitle)),
       body: BlocConsumer<LoginBloc, LoginState>(
         listenWhen: (prev, curr) => curr is LoginSuccess || curr is LoginFailure,
         listener: (context, state) {
           switch (state) {
             case LoginSuccess():
               GetIt.I<LoginFlowController>().onLoginSuccess(context);
-            case LoginFailure(:final message):
+            case LoginFailure(:final error):
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
-                ..showSnackBar(SnackBar(content: Text(message)));
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      error == LoginError.invalidCode
+                          ? l10n.otpInvalidCode
+                          : l10n.commonError,
+                    ),
+                  ),
+                );
             default:
               break;
           }
@@ -77,7 +87,7 @@ class _OtpFormState extends State<_OtpForm> {
               children: [
                 const SizedBox(height: Dimens.md),
                 Text(
-                  'Code envoyé au ${widget.session.phoneNumber}',
+                  l10n.otpCodeSentTo(widget.session.phoneNumber),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: Dimens.md),
@@ -87,11 +97,11 @@ class _OtpFormState extends State<_OtpForm> {
                   enabled: !loading,
                   textAlign: TextAlign.center,
                   maxLength: 6,
-                  decoration: const InputDecoration(labelText: 'Code à 6 chiffres'),
+                  decoration: InputDecoration(labelText: l10n.otpCodeLabel),
                 ),
                 const SizedBox(height: Dimens.sm),
                 PrimaryButton(
-                  label: 'Valider',
+                  label: l10n.otpValidate,
                   isLoading: loading,
                   onPressed: _submit,
                 ),

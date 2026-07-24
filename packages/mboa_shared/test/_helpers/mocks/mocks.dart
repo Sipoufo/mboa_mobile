@@ -11,4 +11,10 @@ class MockApiClient extends Mock implements ApiClient {}
 
 class MockAuthApi extends Mock implements AuthenticationApi {}
 
+class MockCurrentUserApi extends Mock implements CurrentUserApi {}
+
 class MockSecureTokenStorage extends Mock implements SecureTokenStorage {}
+
+class MockNetworkMonitor extends Mock implements NetworkMonitor {}
+
+class MockSessionRepository extends Mock implements SessionRepository {}

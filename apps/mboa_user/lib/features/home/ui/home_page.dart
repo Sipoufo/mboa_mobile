@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 
 import '../../auth/bloc/auth_bloc.dart';
 
@@ -12,9 +13,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mboa'),
+        title: Text(l10n.appName),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -23,7 +25,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(child: Text('Bienvenue sur Mboa 👋')),
+      body: Center(child: Text(l10n.homeUserWelcome)),
     );
   }
 }

@@ -97,7 +97,7 @@ class SplashRoute extends _i5.PageRouteInfo<void> {
   static _i5.PageInfo page = _i5.PageInfo(
     name,
     builder: (data) {
-      return const _i4.SplashPage();
+      return _i5.WrappedRoute(child: const _i4.SplashPage());
     },
   );
 }

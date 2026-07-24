@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 APPS := mboa_user mboa_pro
 
-.PHONY: help bootstrap gen gen-api gen-code analyze format test coverage clean run-user run-pro
+.PHONY: help bootstrap gen gen-api gen-code gen-l10n analyze format test coverage clean run-user run-pro
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -14,13 +14,16 @@ help: ## Show this help
 bootstrap: ## Resolve workspace dependencies (single shared lockfile)
 	flutter pub get
 
-gen: gen-api gen-code ## Regenerate everything (api_client + routes/json)
+gen: gen-api gen-l10n gen-code ## Regenerate everything (api_client + i18n + routes/json)
 
 gen-api: ## Regenerate packages/api_client from the OpenAPI spec
 	./scripts/gen_api_client.sh
 
 gen-code: ## Run build_runner (auto_route + json) for both apps
 	./scripts/gen_code.sh
+
+gen-l10n: ## Regenerate the shared I18n class from ARB files
+	./scripts/gen_l10n.sh
 
 analyze: ## Static analysis across the whole workspace
 	flutter analyze

@@ -1,5 +1,9 @@
 part of 'login_bloc.dart';
 
+/// Why the login flow failed. The UI maps this to a localised message — the
+/// logic layer never holds user-facing text.
+enum LoginError { otpRequestFailed, invalidCode }
+
 /// Observable states of the shared login flow.
 sealed class LoginState extends Equatable {
   const LoginState();
@@ -34,15 +38,15 @@ final class LoginSuccess extends LoginState {
   const LoginSuccess();
 }
 
-/// The last action failed; [message] is user-presentable.
+/// The last action failed; [error] is mapped to a localised message by the UI.
 final class LoginFailure extends LoginState {
-  const LoginFailure(this.message, {this.session});
+  const LoginFailure(this.error, {this.session});
 
-  final String message;
+  final LoginError error;
 
   /// Preserved so the OTP screen stays usable after a bad code.
   final OtpSession? session;
 
   @override
-  List<Object?> get props => [message, session];
+  List<Object?> get props => [error, session];
 }
