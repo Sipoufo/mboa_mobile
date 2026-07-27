@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zeney/src/core/i18n/l10n.dart';
-import 'package:zeney/src/core/theme/dimens.dart';
-import 'package:zeney/src/shared/foundation/extensions/context_extensions.dart';
+import 'package:mboa_ui/mboa_ui.dart';
 
 class Input extends StatelessWidget {
   final FocusNode? focusNode;
@@ -76,7 +74,7 @@ class Input extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color effectiveBorderColor = borderColor ?? context.zeneyColorScheme.black100;
+    final Color effectiveBorderColor = borderColor ?? context.mboaColors.primaryDark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,27 +83,21 @@ class Input extends StatelessWidget {
           Text.rich(
             TextSpan(
               text: labelText!,
-              style: context.zeneyTextTheme.textBase.copyWith(
+              style: context.mboaText.label.copyWith(
                 fontWeight: FontWeight.w700,
-                color: context.zeneyColorScheme.black500,
+                color: context.mboaColors.primaryDark,
               ),
               children: [
                 if (labelSuffix != null) ...[
                   TextSpan(
                     text: ' ($labelSuffix)',
-                    style: context.zeneyTextTheme.textXs.copyWith(fontWeight: FontWeight.w400),
-                  ),
-                ],
-                if (optional) ...[
-                  TextSpan(
-                    text: ' ${I18n.of(context).formInput_optional_suffix}',
-                    style: context.zeneyTextTheme.textBase.copyWith(fontWeight: FontWeight.w400),
+                    style: context.mboaText.label.copyWith(fontWeight: FontWeight.w400),
                   ),
                 ],
               ],
             ),
           ),
-          const SizedBox(height: Dimens.minSpacing),
+          const SizedBox(height: Dimens.spacingXs),
         ],
         ClipRRect(
           borderRadius: BorderRadius.circular(Dimens.radius),
@@ -115,11 +107,11 @@ class Input extends StatelessWidget {
             inputFormatters: inputFormatters,
             controller: controller,
             obscureText: isPassword,
-            cursorColor: cursorColor ?? context.zeneyColorScheme.black500,
+            cursorColor: cursorColor ?? context.mboaColors.primaryDark,
             readOnly: readOnly,
             focusNode: focusNode,
             maxLength: maxLength,
-            style: style ?? context.zeneyTextTheme.textBase.copyWith(fontWeight: FontWeight.w500),
+            style: style ?? context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
             minLines: minLines ?? 1,
             maxLines: maxLines ?? 1,
             keyboardType: keyboardType,
@@ -133,9 +125,9 @@ class Input extends StatelessWidget {
               hintText: hintText,
               hintStyle:
                   hintStyle ??
-                  context.zeneyTextTheme.textSm.copyWith(
+                  context.mboaText.label.copyWith(
                     fontWeight: FontWeight.w400,
-                    color: context.zeneyColorScheme.black300,
+                    color: context.mboaColors.textTertiary,
                   ),
               counter: showCounter ? null : const SizedBox(),
               filled: filled,
@@ -145,10 +137,10 @@ class Input extends StatelessWidget {
               suffixIcon: suffixIcon,
               enabled: enabled,
               contentPadding: padding ?? const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: 18),
-              errorBorder: _getInputBorder(color: context.zeneyColorScheme.red600),
+              errorBorder: _getInputBorder(color: context.mboaColors.error),
               enabledBorder: _getInputBorder(color: effectiveBorderColor),
               border: _getInputBorder(color: effectiveBorderColor),
-              focusedErrorBorder: _getInputBorder(color: context.zeneyColorScheme.red600),
+              focusedErrorBorder: _getInputBorder(color: context.mboaColors.error),
               focusedBorder: _getInputBorder(color: focusedBorderColor ?? context.colorScheme.primary),
             ),
             onChanged: onChanged,

@@ -51,7 +51,7 @@ class _LoginFormState extends State<_LoginForm> {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.loginTitle)),
+      backgroundColor: context.mboaColors.primary,
       body: BlocConsumer<LoginBloc, LoginState>(
         listenWhen: (prev, curr) => curr is LoginOtpSent || curr is LoginFailure,
         listener: (context, state) {
@@ -68,43 +68,7 @@ class _LoginFormState extends State<_LoginForm> {
         },
         builder: (context, state) {
           final loading = state is LoginInProgress;
-          return Padding(
-            padding: const EdgeInsets.all(Dimens.lg),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: Dimens.xl),
-                  const Center(child: MboaLogo()),
-                  const SizedBox(height: Dimens.xl),
-                  Text(
-                    l10n.loginEnterPhone,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: Dimens.md),
-                  TextFormField(
-                    controller: _controller,
-                    keyboardType: TextInputType.phone,
-                    enabled: !loading,
-                    decoration: InputDecoration(
-                      labelText: l10n.loginPhoneLabel,
-                      hintText: l10n.loginPhoneHint,
-                    ),
-                    validator: (v) => (v == null || v.trim().length < 8)
-                        ? l10n.loginPhoneInvalid
-                        : null,
-                  ),
-                  const SizedBox(height: Dimens.lg),
-                  PrimaryButton(
-                    label: l10n.loginRequestCode,
-                    isLoading: loading,
-                    onPressed: _submit,
-                  ),
-                ],
-              ),
-            ),
-          );
+          return Container();
         },
       ),
     );

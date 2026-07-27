@@ -1,7 +1,7 @@
-import 'package:afrodiet/src/core/theme/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mboa_ui/mboa_ui.dart';
 
 class Loader extends StatelessWidget {
   const Loader({super.key, this.size = Dimens.loaderSize});
@@ -16,7 +16,7 @@ class Loader extends StatelessWidget {
       child: SizedBox(
         width: size,
         height: size,
-        child: CircularProgressIndicator.adaptive(strokeCap: StrokeCap.round),
+        child: const CircularProgressIndicator.adaptive(strokeCap: StrokeCap.round),
       ),
     );
   }
@@ -32,7 +32,7 @@ class IconLoader extends StatelessWidget {
     return Icon(
       LucideIcons.loader,
       color: color,
-      size: Dimens.iconSizeSm,
+      size: Dimens.iconSm,
     ).animate(onPlay: (controller) => controller.repeat()).rotate(duration: const Duration(seconds: 2));
   }
 }

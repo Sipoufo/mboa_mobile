@@ -5,6 +5,10 @@
 
   "commonRetry": "Réessayer",
   "commonError": "Une erreur est survenue. Réessayez.",
+  "loadingDialog_content": "Veuillez patienter...",
+
+  "welcome_inscriptionButton": "Inscription",
+  "welcome_loginButton": "Connexion",
 
   "loginTitle": "Connexion",
   "loginEnterPhone": "Entrez votre numéro de téléphone",

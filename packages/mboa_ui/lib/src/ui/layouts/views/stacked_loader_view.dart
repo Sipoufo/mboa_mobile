@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:afrodiet/src/core/i18n/l10n.dart';
-import 'package:afrodiet/src/core/theme/dimens.dart';
-import 'package:afrodiet/src/shared/ui/feedback/loader.dart';
-import 'package:afrodiet/src/shared/foundation/extensions/context_extensions.dart';
+import 'package:mboa_ui/mboa_ui.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_ui/src/ui/feedback/loader.dart';
 
 class StackedLoaderView extends StatefulWidget {
   const StackedLoaderView({
@@ -125,13 +124,13 @@ class _LoaderWidget extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Container(
-        constraints: BoxConstraints(maxWidth: context.screenSize.width * .8),
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * .8),
         decoration: BoxDecoration(
-          color: context.afrodietColorScheme.mainAppBg,
+          color: context.mboaColors.primary,
           borderRadius: BorderRadius.circular(Dimens.radius),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(Dimens.doubleSpacing),
+          padding: const EdgeInsets.all(Dimens.spacingXl),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -145,8 +144,8 @@ class _LoaderWidget extends StatelessWidget {
                       loadingText ?? I18n.of(context).loadingDialog_content,
                       style:
                           loadingTextStyle ??
-                          context.afrodietTextTheme.textSm.copyWith(
-                            color: context.afrodietColorScheme.mainTextColor,
+                          context.mboaText.body.copyWith(
+                            color: context.mboaColors.primary,
                           ),
                     ),
                   ),

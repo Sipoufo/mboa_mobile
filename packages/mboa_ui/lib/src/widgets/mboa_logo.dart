@@ -11,7 +11,7 @@ class MboaLogo extends StatelessWidget {
 
   final double size;
 
-  static const String _asset = 'assets/images/mboa-logo-full-color.svg';
+  static const String _asset = 'assets/images/logos/mboa-logo-full-color.svg';
   static const String _package = 'mboa_ui';
 
   @override

@@ -79,6 +79,36 @@ class I18n {
     );
   }
 
+  /// `Veuillez patienter...`
+  String get loadingDialog_content {
+    return Intl.message(
+      'Veuillez patienter...',
+      name: 'loadingDialog_content',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inscription`
+  String get welcome_inscriptionButton {
+    return Intl.message(
+      'Inscription',
+      name: 'welcome_inscriptionButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connexion`
+  String get welcome_loginButton {
+    return Intl.message(
+      'Connexion',
+      name: 'welcome_loginButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Connexion`
   String get loginTitle {
     return Intl.message('Connexion', name: 'loginTitle', desc: '', args: []);

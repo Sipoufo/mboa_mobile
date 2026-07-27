@@ -38,4 +38,9 @@ abstract final class Dimens {
   static const double avatar = 44;
   static const double logo = 96;
   static const double loader = 24;
+
+  // Loader
+  static const double loaderSizeXs = 12.0;
+  static const double loaderSizeSm = 24.0;
+  static const double loaderSize = 34.0;
 }

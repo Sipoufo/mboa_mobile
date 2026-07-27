@@ -36,6 +36,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeUserWelcome": MessageLookupByLibrary.simpleMessage(
       "Welcome to Mboa 👋",
     ),
+    "loadingDialog_content": MessageLookupByLibrary.simpleMessage(
+      "Please wait...",
+    ),
     "loginEnterPhone": MessageLookupByLibrary.simpleMessage(
       "Enter your phone number",
     ),
@@ -54,5 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "otpTitle": MessageLookupByLibrary.simpleMessage("Verification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "welcome_inscriptionButton": MessageLookupByLibrary.simpleMessage(
+      "Registration",
+    ),
+    "welcome_loginButton": MessageLookupByLibrary.simpleMessage("Login"),
   };
 }

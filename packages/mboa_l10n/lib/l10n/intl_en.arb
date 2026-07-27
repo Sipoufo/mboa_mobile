@@ -5,6 +5,10 @@
 
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
+  "loadingDialog_content": "Please wait...",
+
+  "welcome_inscriptionButton": "Registration",
+  "welcome_loginButton": "Login",
 
   "loginTitle": "Sign in",
   "loginEnterPhone": "Enter your phone number",

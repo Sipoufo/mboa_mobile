@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zeney/src/core/theme/dimens.dart';
-import 'package:zeney/src/shared/ui/feedback/loader.dart';
-import 'package:zeney/src/shared/foundation/extensions/context_extensions.dart';
+import 'package:mboa_ui/mboa_ui.dart';
 
 enum ButtonType { primary, onSurface, secondary, custom, outline }
 
@@ -12,7 +10,7 @@ class Button extends StatelessWidget {
     this.onPressed,
     required this.type,
     this.icon,
-    this.iconAligment = IconAlignment.end,
+    this.iconAlignment = IconAlignment.end,
     this.backgroundColor,
     this.textColor,
     this.textStyle,
@@ -27,7 +25,7 @@ class Button extends StatelessWidget {
     required String title,
     Widget? icon,
     VoidCallback? onPressed,
-    IconAlignment iconAligment = IconAlignment.end,
+    IconAlignment iconAlignment = IconAlignment.end,
     TextStyle? textStyle,
     bool isLoading = false,
     bool isCenter = false,
@@ -39,7 +37,7 @@ class Button extends StatelessWidget {
       icon: icon,
       onPressed: onPressed,
       type: ButtonType.primary,
-      iconAligment: iconAligment,
+      iconAlignment: iconAlignment,
       textStyle: textStyle,
       isLoading: isLoading,
       isCenter: isCenter,
@@ -52,7 +50,7 @@ class Button extends StatelessWidget {
     required String title,
     Widget? icon,
     VoidCallback? onPressed,
-    IconAlignment iconAligment = IconAlignment.end,
+    IconAlignment iconAlignment = IconAlignment.end,
     TextStyle? textStyle,
     bool isLoading = false,
     bool isCenter = false,
@@ -64,7 +62,7 @@ class Button extends StatelessWidget {
       icon: icon,
       onPressed: onPressed,
       type: ButtonType.secondary,
-      iconAligment: iconAligment,
+      iconAlignment: iconAlignment,
       textStyle: textStyle,
       isLoading: isLoading,
       isCenter: isCenter,
@@ -79,7 +77,7 @@ class Button extends StatelessWidget {
     VoidCallback? onPressed,
     Color? backgroundColor,
     Color? textColor,
-    IconAlignment iconAligment = IconAlignment.end,
+    IconAlignment iconAlignment = IconAlignment.end,
     TextStyle? textStyle,
     BorderRadiusGeometry? borderRadius,
     bool isLoading = false,
@@ -92,7 +90,7 @@ class Button extends StatelessWidget {
       icon: icon,
       onPressed: onPressed,
       type: ButtonType.custom,
-      iconAligment: iconAligment,
+      iconAlignment: iconAlignment,
       backgroundColor: backgroundColor,
       textColor: textColor,
       textStyle: textStyle,
@@ -108,7 +106,7 @@ class Button extends StatelessWidget {
     required String title,
     Widget? icon,
     VoidCallback? onPressed,
-    IconAlignment iconAligment = IconAlignment.end,
+    IconAlignment iconAlignment = IconAlignment.end,
     TextStyle? textStyle,
     bool isLoading = false,
     bool isCenter = false,
@@ -120,7 +118,7 @@ class Button extends StatelessWidget {
       icon: icon,
       onPressed: onPressed,
       type: ButtonType.outline,
-      iconAligment: iconAligment,
+      iconAlignment: iconAlignment,
       textStyle: textStyle,
       isLoading: isLoading,
       isCenter: isCenter,
@@ -133,7 +131,7 @@ class Button extends StatelessWidget {
     required String title,
     Widget? icon,
     VoidCallback? onPressed,
-    IconAlignment iconAligment = IconAlignment.end,
+    IconAlignment iconAlignment = IconAlignment.end,
     TextStyle? textStyle,
     bool isLoading = false,
     double? height,
@@ -144,7 +142,7 @@ class Button extends StatelessWidget {
       icon: icon,
       onPressed: onPressed,
       type: ButtonType.onSurface,
-      iconAligment: iconAligment,
+      iconAlignment: iconAlignment,
       textStyle: textStyle,
       isLoading: isLoading,
       height: height,
@@ -155,7 +153,7 @@ class Button extends StatelessWidget {
   final Widget? icon;
   final VoidCallback? onPressed;
   final ButtonType type;
-  final IconAlignment iconAligment;
+  final IconAlignment iconAlignment;
   final Color? backgroundColor;
   final Color? textColor;
   final TextStyle? textStyle;
@@ -166,25 +164,25 @@ class Button extends StatelessWidget {
 
   Color _getTextColor(BuildContext context) {
     return switch (type) {
-      ButtonType.primary || ButtonType.secondary => context.zeneyColorScheme.foreground,
-      ButtonType.onSurface => context.zeneyColorScheme.black500,
-      ButtonType.custom || ButtonType.outline => textColor ?? Colors.black,
+      ButtonType.primary || ButtonType.secondary => context.mboaColors.surface,
+      ButtonType.onSurface => context.mboaColors.primary,
+      ButtonType.custom || ButtonType.outline => textColor ?? context.mboaColors.primary,
     };
   }
 
   Color _getBackgroundColor(BuildContext context) {
     return switch (type) {
-      ButtonType.onSurface => context.zeneyColorScheme.foreground,
-      ButtonType.primary => context.zeneyColorScheme.blue500,
+      ButtonType.onSurface => context.mboaColors.surface,
+      ButtonType.primary => context.mboaColors.primary,
       ButtonType.custom => backgroundColor ?? Colors.transparent,
-      ButtonType.secondary => context.zeneyColorScheme.black500,
+      ButtonType.secondary => context.mboaColors.primaryLight,
       ButtonType.outline => Colors.transparent,
     };
   }
 
   BorderSide _getBorderSide(BuildContext context) {
     return switch (type) {
-      ButtonType.outline => BorderSide(color: context.zeneyColorScheme.black100, width: 1),
+      ButtonType.outline => BorderSide(color: context.mboaColors.primary, width: 1),
       _ => BorderSide.none,
     };
   }
@@ -193,7 +191,7 @@ class Button extends StatelessWidget {
     return ElevatedButton.styleFrom(
       elevation: 0,
       alignment: icon == null ? Alignment.center : null,
-      iconAlignment: iconAligment,
+      iconAlignment: iconAlignment,
       padding: icon != null ? const EdgeInsets.symmetric(horizontal: Dimens.spacing) : null,
       fixedSize: Size.fromHeight(height ?? Dimens.buttonHeight),
       shape: RoundedRectangleBorder(
@@ -205,7 +203,7 @@ class Button extends StatelessWidget {
   }
 
   Widget _buildLabel(BuildContext context) {
-    final defaultStyle = context.zeneyTextTheme.textBase.copyWith(
+    final defaultStyle = context.mboaText.label.copyWith(
       fontWeight: FontWeight.w700,
       color: _getTextColor(context),
     );
@@ -217,17 +215,10 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     final label = _buildLabel(context);
     final style = _getButtonStyle(context);
-    final loadingIndicator = Loader.sm();
 
     return SizedBox(
       width: double.infinity,
-      child: isLoading
-          ? ElevatedButton(
-              onPressed: null,
-              style: style,
-              child: loadingIndicator,
-            )
-          : icon == null
+      child: icon == null
           ? ElevatedButton(onPressed: onPressed, style: style, child: label)
           : ElevatedButton(
               onPressed: onPressed,
@@ -236,8 +227,8 @@ class Button extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                spacing: Dimens.halfSpacing,
-                children: iconAligment == IconAlignment.start
+                spacing: Dimens.spacingSm,
+                children: iconAlignment == IconAlignment.start
                     ? [icon!, Flexible(child: label)]
                     : [Expanded(flex: isCenter ? 0 : 1, child: label), icon!],
               ),

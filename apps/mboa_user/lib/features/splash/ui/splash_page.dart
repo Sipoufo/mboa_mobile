@@ -34,7 +34,7 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
           case SplashAuthenticated():
             context.router.replaceAll([const HomeRoute()]);
           case SplashUnauthenticated():
-            context.router.replaceAll([const LoginRoute()]);
+            context.router.replaceAll([const WelcomeRoute()]);
           default:
             break;
         }
