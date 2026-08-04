@@ -30,6 +30,14 @@ class LoginRepository {
     );
   }
 
+  /// Re-sends the SMS OTP for an already-pending [phoneNumber] (dedicated
+  /// resend endpoint, distinct from the initial request).
+  Future<void> resendOtp(String phoneNumber) async {
+    await _api.resendOtp(
+      sendOtpRequest: SendOtpRequest((b) => b..phoneNumber = phoneNumber),
+    );
+  }
+
   /// Verifies [code] against [session] and persists the issued tokens.
   Future<void> verifyOtp({required OtpSession session, required String code}) async {
     final response = await _api.verifyOtp(

@@ -19,18 +19,194 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Annonces
+    description: Create and manage the prestataire's listings
+  - name: Media
+    description: Direct-to-R2 uploads via pre-signed URLs
+  - name: Search
+    description: Public listing search
+  - name: Admin — Type Change
+    description: Review prestataire type-change requests
+  - name: Password
+    description: Change the account password
+  - name: Residences
+    description: Bulk-create and manage grouped listings
+  - name: Prestataire Profile
+    description: Profile of the App Mboa Pro service provider
+  - name: Phone Change
+    description: Change the account phone number with double OTP verification
+  - name: User Profile
+    description: Personal profile of the App Mboa user
   - name: KYC
     description: Identity verification
   - name: Current user
     description: The authenticated account's identity
-  - name: Media
-    description: Direct-to-R2 uploads via pre-signed URLs
+  - name: User Settings
+    description: "Language, notification and privacy preferences"
+  - name: Locations
+    description: Country / region / city / district reference
   - name: Authentication
     description: "Phone-OTP login, token refresh and logout"
+  - name: Notification Devices
+    description: Register device tokens for push notifications
   - name: Admin — KYC
     description: Review identity-verification submissions
+  - name: Account
+    description: Account-wide operations (any role)
 
 paths:
+  /api/v1/residences:
+    get:
+      tags:
+        - Residences
+      summary: List the authenticated prestataire's residences
+      operationId: listMine
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseResidenceResponse"
+    post:
+      tags:
+        - Residences
+      summary: Bulk-create a residence and its units (drafts)
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateResidenceRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+  /api/v1/residences/{id}/reserve:
+    post:
+      tags:
+        - Residences
+      summary: Reserve all published units at once
+      operationId: reserveAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+  /api/v1/residences/{id}/rented:
+    post:
+      tags:
+        - Residences
+      summary: Mark all live units (published or reserved) as rented at once
+      operationId: rentAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+  /api/v1/residences/{id}/publish:
+    post:
+      tags:
+        - Residences
+      summary: Publish all draft units at once
+      operationId: publishAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+  /api/v1/residences/{id}/archive:
+    post:
+      tags:
+        - Residences
+      summary: Archive all units at once
+      operationId: archiveAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+  /api/v1/prestataires/me/type-change:
+    post:
+      tags:
+        - Prestataire Profile
+      summary: "Change the provider type — applied directly if eligible, else opens\
+        \ an admin request"
+      operationId: changeType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestTypeChangeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TypeChangeResult"
+  /api/v1/notifications/devices:
+    post:
+      tags:
+        - Notification Devices
+      summary: Register or refresh a device push token
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterDeviceRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
   /api/v1/media/uploads:
     post:
       tags:
@@ -123,6 +299,36 @@ paths:
       responses:
         "202":
           description: Accepted
+  /api/v1/auth/password/reset:
+    post:
+      tags:
+        - Authentication
+      summary: Complete a password reset with the OTP received on the phone
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+  /api/v1/auth/password/forgot:
+    post:
+      tags:
+        - Authentication
+      summary: Start a password reset; sends an OTP if the email has a password account
+      operationId: forgotPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordRequest"
+        required: true
+      responses:
+        "202":
+          description: Accepted
   /api/v1/auth/otp/verify:
     post:
       tags:
@@ -142,6 +348,21 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
+  /api/v1/auth/otp/resend:
+    post:
+      tags:
+        - Authentication
+      summary: Resend the OTP to a phone that has a pending verification
+      operationId: resendOtp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendOtpRequest"
+        required: true
+      responses:
+        "202":
+          description: Accepted
   /api/v1/auth/otp/request:
     post:
       tags:
@@ -208,12 +429,175 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
+  /api/v1/annonces:
+    get:
+      tags:
+        - Annonces
+      summary: List the authenticated prestataire's listings
+      operationId: listMine_1
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseAnnonceResponse"
+    post:
+      tags:
+        - Annonces
+      summary: Create a listing (draft)
+      operationId: create_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAnnonceRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/annonces/{id}/reserve:
+    post:
+      tags:
+        - Annonces
+      summary: Reserve a published listing (temporary hold)
+      operationId: reserve
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/annonces/{id}/rented:
+    post:
+      tags:
+        - Annonces
+      summary: Mark a published or reserved listing as rented
+      operationId: markRented
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/annonces/{id}/publish:
+    post:
+      tags:
+        - Annonces
+      summary: Publish a draft listing (profile complete + ≥3 photos + tier limit)
+      operationId: publish
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/annonces/{id}/archive:
+    post:
+      tags:
+        - Annonces
+      summary: Archive a listing
+      operationId: archive
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/admin/type-change-requests/{id}/reject:
+    post:
+      tags:
+        - Admin — Type Change
+      summary: Reject a type-change request with a reason
+      operationId: reject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RejectTypeChangeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TypeChangeReviewResult"
+  /api/v1/admin/type-change-requests/{id}/approve:
+    post:
+      tags:
+        - Admin — Type Change
+      summary: Approve a type-change request and apply the new type
+      operationId: approve
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TypeChangeReviewResult"
   /api/v1/admin/kyc/{id}/reject:
     post:
       tags:
         - Admin — KYC
       summary: Reject a KYC submission with a reason
-      operationId: reject
+      operationId: reject_1
       parameters:
         - name: id
           in: path
@@ -239,7 +623,7 @@ paths:
       tags:
         - Admin — KYC
       summary: Approve a KYC submission and activate the account
-      operationId: approve
+      operationId: approve_1
       parameters:
         - name: id
           in: path
@@ -254,6 +638,385 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+  /api/v1/account/phone/verify:
+    post:
+      tags:
+        - Phone Change
+      summary: "Step 2: verify both codes and switch the number"
+      operationId: confirmChange
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfirmPhoneChangeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PhoneChangeResponse"
+  /api/v1/account/phone/change:
+    post:
+      tags:
+        - Phone Change
+      summary: "Step 1: request OTPs on the current and the new number"
+      operationId: requestChange
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestPhoneChangeRequest"
+        required: true
+      responses:
+        "202":
+          description: Accepted
+  /api/v1/account/password:
+    post:
+      tags:
+        - Password
+      summary: Change the password (revokes other sessions)
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+  /api/v1/users/me:
+    get:
+      tags:
+        - User Profile
+      summary: Get the authenticated user's profile
+      operationId: myProfile
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+    patch:
+      tags:
+        - User Profile
+      summary: Partially update the authenticated user's profile
+      operationId: updateMyProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserProfileRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+  /api/v1/users/me/settings:
+    get:
+      tags:
+        - User Settings
+      summary: Get the authenticated account's settings
+      operationId: mySettings
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserSettingsResponse"
+    patch:
+      tags:
+        - User Settings
+      summary: Partially update the authenticated account's settings
+      operationId: updateMySettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserSettingsRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserSettingsResponse"
+  /api/v1/residences/{id}:
+    get:
+      tags:
+        - Residences
+      summary: Get a residence with its units
+      operationId: getOne
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+    delete:
+      tags:
+        - Residences
+      summary: Delete a residence and all its units
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+    patch:
+      tags:
+        - Residences
+      summary: Update the residence's shared attributes (cascades to units)
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateResidenceRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
+  /api/v1/prestataires/me:
+    get:
+      tags:
+        - Prestataire Profile
+      summary: Get the authenticated prestataire's profile
+      operationId: myProfile_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PrestataireProfileResponse"
+    patch:
+      tags:
+        - Prestataire Profile
+      summary: Partially update the authenticated prestataire's profile
+      operationId: updateMyProfile_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePrestataireProfileRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PrestataireProfileResponse"
+  /api/v1/annonces/{id}:
+    get:
+      tags:
+        - Annonces
+      summary: Get one of the authenticated prestataire's listings
+      operationId: getOne_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+    delete:
+      tags:
+        - Annonces
+      summary: Delete one of the authenticated prestataire's listings
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+    patch:
+      tags:
+        - Annonces
+      summary: Partially update one of the authenticated prestataire's listings
+      operationId: update_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAnnonceRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/search:
+    get:
+      tags:
+        - Search
+      summary: Search listings and residences (city/district required; other filters
+        cumulative)
+      operationId: search
+      parameters:
+        - name: cityId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: districtIds
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+        - name: propertyTypes
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - APARTMENT
+                - STUDIO
+                - VILLA
+                - ROOM
+                - OFFICE
+                - COMMERCIAL_SPACE
+        - name: rentMin
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: rentMax
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: roomsMin
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: surfaceMin
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: surfaceMax
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: furnished
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: availableNow
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseSearchResult"
+  /api/v1/search/residences/{id}:
+    get:
+      tags:
+        - Search
+      summary: Public detail of a residence with its live units
+      operationId: residenceDetail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceDetailResponse"
   /api/v1/me:
     get:
       tags:
@@ -267,6 +1030,87 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/MeResponse"
+  /api/v1/locations/regions:
+    get:
+      tags:
+        - Locations
+      summary: List regions (optionally filtered by country)
+      operationId: regions
+      parameters:
+        - name: countryId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LocationOption"
+  /api/v1/locations/countries:
+    get:
+      tags:
+        - Locations
+      summary: List countries
+      operationId: countries
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CountryResponse"
+  /api/v1/locations/cities:
+    get:
+      tags:
+        - Locations
+      summary: List cities (optionally filtered by region)
+      operationId: cities
+      parameters:
+        - name: regionId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LocationOption"
+  /api/v1/locations/cities/{cityId}/districts:
+    get:
+      tags:
+        - Locations
+      summary: List a city's districts (quartiers)
+      operationId: districts
+      parameters:
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LocationOption"
   /api/v1/kyc/me:
     get:
       tags:
@@ -280,11 +1124,11 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
-  /api/v1/admin/kyc:
+  /api/v1/admin/type-change-requests:
     get:
       tags:
-        - Admin — KYC
-      summary: List pending KYC submissions (with pre-signed document URLs)
+        - Admin — Type Change
+      summary: List pending type-change requests
       operationId: listPending
       parameters:
         - name: pageable
@@ -298,9 +1142,283 @@ paths:
           content:
             '*/*':
               schema:
+                $ref: "#/components/schemas/PageResponseTypeChangeReviewItem"
+  /api/v1/admin/kyc:
+    get:
+      tags:
+        - Admin — KYC
+      summary: List pending KYC submissions (with pre-signed document URLs)
+      operationId: listPending_1
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
                 $ref: "#/components/schemas/PageResponseKycReviewItem"
+  /api/v1/notifications/devices/{token}:
+    delete:
+      tags:
+        - Notification Devices
+      summary: Unregister a device push token
+      operationId: unregister
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+  /api/v1/account:
+    delete:
+      tags:
+        - Account
+      summary: "Delete the authenticated account (RGPD): anonymises personal data"
+      operationId: deleteMyAccount
+      responses:
+        "204":
+          description: No Content
 components:
   schemas:
+    CreateResidenceRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 150
+          minLength: 0
+        districtId:
+          type: string
+          format: uuid
+        exactAddress:
+          type: string
+          maxLength: 255
+          minLength: 0
+        latitude:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        longitude:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+        availableFrom:
+          type: string
+          format: date
+        description:
+          type: string
+          maxLength: 1500
+          minLength: 0
+        photoKeys:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 15
+          minItems: 0
+        units:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnitGroup"
+          minItems: 1
+      required:
+        - availableFrom
+        - districtId
+        - exactAddress
+        - latitude
+        - longitude
+        - name
+        - units
+    UnitGroup:
+      type: object
+      properties:
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        count:
+          type: integer
+          format: int32
+          maximum: 200
+        namePrefix:
+          type: string
+          maxLength: 80
+          minLength: 0
+        monthlyRent:
+          type: integer
+          format: int32
+        chargesIncluded:
+          type: boolean
+        chargesAmount:
+          type: integer
+          format: int32
+        surfaceArea:
+          type: integer
+          format: int32
+        roomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        description:
+          type: string
+          maxLength: 1500
+          minLength: 0
+      required:
+        - count
+        - monthlyRent
+        - namePrefix
+        - propertyType
+    ResidenceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        cityId:
+          type: string
+          format: uuid
+        city:
+          type: string
+        districtId:
+          type: string
+          format: uuid
+        district:
+          type: string
+        exactAddress:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        description:
+          type: string
+        photoKeys:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PUBLISHED
+            - RESERVED
+            - RENTED
+            - ARCHIVED
+        unitCount:
+          type: integer
+          format: int32
+        publishedUnitCount:
+          type: integer
+          format: int32
+        draftUnitCount:
+          type: integer
+          format: int32
+        reserveUnitCount:
+          type: integer
+          format: int32
+        units:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnitSummary"
+        createdAt:
+          type: string
+          format: date-time
+    UnitSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PUBLISHED
+            - RESERVED
+            - RENTED
+            - ARCHIVED
+        monthlyRent:
+          type: integer
+          format: int32
+    RequestTypeChangeRequest:
+      type: object
+      properties:
+        newType:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 0
+      required:
+        - newType
+    TypeChangeResult:
+      type: object
+      properties:
+        outcome:
+          type: string
+        requestedType:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        requestId:
+          type: string
+          format: uuid
+    RegisterDeviceRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          maxLength: 512
+          minLength: 0
+        platform:
+          type: string
+          enum:
+            - ANDROID
+            - IOS
+            - WEB
+      required:
+        - platform
+        - token
     CreateUploadRequest:
       type: object
       properties:
@@ -314,8 +1432,12 @@ components:
         contentType:
           type: string
           minLength: 1
+        contentLength:
+          type: integer
+          format: int64
       required:
         - category
+        - contentLength
         - contentType
     PresignedUpload:
       type: object
@@ -421,6 +1543,32 @@ components:
         - password
         - phoneNumber
         - role
+    ResetPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 1
+        code:
+          type: string
+          minLength: 1
+          pattern: "^\\d{6}$"
+        newPassword:
+          type: string
+          maxLength: 72
+          minLength: 8
+      required:
+        - code
+        - email
+        - newPassword
+    ForgotPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 1
+      required:
+        - email
     VerifyOtpRequest:
       type: object
       properties:
@@ -477,6 +1625,190 @@ components:
       required:
         - code
         - email
+    CreateAnnonceRequest:
+      type: object
+      properties:
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        title:
+          type: string
+          maxLength: 100
+          minLength: 0
+        districtId:
+          type: string
+          format: uuid
+        exactAddress:
+          type: string
+          maxLength: 255
+          minLength: 0
+        latitude:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        longitude:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+        monthlyRent:
+          type: integer
+          format: int32
+        chargesIncluded:
+          type: boolean
+        chargesAmount:
+          type: integer
+          format: int32
+        surfaceArea:
+          type: integer
+          format: int32
+        roomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        availableFrom:
+          type: string
+          format: date
+        description:
+          type: string
+          maxLength: 1500
+          minLength: 0
+        photoKeys:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 15
+          minItems: 0
+      required:
+        - availableFrom
+        - districtId
+        - exactAddress
+        - latitude
+        - longitude
+        - monthlyRent
+        - propertyType
+        - title
+    AnnonceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        title:
+          type: string
+        cityId:
+          type: string
+          format: uuid
+        city:
+          type: string
+        districtId:
+          type: string
+          format: uuid
+        district:
+          type: string
+        exactAddress:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        monthlyRent:
+          type: integer
+          format: int32
+        chargesIncluded:
+          type: boolean
+        chargesAmount:
+          type: integer
+          format: int32
+        surfaceArea:
+          type: integer
+          format: int32
+        roomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        availableFrom:
+          type: string
+          format: date
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PUBLISHED
+            - RESERVED
+            - RENTED
+            - ARCHIVED
+        tierRank:
+          type: integer
+          format: int32
+        photoKeys:
+          type: array
+          items:
+            type: string
+        publishedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    RejectTypeChangeRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 0
+      required:
+        - reason
+    TypeChangeReviewResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - PENDING
+            - APPROVED
+            - REJECTED
+        requestedType:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        adminReason:
+          type: string
     RejectKycRequest:
       type: object
       properties:
@@ -486,6 +1818,516 @@ components:
           minLength: 0
       required:
         - reason
+    ConfirmPhoneChangeRequest:
+      type: object
+      properties:
+        newPhoneNumber:
+          type: string
+          minLength: 1
+          pattern: "^\\+[1-9]\\d{7,14}$"
+        oldCode:
+          type: string
+          minLength: 1
+          pattern: "^\\d{6}$"
+        newCode:
+          type: string
+          minLength: 1
+          pattern: "^\\d{6}$"
+      required:
+        - newCode
+        - newPhoneNumber
+        - oldCode
+    PhoneChangeResponse:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+    RequestPhoneChangeRequest:
+      type: object
+      properties:
+        newPhoneNumber:
+          type: string
+          minLength: 1
+          pattern: "^\\+[1-9]\\d{7,14}$"
+      required:
+        - newPhoneNumber
+    ChangePasswordRequest:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+          minLength: 1
+        newPassword:
+          type: string
+          maxLength: 72
+          minLength: 8
+      required:
+        - currentPassword
+        - newPassword
+    UpdateUserProfileRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        searchCityId:
+          type: string
+          format: uuid
+        photoObjectKey:
+          type: string
+          maxLength: 512
+          minLength: 0
+        cniNumber:
+          type: string
+          maxLength: 50
+          minLength: 0
+    UserProfileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        searchCityId:
+          type: string
+          format: uuid
+        searchCity:
+          type: string
+        photoObjectKey:
+          type: string
+        cniNumber:
+          type: string
+        profileComplete:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    UpdateUserSettingsRequest:
+      type: object
+      properties:
+        language:
+          type: string
+          enum:
+            - FR
+            - EN
+        searchable:
+          type: boolean
+        disabledNotifications:
+          type: array
+          items:
+            type: string
+            enum:
+              - N01
+              - N02
+              - N03
+              - N04
+              - N05
+              - N06
+              - N07
+              - N08
+              - N09
+              - N10
+              - N11
+              - N12
+              - N13
+          uniqueItems: true
+    NotificationSetting:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - N01
+            - N02
+            - N03
+            - N04
+            - N05
+            - N06
+            - N07
+            - N08
+            - N09
+            - N10
+            - N11
+            - N12
+            - N13
+        enabled:
+          type: boolean
+        mandatory:
+          type: boolean
+    UserSettingsResponse:
+      type: object
+      properties:
+        language:
+          type: string
+          enum:
+            - FR
+            - EN
+        searchable:
+          type: boolean
+        notifications:
+          type: array
+          items:
+            $ref: "#/components/schemas/NotificationSetting"
+    UpdateResidenceRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 150
+          minLength: 0
+        districtId:
+          type: string
+          format: uuid
+        exactAddress:
+          type: string
+          maxLength: 255
+          minLength: 0
+        latitude:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        longitude:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+        description:
+          type: string
+          maxLength: 1500
+          minLength: 0
+        photoKeys:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 15
+          minItems: 0
+    UpdatePrestataireProfileRequest:
+      type: object
+      properties:
+        displayName:
+          type: string
+          maxLength: 150
+          minLength: 0
+        logoObjectKey:
+          type: string
+          maxLength: 512
+          minLength: 0
+        type:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        mainCityId:
+          type: string
+          format: uuid
+    PrestataireProfileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        logoObjectKey:
+          type: string
+        type:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        mainCityId:
+          type: string
+          format: uuid
+        mainCity:
+          type: string
+        typeChangedAt:
+          type: string
+          format: date-time
+        profileComplete:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    UpdateAnnonceRequest:
+      type: object
+      properties:
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        title:
+          type: string
+          maxLength: 100
+          minLength: 0
+        districtId:
+          type: string
+          format: uuid
+        exactAddress:
+          type: string
+          maxLength: 255
+          minLength: 0
+        latitude:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        longitude:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+        monthlyRent:
+          type: integer
+          format: int32
+        chargesIncluded:
+          type: boolean
+        chargesAmount:
+          type: integer
+          format: int32
+        surfaceArea:
+          type: integer
+          format: int32
+        roomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        availableFrom:
+          type: string
+          format: date
+        description:
+          type: string
+          maxLength: 1500
+          minLength: 0
+        photoKeys:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 15
+          minItems: 0
+    PageResponseSearchResult:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchResult"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    ResidenceSearchCard:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        primaryPhotoKey:
+          type: string
+        tierRank:
+          type: integer
+          format: int32
+        availableUnitCount:
+          type: integer
+          format: int32
+        reservedUnitCount:
+          type: integer
+          format: int32
+        breakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/TypeCount"
+        fromMonthlyRent:
+          type: integer
+          format: int32
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    SearchResult:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - LISTING
+            - RESIDENCE
+        listing:
+          $ref: "#/components/schemas/SearchResultItem"
+        residence:
+          $ref: "#/components/schemas/ResidenceSearchCard"
+    SearchResultItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        city:
+          type: string
+        district:
+          type: string
+        monthlyRent:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        roomCount:
+          type: integer
+          format: int32
+        surfaceArea:
+          type: integer
+          format: int32
+        primaryPhotoKey:
+          type: string
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PUBLISHED
+            - RESERVED
+            - RENTED
+            - ARCHIVED
+        tierRank:
+          type: integer
+          format: int32
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        availableFrom:
+          type: string
+          format: date
+    TypeCount:
+      type: object
+      properties:
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        count:
+          type: integer
+          format: int32
+    ResidenceDetailResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        description:
+          type: string
+        photoKeys:
+          type: array
+          items:
+            type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        units:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchResultItem"
+    Pageable:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          minimum: 0
+        size:
+          type: integer
+          format: int32
+          minimum: 1
+        sort:
+          type: array
+          items:
+            type: string
+    PageResponseResidenceResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResidenceResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
     MeResponse:
       type: object
       properties:
@@ -521,21 +2363,92 @@ components:
         createdAt:
           type: string
           format: date-time
-    Pageable:
+    LocationOption:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    CountryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        name:
+          type: string
+    PageResponseAnnonceResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnnonceResponse"
         page:
           type: integer
           format: int32
-          minimum: 0
         size:
           type: integer
           format: int32
-          minimum: 1
-        sort:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    PageResponseTypeChangeReviewItem:
+      type: object
+      properties:
+        content:
           type: array
           items:
-            type: string
+            $ref: "#/components/schemas/TypeChangeReviewItem"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    TypeChangeReviewItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        accountId:
+          type: string
+          format: uuid
+        currentType:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        requestedType:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        reason:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
     KycReviewItem:
       type: object
       properties:
@@ -582,4 +2495,3 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-

@@ -18,10 +18,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       : _repository = repository,
         super(const LoginInitial()) {
     on<LoginOtpRequested>(_onOtpRequested);
+    on<LoginOtpResendRequested>(_onOtpResendRequested);
     on<LoginCodeSubmitted>(_onCodeSubmitted);
   }
 
   final LoginRepository _repository;
+
+  Future<void> _onOtpResendRequested(
+    LoginOtpResendRequested event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(const LoginInProgress());
+    try {
+      await _repository.resendOtp(event.phoneNumber);
+      emit(const LoginOtpResent());
+    } catch (_) {
+      emit(const LoginFailure(LoginError.otpRequestFailed));
+    }
+  }
 
   Future<void> _onOtpRequested(LoginOtpRequested event, Emitter<LoginState> emit) async {
     emit(const LoginInProgress());

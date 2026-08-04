@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_ui/src/ui/feedback/loader.dart';
 
 class StackedLoaderView extends StatefulWidget {
   const StackedLoaderView({
@@ -126,7 +125,7 @@ class _LoaderWidget extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * .8),
         decoration: BoxDecoration(
-          color: context.mboaColors.primary,
+          color: context.mboaColors.surface,
           borderRadius: BorderRadius.circular(Dimens.radius),
         ),
         child: Padding(

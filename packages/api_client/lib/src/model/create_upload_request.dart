@@ -14,6 +14,7 @@ part 'create_upload_request.g.dart';
 /// Properties:
 /// * [category] 
 /// * [contentType] 
+/// * [contentLength] 
 @BuiltValue()
 abstract class CreateUploadRequest implements Built<CreateUploadRequest, CreateUploadRequestBuilder> {
   @BuiltValueField(wireName: r'category')
@@ -22,6 +23,9 @@ abstract class CreateUploadRequest implements Built<CreateUploadRequest, CreateU
 
   @BuiltValueField(wireName: r'contentType')
   String get contentType;
+
+  @BuiltValueField(wireName: r'contentLength')
+  int get contentLength;
 
   CreateUploadRequest._();
 
@@ -55,6 +59,11 @@ class _$CreateUploadRequestSerializer implements PrimitiveSerializer<CreateUploa
     yield serializers.serialize(
       object.contentType,
       specifiedType: const FullType(String),
+    );
+    yield r'contentLength';
+    yield serializers.serialize(
+      object.contentLength,
+      specifiedType: const FullType(int),
     );
   }
 
@@ -92,6 +101,13 @@ class _$CreateUploadRequestSerializer implements PrimitiveSerializer<CreateUploa
             specifiedType: const FullType(String),
           ) as String;
           result.contentType = valueDes;
+          break;
+        case r'contentLength':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.contentLength = valueDes;
           break;
         default:
           unhandled.add(key);

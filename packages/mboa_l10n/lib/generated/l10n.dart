@@ -79,6 +79,71 @@ class I18n {
     );
   }
 
+  /// `Oups`
+  String get commonErrorTitle {
+    return Intl.message('Oups', name: 'commonErrorTitle', desc: '', args: []);
+  }
+
+  /// `Ou`
+  String get commonOr {
+    return Intl.message('Ou', name: 'commonOr', desc: '', args: []);
+  }
+
+  /// `Prendre une photo`
+  String get mediaTakePhoto {
+    return Intl.message(
+      'Prendre une photo',
+      name: 'mediaTakePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Importer`
+  String get mediaImport {
+    return Intl.message('Importer', name: 'mediaImport', desc: '', args: []);
+  }
+
+  /// `Photo mise à jour`
+  String get profilePhotoUpdated {
+    return Intl.message(
+      'Photo mise à jour',
+      name: 'profilePhotoUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choisir une ville`
+  String get cityPickerTitle {
+    return Intl.message(
+      'Choisir une ville',
+      name: 'cityPickerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rechercher une ville`
+  String get cityPickerSearchHint {
+    return Intl.message(
+      'Rechercher une ville',
+      name: 'cityPickerSearchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucune ville trouvée`
+  String get cityPickerEmpty {
+    return Intl.message(
+      'Aucune ville trouvée',
+      name: 'cityPickerEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Veuillez patienter...`
   String get loadingDialog_content {
     return Intl.message(
@@ -109,9 +174,19 @@ class I18n {
     );
   }
 
-  /// `Connexion`
+  /// `Se connecter`
   String get loginTitle {
-    return Intl.message('Connexion', name: 'loginTitle', desc: '', args: []);
+    return Intl.message('Se connecter', name: 'loginTitle', desc: '', args: []);
+  }
+
+  /// `Créer un compte`
+  String get registerTitle {
+    return Intl.message(
+      'Créer un compte',
+      name: 'registerTitle',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Entrez votre numéro de téléphone`
@@ -139,6 +214,16 @@ class I18n {
     return Intl.message(
       '+237 6XX XX XX XX',
       name: 'loginPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `6 XX XX XX XX`
+  String get loginPhoneHintLocal {
+    return Intl.message(
+      '6 XX XX XX XX',
+      name: 'loginPhoneHintLocal',
       desc: '',
       args: [],
     );
@@ -172,6 +257,816 @@ class I18n {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Continuer avec Google`
+  String get loginContinueWithGoogle {
+    return Intl.message(
+      'Continuer avec Google',
+      name: 'loginContinueWithGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continuer avec Apple`
+  String get loginContinueWithApple {
+    return Intl.message(
+      'Continuer avec Apple',
+      name: 'loginContinueWithApple',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vous n’avez pas de compte ?`
+  String get loginNoAccountQuestion {
+    return Intl.message(
+      'Vous n’avez pas de compte ?',
+      name: 'loginNoAccountQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inscrivez-vous`
+  String get loginSignUpAction {
+    return Intl.message(
+      'Inscrivez-vous',
+      name: 'loginSignUpAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vous avez déjà un compte ?`
+  String get registerHaveAccountQuestion {
+    return Intl.message(
+      'Vous avez déjà un compte ?',
+      name: 'registerHaveAccountQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connectez-vous`
+  String get registerSignInAction {
+    return Intl.message(
+      'Connectez-vous',
+      name: 'registerSignInAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail`
+  String get authEmailLabel {
+    return Intl.message('E-mail', name: 'authEmailLabel', desc: '', args: []);
+  }
+
+  /// `nom@exemple.com`
+  String get authEmailHint {
+    return Intl.message(
+      'nom@exemple.com',
+      name: 'authEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail invalide`
+  String get authEmailInvalid {
+    return Intl.message(
+      'E-mail invalide',
+      name: 'authEmailInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mot de passe`
+  String get authPasswordLabel {
+    return Intl.message(
+      'Mot de passe',
+      name: 'authPasswordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Votre mot de passe`
+  String get authPasswordHint {
+    return Intl.message(
+      'Votre mot de passe',
+      name: 'authPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mot de passe requis`
+  String get authPasswordRequired {
+    return Intl.message(
+      'Mot de passe requis',
+      name: 'authPasswordRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Se connecter`
+  String get authLoginButton {
+    return Intl.message(
+      'Se connecter',
+      name: 'authLoginButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail ou mot de passe incorrect.`
+  String get authLoginInvalidCredentials {
+    return Intl.message(
+      'E-mail ou mot de passe incorrect.',
+      name: 'authLoginInvalidCredentials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Un nouveau code a été envoyé.`
+  String get authOtpResent {
+    return Intl.message(
+      'Un nouveau code a été envoyé.',
+      name: 'authOtpResent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Se déconnecter`
+  String get authLogout {
+    return Intl.message(
+      'Se déconnecter',
+      name: 'authLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Je suis`
+  String get registerRoleLabel {
+    return Intl.message(
+      'Je suis',
+      name: 'registerRoleLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prestataire`
+  String get registerRolePrestataire {
+    return Intl.message(
+      'Prestataire',
+      name: 'registerRolePrestataire',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agent`
+  String get registerRoleAgent {
+    return Intl.message('Agent', name: 'registerRoleAgent', desc: '', args: []);
+  }
+
+  /// `S’inscrire`
+  String get registerButton {
+    return Intl.message(
+      'S’inscrire',
+      name: 'registerButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inscription impossible. Vérifiez vos informations.`
+  String get registerFailed {
+    return Intl.message(
+      'Inscription impossible. Vérifiez vos informations.',
+      name: 'registerFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bientôt disponible`
+  String get commonComingSoon {
+    return Intl.message(
+      'Bientôt disponible',
+      name: 'commonComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profil`
+  String get settingsTitle {
+    return Intl.message('Profil', name: 'settingsTitle', desc: '', args: []);
+  }
+
+  /// `Profil`
+  String get settingsProfileCard {
+    return Intl.message(
+      'Profil',
+      name: 'settingsProfileCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certifications`
+  String get settingsCertificationsTitle {
+    return Intl.message(
+      'Certifications',
+      name: 'settingsCertificationsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pièces d’identifications et tout autres vérifications requises`
+  String get settingsCertificationsBody {
+    return Intl.message(
+      'Pièces d’identifications et tout autres vérifications requises',
+      name: 'settingsCertificationsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changer de mot passe`
+  String get settingsChangePassword {
+    return Intl.message(
+      'Changer de mot passe',
+      name: 'settingsChangePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Déconnexion`
+  String get settingsLogout {
+    return Intl.message(
+      'Déconnexion',
+      name: 'settingsLogout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paramètres`
+  String get settingsMenuTitle {
+    return Intl.message(
+      'Paramètres',
+      name: 'settingsMenuTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Langue`
+  String get settingsLanguage {
+    return Intl.message('Langue', name: 'settingsLanguage', desc: '', args: []);
+  }
+
+  /// `Français`
+  String get languageFrench {
+    return Intl.message('Français', name: 'languageFrench', desc: '', args: []);
+  }
+
+  /// `English`
+  String get languageEnglish {
+    return Intl.message('English', name: 'languageEnglish', desc: '', args: []);
+  }
+
+  /// `Changer de numéro`
+  String get settingsChangePhone {
+    return Intl.message(
+      'Changer de numéro',
+      name: 'settingsChangePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code reçu sur l’ancien numéro`
+  String get changePhoneOldCodeLabel {
+    return Intl.message(
+      'Code reçu sur l’ancien numéro',
+      name: 'changePhoneOldCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code reçu sur {phone}`
+  String changePhoneNewCodeLabel(String phone) {
+    return Intl.message(
+      'Code reçu sur $phone',
+      name: 'changePhoneNewCodeLabel',
+      desc: '',
+      args: [phone],
+    );
+  }
+
+  /// `Confirmer le changement`
+  String get changePhoneConfirm {
+    return Intl.message(
+      'Confirmer le changement',
+      name: 'changePhoneConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Numéro mis à jour`
+  String get changePhoneSuccess {
+    return Intl.message(
+      'Numéro mis à jour',
+      name: 'changePhoneSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mot de passe actuel`
+  String get changePasswordCurrent {
+    return Intl.message(
+      'Mot de passe actuel',
+      name: 'changePasswordCurrent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nouveau mot de passe`
+  String get changePasswordNew {
+    return Intl.message(
+      'Nouveau mot de passe',
+      name: 'changePasswordNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmer le nouveau mot de passe`
+  String get changePasswordConfirm {
+    return Intl.message(
+      'Confirmer le nouveau mot de passe',
+      name: 'changePasswordConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Les mots de passe ne correspondent pas`
+  String get changePasswordMismatch {
+    return Intl.message(
+      'Les mots de passe ne correspondent pas',
+      name: 'changePasswordMismatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mettre à jour`
+  String get changePasswordButton {
+    return Intl.message(
+      'Mettre à jour',
+      name: 'changePasswordButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mot de passe mis à jour`
+  String get changePasswordSuccess {
+    return Intl.message(
+      'Mot de passe mis à jour',
+      name: 'changePasswordSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.`
+  String get changePasswordError {
+    return Intl.message(
+      'Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.',
+      name: 'changePasswordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supprimer mon compte`
+  String get deleteAccountLink {
+    return Intl.message(
+      'Supprimer mon compte',
+      name: 'deleteAccountLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supprimer le compte`
+  String get deleteAccountTitle {
+    return Intl.message(
+      'Supprimer le compte',
+      name: 'deleteAccountTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.`
+  String get deleteAccountWarning {
+    return Intl.message(
+      'Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.',
+      name: 'deleteAccountWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SUPPRIMER`
+  String get deleteAccountConfirmWord {
+    return Intl.message(
+      'SUPPRIMER',
+      name: 'deleteAccountConfirmWord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tapez « {word} » pour confirmer`
+  String deleteAccountConfirmLabel(String word) {
+    return Intl.message(
+      'Tapez « $word » pour confirmer',
+      name: 'deleteAccountConfirmLabel',
+      desc: '',
+      args: [word],
+    );
+  }
+
+  /// `Supprimer définitivement`
+  String get deleteAccountButton {
+    return Intl.message(
+      'Supprimer définitivement',
+      name: 'deleteAccountButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Editer le Profil`
+  String get editProfileTitle {
+    return Intl.message(
+      'Editer le Profil',
+      name: 'editProfileTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prénom`
+  String get profileFirstName {
+    return Intl.message('Prénom', name: 'profileFirstName', desc: '', args: []);
+  }
+
+  /// `Nom`
+  String get profileLastName {
+    return Intl.message('Nom', name: 'profileLastName', desc: '', args: []);
+  }
+
+  /// `Localisation`
+  String get profileLocation {
+    return Intl.message(
+      'Localisation',
+      name: 'profileLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nom affiché`
+  String get profileDisplayName {
+    return Intl.message(
+      'Nom affiché',
+      name: 'profileDisplayName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type`
+  String get profileType {
+    return Intl.message('Type', name: 'profileType', desc: '', args: []);
+  }
+
+  /// `Particulier`
+  String get profileTypeParticulier {
+    return Intl.message(
+      'Particulier',
+      name: 'profileTypeParticulier',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agence`
+  String get profileTypeAgence {
+    return Intl.message(
+      'Agence',
+      name: 'profileTypeAgence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Promoteur`
+  String get profileTypePromoteur {
+    return Intl.message(
+      'Promoteur',
+      name: 'profileTypePromoteur',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ville principale`
+  String get profileMainCity {
+    return Intl.message(
+      'Ville principale',
+      name: 'profileMainCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get profileSave {
+    return Intl.message('Enregistrer', name: 'profileSave', desc: '', args: []);
+  }
+
+  /// `Profil mis à jour`
+  String get profileSaved {
+    return Intl.message(
+      'Profil mis à jour',
+      name: 'profileSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Impossible de charger le profil.`
+  String get profileLoadError {
+    return Intl.message(
+      'Impossible de charger le profil.',
+      name: 'profileLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statut`
+  String get kycTabStatut {
+    return Intl.message('Statut', name: 'kycTabStatut', desc: '', args: []);
+  }
+
+  /// `Identification`
+  String get kycTabIdentification {
+    return Intl.message(
+      'Identification',
+      name: 'kycTabIdentification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selfie`
+  String get kycItemSelfie {
+    return Intl.message('Selfie', name: 'kycItemSelfie', desc: '', args: []);
+  }
+
+  /// `ID Document`
+  String get kycItemIdDocument {
+    return Intl.message(
+      'ID Document',
+      name: 'kycItemIdDocument',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NUI`
+  String get kycItemNui {
+    return Intl.message('NUI', name: 'kycItemNui', desc: '', args: []);
+  }
+
+  /// `Adresse`
+  String get kycItemAddress {
+    return Intl.message('Adresse', name: 'kycItemAddress', desc: '', args: []);
+  }
+
+  /// `Compte Standard`
+  String get kycAccountStandard {
+    return Intl.message(
+      'Compte Standard',
+      name: 'kycAccountStandard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compte Prestataire`
+  String get kycAccountPrestataire {
+    return Intl.message(
+      'Compte Prestataire',
+      name: 'kycAccountPrestataire',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compte Agent`
+  String get kycAccountAgent {
+    return Intl.message(
+      'Compte Agent',
+      name: 'kycAccountAgent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Informations requises`
+  String get kycStatusNotSubmitted {
+    return Intl.message(
+      'Informations requises',
+      name: 'kycStatusNotSubmitted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Informations en attente`
+  String get kycStatusPending {
+    return Intl.message(
+      'Informations en attente',
+      name: 'kycStatusPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vérifié`
+  String get kycStatusApproved {
+    return Intl.message(
+      'Vérifié',
+      name: 'kycStatusApproved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refusé`
+  String get kycStatusRejected {
+    return Intl.message(
+      'Refusé',
+      name: 'kycStatusRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Motif : {reason}`
+  String kycRejectionReason(String reason) {
+    return Intl.message(
+      'Motif : $reason',
+      name: 'kycRejectionReason',
+      desc: '',
+      args: [reason],
+    );
+  }
+
+  /// `Ajouté`
+  String get kycAdded {
+    return Intl.message('Ajouté', name: 'kycAdded', desc: '', args: []);
+  }
+
+  /// `Soumettre`
+  String get kycSubmit {
+    return Intl.message('Soumettre', name: 'kycSubmit', desc: '', args: []);
+  }
+
+  /// `Documents soumis`
+  String get kycSubmitted {
+    return Intl.message(
+      'Documents soumis',
+      name: 'kycSubmitted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Échec de l’envoi. Réessayez.`
+  String get kycUploadError {
+    return Intl.message(
+      'Échec de l’envoi. Réessayez.',
+      name: 'kycUploadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prendre une photo`
+  String get kycTakePhoto {
+    return Intl.message(
+      'Prendre une photo',
+      name: 'kycTakePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Importer`
+  String get kycImport {
+    return Intl.message('Importer', name: 'kycImport', desc: '', args: []);
+  }
+
+  /// `Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité`
+  String get kycIdDocumentPrompt {
+    return Intl.message(
+      'Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité',
+      name: 'kycIdDocumentPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Carte d’identité`
+  String get kycDocCni {
+    return Intl.message(
+      'Carte d’identité',
+      name: 'kycDocCni',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recépissé`
+  String get kycDocRecepisse {
+    return Intl.message(
+      'Recépissé',
+      name: 'kycDocRecepisse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passeport`
+  String get kycDocPassport {
+    return Intl.message(
+      'Passeport',
+      name: 'kycDocPassport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permis de residence`
+  String get kycDocResidence {
+    return Intl.message(
+      'Permis de residence',
+      name: 'kycDocResidence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recto`
+  String get kycRecto {
+    return Intl.message('Recto', name: 'kycRecto', desc: '', args: []);
+  }
+
+  /// `Verso`
+  String get kycVerso {
+    return Intl.message('Verso', name: 'kycVerso', desc: '', args: []);
+  }
+
+  /// `Terminé`
+  String get kycDone {
+    return Intl.message('Terminé', name: 'kycDone', desc: '', args: []);
   }
 
   /// `Vérification`
@@ -211,6 +1106,36 @@ class I18n {
       name: 'otpInvalidCode',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Vous n’avez pas reçu le code ?`
+  String get otpNoCodeQuestion {
+    return Intl.message(
+      'Vous n’avez pas reçu le code ?',
+      name: 'otpNoCodeQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Renvoyer le code`
+  String get otpResend {
+    return Intl.message(
+      'Renvoyer le code',
+      name: 'otpResend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Renvoyer dans {seconds}s`
+  String otpResendIn(int seconds) {
+    return Intl.message(
+      'Renvoyer dans ${seconds}s',
+      name: 'otpResendIn',
+      desc: '',
+      args: [seconds],
     );
   }
 

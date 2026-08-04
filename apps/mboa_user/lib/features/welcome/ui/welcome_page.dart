@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -17,7 +16,7 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) => WelcomeView(
-    toLogin: () => context.router.push(const LoginRoute()),
-    toRegistration: () => context.router.push(const LoginRoute()),
+    toLogin: () => context.router.push(LoginRoute()),
+    toRegistration: () => context.router.push(LoginRoute(mode: AuthMode.register)),
   );
 }

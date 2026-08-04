@@ -12,6 +12,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  mboa_l10n:
+    path: ../mboa_l10n
+
   flutter_svg: ^2.0.10+1
   lucide_icons_flutter: ^3.1.10
   flutter_animate: ^4.5.2
@@ -26,6 +29,7 @@ flutter:
   assets:
     - assets/images/logos/
     - assets/images/illustrations/
+    - assets/images/social/
   fonts:
     # Display & titles (Doc 05 §3.1). Weights: SemiBold 600, Bold 700, ExtraBold 800.
     - family: PlusJakartaSans

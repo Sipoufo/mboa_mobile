@@ -8,6 +8,7 @@ abstract final class Dimens {
   static const double spacingLg = 24;
   static const double spacingXl = 32;
   static const double spacingXxl = 48;
+  static const double spacing3Xl = 64;
 
   // Back-compat aliases (earlier widgets used these names).
   static const double xs = spacingXs;
@@ -21,6 +22,7 @@ abstract final class Dimens {
   static const double radius = 12;
   static const double radiusMd = 16;
   static const double radiusLg = 24;
+  static const double radiusXl = 28;
   static const double radiusFull = 999;
 
   // Icons

@@ -47,8 +47,8 @@ class _WelcomeViewState extends State<WelcomeView> {
                   Column(
                     spacing: Dimens.spacing,
                     children: [
-                      Button.outline(onPressed: widget.toLogin, title: I18n.of(context).welcome_inscriptionButton),
-                      Button.primary(onPressed: widget.toRegistration, title: I18n.of(context).welcome_loginButton),
+                      Button.primary(onPressed: widget.toLogin, title: I18n.of(context).welcome_loginButton),
+                      Button.outline(onPressed: widget.toRegistration, title: I18n.of(context).welcome_inscriptionButton),
                     ],
                   )
                 ],

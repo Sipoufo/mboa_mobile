@@ -26,14 +26,43 @@ class Environment {
     const String.fromEnvironment('ENV', defaultValue: 'dev'),
   );
 
+  /// Origin only — the generated `api_client` paths already include the
+  /// `/api/v1` version prefix, so appending it here would double it
+  /// (`/api/v1/api/v1/...` → 401).
   static String get apiBaseUrl {
     switch (current) {
       case MboaEnv.dev:
-        return 'http://localhost:8080/api/v1';
+        return 'http://localhost:8080';
       case MboaEnv.staging:
-        return 'https://staging.api.mboa.cm/api/v1';
+        return 'https://staging.api.mboa.cm';
       case MboaEnv.production:
-        return 'https://api.mboa.cm/api/v1';
+        return 'https://api.mboa.cm';
+    }
+  }
+
+  /// Public base URL for reading media stored in Cloudflare R2 (avatars, logos,
+  /// KYC previews). Object keys returned by the API are appended to this.
+  ///
+  /// Uploads use per-request presigned URLs (no client credentials needed);
+  /// this is only for *displaying* stored objects.
+  // TODO(r2): replace with the real R2 public bucket URL per environment.
+  static String get r2PublicBaseUrl {
+    switch (current) {
+      case MboaEnv.dev:
+        return const String.fromEnvironment(
+          'R2_PUBLIC_BASE_URL',
+          defaultValue: 'https://pub-f76049c2b3fc47e79f2c9a437a81c89f.r2.dev',
+        );
+      case MboaEnv.staging:
+        return const String.fromEnvironment(
+          'R2_PUBLIC_BASE_URL',
+          defaultValue: 'https://TODO-r2-public-staging.example.com',
+        );
+      case MboaEnv.production:
+        return const String.fromEnvironment(
+          'R2_PUBLIC_BASE_URL',
+          defaultValue: 'https://TODO-r2-public-production.example.com',
+        );
     }
   }
 

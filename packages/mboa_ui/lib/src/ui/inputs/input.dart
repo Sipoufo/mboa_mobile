@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+/// Visual treatment of an [Input]'s border.
+enum InputVariant {
+  /// Rounded outlined box — the design-system default.
+  outlined,
+
+  /// A single bottom rule — the auth-surface style (see the login screens).
+  underline,
+}
+
 class Input extends StatelessWidget {
   final FocusNode? focusNode;
   final TextEditingController? controller;
@@ -35,6 +44,7 @@ class Input extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final Color? borderColor;
   final Color? focusedBorderColor;
+  final InputVariant variant;
 
   const Input({
     super.key,
@@ -70,11 +80,66 @@ class Input extends StatelessWidget {
     this.padding,
     this.borderColor,
     this.focusedBorderColor,
+    this.variant = InputVariant.outlined,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Color effectiveBorderColor = borderColor ?? context.mboaColors.primaryDark;
+    final bool isUnderline = variant == InputVariant.underline;
+    final Color effectiveBorderColor =
+        borderColor ?? (isUnderline ? context.mboaColors.border : context.mboaColors.primaryDark);
+
+    final field = TextFormField(
+      onTap: onTap,
+      autofillHints: autofillHints,
+      inputFormatters: inputFormatters,
+      controller: controller,
+      obscureText: isPassword,
+      cursorColor: cursorColor ?? context.mboaColors.primaryDark,
+      readOnly: readOnly,
+      focusNode: focusNode,
+      maxLength: maxLength,
+      style: style ?? context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
+      minLines: minLines ?? 1,
+      maxLines: maxLines ?? 1,
+      keyboardType: keyboardType,
+      textInputAction: textInputAction,
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      onFieldSubmitted: onSubmitted,
+      textCapitalization: textCapitalization ?? TextCapitalization.sentences,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: hintStyle ??
+            context.mboaText.label.copyWith(
+              fontWeight: FontWeight.w400,
+              color: context.mboaColors.textTertiary,
+            ),
+        counter: showCounter ? null : const SizedBox(),
+        filled: filled,
+        errorMaxLines: 2,
+        fillColor: fillColor ?? context.colorScheme.surface,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        enabled: enabled,
+        isDense: isUnderline,
+        contentPadding: padding ??
+            (isUnderline
+                ? const EdgeInsets.symmetric(vertical: Dimens.spacingMd)
+                : const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: 18)),
+        errorBorder: _getInputBorder(color: context.mboaColors.error, isUnderline: isUnderline),
+        enabledBorder: _getInputBorder(color: effectiveBorderColor, isUnderline: isUnderline),
+        border: _getInputBorder(color: effectiveBorderColor, isUnderline: isUnderline),
+        focusedErrorBorder: _getInputBorder(color: context.mboaColors.error, isUnderline: isUnderline),
+        focusedBorder: _getInputBorder(
+          color: focusedBorderColor ?? context.colorScheme.primary,
+          isUnderline: isUnderline,
+        ),
+      ),
+      onChanged: onChanged,
+      validator: validator,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,14 +149,17 @@ class Input extends StatelessWidget {
             TextSpan(
               text: labelText!,
               style: context.mboaText.label.copyWith(
-                fontWeight: FontWeight.w700,
-                color: context.mboaColors.primaryDark,
+                fontWeight: FontWeight.w400,
+                color: context.mboaColors.textSecondary,
               ),
               children: [
                 if (labelSuffix != null) ...[
                   TextSpan(
                     text: ' ($labelSuffix)',
-                    style: context.mboaText.label.copyWith(fontWeight: FontWeight.w400),
+                    style: context.mboaText.label.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: context.mboaColors.textTertiary,
+                    ),
                   ),
                 ],
               ],
@@ -99,60 +167,24 @@ class Input extends StatelessWidget {
           ),
           const SizedBox(height: Dimens.spacingXs),
         ],
-        ClipRRect(
-          borderRadius: BorderRadius.circular(Dimens.radius),
-          child: TextFormField(
-            onTap: onTap,
-            autofillHints: autofillHints,
-            inputFormatters: inputFormatters,
-            controller: controller,
-            obscureText: isPassword,
-            cursorColor: cursorColor ?? context.mboaColors.primaryDark,
-            readOnly: readOnly,
-            focusNode: focusNode,
-            maxLength: maxLength,
-            style: style ?? context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
-            minLines: minLines ?? 1,
-            maxLines: maxLines ?? 1,
-            keyboardType: keyboardType,
-            textInputAction: textInputAction,
-            onTapOutside: (event) {
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
-            onFieldSubmitted: onSubmitted,
-            textCapitalization: textCapitalization ?? TextCapitalization.sentences,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle:
-                  hintStyle ??
-                  context.mboaText.label.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: context.mboaColors.textTertiary,
-                  ),
-              counter: showCounter ? null : const SizedBox(),
-              filled: filled,
-              errorMaxLines: 2,
-              fillColor: fillColor ?? context.colorScheme.surface,
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              enabled: enabled,
-              contentPadding: padding ?? const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: 18),
-              errorBorder: _getInputBorder(color: context.mboaColors.error),
-              enabledBorder: _getInputBorder(color: effectiveBorderColor),
-              border: _getInputBorder(color: effectiveBorderColor),
-              focusedErrorBorder: _getInputBorder(color: context.mboaColors.error),
-              focusedBorder: _getInputBorder(color: focusedBorderColor ?? context.colorScheme.primary),
-            ),
-            onChanged: onChanged,
-            validator: validator,
+        if (isUnderline)
+          field
+        else
+          ClipRRect(
+            borderRadius: BorderRadius.circular(Dimens.radius),
+            child: field,
           ),
-        ),
       ],
     );
   }
 
-  InputBorder _getInputBorder({required Color color}) => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(Dimens.radius),
-    borderSide: BorderSide(color: color, width: 1),
-  );
+  InputBorder _getInputBorder({required Color color, required bool isUnderline}) {
+    final side = BorderSide(color: color, width: 1);
+    return isUnderline
+        ? UnderlineInputBorder(borderSide: side)
+        : OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Dimens.radius),
+            borderSide: side,
+          );
+  }
 }

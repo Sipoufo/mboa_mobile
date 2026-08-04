@@ -5,18 +5,145 @@
 
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
+  "commonErrorTitle": "Oops",
+  "commonOr": "Or",
+  "mediaTakePhoto": "Take a photo",
+  "mediaImport": "Import",
+  "profilePhotoUpdated": "Photo updated",
+  "cityPickerTitle": "Choose a city",
+  "cityPickerSearchHint": "Search a city",
+  "cityPickerEmpty": "No city found",
   "loadingDialog_content": "Please wait...",
 
   "welcome_inscriptionButton": "Registration",
   "welcome_loginButton": "Login",
 
   "loginTitle": "Sign in",
+  "registerTitle": "Create account",
   "loginEnterPhone": "Enter your phone number",
   "loginPhoneLabel": "Phone",
   "loginPhoneHint": "+237 6XX XX XX XX",
+  "loginPhoneHintLocal": "6 XX XX XX XX",
   "loginPhoneInvalid": "Invalid number",
   "loginRequestCode": "Get the code",
   "loginOtpSendError": "Couldn’t send the code. Please try again.",
+  "loginContinueWithGoogle": "Continue with Google",
+  "loginContinueWithApple": "Continue with Apple",
+  "loginNoAccountQuestion": "Don’t have an account?",
+  "loginSignUpAction": "Sign up",
+  "registerHaveAccountQuestion": "Already have an account?",
+  "registerSignInAction": "Sign in",
+
+  "authEmailLabel": "Email",
+  "authEmailHint": "name@example.com",
+  "authEmailInvalid": "Invalid email",
+  "authPasswordLabel": "Password",
+  "authPasswordHint": "Your password",
+  "authPasswordRequired": "Password required",
+  "authLoginButton": "Sign in",
+  "authLoginInvalidCredentials": "Incorrect email or password.",
+  "authOtpResent": "A new code has been sent.",
+  "authLogout": "Log out",
+  "registerRoleLabel": "I am a",
+  "registerRolePrestataire": "Provider",
+  "registerRoleAgent": "Agent",
+  "registerButton": "Sign up",
+  "registerFailed": "Registration failed. Check your details.",
+
+  "commonComingSoon": "Coming soon",
+
+  "settingsTitle": "Profile",
+  "settingsProfileCard": "Profile",
+  "settingsCertificationsTitle": "Certifications",
+  "settingsCertificationsBody": "Identity documents and any other required verifications",
+  "settingsChangePassword": "Change password",
+  "settingsLogout": "Log out",
+  "settingsMenuTitle": "Settings",
+  "settingsLanguage": "Language",
+  "languageFrench": "Français",
+  "languageEnglish": "English",
+  "settingsChangePhone": "Change phone number",
+  "changePhoneOldCodeLabel": "Code sent to your old number",
+  "changePhoneNewCodeLabel": "Code sent to {phone}",
+  "@changePhoneNewCodeLabel": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "changePhoneConfirm": "Confirm change",
+  "changePhoneSuccess": "Number updated",
+  "changePasswordCurrent": "Current password",
+  "changePasswordNew": "New password",
+  "changePasswordConfirm": "Confirm new password",
+  "changePasswordMismatch": "Passwords don’t match",
+  "changePasswordButton": "Update",
+  "changePasswordSuccess": "Password updated",
+  "changePasswordError": "Couldn’t change the password. Check your current password.",
+  "deleteAccountLink": "Delete my account",
+  "deleteAccountTitle": "Delete account",
+  "deleteAccountWarning": "This is permanent. Your personal data will be deleted and you will lose access to your account.",
+  "deleteAccountConfirmWord": "DELETE",
+  "deleteAccountConfirmLabel": "Type “{word}” to confirm",
+  "@deleteAccountConfirmLabel": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountButton": "Delete permanently",
+
+  "editProfileTitle": "Edit Profile",
+  "profileFirstName": "First name",
+  "profileLastName": "Last name",
+  "profileLocation": "Location",
+  "profileDisplayName": "Display name",
+  "profileType": "Type",
+  "profileTypeParticulier": "Individual",
+  "profileTypeAgence": "Agency",
+  "profileTypePromoteur": "Promoter",
+  "profileMainCity": "Main city",
+  "profileSave": "Save",
+  "profileSaved": "Profile updated",
+  "profileLoadError": "Couldn’t load your profile.",
+
+  "kycTabStatut": "Status",
+  "kycTabIdentification": "Identification",
+  "kycItemSelfie": "Selfie",
+  "kycItemIdDocument": "ID Document",
+  "kycItemNui": "NUI",
+  "kycItemAddress": "Address",
+  "kycAccountStandard": "Standard account",
+  "kycAccountPrestataire": "Provider account",
+  "kycAccountAgent": "Agent account",
+  "kycStatusNotSubmitted": "Information required",
+  "kycStatusPending": "Awaiting review",
+  "kycStatusApproved": "Verified",
+  "kycStatusRejected": "Rejected",
+  "kycRejectionReason": "Reason: {reason}",
+  "@kycRejectionReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "kycAdded": "Added",
+  "kycSubmit": "Submit",
+  "kycSubmitted": "Documents submitted",
+  "kycUploadError": "Upload failed. Please try again.",
+  "kycTakePhoto": "Take a photo",
+  "kycImport": "Import",
+  "kycIdDocumentPrompt": "Choose the type of document you want to use to verify your identity",
+  "kycDocCni": "ID card",
+  "kycDocRecepisse": "Receipt",
+  "kycDocPassport": "Passport",
+  "kycDocResidence": "Residence permit",
+  "kycRecto": "Front",
+  "kycVerso": "Back",
+  "kycDone": "Done",
 
   "otpTitle": "Verification",
   "otpCodeSentTo": "Code sent to {phone}",
@@ -30,6 +157,16 @@
   "otpCodeLabel": "6-digit code",
   "otpValidate": "Confirm",
   "otpInvalidCode": "Invalid code. Please try again.",
+  "otpNoCodeQuestion": "Didn’t receive the code?",
+  "otpResend": "Resend code",
+  "otpResendIn": "Resend in {seconds}s",
+  "@otpResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
 
   "homeUserWelcome": "Welcome to Mboa 👋",
   "homeProWelcome": "Welcome to Mboa Pro 👋"

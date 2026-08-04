@@ -18,4 +18,26 @@ class MboaIllustrations {
       height: size,
     );
   }
+
+  static Widget illustration2({double? size, BoxFit? fit}) {
+    return Image.asset(
+      '$_illustrationPath/illustration_2.png',
+      package: _package,
+      width: size,
+      height: size,
+      fit: fit,
+    );
+  }
+
+  /// Mint wave graphic used as the watermark background of profile cards.
+  static Widget illustration3({double? width, double? height, BoxFit? fit, Alignment? alignment}) {
+    return Image.asset(
+      '$_illustrationPath/illustration_3.png',
+      package: _package,
+      width: width,
+      height: height,
+      fit: fit,
+      alignment: alignment ?? Alignment.center,
+    );
+  }
 }

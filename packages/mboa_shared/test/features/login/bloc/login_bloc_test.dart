@@ -34,6 +34,25 @@ void main() {
     );
   });
 
+  group('LoginOtpResendRequested', () {
+    blocTest<LoginBloc, LoginState>(
+      'emits [LoginInProgress, LoginOtpResent] when the resend succeeds',
+      setUp: () => when(() => repository.resendOtp(any())).thenAnswer((_) async {}),
+      build: () => LoginBloc(repository: repository),
+      act: (bloc) => bloc.add(const LoginOtpResendRequested('+237690000000')),
+      expect: () => const [LoginInProgress(), LoginOtpResent()],
+      verify: (_) => verify(() => repository.resendOtp('+237690000000')).called(1),
+    );
+
+    blocTest<LoginBloc, LoginState>(
+      'emits [LoginInProgress, LoginFailure] when the resend throws',
+      setUp: () => when(() => repository.resendOtp(any())).thenThrow(Exception('boom')),
+      build: () => LoginBloc(repository: repository),
+      act: (bloc) => bloc.add(const LoginOtpResendRequested('+237690000000')),
+      expect: () => const [LoginInProgress(), LoginFailure(LoginError.otpRequestFailed)],
+    );
+  });
+
   group('LoginCodeSubmitted', () {
     final session = buildOtpSession();
 

@@ -18,6 +18,16 @@ final class LoginOtpRequested extends LoginEvent {
   List<Object?> get props => [phoneNumber];
 }
 
+/// User asked to re-send the OTP for an already-pending [phoneNumber].
+final class LoginOtpResendRequested extends LoginEvent {
+  const LoginOtpResendRequested(this.phoneNumber);
+
+  final String phoneNumber;
+
+  @override
+  List<Object?> get props => [phoneNumber];
+}
+
 /// User submitted [code] for the pending [session].
 final class LoginCodeSubmitted extends LoginEvent {
   const LoginCodeSubmitted({required this.session, required this.code});

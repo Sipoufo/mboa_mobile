@@ -27,9 +27,11 @@ void main() {
   });
 
   group('Environment', () {
-    test('defaults to dev and exposes a base URL', () {
+    test('defaults to dev and exposes an origin-only base URL', () {
       expect(Environment.current, MboaEnv.dev);
-      expect(Environment.apiBaseUrl, contains('/api/v1'));
+      // Origin only — the generated client paths already carry `/api/v1`.
+      expect(Environment.apiBaseUrl, 'http://localhost:8080');
+      expect(Environment.apiBaseUrl, isNot(contains('/api/v1')));
     });
   });
 }

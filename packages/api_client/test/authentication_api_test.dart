@@ -7,6 +7,13 @@ void main() {
   final instance = ApiClient().getAuthenticationApi();
 
   group(AuthenticationApi, () {
+    // Start a password reset; sends an OTP if the email has a password account
+    //
+    //Future forgotPassword(ForgotPasswordRequest forgotPasswordRequest) async
+    test('test forgotPassword', () async {
+      // TODO
+    });
+
     // Credential login step 1: verify email + password, sends an OTP second factor
     //
     //Future login(LoginRequest loginRequest) async
@@ -39,6 +46,20 @@ void main() {
     //
     //Future requestOtp(SendOtpRequest sendOtpRequest) async
     test('test requestOtp', () async {
+      // TODO
+    });
+
+    // Resend the OTP to a phone that has a pending verification
+    //
+    //Future resendOtp(SendOtpRequest sendOtpRequest) async
+    test('test resendOtp', () async {
+      // TODO
+    });
+
+    // Complete a password reset with the OTP received on the phone
+    //
+    //Future resetPassword(ResetPasswordRequest resetPasswordRequest) async
+    test('test resetPassword', () async {
       // TODO
     });
 

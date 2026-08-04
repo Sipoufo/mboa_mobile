@@ -32,6 +32,12 @@ final class LoginOtpSent extends LoginState {
   List<Object?> get props => [session];
 }
 
+/// A resend of the OTP for the pending challenge just succeeded. Surfaced as a
+/// confirmation on the OTP screen; the phone screen ignores it.
+final class LoginOtpResent extends LoginState {
+  const LoginOtpResent();
+}
+
 /// Verification succeeded and tokens were persisted. The host app promotes the
 /// session on its own AuthBloc in response.
 final class LoginSuccess extends LoginState {

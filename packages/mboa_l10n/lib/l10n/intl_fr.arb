@@ -5,18 +5,145 @@
 
   "commonRetry": "Réessayer",
   "commonError": "Une erreur est survenue. Réessayez.",
+  "commonErrorTitle": "Oups",
+  "commonOr": "Ou",
+  "mediaTakePhoto": "Prendre une photo",
+  "mediaImport": "Importer",
+  "profilePhotoUpdated": "Photo mise à jour",
+  "cityPickerTitle": "Choisir une ville",
+  "cityPickerSearchHint": "Rechercher une ville",
+  "cityPickerEmpty": "Aucune ville trouvée",
   "loadingDialog_content": "Veuillez patienter...",
 
   "welcome_inscriptionButton": "Inscription",
   "welcome_loginButton": "Connexion",
 
-  "loginTitle": "Connexion",
+  "loginTitle": "Se connecter",
+  "registerTitle": "Créer un compte",
   "loginEnterPhone": "Entrez votre numéro de téléphone",
   "loginPhoneLabel": "Téléphone",
   "loginPhoneHint": "+237 6XX XX XX XX",
+  "loginPhoneHintLocal": "6 XX XX XX XX",
   "loginPhoneInvalid": "Numéro invalide",
   "loginRequestCode": "Recevoir le code",
   "loginOtpSendError": "Impossible d’envoyer le code. Réessayez.",
+  "loginContinueWithGoogle": "Continuer avec Google",
+  "loginContinueWithApple": "Continuer avec Apple",
+  "loginNoAccountQuestion": "Vous n’avez pas de compte ?",
+  "loginSignUpAction": "Inscrivez-vous",
+  "registerHaveAccountQuestion": "Vous avez déjà un compte ?",
+  "registerSignInAction": "Connectez-vous",
+
+  "authEmailLabel": "E-mail",
+  "authEmailHint": "nom@exemple.com",
+  "authEmailInvalid": "E-mail invalide",
+  "authPasswordLabel": "Mot de passe",
+  "authPasswordHint": "Votre mot de passe",
+  "authPasswordRequired": "Mot de passe requis",
+  "authLoginButton": "Se connecter",
+  "authLoginInvalidCredentials": "E-mail ou mot de passe incorrect.",
+  "authOtpResent": "Un nouveau code a été envoyé.",
+  "authLogout": "Se déconnecter",
+  "registerRoleLabel": "Je suis",
+  "registerRolePrestataire": "Prestataire",
+  "registerRoleAgent": "Agent",
+  "registerButton": "S’inscrire",
+  "registerFailed": "Inscription impossible. Vérifiez vos informations.",
+
+  "commonComingSoon": "Bientôt disponible",
+
+  "settingsTitle": "Profil",
+  "settingsProfileCard": "Profil",
+  "settingsCertificationsTitle": "Certifications",
+  "settingsCertificationsBody": "Pièces d’identifications et tout autres vérifications requises",
+  "settingsChangePassword": "Changer de mot passe",
+  "settingsLogout": "Déconnexion",
+  "settingsMenuTitle": "Paramètres",
+  "settingsLanguage": "Langue",
+  "languageFrench": "Français",
+  "languageEnglish": "English",
+  "settingsChangePhone": "Changer de numéro",
+  "changePhoneOldCodeLabel": "Code reçu sur l’ancien numéro",
+  "changePhoneNewCodeLabel": "Code reçu sur {phone}",
+  "@changePhoneNewCodeLabel": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "changePhoneConfirm": "Confirmer le changement",
+  "changePhoneSuccess": "Numéro mis à jour",
+  "changePasswordCurrent": "Mot de passe actuel",
+  "changePasswordNew": "Nouveau mot de passe",
+  "changePasswordConfirm": "Confirmer le nouveau mot de passe",
+  "changePasswordMismatch": "Les mots de passe ne correspondent pas",
+  "changePasswordButton": "Mettre à jour",
+  "changePasswordSuccess": "Mot de passe mis à jour",
+  "changePasswordError": "Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.",
+  "deleteAccountLink": "Supprimer mon compte",
+  "deleteAccountTitle": "Supprimer le compte",
+  "deleteAccountWarning": "Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.",
+  "deleteAccountConfirmWord": "SUPPRIMER",
+  "deleteAccountConfirmLabel": "Tapez « {word} » pour confirmer",
+  "@deleteAccountConfirmLabel": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountButton": "Supprimer définitivement",
+
+  "editProfileTitle": "Editer le Profil",
+  "profileFirstName": "Prénom",
+  "profileLastName": "Nom",
+  "profileLocation": "Localisation",
+  "profileDisplayName": "Nom affiché",
+  "profileType": "Type",
+  "profileTypeParticulier": "Particulier",
+  "profileTypeAgence": "Agence",
+  "profileTypePromoteur": "Promoteur",
+  "profileMainCity": "Ville principale",
+  "profileSave": "Enregistrer",
+  "profileSaved": "Profil mis à jour",
+  "profileLoadError": "Impossible de charger le profil.",
+
+  "kycTabStatut": "Statut",
+  "kycTabIdentification": "Identification",
+  "kycItemSelfie": "Selfie",
+  "kycItemIdDocument": "ID Document",
+  "kycItemNui": "NUI",
+  "kycItemAddress": "Adresse",
+  "kycAccountStandard": "Compte Standard",
+  "kycAccountPrestataire": "Compte Prestataire",
+  "kycAccountAgent": "Compte Agent",
+  "kycStatusNotSubmitted": "Informations requises",
+  "kycStatusPending": "Informations en attente",
+  "kycStatusApproved": "Vérifié",
+  "kycStatusRejected": "Refusé",
+  "kycRejectionReason": "Motif : {reason}",
+  "@kycRejectionReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "kycAdded": "Ajouté",
+  "kycSubmit": "Soumettre",
+  "kycSubmitted": "Documents soumis",
+  "kycUploadError": "Échec de l’envoi. Réessayez.",
+  "kycTakePhoto": "Prendre une photo",
+  "kycImport": "Importer",
+  "kycIdDocumentPrompt": "Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité",
+  "kycDocCni": "Carte d’identité",
+  "kycDocRecepisse": "Recépissé",
+  "kycDocPassport": "Passeport",
+  "kycDocResidence": "Permis de residence",
+  "kycRecto": "Recto",
+  "kycVerso": "Verso",
+  "kycDone": "Terminé",
 
   "otpTitle": "Vérification",
   "otpCodeSentTo": "Code envoyé au {phone}",
@@ -30,6 +157,16 @@
   "otpCodeLabel": "Code à 6 chiffres",
   "otpValidate": "Valider",
   "otpInvalidCode": "Code invalide. Réessayez.",
+  "otpNoCodeQuestion": "Vous n’avez pas reçu le code ?",
+  "otpResend": "Renvoyer le code",
+  "otpResendIn": "Renvoyer dans {seconds}s",
+  "@otpResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
 
   "homeUserWelcome": "Bienvenue sur Mboa 👋",
   "homeProWelcome": "Bienvenue sur Mboa Pro 👋"

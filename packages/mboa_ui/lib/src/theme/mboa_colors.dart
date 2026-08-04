@@ -7,6 +7,7 @@ abstract final class MboaPalette {
   // Vert Forêt — brand colour (§2.1)
   static const Color forest = Color(0xFF1A5C45);
   static const Color forestLight = Color(0xFF2D8A67);
+  static const Color forestLight2 = Color(0xFFD8F3DC);
   static const Color forestPale = Color(0xFFE8F4F0);
   static const Color forestDark = Color(0xFF0F3829);
 
@@ -38,6 +39,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   const MboaColorScheme({
     required this.primary,
     required this.primaryLight,
+    required this.primaryLight2,
     required this.primaryPale,
     required this.primaryDark,
     required this.action,
@@ -60,6 +62,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   // Brand (Vert Forêt) + action (Corail)
   final Color primary;
   final Color primaryLight;
+  final Color primaryLight2;
   final Color primaryPale;
   final Color primaryDark;
   final Color action;
@@ -88,6 +91,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   static const MboaColorScheme light = MboaColorScheme(
     primary: MboaPalette.forest,
     primaryLight: MboaPalette.forestLight,
+    primaryLight2: MboaPalette.forestLight2,
     primaryPale: MboaPalette.forestPale,
     primaryDark: MboaPalette.forestDark,
     action: MboaPalette.coral,
@@ -112,6 +116,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   static const MboaColorScheme dark = MboaColorScheme(
     primary: MboaPalette.forestLight,
     primaryLight: MboaPalette.forest,
+    primaryLight2: MboaPalette.forest,
     primaryPale: MboaPalette.forestDark,
     primaryDark: MboaPalette.forestPale,
     action: MboaPalette.coral,
@@ -135,6 +140,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   MboaColorScheme copyWith({
     Color? primary,
     Color? primaryLight,
+    Color? primaryLight2,
     Color? primaryPale,
     Color? primaryDark,
     Color? action,
@@ -156,6 +162,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     return MboaColorScheme(
       primary: primary ?? this.primary,
       primaryLight: primaryLight ?? this.primaryLight,
+      primaryLight2: primaryLight2 ?? this.primaryLight2,
       primaryPale: primaryPale ?? this.primaryPale,
       primaryDark: primaryDark ?? this.primaryDark,
       action: action ?? this.action,
@@ -183,6 +190,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     return MboaColorScheme(
       primary: mix(primary, other.primary),
       primaryLight: mix(primaryLight, other.primaryLight),
+      primaryLight2: mix(primaryLight2, other.primaryLight2),
       primaryPale: mix(primaryPale, other.primaryPale),
       primaryDark: mix(primaryDark, other.primaryDark),
       action: mix(action, other.action),

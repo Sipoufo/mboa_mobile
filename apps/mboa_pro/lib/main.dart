@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 import 'app/di/app_module.dart';
 import 'app/mboa_pro_app.dart';
@@ -18,6 +19,9 @@ Future<void> main() async {
     },
   );
   registerAppModule();
+
+  // Apply the persisted language before the first frame.
+  await getIt<LocaleController>().load();
 
   Bloc.observer = SentryBlocObserver();
 

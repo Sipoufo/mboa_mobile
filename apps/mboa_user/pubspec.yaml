@@ -31,6 +31,7 @@ dependencies:
   auto_route: ^9.2.2
   intl: ^0.20.2
   cached_network_image: ^3.4.1
+  lucide_icons_flutter: ^3.1.10
   sentry_flutter: ^8.9.0
 
 dev_dependencies:
@@ -42,6 +43,7 @@ dev_dependencies:
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
   flutter_native_splash: ^2.4.4
+  dio: ^5.7.0 # test-only: construct Dio Response fakes in repository tests
 
 flutter:
   uses-material-design: true

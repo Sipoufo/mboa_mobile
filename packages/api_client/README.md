@@ -48,14 +48,12 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:api_client/api_client.dart';
 
 
-final api = ApiClient().getAdminKYCApi();
-final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final api = ApiClient().getAccountApi();
 
 try {
-    final response = await api.approve(id);
-    print(response);
+    api.deleteMyAccount();
 } on DioException catch (e) {
-    print("Exception when calling AdminKYCApi->approve: $e\n");
+    print("Exception when calling AccountApi->deleteMyAccount: $e\n");
 }
 
 ```
@@ -66,42 +64,123 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*AdminKYCApi*](doc/AdminKYCApi.md) | [**approve**](doc/AdminKYCApi.md#approve) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
-[*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPending**](doc/AdminKYCApi.md#listpending) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
-[*AdminKYCApi*](doc/AdminKYCApi.md) | [**reject**](doc/AdminKYCApi.md#reject) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
+[*AccountApi*](doc/AccountApi.md) | [**deleteMyAccount**](doc/AccountApi.md#deletemyaccount) | **DELETE** /api/v1/account | Delete the authenticated account (RGPD): anonymises personal data
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**approve1**](doc/AdminKYCApi.md#approve1) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPending1**](doc/AdminKYCApi.md#listpending1) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**reject1**](doc/AdminKYCApi.md#reject1) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
+[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approve**](doc/AdminTypeChangeApi.md#approve) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
+[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPending**](doc/AdminTypeChangeApi.md#listpending) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
+[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**reject**](doc/AdminTypeChangeApi.md#reject) | **POST** /api/v1/admin/type-change-requests/{id}/reject | Reject a type-change request with a reason
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**archive**](doc/AnnoncesApi.md#archive) | **POST** /api/v1/annonces/{id}/archive | Archive a listing
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**create1**](doc/AnnoncesApi.md#create1) | **POST** /api/v1/annonces | Create a listing (draft)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**delete1**](doc/AnnoncesApi.md#delete1) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**getOne1**](doc/AnnoncesApi.md#getone1) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**listMine1**](doc/AnnoncesApi.md#listmine1) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**markRented**](doc/AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**publish**](doc/AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**reserve**](doc/AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**update1**](doc/AnnoncesApi.md#update1) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
+[*AuthenticationApi*](doc/AuthenticationApi.md) | [**forgotPassword**](doc/AuthenticationApi.md#forgotpassword) | **POST** /api/v1/auth/password/forgot | Start a password reset; sends an OTP if the email has a password account
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**login**](doc/AuthenticationApi.md#login) | **POST** /api/v1/auth/login | Credential login step 1: verify email + password, sends an OTP second factor
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**logout**](doc/AuthenticationApi.md#logout) | **POST** /api/v1/auth/logout | Revoke a refresh token (logout)
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**refresh**](doc/AuthenticationApi.md#refresh) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**registerProfessional**](doc/AuthenticationApi.md#registerprofessional) | **POST** /api/v1/auth/register/professional | Register a professional (AGENT or PRESTATAIRE); sends an OTP to verify the phone
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**requestOtp**](doc/AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number
+[*AuthenticationApi*](doc/AuthenticationApi.md) | [**resendOtp**](doc/AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone that has a pending verification
+[*AuthenticationApi*](doc/AuthenticationApi.md) | [**resetPassword**](doc/AuthenticationApi.md#resetpassword) | **POST** /api/v1/auth/password/reset | Complete a password reset with the OTP received on the phone
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**socialLogin**](doc/AuthenticationApi.md#sociallogin) | **POST** /api/v1/auth/social/login | Log in with a Google or Apple ID token
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyLoginOtp**](doc/AuthenticationApi.md#verifyloginotp) | **POST** /api/v1/auth/login/verify | Credential login step 2: verify the OTP and obtain access + refresh tokens
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyOtp**](doc/AuthenticationApi.md#verifyotp) | **POST** /api/v1/auth/otp/verify | Verify an OTP and obtain access + refresh tokens
 [*CurrentUserApi*](doc/CurrentUserApi.md) | [**me**](doc/CurrentUserApi.md#me) | **GET** /api/v1/me | Get the currently authenticated account
 [*KYCApi*](doc/KYCApi.md) | [**myStatus**](doc/KYCApi.md#mystatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
 [*KYCApi*](doc/KYCApi.md) | [**submit**](doc/KYCApi.md#submit) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
+[*LocationsApi*](doc/LocationsApi.md) | [**cities**](doc/LocationsApi.md#cities) | **GET** /api/v1/locations/cities | List cities (optionally filtered by region)
+[*LocationsApi*](doc/LocationsApi.md) | [**countries**](doc/LocationsApi.md#countries) | **GET** /api/v1/locations/countries | List countries
+[*LocationsApi*](doc/LocationsApi.md) | [**districts**](doc/LocationsApi.md#districts) | **GET** /api/v1/locations/cities/{cityId}/districts | List a city&#39;s districts (quartiers)
+[*LocationsApi*](doc/LocationsApi.md) | [**regions**](doc/LocationsApi.md#regions) | **GET** /api/v1/locations/regions | List regions (optionally filtered by country)
 [*MediaApi*](doc/MediaApi.md) | [**createUpload**](doc/MediaApi.md#createupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
+[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**register**](doc/NotificationDevicesApi.md#register) | **POST** /api/v1/notifications/devices | Register or refresh a device push token
+[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**unregister**](doc/NotificationDevicesApi.md#unregister) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
+[*PasswordApi*](doc/PasswordApi.md) | [**changePassword**](doc/PasswordApi.md#changepassword) | **POST** /api/v1/account/password | Change the password (revokes other sessions)
+[*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**confirmChange**](doc/PhoneChangeApi.md#confirmchange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
+[*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**requestChange**](doc/PhoneChangeApi.md#requestchange) | **POST** /api/v1/account/phone/change | Step 1: request OTPs on the current and the new number
+[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**changeType**](doc/PrestataireProfileApi.md#changetype) | **POST** /api/v1/prestataires/me/type-change | Change the provider type — applied directly if eligible, else opens an admin request
+[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**myProfile1**](doc/PrestataireProfileApi.md#myprofile1) | **GET** /api/v1/prestataires/me | Get the authenticated prestataire&#39;s profile
+[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**updateMyProfile1**](doc/PrestataireProfileApi.md#updatemyprofile1) | **PATCH** /api/v1/prestataires/me | Partially update the authenticated prestataire&#39;s profile
+[*ResidencesApi*](doc/ResidencesApi.md) | [**archiveAll**](doc/ResidencesApi.md#archiveall) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**create**](doc/ResidencesApi.md#create) | **POST** /api/v1/residences | Bulk-create a residence and its units (drafts)
+[*ResidencesApi*](doc/ResidencesApi.md) | [**delete**](doc/ResidencesApi.md#delete) | **DELETE** /api/v1/residences/{id} | Delete a residence and all its units
+[*ResidencesApi*](doc/ResidencesApi.md) | [**getOne**](doc/ResidencesApi.md#getone) | **GET** /api/v1/residences/{id} | Get a residence with its units
+[*ResidencesApi*](doc/ResidencesApi.md) | [**listMine**](doc/ResidencesApi.md#listmine) | **GET** /api/v1/residences | List the authenticated prestataire&#39;s residences
+[*ResidencesApi*](doc/ResidencesApi.md) | [**publishAll**](doc/ResidencesApi.md#publishall) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**rentAll**](doc/ResidencesApi.md#rentall) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**reserveAll**](doc/ResidencesApi.md#reserveall) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**update**](doc/ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
+[*SearchApi*](doc/SearchApi.md) | [**residenceDetail**](doc/SearchApi.md#residencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
+[*SearchApi*](doc/SearchApi.md) | [**search**](doc/SearchApi.md#search) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
+[*UserProfileApi*](doc/UserProfileApi.md) | [**myProfile**](doc/UserProfileApi.md#myprofile) | **GET** /api/v1/users/me | Get the authenticated user&#39;s profile
+[*UserProfileApi*](doc/UserProfileApi.md) | [**updateMyProfile**](doc/UserProfileApi.md#updatemyprofile) | **PATCH** /api/v1/users/me | Partially update the authenticated user&#39;s profile
+[*UserSettingsApi*](doc/UserSettingsApi.md) | [**mySettings**](doc/UserSettingsApi.md#mysettings) | **GET** /api/v1/users/me/settings | Get the authenticated account&#39;s settings
+[*UserSettingsApi*](doc/UserSettingsApi.md) | [**updateMySettings**](doc/UserSettingsApi.md#updatemysettings) | **PATCH** /api/v1/users/me/settings | Partially update the authenticated account&#39;s settings
 
 
 ## Documentation For Models
 
+ - [AnnonceResponse](doc/AnnonceResponse.md)
  - [AuthTokens](doc/AuthTokens.md)
+ - [ChangePasswordRequest](doc/ChangePasswordRequest.md)
+ - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
+ - [CountryResponse](doc/CountryResponse.md)
+ - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
+ - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
+ - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
+ - [LocationOption](doc/LocationOption.md)
  - [LoginOtpRequest](doc/LoginOtpRequest.md)
  - [LoginRequest](doc/LoginRequest.md)
  - [LogoutRequest](doc/LogoutRequest.md)
  - [MeResponse](doc/MeResponse.md)
+ - [NotificationSetting](doc/NotificationSetting.md)
+ - [PageResponseAnnonceResponse](doc/PageResponseAnnonceResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
+ - [PageResponseResidenceResponse](doc/PageResponseResidenceResponse.md)
+ - [PageResponseSearchResult](doc/PageResponseSearchResult.md)
+ - [PageResponseTypeChangeReviewItem](doc/PageResponseTypeChangeReviewItem.md)
  - [Pageable](doc/Pageable.md)
+ - [PhoneChangeResponse](doc/PhoneChangeResponse.md)
  - [PresignedUpload](doc/PresignedUpload.md)
+ - [PrestataireProfileResponse](doc/PrestataireProfileResponse.md)
  - [RefreshTokenRequest](doc/RefreshTokenRequest.md)
+ - [RegisterDeviceRequest](doc/RegisterDeviceRequest.md)
  - [RegisterProfessionalRequest](doc/RegisterProfessionalRequest.md)
  - [RejectKycRequest](doc/RejectKycRequest.md)
+ - [RejectTypeChangeRequest](doc/RejectTypeChangeRequest.md)
+ - [RequestPhoneChangeRequest](doc/RequestPhoneChangeRequest.md)
+ - [RequestTypeChangeRequest](doc/RequestTypeChangeRequest.md)
+ - [ResetPasswordRequest](doc/ResetPasswordRequest.md)
+ - [ResidenceDetailResponse](doc/ResidenceDetailResponse.md)
+ - [ResidenceResponse](doc/ResidenceResponse.md)
+ - [ResidenceSearchCard](doc/ResidenceSearchCard.md)
+ - [SearchResult](doc/SearchResult.md)
+ - [SearchResultItem](doc/SearchResultItem.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
  - [SocialLoginRequest](doc/SocialLoginRequest.md)
  - [SubmitKycRequest](doc/SubmitKycRequest.md)
+ - [TypeChangeResult](doc/TypeChangeResult.md)
+ - [TypeChangeReviewItem](doc/TypeChangeReviewItem.md)
+ - [TypeChangeReviewResult](doc/TypeChangeReviewResult.md)
+ - [TypeCount](doc/TypeCount.md)
+ - [UnitGroup](doc/UnitGroup.md)
+ - [UnitSummary](doc/UnitSummary.md)
+ - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
+ - [UpdatePrestataireProfileRequest](doc/UpdatePrestataireProfileRequest.md)
+ - [UpdateResidenceRequest](doc/UpdateResidenceRequest.md)
+ - [UpdateUserProfileRequest](doc/UpdateUserProfileRequest.md)
+ - [UpdateUserSettingsRequest](doc/UpdateUserSettingsRequest.md)
+ - [UserProfileResponse](doc/UserProfileResponse.md)
+ - [UserSettingsResponse](doc/UserSettingsResponse.md)
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
 
 

@@ -101,13 +101,18 @@ class _$CreateUploadRequest extends CreateUploadRequest {
   final CreateUploadRequestCategoryEnum category;
   @override
   final String contentType;
+  @override
+  final int contentLength;
 
   factory _$CreateUploadRequest([
     void Function(CreateUploadRequestBuilder)? updates,
   ]) => (CreateUploadRequestBuilder()..update(updates))._build();
 
-  _$CreateUploadRequest._({required this.category, required this.contentType})
-    : super._();
+  _$CreateUploadRequest._({
+    required this.category,
+    required this.contentType,
+    required this.contentLength,
+  }) : super._();
   @override
   CreateUploadRequest rebuild(
     void Function(CreateUploadRequestBuilder) updates,
@@ -122,7 +127,8 @@ class _$CreateUploadRequest extends CreateUploadRequest {
     if (identical(other, this)) return true;
     return other is CreateUploadRequest &&
         category == other.category &&
-        contentType == other.contentType;
+        contentType == other.contentType &&
+        contentLength == other.contentLength;
   }
 
   @override
@@ -130,6 +136,7 @@ class _$CreateUploadRequest extends CreateUploadRequest {
     var _$hash = 0;
     _$hash = $jc(_$hash, category.hashCode);
     _$hash = $jc(_$hash, contentType.hashCode);
+    _$hash = $jc(_$hash, contentLength.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -138,7 +145,8 @@ class _$CreateUploadRequest extends CreateUploadRequest {
   String toString() {
     return (newBuiltValueToStringHelper(r'CreateUploadRequest')
           ..add('category', category)
-          ..add('contentType', contentType))
+          ..add('contentType', contentType)
+          ..add('contentLength', contentLength))
         .toString();
   }
 }
@@ -156,6 +164,11 @@ class CreateUploadRequestBuilder
   String? get contentType => _$this._contentType;
   set contentType(String? contentType) => _$this._contentType = contentType;
 
+  int? _contentLength;
+  int? get contentLength => _$this._contentLength;
+  set contentLength(int? contentLength) =>
+      _$this._contentLength = contentLength;
+
   CreateUploadRequestBuilder() {
     CreateUploadRequest._defaults(this);
   }
@@ -165,6 +178,7 @@ class CreateUploadRequestBuilder
     if ($v != null) {
       _category = $v.category;
       _contentType = $v.contentType;
+      _contentLength = $v.contentLength;
       _$v = null;
     }
     return this;
@@ -196,6 +210,11 @@ class CreateUploadRequestBuilder
             contentType,
             r'CreateUploadRequest',
             'contentType',
+          ),
+          contentLength: BuiltValueNullFieldError.checkNotNull(
+            contentLength,
+            r'CreateUploadRequest',
+            'contentLength',
           ),
         );
     replace(_$result);

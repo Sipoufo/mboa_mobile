@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/auth/bloc/auth_bloc.dart';
@@ -30,21 +31,27 @@ class _MboaProAppState extends State<MboaProApp> {
         listener: (context, state) {
           switch (state) {
             case AuthAuthenticated():
-              _router.replaceAll([const HomeRoute()]);
+              // Temporary post-auth landing while the profile/KYC surfaces are
+              // built (was HomeRoute).
+              _router.replaceAll([const SettingsRoute()]);
             case AuthUnauthenticated():
               _router.replaceAll([const LoginRoute()]);
             default:
               break;
           }
         },
-        child: MaterialApp.router(
-          onGenerateTitle: (context) => I18n.of(context).appNamePro,
-          debugShowCheckedModeBanner: false,
-          theme: MboaTheme.light(),
-          darkTheme: MboaTheme.dark(),
-          localizationsDelegates: MboaLocalizations.delegates,
-          supportedLocales: MboaLocalizations.supportedLocales,
-          routerConfig: _router.config(),
+        child: ValueListenableBuilder<Locale?>(
+          valueListenable: getIt<LocaleController>(),
+          builder: (context, locale, _) => MaterialApp.router(
+            onGenerateTitle: (context) => I18n.of(context).appNamePro,
+            debugShowCheckedModeBanner: false,
+            theme: MboaTheme.light(),
+            darkTheme: MboaTheme.dark(),
+            locale: locale,
+            localizationsDelegates: MboaLocalizations.delegates,
+            supportedLocales: MboaLocalizations.supportedLocales,
+            routerConfig: _router.config(),
+          ),
         ),
       ),
     );

@@ -17,5 +17,10 @@ void main() {
       // TODO
     });
 
+    // int contentLength
+    test('to test the property `contentLength`', () async {
+      // TODO
+    });
+
   });
 }

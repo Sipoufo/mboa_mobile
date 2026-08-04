@@ -13,6 +13,10 @@ class MockAuthApi extends Mock implements AuthenticationApi {}
 
 class MockCurrentUserApi extends Mock implements CurrentUserApi {}
 
+class MockLocationsApi extends Mock implements LocationsApi {}
+
+class MockAccountRepository extends Mock implements AccountRepository {}
+
 class MockSecureTokenStorage extends Mock implements SecureTokenStorage {}
 
 class MockNetworkMonitor extends Mock implements NetworkMonitor {}

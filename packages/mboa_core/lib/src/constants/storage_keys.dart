@@ -21,12 +21,15 @@ class StorageKeys {
   static const String searchBox = 'searchBox';
   static const String favoritesBox = 'favoritesBox';
   static const String pendingMessagesBox = 'pendingMessagesBox';
+  // App preferences (permanent): selected language, etc.
+  static const String appSettingsBox = 'appSettings';
 
   static const List<String> allBoxes = [
     viewedBox,
     searchBox,
     favoritesBox,
     pendingMessagesBox,
+    appSettingsBox,
   ];
 }
 

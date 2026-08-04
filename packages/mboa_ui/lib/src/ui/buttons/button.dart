@@ -195,7 +195,7 @@ class Button extends StatelessWidget {
       padding: icon != null ? const EdgeInsets.symmetric(horizontal: Dimens.spacing) : null,
       fixedSize: Size.fromHeight(height ?? Dimens.buttonHeight),
       shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(Dimens.radius),
+        borderRadius: borderRadius ?? BorderRadius.circular(Dimens.radiusXl),
         side: _getBorderSide(context),
       ),
       backgroundColor: _getBackgroundColor(context),

@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
-import '../../auth/bloc/auth_bloc.dart';
+import '../../../app/router/app_router.gr.dart';
 
 /// Placeholder authenticated landing screen. Real feature modules (listings,
 /// search, favorites…) plug in here following the same feature structure.
@@ -21,9 +21,8 @@ class HomePage extends StatelessWidget {
         title: Text(l10n.appName),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () =>
-                context.read<AuthBloc>().add(const AuthLogoutRequested()),
+            icon: const Icon(LucideIcons.settings),
+            onPressed: () => context.router.push(const SettingsRoute()),
           ),
         ],
       ),
