@@ -5,6 +5,8 @@ import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/login/bloc/credential_login_bloc.dart';
 import '../../features/login/data/credential_auth_repository.dart';
+import '../../features/home/bloc/home_bloc.dart';
+import '../../features/home/data/pro_dashboard_repository.dart';
 import '../../features/kyc/data/kyc_repository.dart';
 import '../../features/kyc/logic/kyc_cubit.dart';
 import '../../features/profile/data/profile_repository.dart';
@@ -110,6 +112,17 @@ void registerAppModule() {
       settings: getIt<AppSettingsRepository>(),
     ),
   );
+  // Home / dashboard (M14).
+  getIt.registerLazySingleton<ProDashboardRepository>(
+    () => ProDashboardRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerFactory<HomeBloc>(
+    () => HomeBloc(repository: getIt<ProDashboardRepository>()),
+  );
+
   getIt.registerLazySingleton<KycCubit>(
     () => KycCubit(
       repository: getIt<KycRepository>(),

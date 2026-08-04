@@ -1388,6 +1388,256 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Gérez vos biens\nà travers l’application`
+  String get homeTitle {
+    return Intl.message(
+      'Gérez vos biens\nà travers l’application',
+      name: 'homeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Localisation`
+  String get homeLocationLabel {
+    return Intl.message(
+      'Localisation',
+      name: 'homeLocationLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `--/--`
+  String get homeLocationEmpty {
+    return Intl.message('--/--', name: 'homeLocationEmpty', desc: '', args: []);
+  }
+
+  /// `Données hors ligne`
+  String get homeOfflineBanner {
+    return Intl.message(
+      'Données hors ligne',
+      name: 'homeOfflineBanner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mes biens`
+  String get homeCtaBiensTitle {
+    return Intl.message(
+      'Mes biens',
+      name: 'homeCtaBiensTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management`
+  String get homeCtaBiensBody {
+    return Intl.message(
+      'Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management',
+      name: 'homeCtaBiensBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gérer mes biens`
+  String get homeCtaBiensAction {
+    return Intl.message(
+      'Gérer mes biens',
+      name: 'homeCtaBiensAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Portefeuille`
+  String get homeCtaPortefeuilleTitle {
+    return Intl.message(
+      'Portefeuille',
+      name: 'homeCtaPortefeuilleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application`
+  String get homeCtaPortefeuilleBody {
+    return Intl.message(
+      'Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application',
+      name: 'homeCtaPortefeuilleBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gérer mes transactions`
+  String get homeCtaPortefeuilleAction {
+    return Intl.message(
+      'Gérer mes transactions',
+      name: 'homeCtaPortefeuilleAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mes agents`
+  String get homeCtaAgentsTitle {
+    return Intl.message(
+      'Mes agents',
+      name: 'homeCtaAgentsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Créez des agents à qui déléguer la gestion partielle ou complète de vos biens`
+  String get homeCtaAgentsBody {
+    return Intl.message(
+      'Créez des agents à qui déléguer la gestion partielle ou complète de vos biens',
+      name: 'homeCtaAgentsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gérer mes agents`
+  String get homeCtaAgentsAction {
+    return Intl.message(
+      'Gérer mes agents',
+      name: 'homeCtaAgentsAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statistiques Globales`
+  String get homeStatsTitle {
+    return Intl.message(
+      'Statistiques Globales',
+      name: 'homeStatsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biens`
+  String get homeStatsBiens {
+    return Intl.message('Biens', name: 'homeStatsBiens', desc: '', args: []);
+  }
+
+  /// `Publiés`
+  String get homeStatsPublished {
+    return Intl.message(
+      'Publiés',
+      name: 'homeStatsPublished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Réservés`
+  String get homeStatsReserved {
+    return Intl.message(
+      'Réservés',
+      name: 'homeStatsReserved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loués`
+  String get homeStatsRented {
+    return Intl.message('Loués', name: 'homeStatsRented', desc: '', args: []);
+  }
+
+  /// `Vues`
+  String get homeStatsViews {
+    return Intl.message('Vues', name: 'homeStatsViews', desc: '', args: []);
+  }
+
+  /// `Contacts`
+  String get homeStatsContacts {
+    return Intl.message(
+      'Contacts',
+      name: 'homeStatsContacts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversion`
+  String get homeStatsConversion {
+    return Intl.message(
+      'Conversion',
+      name: 'homeStatsConversion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Visites`
+  String get homeStatsVisits {
+    return Intl.message('Visites', name: 'homeStatsVisits', desc: '', args: []);
+  }
+
+  /// `Contrats`
+  String get homeStatsContracts {
+    return Intl.message(
+      'Contrats',
+      name: 'homeStatsContracts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Position`
+  String get homeStatsRank {
+    return Intl.message('Position', name: 'homeStatsRank', desc: '', args: []);
+  }
+
+  /// `Bientôt`
+  String get homeStatsUnavailable {
+    return Intl.message(
+      'Bientôt',
+      name: 'homeStatsUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ces mesures s’activeront dès que le backend les exposera.`
+  String get homeStatsUnavailableHint {
+    return Intl.message(
+      'Ces mesures s’activeront dès que le backend les exposera.',
+      name: 'homeStatsUnavailableHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inclus dans {tier}`
+  String homeStatsLockedHint(String tier) {
+    return Intl.message(
+      'Inclus dans $tier',
+      name: 'homeStatsLockedHint',
+      desc: '',
+      args: [tier],
+    );
+  }
+
+  /// `Vous n’avez encore enregistré aucun bien.`
+  String get homeEmptyBiens {
+    return Intl.message(
+      'Vous n’avez encore enregistré aucun bien.',
+      name: 'homeEmptyBiens',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

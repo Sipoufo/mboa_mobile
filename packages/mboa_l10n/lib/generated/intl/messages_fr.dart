@@ -29,11 +29,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(word) => "Tapez « ${word} » pour confirmer";
 
-  static String m4(reason) => "Motif : ${reason}";
+  static String m4(tier) => "Inclus dans ${tier}";
 
-  static String m5(phone) => "Code envoyé au ${phone}";
+  static String m5(reason) => "Motif : ${reason}";
 
-  static String m6(seconds) => "Renvoyer dans ${seconds}s";
+  static String m6(phone) => "Code envoyé au ${phone}";
+
+  static String m7(seconds) => "Renvoyer dans ${seconds}s";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -166,8 +168,60 @@ class MessageLookup extends MessageLookupByLibrary {
     "exitAppTitle": MessageLookupByLibrary.simpleMessage(
       "Quitter l’application ?",
     ),
+    "homeCtaAgentsAction": MessageLookupByLibrary.simpleMessage(
+      "Gérer mes agents",
+    ),
+    "homeCtaAgentsBody": MessageLookupByLibrary.simpleMessage(
+      "Créez des agents à qui déléguer la gestion partielle ou complète de vos biens",
+    ),
+    "homeCtaAgentsTitle": MessageLookupByLibrary.simpleMessage("Mes agents"),
+    "homeCtaBiensAction": MessageLookupByLibrary.simpleMessage(
+      "Gérer mes biens",
+    ),
+    "homeCtaBiensBody": MessageLookupByLibrary.simpleMessage(
+      "Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management",
+    ),
+    "homeCtaBiensTitle": MessageLookupByLibrary.simpleMessage("Mes biens"),
+    "homeCtaPortefeuilleAction": MessageLookupByLibrary.simpleMessage(
+      "Gérer mes transactions",
+    ),
+    "homeCtaPortefeuilleBody": MessageLookupByLibrary.simpleMessage(
+      "Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application",
+    ),
+    "homeCtaPortefeuilleTitle": MessageLookupByLibrary.simpleMessage(
+      "Portefeuille",
+    ),
+    "homeEmptyBiens": MessageLookupByLibrary.simpleMessage(
+      "Vous n’avez encore enregistré aucun bien.",
+    ),
+    "homeLocationEmpty": MessageLookupByLibrary.simpleMessage("--/--"),
+    "homeLocationLabel": MessageLookupByLibrary.simpleMessage("Localisation"),
+    "homeOfflineBanner": MessageLookupByLibrary.simpleMessage(
+      "Données hors ligne",
+    ),
     "homeProWelcome": MessageLookupByLibrary.simpleMessage(
       "Bienvenue sur Mboa Pro 👋",
+    ),
+    "homeStatsBiens": MessageLookupByLibrary.simpleMessage("Biens"),
+    "homeStatsContacts": MessageLookupByLibrary.simpleMessage("Contacts"),
+    "homeStatsContracts": MessageLookupByLibrary.simpleMessage("Contrats"),
+    "homeStatsConversion": MessageLookupByLibrary.simpleMessage("Conversion"),
+    "homeStatsLockedHint": m4,
+    "homeStatsPublished": MessageLookupByLibrary.simpleMessage("Publiés"),
+    "homeStatsRank": MessageLookupByLibrary.simpleMessage("Position"),
+    "homeStatsRented": MessageLookupByLibrary.simpleMessage("Loués"),
+    "homeStatsReserved": MessageLookupByLibrary.simpleMessage("Réservés"),
+    "homeStatsTitle": MessageLookupByLibrary.simpleMessage(
+      "Statistiques Globales",
+    ),
+    "homeStatsUnavailable": MessageLookupByLibrary.simpleMessage("Bientôt"),
+    "homeStatsUnavailableHint": MessageLookupByLibrary.simpleMessage(
+      "Ces mesures s’activeront dès que le backend les exposera.",
+    ),
+    "homeStatsViews": MessageLookupByLibrary.simpleMessage("Vues"),
+    "homeStatsVisits": MessageLookupByLibrary.simpleMessage("Visites"),
+    "homeTitle": MessageLookupByLibrary.simpleMessage(
+      "Gérez vos biens\nà travers l’application",
     ),
     "homeUserWelcome": MessageLookupByLibrary.simpleMessage(
       "Bienvenue sur Mboa 👋",
@@ -196,7 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Recto"),
-    "kycRejectionReason": m4,
+    "kycRejectionReason": m5,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Vérifié"),
     "kycStatusNotSubmitted": MessageLookupByLibrary.simpleMessage(
       "Informations requises",
@@ -266,7 +320,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "navManager": MessageLookupByLibrary.simpleMessage("Gestionnaire"),
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
-    "otpCodeSentTo": m5,
+    "otpCodeSentTo": m6,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Code invalide. Réessayez.",
     ),
@@ -274,7 +328,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous n’avez pas reçu le code ?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Renvoyer le code"),
-    "otpResendIn": m6,
+    "otpResendIn": m7,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),

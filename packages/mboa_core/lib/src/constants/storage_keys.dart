@@ -23,6 +23,9 @@ class StorageKeys {
   static const String pendingMessagesBox = 'pendingMessagesBox';
   // App preferences (permanent): selected language, etc.
   static const String appSettingsBox = 'appSettings';
+  // Prestataire dashboard counters (M14) — cheap to refetch, cached so the Pro
+  // home renders instantly and works offline.
+  static const String dashboardBox = 'dashboardBox';
 
   static const List<String> allBoxes = [
     viewedBox,
@@ -30,6 +33,7 @@ class StorageKeys {
     favoritesBox,
     pendingMessagesBox,
     appSettingsBox,
+    dashboardBox,
   ];
 }
 
@@ -39,4 +43,7 @@ class CacheTtl {
 
   static const Duration viewed = Duration(hours: 24);
   static const Duration search = Duration(hours: 1);
+  /// RM-M14-01 wants near-real-time stats, so keep this short — the cache is
+  /// for instant first paint and offline, not for avoiding the fetch.
+  static const Duration dashboard = Duration(minutes: 5);
 }
