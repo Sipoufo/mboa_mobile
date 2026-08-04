@@ -3,12 +3,44 @@
 > Working tracker for the Flutter monorepo. Update this at the end of each work
 > session. Architecture rules live in `CLAUDE.md`; functional spec in
 > `Documents/Claude/Projects/MyHome/Mboa_Doc10_CDC_Fonctionnel.md` (outside repo).
-> Last updated: 2026-07 (settings section complete).
+> Last updated: 2026-08-04 (routing architecture reworked; Pro tab shell in).
 
 ## How to resume
 1. Read `CLAUDE.md` (rules) + this file (state).
 2. `make bootstrap` if needed; `make analyze` + `make test` must be green.
 3. Verify the API: `packages/api_client` is generated (`make gen-api`) — never hand-edit `lib/`.
+
+## Routing architecture (both apps)
+Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa needs.
+
+- **Shared plumbing** lives in `mboa_shared/lib/src/routing/`; the *route tables
+  stay app-local* because the generated route classes are per-app.
+  - `SessionSnapshot` — synchronous `hasSession` boolean the guards read. Holds
+    **no token material**; kept warm by the splash (startup) and the app's
+    `AuthBloc` (runtime). Guards must never do an async keychain read.
+  - `SessionGuard` / `GuestGuard` — take an `onDenied` / `onAuthenticated`
+    **callback** so a shared guard never names an app-local route class.
+  - `AccessPolicy` — pure `(FeatureKey, AccessContext) -> AccessDecision`. Single
+    source of truth for KYC / role / subscription-tier gating (CDC RM-M14-02).
+    `AccessContext` uses plain flags, so it doesn't couple to either app's KYC type.
+- **Table shape** (both apps): guest routes at the root behind `GuestGuard`;
+  everything authenticated nested under `/app` behind `SessionGuard` + the
+  `AuthenticatedRouter` wrapper, which owns the session-scoped blocs (profile,
+  and KYC on Pro) so the header/gates/settings share one load.
+- **Pro tab shell** `ProShellRoute` → Accueil / Gestionnaire / Finance. The
+  4th nav slot ("Menu") **pushes `ProMenuRoute` as a modal over the active tab**
+  — it is deliberately not a tab. Android back: pop within tab → walk tab
+  history → double-press to exit.
+- **Transitions are still listener-driven.** The guards make the table correct
+  for deep links and back navigation; the `AuthBloc` listener in each app root
+  still does the `replaceAll` on login/logout and keeps `SessionSnapshot` and
+  `SessionExpiryWatcher` in step. Both mechanisms are needed — don't delete one.
+- **`SessionExpiryWatcher`** (`mboa_core`) refreshes the access token *ahead* of
+  expiry and forces a clean logout once the refresh token is dead — closing the
+  idle-app and resumed-app gaps the interceptor's reactive 401 path can't see.
+  Timer-driven; `start()` is idempotent. **No inactivity/PIN lock** (deliberate:
+  Zeney needs one because it moves money, Mboa Pro manages listings). The shell
+  leaves room to add one as a wrapper later.
 
 ## Apps & packages
 - `apps/mboa_user` — App Mboa (public; phone-OTP auth).
@@ -52,7 +84,13 @@
 - Messaging (M12), favorites (M06), visits (M07), contract (M08), Mboa Score (M09).
 
 ## Tech debt / optimizations to revisit
-- **Pre-existing analyze info**: `packages/mboa_ui/.../stacked_loader_view.dart` imports `mboa_l10n` without declaring the dep. Harmless; declare the dep or inject the string to clear it.
+- **Subscription tier has no API.** `AccessPolicy` gates M14 metrics on
+  `SubscriptionTier`, but `MeResponse` carries no tier — `AccessContext.tier`
+  defaults to `gratuit` until an endpoint exists. Wire it when M13 lands.
+- **Shell integration isn't widget-tested end-to-end** (it needs the full router
+  + get_it harness). Covered instead by: route-table assertions
+  (`test/app/router/app_router_test.dart`), `ProBottomNav` widget tests, and the
+  guard/policy unit tests in `mboa_shared`.
 - **No device smoke-test yet** for camera capture, R2 PUT (Content-Type/Length must match presigned signature), city fetch, and the settings round-trips — all need a real device + backend + `R2_PUBLIC_BASE_URL`.
 - `updatePhoto` and profile save assume **partial-update** semantics (all-nullable DTOs). If the backend does full-replace, send the full current profile.
 - `MboaActionCard` is fixed-height (180) with a hardcoded illustration background (intentional per design).
@@ -60,6 +98,9 @@
 - `dio` is a dev-dep in the apps (test Response fakes); the shared `MediaUploader` uses it as a regular dep.
 
 ## Test/analyze status (last run)
-- Analyze: clean except the one pre-existing `stacked_loader_view` info.
-- Tests: `mboa_shared` 34, `mboa_user` 14, `mboa_pro` 29, `mboa_core` 6 — all passing.
+- Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
+  now declares `mboa_l10n`). `make analyze` exits 0.
+- Tests: 117 passing — `mboa_user` 14, `mboa_pro` 40, `mboa_core` 12, `mboa_shared` 51.
+- `make test` now runs the **package** suites too, not just the two apps, and
+  fails the target on the first failing suite.
 - Convention: every bloc/cubit + repository has tests (`bloc_test` + `mocktail`); shared doubles in `test/_helpers/mocks`.

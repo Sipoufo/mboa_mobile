@@ -24,6 +24,8 @@ dependencies:
   bloc: ^9.0.0
   equatable: ^2.0.0
   get_it: ^8.0.0
+  # Route guards shared by both apps (the route tables stay app-local).
+  auto_route: ^9.2.2
   # SessionRepository inspects DioException types for offline-aware validation;
   # MediaUploader also uses a bare Dio for direct PUTs to R2 presigned URLs.
   dio: ^5.7.0

@@ -29,12 +29,17 @@ class _MboaProAppState extends State<MboaProApp> {
         listenWhen: (prev, curr) =>
             curr is AuthAuthenticated || curr is AuthUnauthenticated,
         listener: (context, state) {
+          // Keep the snapshot the route guards read in step with the bloc, then
+          // drive the transition. The guards cover deep links and back
+          // navigation; this covers login/logout while the app is running.
           switch (state) {
             case AuthAuthenticated():
-              // Temporary post-auth landing while the profile/KYC surfaces are
-              // built (was HomeRoute).
-              _router.replaceAll([const SettingsRoute()]);
+              getIt<SessionSnapshot>().markAuthenticated();
+              getIt<SessionExpiryWatcher>().start();
+              _router.replaceAll([const AuthenticatedRouter()]);
             case AuthUnauthenticated():
+              getIt<SessionSnapshot>().markUnauthenticated();
+              getIt<SessionExpiryWatcher>().stop();
               _router.replaceAll([const LoginRoute()]);
             default:
               break;

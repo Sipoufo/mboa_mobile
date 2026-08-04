@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
@@ -30,10 +31,15 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
       listenWhen: (prev, curr) =>
           curr is SplashAuthenticated || curr is SplashUnauthenticated,
       listener: (context, state) {
+        // The startup decision also seeds the snapshot the route guards read
+        // — otherwise the very first navigation into /app would be denied.
         switch (state) {
           case SplashAuthenticated():
-            context.router.replaceAll([const HomeRoute()]);
+            getIt<SessionSnapshot>().markAuthenticated();
+            getIt<SessionExpiryWatcher>().start();
+            context.router.replaceAll([const AuthenticatedRouter()]);
           case SplashUnauthenticated():
+            getIt<SessionSnapshot>().markUnauthenticated();
             context.router.replaceAll([const WelcomeRoute()]);
           default:
             break;

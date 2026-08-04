@@ -20,18 +20,58 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'fr';
 
-  static String m0(phone) => "Code reçu sur ${phone}";
+  static String m0(tier) =>
+      "Cette donnée est incluse dans l’abonnement ${tier}.";
 
-  static String m1(word) => "Tapez « ${word} » pour confirmer";
+  static String m1(tier) => "Passer à ${tier}";
 
-  static String m2(reason) => "Motif : ${reason}";
+  static String m2(phone) => "Code reçu sur ${phone}";
 
-  static String m3(phone) => "Code envoyé au ${phone}";
+  static String m3(word) => "Tapez « ${word} » pour confirmer";
 
-  static String m4(seconds) => "Renvoyer dans ${seconds}s";
+  static String m4(reason) => "Motif : ${reason}";
+
+  static String m5(phone) => "Code envoyé au ${phone}";
+
+  static String m6(seconds) => "Renvoyer dans ${seconds}s";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "accessComingSoonBody": MessageLookupByLibrary.simpleMessage(
+      "Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.",
+    ),
+    "accessComingSoonTitle": MessageLookupByLibrary.simpleMessage(
+      "Bientôt disponible",
+    ),
+    "accessKycPendingBody": MessageLookupByLibrary.simpleMessage(
+      "Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.",
+    ),
+    "accessKycPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "Vérification en cours",
+    ),
+    "accessKycRequiredBody": MessageLookupByLibrary.simpleMessage(
+      "Complétez vos certifications pour accéder à cette fonctionnalité.",
+    ),
+    "accessKycRequiredCta": MessageLookupByLibrary.simpleMessage(
+      "Compléter mes certifications",
+    ),
+    "accessKycRequiredTitle": MessageLookupByLibrary.simpleMessage(
+      "Vérification requise",
+    ),
+    "accessRestrictedTitle": MessageLookupByLibrary.simpleMessage(
+      "Accès restreint",
+    ),
+    "accessRoleRequiredBody": MessageLookupByLibrary.simpleMessage(
+      "Cette fonctionnalité est réservée aux comptes prestataires.",
+    ),
+    "accessRoleRequiredTitle": MessageLookupByLibrary.simpleMessage(
+      "Non disponible pour ce compte",
+    ),
+    "accessTierRequiredBody": m0,
+    "accessTierRequiredTitle": MessageLookupByLibrary.simpleMessage(
+      "Réservé aux abonnés",
+    ),
+    "accessUpgradeCta": m1,
     "appName": MessageLookupByLibrary.simpleMessage("Mboa"),
     "appNamePro": MessageLookupByLibrary.simpleMessage("Mboa Pro"),
     "authEmailHint": MessageLookupByLibrary.simpleMessage("nom@exemple.com"),
@@ -76,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer le changement",
     ),
-    "changePhoneNewCodeLabel": m0,
+    "changePhoneNewCodeLabel": m2,
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code reçu sur l’ancien numéro",
     ),
@@ -104,7 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAccountButton": MessageLookupByLibrary.simpleMessage(
       "Supprimer définitivement",
     ),
-    "deleteAccountConfirmLabel": m1,
+    "deleteAccountConfirmLabel": m3,
     "deleteAccountConfirmWord": MessageLookupByLibrary.simpleMessage(
       "SUPPRIMER",
     ),
@@ -119,6 +159,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Editer le Profil",
+    ),
+    "exitAppBody": MessageLookupByLibrary.simpleMessage(
+      "Appuyez de nouveau pour quitter.",
+    ),
+    "exitAppTitle": MessageLookupByLibrary.simpleMessage(
+      "Quitter l’application ?",
     ),
     "homeProWelcome": MessageLookupByLibrary.simpleMessage(
       "Bienvenue sur Mboa Pro 👋",
@@ -150,7 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Recto"),
-    "kycRejectionReason": m2,
+    "kycRejectionReason": m4,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Vérifié"),
     "kycStatusNotSubmitted": MessageLookupByLibrary.simpleMessage(
       "Informations requises",
@@ -205,8 +251,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "loginTitle": MessageLookupByLibrary.simpleMessage("Se connecter"),
     "mediaImport": MessageLookupByLibrary.simpleMessage("Importer"),
     "mediaTakePhoto": MessageLookupByLibrary.simpleMessage("Prendre une photo"),
+    "menuBookmarks": MessageLookupByLibrary.simpleMessage("Signets"),
+    "menuClose": MessageLookupByLibrary.simpleMessage("Fermer le menu"),
+    "menuExplore": MessageLookupByLibrary.simpleMessage("Explorer"),
+    "menuGreeting": MessageLookupByLibrary.simpleMessage("Hello !!"),
+    "menuMessages": MessageLookupByLibrary.simpleMessage("Message"),
+    "menuNotifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "menuOther": MessageLookupByLibrary.simpleMessage("Autres"),
+    "menuProfile": MessageLookupByLibrary.simpleMessage("Profil"),
+    "menuQuit": MessageLookupByLibrary.simpleMessage("Quitter"),
+    "menuSearch": MessageLookupByLibrary.simpleMessage("Recherche"),
+    "navFinance": MessageLookupByLibrary.simpleMessage("Finance"),
+    "navHome": MessageLookupByLibrary.simpleMessage("Accueil"),
+    "navManager": MessageLookupByLibrary.simpleMessage("Gestionnaire"),
+    "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
-    "otpCodeSentTo": m3,
+    "otpCodeSentTo": m5,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Code invalide. Réessayez.",
     ),
@@ -214,7 +274,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous n’avez pas reçu le code ?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Renvoyer le code"),
-    "otpResendIn": m4,
+    "otpResendIn": m6,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),

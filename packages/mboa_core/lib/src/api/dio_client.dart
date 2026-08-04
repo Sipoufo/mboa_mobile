@@ -65,6 +65,15 @@ class DioClient {
 
   Dio get dio => _dio;
 
+  /// Refreshes the token pair on demand, ahead of expiry.
+  ///
+  /// The [AuthInterceptor] refreshes *reactively*, on a 401. [SessionExpiryWatcher]
+  /// uses this to refresh *proactively*, before the access token lapses.
+  /// Returns `null` when the refresh token is itself rejected — the caller is
+  /// responsible for the resulting logout.
+  Future<AuthTokens?> refreshSession(String refreshToken) =>
+      _refreshTokens(refreshToken);
+
   /// Calls `/auth/refresh` on the bare client and maps the wire type to the
   /// domain [AuthTokens]. Returns `null` if the refresh token is rejected.
   Future<AuthTokens?> _refreshTokens(String refreshToken) async {

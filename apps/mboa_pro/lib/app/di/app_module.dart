@@ -15,6 +15,10 @@ import '../../features/splash/logic/splash_cubit.dart';
 
 /// Registers App-Mboa-Pro dependencies on top of the shared core module.
 void registerAppModule() {
+  // Routing — the snapshot the guards read, and the feature-access policy.
+  getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
+  getIt.registerLazySingleton<AccessPolicy>(AccessPolicy.new);
+
   // Session gate.
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepository(

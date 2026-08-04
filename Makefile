@@ -4,6 +4,8 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 APPS := mboa_user mboa_pro
+# Packages that carry their own test suites.
+TEST_PACKAGES := mboa_core mboa_shared
 
 .PHONY: help bootstrap gen gen-api gen-code gen-l10n analyze format test coverage clean run-user run-pro
 
@@ -31,8 +33,10 @@ analyze: ## Static analysis across the whole workspace
 format: ## Auto-format all Dart sources
 	dart format --line-length 120 packages apps
 
-test: ## Run unit/bloc tests for both apps
-	@for app in $(APPS); do echo "==> test: apps/$$app"; (cd apps/$$app && flutter test); done
+test: ## Run unit/bloc tests for both apps and the shared packages
+	@set -e; \
+	for app in $(APPS); do echo "==> test: apps/$$app"; (cd apps/$$app && flutter test); done; \
+	for pkg in $(TEST_PACKAGES); do echo "==> test: packages/$$pkg"; (cd packages/$$pkg && flutter test); done
 
 coverage: ## Run tests with coverage + HTML report
 	./scripts/coverage.sh

@@ -2,7 +2,6 @@
   "@@locale": "fr",
   "appName": "Mboa",
   "appNamePro": "Mboa Pro",
-
   "commonRetry": "Réessayer",
   "commonError": "Une erreur est survenue. Réessayez.",
   "commonErrorTitle": "Oups",
@@ -14,10 +13,8 @@
   "cityPickerSearchHint": "Rechercher une ville",
   "cityPickerEmpty": "Aucune ville trouvée",
   "loadingDialog_content": "Veuillez patienter...",
-
   "welcome_inscriptionButton": "Inscription",
   "welcome_loginButton": "Connexion",
-
   "loginTitle": "Se connecter",
   "registerTitle": "Créer un compte",
   "loginEnterPhone": "Entrez votre numéro de téléphone",
@@ -33,7 +30,6 @@
   "loginSignUpAction": "Inscrivez-vous",
   "registerHaveAccountQuestion": "Vous avez déjà un compte ?",
   "registerSignInAction": "Connectez-vous",
-
   "authEmailLabel": "E-mail",
   "authEmailHint": "nom@exemple.com",
   "authEmailInvalid": "E-mail invalide",
@@ -49,9 +45,7 @@
   "registerRoleAgent": "Agent",
   "registerButton": "S’inscrire",
   "registerFailed": "Inscription impossible. Vérifiez vos informations.",
-
   "commonComingSoon": "Bientôt disponible",
-
   "settingsTitle": "Profil",
   "settingsProfileCard": "Profil",
   "settingsCertificationsTitle": "Certifications",
@@ -94,7 +88,6 @@
     }
   },
   "deleteAccountButton": "Supprimer définitivement",
-
   "editProfileTitle": "Editer le Profil",
   "profileFirstName": "Prénom",
   "profileLastName": "Nom",
@@ -108,7 +101,6 @@
   "profileSave": "Enregistrer",
   "profileSaved": "Profil mis à jour",
   "profileLoadError": "Impossible de charger le profil.",
-
   "kycTabStatut": "Statut",
   "kycTabIdentification": "Identification",
   "kycItemSelfie": "Selfie",
@@ -144,7 +136,6 @@
   "kycRecto": "Recto",
   "kycVerso": "Verso",
   "kycDone": "Terminé",
-
   "otpTitle": "Vérification",
   "otpCodeSentTo": "Code envoyé au {phone}",
   "@otpCodeSentTo": {
@@ -167,7 +158,76 @@
       }
     }
   },
-
   "homeUserWelcome": "Bienvenue sur Mboa 👋",
-  "homeProWelcome": "Bienvenue sur Mboa Pro 👋"
+  "homeProWelcome": "Bienvenue sur Mboa Pro 👋",
+  "navHome": "Accueil",
+  "@navHome": {},
+  "navManager": "Gestionnaire",
+  "@navManager": {},
+  "navFinance": "Finance",
+  "@navFinance": {},
+  "navMenu": "Menu",
+  "@navMenu": {},
+  "menuGreeting": "Hello !!",
+  "@menuGreeting": {},
+  "menuProfile": "Profil",
+  "@menuProfile": {},
+  "menuNotifications": "Notifications",
+  "@menuNotifications": {},
+  "menuMessages": "Message",
+  "@menuMessages": {},
+  "menuSearch": "Recherche",
+  "@menuSearch": {},
+  "menuExplore": "Explorer",
+  "@menuExplore": {},
+  "menuBookmarks": "Signets",
+  "@menuBookmarks": {},
+  "menuOther": "Autres",
+  "@menuOther": {},
+  "menuQuit": "Quitter",
+  "@menuQuit": {},
+  "menuClose": "Fermer le menu",
+  "@menuClose": {},
+  "accessRestrictedTitle": "Accès restreint",
+  "@accessRestrictedTitle": {},
+  "accessComingSoonTitle": "Bientôt disponible",
+  "@accessComingSoonTitle": {},
+  "accessComingSoonBody": "Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.",
+  "@accessComingSoonBody": {},
+  "accessKycRequiredTitle": "Vérification requise",
+  "@accessKycRequiredTitle": {},
+  "accessKycRequiredBody": "Complétez vos certifications pour accéder à cette fonctionnalité.",
+  "@accessKycRequiredBody": {},
+  "accessKycRequiredCta": "Compléter mes certifications",
+  "@accessKycRequiredCta": {},
+  "accessKycPendingTitle": "Vérification en cours",
+  "@accessKycPendingTitle": {},
+  "accessKycPendingBody": "Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.",
+  "@accessKycPendingBody": {},
+  "accessTierRequiredTitle": "Réservé aux abonnés",
+  "@accessTierRequiredTitle": {},
+  "accessTierRequiredBody": "Cette donnée est incluse dans l’abonnement {tier}.",
+  "@accessTierRequiredBody": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "accessUpgradeCta": "Passer à {tier}",
+  "@accessUpgradeCta": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRoleRequiredTitle": "Non disponible pour ce compte",
+  "@accessRoleRequiredTitle": {},
+  "accessRoleRequiredBody": "Cette fonctionnalité est réservée aux comptes prestataires.",
+  "@accessRoleRequiredBody": {},
+  "exitAppTitle": "Quitter l’application ?",
+  "@exitAppTitle": {},
+  "exitAppBody": "Appuyez de nouveau pour quitter.",
+  "@exitAppBody": {}
 }

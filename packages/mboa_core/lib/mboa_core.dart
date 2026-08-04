@@ -21,6 +21,7 @@ export 'src/network/network_monitor.dart';
 // API
 export 'src/api/dio_client.dart';
 export 'src/api/interceptors/auth_interceptor.dart';
+export 'src/api/session_expiry_watcher.dart';
 
 // DI
 export 'src/di/core_module.dart';

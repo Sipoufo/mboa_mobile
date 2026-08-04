@@ -12,6 +12,10 @@ import '../login_flow_controller_impl.dart';
 /// Order matters: [registerCoreModule] must have run first so [DioClient] and
 /// [SecureTokenStorage] are available here.
 void registerAppModule() {
+  // Routing — the snapshot the guards read, and the feature-access policy.
+  getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
+  getIt.registerLazySingleton<AccessPolicy>(AccessPolicy.new);
+
   // Session gate.
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepository(

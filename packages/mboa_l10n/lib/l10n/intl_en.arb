@@ -2,7 +2,6 @@
   "@@locale": "en",
   "appName": "Mboa",
   "appNamePro": "Mboa Pro",
-
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
   "commonErrorTitle": "Oops",
@@ -14,10 +13,8 @@
   "cityPickerSearchHint": "Search a city",
   "cityPickerEmpty": "No city found",
   "loadingDialog_content": "Please wait...",
-
   "welcome_inscriptionButton": "Registration",
   "welcome_loginButton": "Login",
-
   "loginTitle": "Sign in",
   "registerTitle": "Create account",
   "loginEnterPhone": "Enter your phone number",
@@ -33,7 +30,6 @@
   "loginSignUpAction": "Sign up",
   "registerHaveAccountQuestion": "Already have an account?",
   "registerSignInAction": "Sign in",
-
   "authEmailLabel": "Email",
   "authEmailHint": "name@example.com",
   "authEmailInvalid": "Invalid email",
@@ -49,9 +45,7 @@
   "registerRoleAgent": "Agent",
   "registerButton": "Sign up",
   "registerFailed": "Registration failed. Check your details.",
-
   "commonComingSoon": "Coming soon",
-
   "settingsTitle": "Profile",
   "settingsProfileCard": "Profile",
   "settingsCertificationsTitle": "Certifications",
@@ -94,7 +88,6 @@
     }
   },
   "deleteAccountButton": "Delete permanently",
-
   "editProfileTitle": "Edit Profile",
   "profileFirstName": "First name",
   "profileLastName": "Last name",
@@ -108,7 +101,6 @@
   "profileSave": "Save",
   "profileSaved": "Profile updated",
   "profileLoadError": "Couldn’t load your profile.",
-
   "kycTabStatut": "Status",
   "kycTabIdentification": "Identification",
   "kycItemSelfie": "Selfie",
@@ -144,7 +136,6 @@
   "kycRecto": "Front",
   "kycVerso": "Back",
   "kycDone": "Done",
-
   "otpTitle": "Verification",
   "otpCodeSentTo": "Code sent to {phone}",
   "@otpCodeSentTo": {
@@ -167,7 +158,76 @@
       }
     }
   },
-
   "homeUserWelcome": "Welcome to Mboa 👋",
-  "homeProWelcome": "Welcome to Mboa Pro 👋"
+  "homeProWelcome": "Welcome to Mboa Pro 👋",
+  "navHome": "Home",
+  "@navHome": {},
+  "navManager": "Manager",
+  "@navManager": {},
+  "navFinance": "Finance",
+  "@navFinance": {},
+  "navMenu": "Menu",
+  "@navMenu": {},
+  "menuGreeting": "Hello !!",
+  "@menuGreeting": {},
+  "menuProfile": "Profile",
+  "@menuProfile": {},
+  "menuNotifications": "Notifications",
+  "@menuNotifications": {},
+  "menuMessages": "Messages",
+  "@menuMessages": {},
+  "menuSearch": "Search",
+  "@menuSearch": {},
+  "menuExplore": "Explore",
+  "@menuExplore": {},
+  "menuBookmarks": "Bookmarks",
+  "@menuBookmarks": {},
+  "menuOther": "More",
+  "@menuOther": {},
+  "menuQuit": "Sign out",
+  "@menuQuit": {},
+  "menuClose": "Close menu",
+  "@menuClose": {},
+  "accessRestrictedTitle": "Access restricted",
+  "@accessRestrictedTitle": {},
+  "accessComingSoonTitle": "Coming soon",
+  "@accessComingSoonTitle": {},
+  "accessComingSoonBody": "This feature is on its way. We’ll let you know as soon as it’s ready.",
+  "@accessComingSoonBody": {},
+  "accessKycRequiredTitle": "Verification required",
+  "@accessKycRequiredTitle": {},
+  "accessKycRequiredBody": "Complete your certifications to unlock this feature.",
+  "@accessKycRequiredBody": {},
+  "accessKycRequiredCta": "Complete my certifications",
+  "@accessKycRequiredCta": {},
+  "accessKycPendingTitle": "Verification in progress",
+  "@accessKycPendingTitle": {},
+  "accessKycPendingBody": "Your documents are under review. This feature unlocks once they’re approved.",
+  "@accessKycPendingBody": {},
+  "accessTierRequiredTitle": "Subscribers only",
+  "@accessTierRequiredTitle": {},
+  "accessTierRequiredBody": "This metric is included in the {tier} plan.",
+  "@accessTierRequiredBody": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "accessUpgradeCta": "Upgrade to {tier}",
+  "@accessUpgradeCta": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "accessRoleRequiredTitle": "Not available for this account",
+  "@accessRoleRequiredTitle": {},
+  "accessRoleRequiredBody": "This feature is reserved for provider accounts.",
+  "@accessRoleRequiredBody": {},
+  "exitAppTitle": "Leave the app?",
+  "@exitAppTitle": {},
+  "exitAppBody": "Press back again to exit.",
+  "@exitAppBody": {}
 }

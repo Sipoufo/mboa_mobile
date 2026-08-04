@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import '../api/dio_client.dart';
+import '../api/session_expiry_watcher.dart';
 import '../network/network_monitor.dart';
 import '../storage/hive_cache.dart';
 import '../storage/secure_token_storage.dart';
@@ -30,6 +31,15 @@ Future<void> registerCoreModule({
     getIt.registerLazySingleton<DioClient>(
       () => DioClient(
         storage: getIt<SecureTokenStorage>(),
+        onSessionExpired: onSessionExpired,
+      ),
+    );
+  }
+  if (!getIt.isRegistered<SessionExpiryWatcher>()) {
+    getIt.registerLazySingleton<SessionExpiryWatcher>(
+      () => SessionExpiryWatcher(
+        dioClient: getIt<DioClient>(),
+        tokenStorage: getIt<SecureTokenStorage>(),
         onSessionExpired: onSessionExpired,
       ),
     );

@@ -32,11 +32,18 @@ class _MboaUserAppState extends State<MboaUserApp> {
         listenWhen: (prev, curr) =>
             curr is AuthAuthenticated || curr is AuthUnauthenticated,
         listener: (context, state) {
+          // Keep the snapshot the route guards read in step with the bloc,
+          // then drive the transition. The guards cover deep links and back
+          // navigation; this covers login/logout while the app is running.
           switch (state) {
             case AuthAuthenticated():
-              _router.replaceAll([const HomeRoute()]);
+              getIt<SessionSnapshot>().markAuthenticated();
+              getIt<SessionExpiryWatcher>().start();
+              _router.replaceAll([const AuthenticatedRouter()]);
             case AuthUnauthenticated():
-              _router.replaceAll([LoginRoute()]);
+              getIt<SessionSnapshot>().markUnauthenticated();
+              getIt<SessionExpiryWatcher>().stop();
+              _router.replaceAll([const WelcomeRoute()]);
             default:
               break;
           }

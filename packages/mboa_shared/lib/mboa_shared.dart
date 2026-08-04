@@ -1,6 +1,17 @@
 /// Features shared identically by both Mboa apps.
 library;
 
+// Routing — guards + feature-access policy. The route tables stay app-local
+// (the generated route classes live in each app's `app_router.gr.dart`).
+export 'src/routing/access/access_context.dart';
+export 'src/routing/access/access_decision.dart';
+export 'src/routing/access/access_policy.dart';
+export 'src/routing/access/feature_key.dart';
+export 'src/routing/access/subscription_tier.dart';
+export 'src/routing/guards/guest_guard.dart';
+export 'src/routing/guards/session_guard.dart';
+export 'src/routing/session_snapshot.dart';
+
 // Session resolution — shared startup auth check used by each app's splash.
 export 'src/features/session/data/session_repository.dart';
 export 'src/features/session/models/session_result.dart';

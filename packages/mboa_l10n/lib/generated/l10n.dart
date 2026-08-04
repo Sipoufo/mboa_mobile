@@ -1158,6 +1158,236 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Accueil`
+  String get navHome {
+    return Intl.message('Accueil', name: 'navHome', desc: '', args: []);
+  }
+
+  /// `Gestionnaire`
+  String get navManager {
+    return Intl.message('Gestionnaire', name: 'navManager', desc: '', args: []);
+  }
+
+  /// `Finance`
+  String get navFinance {
+    return Intl.message('Finance', name: 'navFinance', desc: '', args: []);
+  }
+
+  /// `Menu`
+  String get navMenu {
+    return Intl.message('Menu', name: 'navMenu', desc: '', args: []);
+  }
+
+  /// `Hello !!`
+  String get menuGreeting {
+    return Intl.message('Hello !!', name: 'menuGreeting', desc: '', args: []);
+  }
+
+  /// `Profil`
+  String get menuProfile {
+    return Intl.message('Profil', name: 'menuProfile', desc: '', args: []);
+  }
+
+  /// `Notifications`
+  String get menuNotifications {
+    return Intl.message(
+      'Notifications',
+      name: 'menuNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message`
+  String get menuMessages {
+    return Intl.message('Message', name: 'menuMessages', desc: '', args: []);
+  }
+
+  /// `Recherche`
+  String get menuSearch {
+    return Intl.message('Recherche', name: 'menuSearch', desc: '', args: []);
+  }
+
+  /// `Explorer`
+  String get menuExplore {
+    return Intl.message('Explorer', name: 'menuExplore', desc: '', args: []);
+  }
+
+  /// `Signets`
+  String get menuBookmarks {
+    return Intl.message('Signets', name: 'menuBookmarks', desc: '', args: []);
+  }
+
+  /// `Autres`
+  String get menuOther {
+    return Intl.message('Autres', name: 'menuOther', desc: '', args: []);
+  }
+
+  /// `Quitter`
+  String get menuQuit {
+    return Intl.message('Quitter', name: 'menuQuit', desc: '', args: []);
+  }
+
+  /// `Fermer le menu`
+  String get menuClose {
+    return Intl.message(
+      'Fermer le menu',
+      name: 'menuClose',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accès restreint`
+  String get accessRestrictedTitle {
+    return Intl.message(
+      'Accès restreint',
+      name: 'accessRestrictedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bientôt disponible`
+  String get accessComingSoonTitle {
+    return Intl.message(
+      'Bientôt disponible',
+      name: 'accessComingSoonTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.`
+  String get accessComingSoonBody {
+    return Intl.message(
+      'Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.',
+      name: 'accessComingSoonBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vérification requise`
+  String get accessKycRequiredTitle {
+    return Intl.message(
+      'Vérification requise',
+      name: 'accessKycRequiredTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complétez vos certifications pour accéder à cette fonctionnalité.`
+  String get accessKycRequiredBody {
+    return Intl.message(
+      'Complétez vos certifications pour accéder à cette fonctionnalité.',
+      name: 'accessKycRequiredBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compléter mes certifications`
+  String get accessKycRequiredCta {
+    return Intl.message(
+      'Compléter mes certifications',
+      name: 'accessKycRequiredCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vérification en cours`
+  String get accessKycPendingTitle {
+    return Intl.message(
+      'Vérification en cours',
+      name: 'accessKycPendingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.`
+  String get accessKycPendingBody {
+    return Intl.message(
+      'Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.',
+      name: 'accessKycPendingBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Réservé aux abonnés`
+  String get accessTierRequiredTitle {
+    return Intl.message(
+      'Réservé aux abonnés',
+      name: 'accessTierRequiredTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cette donnée est incluse dans l’abonnement {tier}.`
+  String accessTierRequiredBody(String tier) {
+    return Intl.message(
+      'Cette donnée est incluse dans l’abonnement $tier.',
+      name: 'accessTierRequiredBody',
+      desc: '',
+      args: [tier],
+    );
+  }
+
+  /// `Passer à {tier}`
+  String accessUpgradeCta(String tier) {
+    return Intl.message(
+      'Passer à $tier',
+      name: 'accessUpgradeCta',
+      desc: '',
+      args: [tier],
+    );
+  }
+
+  /// `Non disponible pour ce compte`
+  String get accessRoleRequiredTitle {
+    return Intl.message(
+      'Non disponible pour ce compte',
+      name: 'accessRoleRequiredTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cette fonctionnalité est réservée aux comptes prestataires.`
+  String get accessRoleRequiredBody {
+    return Intl.message(
+      'Cette fonctionnalité est réservée aux comptes prestataires.',
+      name: 'accessRoleRequiredBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quitter l’application ?`
+  String get exitAppTitle {
+    return Intl.message(
+      'Quitter l’application ?',
+      name: 'exitAppTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Appuyez de nouveau pour quitter.`
+  String get exitAppBody {
+    return Intl.message(
+      'Appuyez de nouveau pour quitter.',
+      name: 'exitAppBody',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {
