@@ -11,6 +11,7 @@ import 'package:api_client/src/auth/bearer_auth.dart';
 import 'package:api_client/src/auth/oauth.dart';
 import 'package:api_client/src/api/account_api.dart';
 import 'package:api_client/src/api/admin_kyc_api.dart';
+import 'package:api_client/src/api/admin_subscriptions_api.dart';
 import 'package:api_client/src/api/admin_type_change_api.dart';
 import 'package:api_client/src/api/annonces_api.dart';
 import 'package:api_client/src/api/authentication_api.dart';
@@ -18,12 +19,14 @@ import 'package:api_client/src/api/current_user_api.dart';
 import 'package:api_client/src/api/kyc_api.dart';
 import 'package:api_client/src/api/locations_api.dart';
 import 'package:api_client/src/api/media_api.dart';
+import 'package:api_client/src/api/messagerie_api.dart';
 import 'package:api_client/src/api/notification_devices_api.dart';
 import 'package:api_client/src/api/password_api.dart';
 import 'package:api_client/src/api/phone_change_api.dart';
 import 'package:api_client/src/api/prestataire_profile_api.dart';
 import 'package:api_client/src/api/residences_api.dart';
 import 'package:api_client/src/api/search_api.dart';
+import 'package:api_client/src/api/subscriptions_api.dart';
 import 'package:api_client/src/api/user_profile_api.dart';
 import 'package:api_client/src/api/user_settings_api.dart';
 
@@ -133,6 +136,12 @@ class ApiClient {
     return AdminKYCApi(dio, serializers);
   }
 
+  /// Get AdminSubscriptionsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminSubscriptionsApi getAdminSubscriptionsApi() {
+    return AdminSubscriptionsApi(dio, serializers);
+  }
+
   /// Get AdminTypeChangeApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AdminTypeChangeApi getAdminTypeChangeApi() {
@@ -175,6 +184,12 @@ class ApiClient {
     return MediaApi(dio, serializers);
   }
 
+  /// Get MessagerieApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  MessagerieApi getMessagerieApi() {
+    return MessagerieApi(dio, serializers);
+  }
+
   /// Get NotificationDevicesApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   NotificationDevicesApi getNotificationDevicesApi() {
@@ -209,6 +224,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   SearchApi getSearchApi() {
     return SearchApi(dio, serializers);
+  }
+
+  /// Get SubscriptionsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  SubscriptionsApi getSubscriptionsApi() {
+    return SubscriptionsApi(dio, serializers);
   }
 
   /// Get UserProfileApi instance, base route and serializer can be overridden by a given but be careful,

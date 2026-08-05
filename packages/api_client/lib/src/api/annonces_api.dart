@@ -353,7 +353,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseAnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseAnnonceResponse>> listMine1({ 
+  Future<Response<PageResponseAnnonceResponse>> listMine2({ 
     required Pageable pageable,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

@@ -19,7 +19,7 @@ part 'create_upload_request.g.dart';
 abstract class CreateUploadRequest implements Built<CreateUploadRequest, CreateUploadRequestBuilder> {
   @BuiltValueField(wireName: r'category')
   CreateUploadRequestCategoryEnum get category;
-  // enum categoryEnum {  KYC_DOCUMENT,  LISTING_PHOTO,  PROFILE_PHOTO,  VISIT_REPORT,  };
+  // enum categoryEnum {  KYC_DOCUMENT,  LISTING_PHOTO,  PROFILE_PHOTO,  MESSAGE_ATTACHMENT,  VISIT_REPORT,  RECEIPT,  };
 
   @BuiltValueField(wireName: r'contentType')
   String get contentType;
@@ -146,8 +146,12 @@ class CreateUploadRequestCategoryEnum extends EnumClass {
   static const CreateUploadRequestCategoryEnum LISTING_PHOTO = _$createUploadRequestCategoryEnum_LISTING_PHOTO;
   @BuiltValueEnumConst(wireName: r'PROFILE_PHOTO')
   static const CreateUploadRequestCategoryEnum PROFILE_PHOTO = _$createUploadRequestCategoryEnum_PROFILE_PHOTO;
+  @BuiltValueEnumConst(wireName: r'MESSAGE_ATTACHMENT')
+  static const CreateUploadRequestCategoryEnum MESSAGE_ATTACHMENT = _$createUploadRequestCategoryEnum_MESSAGE_ATTACHMENT;
   @BuiltValueEnumConst(wireName: r'VISIT_REPORT')
   static const CreateUploadRequestCategoryEnum VISIT_REPORT = _$createUploadRequestCategoryEnum_VISIT_REPORT;
+  @BuiltValueEnumConst(wireName: r'RECEIPT')
+  static const CreateUploadRequestCategoryEnum RECEIPT = _$createUploadRequestCategoryEnum_RECEIPT;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateUploadRequestCategoryEnum unknownDefaultOpenApi = _$createUploadRequestCategoryEnum_unknownDefaultOpenApi;
 

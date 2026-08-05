@@ -25,6 +25,8 @@ tags:
     description: Direct-to-R2 uploads via pre-signed URLs
   - name: Search
     description: Public listing search
+  - name: Messagerie
+    description: Conversations between a user and a prestataire about a listing
   - name: Admin — Type Change
     description: Review prestataire type-change requests
   - name: Password
@@ -43,6 +45,8 @@ tags:
     description: The authenticated account's identity
   - name: User Settings
     description: "Language, notification and privacy preferences"
+  - name: Admin — Subscriptions
+    description: Grant subscriptions and edit plan parameters
   - name: Locations
     description: Country / region / city / district reference
   - name: Authentication
@@ -51,10 +55,53 @@ tags:
     description: Register device tokens for push notifications
   - name: Admin — KYC
     description: Review identity-verification submissions
+  - name: Subscriptions
+    description: "Tiers, subscription and payment"
   - name: Account
     description: Account-wide operations (any role)
 
 paths:
+  /api/v1/subscriptions:
+    post:
+      tags:
+        - Subscriptions
+      summary: Subscribe to (or upgrade to) a paid tier; initiates a mobile-money
+        payment
+      operationId: subscribe
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaymentInitiatedResponse"
+  /api/v1/subscriptions/webhook:
+    post:
+      tags:
+        - Subscriptions
+      summary: Payment confirmation webhook (HMAC-verified)
+      operationId: webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentWebhookRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
   /api/v1/residences:
     get:
       tags:
@@ -245,6 +292,110 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+  /api/v1/conversations:
+    get:
+      tags:
+        - Messagerie
+      summary: List the authenticated participant's conversations
+      operationId: listMine_1
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseConversationResponse"
+    post:
+      tags:
+        - Messagerie
+      summary: Contact a listing — opens (or reuses) the thread and posts the first
+        message
+      operationId: start
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartConversationRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ConversationResponse"
+  /api/v1/conversations/{id}/read:
+    post:
+      tags:
+        - Messagerie
+      summary: Mark the conversation's incoming messages as read
+      operationId: markRead
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+  /api/v1/conversations/{id}/messages:
+    get:
+      tags:
+        - Messagerie
+      summary: "List a conversation's messages, newest first"
+      operationId: listMessages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseMessageResponse"
+    post:
+      tags:
+        - Messagerie
+      summary: Post a message in a conversation
+      operationId: send
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
   /api/v1/auth/token/refresh:
     post:
       tags:
@@ -434,7 +585,7 @@ paths:
       tags:
         - Annonces
       summary: List the authenticated prestataire's listings
-      operationId: listMine_1
+      operationId: listMine_2
       parameters:
         - name: pageable
           in: query
@@ -592,6 +743,21 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeReviewResult"
+  /api/v1/admin/subscriptions:
+    post:
+      tags:
+        - Admin — Subscriptions
+      summary: "Grant a tier to an account for a number of days, without payment"
+      operationId: grant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrantSubscriptionRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
   /api/v1/admin/kyc/{id}/reject:
     post:
       tags:
@@ -900,6 +1066,84 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+  /api/v1/admin/plans/{tier}:
+    patch:
+      tags:
+        - Admin — Subscriptions
+      summary: "Update a tier's parameters (price, listing limit, residence unit allowance)"
+      operationId: updatePlan
+      parameters:
+        - name: tier
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - FREE
+              - BASIC_PLUS
+              - PRO
+              - PRO_PLUS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlanRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TierInfo"
+  /api/v1/subscriptions/tiers:
+    get:
+      tags:
+        - Subscriptions
+      summary: List the subscription tiers and their current parameters
+      operationId: tiers
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TierInfo"
+  /api/v1/subscriptions/payments/{id}/receipt:
+    get:
+      tags:
+        - Subscriptions
+      summary: Get a short-lived URL to download a payment's PDF receipt
+      operationId: receipt
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceiptResponse"
+  /api/v1/subscriptions/me:
+    get:
+      tags:
+        - Subscriptions
+      summary: Get the authenticated account's current subscription
+      operationId: mySubscription
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubscriptionResponse"
   /api/v1/search:
     get:
       tags:
@@ -1188,6 +1432,62 @@ paths:
           description: No Content
 components:
   schemas:
+    SubscribeRequest:
+      type: object
+      properties:
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
+        method:
+          type: string
+          enum:
+            - MTN_MOMO
+            - ORANGE_MONEY
+      required:
+        - method
+        - tier
+    PaymentInitiatedResponse:
+      type: object
+      properties:
+        paymentId:
+          type: string
+          format: uuid
+        providerRef:
+          type: string
+        amount:
+          type: integer
+          format: int32
+        status:
+          type: string
+          enum:
+            - PENDING
+            - CONFIRMED
+            - FAILED
+            - CANCELLED
+    PaymentWebhookRequest:
+      type: object
+      properties:
+        providerRef:
+          type: string
+          minLength: 1
+        status:
+          type: string
+          enum:
+            - PENDING
+            - CONFIRMED
+            - FAILED
+            - CANCELLED
+        signature:
+          type: string
+          minLength: 1
+      required:
+        - providerRef
+        - signature
+        - status
     CreateResidenceRequest:
       type: object
       properties:
@@ -1428,7 +1728,9 @@ components:
             - KYC_DOCUMENT
             - LISTING_PHOTO
             - PROFILE_PHOTO
+            - MESSAGE_ATTACHMENT
             - VISIT_REPORT
+            - RECEIPT
         contentType:
           type: string
           minLength: 1
@@ -1480,6 +1782,92 @@ components:
           format: date-time
         rejectionReason:
           type: string
+    StartConversationRequest:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+        body:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        attachmentKeys:
+          type: array
+          items:
+            type: string
+            maxLength: 512
+            minLength: 0
+          maxItems: 3
+          minItems: 0
+      required:
+        - annonceId
+    ConversationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        annonceTitle:
+          type: string
+        peerAccountId:
+          type: string
+          format: uuid
+        peerName:
+          type: string
+        peerPhotoKey:
+          type: string
+        lastMessageAt:
+          type: string
+          format: date-time
+        lastMessage:
+          type: string
+        unreadCount:
+          type: integer
+          format: int32
+        readOnly:
+          type: boolean
+    SendMessageRequest:
+      type: object
+      properties:
+        body:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        attachmentKeys:
+          type: array
+          items:
+            type: string
+            maxLength: 512
+            minLength: 0
+          maxItems: 3
+          minItems: 0
+    MessageResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        senderAccountId:
+          type: string
+          format: uuid
+        mine:
+          type: boolean
+        body:
+          type: string
+        attachmentKeys:
+          type: array
+          items:
+            type: string
+        sentAt:
+          type: string
+          format: date-time
+        readAt:
+          type: string
+          format: date-time
     RefreshTokenRequest:
       type: object
       properties:
@@ -1809,6 +2197,26 @@ components:
             - PROMOTEUR
         adminReason:
           type: string
+    GrantSubscriptionRequest:
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
+        days:
+          type: integer
+          format: int32
+      required:
+        - accountId
+        - days
+        - tier
     RejectKycRequest:
       type: object
       properties:
@@ -2126,6 +2534,61 @@ components:
             minLength: 1
           maxItems: 15
           minItems: 0
+    UpdatePlanRequest:
+      type: object
+      properties:
+        monthlyPrice:
+          type: integer
+          format: int32
+        activeListingLimit:
+          type: integer
+          format: int32
+        residenceUnitAllowance:
+          type: integer
+          format: int32
+    TierInfo:
+      type: object
+      properties:
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
+        rank:
+          type: integer
+          format: int32
+        monthlyPrice:
+          type: integer
+          format: int32
+        activeListingLimit:
+          type: integer
+          format: int32
+        residenceUnitAllowance:
+          type: integer
+          format: int32
+    ReceiptResponse:
+      type: object
+      properties:
+        downloadUrl:
+          type: string
+    SubscriptionResponse:
+      type: object
+      properties:
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
+        periodEnd:
+          type: string
+          format: date-time
+        activeListingLimit:
+          type: integer
+          format: int32
     PageResponseSearchResult:
       type: object
       properties:
@@ -2381,6 +2844,48 @@ components:
           type: string
         name:
           type: string
+    PageResponseConversationResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConversationResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    PageResponseMessageResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/MessageResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
     PageResponseAnnonceResponse:
       type: object
       properties:

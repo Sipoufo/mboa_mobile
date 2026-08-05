@@ -37,8 +37,8 @@ void main() {
 
     // List the authenticated prestataire's listings
     //
-    //Future<PageResponseAnnonceResponse> listMine1(Pageable pageable) async
-    test('test listMine1', () async {
+    //Future<PageResponseAnnonceResponse> listMine2(Pageable pageable) async
+    test('test listMine2', () async {
       // TODO
     });
 

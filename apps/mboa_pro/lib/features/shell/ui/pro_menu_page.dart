@@ -55,7 +55,9 @@ class ProMenuPage extends StatelessWidget {
                   _MenuEntry(
                     icon: LucideIcons.user,
                     label: l10n.menuProfile,
-                    onTap: () => _go(context, const EditProfileRoute()),
+                    // The hub, not the edit form — it is the entry point to
+                    // edit, certifications and password.
+                    onTap: () => _go(context, const SettingsRoute()),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.bell,

@@ -47,7 +47,7 @@ void main() {
       ..content = ListBuilder(content)
       ..totalElements = totalElements ?? content.length);
 
-    when(() => annoncesApi.listMine1(pageable: any(named: 'pageable')))
+    when(() => annoncesApi.listMine2(pageable: any(named: 'pageable')))
         .thenAnswer(
       (_) async => Response(
         data: page,
@@ -126,7 +126,7 @@ void main() {
     });
 
     test('propagates a network failure so the bloc can fall back', () async {
-      when(() => annoncesApi.listMine1(pageable: any(named: 'pageable')))
+      when(() => annoncesApi.listMine2(pageable: any(named: 'pageable')))
           .thenThrow(
         DioException(requestOptions: RequestOptions(path: '/api/v1/annonces')),
       );

@@ -3,7 +3,7 @@
 > Working tracker for the Flutter monorepo. Update this at the end of each work
 > session. Architecture rules live in `CLAUDE.md`; functional spec in
 > `Documents/Claude/Projects/MyHome/Mboa_Doc10_CDC_Fonctionnel.md` (outside repo).
-> Last updated: 2026-08-04 (routing rework + Pro homepage M14).
+> Last updated: 2026-08-05 (api_client regen; profile hub reachability fixed).
 
 ## How to resume
 1. Read `CLAUDE.md` (rules) + this file (state).
@@ -79,6 +79,21 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 - iOS camera/photo Info.plist permissions in **both** apps.
 - Role-aware account (`AccountRole`) surfaced in KYC Statut label.
 
+## Route reachability (learned the hard way)
+A route in the table is **not** proof it is reachable. The profile hub
+(`SettingsRoute`, the `screenshots/profil/profil.png` design) was orphaned when
+the tab shell replaced it as the post-auth landing — still declared, but nothing
+navigated to it, so it vanished from the running app. Pinned by
+`apps/mboa_pro/test/features/shell/pro_menu_page_test.dart`, which greps `lib/`
+for a navigation source for every `/app` child. Add new entry points there when
+a route is reached by something other than a `push` call.
+
+Pro navigation map: slide menu **Profil → `SettingsRoute` (hub)** → Éditer /
+Certifications / Changer de mot passe; slide menu **Paramètres →
+`SettingsMenuRoute`** (language, phone, deletion). The hub's third button is
+"Changer de mot passe" per the design — `mboa_user`'s hub keeps "Paramètres"
+there instead, because that app has no slide menu.
+
 ## M14 dashboard — what is real and what is not (IMPORTANT)
 The CDC M14 metrics table has **almost no backing API**. Verified against the
 generated client: `AnnonceResponse` has no view/contact field, there is no stats
@@ -90,7 +105,7 @@ endpoint, and `MeResponse` carries no subscription tier.
 | Vues, Contacts, Contrats | ❌ no endpoint — render as "Bientôt" (null, never a fabricated 0) |
 | Conversion, Visites | ❌ no endpoint **and** tier-gated (Basic+) |
 | Position moyenne | ❌ no endpoint **and** tier-gated (Pro+) |
-| Subscription tier | ❌ no endpoint — `AccessContext.tier` is hardcoded `gratuit` (TODO in `home_page.dart`) |
+| Subscription tier | ⚠️ **endpoint now exists** (`SubscriptionsApi.mySubscription`) but is **not wired yet** — `AccessContext.tier` is still hardcoded `gratuit` (TODO in `home_page.dart`). Closes with M13. |
 
 Locked metrics get the RM-M14-02 treatment (blurred value + lock + a single
 "Passer à Basic+" CTA); unavailable ones say so. When the backend ships the
@@ -101,7 +116,14 @@ card is built against Doc 10's M14 metrics, not the mockup's "Entrées/Sorties".
 Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
 
 ## Pending / next (no blockers unless noted)
-- **M10 annonces — next up.** Pro-first: the prestataire must be able to create
+- **M13 subscriptions — next up** (reordered ahead of M10 on 2026-08-05).
+  `SubscriptionsApi` (mySubscription / tiers / subscribe / receipt) + the
+  `MessagerieApi` (M12) arrived in the 2026-08-05 client regen. M13 is the
+  revenue module, is unblocked now, and wiring the real tier makes the M14
+  gating honest; M10 then respects `activeListingLimit` from day one.
+  **Note:** `listMine1` was renamed `listMine2` in that regen — generated
+  operation ids are not stable, expect this on every spec change.
+- **M10 annonces — after M13.** Pro-first: the prestataire must be able to create
   listings before M04/M05 (which are user-app consumption). M10 is also what
   fills "Mes biens" behind the home CTA, which currently dead-ends in
   `AccessRestrictedRoute(comingSoon)`.
@@ -134,7 +156,7 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 143 passing — `mboa_user` 14, `mboa_pro` 66, `mboa_core` 12, `mboa_shared` 51.
+- Tests: 145 passing — `mboa_user` 14, `mboa_pro` 68, `mboa_core` 12, `mboa_shared` 51.
 - `make test` now runs the **package** suites too, not just the two apps, and
   fails the target on the first failing suite.
 - Convention: every bloc/cubit + repository has tests (`bloc_test` + `mocktail`); shared doubles in `test/_helpers/mocks`.

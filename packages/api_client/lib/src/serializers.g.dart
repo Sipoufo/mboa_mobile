@@ -14,6 +14,7 @@ Serializers _$serializers =
           ..add(AuthTokens.serializer)
           ..add(ChangePasswordRequest.serializer)
           ..add(ConfirmPhoneChangeRequest.serializer)
+          ..add(ConversationResponse.serializer)
           ..add(CountryResponse.serializer)
           ..add(CreateAnnonceRequest.serializer)
           ..add(CreateAnnonceRequestPropertyTypeEnum.serializer)
@@ -21,6 +22,8 @@ Serializers _$serializers =
           ..add(CreateUploadRequest.serializer)
           ..add(CreateUploadRequestCategoryEnum.serializer)
           ..add(ForgotPasswordRequest.serializer)
+          ..add(GrantSubscriptionRequest.serializer)
+          ..add(GrantSubscriptionRequestTierEnum.serializer)
           ..add(KycReviewItem.serializer)
           ..add(KycStatusResponse.serializer)
           ..add(LocationOption.serializer)
@@ -31,18 +34,26 @@ Serializers _$serializers =
           ..add(MeResponseAuthProviderEnum.serializer)
           ..add(MeResponseRoleEnum.serializer)
           ..add(MeResponseStatusEnum.serializer)
+          ..add(MessageResponse.serializer)
           ..add(NotificationSetting.serializer)
           ..add(NotificationSettingTypeEnum.serializer)
           ..add(PageResponseAnnonceResponse.serializer)
+          ..add(PageResponseConversationResponse.serializer)
           ..add(PageResponseKycReviewItem.serializer)
+          ..add(PageResponseMessageResponse.serializer)
           ..add(PageResponseResidenceResponse.serializer)
           ..add(PageResponseSearchResult.serializer)
           ..add(PageResponseTypeChangeReviewItem.serializer)
           ..add(Pageable.serializer)
+          ..add(PaymentInitiatedResponse.serializer)
+          ..add(PaymentInitiatedResponseStatusEnum.serializer)
+          ..add(PaymentWebhookRequest.serializer)
+          ..add(PaymentWebhookRequestStatusEnum.serializer)
           ..add(PhoneChangeResponse.serializer)
           ..add(PresignedUpload.serializer)
           ..add(PrestataireProfileResponse.serializer)
           ..add(PrestataireProfileResponseTypeEnum.serializer)
+          ..add(ReceiptResponse.serializer)
           ..add(RefreshTokenRequest.serializer)
           ..add(RegisterDeviceRequest.serializer)
           ..add(RegisterDeviceRequestPlatformEnum.serializer)
@@ -63,10 +74,19 @@ Serializers _$serializers =
           ..add(SearchResultItemPropertyTypeEnum.serializer)
           ..add(SearchResultItemStatusEnum.serializer)
           ..add(SearchResultTypeEnum.serializer)
+          ..add(SendMessageRequest.serializer)
           ..add(SendOtpRequest.serializer)
           ..add(SocialLoginRequest.serializer)
           ..add(SocialLoginRequestProviderEnum.serializer)
+          ..add(StartConversationRequest.serializer)
           ..add(SubmitKycRequest.serializer)
+          ..add(SubscribeRequest.serializer)
+          ..add(SubscribeRequestMethodEnum.serializer)
+          ..add(SubscribeRequestTierEnum.serializer)
+          ..add(SubscriptionResponse.serializer)
+          ..add(SubscriptionResponseTierEnum.serializer)
+          ..add(TierInfo.serializer)
+          ..add(TierInfoTierEnum.serializer)
           ..add(TypeChangeResult.serializer)
           ..add(TypeChangeResultRequestedTypeEnum.serializer)
           ..add(TypeChangeReviewItem.serializer)
@@ -84,6 +104,7 @@ Serializers _$serializers =
           ..add(UnitSummaryStatusEnum.serializer)
           ..add(UpdateAnnonceRequest.serializer)
           ..add(UpdateAnnonceRequestPropertyTypeEnum.serializer)
+          ..add(UpdatePlanRequest.serializer)
           ..add(UpdatePrestataireProfileRequest.serializer)
           ..add(UpdatePrestataireProfileRequestTypeEnum.serializer)
           ..add(UpdateResidenceRequest.serializer)
@@ -100,8 +121,18 @@ Serializers _$serializers =
             () => ListBuilder<AnnonceResponse>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ConversationResponse),
+            ]),
+            () => ListBuilder<ConversationResponse>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(KycReviewItem)]),
             () => ListBuilder<KycReviewItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(MessageResponse)]),
+            () => ListBuilder<MessageResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
@@ -118,6 +149,18 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(SearchResult)]),
             () => ListBuilder<SearchResult>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),

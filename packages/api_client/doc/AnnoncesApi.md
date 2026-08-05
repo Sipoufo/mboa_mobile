@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**create1**](AnnoncesApi.md#create1) | **POST** /api/v1/annonces | Create a listing (draft)
 [**delete1**](AnnoncesApi.md#delete1) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
 [**getOne1**](AnnoncesApi.md#getone1) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
-[**listMine1**](AnnoncesApi.md#listmine1) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
+[**listMine2**](AnnoncesApi.md#listmine2) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
 [**markRented**](AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
 [**publish**](AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
 [**reserve**](AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
@@ -183,8 +183,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listMine1**
-> PageResponseAnnonceResponse listMine1(pageable)
+# **listMine2**
+> PageResponseAnnonceResponse listMine2(pageable)
 
 List the authenticated prestataire's listings
 
@@ -196,10 +196,10 @@ final api = ApiClient().getAnnoncesApi();
 final Pageable pageable = ; // Pageable | 
 
 try {
-    final response = api.listMine1(pageable);
+    final response = api.listMine2(pageable);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->listMine1: $e\n');
+    print('Exception when calling AnnoncesApi->listMine2: $e\n');
 }
 ```
 

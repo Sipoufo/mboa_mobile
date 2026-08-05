@@ -112,11 +112,16 @@ class _SettingsViewState extends State<SettingsView> {
                                           : () => context.router.push(CertificationsRoute(accountRole: data.role)),
                                     ),
                                     const SizedBox(height: Dimens.spacingLg),
+                                    // Per the Profil design. "Paramètres"
+                                    // (language, phone, deletion) is reached
+                                    // from the Pro slide menu instead, so it
+                                    // stays one tap away without a second
+                                    // button competing here.
                                     Button.outline(
-                                      title: l10n.settingsMenuTitle,
-                                      icon: const Icon(LucideIcons.settings, size: Dimens.icon),
+                                      title: l10n.settingsChangePassword,
+                                      icon: const Icon(LucideIcons.keyRound, size: Dimens.icon),
                                       iconAlignment: IconAlignment.start,
-                                      onPressed: () => context.router.push(const SettingsMenuRoute()),
+                                      onPressed: () => context.router.push(const ChangePasswordRoute()),
                                     ),
                                   ],
                                 ),

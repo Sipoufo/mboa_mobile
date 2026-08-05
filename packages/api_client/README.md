@@ -68,6 +68,8 @@ Class | Method | HTTP request | Description
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**approve1**](doc/AdminKYCApi.md#approve1) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPending1**](doc/AdminKYCApi.md#listpending1) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**reject1**](doc/AdminKYCApi.md#reject1) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grant**](doc/AdminSubscriptionsApi.md#grant) | **POST** /api/v1/admin/subscriptions | Grant a tier to an account for a number of days, without payment
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updatePlan**](doc/AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approve**](doc/AdminTypeChangeApi.md#approve) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPending**](doc/AdminTypeChangeApi.md#listpending) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**reject**](doc/AdminTypeChangeApi.md#reject) | **POST** /api/v1/admin/type-change-requests/{id}/reject | Reject a type-change request with a reason
@@ -75,7 +77,7 @@ Class | Method | HTTP request | Description
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**create1**](doc/AnnoncesApi.md#create1) | **POST** /api/v1/annonces | Create a listing (draft)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**delete1**](doc/AnnoncesApi.md#delete1) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**getOne1**](doc/AnnoncesApi.md#getone1) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**listMine1**](doc/AnnoncesApi.md#listmine1) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**listMine2**](doc/AnnoncesApi.md#listmine2) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**markRented**](doc/AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**publish**](doc/AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**reserve**](doc/AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
@@ -99,6 +101,11 @@ Class | Method | HTTP request | Description
 [*LocationsApi*](doc/LocationsApi.md) | [**districts**](doc/LocationsApi.md#districts) | **GET** /api/v1/locations/cities/{cityId}/districts | List a city&#39;s districts (quartiers)
 [*LocationsApi*](doc/LocationsApi.md) | [**regions**](doc/LocationsApi.md#regions) | **GET** /api/v1/locations/regions | List regions (optionally filtered by country)
 [*MediaApi*](doc/MediaApi.md) | [**createUpload**](doc/MediaApi.md#createupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
+[*MessagerieApi*](doc/MessagerieApi.md) | [**listMessages**](doc/MessagerieApi.md#listmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first
+[*MessagerieApi*](doc/MessagerieApi.md) | [**listMine1**](doc/MessagerieApi.md#listmine1) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
+[*MessagerieApi*](doc/MessagerieApi.md) | [**markRead**](doc/MessagerieApi.md#markread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
+[*MessagerieApi*](doc/MessagerieApi.md) | [**send**](doc/MessagerieApi.md#send) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
+[*MessagerieApi*](doc/MessagerieApi.md) | [**start**](doc/MessagerieApi.md#start) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
 [*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**register**](doc/NotificationDevicesApi.md#register) | **POST** /api/v1/notifications/devices | Register or refresh a device push token
 [*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**unregister**](doc/NotificationDevicesApi.md#unregister) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
 [*PasswordApi*](doc/PasswordApi.md) | [**changePassword**](doc/PasswordApi.md#changepassword) | **POST** /api/v1/account/password | Change the password (revokes other sessions)
@@ -118,6 +125,11 @@ Class | Method | HTTP request | Description
 [*ResidencesApi*](doc/ResidencesApi.md) | [**update**](doc/ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
 [*SearchApi*](doc/SearchApi.md) | [**residenceDetail**](doc/SearchApi.md#residencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**search**](doc/SearchApi.md#search) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**mySubscription**](doc/SubscriptionsApi.md#mysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**receipt**](doc/SubscriptionsApi.md#receipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**subscribe**](doc/SubscriptionsApi.md#subscribe) | **POST** /api/v1/subscriptions | Subscribe to (or upgrade to) a paid tier; initiates a mobile-money payment
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**tiers**](doc/SubscriptionsApi.md#tiers) | **GET** /api/v1/subscriptions/tiers | List the subscription tiers and their current parameters
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**webhook**](doc/SubscriptionsApi.md#webhook) | **POST** /api/v1/subscriptions/webhook | Payment confirmation webhook (HMAC-verified)
 [*UserProfileApi*](doc/UserProfileApi.md) | [**myProfile**](doc/UserProfileApi.md#myprofile) | **GET** /api/v1/users/me | Get the authenticated user&#39;s profile
 [*UserProfileApi*](doc/UserProfileApi.md) | [**updateMyProfile**](doc/UserProfileApi.md#updatemyprofile) | **PATCH** /api/v1/users/me | Partially update the authenticated user&#39;s profile
 [*UserSettingsApi*](doc/UserSettingsApi.md) | [**mySettings**](doc/UserSettingsApi.md#mysettings) | **GET** /api/v1/users/me/settings | Get the authenticated account&#39;s settings
@@ -130,11 +142,13 @@ Class | Method | HTTP request | Description
  - [AuthTokens](doc/AuthTokens.md)
  - [ChangePasswordRequest](doc/ChangePasswordRequest.md)
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
+ - [ConversationResponse](doc/ConversationResponse.md)
  - [CountryResponse](doc/CountryResponse.md)
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
  - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
  - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
+ - [GrantSubscriptionRequest](doc/GrantSubscriptionRequest.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
  - [LocationOption](doc/LocationOption.md)
@@ -142,16 +156,22 @@ Class | Method | HTTP request | Description
  - [LoginRequest](doc/LoginRequest.md)
  - [LogoutRequest](doc/LogoutRequest.md)
  - [MeResponse](doc/MeResponse.md)
+ - [MessageResponse](doc/MessageResponse.md)
  - [NotificationSetting](doc/NotificationSetting.md)
  - [PageResponseAnnonceResponse](doc/PageResponseAnnonceResponse.md)
+ - [PageResponseConversationResponse](doc/PageResponseConversationResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
+ - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
  - [PageResponseResidenceResponse](doc/PageResponseResidenceResponse.md)
  - [PageResponseSearchResult](doc/PageResponseSearchResult.md)
  - [PageResponseTypeChangeReviewItem](doc/PageResponseTypeChangeReviewItem.md)
  - [Pageable](doc/Pageable.md)
+ - [PaymentInitiatedResponse](doc/PaymentInitiatedResponse.md)
+ - [PaymentWebhookRequest](doc/PaymentWebhookRequest.md)
  - [PhoneChangeResponse](doc/PhoneChangeResponse.md)
  - [PresignedUpload](doc/PresignedUpload.md)
  - [PrestataireProfileResponse](doc/PrestataireProfileResponse.md)
+ - [ReceiptResponse](doc/ReceiptResponse.md)
  - [RefreshTokenRequest](doc/RefreshTokenRequest.md)
  - [RegisterDeviceRequest](doc/RegisterDeviceRequest.md)
  - [RegisterProfessionalRequest](doc/RegisterProfessionalRequest.md)
@@ -165,9 +185,14 @@ Class | Method | HTTP request | Description
  - [ResidenceSearchCard](doc/ResidenceSearchCard.md)
  - [SearchResult](doc/SearchResult.md)
  - [SearchResultItem](doc/SearchResultItem.md)
+ - [SendMessageRequest](doc/SendMessageRequest.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
  - [SocialLoginRequest](doc/SocialLoginRequest.md)
+ - [StartConversationRequest](doc/StartConversationRequest.md)
  - [SubmitKycRequest](doc/SubmitKycRequest.md)
+ - [SubscribeRequest](doc/SubscribeRequest.md)
+ - [SubscriptionResponse](doc/SubscriptionResponse.md)
+ - [TierInfo](doc/TierInfo.md)
  - [TypeChangeResult](doc/TypeChangeResult.md)
  - [TypeChangeReviewItem](doc/TypeChangeReviewItem.md)
  - [TypeChangeReviewResult](doc/TypeChangeReviewResult.md)
@@ -175,6 +200,7 @@ Class | Method | HTTP request | Description
  - [UnitGroup](doc/UnitGroup.md)
  - [UnitSummary](doc/UnitSummary.md)
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
+ - [UpdatePlanRequest](doc/UpdatePlanRequest.md)
  - [UpdatePrestataireProfileRequest](doc/UpdatePrestataireProfileRequest.md)
  - [UpdateResidenceRequest](doc/UpdateResidenceRequest.md)
  - [UpdateUserProfileRequest](doc/UpdateUserProfileRequest.md)

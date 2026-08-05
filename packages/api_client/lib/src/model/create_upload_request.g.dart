@@ -16,8 +16,14 @@ const CreateUploadRequestCategoryEnum
 _$createUploadRequestCategoryEnum_PROFILE_PHOTO =
     const CreateUploadRequestCategoryEnum._('PROFILE_PHOTO');
 const CreateUploadRequestCategoryEnum
+_$createUploadRequestCategoryEnum_MESSAGE_ATTACHMENT =
+    const CreateUploadRequestCategoryEnum._('MESSAGE_ATTACHMENT');
+const CreateUploadRequestCategoryEnum
 _$createUploadRequestCategoryEnum_VISIT_REPORT =
     const CreateUploadRequestCategoryEnum._('VISIT_REPORT');
+const CreateUploadRequestCategoryEnum
+_$createUploadRequestCategoryEnum_RECEIPT =
+    const CreateUploadRequestCategoryEnum._('RECEIPT');
 const CreateUploadRequestCategoryEnum
 _$createUploadRequestCategoryEnum_unknownDefaultOpenApi =
     const CreateUploadRequestCategoryEnum._('unknownDefaultOpenApi');
@@ -32,8 +38,12 @@ CreateUploadRequestCategoryEnum _$createUploadRequestCategoryEnumValueOf(
       return _$createUploadRequestCategoryEnum_LISTING_PHOTO;
     case 'PROFILE_PHOTO':
       return _$createUploadRequestCategoryEnum_PROFILE_PHOTO;
+    case 'MESSAGE_ATTACHMENT':
+      return _$createUploadRequestCategoryEnum_MESSAGE_ATTACHMENT;
     case 'VISIT_REPORT':
       return _$createUploadRequestCategoryEnum_VISIT_REPORT;
+    case 'RECEIPT':
+      return _$createUploadRequestCategoryEnum_RECEIPT;
     case 'unknownDefaultOpenApi':
       return _$createUploadRequestCategoryEnum_unknownDefaultOpenApi;
     default:
@@ -48,7 +58,9 @@ _$createUploadRequestCategoryEnumValues =
         _$createUploadRequestCategoryEnum_KYC_DOCUMENT,
         _$createUploadRequestCategoryEnum_LISTING_PHOTO,
         _$createUploadRequestCategoryEnum_PROFILE_PHOTO,
+        _$createUploadRequestCategoryEnum_MESSAGE_ATTACHMENT,
         _$createUploadRequestCategoryEnum_VISIT_REPORT,
+        _$createUploadRequestCategoryEnum_RECEIPT,
         _$createUploadRequestCategoryEnum_unknownDefaultOpenApi,
       ],
     );
@@ -63,14 +75,18 @@ class _$CreateUploadRequestCategoryEnumSerializer
     'KYC_DOCUMENT': 'KYC_DOCUMENT',
     'LISTING_PHOTO': 'LISTING_PHOTO',
     'PROFILE_PHOTO': 'PROFILE_PHOTO',
+    'MESSAGE_ATTACHMENT': 'MESSAGE_ATTACHMENT',
     'VISIT_REPORT': 'VISIT_REPORT',
+    'RECEIPT': 'RECEIPT',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'KYC_DOCUMENT': 'KYC_DOCUMENT',
     'LISTING_PHOTO': 'LISTING_PHOTO',
     'PROFILE_PHOTO': 'PROFILE_PHOTO',
+    'MESSAGE_ATTACHMENT': 'MESSAGE_ATTACHMENT',
     'VISIT_REPORT': 'VISIT_REPORT',
+    'RECEIPT': 'RECEIPT',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
