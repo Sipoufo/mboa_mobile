@@ -143,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormCityNotDetected": MessageLookupByLibrary.simpleMessage(
       "Ville non détectée. Choisissez-la manuellement.",
     ),
+    "annonceFormCurrency": MessageLookupByLibrary.simpleMessage("XAF"),
     "annonceFormDetectingCity": MessageLookupByLibrary.simpleMessage(
       "Détection de la ville…",
     ),
@@ -160,6 +161,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormFieldBathrooms": MessageLookupByLibrary.simpleMessage(
       "Salles de bain",
+    ),
+    "annonceFormFieldBathrooms2": MessageLookupByLibrary.simpleMessage(
+      "Salles de bain",
+    ),
+    "annonceFormFieldCharges": MessageLookupByLibrary.simpleMessage(
+      "Charges incluses",
+    ),
+    "annonceFormFieldChargesAmount": MessageLookupByLibrary.simpleMessage(
+      "Montant des charges",
     ),
     "annonceFormFieldDescription": MessageLookupByLibrary.simpleMessage(
       "Description",
@@ -186,6 +196,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormKindSingle": MessageLookupByLibrary.simpleMessage(
       "Bien Unique",
+    ),
+    "annonceFormLoadFailed": MessageLookupByLibrary.simpleMessage(
+      "Impossible de charger ce bien.",
     ),
     "annonceFormLocating": MessageLookupByLibrary.simpleMessage(
       "Localisation en cours…",
@@ -217,6 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormUnitPrefix": MessageLookupByLibrary.simpleMessage(
       "Préfixe (ex. Chambre)",
     ),
+    "annonceFormUnitSquareMetres": MessageLookupByLibrary.simpleMessage("m²"),
     "annonceFormUnitsAdd": MessageLookupByLibrary.simpleMessage(
       "Ajouter un groupe d’unités",
     ),
@@ -230,6 +244,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceStatusReserved": MessageLookupByLibrary.simpleMessage("Réservé"),
     "annoncesActionEdit": MessageLookupByLibrary.simpleMessage("Modifier"),
     "annoncesActionHistory": MessageLookupByLibrary.simpleMessage("Historique"),
+    "annoncesActionMore": MessageLookupByLibrary.simpleMessage(
+      "Plus d’actions",
+    ),
     "annoncesEmptyAvailable": MessageLookupByLibrary.simpleMessage(
       "Aucun bien disponible. Appuyez sur + pour en enregistrer un.",
     ),
@@ -334,6 +351,21 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Editer le Profil",
+    ),
+    "errorKycRequired": MessageLookupByLibrary.simpleMessage(
+      "Vos certifications doivent être validées avant cette action.",
+    ),
+    "errorListingLimit": MessageLookupByLibrary.simpleMessage(
+      "Limite d’annonces actives atteinte pour votre formule.",
+    ),
+    "errorProfileIncomplete": MessageLookupByLibrary.simpleMessage(
+      "Complétez votre profil (photo, type, ville) avant de continuer.",
+    ),
+    "errorResidenceUnitLimit": MessageLookupByLibrary.simpleMessage(
+      "Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.",
+    ),
+    "errorValidation": MessageLookupByLibrary.simpleMessage(
+      "Certaines informations sont invalides. Vérifiez le formulaire.",
     ),
     "exitAppBody": MessageLookupByLibrary.simpleMessage(
       "Appuyez de nouveau pour quitter.",
@@ -625,6 +657,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Connectez-vous",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Créer un compte"),
+    "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Pièces d’identifications et tout autres vérifications requises",
     ),

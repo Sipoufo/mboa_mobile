@@ -140,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormCityNotDetected": MessageLookupByLibrary.simpleMessage(
       "City not detected. Pick it manually.",
     ),
+    "annonceFormCurrency": MessageLookupByLibrary.simpleMessage("XAF"),
     "annonceFormDetectingCity": MessageLookupByLibrary.simpleMessage(
       "Detecting your city…",
     ),
@@ -157,6 +158,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormFieldBathrooms": MessageLookupByLibrary.simpleMessage(
       "Bathrooms",
+    ),
+    "annonceFormFieldBathrooms2": MessageLookupByLibrary.simpleMessage(
+      "Bathrooms",
+    ),
+    "annonceFormFieldCharges": MessageLookupByLibrary.simpleMessage(
+      "Charges included",
+    ),
+    "annonceFormFieldChargesAmount": MessageLookupByLibrary.simpleMessage(
+      "Charges amount",
     ),
     "annonceFormFieldDescription": MessageLookupByLibrary.simpleMessage(
       "Description",
@@ -179,10 +189,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormFieldTitle": MessageLookupByLibrary.simpleMessage("Title"),
     "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
     "annonceFormKindMultiple": MessageLookupByLibrary.simpleMessage(
-      "Multi-unit",
+      "Residence",
     ),
     "annonceFormKindSingle": MessageLookupByLibrary.simpleMessage(
       "Single property",
+    ),
+    "annonceFormLoadFailed": MessageLookupByLibrary.simpleMessage(
+      "Couldn’t load this property.",
     ),
     "annonceFormLocating": MessageLookupByLibrary.simpleMessage(
       "Getting your location…",
@@ -214,6 +227,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormUnitPrefix": MessageLookupByLibrary.simpleMessage(
       "Prefix (e.g. Room)",
     ),
+    "annonceFormUnitSquareMetres": MessageLookupByLibrary.simpleMessage("m²"),
     "annonceFormUnitsAdd": MessageLookupByLibrary.simpleMessage(
       "Add a unit group",
     ),
@@ -225,15 +239,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceStatusReserved": MessageLookupByLibrary.simpleMessage("Reserved"),
     "annoncesActionEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "annoncesActionHistory": MessageLookupByLibrary.simpleMessage("History"),
+    "annoncesActionMore": MessageLookupByLibrary.simpleMessage("More actions"),
     "annoncesEmptyAvailable": MessageLookupByLibrary.simpleMessage(
       "No available property. Tap + to register one.",
     ),
     "annoncesEmptyOccupied": MessageLookupByLibrary.simpleMessage(
       "No occupied property.",
     ),
-    "annoncesMultipleTitle": MessageLookupByLibrary.simpleMessage(
-      "Multi-unit properties",
-    ),
+    "annoncesMultipleTitle": MessageLookupByLibrary.simpleMessage("Residences"),
     "annoncesPerMonth": m4,
     "annoncesRooms": m5,
     "annoncesSingleTitle": MessageLookupByLibrary.simpleMessage(
@@ -316,6 +329,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "This is permanent. Your personal data will be deleted and you will lose access to your account.",
     ),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+    "errorKycRequired": MessageLookupByLibrary.simpleMessage(
+      "Your certifications must be approved before this action.",
+    ),
+    "errorListingLimit": MessageLookupByLibrary.simpleMessage(
+      "You’ve reached your plan’s active-listing limit.",
+    ),
+    "errorProfileIncomplete": MessageLookupByLibrary.simpleMessage(
+      "Complete your profile (photo, type, city) first.",
+    ),
+    "errorResidenceUnitLimit": MessageLookupByLibrary.simpleMessage(
+      "Your plan doesn’t allow that many units. Upgrade, or reduce the unit count.",
+    ),
+    "errorValidation": MessageLookupByLibrary.simpleMessage(
+      "Some details are invalid. Check the form.",
+    ),
     "exitAppBody": MessageLookupByLibrary.simpleMessage(
       "Press back again to exit.",
     ),
@@ -457,9 +485,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mesBiensAttributionsBody": MessageLookupByLibrary.simpleMessage(
       "Assign a unit",
     ),
-    "mesBiensMultiple": MessageLookupByLibrary.simpleMessage(
-      "Multi-unit\nproperties",
-    ),
+    "mesBiensMultiple": MessageLookupByLibrary.simpleMessage("Residences"),
     "mesBiensPending": MessageLookupByLibrary.simpleMessage(
       "Awaiting\nvalidation",
     ),
@@ -582,6 +608,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "registerRolePrestataire": MessageLookupByLibrary.simpleMessage("Provider"),
     "registerSignInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
+    "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Identity documents and any other required verifications",
     ),

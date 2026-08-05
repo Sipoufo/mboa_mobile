@@ -9,8 +9,11 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/annonce_form_bloc.dart';
+import '../bloc/annonces_bloc.dart';
+import '../bloc/residences_bloc.dart';
 import '../models/annonce.dart';
 import '../models/annonce_draft.dart';
+import 'widgets/form_field_shell.dart';
 import 'widgets/form_text_field.dart';
 import 'widgets/location_field.dart';
 import 'widgets/photo_strip.dart';
@@ -31,8 +34,8 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<AnnonceFormBloc>(
-        create: (_) =>
-            getIt<AnnonceFormBloc>()..add(AnnonceFormStarted(kind: kind)),
+        create: (_) => getIt<AnnonceFormBloc>()
+          ..add(AnnonceFormStarted(kind: kind, annonceId: annonceId)),
         child: this,
       );
 
@@ -46,20 +49,32 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
           (curr is AnnonceFormEditing && curr.error != null),
       listener: (context, state) {
         switch (state) {
-          case AnnonceFormSaved():
+          case AnnonceFormSaved(:final kind):
+            // The list is session-scoped, so refreshing it here means the new
+            // listing is there when the user lands back on it.
+            switch (kind) {
+              case AnnonceKind.single:
+                context
+                    .read<AnnoncesBloc>()
+                    .add(const AnnoncesRefreshRequested());
+              case AnnonceKind.residence:
+                context
+                    .read<ResidencesBloc>()
+                    .add(const ResidencesRefreshRequested());
+            }
             MboaToast.success(
               context: context,
               title: l10n.annonceFormSavedDraft,
             );
             context.router.maybePop();
-          case AnnonceFormEditing(:final error?):
+          case AnnonceFormEditing(:final error?, :final apiError):
             MboaToast.error(
               context: context,
               title: l10n.commonErrorTitle,
               description: switch (error) {
                 AnnonceFormError.photoUpload => l10n.annonceFormErrorPhoto,
                 AnnonceFormError.incomplete => l10n.annonceFormErrorIncomplete,
-                AnnonceFormError.save => l10n.annonceFormErrorSave,
+                AnnonceFormError.save => _saveMessage(l10n, apiError),
               },
             );
           default:
@@ -72,6 +87,7 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
           AnnonceFormSubmitting(:final draft) => AnnonceFormEditing(draft),
           _ => null,
         };
+        final failedToLoad = state is AnnonceFormLoadFailure;
 
         return Scaffold(
           backgroundColor: context.mboaColors.background,
@@ -82,9 +98,11 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
                   : l10n.annonceFormTitleEdit,
             ),
           ),
-          body: editing == null
-              ? const Center(child: Loader())
-              : _Form(state: editing),
+          body: switch ((editing, failedToLoad)) {
+            (_, true) => Center(child: Text(l10n.annonceFormLoadFailed)),
+            (final AnnonceFormEditing e, _) => _Form(state: e),
+            _ => const Center(child: Loader()),
+          },
           bottomNavigationBar: editing == null
               ? null
               : SafeArea(
@@ -105,6 +123,29 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
       },
     );
   }
+}
+
+/// Turns a backend error into something actionable.
+///
+/// Known codes get a written explanation; an unknown code still shows the
+/// backend's own message if it sent one, and only a truly opaque failure falls
+/// back to "try again".
+String _saveMessage(I18n l10n, ApiError? error) {
+  if (error == null) return l10n.annonceFormErrorSave;
+
+  if (error.hasCode('RESIDENCE_UNIT_LIMIT')) return l10n.errorResidenceUnitLimit;
+  if (error.hasCode('LISTING_LIMIT') ||
+      error.hasCode('ANNONCE_LIMIT') ||
+      error.hasCode('ACTIVE_LISTING_LIMIT')) {
+    return l10n.errorListingLimit;
+  }
+  if (error.hasCode('PROFILE_INCOMPLETE')) return l10n.errorProfileIncomplete;
+  if (error.hasCode('KYC_REQUIRED')) return l10n.errorKycRequired;
+  if (error.statusCode == 400 || error.statusCode == 422) {
+    return error.message ?? l10n.errorValidation;
+  }
+
+  return error.message ?? l10n.annonceFormErrorSave;
 }
 
 class _Form extends StatelessWidget {
@@ -175,7 +216,8 @@ class _Form extends StatelessWidget {
           ),
           const SizedBox(height: Dimens.spacing),
           FormTextField(
-            label: '${l10n.annonceFormFieldPrice} (XAF)',
+            label: l10n.annonceFormFieldPrice,
+            suffixText: l10n.annonceFormCurrency,
             keyboardType: TextInputType.number,
             initialValue: draft.monthlyRent?.toString() ?? '',
             onChanged: (value) => _change(
@@ -184,12 +226,14 @@ class _Form extends StatelessWidget {
             ),
           ),
         ],
+        if (!isResidence) ...[
         const SizedBox(height: Dimens.spacing),
         Row(
           children: [
             Expanded(
               child: FormTextField(
                 label: l10n.annonceFormFieldSurface,
+                suffixText: l10n.annonceFormUnitSquareMetres,
                 keyboardType: TextInputType.number,
                 initialValue: draft.surfaceArea?.toString() ?? '',
                 onChanged: (value) => _change(
@@ -212,6 +256,59 @@ class _Form extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: Dimens.spacing),
+        Row(
+          children: [
+            Expanded(
+              child: FormTextField(
+                label: l10n.annonceFormFieldBathrooms,
+                keyboardType: TextInputType.number,
+                initialValue: draft.bathroomCount?.toString() ?? '',
+                onChanged: (value) => _change(
+                  context,
+                  (d) => d.copyWith(bathroomCount: int.tryParse(value)),
+                ),
+              ),
+            ),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: FormFieldShell(
+                label: l10n.annonceFormFieldFurnished,
+                trailing: Switch(
+                  value: draft.furnished ?? false,
+                  onChanged: (value) =>
+                      _change(context, (d) => d.copyWith(furnished: value)),
+                ),
+                child: const SizedBox.shrink(),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Dimens.spacing),
+        FormFieldShell(
+          label: l10n.annonceFormFieldCharges,
+          trailing: Switch(
+            value: draft.chargesIncluded ?? false,
+            onChanged: (value) =>
+                _change(context, (d) => d.copyWith(chargesIncluded: value)),
+          ),
+          child: const SizedBox.shrink(),
+        ),
+        // Only meaningful when charges are separate from the rent.
+        if (draft.chargesIncluded != true) ...[
+          const SizedBox(height: Dimens.spacing),
+          FormTextField(
+            label: l10n.annonceFormFieldChargesAmount,
+            suffixText: l10n.annonceFormCurrency,
+            keyboardType: TextInputType.number,
+            initialValue: draft.chargesAmount?.toString() ?? '',
+            onChanged: (value) => _change(
+              context,
+              (d) => d.copyWith(chargesAmount: int.tryParse(value)),
+            ),
+          ),
+        ],
+        ],
         const SizedBox(height: Dimens.spacing),
         LocationField(location: draft.location),
         const SizedBox(height: Dimens.spacing),
@@ -254,14 +351,21 @@ class _PropertyTypeField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
 
-    return DropdownButtonFormField<PropertyType>(
-      initialValue: value,
-      decoration: InputDecoration(labelText: l10n.annonceFormFieldType),
-      items: [
-        for (final type in PropertyType.values)
-          DropdownMenuItem(value: type, child: Text(_label(type))),
-      ],
-      onChanged: (type) => type == null ? null : onChanged(type),
+    return FormFieldShell(
+      label: l10n.annonceFormFieldType,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<PropertyType>(
+          value: value,
+          isExpanded: true,
+          isDense: true,
+          style: context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
+          items: [
+            for (final type in PropertyType.values)
+              DropdownMenuItem(value: type, child: Text(_label(type))),
+          ],
+          onChanged: (type) => type == null ? null : onChanged(type),
+        ),
+      ),
     );
   }
 
@@ -299,14 +403,11 @@ class _AvailabilityField extends StatelessWidget {
         );
         if (picked != null) onChanged(picked);
       },
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: l10n.annonceFormFieldAvailability,
-          suffixIcon: Icon(LucideIcons.calendar, color: colors.primary),
-        ),
+      child: FormFieldShell(
+        label: l10n.annonceFormFieldAvailability,
+        trailing: Icon(LucideIcons.calendar, color: colors.primary),
         child: Text(
           value == null ? '--/--' : DateFormat.yMMMMd().format(value!),
-          style: context.mboaText.body,
         ),
       ),
     );

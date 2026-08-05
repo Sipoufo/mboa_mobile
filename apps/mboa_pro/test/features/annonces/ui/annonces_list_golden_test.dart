@@ -70,6 +70,8 @@ void main() {
               for (final annonce in listings)
                 AnnonceCard(
                   annonce: annonce,
+                  activeCount: 2,
+                  onTransition: (_) {},
                   onEdit: () {},
                   onHistory: () {},
                   onAttributions: () {},

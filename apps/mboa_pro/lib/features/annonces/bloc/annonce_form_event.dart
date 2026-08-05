@@ -7,15 +7,20 @@ sealed class AnnonceFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Opens the form, either blank for [kind] or seeded with [draft] when editing.
+/// Opens the form.
+///
+/// Blank for [kind], or — when [annonceId] is set — seeded from that listing,
+/// which is fetched here rather than passed in so a deep link to the edit route
+/// works without the list being loaded.
 final class AnnonceFormStarted extends AnnonceFormEvent {
-  const AnnonceFormStarted({required this.kind, this.draft});
+  const AnnonceFormStarted({required this.kind, this.annonceId, this.draft});
 
   final AnnonceKind kind;
+  final String? annonceId;
   final AnnonceDraft? draft;
 
   @override
-  List<Object?> get props => [kind, draft];
+  List<Object?> get props => [kind, annonceId, draft];
 }
 
 final class AnnonceFormPhotoAdded extends AnnonceFormEvent {

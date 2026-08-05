@@ -5,7 +5,9 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../models/annonce.dart';
+import '../../models/annonce_status.dart';
 import 'annonce_status_chip.dart';
+import 'status_actions_menu.dart';
 
 /// One listing on the Biens Uniques list.
 ///
@@ -19,6 +21,8 @@ class AnnonceCard extends StatelessWidget {
     required this.onEdit,
     required this.onHistory,
     required this.onAttributions,
+    required this.onTransition,
+    required this.activeCount,
     this.onTap,
     this.isBusy = false,
   });
@@ -27,6 +31,10 @@ class AnnonceCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onHistory;
   final VoidCallback onAttributions;
+  final ValueChanged<AnnonceTransition> onTransition;
+
+  /// Active listings across the portfolio, for the tier limit on publish.
+  final int activeCount;
   final VoidCallback? onTap;
 
   /// A transition or delete is in flight for this listing specifically.
@@ -58,6 +66,13 @@ class AnnonceCard extends StatelessWidget {
                     _Thumbnail(url: annonce.coverUrl),
                     const SizedBox(width: Dimens.spacingMd),
                     Expanded(child: _Summary(annonce: annonce)),
+                    StatusActionsMenu(
+                      status: annonce.status,
+                      photoCount: annonce.photoKeys.length,
+                      activeCount: activeCount,
+                      enabled: !isBusy,
+                      onSelected: onTransition,
+                    ),
                   ],
                 ),
               ),

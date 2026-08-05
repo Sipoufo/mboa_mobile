@@ -9,6 +9,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../bloc/annonce_form_bloc.dart';
 import '../../data/location_capture.dart';
 import '../../models/annonce_draft.dart';
+import 'form_field_shell.dart';
 import 'form_text_field.dart';
 
 /// The design's single "Localisation" field, over the three values the API
@@ -136,23 +137,17 @@ class _LocationFieldState extends State<LocationField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
+        FormFieldShell(
+          label: l10n.annonceFormFieldLocation,
           onTap: _busy ? null : _start,
-          child: InputDecorator(
-            decoration: InputDecoration(
-              labelText: l10n.annonceFormFieldLocation,
-              suffixIcon: _busy
-                  ? const Padding(
-                      padding: EdgeInsets.all(Dimens.spacingMd),
-                      child: Loader(),
-                    )
-                  : Icon(LucideIcons.mapPinHouse, color: colors.primary),
-            ),
-            child: Text(
-              location?.label ?? l10n.homeLocationEmpty,
-              style: context.mboaText.body,
-            ),
-          ),
+          trailing: _busy
+              ? const SizedBox(
+                  width: Dimens.loaderSizeSm,
+                  height: Dimens.loaderSizeSm,
+                  child: Loader(),
+                )
+              : Icon(LucideIcons.mapPinHouse, color: colors.primary),
+          child: Text(location?.label ?? l10n.homeLocationEmpty),
         ),
         if (_busy && _status != null) ...[
           const SizedBox(height: Dimens.spacingXs),

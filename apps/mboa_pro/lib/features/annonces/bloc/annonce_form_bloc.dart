@@ -46,12 +46,31 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
   /// CE-M10-01 asks for automatic retries on a failed photo upload.
   final int uploadRetries;
 
-  void _onStarted(AnnonceFormStarted event, Emitter<AnnonceFormState> emit) {
-    emit(
-      AnnonceFormEditing(
-        event.draft ?? AnnonceDraft(kind: event.kind),
-      ),
-    );
+  Future<void> _onStarted(
+    AnnonceFormStarted event,
+    Emitter<AnnonceFormState> emit,
+  ) async {
+    if (event.draft != null) {
+      emit(AnnonceFormEditing(event.draft!));
+      return;
+    }
+
+    final id = event.annonceId;
+    if (id == null) {
+      emit(AnnonceFormEditing(AnnonceDraft(kind: event.kind)));
+      return;
+    }
+
+    // Editing: show the loader until the listing is in hand, rather than an
+    // empty form that fills in underneath the user.
+    emit(const AnnonceFormLoading());
+    try {
+      emit(AnnonceFormEditing(
+        AnnonceDraft.fromAnnonce(await _annonces.getOne(id)),
+      ));
+    } catch (_) {
+      emit(const AnnonceFormLoadFailure());
+    }
   }
 
   AnnonceFormEditing? get _editing =>
@@ -185,8 +204,17 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
         AnnonceKind.residence => (await _residences.create(draft)).id,
       };
       emit(AnnonceFormSaved(id: id, kind: draft.kind));
-    } catch (_) {
-      emit(current.copyWith(error: AnnonceFormError.save));
+    } catch (error) {
+      // Keep the backend's own reason — a unit-limit rejection is actionable,
+      // "try again" is not. Attached only when it actually says something, so
+      // a non-null apiError always means "we know why".
+      final api = ApiError.from(error);
+      emit(
+        current.copyWith(
+          error: AnnonceFormError.save,
+          apiError: api.code == null && api.message == null ? null : api,
+        ),
+      );
     }
   }
 }

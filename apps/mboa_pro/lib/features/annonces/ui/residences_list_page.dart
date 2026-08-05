@@ -9,7 +9,9 @@ import '../../../app/router/app_router.gr.dart';
 import '../bloc/residences_bloc.dart';
 import '../models/annonce_draft.dart';
 import '../models/residence.dart';
+import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';
+import 'widgets/status_actions_menu.dart';
 
 /// Biens Multiples list (CDC M10).
 @RoutePage()
@@ -79,7 +81,14 @@ class _ResidencesListPageState extends State<ResidencesListPage> {
                       itemCount: items.length,
                       itemBuilder: (context, index) => _ResidenceCard(
                         residence: items[index],
+                        activeCount: state.activeCount,
                         isBusy: mutatingId == items[index].id,
+                        onTransition: (transition) => context
+                            .read<ResidencesBloc>()
+                            .add(ResidenceStatusChangeRequested(
+                              items[index].id,
+                              transition,
+                            )),
                       ),
                     ),
             ),
@@ -90,10 +99,17 @@ class _ResidencesListPageState extends State<ResidencesListPage> {
 }
 
 class _ResidenceCard extends StatelessWidget {
-  const _ResidenceCard({required this.residence, required this.isBusy});
+  const _ResidenceCard({
+    required this.residence,
+    required this.isBusy,
+    required this.activeCount,
+    required this.onTransition,
+  });
 
   final Residence residence;
   final bool isBusy;
+  final int activeCount;
+  final ValueChanged<AnnonceTransition> onTransition;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +145,15 @@ class _ResidenceCard extends StatelessWidget {
                   ),
                 ),
                 AnnonceStatusChip(status: residence.status),
+                StatusActionsMenu(
+                  status: residence.status,
+                  // Bulk publish covers many units; the per-listing photo rule
+                  // does not apply, and the backend validates each unit.
+                  photoCount: 3,
+                  activeCount: activeCount,
+                  enabled: !isBusy,
+                  onSelected: onTransition,
+                ),
               ],
             ),
             if (residence.district case final district?) ...[

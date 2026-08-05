@@ -94,6 +94,18 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 - iOS camera/photo Info.plist permissions in **both** apps.
 - Role-aware account (`AccountRole`) surfaced in KYC Statut label.
 
+## Backend errors are undocumented — parse defensively
+`tools/gac/mboa.openapi.yaml` declares **no error schema at all**, only success
+responses. `ApiError.from` (mboa_shared) therefore accepts several body shapes
+(`code`/`errorCode`/`error_code`, `message`/`detail`, bare strings) and never
+throws; an unrecognised body yields nulls and the UI falls back to a generic
+message. It also ignores Spring's `{"error": "Bad Request"}` reason phrase,
+which is not a machine code.
+
+Known codes are mapped to written explanations in `annonce_form_page.dart`
+(`RESIDENCE_UNIT_LIMIT`, `LISTING_LIMIT`, `PROFILE_INCOMPLETE`, `KYC_REQUIRED`).
+**Ask the backend to document its error codes** — this mapping is inferred.
+
 ## Design tokens: page canvas vs card fill
 `surfaceWarm` (#F9F7F4) is documented as **"cards, inputs"** and was being used
 as a page background across every Pro screen — it reads visibly grey/beige.
@@ -299,7 +311,7 @@ Behaviour worth knowing before changing it:
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 250 passing — `mboa_user` 18, `mboa_pro` 154, `mboa_core` 12, `mboa_shared` 66.
+- Tests: 272 passing — `mboa_user` 18, `mboa_pro` 168, `mboa_core` 12, `mboa_shared` 74.
 - **Android and iOS builds verified** (`flutter build apk --debug`,
   `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
   doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the

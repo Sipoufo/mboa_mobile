@@ -215,8 +215,11 @@ class AnnonceDraft extends Equatable {
         units: units ?? this.units,
       );
 
-  static AnnonceDraft fromAnnonce(Annonce annonce, ListingLocation? location) =>
-      AnnonceDraft(
+  /// Seeds the form from an existing listing.
+  ///
+  /// The location is rebuilt from the listing's own district/coordinates, so
+  /// editing never forces a fresh GPS capture — only changing it does.
+  static AnnonceDraft fromAnnonce(Annonce annonce) => AnnonceDraft(
         kind: AnnonceKind.single,
         id: annonce.id,
         title: annonce.title,
@@ -231,7 +234,23 @@ class AnnonceDraft extends Equatable {
         availableFrom: annonce.availableFrom,
         description: annonce.description,
         photoKeys: annonce.photoKeys,
-        location: location,
+        location: switch ((
+          annonce.districtId,
+          annonce.latitude,
+          annonce.longitude
+        )) {
+          (final String id, final double lat, final double lng) =>
+            ListingLocation(
+              districtId: id,
+              districtName: annonce.district ?? '',
+              cityId: annonce.cityId,
+              cityName: annonce.city,
+              latitude: lat,
+              longitude: lng,
+              exactAddress: annonce.exactAddress,
+            ),
+          _ => null,
+        },
       );
 
   @override

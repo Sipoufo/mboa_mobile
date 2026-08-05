@@ -63,7 +63,11 @@ class Annonce extends Equatable {
     required this.status,
     required this.propertyType,
     this.city,
+    this.cityId,
     this.district,
+    this.districtId,
+    this.latitude,
+    this.longitude,
     this.exactAddress,
     this.monthlyRent,
     this.chargesIncluded,
@@ -84,7 +88,13 @@ class Annonce extends Equatable {
   final AnnonceStatus status;
   final PropertyType propertyType;
   final String? city;
+  final String? cityId;
   final String? district;
+
+  /// Kept so editing can rebuild the location without re-capturing GPS.
+  final String? districtId;
+  final double? latitude;
+  final double? longitude;
   final String? exactAddress;
   final int? monthlyRent;
   final bool? chargesIncluded;
@@ -109,7 +119,11 @@ class Annonce extends Equatable {
         status: AnnonceStatus.fromResponse(response.status),
         propertyType: PropertyType.fromResponse(response.propertyType),
         city: response.city,
+        cityId: response.cityId,
         district: response.district,
+        districtId: response.districtId,
+        latitude: response.latitude,
+        longitude: response.longitude,
         exactAddress: response.exactAddress,
         monthlyRent: response.monthlyRent,
         chargesIncluded: response.chargesIncluded,

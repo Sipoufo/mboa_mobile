@@ -2792,6 +2792,131 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Charges incluses`
+  String get annonceFormFieldCharges {
+    return Intl.message(
+      'Charges incluses',
+      name: 'annonceFormFieldCharges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Montant des charges`
+  String get annonceFormFieldChargesAmount {
+    return Intl.message(
+      'Montant des charges',
+      name: 'annonceFormFieldChargesAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salles de bain`
+  String get annonceFormFieldBathrooms2 {
+    return Intl.message(
+      'Salles de bain',
+      name: 'annonceFormFieldBathrooms2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `m²`
+  String get annonceFormUnitSquareMetres {
+    return Intl.message(
+      'm²',
+      name: 'annonceFormUnitSquareMetres',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `XAF`
+  String get annonceFormCurrency {
+    return Intl.message('XAF', name: 'annonceFormCurrency', desc: '', args: []);
+  }
+
+  /// `Impossible de charger ce bien.`
+  String get annonceFormLoadFailed {
+    return Intl.message(
+      'Impossible de charger ce bien.',
+      name: 'annonceFormLoadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biens Multiples`
+  String get residencesTitle {
+    return Intl.message(
+      'Biens Multiples',
+      name: 'residencesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plus d’actions`
+  String get annoncesActionMore {
+    return Intl.message(
+      'Plus d’actions',
+      name: 'annoncesActionMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.`
+  String get errorResidenceUnitLimit {
+    return Intl.message(
+      'Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.',
+      name: 'errorResidenceUnitLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limite d’annonces actives atteinte pour votre formule.`
+  String get errorListingLimit {
+    return Intl.message(
+      'Limite d’annonces actives atteinte pour votre formule.',
+      name: 'errorListingLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complétez votre profil (photo, type, ville) avant de continuer.`
+  String get errorProfileIncomplete {
+    return Intl.message(
+      'Complétez votre profil (photo, type, ville) avant de continuer.',
+      name: 'errorProfileIncomplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vos certifications doivent être validées avant cette action.`
+  String get errorKycRequired {
+    return Intl.message(
+      'Vos certifications doivent être validées avant cette action.',
+      name: 'errorKycRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certaines informations sont invalides. Vérifiez le formulaire.`
+  String get errorValidation {
+    return Intl.message(
+      'Certaines informations sont invalides. Vérifiez le formulaire.',
+      name: 'errorValidation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -6,6 +6,8 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../bloc/annonce_form_bloc.dart';
 import '../../models/annonce_draft.dart';
+import '../../models/annonce.dart';
+import 'form_field_shell.dart';
 import 'form_text_field.dart';
 
 /// Editor for a residence's unit groups.
@@ -96,6 +98,26 @@ class _UnitGroupRow extends StatelessWidget {
             ],
           ),
           const SizedBox(height: Dimens.spacingSm),
+          FormFieldShell(
+            label: l10n.annonceFormFieldType,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<PropertyType>(
+                value: group.propertyType,
+                isExpanded: true,
+                isDense: true,
+                style:
+                    context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
+                items: [
+                  for (final type in PropertyType.values)
+                    DropdownMenuItem(value: type, child: Text(_typeLabel(type))),
+                ],
+                onChanged: (type) => type == null
+                    ? null
+                    : onChanged(group.copyWith(propertyType: type)),
+              ),
+            ),
+          ),
+          const SizedBox(height: Dimens.spacingSm),
           Row(
             children: [
               Expanded(
@@ -112,6 +134,7 @@ class _UnitGroupRow extends StatelessWidget {
               Expanded(
                 child: FormTextField(
                   label: l10n.annonceFormFieldPrice,
+                  suffixText: l10n.annonceFormCurrency,
                   keyboardType: TextInputType.number,
                   initialValue: group.monthlyRent?.toString() ?? '',
                   onChanged: (value) =>
@@ -120,8 +143,90 @@ class _UnitGroupRow extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: Dimens.spacingSm),
+          Row(
+            children: [
+              Expanded(
+                child: FormTextField(
+                  label: l10n.annonceFormFieldSurface,
+                  suffixText: l10n.annonceFormUnitSquareMetres,
+                  keyboardType: TextInputType.number,
+                  initialValue: group.surfaceArea?.toString() ?? '',
+                  onChanged: (value) =>
+                      onChanged(group.copyWith(surfaceArea: int.tryParse(value))),
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: FormTextField(
+                  label: l10n.annonceFormFieldRooms,
+                  keyboardType: TextInputType.number,
+                  initialValue: group.roomCount?.toString() ?? '',
+                  onChanged: (value) =>
+                      onChanged(group.copyWith(roomCount: int.tryParse(value))),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Dimens.spacingSm),
+          Row(
+            children: [
+              Expanded(
+                child: FormTextField(
+                  label: l10n.annonceFormFieldBathrooms,
+                  keyboardType: TextInputType.number,
+                  initialValue: group.bathroomCount?.toString() ?? '',
+                  onChanged: (value) => onChanged(
+                    group.copyWith(bathroomCount: int.tryParse(value)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: FormFieldShell(
+                  label: l10n.annonceFormFieldFurnished,
+                  trailing: Switch(
+                    value: group.furnished ?? false,
+                    onChanged: (value) =>
+                        onChanged(group.copyWith(furnished: value)),
+                  ),
+                  child: const SizedBox.shrink(),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Dimens.spacingSm),
+          FormFieldShell(
+            label: l10n.annonceFormFieldCharges,
+            trailing: Switch(
+              value: group.chargesIncluded ?? false,
+              onChanged: (value) =>
+                  onChanged(group.copyWith(chargesIncluded: value)),
+            ),
+            child: const SizedBox.shrink(),
+          ),
+          if (group.chargesIncluded != true) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            FormTextField(
+              label: l10n.annonceFormFieldChargesAmount,
+              suffixText: l10n.annonceFormCurrency,
+              keyboardType: TextInputType.number,
+              initialValue: group.chargesAmount?.toString() ?? '',
+              onChanged: (value) =>
+                  onChanged(group.copyWith(chargesAmount: int.tryParse(value))),
+            ),
+          ],
         ],
       ),
     );
   }
+
+  String _typeLabel(PropertyType type) => switch (type) {
+        PropertyType.apartment => 'Appartement',
+        PropertyType.studio => 'Studio',
+        PropertyType.villa => 'Villa',
+        PropertyType.room => 'Chambre',
+        PropertyType.office => 'Bureau',
+        PropertyType.commercialSpace => 'Local commercial',
+      };
 }

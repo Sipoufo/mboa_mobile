@@ -122,7 +122,14 @@ class _Loaded extends StatelessWidget {
                       final annonce = items[index];
                       return AnnonceCard(
                         annonce: annonce,
+                        activeCount: state.activeCount,
                         isBusy: state.mutatingId == annonce.id,
+                        onTransition: (transition) => context
+                            .read<AnnoncesBloc>()
+                            .add(AnnonceStatusChangeRequested(
+                              annonce.id,
+                              transition,
+                            )),
                         onTap: () => context.router
                             .push(AnnonceDetailRoute(id: annonce.id)),
                         onEdit: () => _edit(context, annonce),
