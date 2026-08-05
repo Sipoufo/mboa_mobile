@@ -91,6 +91,20 @@ logout       → unregister (before clearing tokens) → clear
 token refresh→ re-register (only while a session exists)
 ```
 
+## Status (2026-08-05)
+
+| Item | State |
+|---|---|
+| `mboa_pro` `google-services.json` | ✅ placed (`cm.mboa.mboa_pro`) |
+| `mboa_pro` `GoogleService-Info.plist` | ✅ placed (`cm.mboa.mboaPro`) — **still needs adding to the Runner target in Xcode** |
+| `mboa_user` client config (both platforms) | ❌ not created in the Firebase console yet |
+| APNs `.p8` | ⏸ deferred (paid Apple Developer account) |
+
+**Consequence of the deferred `.p8`: Android push can ship end-to-end; iOS push
+cannot.** The Flutter wiring is identical for both, so build it once — iOS will
+simply never return a token until APNs is configured. Guard the registration
+call so a missing iOS token is a no-op rather than an error.
+
 ## 5. Blocked on
 
 - `google-services.json` and `GoogleService-Info.plist` for **both** apps (§1).
