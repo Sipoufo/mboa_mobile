@@ -7,6 +7,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/residences_bloc.dart';
+import '../models/annonce.dart';
 import '../models/residence.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
@@ -241,6 +242,15 @@ class _Pill extends StatelessWidget {
   }
 }
 
+String _typeLabel(PropertyType type) => switch (type) {
+      PropertyType.apartment => 'Appartement',
+      PropertyType.studio => 'Studio',
+      PropertyType.villa => 'Villa',
+      PropertyType.room => 'Chambre',
+      PropertyType.office => 'Bureau',
+      PropertyType.commercialSpace => 'Local commercial',
+    };
+
 class _UnitRow extends StatelessWidget {
   const _UnitRow({required this.unit});
 
@@ -271,6 +281,14 @@ class _UnitRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (unit.propertyType case final type?) ...[
+                  const SizedBox(height: Dimens.spacingXs),
+                  Text(
+                    _typeLabel(type),
+                    style: context.mboaText.caption
+                        .copyWith(color: colors.textSecondary),
+                  ),
+                ],
                 if (unit.monthlyRent case final rent?) ...[
                   const SizedBox(height: Dimens.spacingXs),
                   Text(

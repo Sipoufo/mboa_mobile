@@ -121,6 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceActionReserve": MessageLookupByLibrary.simpleMessage(
       "Marquer réservé",
     ),
+    "annonceActionUnarchive": MessageLookupByLibrary.simpleMessage("Republier"),
     "annonceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
       "Cette action est définitive. Le bien sera retiré de votre portefeuille.",
     ),
@@ -328,6 +329,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "Choisir une ville",
     ),
+    "commonCancel": MessageLookupByLibrary.simpleMessage("Annuler"),
     "commonComingSoon": MessageLookupByLibrary.simpleMessage(
       "Bientôt disponible",
     ),

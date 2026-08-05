@@ -11,6 +11,7 @@ import 'package:mboa_pro/features/profile/profile_types.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
 import 'package:mboa_shared/mboa_shared.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -75,8 +76,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    if (StatusActionsMenu.transitionsFor(status).isNotEmpty) {
-      await tester.tap(find.byType(PopupMenuButton<AnnonceTransition>));
+    if (find.byIcon(LucideIcons.ellipsisVertical).evaluate().isNotEmpty) {
+      await tester.tap(find.byIcon(LucideIcons.ellipsisVertical));
       await tester.pumpAndSettle();
     }
     return selected;
@@ -104,15 +105,33 @@ void main() {
       );
     });
 
-    test('an archived listing offers nothing', () {
-      expect(StatusActionsMenu.transitionsFor(AnnonceStatus.archived), isEmpty);
+    test('an archived listing can be republished', () {
+      // Un-archiving is republishing; Doc 10 draws no arrow back from Archivée,
+      // so the backend may still refuse — the action is offered, not hidden.
+      expect(
+        StatusActionsMenu.transitionsFor(AnnonceStatus.archived),
+        [AnnonceTransition.publish],
+      );
+    });
+
+    test('an unknown status offers nothing', () {
+      expect(StatusActionsMenu.transitionsFor(AnnonceStatus.unknown), isEmpty);
     });
   });
 
-  testWidgets('renders nothing at all when there is no action', (tester) async {
-    await open(tester, status: AnnonceStatus.archived);
+  testWidgets('renders nothing when there is no action and no delete', (tester) async {
+    await open(tester, status: AnnonceStatus.unknown);
 
-    expect(find.byType(PopupMenuButton<AnnonceTransition>), findsNothing);
+    expect(find.byIcon(LucideIcons.ellipsisVertical), findsNothing);
+  });
+
+  testWidgets('an archived listing offers Republier', (tester) async {
+    final selected = await open(tester, status: AnnonceStatus.archived);
+
+    await tester.tap(find.text('Republier'));
+    await tester.pumpAndSettle();
+
+    expect(selected, [AnnonceTransition.publish]);
   });
 
   testWidgets('publishing a valid draft is allowed through', (tester) async {

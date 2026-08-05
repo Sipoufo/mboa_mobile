@@ -120,6 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceActionReserve": MessageLookupByLibrary.simpleMessage(
       "Mark reserved",
     ),
+    "annonceActionUnarchive": MessageLookupByLibrary.simpleMessage("Republish"),
     "annonceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
       "This is permanent. The property will be removed from your portfolio.",
     ),
@@ -311,6 +312,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Search a city",
     ),
     "cityPickerTitle": MessageLookupByLibrary.simpleMessage("Choose a city"),
+    "commonCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "commonComingSoon": MessageLookupByLibrary.simpleMessage("Coming soon"),
     "commonError": MessageLookupByLibrary.simpleMessage(
       "Something went wrong. Please try again.",

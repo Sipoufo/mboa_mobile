@@ -2977,6 +2977,21 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Republier`
+  String get annonceActionUnarchive {
+    return Intl.message(
+      'Republier',
+      name: 'annonceActionUnarchive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Annuler`
+  String get commonCancel {
+    return Intl.message('Annuler', name: 'commonCancel', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

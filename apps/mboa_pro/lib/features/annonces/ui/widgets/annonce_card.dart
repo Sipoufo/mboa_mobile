@@ -22,6 +22,7 @@ class AnnonceCard extends StatelessWidget {
     required this.onHistory,
     required this.onAttributions,
     required this.onTransition,
+    required this.onDelete,
     required this.activeCount,
     this.onTap,
     this.isBusy = false,
@@ -32,6 +33,7 @@ class AnnonceCard extends StatelessWidget {
   final VoidCallback onHistory;
   final VoidCallback onAttributions;
   final ValueChanged<AnnonceTransition> onTransition;
+  final VoidCallback onDelete;
 
   /// Active listings across the portfolio, for the tier limit on publish.
   final int activeCount;
@@ -72,6 +74,7 @@ class AnnonceCard extends StatelessWidget {
                       activeCount: activeCount,
                       enabled: !isBusy,
                       onSelected: onTransition,
+                      onDelete: onDelete,
                     ),
                   ],
                 ),

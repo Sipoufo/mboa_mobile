@@ -219,6 +219,13 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
   slow or broken load must not unlock a paid feature.
 - Receipt opening surfaces the URL in a toast; wiring `url_launcher` is a TODO.
 
+## Backend requests
+**`docs/backend-requests.md`** consolidates everything the apps need from the
+API, ordered by what each gap currently costs. Nothing blocks the apps — every
+item has a workaround — but the workarounds cost extra requests, guessed
+contracts, or disabled features. Update it when an item lands or a new one
+appears, rather than scattering the asks through this file.
+
 ## M10 — what exists and what does not
 Only the two CRUD resources have an API. Everything else on the `mes_biens`
 designs is unbuilt **because there is no endpoint**, and routes to the
@@ -252,6 +259,11 @@ Behaviour worth knowing before changing it:
   detail dispatches `ResidenceDetailRequested`, which fetches `getOne` and
   merges the result into the list, so both stay one source of truth (and a deep
   link straight to a detail works without the list being loaded).
+- **Un-archive = republish.** Doc 10's lifecycle draws no arrow back from
+  *Archivée*, so the backend may refuse. The action is offered with the error
+  surfaced rather than hidden — see `docs/backend-requests.md` §9.
+- **Deletion is two-step** (RM-M10-07) and the backend still refuses when an
+  active Mboa contract references the listing; that failure shows a toast.
 - **Archived listings have their own tab.** RM-M10-04 auto-archives Gratuit
   listings at J+30 and RM-M10-05 keeps rented ones in history, so they need
   somewhere to be seen. The design shows two tabs; this is a third.
@@ -340,7 +352,7 @@ Behaviour worth knowing before changing it:
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 280 passing — `mboa_user` 18, `mboa_pro` 176, `mboa_core` 12, `mboa_shared` 74.
+- Tests: 282 passing — `mboa_user` 18, `mboa_pro` 178, `mboa_core` 12, `mboa_shared` 74.
 - Residence detail has widget tests, mutation-checked against the
   missing-units bug.
 - **Android and iOS builds verified** (`flutter build apk --debug`,

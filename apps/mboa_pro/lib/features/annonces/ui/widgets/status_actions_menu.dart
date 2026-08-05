@@ -10,6 +10,23 @@ import '../../../subscription/bloc/subscription_bloc.dart';
 import '../../models/annonce_status.dart';
 import '../../models/publish_gate.dart';
 
+/// One entry in the menu: a lifecycle transition, or deletion.
+class _MenuAction {
+  const _MenuAction.of(this.transition);
+  const _MenuAction.delete() : transition = null;
+
+  final AnnonceTransition? transition;
+
+  bool get isDelete => transition == null;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _MenuAction && other.transition == transition;
+
+  @override
+  int get hashCode => transition.hashCode;
+}
+
 /// Lifecycle actions for a listing or a residence, from the list.
 ///
 /// Only the transitions the current status allows are offered — an archived
@@ -23,6 +40,7 @@ class StatusActionsMenu extends StatelessWidget {
     required this.photoCount,
     required this.activeCount,
     required this.onSelected,
+    this.onDelete,
     this.enabled = true,
   });
 
@@ -33,6 +51,9 @@ class StatusActionsMenu extends StatelessWidget {
   final int photoCount;
   final int activeCount;
   final ValueChanged<AnnonceTransition> onSelected;
+
+  /// RM-M10-07 — omitted where deletion doesn't apply (residences).
+  final VoidCallback? onDelete;
   final bool enabled;
 
   static List<AnnonceTransition> transitionsFor(AnnonceStatus status) =>
@@ -51,22 +72,30 @@ class StatusActionsMenu extends StatelessWidget {
             AnnonceTransition.archive,
           ],
         AnnonceStatus.rented => [AnnonceTransition.archive],
-        AnnonceStatus.archived || AnnonceStatus.unknown => const [],
+        // Un-archiving is republishing. Doc 10's lifecycle draws no arrow back
+        // from Archivée, so the backend may refuse — the error is surfaced
+        // rather than the action being hidden.
+        AnnonceStatus.archived => [AnnonceTransition.publish],
+        AnnonceStatus.unknown => const [],
       };
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final transitions = transitionsFor(status);
-    if (transitions.isEmpty) return const SizedBox.shrink();
+    if (transitions.isEmpty && onDelete == null) return const SizedBox.shrink();
 
-    return PopupMenuButton<AnnonceTransition>(
+    return PopupMenuButton<_MenuAction>(
       enabled: enabled,
       tooltip: l10n.annoncesActionMore,
       icon: Icon(LucideIcons.ellipsisVertical, color: context.mboaColors.primary),
-      onSelected: (transition) {
-        if (transition == AnnonceTransition.publish &&
-            !_canPublish(context)) {
+      onSelected: (action) {
+        if (action.isDelete) {
+          onDelete?.call();
+          return;
+        }
+        final transition = action.transition!;
+        if (transition == AnnonceTransition.publish && !_canPublish(context)) {
           return;
         }
         onSelected(transition);
@@ -74,16 +103,29 @@ class StatusActionsMenu extends StatelessWidget {
       itemBuilder: (context) => [
         for (final transition in transitions)
           PopupMenuItem(
-            value: transition,
+            value: _MenuAction.of(transition),
             child: Text(
               switch (transition) {
-                AnnonceTransition.publish => l10n.annonceActionPublish,
+                // Republishing an archived listing reads as "unarchive".
+                AnnonceTransition.publish => status == AnnonceStatus.archived
+                    ? l10n.annonceActionUnarchive
+                    : l10n.annonceActionPublish,
                 AnnonceTransition.reserve => l10n.annonceActionReserve,
                 AnnonceTransition.markRented => l10n.annonceActionMarkRented,
                 AnnonceTransition.archive => l10n.annonceActionArchive,
               },
             ),
           ),
+        if (onDelete != null) ...[
+          const PopupMenuDivider(),
+          PopupMenuItem(
+            value: const _MenuAction.delete(),
+            child: Text(
+              l10n.annonceActionDelete,
+              style: TextStyle(color: context.mboaColors.error),
+            ),
+          ),
+        ],
       ],
     );
   }

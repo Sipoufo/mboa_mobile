@@ -653,5 +653,9 @@
   "residenceUnitsPending": "La modification d’une unité arrivera prochainement.",
   "@residenceUnitsPending": {},
   "residenceUnitStatus": "Statut",
-  "@residenceUnitStatus": {}
+  "@residenceUnitStatus": {},
+  "annonceActionUnarchive": "Republier",
+  "@annonceActionUnarchive": {},
+  "commonCancel": "Annuler",
+  "@commonCancel": {}
 }

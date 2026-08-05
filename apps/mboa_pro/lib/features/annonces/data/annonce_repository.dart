@@ -43,6 +43,13 @@ class AnnonceRepository {
     return all.where((a) => !unitIds.contains(a.id)).toList();
   }
 
+  /// Ids of every unit belonging to a residence.
+  ///
+  /// The residences *list* payload carries the unit counts but not reliably the
+  /// `units` array, so any residence that reports units without listing them is
+  /// fetched individually. That is N+1 in the worst case — bounded by the
+  /// residence count, not the listing count — and goes away the moment the
+  /// backend puts a `residenceId` on `AnnonceResponse`.
   Future<Set<String>> _residenceUnitIds() async {
     try {
       final response = await _residencesApi.listMine(
@@ -50,11 +57,40 @@ class AnnonceRepository {
           ..page = 0
           ..size = _pageSize),
       );
-      return {
-        for (final residence in response.data?.content ?? const <ResidenceResponse>[])
-          for (final unit in residence.units ?? const <UnitSummary>[])
-            if (unit.id != null) unit.id!,
-      };
+      final residences =
+          response.data?.content ?? const <ResidenceResponse>[];
+
+      final ids = <String>{};
+      final needDetail = <String>[];
+
+      for (final residence in residences) {
+        final units = residence.units ?? const <UnitSummary>[];
+        if (units.isEmpty && (residence.unitCount ?? 0) > 0) {
+          if (residence.id != null) needDetail.add(residence.id!);
+          continue;
+        }
+        for (final unit in units) {
+          if (unit.id != null) ids.add(unit.id!);
+        }
+      }
+
+      if (needDetail.isNotEmpty) {
+        final details = await Future.wait(
+          needDetail.map(
+            (id) => _residencesApi
+                .getOne(id: id)
+                .then<ResidenceResponse?>((r) => r.data)
+                .catchError((_) => null),
+          ),
+        );
+        for (final residence in details) {
+          for (final unit in residence?.units ?? const <UnitSummary>[]) {
+            if (unit.id != null) ids.add(unit.id!);
+          }
+        }
+      }
+
+      return ids;
     } catch (_) {
       return const {};
     }

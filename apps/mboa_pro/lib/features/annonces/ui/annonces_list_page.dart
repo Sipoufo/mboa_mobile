@@ -138,6 +138,7 @@ class _Loaded extends StatelessWidget {
                             )),
                         onTap: () => context.router
                             .push(AnnonceDetailRoute(id: annonce.id)),
+                        onDelete: () => _confirmDelete(context, annonce),
                         onEdit: () => _edit(context, annonce),
                         onHistory: () => _comingSoon(context),
                         onAttributions: () => _comingSoon(context),
@@ -157,6 +158,36 @@ class _Loaded extends StatelessWidget {
   void _comingSoon(BuildContext context) => context.router.push(
         AccessRestrictedRoute(restriction: AccessRestriction.comingSoon),
       );
+
+  /// RM-M10-07 — deletion is permanent, so it is confirmed before dispatch.
+  /// The backend still refuses when an active Mboa contract references it.
+  Future<void> _confirmDelete(BuildContext context, Annonce annonce) async {
+    final l10n = I18n.of(context);
+    final bloc = context.read<AnnoncesBloc>();
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.annonceDeleteConfirmTitle),
+        content: Text(l10n.annonceDeleteConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.commonCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: context.mboaColors.error,
+            ),
+            child: Text(l10n.annonceActionDelete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed ?? false) bloc.add(AnnonceDeleteRequested(annonce.id));
+  }
 }
 
 class _Empty extends StatelessWidget {

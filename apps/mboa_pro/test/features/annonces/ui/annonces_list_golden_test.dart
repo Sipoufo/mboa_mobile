@@ -72,6 +72,7 @@ void main() {
                   annonce: annonce,
                   activeCount: 2,
                   onTransition: (_) {},
+                  onDelete: () {},
                   onEdit: () {},
                   onHistory: () {},
                   onAttributions: () {},

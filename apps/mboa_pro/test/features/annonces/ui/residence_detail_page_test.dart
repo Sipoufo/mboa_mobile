@@ -14,6 +14,7 @@ import 'package:mboa_pro/features/profile/profile_types.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
 import 'package:mboa_shared/mboa_shared.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -153,7 +154,7 @@ void main() {
   testWidgets('offers the bulk transitions for the status', (tester) async {
     await pump(tester);
 
-    await tester.tap(find.byType(PopupMenuButton<AnnonceTransition>));
+    await tester.tap(find.byIcon(LucideIcons.ellipsisVertical));
     await tester.pumpAndSettle();
 
     // Published: reserve / rent / archive, applied to every unit at once.
