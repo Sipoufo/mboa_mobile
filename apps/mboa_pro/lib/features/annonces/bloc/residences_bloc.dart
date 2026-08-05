@@ -18,6 +18,7 @@ class ResidencesBloc extends Bloc<ResidencesEvent, ResidencesState> {
         super(const ResidencesInitial()) {
     on<ResidencesLoadRequested>(_onLoad);
     on<ResidencesRefreshRequested>(_onRefresh);
+    on<ResidenceDetailRequested>(_onDetailRequested);
     on<ResidenceStatusChangeRequested>(_onStatusChange);
   }
 
@@ -40,6 +41,30 @@ class ResidencesBloc extends Bloc<ResidencesEvent, ResidencesState> {
   Future<void> _load(Emitter<ResidencesState> emit) async {
     try {
       emit(ResidencesReady(items: await _repository.list()));
+    } catch (_) {
+      if (state is! ResidencesReady) emit(const ResidencesFailure());
+    }
+  }
+
+  /// Fetches the full residence and merges it into the list, so the detail and
+  /// the list stay one source of truth.
+  Future<void> _onDetailRequested(
+    ResidenceDetailRequested event,
+    Emitter<ResidencesState> emit,
+  ) async {
+    try {
+      final residence = await _repository.getOne(event.id);
+      final current = state;
+      final items = current is ResidencesReady ? [...current.items] : <Residence>[];
+
+      final index = items.indexWhere((r) => r.id == residence.id);
+      if (index >= 0) {
+        items[index] = residence;
+      } else {
+        // Deep link straight to a detail: the list was never loaded.
+        items.add(residence);
+      }
+      emit(ResidencesReady(items: items));
     } catch (_) {
       if (state is! ResidencesReady) emit(const ResidencesFailure());
     }

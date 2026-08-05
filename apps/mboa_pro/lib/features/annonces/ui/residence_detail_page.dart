@@ -19,10 +19,22 @@ import 'widgets/status_actions_menu.dart';
 /// exposes only the *bulk* transitions. Editing a single unit lands once the
 /// backend says whether a unit id is an annonce id.
 @RoutePage()
-class ResidenceDetailPage extends StatelessWidget {
+class ResidenceDetailPage extends StatefulWidget {
   const ResidenceDetailPage({super.key, required this.id});
 
   final String id;
+
+  @override
+  State<ResidenceDetailPage> createState() => _ResidenceDetailPageState();
+}
+
+class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    // The list payload may omit the units array; fetch the full residence.
+    context.read<ResidencesBloc>().add(ResidenceDetailRequested(widget.id));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +49,15 @@ class ResidenceDetailPage extends StatelessWidget {
             return const Center(child: Loader());
           }
 
-          final residence = state.items.where((r) => r.id == id).firstOrNull;
-          if (residence == null) {
-            return Center(child: Text(l10n.commonError));
-          }
+          final residence =
+              state.items.where((r) => r.id == widget.id).firstOrNull;
+          // Still fetching, or genuinely gone.
+          if (residence == null) return const Center(child: Loader());
 
           return RefreshIndicator(
             onRefresh: () async => context
                 .read<ResidencesBloc>()
-                .add(const ResidencesRefreshRequested()),
+                .add(ResidenceDetailRequested(widget.id)),
             child: ListView(
               padding: const EdgeInsets.all(Dimens.spacing),
               children: [

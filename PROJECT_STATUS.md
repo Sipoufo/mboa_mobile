@@ -227,7 +227,7 @@ designs is unbuilt **because there is no endpoint**, and routes to the
 | Surface | State |
 |---|---|
 | Biens Uniques / Résidences CRUD + lifecycle | ✅ built |
-| Residence detail (counts, bulk actions, **read-only** unit list) | ✅ built |
+| Residence detail (counts, bulk actions, **read-only** unit list) | ✅ built + widget-tested |
 | Per-unit view/edit | ❌ **needs a backend answer** — see below |
 | Attributions, Réservations, Prospections | ❌ no endpoint |
 | En attente de validation | ❌ no moderation-status endpoint |
@@ -247,6 +247,11 @@ Behaviour worth knowing before changing it:
   unfiltered list — extra rows beat an empty screen. **Ask the backend for a
   `residenceId` on `AnnonceResponse`, or a `standalone` filter**; this costs an
   extra request per list load.
+- **The residence *list* payload may omit the `units` array** — it carries the
+  counts, but the detail was rendering an empty unit list because of it. The
+  detail dispatches `ResidenceDetailRequested`, which fetches `getOne` and
+  merges the result into the list, so both stay one source of truth (and a deep
+  link straight to a detail works without the list being loaded).
 - **Archived listings have their own tab.** RM-M10-04 auto-archives Gratuit
   listings at J+30 and RM-M10-05 keeps rented ones in history, so they need
   somewhere to be seen. The design shows two tabs; this is a third.
@@ -335,9 +340,9 @@ Behaviour worth knowing before changing it:
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 272 passing — `mboa_user` 18, `mboa_pro` 168, `mboa_core` 12, `mboa_shared` 74.
-- Residence detail, the archived tab and the unit-exclusion filter are covered
-  by bloc/model tests; the detail screen itself has no widget test yet.
+- Tests: 280 passing — `mboa_user` 18, `mboa_pro` 176, `mboa_core` 12, `mboa_shared` 74.
+- Residence detail has widget tests, mutation-checked against the
+  missing-units bug.
 - **Android and iOS builds verified** (`flutter build apk --debug`,
   `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
   doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the
