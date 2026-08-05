@@ -1,388 +1,267 @@
 # Mboa Mobile — Project Status (living doc)
 
-> Working tracker for the Flutter monorepo. Update this at the end of each work
-> session. Architecture rules live in `CLAUDE.md`; functional spec in
-> `Documents/Claude/Projects/MyHome/Mboa_Doc10_CDC_Fonctionnel.md` (outside repo).
-> Last updated: 2026-08-05 (M10 listings; FCM Android in both apps).
+> Working tracker for the Flutter monorepo. **Update it at the end of each work
+> session.** Architecture rules live in `CLAUDE.md`; functional spec in
+> `~/Documents/Claude/Projects/MyHome/Mboa_Doc10_CDC_Fonctionnel.md` (outside the
+> repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
+> `CLAUDE.md` diverge, ignore those.
+>
+> Last updated: 2026-08-06.
 
 ## How to resume
-1. Read `CLAUDE.md` (rules) + this file (state).
-2. `make bootstrap` if needed; `make analyze` + `make test` must be green.
-3. Verify the API: `packages/api_client` is generated (`make gen-api`) — never hand-edit `lib/`.
 
-## Routing architecture (both apps)
-Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa needs.
+1. Read `CLAUDE.md` (rules), then this file (state), then
+   `docs/backend-requests.md` (API gaps and what is agreed).
+2. `make analyze` and `make test` must both be green **before** changing
+   anything. `make bootstrap` first if dependencies moved.
+3. Native builds are **not** covered by either. After any dependency, Gradle,
+   Podfile or plugin change, run a real build — see *Verification* below.
+4. `packages/api_client` is generated (`make gen-api`) — never hand-edit `lib/`.
 
-- **Shared plumbing** lives in `mboa_shared/lib/src/routing/`; the *route tables
-  stay app-local* because the generated route classes are per-app.
-  - `SessionSnapshot` — synchronous `hasSession` boolean the guards read. Holds
-    **no token material**; kept warm by the splash (startup) and the app's
-    `AuthBloc` (runtime). Guards must never do an async keychain read.
-  - `SessionGuard` / `GuestGuard` — take an `onDenied` / `onAuthenticated`
-    **callback** so a shared guard never names an app-local route class.
-  - `AccessPolicy` — pure `(FeatureKey, AccessContext) -> AccessDecision`. Single
-    source of truth for KYC / role / subscription-tier gating (CDC RM-M14-02).
-    `AccessContext` uses plain flags, so it doesn't couple to either app's KYC type.
-- **Table shape** (both apps): guest routes at the root behind `GuestGuard`;
-  everything authenticated nested under `/app` behind `SessionGuard` + the
-  `AuthenticatedRouter` wrapper, which owns the session-scoped blocs (profile,
-  and KYC on Pro) so the header/gates/settings share one load.
-- **Pro tab shell** `ProShellRoute` → Accueil / Gestionnaire / Finance. The
-  4th nav slot ("Menu") **pushes `ProMenuRoute` as a modal over the active tab**
-  — it is deliberately not a tab. Android back: pop within tab → walk tab
-  history → double-press to exit.
-- **Transitions are still listener-driven.** The guards make the table correct
-  for deep links and back navigation; the `AuthBloc` listener in each app root
-  still does the `replaceAll` on login/logout and keeps `SessionSnapshot` and
-  `SessionExpiryWatcher` in step. Both mechanisms are needed — don't delete one.
-- **`SessionExpiryWatcher`** (`mboa_core`) refreshes the access token *ahead* of
-  expiry and forces a clean logout once the refresh token is dead — closing the
-  idle-app and resumed-app gaps the interceptor's reactive 401 path can't see.
-  Timer-driven; `start()` is idempotent. **No inactivity/PIN lock** (deliberate:
-  Zeney needs one because it moves money, Mboa Pro manages listings). The shell
-  leaves room to add one as a wrapper later.
+---
 
-## Apps & packages
-- `apps/mboa_user` — App Mboa (public; phone-OTP auth).
-- `apps/mboa_pro` — App Mboa Pro (prestataires + agents; email/password auth).
-- `packages/mboa_core` — DioClient, SecureTokenStorage, HiveCache, Environment, DI locator.
-- `packages/mboa_shared` — features shared by both apps (login, session, **profile base**, **media**, **locations**, **settings**).
-- `packages/mboa_ui` — design system (theme, Input, Button, cards, AuthScaffold, MboaAvatar, toast, segmented control…).
-- `packages/mboa_l10n` — FR/EN ARB → generated `I18n` (`make gen-l10n`).
-- `packages/api_client` — generated OpenAPI client.
+## Where things stand
 
-## API / environment quirks (IMPORTANT)
-- **Base URL is origin-only** (`Environment.apiBaseUrl` = `http://localhost:8080`, no `/api/v1`) because the generated paths already include `/api/v1`. If the spec's paths ever drop `/api/v1`, put it back on the base URL.
-- **City fields are IDs on update**: profile updates send `searchCityId`/`mainCityId` (not names); responses return both id + display name. Location picker uses `LocationsApi`.
-- **KYC status is a free-form string** — parsed defensively by `KycStatusX.parse` (approved/pending/rejected/notSubmitted).
-- **Two delete endpoints exist**: we use `DELETE /account` (AccountApi). (`DELETE /users/me` also exists.)
-- **KYC submit is atomic**: `{selfieKey, idDocumentFrontKey, idDocumentBackKey}` in one call; selfie is de-facto mandatory (non-nullable).
-- **R2 uploads** = presigned PUT (`/media/uploads` → PUT to `uploadUrl`). App needs no R2 write creds; needs `Environment.r2PublicBaseUrl` (placeholder + TODO) to *display* images.
+**290 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 183 ·
+`mboa_core` 12 · `mboa_shared` 77.
 
-## Auth model
-- **User**: phone OTP — `otp/request` → `otp/verify`. Register = login (new number auto-created).
-- **Pro**: email/password — login `login` → `login/verify` (email OTP 2FA); register `register/professional` (role+email+password+phone) → phone `otp/verify`.
-- OTP resend uses `otp/resend` (phone flows); pro credential-login resend replays `login`.
-- Logout revokes refresh server-side (`/auth/logout`, best-effort) then clears local tokens.
+| Module | State |
+|---|---|
+| M01 auth (user phone-OTP, pro credential + 2FA) | ✅ |
+| M02 profile & settings (language, phone, password, deletion) | ✅ |
+| M01bis KYC / certifications (pro) | ✅ |
+| Media upload (compress → R2 presigned PUT) | ✅ |
+| Locations (cities, districts, pickers) | ✅ |
+| M14 Pro home dashboard | ✅ shell real, **metrics mostly unavailable** |
+| M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
+| M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
+| M10 listings + residences | ✅ complete for everything the API supports |
+| M04 search · M05 detail · M12 messaging | ❌ not started |
+| M15/M16 agents | ❌ no endpoints |
 
-## Done
-- **M01 auth** — user (phone OTP login/register) + pro (credential login + professional registration). Shared login flow in `mboa_shared`.
-- **M02 profile** — Settings hub + Edit Profile, both apps. Base profile unified in `mboa_shared` (generic `ProfileBloc<D,E>`, `BaseProfile`, `BaseProfileRepository`); pro extends with business fields + `ProfileData`/`ProProfileRepository`.
-- **M10 listings** (pro) — Mes biens hub, Biens Uniques list (Disponibles /
-  Occupés, drafts badged under Disponibles), Biens Multiples list, the shared
-  creation/edit form for both kinds, and the detail with lifecycle transitions.
-  See the M10 gaps section below for what is deliberately absent.
-- **M03 push, Android, both apps** — shared `NotificationsRepository`
-  (register/refresh/unregister + foreground/opened/terminated intake), top-level
-  background handler, `Firebase.initializeApp` guarded so a bad setup can't stop
-  boot. **Deregistration happens in `AuthRepository.logout()` before the tokens
-  are cleared** — order is load-bearing and tested. Both Android APKs build.
-  iOS is blocked on the APNs key + the Xcode target-membership step for the two
-  `GoogleService-Info.plist` files. See `docs/notifications-setup.md`.
-- **M13 subscriptions** (pro) — `SubscriptionBloc` (current plan, session-scoped,
-  **the single source of `AccessContext.tier`**) + `SubscribeBloc` (checkout).
-  Screens: Mon abonnement, Formules, payment-method sheet, payment-flow sheet.
-  See the payment caveats below.
-- **M14 Pro home** — header (greeting/location/menu), the three CTA cards
-  (Mes biens / Portefeuille / Mes agents), and the "Statistiques Globales" card.
-  `HomeBloc` + `ProDashboardRepository`, offline-first over a 5-min Hive cache
-  (`dashboardBox`). See the M14 data caveat below.
-- **M01bis KYC** (pro) — Certifications (Statut + Identification tabs, status-adaptive), capture→compress→R2 upload→submit; ID-document type picker + front/back.
-- **Media** — shared `MediaUploader` (image_picker + flutter_image_compress + presigned PUT) + capture sheet. Profile photo upload wired (both apps).
-- **Locations** — shared `LocationRepository` + `showCityPicker`; city pickers in both edit forms.
-- **Settings** — language (LocaleController, FR/EN, persisted in Hive `appSettings` box + synced to `/users/me/settings`), change phone (dual-OTP), change password (pro-only), delete account (type-to-confirm, `DELETE /account`). Grouped in `SettingsMenuView` ("Paramètres"); delete tucked at bottom.
-- iOS camera/photo Info.plist permissions in **both** apps.
-- Role-aware account (`AccountRole`) surfaced in KYC Statut label.
+**Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
+agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
+`mboa_shared` (login, session, profile base, media, locations, settings,
+notifications, routing guards, `ApiError`), `mboa_ui` (design system),
+`mboa_l10n` (FR/EN ARB → generated `I18n`), `api_client` (generated).
 
-## Backend errors are undocumented — parse defensively
-`tools/gac/mboa.openapi.yaml` declares **no error schema at all**, only success
-responses. `ApiError.from` (mboa_shared) therefore accepts several body shapes
-(`code`/`errorCode`/`error_code`, `message`/`detail`, bare strings) and never
-throws; an unrecognised body yields nulls and the UI falls back to a generic
-message. It also ignores Spring's `{"error": "Bad Request"}` reason phrase,
-which is not a machine code.
+---
 
-Known codes are mapped to written explanations in `annonce_form_page.dart`
-(`RESIDENCE_UNIT_LIMIT`, `LISTING_LIMIT`, `PROFILE_INCOMPLETE`, `KYC_REQUIRED`).
-**Ask the backend to document its error codes** — this mapping is inferred.
+## Invariants — the things that broke before
 
-## Design tokens: page canvas vs card fill
-`surfaceWarm` (#F9F7F4) is documented as **"cards, inputs"** and was being used
-as a page background across every Pro screen — it reads visibly grey/beige.
-Sampling the designs gives **#FBFBFB pages, #FFFFFF cards**, so there is now a
-`background` token (`MboaPalette.offWhite`) for page scaffolds. Use
-`colors.background` for a `Scaffold`, `colors.surface` for a card,
-`colors.surfaceWarm` only for card/input fills.
+Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
+pinned by tests; do not "simplify" them away.
 
-## Native permissions (device-only failures)
-A plugin needing a runtime permission fails **only on device**, with a crash
-that analyze, bloc tests and widget tests all miss. Two shipped without their
-declarations: `geolocator` had no `NSLocationWhenInUseUsageDescription`, and the
-Android manifests had **no `uses-permission` entries at all**.
+### Bloc scoping
+`AuthenticatedWrapper` provides the **session-scoped** blocs: `ProProfileBloc`,
+`KycCubit`, `SubscriptionBloc`, `HomeBloc`, `AnnoncesBloc`, `ResidencesBloc`.
+Anything read by more than one route belongs there. A bloc provided in a single
+page's `wrappedRoute` is visible **only to that route and its children** — not to
+siblings. This threw `ProviderNotFoundException` twice (Mes biens hub, then
+listing detail).
 
-Now declared and pinned by `test/platform_permissions_test.dart` in both apps:
+**Rule:** a screen reading a bloc it does not provide itself needs a widget test
+pumping it with *only* the blocs its route inherits. See
+`screens_provider_scope_test.dart`.
 
-| | `mboa_pro` | `mboa_user` |
-|---|---|---|
-| Camera / photos | ✅ | ✅ |
-| Location (fine + coarse, M10) | ✅ | n/a — no geolocator |
-| POST_NOTIFICATIONS (Android 13+) | ✅ | ✅ |
-| `UIBackgroundModes: remote-notification` | ✅ | ✅ |
+### Route reachability
+A route in the table is not proof it is reachable. The profile hub was orphaned
+when the tab shell replaced it as the post-auth landing. Pinned by
+`pro_menu_page_test.dart`, which greps `lib/` for a navigation source for every
+`/app` child.
 
-**When you add a plugin that touches camera, photos, location, notifications or
+### Native permissions
+A plugin needing a runtime permission fails **only on device**. `geolocator`
+shipped without `NSLocationWhenInUseUsageDescription`, and the Android manifests
+had no `uses-permission` entries at all. Pinned by
+`platform_permissions_test.dart` in both apps, which reads the real `Info.plist`
+and `AndroidManifest.xml`.
+
+**Adding a plugin that touches camera, photos, location, notifications or
 background execution: add the declaration *and* a line in that test.**
 
-## Profile: one city field, not two
-Doc 10 gives the **Utilisateur** profile "Ville de recherche" and the
-**Prestataire** profile "Ville principale" — not both. Pro was showing both,
-which read as two fields doing the same thing. Pro now shows "Ville principale"
-for prestataires and the single city for agents, whose real field is
-"Zone d'intervention (villes/quartiers)" — unmodelled in the API (M15).
+### Design tokens
+`colors.background` = page canvas (#FBFBFB) · `colors.surface` = card (#FFFFFF) ·
+`colors.surfaceWarm` = card/input **fill only**. Using `surfaceWarm` as a page
+background reads visibly grey; it was wrong on every Pro screen once.
 
-## Bloc scoping (learned the hard way, twice)
-`AuthenticatedWrapper` provides the **session-scoped** blocs — `ProProfileBloc`,
-`KycCubit`, `SubscriptionBloc`, `HomeBloc`. Anything read by more than one route
-belongs there; anything provided by a single page's `wrappedRoute` is visible
-**only to that route and its children**, not to siblings.
+### Equatable props must be complete
+`bloc` drops an emission whose state compares equal to the current one. A model
+with a partial `props` list therefore makes the screen silently not update.
 
-`HomeBloc` was originally created in `HomePage.wrappedRoute`, so the Mes biens
-hub — a sibling route that renders the same dashboard card — threw
-`ProviderNotFoundException` the moment it opened. Analyze and the bloc tests
-could not see it; only pumping the page could.
+`Residence.props` omitted `units`, so a residence fetched *with* its units
+compared equal to the unit-less one from the list and the detail never showed a
+unit — a bug that survived two other fixes because the page code was correct
+throughout. `Annonce.props` had the same hole. Both now list every field.
+Pinned by `residences_detail_test.dart`.
 
-**Rule:** a screen that reads a bloc it does not provide itself needs a widget
-test that pumps it in isolation with *only* the blocs its route inherits. See
-`mes_biens_page_test.dart` and `screens_provider_scope_test.dart`.
+### Listings vs units
+`AnnoncesReady.standalone` filters `residenceId == null`. A residence unit can
+sit in `items` (fetched for its detail) without appearing in Biens Uniques.
+**Read `visible`/`standalone`, never `items`, when showing the list.** A unit
+also does **not** consume the active-listing quota — the allowance is enforced at
+residence creation, so `PublishGate` gets a null limit for a unit.
 
-A sweep of the M10 screens found the same bug in `AnnonceDetailPage`, which
-reads `AnnoncesBloc` while being a *sibling* route of the list. `AnnoncesBloc`
-and `ResidencesBloc` are now session singletons provided by the wrapper —
-**provided but not loaded there**, so a session that never opens Mes biens costs
-no requests; each list screen loads on open. Sharing one instance also means a
-transition on the detail updates the list behind it.
+---
 
-## Route reachability (learned the hard way)
-A route in the table is **not** proof it is reachable. The profile hub
-(`SettingsRoute`, the `screenshots/profil/profil.png` design) was orphaned when
-the tab shell replaced it as the post-auth landing — still declared, but nothing
-navigated to it, so it vanished from the running app. Pinned by
-`apps/mboa_pro/test/features/shell/pro_menu_page_test.dart`, which greps `lib/`
-for a navigation source for every `/app` child. Add new entry points there when
-a route is reached by something other than a `push` call.
+## API / environment quirks
 
-Pro navigation map: slide menu **Profil → `SettingsRoute` (hub)** → Éditer /
-Certifications / Changer de mot passe; slide menu **Paramètres →
-`SettingsMenuRoute`** (language, phone, deletion). The hub's third button is
-"Changer de mot passe" per the design — `mboa_user`'s hub keeps "Paramètres"
-there instead, because that app has no slide menu.
+- **Base URL is origin-only** (`http://localhost:8080`) — generated paths already
+  include `/api/v1`.
+- **City fields are IDs on update**: `searchCityId` / `mainCityId`.
+- **Listings are filed against a district**, not a city
+  (`CreateAnnonceRequest.districtId`), and `latitude`/`longitude` are required.
+- **Error codes live in `error`**, not `code`. All 63 are in
+  `api/docs/api-error-codes.md`. `message` is prose and gets reworded — never
+  branch on it. `VALIDATION_ERROR` carries a `fields` array.
+- **Timestamps are ISO-8601 UTC.** Pagination envelope is
+  `{content, page, size, totalElements, totalPages, last}` — do not read
+  `pageable.pageNumber` or `numberOfElements`.
+- **Send `Idempotency-Key`** on `POST /subscriptions`. The server generates a
+  random one when absent, so a double-tap creates two payments. `SubscribeBloc`
+  mints one per purchase and reuses it on retry.
+- **Generated operation ids are unstable** — `listMine1` → `listMine2` once broke
+  the build. The backend agreed to pin explicit `operationId`s; until then expect
+  churn on every regen.
+- **R2 needs `Environment.r2PublicBaseUrl`** to display images (placeholder + TODO).
 
-## M14 dashboard — what is real and what is not (IMPORTANT)
-The CDC M14 metrics table has **almost no backing API**. Verified against the
-generated client: `AnnonceResponse` has no view/contact field, there is no stats
-endpoint, and `MeResponse` carries no subscription tier.
+## Auth model
+- **User**: phone OTP — `otp/request` → `otp/verify`. Register = login.
+- **Pro**: email/password — `login` → `login/verify` (email OTP 2FA); register
+  `register/professional` → phone `otp/verify`.
+- Logout revokes the refresh token server-side and **deregisters the push device
+  first** — both are authenticated calls, so the order is load-bearing and tested.
+- `SessionExpiryWatcher` (mboa_core) refreshes ahead of expiry and forces a clean
+  logout when the refresh token dies. No inactivity/PIN lock (deliberate).
 
-| M14 metric | Status |
-|---|---|
-| Total biens + per-status breakdown | ✅ real — derived from `AnnoncesApi.listMine1` (`totalElements` + page content) |
-| Vues, Contacts, Contrats | ❌ no endpoint — render as "Bientôt" (null, never a fabricated 0) |
-| Conversion, Visites | ❌ no endpoint **and** tier-gated (Basic+) |
-| Position moyenne | ❌ no endpoint **and** tier-gated (Pro+) |
-| Subscription tier | ✅ **real** — `SubscriptionBloc.tier` feeds `AccessContext`. RM-M14-02 gating now reflects the actual plan. |
+---
 
-Locked metrics get the RM-M14-02 treatment (blurred value + lock + a single
-"Passer à Basic+" CTA); unavailable ones say so. When the backend ships the
-endpoints, fill `DashboardStats`' nullable fields — the bloc and UI don't change.
+## Module notes worth reading before touching
 
-**Decided (2026-08-04):** Portefeuille/Finances ships as a placeholder; the stats
-card is built against Doc 10's M14 metrics, not the mockup's "Entrées/Sorties".
-Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
+### M14 dashboard — mostly empty by necessity
+Only the total-listings count and per-status breakdown are real (derived from the
+listings page). Views, contacts, conversion, visits, contracts and ranking **have
+no source data** — the backend confirmed the events are not captured anywhere.
+They land with M05 (views/contacts), M08, M16, M04.
 
-## M13 payments — behaviour to know before touching it
-- **Confirmation is webhook-driven and there is no payment-status endpoint.**
-  The only observable is `mySubscription()` changing tier, so `SubscribeBloc`
-  polls it (3s) and gives up after **90s** into `SubscribePendingHandoff`
-  ("you'll be notified") rather than spinning for the 15 minutes RM-M13-05
-  allows. **This makes M13's UX depend on M03 notifications to close the loop.**
-  Replace the polling if a status endpoint ever lands.
-- **Idempotency matters.** `POST /subscriptions` takes an `Idempotency-Key`.
-  `SubscribeRequested` mints a new key (a new charge); `SubscribeRetryRequested`
-  **reuses** it, so retrying a request that actually landed cannot double-charge.
-  Covered by tests — do not "simplify" that away.
-- **Receipts are device-local.** `paymentId` is returned only by the initiating
-  call and there is no payments-list endpoint, so payments are cached in
-  `subscriptionBox`. Lost on reinstall, invisible across devices.
-  **Ask the backend for `GET /subscriptions/payments`** and delete the cache.
-- **Downgrade vs upgrade semantics are unverified.** RM-M13-03/04 differ, but
-  `subscribe()` takes only `{tier, method}` — the UI only warns (RM-M13-03) and
-  makes no promise. Confirm with the backend.
-- An unknown/failed plan read always resolves to **Gratuit**, never upward — a
-  slow or broken load must not unlock a paid feature.
-- Receipt opening surfaces the URL in a toast; wiring `url_launcher` is a TODO.
+`DashboardStats` models them nullable and the UI renders "Bientôt". The backend
+explicitly endorsed this over fabricating zeroes. Tier-gated metrics show the
+RM-M14-02 blur + upgrade CTA, which *is* real behaviour.
 
-## Backend requests (answered 2026-08-05, spec regenerated 2026-08-06)
-The backend answered every item; `api/backend-response.md` has their reply and
-`api/docs/api-error-codes.md` lists all 63 error codes. Consumed since:
+### M13 payments
+- Confirmation is webhook-driven. `SubscribeBloc` polls
+  `GET /subscriptions/payments/{id}` — **not** the plan, because the tier cannot
+  distinguish `FAILED` from "not yet". Gives up after 90s into a
+  "you'll be notified" state rather than the 15 minutes RM-M13-05 allows.
+- Push fires on settlement (confirmed *and* failed), ending the wait when the app
+  is backgrounded.
+- Receipts come from `GET /subscriptions/payments`; `hasReceipt` decides whether
+  the download affordance is drawn at all.
+- An unknown or failed plan read resolves **down** to Gratuit, never up.
 
-- **`AnnonceResponse.residenceId`** — replaced the N+1 unit-id subtraction with
-  one request and a local `residenceId == null` filter.
-- **`POST /annonces/{id}/unarchive`** — the "Republier" button was calling
-  `publish`, which rejects anything but `DRAFT` (409). Unarchive returns the
-  listing to `DRAFT`, so republishing re-checks the quota and the photo rule.
-  Residences have no bulk equivalent; that path throws `UnsupportedError`.
-- **`GET /subscriptions/payments`** — deleted the device-local Hive cache.
-  `hasReceipt` decides whether the download affordance is shown at all.
-- **`GET /subscriptions/payments/{id}`** — `SubscribeBloc` polls the *payment*
-  now, not the plan, so a `FAILED` is reported at once instead of timing out.
-- **Error codes** — the guessed names were wrong on three of four; corrected,
-  and `VALIDATION_ERROR.fields` surfaces the specific complaint on a form.
+### M10 listings
+- Photos: **min 3, max 15** (Doc 10). The mockup's "5 photos" is wrong.
+  `INSUFFICIENT_PHOTOS` is enforced server-side at publish too.
+- **Enregistrer saves a draft.** Publishing is separate, because only publishing
+  hits the tier limit and the photo minimum.
+- Drafts appear under *Disponibles* with a badge; archived have their own tab.
+- **Un-archiving is its own endpoint** (`POST /annonces/{id}/unarchive` → DRAFT).
+  `publish` rejects anything but DRAFT with a 409 — an earlier "Republier" button
+  calling `publish` was broken in a shipped build.
+- `PublishGate` is a pure function over (profile complete, photo count, active
+  count, tier limit). It reports the profile blocker first — the one the
+  prestataire can act on.
+- **Location flow:** GPS fix → reverse geocode to a city → preselect it → load
+  *that city's* districts → pick one. `matchCity` is deliberately loose (accents,
+  casing, "Douala 5e") and **may return null**; the city is always confirmable by
+  hand. It records where the *phone* is, not the property — a MapLibre picker is
+  the real fix and replaces only `LocationCapture`.
+- A unit id **is** an annonce id, so unit rows open the ordinary detail and edit
+  form.
+- Surfaces with no endpoint (Attributions, Réservations, Prospections, En attente
+  de validation, Historique, Occupant) route to `AccessRestrictedPage(comingSoon)`
+  rather than being hidden — the hub is the product's map.
 
-Still open: `expiresAt` (J+30 countdown) is mapped but unused in the UI; M12
-messaging is live and unbuilt; `amenities` is queued on their side.
+---
 
-## Backend requests
-**`docs/backend-requests.md`** consolidates everything the apps need from the
-API, ordered by what each gap currently costs. Nothing blocks the apps — every
-item has a workaround — but the workarounds cost extra requests, guessed
-contracts, or disabled features. Update it when an item lands or a new one
-appears, rather than scattering the asks through this file.
+## Open decisions (product, not code)
 
-## M10 — what exists and what does not
-Only the two CRUD resources have an API. Everything else on the `mes_biens`
-designs is unbuilt **because there is no endpoint**, and routes to the
-`comingSoon` explainer rather than being hidden — the hub is the product's map.
+1. **Doc 10 has no Bien Multiple section.** Residences are fully shipped — bulk
+   lifecycle, per-residence quota, `residenceUnitAllowance` — against a CDC that
+   describes single listings only. No RM-IDs to cite, nothing to validate
+   against. The backend flagged this as the most consequential item on either
+   list.
+2. **`residenceUnitAllowance` is not in Doc 10** — the name was invented in the
+   backend. Shown on the plans screen as "N unités de résidence".
+3. **Water/electricity metering** — the designs show "Compteur Prépayé" on a
+   listing card, but Doc 10 does not define it. The backend will add it once it
+   is in the CDC. See `docs/openapi-proposal-m10-fields.md`.
+4. **Photos: 3 vs 5** — Doc 10 says 3, the mockup says 5. Built as 3.
+5. **French wording for residences** — English says "Residences", French keeps the
+   design's "Biens Multiples".
 
-| Surface | State |
-|---|---|
-| Biens Uniques / Résidences CRUD + lifecycle | ✅ built |
-| Residence detail (counts, bulk actions, unit list) | ✅ built + widget-tested |
-| Per-unit view/edit | ✅ a unit id **is** an annonce id — rows open the ordinary detail and edit form |
-| Attributions, Réservations, Prospections | ❌ no endpoint |
-| En attente de validation | ❌ no moderation-status endpoint |
-| Occupant / Mes locataires, Historique, rating | ❌ no endpoint — the detail uses the design's own "Aucune information" empty state |
-| Gestionnaire hub (agents, annuaires) | ❌ M15/M16, still a tab placeholder |
+---
 
-**Units are annonces.** Confirmed by the backend, so nothing about the unit
-screens is unit-specific — a row opens `AnnonceDetailPage` and `AnnonceFormPage`.
-Two consequences that are easy to get wrong:
-- `AnnoncesReady.standalone` filters `residenceId == null`, so a unit fetched
-  for its detail sits in `items` without appearing in Biens Uniques. **Read
-  `visible`/`standalone`, never `items`, when showing the list.**
-- A unit **does not** consume the tier's active-listing quota — the allowance is
-  enforced at residence creation (`RESIDENCE_UNIT_LIMIT`). `PublishGate` is
-  therefore passed a null limit for a unit.
+## Pending / next
 
-Behaviour worth knowing before changing it:
-- **`GET /annonces` returns residence units too**, and `AnnonceResponse` has no
-  residence link. `AnnonceRepository.list()` therefore subtracts the unit ids
-  gathered from `ResidencesApi.listMine`. If that lookup fails it returns the
-  unfiltered list — extra rows beat an empty screen. **Ask the backend for a
-  `residenceId` on `AnnonceResponse`, or a `standalone` filter**; this costs an
-  extra request per list load.
-- **The residence *list* payload may omit the `units` array** — it carries the
-  counts, but the detail was rendering an empty unit list because of it. The
-  detail dispatches `ResidenceDetailRequested`, which fetches `getOne` and
-  merges the result into the list, so both stay one source of truth (and a deep
-  link straight to a detail works without the list being loaded).
-- **Un-archive = republish.** Doc 10's lifecycle draws no arrow back from
-  *Archivée*, so the backend may refuse. The action is offered with the error
-  surfaced rather than hidden — see `docs/backend-requests.md` §9.
-- **Deletion is two-step** (RM-M10-07) and the backend still refuses when an
-  active Mboa contract references the listing; that failure shows a toast.
-- **Archived listings have their own tab.** RM-M10-04 auto-archives Gratuit
-  listings at J+30 and RM-M10-05 keeps rented ones in history, so they need
-  somewhere to be seen. The design shows two tabs; this is a third.
-- **`PublishGate`** is a pure function; the publish rules (RM-M10-01 profile,
-  CE-M10-03 three photos, RM-M10-02 tier limit) live there, not spread across
-  blocs. It reports the profile blocker first — the one the prestataire can fix.
-- **Enregistrer saves a draft.** Publishing is a separate action from the list
-  or detail, because only publishing hits the tier limit and the photo minimum.
-- **Photos: min 3, max 15** per Doc 10 — the mockup's "5 photos" is wrong, and
-  `photoKeys.minItems` in the spec is 0 (see `docs/openapi-proposal-m10-fields.md`).
-- **The form's location flow is: GPS fix → reverse geocode to a city →
-  preselect it in the catalogue → load *that city's* districts → pick one.**
-  Listings are filed against a **district** (`CreateAnnonceRequest.districtId`),
-  so the city is only ever a means of narrowing the list. Geocoded names never
-  match the catalogue exactly, so `LocationRepository.matchCity` is loose
-  (accents, casing, "Douala 5e") and **may return null** — the city is always
-  confirmable by hand. It still records where the *phone* is, not the property;
-  a MapLibre picker is the real fix and replaces only `LocationCapture`.
-- Four fields in the creation mockup (water/electricity metering, titre de
-  propriété, période) have **no API and are not built** — see the OpenAPI
-  proposal for which two are worth adding.
+- **`expiresAt` countdown** — mapped onto `Annonce`, unused in the UI. Free-tier
+  listings expire at J+30 (RM-M10-04); the field gives the countdown for free.
+  Smallest useful next task.
+- **M12 messaging** — live on the backend, entirely unbuilt. Constraints from
+  their handover: `ConversationResponse.readOnly` must disable the composer;
+  phone numbers are masked server-side both directions (RM-M12-03) so **no call
+  affordance anywhere**; attachments are **object keys, not URLs**, max 3, images
+  only, via the `MESSAGE_ATTACHMENT` upload category; `POST /conversations` is
+  **USER role only** (a prestataire gets 403); a double-tapped "Contact" returns
+  409 `CONSTRAINT_VIOLATION` — retry to get the existing thread.
+- **M04 search / M05 listing detail** — the user-app side.
+- **iOS push** — blocked only on the APNs key. Everything else is done.
+- Password reset (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
+- Settings extras: searchable toggle, per-type notification preferences.
+- Agent side (M15/M16), favourites (M06), visits (M07), contract (M08),
+  Mboa Score (M09).
 
-## Pending / next (no blockers unless noted)
-- **M04 search / M05 listing detail** — the user-app side, now unblocked.
-  **Note:** the 2026-08-05 regen renamed `listMine1` -> `listMine2`; generated
-  operation ids are not stable, expect this on every spec change.
-- **District picker + MapLibre location** for the M10 form (see above).
-- **M12 messagerie** — `MessagerieApi` arrived in the same regen, unbuilt.
-- **M03 notifications** — **Android done in both apps.** Remaining: iOS (APNs
-  key + adding both plists to their Runner targets in Xcode), the payload
-  contract for CA-M03-02 deep links, and per-type preferences in
-  `user_settings`. See `docs/notifications-setup.md`. Pro-first: the prestataire must be able to create
-  listings before M04/M05 (which are user-app consumption). M10 is also what
-  fills "Mes biens" behind the home CTA, which currently dead-ends in
-  `AccessRestrictedRoute(comingSoon)`.
-- **M04 search, M05 listing detail** — after M10.
-- **Agent side (M15 availability, M16 assigned visits/reports)** — BLOCKED: no agent endpoints in `api_client` yet.
-- **Password reset** (`auth/password/forgot` + `/reset`) — endpoints exist, not wired.
-- **Notifications** — FCM + `NotificationDevicesApi` exist; not wired.
-- **Settings extras** — searchable toggle + per-type notification prefs (`user_settings` supports them).
-- Messaging (M12), favorites (M06), visits (M07), contract (M08), Mboa Score (M09).
+---
 
-## Tech debt / optimizations to revisit
-- **iOS: a stale `Podfile.lock` will masquerade as a deployment-target error.**
-  After the sentry 8.x -> 9.x bump, `pod install` failed with *"Sentry/HybridSDK
-  ... required a higher minimum deployment target"*. That message is a red
-  herring — Sentry 8.58.4's podspec allows iOS 11. The real cause was the lock
-  pinning 8.46.0 while the new plugin demanded 8.58.4, i.e. an unsatisfiable
-  pair. Fix: delete `ios/Podfile.lock` and `pod install --repo-update`. Both
-  Podfiles now pin `platform :ios, '13.0'` explicitly (Firebase 11.x needs 13),
-  because an implicit platform makes these errors even harder to read.
-- **CocoaPods on this Mac needs a UTF-8 locale**: run pod with
-  `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8`, or it dies with
-  *"Unicode Normalization not appropriate for ASCII-8BIT"*.
-- **The CocoaPods "did not set the base configuration ... Pods-Runner.profile"
-  warning is benign.** Flutter's template points the Profile build config at
-  `Release.xcconfig`, which already includes the Pods release xcconfig.
-  Verified: `flutter build ios --profile` succeeds. Don't "fix" it.
-- **`sentry_flutter` was pinned to 8.x, which broke the Android build outright**
-  (it ships Kotlin language version 1.6; the Kotlin 2.2.20 compiler rejects it).
-  Upgraded to 9.x on 2026-08-05 — our `SentryBlocObserver` needed no changes.
-  This had been broken for a while and nothing caught it, because nothing ran an
-  Android build.
-- **Subscription tier has no API.** `AccessPolicy` gates M14 metrics on
-  `SubscriptionTier`, but `MeResponse` carries no tier — `AccessContext.tier`
-  defaults to `gratuit` until an endpoint exists. Wire it when M13 lands.
-- **Goldens are macOS-rendered** (`home/ui/goldens/pro_home.png`,
-  `subscription/ui/goldens/plans.png`). Both have caught real layout bugs — an
-  overflowing metric grid, and unformatted prices / a `1 annonces` plural bug.
-  Platform-dependent, so a Linux CI needs them regenerated or excluded.
-- **The Pro home golden is macOS-rendered.** `test/features/home/ui/goldens/pro_home.png`
-  is a real visual check (it caught a grid overflow), but goldens are
-  platform-dependent — a Linux CI will need it regenerated or excluded.
-  Fonts are loaded via `test/_helpers/load_brand_fonts.dart`; note package fonts
-  must be requested as `packages/mboa_ui/<Family>`.
-- **Shell integration isn't widget-tested end-to-end** (it needs the full router
-  + get_it harness). Covered instead by: route-table assertions
-  (`test/app/router/app_router_test.dart`), `ProBottomNav` widget tests, and the
-  guard/policy unit tests in `mboa_shared`.
-- **No device smoke-test yet** for camera capture, R2 PUT (Content-Type/Length must match presigned signature), city fetch, and the settings round-trips — all need a real device + backend + `R2_PUBLIC_BASE_URL`.
-- `updatePhoto` and profile save assume **partial-update** semantics (all-nullable DTOs). If the backend does full-replace, send the full current profile.
-- `MboaActionCard` is fixed-height (180) with a hardcoded illustration background (intentional per design).
-- Change-phone success doesn't reload the profile (phone isn't shown on the hub) — reload if it becomes visible.
-- `dio` is a dev-dep in the apps (test Response fakes); the shared `MediaUploader` uses it as a regular dep.
+## Tech debt
 
-## Test/analyze status (last run)
-- Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
-  now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 282 passing — `mboa_user` 18, `mboa_pro` 178, `mboa_core` 12, `mboa_shared` 74.
-- Residence detail has widget tests, mutation-checked against the
-  missing-units bug.
-- **Android and iOS builds verified** (`flutter build apk --debug`,
-  `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
-  doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the
-  test suite cannot catch native build breakage.
-- `make test` now runs the **package** suites too, not just the two apps, and
-  fails the target on the first failing suite.
-- Convention: every bloc/cubit + repository has tests (`bloc_test` + `mocktail`); shared doubles in `test/_helpers/mocks`.
+- **Nothing has been run on a device or simulator.** Every claim here is from
+  tests, analyze and native builds — not from the app running. Simulator install
+  kept failing with CoreSimulator 405; a physical device may be easier. The
+  broken "Republier" button is exactly the class of bug this misses.
+- **Deep-link routing** handles `PAYMENT_CONFIRMED` and `KYC`;
+  `MESSAGE`/`ANNONCE`/`VISIT` land on the shell until those modules exist.
+- **Goldens are macOS-rendered** (`home/ui/goldens/`, `subscription/ui/goldens/`,
+  `annonces/ui/goldens/`). They have caught real bugs — an overflowing metric
+  grid, unformatted prices, a `1 annonces` plural — but a Linux CI will need them
+  regenerated or excluded.
+- `url_launcher` is unwired: tapping a receipt surfaces the URL in a toast.
+- `sentry_flutter` had to go 8.x → 9.x to unbreak the Android build (Kotlin 1.6
+  vs the 2.x compiler). Nothing caught it because nothing ran an Android build.
+- **CocoaPods on this Mac needs a UTF-8 locale**: prefix `pod` with
+  `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` or it dies on ASCII-8BIT normalisation.
+- A stale `ios/Podfile.lock` reports as a *deployment-target* error. It is not —
+  delete the lock and `pod install --repo-update`.
+- The CocoaPods "base configuration … Pods-Runner.profile" warning is **benign**;
+  Flutter points Profile at `Release.xcconfig`. Verified. Don't "fix" it.
+- `updatePhoto` and profile save assume partial-update semantics.
+- `MboaActionCard` is fixed-height (180) with a hardcoded illustration background.
+
+---
+
+## Verification
+
+| Check | Command | Catches |
+|---|---|---|
+| Static | `make analyze` | types, lints, unused |
+| Unit/widget | `make test` | logic, bloc states, provider scoping, layout overflow |
+| Android | `flutter build apk --debug` (per app) | Gradle, manifest, plugin conflicts |
+| iOS | `flutter build ios --debug --simulator` (per app) | Podfile, plist, target membership |
+
+**Analyze and test cannot see native breakage.** Three separate failures reached
+the user that way: the Kotlin/Sentry build break, the missing location
+permission, and `POST_NOTIFICATIONS` missing (a green build that would never have
+prompted on Android 13+).
+
+Last run: all four green, 290 tests, both APKs and both iOS simulator builds OK,
+`mboa_pro` also builds `--profile`.

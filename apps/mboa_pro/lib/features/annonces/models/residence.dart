@@ -80,8 +80,26 @@ class Residence extends Equatable {
         _ => AnnonceStatus.unknown,
       };
 
+  // Every field, deliberately: `units` was missing, so a residence fetched with
+  // its units compared equal to the unit-less one from the list, bloc treated
+  // the emission as a no-op, and the detail never showed a unit.
   @override
-  List<Object?> get props => [id, name, status, unitCount, publishedUnitCount];
+  List<Object?> get props => [
+        id,
+        name,
+        status,
+        city,
+        district,
+        exactAddress,
+        description,
+        photoKeys,
+        unitCount,
+        publishedUnitCount,
+        draftUnitCount,
+        reserveUnitCount,
+        units,
+        createdAt,
+      ];
 }
 
 /// One unit inside a [Residence].

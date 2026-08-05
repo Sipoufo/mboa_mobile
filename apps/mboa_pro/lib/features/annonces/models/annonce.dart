@@ -149,6 +149,34 @@ class Annonce extends Equatable {
         expiresAt: response.expiresAt,
       );
 
+  // Every field: a partial props list makes an edit that only touched, say, the
+  // description compare equal to the old value, and the screen never redraws.
   @override
-  List<Object?> get props => [id, title, status, propertyType, monthlyRent, photoKeys];
+  List<Object?> get props => [
+        id,
+        title,
+        status,
+        propertyType,
+        city,
+        cityId,
+        district,
+        districtId,
+        latitude,
+        longitude,
+        exactAddress,
+        monthlyRent,
+        chargesIncluded,
+        chargesAmount,
+        surfaceArea,
+        roomCount,
+        bathroomCount,
+        furnished,
+        availableFrom,
+        description,
+        photoKeys,
+        publishedAt,
+        createdAt,
+        residenceId,
+        expiresAt,
+      ];
 }
