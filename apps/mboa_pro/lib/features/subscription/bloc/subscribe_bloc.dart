@@ -17,11 +17,14 @@ part 'subscribe_state.dart';
 /// the same split as `ProfileBloc` vs `ChangePasswordCubit`. Created per flow,
 /// so its state dies with the screen instead of lingering all session.
 ///
-/// **Confirmation is webhook-driven and there is no payment-status endpoint**,
-/// so the only observable is the plan itself changing. This bloc polls
-/// `myPlan()` and gives up after [pollTimeout], handing off to a
-/// "we'll notify you" state rather than spinning for the full 15 minutes
-/// RM-M13-05 allows.
+/// Confirmation is webhook-driven, so the outcome is polled. It polls the
+/// **payment** rather than the plan: unlike the tier, the payment distinguishes
+/// `FAILED` from "not settled yet", so a rejection is reported instead of
+/// silently timing out. A push also fires on settlement (M03), which is what
+/// ends the wait when the app is backgrounded.
+///
+/// Polling still stops after [pollTimeout] and hands off to a "we'll notify
+/// you" state, rather than spinning for the full 15 minutes RM-M13-05 allows.
 class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
   SubscribeBloc({
     required SubscriptionRepository repository,
@@ -42,7 +45,12 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
   final Duration pollTimeout;
 
   /// Stable across retries of one purchase, so a retry cannot double-charge.
+  /// The server generates a random key when the header is absent, so sending
+  /// one is what actually stops a double-tap becoming two payments.
   String? _idempotencyKey;
+
+  /// Retained so a mid-poll rejection can be reported with its inputs.
+  PaymentMethod _method = PaymentMethod.mtnMomo;
 
   Future<void> _onRetry(
     SubscribeRetryRequested event,
@@ -67,6 +75,7 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
     PaymentMethod method,
     Emitter<SubscribeState> emit,
   ) async {
+    _method = method;
     emit(SubscribeInitiating(tier: tier, method: method));
 
     final PaymentAttempt attempt;
@@ -98,7 +107,7 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
     await _awaitConfirmation(tier, attempt, emit);
   }
 
-  /// Polls the plan until it reflects [tier], or [pollTimeout] elapses.
+  /// Polls the payment until it settles, or [pollTimeout] elapses.
   Future<void> _awaitConfirmation(
     SubscriptionTier tier,
     PaymentAttempt attempt,
@@ -110,10 +119,20 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       await Future<void>.delayed(pollInterval);
       if (isClosed || emit.isDone) return;
 
-      final plan = await _safePlan();
-      if (plan != null && plan.effectiveTier.isAtLeast(tier)) {
-        emit(SubscribeConfirmed(attempt: attempt, plan: plan));
-        return;
+      final settled = await _safePayment(attempt.paymentId);
+      switch (settled?.status) {
+        case PaymentStatus.confirmed:
+          emit(SubscribeConfirmed(attempt: settled!, plan: await _safePlan()));
+          return;
+        case PaymentStatus.failed:
+        case PaymentStatus.cancelled:
+          // Reported now rather than after the full timeout — watching the tier
+          // could never tell a rejection from "not yet".
+          emit(SubscribeFailure(tier: tier, method: _method, attempt: settled));
+          return;
+        case PaymentStatus.pending:
+        case null:
+          break;
       }
     }
 
@@ -124,6 +143,14 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
   }
 
   /// A poll failure must not abort the wait — the next tick may well succeed.
+  Future<PaymentAttempt?> _safePayment(String paymentId) async {
+    try {
+      return await _repository.payment(paymentId);
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<SubscriptionPlan?> _safePlan() async {
     try {
       return await _repository.myPlan();

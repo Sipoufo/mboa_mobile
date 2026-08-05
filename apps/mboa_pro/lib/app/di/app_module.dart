@@ -169,10 +169,7 @@ void registerAppModule() {
   // Subscriptions (M13). SubscriptionBloc is a singleton because it feeds
   // AccessContext.tier for the whole app; SubscribeBloc is per-checkout.
   getIt.registerLazySingleton<SubscriptionRepository>(
-    () => SubscriptionRepository(
-      dioClient: getIt<DioClient>(),
-      cache: getIt<HiveCache>(),
-    ),
+    () => SubscriptionRepository(dioClient: getIt<DioClient>()),
   );
   getIt.registerLazySingleton<SubscriptionBloc>(
     () => SubscriptionBloc(repository: getIt<SubscriptionRepository>()),

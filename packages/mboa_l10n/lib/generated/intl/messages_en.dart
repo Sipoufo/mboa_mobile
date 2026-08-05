@@ -120,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceActionReserve": MessageLookupByLibrary.simpleMessage(
       "Mark reserved",
     ),
-    "annonceActionUnarchive": MessageLookupByLibrary.simpleMessage("Republish"),
+    "annonceActionUnarchive": MessageLookupByLibrary.simpleMessage("Unarchive"),
     "annonceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
       "This is permanent. The property will be removed from your portfolio.",
     ),

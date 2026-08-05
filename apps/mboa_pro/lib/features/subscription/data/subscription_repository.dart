@@ -7,16 +7,10 @@ import '../models/subscription_models.dart';
 
 /// Subscriptions and Mobile Money payment (CDC M13).
 class SubscriptionRepository {
-  SubscriptionRepository({
-    required DioClient dioClient,
-    required HiveCache cache,
-  })  : _dioClient = dioClient,
-        _cache = cache;
+  SubscriptionRepository({required DioClient dioClient})
+      : _dioClient = dioClient;
 
   final DioClient _dioClient;
-  final HiveCache _cache;
-
-  static const String _paymentsKey = 'payments';
 
   SubscriptionsApi get _api => _dioClient.api.getSubscriptionsApi();
 
@@ -64,9 +58,7 @@ class SubscriptionRepository {
       throw StateError('subscribe returned no payment');
     }
 
-    final attempt = PaymentAttempt.fromResponse(data, tier: tier);
-    await rememberPayment(attempt);
-    return attempt;
+    return PaymentAttempt.fromResponse(data, tier: tier);
   }
 
   /// A signed URL for the payment receipt (RM-M13-07).
@@ -75,34 +67,27 @@ class SubscriptionRepository {
     return response.data?.downloadUrl;
   }
 
-  // --- Local payment history -------------------------------------------------
-  //
-  // There is no "list my payments" endpoint, and `paymentId` comes back only
-  // from the initiating call, so receipts would be unreachable after the fact.
-  // Persisting locally is a stopgap: it does not survive a reinstall and does
-  // not follow the user across devices. Drop this once the backend exposes a
-  // payments list.
-
-  Future<void> rememberPayment(PaymentAttempt attempt) async {
-    if (attempt.paymentId.isEmpty) return;
-
-    final payments = knownPayments()
-        .where((p) => p.paymentId != attempt.paymentId)
-        .toList()
-      ..insert(0, attempt);
-
-    await _cache.put(StorageKeys.subscriptionBox, _paymentsKey, {
-      // Keep the history short — receipts age out of usefulness.
-      'items': payments.take(20).map((p) => p.toCache()).toList(),
-    });
+  /// The prestataire's payment history (RM-M13-07), newest first.
+  ///
+  /// Replaced a device-local Hive cache: `paymentId` used to come back only
+  /// from the initiating call, so receipts vanished on reinstall.
+  Future<List<PaymentAttempt>> payments() async {
+    final response = await _api.listMyPayments(
+      pageable: Pageable((b) => b
+        ..page = 0
+        ..size = 50),
+    );
+    return (response.data?.content ?? const <PaymentSummary>[])
+        .map(PaymentAttempt.fromSummary)
+        .toList();
   }
 
-  List<PaymentAttempt> knownPayments() {
-    final json = _cache.get(StorageKeys.subscriptionBox, _paymentsKey);
-    final items = (json?['items'] as List?) ?? const [];
-    return items
-        .map((e) => PaymentAttempt.fromCache(Map<String, dynamic>.from(e as Map)))
-        .toList();
+  /// One payment's current state — the source of truth while awaiting
+  /// settlement. Unlike the tier, this distinguishes FAILED from "not yet".
+  Future<PaymentAttempt?> payment(String paymentId) async {
+    final response = await _api.getPayment(id: paymentId);
+    final data = response.data;
+    return data == null ? null : PaymentAttempt.fromSummary(data);
   }
 
   /// A fresh idempotency key for one purchase attempt.

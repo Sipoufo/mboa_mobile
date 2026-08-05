@@ -63,6 +63,13 @@ void main() {
       // TODO
     });
 
+    // Return an archived listing to draft so it can be published again (RM-M10-08)
+    //
+    //Future<AnnonceResponse> unarchive(String id) async
+    test('test unarchive', () async {
+      // TODO
+    });
+
     // Partially update one of the authenticated prestataire's listings
     //
     //Future<AnnonceResponse> update1(String id, UpdateAnnonceRequest updateAnnonceRequest) async

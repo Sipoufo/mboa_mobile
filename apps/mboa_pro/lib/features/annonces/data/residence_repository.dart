@@ -72,6 +72,9 @@ class ResidenceRepository {
       AnnonceTransition.reserve => _api.reserveAll(id: id),
       AnnonceTransition.markRented => _api.rentAll(id: id),
       AnnonceTransition.archive => _api.archiveAll(id: id),
+      // ResidencesApi exposes only the bulk four; there is no unarchiveAll.
+      AnnonceTransition.unarchive =>
+        throw UnsupportedError('Residences cannot be un-archived'),
     };
 
     final data = response.data;

@@ -219,6 +219,26 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
   slow or broken load must not unlock a paid feature.
 - Receipt opening surfaces the URL in a toast; wiring `url_launcher` is a TODO.
 
+## Backend requests (answered 2026-08-05, spec regenerated 2026-08-06)
+The backend answered every item; `api/backend-response.md` has their reply and
+`api/docs/api-error-codes.md` lists all 63 error codes. Consumed since:
+
+- **`AnnonceResponse.residenceId`** — replaced the N+1 unit-id subtraction with
+  one request and a local `residenceId == null` filter.
+- **`POST /annonces/{id}/unarchive`** — the "Republier" button was calling
+  `publish`, which rejects anything but `DRAFT` (409). Unarchive returns the
+  listing to `DRAFT`, so republishing re-checks the quota and the photo rule.
+  Residences have no bulk equivalent; that path throws `UnsupportedError`.
+- **`GET /subscriptions/payments`** — deleted the device-local Hive cache.
+  `hasReceipt` decides whether the download affordance is shown at all.
+- **`GET /subscriptions/payments/{id}`** — `SubscribeBloc` polls the *payment*
+  now, not the plan, so a `FAILED` is reported at once instead of timing out.
+- **Error codes** — the guessed names were wrong on three of four; corrected,
+  and `VALIDATION_ERROR.fields` surfaces the specific complaint on a form.
+
+Still open: `expiresAt` (J+30 countdown) is mapped but unused in the UI; M12
+messaging is live and unbuilt; `amenities` is queued on their side.
+
 ## Backend requests
 **`docs/backend-requests.md`** consolidates everything the apps need from the
 API, ordered by what each gap currently costs. Nothing blocks the apps — every

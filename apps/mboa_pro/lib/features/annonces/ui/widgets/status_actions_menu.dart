@@ -72,10 +72,9 @@ class StatusActionsMenu extends StatelessWidget {
             AnnonceTransition.archive,
           ],
         AnnonceStatus.rented => [AnnonceTransition.archive],
-        // Un-archiving is republishing. Doc 10's lifecycle draws no arrow back
-        // from Archivée, so the backend may refuse — the error is surfaced
-        // rather than the action being hidden.
-        AnnonceStatus.archived => [AnnonceTransition.publish],
+        // Un-archiving returns the listing to DRAFT — publishing it again is a
+        // second, separate step that re-checks the quota and the photo rule.
+        AnnonceStatus.archived => [AnnonceTransition.unarchive],
         AnnonceStatus.unknown => const [],
       };
 
@@ -107,12 +106,11 @@ class StatusActionsMenu extends StatelessWidget {
             child: Text(
               switch (transition) {
                 // Republishing an archived listing reads as "unarchive".
-                AnnonceTransition.publish => status == AnnonceStatus.archived
-                    ? l10n.annonceActionUnarchive
-                    : l10n.annonceActionPublish,
+                AnnonceTransition.publish => l10n.annonceActionPublish,
                 AnnonceTransition.reserve => l10n.annonceActionReserve,
                 AnnonceTransition.markRented => l10n.annonceActionMarkRented,
                 AnnonceTransition.archive => l10n.annonceActionArchive,
+                AnnonceTransition.unarchive => l10n.annonceActionUnarchive,
               },
             ),
           ),

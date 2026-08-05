@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**publishAll**](ResidencesApi.md#publishall) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
 [**rentAll**](ResidencesApi.md#rentall) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
 [**reserveAll**](ResidencesApi.md#reserveall) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
+[**unarchiveAll**](ResidencesApi.md#unarchiveall) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
 [**update**](ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
 
 
@@ -323,6 +324,47 @@ try {
     print(response);
 } on DioException catch (e) {
     print('Exception when calling ResidencesApi->reserveAll: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**ResidenceResponse**](ResidenceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **unarchiveAll**
+> ResidenceResponse unarchiveAll(id)
+
+Return all archived units to draft so the residence can be published again (RM-M10-08)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getResidencesApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.unarchiveAll(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ResidencesApi->unarchiveAll: $e\n');
 }
 ```
 

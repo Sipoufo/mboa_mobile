@@ -87,6 +87,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PaymentInitiatedResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -114,12 +120,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -139,6 +139,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -166,12 +172,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -195,6 +195,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -222,12 +228,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -250,6 +250,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -281,8 +287,60 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/residences/{id}/unarchive:
+    post:
+      tags:
+        - Residences
+      summary: Return all archived units to draft so the residence can be published
+        again (RM-M10-08)
+      operationId: unarchiveAll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
           content:
             application/json:
               schema:
@@ -307,6 +365,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -334,12 +398,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -364,6 +422,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -391,12 +455,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -421,6 +479,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -448,12 +512,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -478,6 +536,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -505,12 +569,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -535,6 +593,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -562,12 +626,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -587,6 +645,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -614,12 +678,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -643,6 +701,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PresignedUpload"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -670,12 +734,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -699,6 +757,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -726,12 +790,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -755,6 +813,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseConversationResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -782,12 +846,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -811,6 +869,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ConversationResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -838,12 +902,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -864,6 +922,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -891,12 +955,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -926,6 +984,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseMessageResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -953,12 +1017,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -988,6 +1046,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/MessageResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1015,12 +1079,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1044,6 +1102,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1071,12 +1135,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1100,6 +1158,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1127,12 +1191,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1153,6 +1211,12 @@ paths:
       responses:
         "202":
           description: Accepted
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1180,12 +1244,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1205,6 +1263,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1232,12 +1296,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1257,6 +1315,12 @@ paths:
       responses:
         "202":
           description: Accepted
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1284,12 +1348,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1313,6 +1371,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1340,12 +1404,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1365,6 +1423,12 @@ paths:
       responses:
         "202":
           description: Accepted
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1392,12 +1456,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1417,6 +1475,12 @@ paths:
       responses:
         "202":
           description: Accepted
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1444,12 +1508,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1469,6 +1527,12 @@ paths:
       responses:
         "200":
           description: OK
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1496,12 +1560,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1522,6 +1580,12 @@ paths:
       responses:
         "202":
           description: Accepted
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1549,12 +1613,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1579,6 +1637,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1606,12 +1670,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1635,6 +1693,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1662,12 +1726,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1690,6 +1748,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1721,8 +1785,59 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/{id}/unarchive:
+    post:
+      tags:
+        - Annonces
+      summary: Return an archived listing to draft so it can be published again (RM-M10-08)
+      operationId: unarchive
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
           content:
             application/json:
               schema:
@@ -1747,6 +1862,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1774,12 +1895,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1804,6 +1919,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1831,12 +1952,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1861,6 +1976,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1888,12 +2009,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1918,6 +2033,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -1945,12 +2066,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -1981,6 +2096,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeReviewResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2008,12 +2129,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2038,6 +2153,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeReviewResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2065,12 +2186,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2090,6 +2205,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2117,12 +2238,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2153,6 +2268,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2180,12 +2301,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2210,6 +2325,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2237,12 +2358,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2266,6 +2381,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PhoneChangeResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2293,12 +2414,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2318,6 +2433,12 @@ paths:
       responses:
         "202":
           description: Accepted
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2345,12 +2466,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2370,6 +2485,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2397,12 +2518,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2420,6 +2535,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserProfileResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2447,12 +2568,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2475,6 +2590,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserProfileResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2502,12 +2623,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2525,6 +2640,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserSettingsResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2552,12 +2673,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2580,6 +2695,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserSettingsResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2607,12 +2728,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2637,6 +2752,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2664,12 +2785,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2689,6 +2804,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2716,12 +2837,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2751,6 +2866,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2778,12 +2899,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2801,6 +2916,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PrestataireProfileResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2828,12 +2949,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2856,6 +2971,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PrestataireProfileResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2883,12 +3004,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2913,6 +3028,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2940,12 +3061,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -2965,6 +3080,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -2992,12 +3113,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3027,6 +3142,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3054,12 +3175,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3094,6 +3209,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TierInfo"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3121,12 +3242,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3146,6 +3261,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/TierInfo"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3173,12 +3294,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3202,6 +3317,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponsePaymentSummary"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3229,12 +3350,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3259,6 +3374,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PaymentSummary"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3286,12 +3407,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3316,6 +3431,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ReceiptResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3343,12 +3464,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3366,6 +3481,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SubscriptionResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3393,12 +3514,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3500,6 +3615,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseSearchResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3527,12 +3648,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3557,6 +3672,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceDetailResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3584,12 +3705,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3607,6 +3722,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/MeResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3634,12 +3755,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3666,6 +3781,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LocationOption"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3693,12 +3814,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3718,6 +3833,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/CountryResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3745,12 +3866,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3777,6 +3892,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LocationOption"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3804,12 +3925,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3836,6 +3951,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LocationOption"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3863,12 +3984,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3886,6 +4001,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3913,12 +4034,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3942,6 +4057,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseTypeChangeReviewItem"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -3969,12 +4090,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -3998,6 +4113,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseKycReviewItem"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -4025,12 +4146,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -4050,6 +4165,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -4077,12 +4198,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:
@@ -4096,6 +4211,12 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: "The resource does not exist, or is not the caller's"
           content:
@@ -4123,12 +4244,6 @@ paths:
         "400":
           description: Invalid request or a violated business rule — see the `error`
             code
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
-          description: Conflicts with the current state — see the `error` code
           content:
             application/json:
               schema:

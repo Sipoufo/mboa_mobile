@@ -2978,10 +2978,10 @@ class I18n {
     );
   }
 
-  /// `Republier`
+  /// `Désarchiver`
   String get annonceActionUnarchive {
     return Intl.message(
-      'Republier',
+      'Désarchiver',
       name: 'annonceActionUnarchive',
       desc: '',
       args: [],

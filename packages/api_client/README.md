@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**markRented**](doc/AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**publish**](doc/AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**reserve**](doc/AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**unarchive**](doc/AnnoncesApi.md#unarchive) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**update1**](doc/AnnoncesApi.md#update1) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**forgotPassword**](doc/AuthenticationApi.md#forgotpassword) | **POST** /api/v1/auth/password/forgot | Start a password reset; sends an OTP if the email has a password account
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**login**](doc/AuthenticationApi.md#login) | **POST** /api/v1/auth/login | Credential login step 1: verify email + password, sends an OTP second factor
@@ -122,6 +123,7 @@ Class | Method | HTTP request | Description
 [*ResidencesApi*](doc/ResidencesApi.md) | [**publishAll**](doc/ResidencesApi.md#publishall) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**rentAll**](doc/ResidencesApi.md#rentall) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**reserveAll**](doc/ResidencesApi.md#reserveall) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**unarchiveAll**](doc/ResidencesApi.md#unarchiveall) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
 [*ResidencesApi*](doc/ResidencesApi.md) | [**update**](doc/ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
 [*SearchApi*](doc/SearchApi.md) | [**residenceDetail**](doc/SearchApi.md#residencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**search**](doc/SearchApi.md#search) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)

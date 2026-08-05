@@ -25,7 +25,6 @@ void main() {
     status: PaymentStatus.confirmed,
   );
 
-  const freePlan = SubscriptionPlan.free();
   const paidPlan = SubscriptionPlan(tier: tier);
 
   setUpAll(() {
@@ -35,7 +34,9 @@ void main() {
 
   setUp(() {
     repository = MockSubscriptionRepository();
-    when(() => repository.myPlan()).thenAnswer((_) async => freePlan);
+    when(() => repository.myPlan()).thenAnswer((_) async => paidPlan);
+    // Default: still settling.
+    when(() => repository.payment(any())).thenAnswer((_) async => pending);
   });
 
   void stubSubscribe(PaymentAttempt attempt) {
@@ -71,14 +72,14 @@ void main() {
     );
 
     blocTest<SubscribeBloc, SubscribeState>(
-      'polls the plan and confirms once the tier changes',
+      'polls the payment and confirms once it settles',
       setUp: () {
         stubSubscribe(pending);
-        // Free on the first poll, upgraded on the next — the webhook landing.
+        // Pending on the first poll, confirmed on the next — the webhook.
         var calls = 0;
-        when(() => repository.myPlan()).thenAnswer((_) async {
+        when(() => repository.payment(any())).thenAnswer((_) async {
           calls++;
-          return calls > 1 ? paidPlan : freePlan;
+          return calls > 1 ? confirmed : pending;
         });
       },
       build: build,
@@ -88,16 +89,21 @@ void main() {
       expect: () => const [
         SubscribeInitiating(tier: tier, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
-        SubscribeConfirmed(attempt: pending, plan: paidPlan),
+        SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
       ],
     );
 
     blocTest<SubscribeBloc, SubscribeState>(
-      'accepts a higher tier than the one purchased as confirmation',
+      'reports a rejection immediately instead of timing out',
       setUp: () {
         stubSubscribe(pending);
-        when(() => repository.myPlan()).thenAnswer(
-          (_) async => const SubscriptionPlan(tier: SubscriptionTier.proPlus),
+        // Watching the tier could never distinguish this from "not yet".
+        when(() => repository.payment(any())).thenAnswer(
+          (_) async => const PaymentAttempt(
+            paymentId: 'pay-1',
+            tier: tier,
+            status: PaymentStatus.failed,
+          ),
         );
       },
       build: build,
@@ -105,7 +111,7 @@ void main() {
           bloc.add(const SubscribeRequested(tier: tier, method: method)),
       wait: _pollWait,
       skip: 2,
-      expect: () => [isA<SubscribeConfirmed>()],
+      expect: () => [isA<SubscribeFailure>()],
     );
   });
 
@@ -131,10 +137,10 @@ void main() {
       setUp: () {
         stubSubscribe(pending);
         var calls = 0;
-        when(() => repository.myPlan()).thenAnswer((_) async {
+        when(() => repository.payment(any())).thenAnswer((_) async {
           calls++;
           if (calls == 1) throw Exception('flaky network');
-          return paidPlan;
+          return confirmed;
         });
       },
       build: build,
@@ -144,7 +150,7 @@ void main() {
       expect: () => const [
         SubscribeInitiating(tier: tier, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
-        SubscribeConfirmed(attempt: pending, plan: paidPlan),
+        SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
       ],
     );
   });
@@ -182,7 +188,7 @@ void main() {
       build: build,
       act: (bloc) =>
           bloc.add(const SubscribeRequested(tier: tier, method: method)),
-      verify: (_) => verifyNever(() => repository.myPlan()),
+      verify: (_) => verifyNever(() => repository.payment(any())),
     );
   });
 

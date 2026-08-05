@@ -113,11 +113,7 @@ enum PaymentMethod {
 
 enum PaymentStatus { pending, confirmed, failed, cancelled }
 
-/// One payment initiation.
-///
-/// [paymentId] is the **only** handle to the receipt (RM-M13-07) and the API
-/// returns it exactly once, so it is persisted locally — see
-/// `SubscriptionRepository.rememberPayment`.
+/// One payment, from initiation or from the server's history.
 class PaymentAttempt extends Equatable {
   const PaymentAttempt({
     required this.paymentId,
@@ -126,6 +122,8 @@ class PaymentAttempt extends Equatable {
     this.amount,
     this.status = PaymentStatus.pending,
     this.initiatedAt,
+    this.method,
+    this.hasReceipt = false,
   });
 
   final String paymentId;
@@ -136,6 +134,11 @@ class PaymentAttempt extends Equatable {
   final int? amount;
   final PaymentStatus status;
   final DateTime? initiatedAt;
+  final PaymentMethod? method;
+
+  /// Whether `GET /payments/{id}/receipt` will succeed — lets the UI show or
+  /// hide the download without a probe call.
+  final bool hasReceipt;
 
   static PaymentAttempt fromResponse(
     PaymentInitiatedResponse response, {
@@ -157,29 +160,32 @@ class PaymentAttempt extends Equatable {
         initiatedAt: DateTime.now(),
       );
 
-  Map<String, dynamic> toCache() => {
-        'paymentId': paymentId,
-        'tier': tier.name,
-        'providerRef': providerRef,
-        'amount': amount,
-        'initiatedAt': initiatedAt?.millisecondsSinceEpoch,
-      };
-
-  static PaymentAttempt fromCache(Map<String, dynamic> json) => PaymentAttempt(
-        paymentId: json['paymentId'] as String? ?? '',
-        tier: SubscriptionTier.values.firstWhere(
-          (t) => t.name == json['tier'],
-          orElse: () => SubscriptionTier.gratuit,
-        ),
-        providerRef: json['providerRef'] as String?,
-        amount: (json['amount'] as num?)?.toInt(),
-        initiatedAt: switch (json['initiatedAt']) {
-          final int ms => DateTime.fromMillisecondsSinceEpoch(ms),
-          _ => null,
+  /// From `GET /subscriptions/payments` — the server's own record, which
+  /// replaced the device-local cache.
+  static PaymentAttempt fromSummary(PaymentSummary summary) => PaymentAttempt(
+        paymentId: summary.paymentId ?? '',
+        tier: switch (summary.tier) {
+          PaymentSummaryTierEnum.BASIC_PLUS => SubscriptionTier.basicPlus,
+          PaymentSummaryTierEnum.PRO => SubscriptionTier.pro,
+          PaymentSummaryTierEnum.PRO_PLUS => SubscriptionTier.proPlus,
+          _ => SubscriptionTier.gratuit,
         },
+        amount: summary.amount,
+        status: switch (summary.status) {
+          PaymentSummaryStatusEnum.CONFIRMED => PaymentStatus.confirmed,
+          PaymentSummaryStatusEnum.FAILED => PaymentStatus.failed,
+          PaymentSummaryStatusEnum.CANCELLED => PaymentStatus.cancelled,
+          _ => PaymentStatus.pending,
+        },
+        method: switch (summary.method) {
+          PaymentSummaryMethodEnum.ORANGE_MONEY => PaymentMethod.orangeMoney,
+          _ => PaymentMethod.mtnMomo,
+        },
+        hasReceipt: summary.hasReceipt ?? false,
+        initiatedAt: summary.paidAt ?? summary.createdAt,
       );
 
   @override
   List<Object?> get props =>
-      [paymentId, tier, providerRef, amount, status, initiatedAt];
+      [paymentId, tier, providerRef, amount, status, initiatedAt, hasReceipt];
 }

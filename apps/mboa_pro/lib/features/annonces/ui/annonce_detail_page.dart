@@ -200,7 +200,8 @@ class _Actions extends StatelessWidget {
           AnnonceTransition.archive,
         ],
       AnnonceStatus.rented => [AnnonceTransition.archive],
-      AnnonceStatus.archived || AnnonceStatus.unknown => <AnnonceTransition>[],
+      AnnonceStatus.archived => [AnnonceTransition.unarchive],
+      AnnonceStatus.unknown => <AnnonceTransition>[],
     };
 
     if (transitions.isEmpty) return const SizedBox.shrink();
@@ -218,6 +219,7 @@ class _Actions extends StatelessWidget {
                 AnnonceTransition.reserve => l10n.annonceActionReserve,
                 AnnonceTransition.markRented => l10n.annonceActionMarkRented,
                 AnnonceTransition.archive => l10n.annonceActionArchive,
+                AnnonceTransition.unarchive => l10n.annonceActionUnarchive,
               },
             ),
           ),

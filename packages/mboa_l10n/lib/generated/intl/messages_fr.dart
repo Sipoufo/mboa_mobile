@@ -121,7 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceActionReserve": MessageLookupByLibrary.simpleMessage(
       "Marquer réservé",
     ),
-    "annonceActionUnarchive": MessageLookupByLibrary.simpleMessage("Republier"),
+    "annonceActionUnarchive": MessageLookupByLibrary.simpleMessage(
+      "Désarchiver",
+    ),
     "annonceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
       "Cette action est définitive. Le bien sera retiré de votre portefeuille.",
     ),

@@ -654,7 +654,7 @@
   "@residenceUnitsPending": {},
   "residenceUnitStatus": "Status",
   "@residenceUnitStatus": {},
-  "annonceActionUnarchive": "Republish",
+  "annonceActionUnarchive": "Unarchive",
   "@annonceActionUnarchive": {},
   "commonCancel": "Cancel",
   "@commonCancel": {},

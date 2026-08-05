@@ -9,8 +9,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../_helpers/mocks/mocks.dart';
 
-class MockHiveCache extends Mock implements HiveCache {}
-
 class MockSubscriptionsApi extends Mock implements SubscriptionsApi {}
 
 Response<T> ok<T>(T data) => Response<T>(
@@ -30,10 +28,10 @@ void main() {
   late MockDioClient dioClient;
   late MockApiClient apiClient;
   late MockSubscriptionsApi api;
-  late MockHiveCache cache;
   late SubscriptionRepository repository;
 
   setUpAll(() {
+    registerFallbackValue(Pageable());
     registerFallbackValue(
       SubscribeRequest((b) => b
         ..tier = SubscribeRequestTierEnum.FREE
@@ -45,14 +43,10 @@ void main() {
     dioClient = MockDioClient();
     apiClient = MockApiClient();
     api = MockSubscriptionsApi();
-    cache = MockHiveCache();
 
     when(() => dioClient.api).thenReturn(apiClient);
     when(apiClient.getSubscriptionsApi).thenReturn(api);
-    when(() => cache.put(any(), any(), any())).thenAnswer((_) async {});
-    when(() => cache.get(any(), any(), ttl: any(named: 'ttl'))).thenReturn(null);
-
-    repository = SubscriptionRepository(dioClient: dioClient, cache: cache);
+    repository = SubscriptionRepository(dioClient: dioClient);
   });
 
   group('myPlan', () {
@@ -162,25 +156,6 @@ void main() {
       expect(captured[1], 'key-1');
     });
 
-    test('persists the payment so the receipt stays reachable', () async {
-      stubSubscribe(
-        PaymentInitiatedResponse((b) => b
-          ..paymentId = 'pay-42'
-          ..amount = 5000),
-      );
-
-      await repository.subscribe(
-        tier: SubscriptionTier.basicPlus,
-        method: PaymentMethod.mtnMomo,
-        idempotencyKey: 'key-1',
-      );
-
-      final stored = verify(
-        () => cache.put(StorageKeys.subscriptionBox, 'payments', captureAny()),
-      ).captured.single as Map<String, dynamic>;
-      expect((stored['items'] as List).single['paymentId'], 'pay-42');
-    });
-
     test('throws when the backend returns no payment', () async {
       when(
         () => api.subscribe(
@@ -200,54 +175,51 @@ void main() {
     });
   });
 
-  group('local payment history', () {
-    test('de-duplicates by paymentId, newest first', () async {
-      const first = PaymentAttempt(
-        paymentId: 'pay-1',
-        tier: SubscriptionTier.basicPlus,
+  group('payment history', () {
+    test('maps the server list, newest first', () async {
+      when(() => api.listMyPayments(pageable: any(named: 'pageable'))).thenAnswer(
+        (_) async => ok(
+          PageResponsePaymentSummary((b) => b
+            ..content = ListBuilder([
+              PaymentSummary((s) => s
+                ..paymentId = 'pay-2'
+                ..tier = PaymentSummaryTierEnum.PRO
+                ..amount = 10000
+                ..method = PaymentSummaryMethodEnum.MTN_MOMO
+                ..status = PaymentSummaryStatusEnum.CONFIRMED
+                ..hasReceipt = true),
+              PaymentSummary((s) => s
+                ..paymentId = 'pay-1'
+                ..tier = PaymentSummaryTierEnum.BASIC_PLUS
+                ..status = PaymentSummaryStatusEnum.FAILED
+                ..hasReceipt = false),
+            ])
+            ..totalElements = 2),
+        ),
       );
-      const second = PaymentAttempt(
-        paymentId: 'pay-2',
-        tier: SubscriptionTier.pro,
-      );
 
-      when(() => cache.get(any(), any(), ttl: any(named: 'ttl'))).thenReturn({
-        'items': [first.toCache()],
-      });
+      final payments = await repository.payments();
 
-      await repository.rememberPayment(second);
-
-      final stored = verify(
-        () => cache.put(StorageKeys.subscriptionBox, 'payments', captureAny()),
-      ).captured.single as Map<String, dynamic>;
-      final ids =
-          (stored['items'] as List).map((e) => e['paymentId']).toList();
-      expect(ids, ['pay-2', 'pay-1']);
+      expect(payments.map((p) => p.paymentId), ['pay-2', 'pay-1']);
+      expect(payments.first.tier, SubscriptionTier.pro);
+      expect(payments.first.status, PaymentStatus.confirmed);
+      // hasReceipt drives whether a download affordance is shown at all.
+      expect(payments.first.hasReceipt, isTrue);
+      expect(payments.last.hasReceipt, isFalse);
     });
 
-    test('ignores a payment with no id — it has no receipt handle', () async {
-      await repository.rememberPayment(
-        const PaymentAttempt(paymentId: '', tier: SubscriptionTier.pro),
+    test('reads one payment as the settlement source of truth', () async {
+      when(() => api.getPayment(id: 'pay-1')).thenAnswer(
+        (_) async => ok(
+          PaymentSummary((s) => s
+            ..paymentId = 'pay-1'
+            ..tier = PaymentSummaryTierEnum.PRO
+            ..status = PaymentSummaryStatusEnum.FAILED),
+        ),
       );
 
-      verifyNever(() => cache.put(any(), any(), any()));
-    });
-
-    test('reads back what it wrote', () {
-      const attempt = PaymentAttempt(
-        paymentId: 'pay-9',
-        tier: SubscriptionTier.proPlus,
-        amount: 15000,
-      );
-      when(() => cache.get(any(), any(), ttl: any(named: 'ttl'))).thenReturn({
-        'items': [attempt.toCache()],
-      });
-
-      final payments = repository.knownPayments();
-
-      expect(payments.single.paymentId, 'pay-9');
-      expect(payments.single.tier, SubscriptionTier.proPlus);
-      expect(payments.single.amount, 15000);
+      // The tier alone could never express this — it just stays unchanged.
+      expect((await repository.payment('pay-1'))?.status, PaymentStatus.failed);
     });
   });
 

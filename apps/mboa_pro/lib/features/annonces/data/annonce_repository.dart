@@ -11,89 +11,28 @@ class AnnonceRepository {
 
   final DioClient _dioClient;
 
-  ResidencesApi get _residencesApi => _dioClient.api.getResidencesApi();
-
   /// One page big enough for any realistic portfolio — the API paginates but
   /// the Pro screens present a single list. Revisit if portfolios grow.
   static const int _pageSize = 100;
 
   AnnoncesApi get _api => _dioClient.api.getAnnoncesApi();
 
-  /// Standalone listings only — residence units are excluded.
+  /// Standalone listings only.
   ///
-  /// `GET /annonces` returns **every** listing the prestataire owns, including
-  /// the units a residence expanded into, and `AnnonceResponse` carries no
-  /// residence link to filter on. So the unit ids are collected from the
-  /// residences side and subtracted here.
-  ///
-  /// If that lookup fails, the full list is returned unfiltered — showing a few
-  /// extra rows beats showing none.
+  /// `GET /annonces` returns every listing the prestataire owns, units
+  /// included. `residenceId` is null for a standalone listing and set for a
+  /// unit, so one request and a local filter is the whole job — this replaced
+  /// an N+1 that fetched each residence to subtract its unit ids.
   Future<List<Annonce>> list() async {
     final response = await _api.listMine2(
       pageable: Pageable((b) => b
         ..page = 0
         ..size = _pageSize),
     );
-    final all = (response.data?.content ?? const <AnnonceResponse>[])
+    return (response.data?.content ?? const <AnnonceResponse>[])
         .map(Annonce.fromResponse)
+        .where((a) => a.residenceId == null)
         .toList();
-
-    final unitIds = await _residenceUnitIds();
-    if (unitIds.isEmpty) return all;
-    return all.where((a) => !unitIds.contains(a.id)).toList();
-  }
-
-  /// Ids of every unit belonging to a residence.
-  ///
-  /// The residences *list* payload carries the unit counts but not reliably the
-  /// `units` array, so any residence that reports units without listing them is
-  /// fetched individually. That is N+1 in the worst case — bounded by the
-  /// residence count, not the listing count — and goes away the moment the
-  /// backend puts a `residenceId` on `AnnonceResponse`.
-  Future<Set<String>> _residenceUnitIds() async {
-    try {
-      final response = await _residencesApi.listMine(
-        pageable: Pageable((b) => b
-          ..page = 0
-          ..size = _pageSize),
-      );
-      final residences =
-          response.data?.content ?? const <ResidenceResponse>[];
-
-      final ids = <String>{};
-      final needDetail = <String>[];
-
-      for (final residence in residences) {
-        final units = residence.units ?? const <UnitSummary>[];
-        if (units.isEmpty && (residence.unitCount ?? 0) > 0) {
-          if (residence.id != null) needDetail.add(residence.id!);
-          continue;
-        }
-        for (final unit in units) {
-          if (unit.id != null) ids.add(unit.id!);
-        }
-      }
-
-      if (needDetail.isNotEmpty) {
-        final details = await Future.wait(
-          needDetail.map(
-            (id) => _residencesApi
-                .getOne(id: id)
-                .then<ResidenceResponse?>((r) => r.data)
-                .catchError((_) => null),
-          ),
-        );
-        for (final residence in details) {
-          for (final unit in residence?.units ?? const <UnitSummary>[]) {
-            if (unit.id != null) ids.add(unit.id!);
-          }
-        }
-      }
-
-      return ids;
-    } catch (_) {
-      return const {};
-    }
   }
 
   Future<Annonce> getOne(String id) async {
@@ -173,6 +112,10 @@ class AnnonceRepository {
       AnnonceTransition.reserve => _api.reserve(id: id),
       AnnonceTransition.markRented => _api.markRented(id: id),
       AnnonceTransition.archive => _api.archive(id: id),
+      // Not `publish`: that rejects anything but DRAFT with 409. Unarchive
+      // returns the listing to DRAFT so republishing re-checks the tier quota
+      // and the 3-photo rule.
+      AnnonceTransition.unarchive => _api.unarchive(id: id),
     };
 
     final data = response.data;

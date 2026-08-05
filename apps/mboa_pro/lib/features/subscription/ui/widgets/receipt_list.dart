@@ -10,39 +10,65 @@ import '../../models/subscription_models.dart';
 
 /// Payment receipts (RM-M13-07).
 ///
-/// Reads the locally-remembered payments — see the note in
-/// `SubscriptionRepository`: with no payments-list endpoint, `paymentId` is
-/// only ever returned once, so this list is device-local and says so.
-class ReceiptList extends StatelessWidget {
+/// Reads the server's payment history. This used to be a device-local Hive
+/// cache, because `paymentId` came back only from the initiating call — the
+/// backend now exposes the list, so receipts survive a reinstall and follow the
+/// account across devices.
+class ReceiptList extends StatefulWidget {
   const ReceiptList({super.key, this.repository});
 
   final SubscriptionRepository? repository;
 
   @override
+  State<ReceiptList> createState() => _ReceiptListState();
+}
+
+class _ReceiptListState extends State<ReceiptList> {
+  late Future<List<PaymentAttempt>> _payments =
+      (widget.repository ?? getIt<SubscriptionRepository>()).payments();
+
+  @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
-    final payments =
-        (repository ?? getIt<SubscriptionRepository>()).knownPayments();
 
-    if (payments.isEmpty) {
-      return Text(
-        l10n.subscriptionNoReceipts,
-        style: context.mboaText.body.copyWith(color: colors.textSecondary),
-      );
-    }
+    return FutureBuilder<List<PaymentAttempt>>(
+      future: _payments,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: Dimens.spacing),
+            child: Loader(),
+          );
+        }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (final payment in payments)
-          _ReceiptTile(payment: payment, repository: repository),
-        const SizedBox(height: Dimens.spacingSm),
-        Text(
-          l10n.subscriptionReceiptsLocalHint,
-          style: context.mboaText.micro.copyWith(color: colors.textTertiary),
-        ),
-      ],
+        if (snapshot.hasError) {
+          return TextButton(
+            onPressed: () => setState(() {
+              _payments =
+                  (widget.repository ?? getIt<SubscriptionRepository>())
+                      .payments();
+            }),
+            child: Text(l10n.commonRetry),
+          );
+        }
+
+        final payments = snapshot.data ?? const <PaymentAttempt>[];
+        if (payments.isEmpty) {
+          return Text(
+            l10n.subscriptionNoReceipts,
+            style: context.mboaText.body.copyWith(color: colors.textSecondary),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final payment in payments)
+              _ReceiptTile(payment: payment, repository: widget.repository),
+          ],
+        );
+      },
     );
   }
 }
@@ -108,8 +134,13 @@ class _ReceiptTileState extends State<_ReceiptTile> {
               height: Dimens.loaderSizeSm,
               child: Loader(),
             )
-          : Icon(LucideIcons.externalLink, size: Dimens.icon, color: colors.primary),
-      onTap: _loading ? null : _open,
+          // hasReceipt says whether the download exists, so there is no probe
+          // call and no dead affordance.
+          : payment.hasReceipt
+              ? Icon(LucideIcons.externalLink,
+                  size: Dimens.icon, color: colors.primary)
+              : null,
+      onTap: _loading || !payment.hasReceipt ? null : _open,
     );
   }
 }

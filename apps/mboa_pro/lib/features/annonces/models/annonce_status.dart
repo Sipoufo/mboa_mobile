@@ -63,4 +63,4 @@ enum AnnonceFilter {
 }
 
 /// A status change the prestataire can trigger from the list or detail.
-enum AnnonceTransition { publish, reserve, markRented, archive }
+enum AnnonceTransition { publish, reserve, markRented, archive, unarchive }

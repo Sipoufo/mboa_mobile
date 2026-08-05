@@ -105,12 +105,12 @@ void main() {
       );
     });
 
-    test('an archived listing can be republished', () {
-      // Un-archiving is republishing; Doc 10 draws no arrow back from Archivée,
-      // so the backend may still refuse — the action is offered, not hidden.
+    test('an archived listing can be un-archived', () {
+      // Its own endpoint: `publish` rejects anything but DRAFT with a 409.
+      // Unarchive returns it to DRAFT, so republishing re-checks the quota.
       expect(
         StatusActionsMenu.transitionsFor(AnnonceStatus.archived),
-        [AnnonceTransition.publish],
+        [AnnonceTransition.unarchive],
       );
     });
 
@@ -125,13 +125,14 @@ void main() {
     expect(find.byIcon(LucideIcons.ellipsisVertical), findsNothing);
   });
 
-  testWidgets('an archived listing offers Republier', (tester) async {
+  testWidgets('an archived listing offers Désarchiver', (tester) async {
     final selected = await open(tester, status: AnnonceStatus.archived);
 
-    await tester.tap(find.text('Republier'));
+    await tester.tap(find.text('Désarchiver'));
     await tester.pumpAndSettle();
 
-    expect(selected, [AnnonceTransition.publish]);
+    // Not gated by the publish rules: it lands in DRAFT, published by nothing.
+    expect(selected, [AnnonceTransition.unarchive]);
   });
 
   testWidgets('publishing a valid draft is allowed through', (tester) async {

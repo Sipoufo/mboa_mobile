@@ -63,6 +63,13 @@ void main() {
       // TODO
     });
 
+    // Return all archived units to draft so the residence can be published again (RM-M10-08)
+    //
+    //Future<ResidenceResponse> unarchiveAll(String id) async
+    test('test unarchiveAll', () async {
+      // TODO
+    });
+
     // Update the residence's shared attributes (cascades to units)
     //
     //Future<ResidenceResponse> update(String id, UpdateResidenceRequest updateResidenceRequest) async

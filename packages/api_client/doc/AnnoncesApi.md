@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**markRented**](AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
 [**publish**](AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
 [**reserve**](AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
+[**unarchive**](AnnoncesApi.md#unarchive) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
 [**update1**](AnnoncesApi.md#update1) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
 
 
@@ -323,6 +324,47 @@ try {
     print(response);
 } on DioException catch (e) {
     print('Exception when calling AnnoncesApi->reserve: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**AnnonceResponse**](AnnonceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **unarchive**
+> AnnonceResponse unarchive(id)
+
+Return an archived listing to draft so it can be published again (RM-M10-08)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAnnoncesApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.unarchive(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling AnnoncesApi->unarchive: $e\n');
 }
 ```
 

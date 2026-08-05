@@ -81,6 +81,8 @@ class Annonce extends Equatable {
     this.photoKeys = const [],
     this.publishedAt,
     this.createdAt,
+    this.residenceId,
+    this.expiresAt,
   });
 
   final String id;
@@ -108,6 +110,12 @@ class Annonce extends Equatable {
   final List<String> photoKeys;
   final DateTime? publishedAt;
   final DateTime? createdAt;
+
+  /// Null for a standalone listing; the parent residence for a unit.
+  final String? residenceId;
+
+  /// When a Free-tier listing auto-expires (RM-M10-04). Null on paid tiers.
+  final DateTime? expiresAt;
 
   /// Absolute URL of the cover photo, or null when the listing has none.
   String? get coverUrl =>
@@ -137,6 +145,8 @@ class Annonce extends Equatable {
         photoKeys: response.photoKeys?.toList() ?? const [],
         publishedAt: response.publishedAt,
         createdAt: response.createdAt,
+        residenceId: response.residenceId,
+        expiresAt: response.expiresAt,
       );
 
   @override
