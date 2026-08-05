@@ -94,6 +94,24 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 - iOS camera/photo Info.plist permissions in **both** apps.
 - Role-aware account (`AccountRole`) surfaced in KYC Statut label.
 
+## Native permissions (device-only failures)
+A plugin needing a runtime permission fails **only on device**, with a crash
+that analyze, bloc tests and widget tests all miss. Two shipped without their
+declarations: `geolocator` had no `NSLocationWhenInUseUsageDescription`, and the
+Android manifests had **no `uses-permission` entries at all**.
+
+Now declared and pinned by `test/platform_permissions_test.dart` in both apps:
+
+| | `mboa_pro` | `mboa_user` |
+|---|---|---|
+| Camera / photos | ✅ | ✅ |
+| Location (fine + coarse, M10) | ✅ | n/a — no geolocator |
+| POST_NOTIFICATIONS (Android 13+) | ✅ | ✅ |
+| `UIBackgroundModes: remote-notification` | ✅ | ✅ |
+
+**When you add a plugin that touches camera, photos, location, notifications or
+background execution: add the declaration *and* a line in that test.**
+
 ## Bloc scoping (learned the hard way, twice)
 `AuthenticatedWrapper` provides the **session-scoped** blocs — `ProProfileBloc`,
 `KycCubit`, `SubscriptionBloc`, `HomeBloc`. Anything read by more than one route
@@ -262,7 +280,7 @@ Behaviour worth knowing before changing it:
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 227 passing — `mboa_user` 14, `mboa_pro` 142, `mboa_core` 12, `mboa_shared` 59.
+- Tests: 237 passing — `mboa_user` 18, `mboa_pro` 148, `mboa_core` 12, `mboa_shared` 59.
 - **Android and iOS builds verified** (`flutter build apk --debug`,
   `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
   doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the

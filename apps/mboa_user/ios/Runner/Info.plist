@@ -51,5 +51,9 @@
 		<string>Mboa utilise l’appareil photo pour prendre votre photo de profil.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Mboa accède à vos photos pour choisir votre photo de profil.</string>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>remote-notification</string>
+		</array>
 	</dict>
 </plist>

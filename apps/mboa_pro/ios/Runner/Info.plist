@@ -51,5 +51,11 @@
 		<string>Mboa Pro utilise l’appareil photo pour capturer vos documents d’identité et votre selfie de vérification.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Mboa Pro accède à vos photos pour importer vos documents d’identité.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Mboa Pro utilise votre position pour enregistrer l’emplacement du bien que vous publiez.</string>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>remote-notification</string>
+		</array>
 	</dict>
 </plist>
