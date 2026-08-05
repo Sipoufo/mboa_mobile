@@ -1,6 +1,11 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/annonces/bloc/annonce_form_bloc.dart';
+import '../../features/annonces/bloc/annonces_bloc.dart';
+import '../../features/annonces/bloc/residences_bloc.dart';
+import '../../features/annonces/data/annonce_repository.dart';
+import '../../features/annonces/data/residence_repository.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/login/bloc/credential_login_bloc.dart';
@@ -131,6 +136,28 @@ void registerAppModule() {
   );
   getIt.registerFactory<HomeBloc>(
     () => HomeBloc(repository: getIt<ProDashboardRepository>()),
+  );
+
+  // Listings (M10). The list blocs are factories — each list screen owns one,
+  // and the detail reads the list bloc it was pushed from.
+  getIt.registerLazySingleton<AnnonceRepository>(
+    () => AnnonceRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerLazySingleton<ResidenceRepository>(
+    () => ResidenceRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<AnnoncesBloc>(
+    () => AnnoncesBloc(repository: getIt<AnnonceRepository>()),
+  );
+  getIt.registerFactory<ResidencesBloc>(
+    () => ResidencesBloc(repository: getIt<ResidenceRepository>()),
+  );
+  getIt.registerFactory<AnnonceFormBloc>(
+    () => AnnonceFormBloc(
+      annonces: getIt<AnnonceRepository>(),
+      residences: getIt<ResidenceRepository>(),
+      uploader: getIt<MediaUploader>(),
+    ),
   );
 
   // Subscriptions (M13). SubscriptionBloc is a singleton because it feeds

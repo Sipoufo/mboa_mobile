@@ -3,7 +3,7 @@
 > Working tracker for the Flutter monorepo. Update this at the end of each work
 > session. Architecture rules live in `CLAUDE.md`; functional spec in
 > `Documents/Claude/Projects/MyHome/Mboa_Doc10_CDC_Fonctionnel.md` (outside repo).
-> Last updated: 2026-08-05 (M13 subscriptions; FCM Android for mboa_pro).
+> Last updated: 2026-08-05 (M10 listings; FCM Android in both apps).
 
 ## How to resume
 1. Read `CLAUDE.md` (rules) + this file (state).
@@ -68,6 +68,10 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 ## Done
 - **M01 auth** — user (phone OTP login/register) + pro (credential login + professional registration). Shared login flow in `mboa_shared`.
 - **M02 profile** — Settings hub + Edit Profile, both apps. Base profile unified in `mboa_shared` (generic `ProfileBloc<D,E>`, `BaseProfile`, `BaseProfileRepository`); pro extends with business fields + `ProfileData`/`ProProfileRepository`.
+- **M10 listings** (pro) — Mes biens hub, Biens Uniques list (Disponibles /
+  Occupés, drafts badged under Disponibles), Biens Multiples list, the shared
+  creation/edit form for both kinds, and the detail with lifecycle transitions.
+  See the M10 gaps section below for what is deliberately absent.
 - **M03 push, Android, both apps** — shared `NotificationsRepository`
   (register/refresh/unregister + foreground/opened/terminated intake), top-level
   background handler, `Firebase.initializeApp` guarded so a bad setup can't stop
@@ -148,11 +152,40 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
   slow or broken load must not unlock a paid feature.
 - Receipt opening surfaces the URL in a toast; wiring `url_launcher` is a TODO.
 
+## M10 — what exists and what does not
+Only the two CRUD resources have an API. Everything else on the `mes_biens`
+designs is unbuilt **because there is no endpoint**, and routes to the
+`comingSoon` explainer rather than being hidden — the hub is the product's map.
+
+| Surface | State |
+|---|---|
+| Biens Uniques / Biens Multiples CRUD + lifecycle | ✅ built |
+| Attributions, Réservations, Prospections | ❌ no endpoint |
+| En attente de validation | ❌ no moderation-status endpoint |
+| Occupant / Mes locataires, Historique, rating | ❌ no endpoint — the detail uses the design's own "Aucune information" empty state |
+| Gestionnaire hub (agents, annuaires) | ❌ M15/M16, still a tab placeholder |
+
+Behaviour worth knowing before changing it:
+- **`PublishGate`** is a pure function; the publish rules (RM-M10-01 profile,
+  CE-M10-03 three photos, RM-M10-02 tier limit) live there, not spread across
+  blocs. It reports the profile blocker first — the one the prestataire can fix.
+- **Enregistrer saves a draft.** Publishing is a separate action from the list
+  or detail, because only publishing hits the tier limit and the photo minimum.
+- **Photos: min 3, max 15** per Doc 10 — the mockup's "5 photos" is wrong, and
+  `photoKeys.minItems` in the spec is 0 (see `docs/openapi-proposal-m10-fields.md`).
+- **The form's location is a GPS fix + a city choice.** It records where the
+  *phone* is, not the property, and the city currently doubles as the district
+  until a district picker is wired (`LocationsApi.districts(cityId)` exists).
+  A MapLibre picker is the real fix; the swap is confined to `LocationCapture`.
+- Four fields in the creation mockup (water/electricity metering, titre de
+  propriété, période) have **no API and are not built** — see the OpenAPI
+  proposal for which two are worth adding.
+
 ## Pending / next (no blockers unless noted)
-- **M10 annonces — next up.** Should respect `activeListingLimit` from the
-  plan (`SubscriptionBloc.state`), which M13 now makes available.
+- **M04 search / M05 listing detail** — the user-app side, now unblocked.
   **Note:** the 2026-08-05 regen renamed `listMine1` -> `listMine2`; generated
   operation ids are not stable, expect this on every spec change.
+- **District picker + MapLibre location** for the M10 form (see above).
 - **M12 messagerie** — `MessagerieApi` arrived in the same regen, unbuilt.
 - **M03 notifications** — **Android done in both apps.** Remaining: iOS (APNs
   key + adding both plists to their Runner targets in Xcode), the payload
@@ -199,7 +232,7 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 185 passing — `mboa_user` 14, `mboa_pro` 100, `mboa_core` 12, `mboa_shared` 59.
+- Tests: 223 passing — `mboa_user` 14, `mboa_pro` 138, `mboa_core` 12, `mboa_shared` 59.
 - **Android release build verified** (`flutter build apk --debug`) — worth doing
   after any Gradle/plugin change, since `flutter analyze` cannot catch these.
 - `make test` now runs the **package** suites too, not just the two apps, and

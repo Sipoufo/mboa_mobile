@@ -397,5 +397,203 @@
   "paymentRetry": "Réessayer le paiement",
   "@paymentRetry": {},
   "paymentDone": "Terminé",
-  "@paymentDone": {}
+  "@paymentDone": {},
+  "mesBiensTitle": "Mes biens",
+  "@mesBiensTitle": {},
+  "mesBiensPending": "En attente\nde validation",
+  "@mesBiensPending": {},
+  "mesBiensSingle": "Biens\nUniques",
+  "@mesBiensSingle": {},
+  "mesBiensMultiple": "Biens\nMultiples",
+  "@mesBiensMultiple": {},
+  "mesBiensAttributions": "Attributions",
+  "@mesBiensAttributions": {},
+  "mesBiensAttributionsBody": "Attribuer un local",
+  "@mesBiensAttributionsBody": {},
+  "mesBiensReservations": "Reservations",
+  "@mesBiensReservations": {},
+  "mesBiensReservationsBody": "Traiter les reservations",
+  "@mesBiensReservationsBody": {},
+  "mesBiensProspections": "Prospections",
+  "@mesBiensProspections": {},
+  "mesBiensProspectionsBody": "Prospection des biens en vente",
+  "@mesBiensProspectionsBody": {},
+  "annoncesSingleTitle": "Biens Unique",
+  "@annoncesSingleTitle": {},
+  "annoncesMultipleTitle": "Biens Multiples",
+  "@annoncesMultipleTitle": {},
+  "annoncesTabAvailable": "Disponibles",
+  "@annoncesTabAvailable": {},
+  "annoncesTabOccupied": "Occupés",
+  "@annoncesTabOccupied": {},
+  "annoncesEmptyAvailable": "Aucun bien disponible. Appuyez sur + pour en enregistrer un.",
+  "@annoncesEmptyAvailable": {},
+  "annoncesEmptyOccupied": "Aucun bien occupé.",
+  "@annoncesEmptyOccupied": {},
+  "annoncesPerMonth": "{price} XAF / Mois",
+  "@annoncesPerMonth": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "annoncesRooms": "{count, plural, one{1 Pièce} other{{count} Pièces}}",
+  "@annoncesRooms": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annoncesSurface": "{value} m²",
+  "@annoncesSurface": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "annoncesActionHistory": "Historique",
+  "@annoncesActionHistory": {},
+  "annoncesActionEdit": "Modifier",
+  "@annoncesActionEdit": {},
+  "annoncesUnitsSummary": "{count, plural, one{1 unité} other{{count} unités}}",
+  "@annoncesUnitsSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annoncesUnitsPublished": "{count} publiées",
+  "@annoncesUnitsPublished": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceStatusDraft": "Brouillon",
+  "@annonceStatusDraft": {},
+  "annonceStatusPublished": "Disponible",
+  "@annonceStatusPublished": {},
+  "annonceStatusReserved": "Réservé",
+  "@annonceStatusReserved": {},
+  "annonceStatusRented": "Loué",
+  "@annonceStatusRented": {},
+  "annonceStatusArchived": "Archivé",
+  "@annonceStatusArchived": {},
+  "annonceActionPublish": "Publier",
+  "@annonceActionPublish": {},
+  "annonceActionReserve": "Marquer réservé",
+  "@annonceActionReserve": {},
+  "annonceActionMarkRented": "Marquer loué",
+  "@annonceActionMarkRented": {},
+  "annonceActionArchive": "Archiver",
+  "@annonceActionArchive": {},
+  "annonceActionDelete": "Supprimer",
+  "@annonceActionDelete": {},
+  "annonceActionFailed": "Action impossible pour le moment.",
+  "@annonceActionFailed": {},
+  "annonceDeleteConfirmTitle": "Supprimer ce bien ?",
+  "@annonceDeleteConfirmTitle": {},
+  "annonceDeleteConfirmBody": "Cette action est définitive. Le bien sera retiré de votre portefeuille.",
+  "@annonceDeleteConfirmBody": {},
+  "annonceFormTitleNew": "Ajouter un bien",
+  "@annonceFormTitleNew": {},
+  "annonceFormTitleEdit": "Modifier le bien",
+  "@annonceFormTitleEdit": {},
+  "annonceFormKindSingle": "Bien Unique",
+  "@annonceFormKindSingle": {},
+  "annonceFormKindMultiple": "Bien multiple",
+  "@annonceFormKindMultiple": {},
+  "annonceFormPhotosHint": "Ajouter des images ({min} photos minimum)",
+  "@annonceFormPhotosHint": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceFormFieldName": "Nom",
+  "@annonceFormFieldName": {},
+  "annonceFormFieldType": "Type",
+  "@annonceFormFieldType": {},
+  "annonceFormFieldPrice": "Prix",
+  "@annonceFormFieldPrice": {},
+  "annonceFormFieldSurface": "Dimensions",
+  "@annonceFormFieldSurface": {},
+  "annonceFormFieldRooms": "Nbre de Pièces",
+  "@annonceFormFieldRooms": {},
+  "annonceFormFieldBathrooms": "Salles de bain",
+  "@annonceFormFieldBathrooms": {},
+  "annonceFormFieldFurnished": "Meublé",
+  "@annonceFormFieldFurnished": {},
+  "annonceFormFieldLocation": "Localisation",
+  "@annonceFormFieldLocation": {},
+  "annonceFormFieldAvailability": "Disponibilté",
+  "@annonceFormFieldAvailability": {},
+  "annonceFormFieldDescription": "Description",
+  "@annonceFormFieldDescription": {},
+  "annonceFormSave": "Enregistrer",
+  "@annonceFormSave": {},
+  "annonceFormSavedDraft": "Bien enregistré en brouillon.",
+  "@annonceFormSavedDraft": {},
+  "annonceFormLocating": "Localisation en cours…",
+  "@annonceFormLocating": {},
+  "annonceFormLocationDenied": "Autorisez la localisation pour enregistrer la position du bien.",
+  "@annonceFormLocationDenied": {},
+  "annonceFormLocationHint": "La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.",
+  "@annonceFormLocationHint": {},
+  "annonceFormAddress": "Adresse exacte",
+  "@annonceFormAddress": {},
+  "annonceFormUnitsTitle": "Unités",
+  "@annonceFormUnitsTitle": {},
+  "annonceFormUnitsAdd": "Ajouter un groupe d’unités",
+  "@annonceFormUnitsAdd": {},
+  "annonceFormUnitPrefix": "Préfixe (ex. Chambre)",
+  "@annonceFormUnitPrefix": {},
+  "annonceFormUnitCount": "Nombre",
+  "@annonceFormUnitCount": {},
+  "annonceFormErrorPhoto": "Photo non uploadée, réessaie.",
+  "@annonceFormErrorPhoto": {},
+  "annonceFormErrorIncomplete": "Complétez les champs obligatoires.",
+  "@annonceFormErrorIncomplete": {},
+  "annonceFormErrorSave": "Enregistrement impossible. Réessayez.",
+  "@annonceFormErrorSave": {},
+  "annonceDetailTitle": "Details du bien",
+  "@annonceDetailTitle": {},
+  "annonceDetailStats": "Statistiques",
+  "@annonceDetailStats": {},
+  "annonceDetailOccupant": "Occupant",
+  "@annonceDetailOccupant": {},
+  "annonceDetailHistory": "Historique",
+  "@annonceDetailHistory": {},
+  "annonceDetailNoInfo": "Aucune information\ndisponible pour le moment",
+  "@annonceDetailNoInfo": {},
+  "publishBlockedProfileTitle": "Profil incomplet",
+  "@publishBlockedProfileTitle": {},
+  "publishBlockedProfileBody": "Complétez votre profil (photo, type, ville) avant de publier.",
+  "@publishBlockedProfileBody": {},
+  "publishBlockedPhotosTitle": "Photos manquantes",
+  "@publishBlockedPhotosTitle": {},
+  "publishBlockedPhotosBody": "Ajoute au moins {min} photos pour publier.",
+  "@publishBlockedPhotosBody": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "publishBlockedLimitTitle": "Limite atteinte",
+  "@publishBlockedLimitTitle": {},
+  "publishBlockedLimitBody": "Limite atteinte. Passe à {tier} pour publier plus d’annonces.",
+  "@publishBlockedLimitBody": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  }
 }

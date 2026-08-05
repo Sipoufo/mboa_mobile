@@ -70,6 +70,11 @@ class ProMenuPage extends StatelessWidget {
                     onTap: () => _comingSoon(context),
                   ),
                   _MenuEntry(
+                    icon: LucideIcons.house,
+                    label: l10n.mesBiensTitle,
+                    onTap: () => _go(context, const MesBiensRoute()),
+                  ),
+                  _MenuEntry(
                     icon: LucideIcons.users,
                     label: l10n.navManager,
                     onTap: () => _comingSoon(context),

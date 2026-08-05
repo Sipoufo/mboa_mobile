@@ -126,10 +126,7 @@ class _CtaCarousel extends StatelessWidget {
       return;
     }
 
-    // M10 (annonces) isn't built yet — the only granted CTA has nowhere to go.
-    context.router.push(
-      AccessRestrictedRoute(restriction: AccessRestriction.comingSoon),
-    );
+    context.router.push(const MesBiensRoute());
   }
 }
 

@@ -25,31 +25,50 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(tier) => "Passer à ${tier}";
 
-  static String m2(phone) => "Code reçu sur ${phone}";
+  static String m2(min) => "Ajouter des images (${min} photos minimum)";
 
-  static String m3(word) => "Tapez « ${word} » pour confirmer";
+  static String m3(price) => "${price} XAF / Mois";
 
-  static String m4(tier) => "Inclus dans ${tier}";
+  static String m4(count) =>
+      "${Intl.plural(count, one: '1 Pièce', other: '${count} Pièces')}";
 
-  static String m5(reason) => "Motif : ${reason}";
+  static String m5(value) => "${value} m²";
 
-  static String m6(phone) => "Code envoyé au ${phone}";
+  static String m6(count) => "${count} publiées";
 
-  static String m7(seconds) => "Renvoyer dans ${seconds}s";
+  static String m7(count) =>
+      "${Intl.plural(count, one: '1 unité', other: '${count} unités')}";
 
-  static String m8(tier) => "Votre formule ${tier} est active.";
+  static String m8(phone) => "Code reçu sur ${phone}";
 
-  static String m9(ref) => "Référence : ${ref}";
+  static String m9(word) => "Tapez « ${word} » pour confirmer";
 
-  static String m10(price) => "${price} FCFA / mois";
+  static String m10(tier) => "Inclus dans ${tier}";
 
-  static String m11(count) =>
+  static String m11(reason) => "Motif : ${reason}";
+
+  static String m12(phone) => "Code envoyé au ${phone}";
+
+  static String m13(seconds) => "Renvoyer dans ${seconds}s";
+
+  static String m14(tier) => "Votre formule ${tier} est active.";
+
+  static String m15(ref) => "Référence : ${ref}";
+
+  static String m16(price) => "${price} FCFA / mois";
+
+  static String m17(count) =>
       "${Intl.plural(count, one: '1 unité de résidence', other: '${count} unités de résidence')}";
 
-  static String m12(count) =>
+  static String m18(tier) =>
+      "Limite atteinte. Passe à ${tier} pour publier plus d’annonces.";
+
+  static String m19(min) => "Ajoute au moins ${min} photos pour publier.";
+
+  static String m20(count) =>
       "${Intl.plural(count, zero: 'Aucune annonce active', one: '1 annonce active', other: '${count} annonces actives')}";
 
-  static String m13(date) => "Valable jusqu’au ${date}";
+  static String m21(date) => "Valable jusqu’au ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -88,6 +107,127 @@ class MessageLookup extends MessageLookupByLibrary {
       "Réservé aux abonnés",
     ),
     "accessUpgradeCta": m1,
+    "annonceActionArchive": MessageLookupByLibrary.simpleMessage("Archiver"),
+    "annonceActionDelete": MessageLookupByLibrary.simpleMessage("Supprimer"),
+    "annonceActionFailed": MessageLookupByLibrary.simpleMessage(
+      "Action impossible pour le moment.",
+    ),
+    "annonceActionMarkRented": MessageLookupByLibrary.simpleMessage(
+      "Marquer loué",
+    ),
+    "annonceActionPublish": MessageLookupByLibrary.simpleMessage("Publier"),
+    "annonceActionReserve": MessageLookupByLibrary.simpleMessage(
+      "Marquer réservé",
+    ),
+    "annonceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
+      "Cette action est définitive. Le bien sera retiré de votre portefeuille.",
+    ),
+    "annonceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
+      "Supprimer ce bien ?",
+    ),
+    "annonceDetailHistory": MessageLookupByLibrary.simpleMessage("Historique"),
+    "annonceDetailNoInfo": MessageLookupByLibrary.simpleMessage(
+      "Aucune information\ndisponible pour le moment",
+    ),
+    "annonceDetailOccupant": MessageLookupByLibrary.simpleMessage("Occupant"),
+    "annonceDetailStats": MessageLookupByLibrary.simpleMessage("Statistiques"),
+    "annonceDetailTitle": MessageLookupByLibrary.simpleMessage(
+      "Details du bien",
+    ),
+    "annonceFormAddress": MessageLookupByLibrary.simpleMessage(
+      "Adresse exacte",
+    ),
+    "annonceFormErrorIncomplete": MessageLookupByLibrary.simpleMessage(
+      "Complétez les champs obligatoires.",
+    ),
+    "annonceFormErrorPhoto": MessageLookupByLibrary.simpleMessage(
+      "Photo non uploadée, réessaie.",
+    ),
+    "annonceFormErrorSave": MessageLookupByLibrary.simpleMessage(
+      "Enregistrement impossible. Réessayez.",
+    ),
+    "annonceFormFieldAvailability": MessageLookupByLibrary.simpleMessage(
+      "Disponibilté",
+    ),
+    "annonceFormFieldBathrooms": MessageLookupByLibrary.simpleMessage(
+      "Salles de bain",
+    ),
+    "annonceFormFieldDescription": MessageLookupByLibrary.simpleMessage(
+      "Description",
+    ),
+    "annonceFormFieldFurnished": MessageLookupByLibrary.simpleMessage("Meublé"),
+    "annonceFormFieldLocation": MessageLookupByLibrary.simpleMessage(
+      "Localisation",
+    ),
+    "annonceFormFieldName": MessageLookupByLibrary.simpleMessage("Nom"),
+    "annonceFormFieldPrice": MessageLookupByLibrary.simpleMessage("Prix"),
+    "annonceFormFieldRooms": MessageLookupByLibrary.simpleMessage(
+      "Nbre de Pièces",
+    ),
+    "annonceFormFieldSurface": MessageLookupByLibrary.simpleMessage(
+      "Dimensions",
+    ),
+    "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
+    "annonceFormKindMultiple": MessageLookupByLibrary.simpleMessage(
+      "Bien multiple",
+    ),
+    "annonceFormKindSingle": MessageLookupByLibrary.simpleMessage(
+      "Bien Unique",
+    ),
+    "annonceFormLocating": MessageLookupByLibrary.simpleMessage(
+      "Localisation en cours…",
+    ),
+    "annonceFormLocationDenied": MessageLookupByLibrary.simpleMessage(
+      "Autorisez la localisation pour enregistrer la position du bien.",
+    ),
+    "annonceFormLocationHint": MessageLookupByLibrary.simpleMessage(
+      "La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.",
+    ),
+    "annonceFormPhotosHint": m2,
+    "annonceFormSave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
+    "annonceFormSavedDraft": MessageLookupByLibrary.simpleMessage(
+      "Bien enregistré en brouillon.",
+    ),
+    "annonceFormTitleEdit": MessageLookupByLibrary.simpleMessage(
+      "Modifier le bien",
+    ),
+    "annonceFormTitleNew": MessageLookupByLibrary.simpleMessage(
+      "Ajouter un bien",
+    ),
+    "annonceFormUnitCount": MessageLookupByLibrary.simpleMessage("Nombre"),
+    "annonceFormUnitPrefix": MessageLookupByLibrary.simpleMessage(
+      "Préfixe (ex. Chambre)",
+    ),
+    "annonceFormUnitsAdd": MessageLookupByLibrary.simpleMessage(
+      "Ajouter un groupe d’unités",
+    ),
+    "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
+    "annonceStatusArchived": MessageLookupByLibrary.simpleMessage("Archivé"),
+    "annonceStatusDraft": MessageLookupByLibrary.simpleMessage("Brouillon"),
+    "annonceStatusPublished": MessageLookupByLibrary.simpleMessage(
+      "Disponible",
+    ),
+    "annonceStatusRented": MessageLookupByLibrary.simpleMessage("Loué"),
+    "annonceStatusReserved": MessageLookupByLibrary.simpleMessage("Réservé"),
+    "annoncesActionEdit": MessageLookupByLibrary.simpleMessage("Modifier"),
+    "annoncesActionHistory": MessageLookupByLibrary.simpleMessage("Historique"),
+    "annoncesEmptyAvailable": MessageLookupByLibrary.simpleMessage(
+      "Aucun bien disponible. Appuyez sur + pour en enregistrer un.",
+    ),
+    "annoncesEmptyOccupied": MessageLookupByLibrary.simpleMessage(
+      "Aucun bien occupé.",
+    ),
+    "annoncesMultipleTitle": MessageLookupByLibrary.simpleMessage(
+      "Biens Multiples",
+    ),
+    "annoncesPerMonth": m3,
+    "annoncesRooms": m4,
+    "annoncesSingleTitle": MessageLookupByLibrary.simpleMessage("Biens Unique"),
+    "annoncesSurface": m5,
+    "annoncesTabAvailable": MessageLookupByLibrary.simpleMessage("Disponibles"),
+    "annoncesTabOccupied": MessageLookupByLibrary.simpleMessage("Occupés"),
+    "annoncesUnitsPublished": m6,
+    "annoncesUnitsSummary": m7,
     "appName": MessageLookupByLibrary.simpleMessage("Mboa"),
     "appNamePro": MessageLookupByLibrary.simpleMessage("Mboa Pro"),
     "authEmailHint": MessageLookupByLibrary.simpleMessage("nom@exemple.com"),
@@ -132,7 +272,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer le changement",
     ),
-    "changePhoneNewCodeLabel": m2,
+    "changePhoneNewCodeLabel": m8,
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code reçu sur l’ancien numéro",
     ),
@@ -160,7 +300,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAccountButton": MessageLookupByLibrary.simpleMessage(
       "Supprimer définitivement",
     ),
-    "deleteAccountConfirmLabel": m3,
+    "deleteAccountConfirmLabel": m9,
     "deleteAccountConfirmWord": MessageLookupByLibrary.simpleMessage(
       "SUPPRIMER",
     ),
@@ -220,7 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeStatsContacts": MessageLookupByLibrary.simpleMessage("Contacts"),
     "homeStatsContracts": MessageLookupByLibrary.simpleMessage("Contrats"),
     "homeStatsConversion": MessageLookupByLibrary.simpleMessage("Conversion"),
-    "homeStatsLockedHint": m4,
+    "homeStatsLockedHint": m10,
     "homeStatsPublished": MessageLookupByLibrary.simpleMessage("Publiés"),
     "homeStatsRank": MessageLookupByLibrary.simpleMessage("Position"),
     "homeStatsRented": MessageLookupByLibrary.simpleMessage("Loués"),
@@ -264,7 +404,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Recto"),
-    "kycRejectionReason": m5,
+    "kycRejectionReason": m11,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Vérifié"),
     "kycStatusNotSubmitted": MessageLookupByLibrary.simpleMessage(
       "Informations requises",
@@ -329,12 +469,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "menuProfile": MessageLookupByLibrary.simpleMessage("Profil"),
     "menuQuit": MessageLookupByLibrary.simpleMessage("Quitter"),
     "menuSearch": MessageLookupByLibrary.simpleMessage("Recherche"),
+    "mesBiensAttributions": MessageLookupByLibrary.simpleMessage(
+      "Attributions",
+    ),
+    "mesBiensAttributionsBody": MessageLookupByLibrary.simpleMessage(
+      "Attribuer un local",
+    ),
+    "mesBiensMultiple": MessageLookupByLibrary.simpleMessage(
+      "Biens\nMultiples",
+    ),
+    "mesBiensPending": MessageLookupByLibrary.simpleMessage(
+      "En attente\nde validation",
+    ),
+    "mesBiensProspections": MessageLookupByLibrary.simpleMessage(
+      "Prospections",
+    ),
+    "mesBiensProspectionsBody": MessageLookupByLibrary.simpleMessage(
+      "Prospection des biens en vente",
+    ),
+    "mesBiensReservations": MessageLookupByLibrary.simpleMessage(
+      "Reservations",
+    ),
+    "mesBiensReservationsBody": MessageLookupByLibrary.simpleMessage(
+      "Traiter les reservations",
+    ),
+    "mesBiensSingle": MessageLookupByLibrary.simpleMessage("Biens\nUniques"),
+    "mesBiensTitle": MessageLookupByLibrary.simpleMessage("Mes biens"),
     "navFinance": MessageLookupByLibrary.simpleMessage("Finance"),
     "navHome": MessageLookupByLibrary.simpleMessage("Accueil"),
     "navManager": MessageLookupByLibrary.simpleMessage("Gestionnaire"),
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
-    "otpCodeSentTo": m6,
+    "otpCodeSentTo": m12,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Code invalide. Réessayez.",
     ),
@@ -342,7 +508,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous n’avez pas reçu le code ?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Renvoyer le code"),
-    "otpResendIn": m7,
+    "otpResendIn": m13,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
     "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
@@ -351,7 +517,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
       "Finalisez sur votre téléphone",
     ),
-    "paymentConfirmedBody": m8,
+    "paymentConfirmedBody": m14,
     "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement confirmé",
     ),
@@ -378,7 +544,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement en attente",
     ),
-    "paymentReference": m9,
+    "paymentReference": m15,
     "paymentRetry": MessageLookupByLibrary.simpleMessage(
       "Réessayer le paiement",
     ),
@@ -388,8 +554,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Un passage à une formule inférieure prend effet au prochain cycle.",
     ),
     "plansPriceFree": MessageLookupByLibrary.simpleMessage("Gratuit"),
-    "plansPriceMonthly": m10,
-    "plansResidenceAllowance": m11,
+    "plansPriceMonthly": m16,
+    "plansResidenceAllowance": m17,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Formules"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("Prénom"),
@@ -410,6 +576,20 @@ class MessageLookup extends MessageLookupByLibrary {
       "Particulier",
     ),
     "profileTypePromoteur": MessageLookupByLibrary.simpleMessage("Promoteur"),
+    "publishBlockedLimitBody": m18,
+    "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
+      "Limite atteinte",
+    ),
+    "publishBlockedPhotosBody": m19,
+    "publishBlockedPhotosTitle": MessageLookupByLibrary.simpleMessage(
+      "Photos manquantes",
+    ),
+    "publishBlockedProfileBody": MessageLookupByLibrary.simpleMessage(
+      "Complétez votre profil (photo, type, ville) avant de publier.",
+    ),
+    "publishBlockedProfileTitle": MessageLookupByLibrary.simpleMessage(
+      "Profil incomplet",
+    ),
     "registerButton": MessageLookupByLibrary.simpleMessage("S’inscrire"),
     "registerFailed": MessageLookupByLibrary.simpleMessage(
       "Inscription impossible. Vérifiez vos informations.",
@@ -452,7 +632,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Votre abonnement a expiré",
     ),
-    "subscriptionListingLimit": m12,
+    "subscriptionListingLimit": m20,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Annonces illimitées",
     ),
@@ -469,7 +649,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Les reçus sont liés à cet appareil pour le moment.",
     ),
-    "subscriptionRenewsOn": m13,
+    "subscriptionRenewsOn": m21,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
       "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",

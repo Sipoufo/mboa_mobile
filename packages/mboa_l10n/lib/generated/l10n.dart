@@ -1973,6 +1973,755 @@ class I18n {
   String get paymentDone {
     return Intl.message('Terminé', name: 'paymentDone', desc: '', args: []);
   }
+
+  /// `Mes biens`
+  String get mesBiensTitle {
+    return Intl.message('Mes biens', name: 'mesBiensTitle', desc: '', args: []);
+  }
+
+  /// `En attente\nde validation`
+  String get mesBiensPending {
+    return Intl.message(
+      'En attente\nde validation',
+      name: 'mesBiensPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biens\nUniques`
+  String get mesBiensSingle {
+    return Intl.message(
+      'Biens\nUniques',
+      name: 'mesBiensSingle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biens\nMultiples`
+  String get mesBiensMultiple {
+    return Intl.message(
+      'Biens\nMultiples',
+      name: 'mesBiensMultiple',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attributions`
+  String get mesBiensAttributions {
+    return Intl.message(
+      'Attributions',
+      name: 'mesBiensAttributions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Attribuer un local`
+  String get mesBiensAttributionsBody {
+    return Intl.message(
+      'Attribuer un local',
+      name: 'mesBiensAttributionsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reservations`
+  String get mesBiensReservations {
+    return Intl.message(
+      'Reservations',
+      name: 'mesBiensReservations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Traiter les reservations`
+  String get mesBiensReservationsBody {
+    return Intl.message(
+      'Traiter les reservations',
+      name: 'mesBiensReservationsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prospections`
+  String get mesBiensProspections {
+    return Intl.message(
+      'Prospections',
+      name: 'mesBiensProspections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prospection des biens en vente`
+  String get mesBiensProspectionsBody {
+    return Intl.message(
+      'Prospection des biens en vente',
+      name: 'mesBiensProspectionsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biens Unique`
+  String get annoncesSingleTitle {
+    return Intl.message(
+      'Biens Unique',
+      name: 'annoncesSingleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biens Multiples`
+  String get annoncesMultipleTitle {
+    return Intl.message(
+      'Biens Multiples',
+      name: 'annoncesMultipleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disponibles`
+  String get annoncesTabAvailable {
+    return Intl.message(
+      'Disponibles',
+      name: 'annoncesTabAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Occupés`
+  String get annoncesTabOccupied {
+    return Intl.message(
+      'Occupés',
+      name: 'annoncesTabOccupied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien disponible. Appuyez sur + pour en enregistrer un.`
+  String get annoncesEmptyAvailable {
+    return Intl.message(
+      'Aucun bien disponible. Appuyez sur + pour en enregistrer un.',
+      name: 'annoncesEmptyAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien occupé.`
+  String get annoncesEmptyOccupied {
+    return Intl.message(
+      'Aucun bien occupé.',
+      name: 'annoncesEmptyOccupied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{price} XAF / Mois`
+  String annoncesPerMonth(String price) {
+    return Intl.message(
+      '$price XAF / Mois',
+      name: 'annoncesPerMonth',
+      desc: '',
+      args: [price],
+    );
+  }
+
+  /// `{count, plural, one{1 Pièce} other{{count} Pièces}}`
+  String annoncesRooms(int count) {
+    return Intl.plural(
+      count,
+      one: '1 Pièce',
+      other: '$count Pièces',
+      name: 'annoncesRooms',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{value} m²`
+  String annoncesSurface(String value) {
+    return Intl.message(
+      '$value m²',
+      name: 'annoncesSurface',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Historique`
+  String get annoncesActionHistory {
+    return Intl.message(
+      'Historique',
+      name: 'annoncesActionHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modifier`
+  String get annoncesActionEdit {
+    return Intl.message(
+      'Modifier',
+      name: 'annoncesActionEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one{1 unité} other{{count} unités}}`
+  String annoncesUnitsSummary(int count) {
+    return Intl.plural(
+      count,
+      one: '1 unité',
+      other: '$count unités',
+      name: 'annoncesUnitsSummary',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} publiées`
+  String annoncesUnitsPublished(int count) {
+    return Intl.message(
+      '$count publiées',
+      name: 'annoncesUnitsPublished',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Brouillon`
+  String get annonceStatusDraft {
+    return Intl.message(
+      'Brouillon',
+      name: 'annonceStatusDraft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disponible`
+  String get annonceStatusPublished {
+    return Intl.message(
+      'Disponible',
+      name: 'annonceStatusPublished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Réservé`
+  String get annonceStatusReserved {
+    return Intl.message(
+      'Réservé',
+      name: 'annonceStatusReserved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loué`
+  String get annonceStatusRented {
+    return Intl.message(
+      'Loué',
+      name: 'annonceStatusRented',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Archivé`
+  String get annonceStatusArchived {
+    return Intl.message(
+      'Archivé',
+      name: 'annonceStatusArchived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Publier`
+  String get annonceActionPublish {
+    return Intl.message(
+      'Publier',
+      name: 'annonceActionPublish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Marquer réservé`
+  String get annonceActionReserve {
+    return Intl.message(
+      'Marquer réservé',
+      name: 'annonceActionReserve',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Marquer loué`
+  String get annonceActionMarkRented {
+    return Intl.message(
+      'Marquer loué',
+      name: 'annonceActionMarkRented',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Archiver`
+  String get annonceActionArchive {
+    return Intl.message(
+      'Archiver',
+      name: 'annonceActionArchive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supprimer`
+  String get annonceActionDelete {
+    return Intl.message(
+      'Supprimer',
+      name: 'annonceActionDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action impossible pour le moment.`
+  String get annonceActionFailed {
+    return Intl.message(
+      'Action impossible pour le moment.',
+      name: 'annonceActionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supprimer ce bien ?`
+  String get annonceDeleteConfirmTitle {
+    return Intl.message(
+      'Supprimer ce bien ?',
+      name: 'annonceDeleteConfirmTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cette action est définitive. Le bien sera retiré de votre portefeuille.`
+  String get annonceDeleteConfirmBody {
+    return Intl.message(
+      'Cette action est définitive. Le bien sera retiré de votre portefeuille.',
+      name: 'annonceDeleteConfirmBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un bien`
+  String get annonceFormTitleNew {
+    return Intl.message(
+      'Ajouter un bien',
+      name: 'annonceFormTitleNew',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modifier le bien`
+  String get annonceFormTitleEdit {
+    return Intl.message(
+      'Modifier le bien',
+      name: 'annonceFormTitleEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bien Unique`
+  String get annonceFormKindSingle {
+    return Intl.message(
+      'Bien Unique',
+      name: 'annonceFormKindSingle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bien multiple`
+  String get annonceFormKindMultiple {
+    return Intl.message(
+      'Bien multiple',
+      name: 'annonceFormKindMultiple',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ajouter des images ({min} photos minimum)`
+  String annonceFormPhotosHint(int min) {
+    return Intl.message(
+      'Ajouter des images ($min photos minimum)',
+      name: 'annonceFormPhotosHint',
+      desc: '',
+      args: [min],
+    );
+  }
+
+  /// `Nom`
+  String get annonceFormFieldName {
+    return Intl.message(
+      'Nom',
+      name: 'annonceFormFieldName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type`
+  String get annonceFormFieldType {
+    return Intl.message(
+      'Type',
+      name: 'annonceFormFieldType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prix`
+  String get annonceFormFieldPrice {
+    return Intl.message(
+      'Prix',
+      name: 'annonceFormFieldPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dimensions`
+  String get annonceFormFieldSurface {
+    return Intl.message(
+      'Dimensions',
+      name: 'annonceFormFieldSurface',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nbre de Pièces`
+  String get annonceFormFieldRooms {
+    return Intl.message(
+      'Nbre de Pièces',
+      name: 'annonceFormFieldRooms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salles de bain`
+  String get annonceFormFieldBathrooms {
+    return Intl.message(
+      'Salles de bain',
+      name: 'annonceFormFieldBathrooms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Meublé`
+  String get annonceFormFieldFurnished {
+    return Intl.message(
+      'Meublé',
+      name: 'annonceFormFieldFurnished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Localisation`
+  String get annonceFormFieldLocation {
+    return Intl.message(
+      'Localisation',
+      name: 'annonceFormFieldLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disponibilté`
+  String get annonceFormFieldAvailability {
+    return Intl.message(
+      'Disponibilté',
+      name: 'annonceFormFieldAvailability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get annonceFormFieldDescription {
+    return Intl.message(
+      'Description',
+      name: 'annonceFormFieldDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get annonceFormSave {
+    return Intl.message(
+      'Enregistrer',
+      name: 'annonceFormSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bien enregistré en brouillon.`
+  String get annonceFormSavedDraft {
+    return Intl.message(
+      'Bien enregistré en brouillon.',
+      name: 'annonceFormSavedDraft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Localisation en cours…`
+  String get annonceFormLocating {
+    return Intl.message(
+      'Localisation en cours…',
+      name: 'annonceFormLocating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Autorisez la localisation pour enregistrer la position du bien.`
+  String get annonceFormLocationDenied {
+    return Intl.message(
+      'Autorisez la localisation pour enregistrer la position du bien.',
+      name: 'annonceFormLocationDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.`
+  String get annonceFormLocationHint {
+    return Intl.message(
+      'La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.',
+      name: 'annonceFormLocationHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Adresse exacte`
+  String get annonceFormAddress {
+    return Intl.message(
+      'Adresse exacte',
+      name: 'annonceFormAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unités`
+  String get annonceFormUnitsTitle {
+    return Intl.message(
+      'Unités',
+      name: 'annonceFormUnitsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un groupe d’unités`
+  String get annonceFormUnitsAdd {
+    return Intl.message(
+      'Ajouter un groupe d’unités',
+      name: 'annonceFormUnitsAdd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Préfixe (ex. Chambre)`
+  String get annonceFormUnitPrefix {
+    return Intl.message(
+      'Préfixe (ex. Chambre)',
+      name: 'annonceFormUnitPrefix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nombre`
+  String get annonceFormUnitCount {
+    return Intl.message(
+      'Nombre',
+      name: 'annonceFormUnitCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Photo non uploadée, réessaie.`
+  String get annonceFormErrorPhoto {
+    return Intl.message(
+      'Photo non uploadée, réessaie.',
+      name: 'annonceFormErrorPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complétez les champs obligatoires.`
+  String get annonceFormErrorIncomplete {
+    return Intl.message(
+      'Complétez les champs obligatoires.',
+      name: 'annonceFormErrorIncomplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enregistrement impossible. Réessayez.`
+  String get annonceFormErrorSave {
+    return Intl.message(
+      'Enregistrement impossible. Réessayez.',
+      name: 'annonceFormErrorSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details du bien`
+  String get annonceDetailTitle {
+    return Intl.message(
+      'Details du bien',
+      name: 'annonceDetailTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statistiques`
+  String get annonceDetailStats {
+    return Intl.message(
+      'Statistiques',
+      name: 'annonceDetailStats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Occupant`
+  String get annonceDetailOccupant {
+    return Intl.message(
+      'Occupant',
+      name: 'annonceDetailOccupant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Historique`
+  String get annonceDetailHistory {
+    return Intl.message(
+      'Historique',
+      name: 'annonceDetailHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucune information\ndisponible pour le moment`
+  String get annonceDetailNoInfo {
+    return Intl.message(
+      'Aucune information\ndisponible pour le moment',
+      name: 'annonceDetailNoInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profil incomplet`
+  String get publishBlockedProfileTitle {
+    return Intl.message(
+      'Profil incomplet',
+      name: 'publishBlockedProfileTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complétez votre profil (photo, type, ville) avant de publier.`
+  String get publishBlockedProfileBody {
+    return Intl.message(
+      'Complétez votre profil (photo, type, ville) avant de publier.',
+      name: 'publishBlockedProfileBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Photos manquantes`
+  String get publishBlockedPhotosTitle {
+    return Intl.message(
+      'Photos manquantes',
+      name: 'publishBlockedPhotosTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ajoute au moins {min} photos pour publier.`
+  String publishBlockedPhotosBody(int min) {
+    return Intl.message(
+      'Ajoute au moins $min photos pour publier.',
+      name: 'publishBlockedPhotosBody',
+      desc: '',
+      args: [min],
+    );
+  }
+
+  /// `Limite atteinte`
+  String get publishBlockedLimitTitle {
+    return Intl.message(
+      'Limite atteinte',
+      name: 'publishBlockedLimitTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limite atteinte. Passe à {tier} pour publier plus d’annonces.`
+  String publishBlockedLimitBody(String tier) {
+    return Intl.message(
+      'Limite atteinte. Passe à $tier pour publier plus d’annonces.',
+      name: 'publishBlockedLimitBody',
+      desc: '',
+      args: [tier],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -397,5 +397,203 @@
   "paymentRetry": "Retry payment",
   "@paymentRetry": {},
   "paymentDone": "Done",
-  "@paymentDone": {}
+  "@paymentDone": {},
+  "mesBiensTitle": "My properties",
+  "@mesBiensTitle": {},
+  "mesBiensPending": "Awaiting\nvalidation",
+  "@mesBiensPending": {},
+  "mesBiensSingle": "Single\nproperties",
+  "@mesBiensSingle": {},
+  "mesBiensMultiple": "Multi-unit\nproperties",
+  "@mesBiensMultiple": {},
+  "mesBiensAttributions": "Assignments",
+  "@mesBiensAttributions": {},
+  "mesBiensAttributionsBody": "Assign a unit",
+  "@mesBiensAttributionsBody": {},
+  "mesBiensReservations": "Reservations",
+  "@mesBiensReservations": {},
+  "mesBiensReservationsBody": "Handle reservations",
+  "@mesBiensReservationsBody": {},
+  "mesBiensProspections": "Prospecting",
+  "@mesBiensProspections": {},
+  "mesBiensProspectionsBody": "Prospecting properties for sale",
+  "@mesBiensProspectionsBody": {},
+  "annoncesSingleTitle": "Single properties",
+  "@annoncesSingleTitle": {},
+  "annoncesMultipleTitle": "Multi-unit properties",
+  "@annoncesMultipleTitle": {},
+  "annoncesTabAvailable": "Available",
+  "@annoncesTabAvailable": {},
+  "annoncesTabOccupied": "Occupied",
+  "@annoncesTabOccupied": {},
+  "annoncesEmptyAvailable": "No available property. Tap + to register one.",
+  "@annoncesEmptyAvailable": {},
+  "annoncesEmptyOccupied": "No occupied property.",
+  "@annoncesEmptyOccupied": {},
+  "annoncesPerMonth": "{price} XAF / month",
+  "@annoncesPerMonth": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "annoncesRooms": "{count, plural, one{1 room} other{{count} rooms}}",
+  "@annoncesRooms": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annoncesSurface": "{value} m²",
+  "@annoncesSurface": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "annoncesActionHistory": "History",
+  "@annoncesActionHistory": {},
+  "annoncesActionEdit": "Edit",
+  "@annoncesActionEdit": {},
+  "annoncesUnitsSummary": "{count, plural, one{1 unit} other{{count} units}}",
+  "@annoncesUnitsSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annoncesUnitsPublished": "{count} published",
+  "@annoncesUnitsPublished": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceStatusDraft": "Draft",
+  "@annonceStatusDraft": {},
+  "annonceStatusPublished": "Available",
+  "@annonceStatusPublished": {},
+  "annonceStatusReserved": "Reserved",
+  "@annonceStatusReserved": {},
+  "annonceStatusRented": "Rented",
+  "@annonceStatusRented": {},
+  "annonceStatusArchived": "Archived",
+  "@annonceStatusArchived": {},
+  "annonceActionPublish": "Publish",
+  "@annonceActionPublish": {},
+  "annonceActionReserve": "Mark reserved",
+  "@annonceActionReserve": {},
+  "annonceActionMarkRented": "Mark rented",
+  "@annonceActionMarkRented": {},
+  "annonceActionArchive": "Archive",
+  "@annonceActionArchive": {},
+  "annonceActionDelete": "Delete",
+  "@annonceActionDelete": {},
+  "annonceActionFailed": "That action isn’t possible right now.",
+  "@annonceActionFailed": {},
+  "annonceDeleteConfirmTitle": "Delete this property?",
+  "@annonceDeleteConfirmTitle": {},
+  "annonceDeleteConfirmBody": "This is permanent. The property will be removed from your portfolio.",
+  "@annonceDeleteConfirmBody": {},
+  "annonceFormTitleNew": "Add a property",
+  "@annonceFormTitleNew": {},
+  "annonceFormTitleEdit": "Edit property",
+  "@annonceFormTitleEdit": {},
+  "annonceFormKindSingle": "Single property",
+  "@annonceFormKindSingle": {},
+  "annonceFormKindMultiple": "Multi-unit",
+  "@annonceFormKindMultiple": {},
+  "annonceFormPhotosHint": "Add images ({min} photos minimum)",
+  "@annonceFormPhotosHint": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceFormFieldName": "Name",
+  "@annonceFormFieldName": {},
+  "annonceFormFieldType": "Type",
+  "@annonceFormFieldType": {},
+  "annonceFormFieldPrice": "Price",
+  "@annonceFormFieldPrice": {},
+  "annonceFormFieldSurface": "Dimensions",
+  "@annonceFormFieldSurface": {},
+  "annonceFormFieldRooms": "Rooms",
+  "@annonceFormFieldRooms": {},
+  "annonceFormFieldBathrooms": "Bathrooms",
+  "@annonceFormFieldBathrooms": {},
+  "annonceFormFieldFurnished": "Furnished",
+  "@annonceFormFieldFurnished": {},
+  "annonceFormFieldLocation": "Location",
+  "@annonceFormFieldLocation": {},
+  "annonceFormFieldAvailability": "Availability",
+  "@annonceFormFieldAvailability": {},
+  "annonceFormFieldDescription": "Description",
+  "@annonceFormFieldDescription": {},
+  "annonceFormSave": "Save",
+  "@annonceFormSave": {},
+  "annonceFormSavedDraft": "Saved as a draft.",
+  "@annonceFormSavedDraft": {},
+  "annonceFormLocating": "Getting your location…",
+  "@annonceFormLocating": {},
+  "annonceFormLocationDenied": "Allow location access to record where the property is.",
+  "@annonceFormLocationDenied": {},
+  "annonceFormLocationHint": "The saved position is your phone’s. Stand at the property, or correct the address.",
+  "@annonceFormLocationHint": {},
+  "annonceFormAddress": "Exact address",
+  "@annonceFormAddress": {},
+  "annonceFormUnitsTitle": "Units",
+  "@annonceFormUnitsTitle": {},
+  "annonceFormUnitsAdd": "Add a unit group",
+  "@annonceFormUnitsAdd": {},
+  "annonceFormUnitPrefix": "Prefix (e.g. Room)",
+  "@annonceFormUnitPrefix": {},
+  "annonceFormUnitCount": "Count",
+  "@annonceFormUnitCount": {},
+  "annonceFormErrorPhoto": "Photo wasn’t uploaded, try again.",
+  "@annonceFormErrorPhoto": {},
+  "annonceFormErrorIncomplete": "Fill in the required fields.",
+  "@annonceFormErrorIncomplete": {},
+  "annonceFormErrorSave": "Couldn’t save. Try again.",
+  "@annonceFormErrorSave": {},
+  "annonceDetailTitle": "Property details",
+  "@annonceDetailTitle": {},
+  "annonceDetailStats": "Statistics",
+  "@annonceDetailStats": {},
+  "annonceDetailOccupant": "Occupant",
+  "@annonceDetailOccupant": {},
+  "annonceDetailHistory": "History",
+  "@annonceDetailHistory": {},
+  "annonceDetailNoInfo": "No information\navailable right now",
+  "@annonceDetailNoInfo": {},
+  "publishBlockedProfileTitle": "Incomplete profile",
+  "@publishBlockedProfileTitle": {},
+  "publishBlockedProfileBody": "Complete your profile (photo, type, city) before publishing.",
+  "@publishBlockedProfileBody": {},
+  "publishBlockedPhotosTitle": "Missing photos",
+  "@publishBlockedPhotosTitle": {},
+  "publishBlockedPhotosBody": "Add at least {min} photos to publish.",
+  "@publishBlockedPhotosBody": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "publishBlockedLimitTitle": "Limit reached",
+  "@publishBlockedLimitTitle": {},
+  "publishBlockedLimitBody": "Limit reached. Upgrade to {tier} to publish more listings.",
+  "@publishBlockedLimitBody": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  }
 }

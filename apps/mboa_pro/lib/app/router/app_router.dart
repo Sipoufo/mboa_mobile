@@ -80,6 +80,13 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: CertificationsRoute.page, path: 'kyc'),
             AutoRoute(page: IdDocumentRoute.page, path: 'kyc/id-document'),
 
+            // Listings (M10).
+            AutoRoute(page: MesBiensRoute.page, path: 'biens'),
+            AutoRoute(page: AnnoncesListRoute.page, path: 'biens/uniques'),
+            AutoRoute(page: ResidencesListRoute.page, path: 'biens/multiples'),
+            AutoRoute(page: AnnonceFormRoute.page, path: 'biens/form'),
+            AutoRoute(page: AnnonceDetailRoute.page, path: 'biens/:id'),
+
             // Subscriptions (M13).
             AutoRoute(page: SubscriptionRoute.page, path: 'subscription'),
             AutoRoute(page: PlansRoute.page, path: 'subscription/plans'),
