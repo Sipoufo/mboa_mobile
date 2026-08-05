@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -16,14 +15,21 @@ import 'widgets/annonce_card.dart';
 
 /// Biens Uniques list, Disponibles / Occupés (CDC M10).
 @RoutePage()
-class AnnoncesListPage extends StatelessWidget implements AutoRouteWrapper {
+class AnnoncesListPage extends StatefulWidget {
   const AnnoncesListPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<AnnoncesBloc>(
-        create: (_) => getIt<AnnoncesBloc>()..add(const AnnoncesLoadRequested()),
-        child: this,
-      );
+  State<AnnoncesListPage> createState() => _AnnoncesListPageState();
+}
+
+class _AnnoncesListPageState extends State<AnnoncesListPage> {
+  @override
+  void initState() {
+    super.initState();
+    // The bloc is session-scoped (AuthenticatedWrapper); loading happens here
+    // so nothing is fetched until this screen is actually opened.
+    context.read<AnnoncesBloc>().add(const AnnoncesLoadRequested());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,7 @@ class AnnoncesListPage extends StatelessWidget implements AutoRouteWrapper {
     final colors = context.mboaColors;
 
     return Scaffold(
-      backgroundColor: colors.surfaceWarm,
+      backgroundColor: colors.background,
       appBar: AppBar(title: Text(l10n.annoncesSingleTitle)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.router.push(

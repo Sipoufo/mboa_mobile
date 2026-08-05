@@ -595,5 +595,25 @@
         "type": "String"
       }
     }
-  }
+  },
+  "annonceFormFieldTitle": "Titre",
+  "@annonceFormFieldTitle": {},
+  "annonceFormFieldDistrict": "Quartier",
+  "@annonceFormFieldDistrict": {},
+  "annonceFormDetectingCity": "Détection de la ville…",
+  "@annonceFormDetectingCity": {},
+  "annonceFormCityDetected": "Ville détectée : {city}",
+  "@annonceFormCityDetected": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceFormCityNotDetected": "Ville non détectée. Choisissez-la manuellement.",
+  "@annonceFormCityNotDetected": {},
+  "annonceFormPickDistrict": "Choisir le quartier",
+  "@annonceFormPickDistrict": {},
+  "annonceFormNoDistricts": "Aucun quartier disponible pour cette ville.",
+  "@annonceFormNoDistricts": {}
 }

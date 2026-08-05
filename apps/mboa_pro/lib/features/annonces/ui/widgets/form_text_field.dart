@@ -15,6 +15,7 @@ class FormTextField extends StatefulWidget {
     this.initialValue = '',
     this.keyboardType,
     this.maxLines = 1,
+    this.minLines,
   });
 
   final String label;
@@ -22,6 +23,10 @@ class FormTextField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final TextInputType? keyboardType;
   final int maxLines;
+
+  /// Set for multi-line fields so the box opens at its full height rather
+  /// than growing from a single line as you type.
+  final int? minLines;
 
   @override
   State<FormTextField> createState() => _FormTextFieldState();
@@ -44,6 +49,7 @@ class _FormTextFieldState extends State<FormTextField> {
       labelText: widget.label,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
+      minLines: widget.minLines,
       variant: InputVariant.underline,
       onChanged: widget.onChanged,
     );

@@ -31,7 +31,7 @@ class AnnonceDetailPage extends StatelessWidget {
     final l10n = I18n.of(context);
 
     return Scaffold(
-      backgroundColor: context.mboaColors.surfaceWarm,
+      backgroundColor: context.mboaColors.background,
       appBar: AppBar(title: Text(l10n.annonceDetailTitle)),
       body: BlocBuilder<AnnoncesBloc, AnnoncesState>(
         builder: (context, state) {

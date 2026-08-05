@@ -27,7 +27,7 @@ class MesBiensPage extends StatelessWidget {
     final colors = context.mboaColors;
 
     return Scaffold(
-      backgroundColor: colors.surfaceWarm,
+      backgroundColor: colors.background,
       appBar: AppBar(title: Text(l10n.mesBiensTitle)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.router.push(

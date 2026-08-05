@@ -188,7 +188,7 @@ class AnnoncesListRoute extends _i26.PageRouteInfo<void> {
   static _i26.PageInfo page = _i26.PageInfo(
     name,
     builder: (data) {
-      return _i26.WrappedRoute(child: const _i4.AnnoncesListPage());
+      return const _i4.AnnoncesListPage();
     },
   );
 }
@@ -489,7 +489,7 @@ class ResidencesListRoute extends _i26.PageRouteInfo<void> {
   static _i26.PageInfo page = _i26.PageInfo(
     name,
     builder: (data) {
-      return _i26.WrappedRoute(child: const _i21.ResidencesListPage());
+      return const _i21.ResidencesListPage();
     },
   );
 }

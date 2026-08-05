@@ -40,6 +40,9 @@ dependencies:
   built_collection: '>=5.1.1 <6.0.0'
   # GPS for the listing location step (M10); also the agents' 500m check (M15).
   geolocator: ^13.0.2
+  # Reverse-geocodes the GPS fix to a city name, so the district list can be
+  # narrowed automatically instead of making the user find their city.
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -38,6 +38,7 @@ export 'src/features/settings/ui/settings_menu_view.dart';
 export 'src/features/location/data/location_repository.dart';
 export 'src/features/location/models/city_option.dart';
 export 'src/features/location/ui/city_picker_sheet.dart';
+export 'src/features/location/ui/option_picker_sheet.dart';
 
 // Media — image capture/compression + R2 presigned upload (shared).
 export 'src/features/media/capture_source_sheet.dart';

@@ -20,6 +20,10 @@ abstract final class MboaPalette {
   // Neutrals (§2.2)
   static const Color white = Color(0xFFFFFFFF);
   static const Color warmWhite = Color(0xFFF9F7F4);
+  // Page canvas — a hair off pure white so white cards still read as raised.
+  // Measured from the Pro designs (#FBFBFB); distinct from the warm [warmWhite]
+  // used for card and input fills.
+  static const Color offWhite = Color(0xFFFBFBFB);
   static const Color greyLight = Color(0xFFF0EFED);
   static const Color greyMedium = Color(0xFF9CA3AF);
   static const Color greyDark = Color(0xFF6B7280);
@@ -48,6 +52,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     required this.actionDark,
     required this.surface,
     required this.surfaceWarm,
+    required this.background,
     required this.border,
     required this.textTertiary,
     required this.textSecondary,
@@ -73,6 +78,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   // Surfaces & neutrals
   final Color surface; // app background
   final Color surfaceWarm; // cards, inputs
+  final Color background; // page canvas behind cards — NOT a card fill
   final Color border; // separators, unselected chips
   final Color textTertiary; // placeholders, inactive
   final Color textSecondary; // labels, metadata
@@ -100,6 +106,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     actionDark: MboaPalette.coralDark,
     surface: MboaPalette.white,
     surfaceWarm: MboaPalette.warmWhite,
+    background: MboaPalette.offWhite,
     border: MboaPalette.greyLight,
     textTertiary: MboaPalette.greyMedium,
     textSecondary: MboaPalette.greyDark,
@@ -125,6 +132,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     actionDark: MboaPalette.coralDark,
     surface: Color(0xFF121212),
     surfaceWarm: Color(0xFF1E1E1E),
+    background: Color(0xFF0D0D0D),
     border: Color(0xFF2C2C2C),
     textTertiary: MboaPalette.greyDark,
     textSecondary: MboaPalette.greyMedium,
@@ -149,6 +157,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     Color? actionDark,
     Color? surface,
     Color? surfaceWarm,
+    Color? background,
     Color? border,
     Color? textTertiary,
     Color? textSecondary,
@@ -171,6 +180,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
       actionDark: actionDark ?? this.actionDark,
       surface: surface ?? this.surface,
       surfaceWarm: surfaceWarm ?? this.surfaceWarm,
+      background: background ?? this.background,
       border: border ?? this.border,
       textTertiary: textTertiary ?? this.textTertiary,
       textSecondary: textSecondary ?? this.textSecondary,
@@ -199,6 +209,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
       actionDark: mix(actionDark, other.actionDark),
       surface: mix(surface, other.surface),
       surfaceWarm: mix(surfaceWarm, other.surfaceWarm),
+      background: mix(background, other.background),
       border: mix(border, other.border),
       textTertiary: mix(textTertiary, other.textTertiary),
       textSecondary: mix(textSecondary, other.textSecondary),

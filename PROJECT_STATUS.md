@@ -94,6 +94,14 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 - iOS camera/photo Info.plist permissions in **both** apps.
 - Role-aware account (`AccountRole`) surfaced in KYC Statut label.
 
+## Design tokens: page canvas vs card fill
+`surfaceWarm` (#F9F7F4) is documented as **"cards, inputs"** and was being used
+as a page background across every Pro screen — it reads visibly grey/beige.
+Sampling the designs gives **#FBFBFB pages, #FFFFFF cards**, so there is now a
+`background` token (`MboaPalette.offWhite`) for page scaffolds. Use
+`colors.background` for a `Scaffold`, `colors.surface` for a card,
+`colors.surfaceWarm` only for card/input fills.
+
 ## Native permissions (device-only failures)
 A plugin needing a runtime permission fails **only on device**, with a crash
 that analyze, bloc tests and widget tests all miss. Two shipped without their
@@ -125,7 +133,14 @@ could not see it; only pumping the page could.
 
 **Rule:** a screen that reads a bloc it does not provide itself needs a widget
 test that pumps it in isolation with *only* the blocs its route inherits. See
-`test/features/annonces/ui/mes_biens_page_test.dart`.
+`mes_biens_page_test.dart` and `screens_provider_scope_test.dart`.
+
+A sweep of the M10 screens found the same bug in `AnnonceDetailPage`, which
+reads `AnnoncesBloc` while being a *sibling* route of the list. `AnnoncesBloc`
+and `ResidencesBloc` are now session singletons provided by the wrapper —
+**provided but not loaded there**, so a session that never opens Mes biens costs
+no requests; each list screen loads on open. Sharing one instance also means a
+transition on the detail updates the list behind it.
 
 ## Route reachability (learned the hard way)
 A route in the table is **not** proof it is reachable. The profile hub
@@ -206,10 +221,14 @@ Behaviour worth knowing before changing it:
   or detail, because only publishing hits the tier limit and the photo minimum.
 - **Photos: min 3, max 15** per Doc 10 — the mockup's "5 photos" is wrong, and
   `photoKeys.minItems` in the spec is 0 (see `docs/openapi-proposal-m10-fields.md`).
-- **The form's location is a GPS fix + a city choice.** It records where the
-  *phone* is, not the property, and the city currently doubles as the district
-  until a district picker is wired (`LocationsApi.districts(cityId)` exists).
-  A MapLibre picker is the real fix; the swap is confined to `LocationCapture`.
+- **The form's location flow is: GPS fix → reverse geocode to a city →
+  preselect it in the catalogue → load *that city's* districts → pick one.**
+  Listings are filed against a **district** (`CreateAnnonceRequest.districtId`),
+  so the city is only ever a means of narrowing the list. Geocoded names never
+  match the catalogue exactly, so `LocationRepository.matchCity` is loose
+  (accents, casing, "Douala 5e") and **may return null** — the city is always
+  confirmable by hand. It still records where the *phone* is, not the property;
+  a MapLibre picker is the real fix and replaces only `LocationCapture`.
 - Four fields in the creation mockup (water/electricity metering, titre de
   propriété, période) have **no API and are not built** — see the OpenAPI
   proposal for which two are worth adding.
@@ -280,7 +299,7 @@ Behaviour worth knowing before changing it:
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 237 passing — `mboa_user` 18, `mboa_pro` 148, `mboa_core` 12, `mboa_shared` 59.
+- Tests: 250 passing — `mboa_user` 18, `mboa_pro` 154, `mboa_core` 12, `mboa_shared` 66.
 - **Android and iOS builds verified** (`flutter build apk --debug`,
   `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
   doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the

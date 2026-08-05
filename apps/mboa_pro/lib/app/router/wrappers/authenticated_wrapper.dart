@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../../features/annonces/bloc/annonces_bloc.dart';
+import '../../../features/annonces/bloc/residences_bloc.dart';
 import '../../../features/home/bloc/home_bloc.dart';
 import '../../../features/kyc/logic/kyc_cubit.dart';
 import '../../../features/profile/profile_types.dart';
@@ -36,6 +38,10 @@ class AuthenticatedWrapper extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<HomeBloc>.value(
           value: getIt<HomeBloc>()..add(const HomeLoadRequested()),
         ),
+        // Provided but deliberately not loaded here: the list screens fetch on
+        // open, so a session that never visits Mes biens costs no requests.
+        BlocProvider<AnnoncesBloc>.value(value: getIt<AnnoncesBloc>()),
+        BlocProvider<ResidencesBloc>.value(value: getIt<ResidencesBloc>()),
       ],
       child: this,
     );

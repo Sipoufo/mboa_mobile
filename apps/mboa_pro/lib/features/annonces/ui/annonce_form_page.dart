@@ -9,10 +9,10 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/annonce_form_bloc.dart';
-import '../data/location_capture.dart';
 import '../models/annonce.dart';
 import '../models/annonce_draft.dart';
 import 'widgets/form_text_field.dart';
+import 'widgets/location_field.dart';
 import 'widgets/photo_strip.dart';
 import 'widgets/unit_group_editor.dart';
 
@@ -74,7 +74,7 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
         };
 
         return Scaffold(
-          backgroundColor: context.mboaColors.surfaceWarm,
+          backgroundColor: context.mboaColors.background,
           appBar: AppBar(
             title: Text(
               annonceId == null
@@ -158,9 +158,11 @@ class _Form extends StatelessWidget {
         ),
         const SizedBox(height: Dimens.spacingLg),
         FormTextField(
+          // Doc 10 makes "Titre" obligatoire; the mockup omits it, and reusing
+          // the "Type" label here collided with the property-type dropdown.
           label: isResidence
               ? l10n.annonceFormFieldName
-              : l10n.annonceFormFieldType,
+              : l10n.annonceFormFieldTitle,
           initialValue: draft.title,
           onChanged: (value) => _change(context, (d) => d.copyWith(title: value)),
         ),
@@ -211,7 +213,7 @@ class _Form extends StatelessWidget {
           ],
         ),
         const SizedBox(height: Dimens.spacing),
-        _LocationField(location: draft.location),
+        LocationField(location: draft.location),
         const SizedBox(height: Dimens.spacing),
         _AvailabilityField(
           value: draft.availableFrom,
@@ -225,7 +227,8 @@ class _Form extends StatelessWidget {
         const SizedBox(height: Dimens.spacing),
         FormTextField(
           label: l10n.annonceFormFieldDescription,
-          maxLines: 5,
+          minLines: 4,
+          maxLines: 8,
           initialValue: draft.description ?? '',
           onChanged: (value) =>
               _change(context, (d) => d.copyWith(description: value)),
@@ -272,116 +275,6 @@ class _PropertyTypeField extends StatelessWidget {
         PropertyType.office => 'Bureau',
         PropertyType.commercialSpace => 'Local commercial',
       };
-}
-
-/// Captures GPS and pairs it with a district, satisfying the endpoints'
-/// required latitude/longitude behind the design's single "Localisation" field.
-class _LocationField extends StatefulWidget {
-  const _LocationField({this.location});
-
-  final ListingLocation? location;
-
-  @override
-  State<_LocationField> createState() => _LocationFieldState();
-}
-
-class _LocationFieldState extends State<_LocationField> {
-  bool _busy = false;
-
-  Future<void> _capture() async {
-    final l10n = I18n.of(context);
-    final bloc = context.read<AnnonceFormBloc>();
-
-    setState(() => _busy = true);
-    try {
-      final city = await showCityPicker(
-        context,
-        repository: getIt<LocationRepository>(),
-      );
-      if (city == null || !mounted) return;
-
-      final fix = await const LocationCapture().current();
-      if (!mounted) return;
-
-      bloc.add(
-        AnnonceFormChanged(
-          (draft) => draft.copyWith(
-            location: ListingLocation(
-              // The city picker doubles as the district choice until a district
-              // picker exists — LocationsApi.districts(cityId) is the next step.
-              districtId: city.id,
-              districtName: city.name,
-              cityId: city.id,
-              cityName: city.name,
-              latitude: fix.latitude,
-              longitude: fix.longitude,
-            ),
-          ),
-        ),
-      );
-    } on LocationCaptureException {
-      if (mounted) {
-        MboaToast.error(
-          context: context,
-          title: l10n.commonErrorTitle,
-          description: l10n.annonceFormLocationDenied,
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-    final location = widget.location;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          onTap: _busy ? null : _capture,
-          child: InputDecorator(
-            decoration: InputDecoration(
-              labelText: l10n.annonceFormFieldLocation,
-              suffixIcon: _busy
-                  ? const Padding(
-                      padding: EdgeInsets.all(Dimens.spacingMd),
-                      child: Loader(),
-                    )
-                  : Icon(LucideIcons.mapPinHouse, color: colors.primary),
-            ),
-            child: Text(
-              location?.label ?? l10n.homeLocationEmpty,
-              style: context.mboaText.body,
-            ),
-          ),
-        ),
-        if (location != null) ...[
-          const SizedBox(height: Dimens.spacingSm),
-          Text(
-            // GPS records where the phone is, not where the property is.
-            l10n.annonceFormLocationHint,
-            style: context.mboaText.micro.copyWith(color: colors.textTertiary),
-          ),
-          const SizedBox(height: Dimens.spacingSm),
-          FormTextField(
-            label: l10n.annonceFormAddress,
-            initialValue: location.exactAddress ?? '',
-            onChanged: (value) => context.read<AnnonceFormBloc>().add(
-                  AnnonceFormChanged(
-                    (draft) => draft.copyWith(
-                      location: location.copyWith(exactAddress: value),
-                    ),
-                  ),
-                ),
-          ),
-        ],
-      ],
-    );
-  }
 }
 
 class _AvailabilityField extends StatelessWidget {

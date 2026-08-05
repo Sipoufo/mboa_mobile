@@ -2722,6 +2722,76 @@ class I18n {
       args: [tier],
     );
   }
+
+  /// `Titre`
+  String get annonceFormFieldTitle {
+    return Intl.message(
+      'Titre',
+      name: 'annonceFormFieldTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quartier`
+  String get annonceFormFieldDistrict {
+    return Intl.message(
+      'Quartier',
+      name: 'annonceFormFieldDistrict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Détection de la ville…`
+  String get annonceFormDetectingCity {
+    return Intl.message(
+      'Détection de la ville…',
+      name: 'annonceFormDetectingCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ville détectée : {city}`
+  String annonceFormCityDetected(String city) {
+    return Intl.message(
+      'Ville détectée : $city',
+      name: 'annonceFormCityDetected',
+      desc: '',
+      args: [city],
+    );
+  }
+
+  /// `Ville non détectée. Choisissez-la manuellement.`
+  String get annonceFormCityNotDetected {
+    return Intl.message(
+      'Ville non détectée. Choisissez-la manuellement.',
+      name: 'annonceFormCityNotDetected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choisir le quartier`
+  String get annonceFormPickDistrict {
+    return Intl.message(
+      'Choisir le quartier',
+      name: 'annonceFormPickDistrict',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucun quartier disponible pour cette ville.`
+  String get annonceFormNoDistricts {
+    return Intl.message(
+      'Aucun quartier disponible pour cette ville.',
+      name: 'annonceFormNoDistricts',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

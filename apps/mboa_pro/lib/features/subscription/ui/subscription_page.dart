@@ -22,7 +22,7 @@ class SubscriptionPage extends StatelessWidget {
     final colors = context.mboaColors;
 
     return Scaffold(
-      backgroundColor: colors.surfaceWarm,
+      backgroundColor: colors.background,
       appBar: AppBar(title: Text(l10n.subscriptionTitle)),
       body: RefreshIndicator(
         onRefresh: () async => context

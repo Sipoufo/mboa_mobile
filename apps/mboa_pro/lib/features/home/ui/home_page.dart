@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
     final l10n = I18n.of(context);
 
     return Scaffold(
-      backgroundColor: context.mboaColors.surfaceWarm,
+      backgroundColor: context.mboaColors.background,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async =>

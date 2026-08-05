@@ -48,7 +48,7 @@ class _PlansPageState extends State<PlansPage> {
     final l10n = I18n.of(context);
 
     return Scaffold(
-      backgroundColor: context.mboaColors.surfaceWarm,
+      backgroundColor: context.mboaColors.background,
       appBar: AppBar(title: Text(l10n.plansTitle)),
       body: FutureBuilder<List<TierOption>>(
         future: _tiers,

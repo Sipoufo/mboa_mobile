@@ -595,5 +595,25 @@
         "type": "String"
       }
     }
-  }
+  },
+  "annonceFormFieldTitle": "Title",
+  "@annonceFormFieldTitle": {},
+  "annonceFormFieldDistrict": "District",
+  "@annonceFormFieldDistrict": {},
+  "annonceFormDetectingCity": "Detecting your city…",
+  "@annonceFormDetectingCity": {},
+  "annonceFormCityDetected": "Detected city: {city}",
+  "@annonceFormCityDetected": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceFormCityNotDetected": "City not detected. Pick it manually.",
+  "@annonceFormCityNotDetected": {},
+  "annonceFormPickDistrict": "Choose the district",
+  "@annonceFormPickDistrict": {},
+  "annonceFormNoDistricts": "No district available for this city.",
+  "@annonceFormNoDistricts": {}
 }

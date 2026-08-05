@@ -149,10 +149,13 @@ void registerAppModule() {
   getIt.registerLazySingleton<ResidenceRepository>(
     () => ResidenceRepository(dioClient: getIt<DioClient>()),
   );
-  getIt.registerFactory<AnnoncesBloc>(
+  // Singletons: AnnonceDetailPage is a *sibling* route of the list, not a
+  // child, so a list-scoped provider would not reach it. Sharing one instance
+  // also means a transition on the detail updates the list behind it.
+  getIt.registerLazySingleton<AnnoncesBloc>(
     () => AnnoncesBloc(repository: getIt<AnnonceRepository>()),
   );
-  getIt.registerFactory<ResidencesBloc>(
+  getIt.registerLazySingleton<ResidencesBloc>(
     () => ResidencesBloc(repository: getIt<ResidenceRepository>()),
   );
   getIt.registerFactory<AnnonceFormBloc>(
