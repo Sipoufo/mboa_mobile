@@ -55,7 +55,28 @@ APNs is required; FCM is only a relay on iOS.
 
 Simulators cannot receive push. Device testing is required.
 
-## 3. Flutter wiring *(me, once step 1 lands)*
+## 3. Flutter wiring — **done for `mboa_pro`** (2026-08-05)
+
+Built and verified against a real Android debug build.
+
+- `firebase_core` + `firebase_messaging`; Google Services Gradle plugin applied
+  in `android/settings.gradle.kts` + `android/app/build.gradle.kts`.
+- `Firebase.initializeApp()` in `main.dart`, wrapped in a try/catch — a broken
+  Firebase setup must not stop the app booting.
+- `NotificationsRepository` in `mboa_shared` (permission, token registration via
+  `NotificationDevicesApi`, `onTokenRefresh` re-registration, foreground /
+  opened / initial-message intake).
+- `handleBackgroundMessage` — top-level, `@pragma('vm:entry-point')`.
+- Started from the auth listener **and** the splash, i.e. once per session.
+- **Deregistered in `AuthRepository.logout()` before the tokens are cleared**,
+  and wrapped so a failure can't strand the user signed-in. Pinned by
+  `auth_repository_notifications_test.dart`, which asserts the call order.
+
+Still open: `PushType`/`entityId` parsing is deliberately lenient because the
+payload contract is unagreed (§3.6 below); routing for M10/M12/M16 types lands
+on the shell until those modules exist.
+
+### Original plan *(for `mboa_user`, still to do)*
 
 1. Add `firebase_core` + `firebase_messaging` to both apps.
 2. Android: Google Services Gradle plugin; confirm `minSdk >= 21`.
@@ -95,6 +116,7 @@ token refresh→ re-register (only while a session exists)
 
 | Item | State |
 |---|---|
+| `mboa_pro` Android push | ✅ **working end to end** — APK builds, wiring done |
 | `mboa_pro` `google-services.json` | ✅ placed (`cm.mboa.mboa_pro`) |
 | `mboa_pro` `GoogleService-Info.plist` | ✅ placed (`cm.mboa.mboaPro`) — **still needs adding to the Runner target in Xcode** |
 | `mboa_user` client config (both platforms) | ❌ not created in the Firebase console yet |

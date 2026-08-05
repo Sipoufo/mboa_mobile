@@ -23,7 +23,9 @@ dependencies:
   hive_ce_flutter: ^2.0.0
   get_it: ^8.0.0
   equatable: ^2.0.0
-  sentry_flutter: ^8.9.0
+  # 9.x required: 8.x ships Kotlin language version 1.6, which the Kotlin 2.x
+  # compiler rejects — it broke the Android build outright.
+  sentry_flutter: ^9.0.0
   connectivity_plus: ^6.1.0
 
 dev_dependencies:

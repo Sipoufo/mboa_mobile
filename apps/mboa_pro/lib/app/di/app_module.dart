@@ -24,11 +24,18 @@ void registerAppModule() {
   getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
   getIt.registerLazySingleton<AccessPolicy>(AccessPolicy.new);
 
+  // Push notifications (M03). Registered before AuthRepository because logout
+  // has to revoke the device *before* the tokens are cleared.
+  getIt.registerLazySingleton<NotificationsRepository>(
+    () => NotificationsRepository(dioClient: getIt<DioClient>()),
+  );
+
   // Session gate.
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepository(
       dioClient: getIt<DioClient>(),
       tokenStorage: getIt<SecureTokenStorage>(),
+      notifications: getIt<NotificationsRepository>(),
     ),
   );
   getIt.registerLazySingleton<AuthBloc>(

@@ -12,6 +12,11 @@ export 'src/routing/guards/guest_guard.dart';
 export 'src/routing/guards/session_guard.dart';
 export 'src/routing/session_snapshot.dart';
 
+// Notifications (M03) — FCM registration + payload intake, shared by both apps.
+export 'src/features/notifications/data/notifications_repository.dart';
+export 'src/features/notifications/models/push_message.dart';
+export 'src/features/notifications/notifications_background.dart';
+
 // Session resolution — shared startup auth check used by each app's splash.
 export 'src/features/session/data/session_repository.dart';
 export 'src/features/session/models/session_result.dart';

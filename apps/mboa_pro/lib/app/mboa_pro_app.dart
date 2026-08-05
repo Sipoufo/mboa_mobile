@@ -6,6 +6,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/auth/bloc/auth_bloc.dart';
+import 'notifications_bootstrap.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
 
@@ -36,6 +37,9 @@ class _MboaProAppState extends State<MboaProApp> {
             case AuthAuthenticated():
               getIt<SessionSnapshot>().markAuthenticated();
               getIt<SessionExpiryWatcher>().start();
+              // Register for push now that the session exists — the endpoint is
+              // authenticated. Logout revokes it via AuthRepository.
+              startNotifications(router: _router, context: () => context);
               _router.replaceAll([const AuthenticatedRouter()]);
             case AuthUnauthenticated():
               getIt<SessionSnapshot>().markUnauthenticated();

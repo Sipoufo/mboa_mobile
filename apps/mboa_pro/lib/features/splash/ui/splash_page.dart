@@ -6,6 +6,8 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/notifications_bootstrap.dart';
+import '../../../app/router/app_router.dart';
 import '../../../app/router/app_router.gr.dart';
 import '../logic/splash_cubit.dart';
 
@@ -35,6 +37,10 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
           case SplashAuthenticated():
             getIt<SessionSnapshot>().markAuthenticated();
             getIt<SessionExpiryWatcher>().start();
+            startNotifications(
+              router: context.router.root as AppRouter,
+              context: () => context,
+            );
             context.router.replaceAll([const AuthenticatedRouter()]);
           case SplashUnauthenticated():
             getIt<SessionSnapshot>().markUnauthenticated();

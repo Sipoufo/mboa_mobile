@@ -34,6 +34,8 @@ dependencies:
   image_picker: ^1.1.2
   flutter_image_compress: ^2.3.0
   dio: ^5.7.0 # bare client for direct PUTs to R2 presigned URLs
+  firebase_core: ^3.8.0 # FCM init (M03)
+  firebase_messaging: ^15.1.5 # background handler registration
 
 dev_dependencies:
   flutter_test:

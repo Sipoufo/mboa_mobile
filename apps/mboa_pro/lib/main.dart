@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -9,6 +11,13 @@ import 'features/auth/bloc/auth_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Push (M03). Best-effort: a missing or misconfigured Firebase setup must not
+  // stop the app booting — notifications simply stay off.
+  try {
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+  } catch (_) {}
 
   await HiveCache.init();
   await registerCoreModule(
