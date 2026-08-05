@@ -36,6 +36,10 @@ dependencies:
   dio: ^5.7.0 # bare client for direct PUTs to R2 presigned URLs
   firebase_core: ^3.8.0 # FCM init (M03)
   firebase_messaging: ^15.1.5 # background handler registration
+  # Builders for the generated request DTOs (ListBuilder on photoKeys/units).
+  built_collection: '>=5.1.1 <6.0.0'
+  # GPS for the listing location step (M10); also the agents' 500m check (M15).
+  geolocator: ^13.0.2
 
 dev_dependencies:
   flutter_test:
@@ -46,8 +50,6 @@ dev_dependencies:
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
   flutter_native_splash: ^2.4.4
-  # Test-only: build generated DTOs (BuiltList) to stub paginated responses.
-  built_collection: '>=5.1.1 <6.0.0'
 
 flutter:
   uses-material-design: true
