@@ -46,13 +46,19 @@ enum AnnonceStatus {
 /// hidden — a created-but-unpublished listing must not vanish from the app.
 enum AnnonceFilter {
   available,
-  occupied;
+  occupied,
+
+  /// Out of circulation but not deleted (RM-M10-05): a rented listing keeps its
+  /// history, and a Gratuit listing archives itself at J+30 (RM-M10-04). They
+  /// need somewhere to be seen.
+  archived;
 
   bool matches(AnnonceStatus status) => switch (this) {
         AnnonceFilter.available =>
           status == AnnonceStatus.published || status == AnnonceStatus.draft,
         AnnonceFilter.occupied =>
           status == AnnonceStatus.reserved || status == AnnonceStatus.rented,
+        AnnonceFilter.archived => status == AnnonceStatus.archived,
       };
 }
 

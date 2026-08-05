@@ -132,6 +132,13 @@ Now declared and pinned by `test/platform_permissions_test.dart` in both apps:
 **When you add a plugin that touches camera, photos, location, notifications or
 background execution: add the declaration *and* a line in that test.**
 
+## Profile: one city field, not two
+Doc 10 gives the **Utilisateur** profile "Ville de recherche" and the
+**Prestataire** profile "Ville principale" — not both. Pro was showing both,
+which read as two fields doing the same thing. Pro now shows "Ville principale"
+for prestataires and the single city for agents, whose real field is
+"Zone d'intervention (villes/quartiers)" — unmodelled in the API (M15).
+
 ## Bloc scoping (learned the hard way, twice)
 `AuthenticatedWrapper` provides the **session-scoped** blocs — `ProProfileBloc`,
 `KycCubit`, `SubscriptionBloc`, `HomeBloc`. Anything read by more than one route
@@ -219,13 +226,30 @@ designs is unbuilt **because there is no endpoint**, and routes to the
 
 | Surface | State |
 |---|---|
-| Biens Uniques / Biens Multiples CRUD + lifecycle | ✅ built |
+| Biens Uniques / Résidences CRUD + lifecycle | ✅ built |
+| Residence detail (counts, bulk actions, **read-only** unit list) | ✅ built |
+| Per-unit view/edit | ❌ **needs a backend answer** — see below |
 | Attributions, Réservations, Prospections | ❌ no endpoint |
 | En attente de validation | ❌ no moderation-status endpoint |
 | Occupant / Mes locataires, Historique, rating | ❌ no endpoint — the detail uses the design's own "Aucune information" empty state |
 | Gestionnaire hub (agents, annuaires) | ❌ M15/M16, still a tab placeholder |
 
+**Open question for the backend:** is a residence unit id also an *annonce* id?
+If yes, `AnnoncesApi.getOne1/update1/publish` work on units and per-unit
+view/edit is a short job. If no, it stays blocked — `ResidencesApi` exposes only
+bulk transitions and `UnitSummary` (id, title, type, status, rent) is all the
+data there is.
+
 Behaviour worth knowing before changing it:
+- **`GET /annonces` returns residence units too**, and `AnnonceResponse` has no
+  residence link. `AnnonceRepository.list()` therefore subtracts the unit ids
+  gathered from `ResidencesApi.listMine`. If that lookup fails it returns the
+  unfiltered list — extra rows beat an empty screen. **Ask the backend for a
+  `residenceId` on `AnnonceResponse`, or a `standalone` filter**; this costs an
+  extra request per list load.
+- **Archived listings have their own tab.** RM-M10-04 auto-archives Gratuit
+  listings at J+30 and RM-M10-05 keeps rented ones in history, so they need
+  somewhere to be seen. The design shows two tabs; this is a third.
 - **`PublishGate`** is a pure function; the publish rules (RM-M10-01 profile,
   CE-M10-03 three photos, RM-M10-02 tier limit) live there, not spread across
   blocs. It reports the profile blocker first — the one the prestataire can fix.
@@ -312,6 +336,8 @@ Behaviour worth knowing before changing it:
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
 - Tests: 272 passing — `mboa_user` 18, `mboa_pro` 168, `mboa_core` 12, `mboa_shared` 74.
+- Residence detail, the archived tab and the unit-exclusion filter are covered
+  by bloc/model tests; the detail screen itself has no widget test yet.
 - **Android and iOS builds verified** (`flutter build apk --debug`,
   `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
   doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the

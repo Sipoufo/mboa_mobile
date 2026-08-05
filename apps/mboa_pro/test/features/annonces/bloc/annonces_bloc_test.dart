@@ -76,11 +76,15 @@ void main() {
       expect(state.visible.map((a) => a.id), ['c', 'd']);
     });
 
-    test('archived listings appear in neither tab', () {
-      for (final filter in AnnonceFilter.values) {
+    test('archived listings appear only under Archivés', () {
+      for (final filter in [AnnonceFilter.available, AnnonceFilter.occupied]) {
         final state = AnnoncesReady(items: all, filter: filter);
         expect(state.visible.map((a) => a.id), isNot(contains('e')));
       }
+
+      final archived =
+          AnnoncesReady(items: all, filter: AnnonceFilter.archived);
+      expect(archived.visible.map((a) => a.id), ['e']);
     });
 
     blocTest<AnnoncesBloc, AnnoncesState>(

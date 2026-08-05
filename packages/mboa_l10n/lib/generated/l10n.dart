@@ -2917,6 +2917,66 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Archivés`
+  String get annoncesTabArchived {
+    return Intl.message(
+      'Archivés',
+      name: 'annoncesTabArchived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien archivé.`
+  String get annoncesEmptyArchived {
+    return Intl.message(
+      'Aucun bien archivé.',
+      name: 'annoncesEmptyArchived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Détails de la résidence`
+  String get residenceDetailTitle {
+    return Intl.message(
+      'Détails de la résidence',
+      name: 'residenceDetailTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unités`
+  String get residenceUnitsTitle {
+    return Intl.message(
+      'Unités',
+      name: 'residenceUnitsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `La modification d’une unité arrivera prochainement.`
+  String get residenceUnitsPending {
+    return Intl.message(
+      'La modification d’une unité arrivera prochainement.',
+      name: 'residenceUnitsPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statut`
+  String get residenceUnitStatus {
+    return Intl.message(
+      'Statut',
+      name: 'residenceUnitStatus',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

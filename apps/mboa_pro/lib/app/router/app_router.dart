@@ -85,6 +85,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: AnnoncesListRoute.page, path: 'biens/uniques'),
             AutoRoute(page: ResidencesListRoute.page, path: 'biens/multiples'),
             AutoRoute(page: AnnonceFormRoute.page, path: 'biens/form'),
+            AutoRoute(page: ResidenceDetailRoute.page, path: 'biens/residences/:id'),
             AutoRoute(page: AnnonceDetailRoute.page, path: 'biens/:id'),
 
             // Subscriptions (M13).

@@ -46,52 +46,46 @@ class _ResidencesListPageState extends State<ResidencesListPage> {
         child: const Icon(LucideIcons.plus),
       ),
       body: BlocConsumer<ResidencesBloc, ResidencesState>(
-        listenWhen: (prev, curr) =>
-            curr is ResidencesReady && curr.lastActionFailed,
+        listenWhen: (prev, curr) => curr is ResidencesReady && curr.lastActionFailed,
         listener: (context, state) => MboaToast.error(
           context: context,
           title: l10n.commonErrorTitle,
           description: l10n.annonceActionFailed,
         ),
         builder: (context, state) => switch (state) {
-          ResidencesInitial() || ResidencesLoadInProgress() =>
-            const Center(child: Loader()),
+          ResidencesInitial() || ResidencesLoadInProgress() => const Center(child: Loader()),
           ResidencesFailure() => Center(
-              child: TextButton(
-                onPressed: () => context
-                    .read<ResidencesBloc>()
-                    .add(const ResidencesLoadRequested()),
-                child: Text(l10n.commonRetry),
-              ),
+            child: TextButton(
+              onPressed: () => context.read<ResidencesBloc>().add(const ResidencesLoadRequested()),
+              child: Text(l10n.commonRetry),
             ),
-          ResidencesReady(:final items, :final mutatingId) =>
-            RefreshIndicator(
-              onRefresh: () async => context
-                  .read<ResidencesBloc>()
-                  .add(const ResidencesRefreshRequested()),
-              child: items.isEmpty
-                  ? _Empty(label: l10n.annoncesEmptyAvailable)
-                  : ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(
-                        Dimens.spacing,
-                        Dimens.spacing,
-                        Dimens.spacing,
-                        Dimens.spacing3Xl,
-                      ),
-                      itemCount: items.length,
-                      itemBuilder: (context, index) => _ResidenceCard(
-                        residence: items[index],
-                        activeCount: state.activeCount,
-                        isBusy: mutatingId == items[index].id,
-                        onTransition: (transition) => context
-                            .read<ResidencesBloc>()
-                            .add(ResidenceStatusChangeRequested(
-                              items[index].id,
-                              transition,
-                            )),
+          ),
+          ResidencesReady(:final items, :final mutatingId) => RefreshIndicator(
+            onRefresh: () async => context.read<ResidencesBloc>().add(const ResidencesRefreshRequested()),
+            child: items.isEmpty
+                ? _Empty(label: l10n.annoncesEmptyAvailable)
+                : ListView.builder(
+                    padding: const EdgeInsets.fromLTRB(
+                      Dimens.spacing,
+                      Dimens.spacing,
+                      Dimens.spacing,
+                      Dimens.spacing3Xl,
+                    ),
+                    itemCount: items.length,
+                    itemBuilder: (context, index) => _ResidenceCard(
+                      residence: items[index],
+                      onTap: () => context.router.push(ResidenceDetailRoute(id: items[index].id)),
+                      activeCount: state.activeCount,
+                      isBusy: mutatingId == items[index].id,
+                      onTransition: (transition) => context.read<ResidencesBloc>().add(
+                        ResidenceStatusChangeRequested(
+                          items[index].id,
+                          transition,
+                        ),
                       ),
                     ),
-            ),
+                  ),
+          ),
         },
       ),
     );
@@ -104,12 +98,14 @@ class _ResidenceCard extends StatelessWidget {
     required this.isBusy,
     required this.activeCount,
     required this.onTransition,
+    required this.onTap,
   });
 
   final Residence residence;
   final bool isBusy;
   final int activeCount;
   final ValueChanged<AnnonceTransition> onTransition;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -120,68 +116,73 @@ class _ResidenceCard extends StatelessWidget {
       opacity: isBusy ? 0.6 : 1,
       child: Container(
         margin: const EdgeInsets.only(bottom: Dimens.spacing),
-        padding: const EdgeInsets.all(Dimens.spacing),
         decoration: BoxDecoration(
           color: colors.surface,
           borderRadius: BorderRadius.circular(Dimens.radiusLg),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+        child: InkWell(
+          onTap: isBusy ? null : onTap,
+          borderRadius: BorderRadius.circular(Dimens.radiusLg),
+          child: Padding(
+            padding: const EdgeInsets.all(Dimens.spacing),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  LucideIcons.layers,
-                  size: Dimens.icon,
-                  color: colors.primary,
+                Row(
+                  children: [
+                    Icon(
+                      LucideIcons.layers,
+                      size: Dimens.icon,
+                      color: colors.primary,
+                    ),
+                    const SizedBox(width: Dimens.spacingSm),
+                    Expanded(
+                      child: Text(
+                        residence.name,
+                        style: context.mboaText.h3,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    AnnonceStatusChip(status: residence.status),
+                    StatusActionsMenu(
+                      status: residence.status,
+                      // Bulk publish covers many units; the per-listing photo rule
+                      // does not apply, and the backend validates each unit.
+                      photoCount: 3,
+                      activeCount: activeCount,
+                      enabled: !isBusy,
+                      onSelected: onTransition,
+                    ),
+                  ],
                 ),
-                const SizedBox(width: Dimens.spacingSm),
-                Expanded(
-                  child: Text(
-                    residence.name,
-                    style: context.mboaText.h3,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                if (residence.district case final district?) ...[
+                  const SizedBox(height: Dimens.spacingXs),
+                  Text(
+                    district,
+                    style: context.mboaText.caption.copyWith(color: colors.textSecondary),
                   ),
+                ],
+                const SizedBox(height: Dimens.spacingMd),
+                Wrap(
+                  spacing: Dimens.spacingSm,
+                  runSpacing: Dimens.spacingSm,
+                  children: [
+                    _Pill(label: l10n.annoncesUnitsSummary(residence.unitCount ?? 0)),
+                    _Pill(
+                      label: l10n.annoncesUnitsPublished(
+                        residence.publishedUnitCount ?? 0,
+                      ),
+                    ),
+                  ],
                 ),
-                AnnonceStatusChip(status: residence.status),
-                StatusActionsMenu(
-                  status: residence.status,
-                  // Bulk publish covers many units; the per-listing photo rule
-                  // does not apply, and the backend validates each unit.
-                  photoCount: 3,
-                  activeCount: activeCount,
-                  enabled: !isBusy,
-                  onSelected: onTransition,
-                ),
+                if (isBusy) ...[
+                  const SizedBox(height: Dimens.spacingMd),
+                  const LinearProgressIndicator(minHeight: 2),
+                ],
               ],
             ),
-            if (residence.district case final district?) ...[
-              const SizedBox(height: Dimens.spacingXs),
-              Text(
-                district,
-                style: context.mboaText.caption
-                    .copyWith(color: colors.textSecondary),
-              ),
-            ],
-            const SizedBox(height: Dimens.spacingMd),
-            Wrap(
-              spacing: Dimens.spacingSm,
-              runSpacing: Dimens.spacingSm,
-              children: [
-                _Pill(label: l10n.annoncesUnitsSummary(residence.unitCount ?? 0)),
-                _Pill(
-                  label: l10n.annoncesUnitsPublished(
-                    residence.publishedUnitCount ?? 0,
-                  ),
-                ),
-              ],
-            ),
-            if (isBusy) ...[
-              const SizedBox(height: Dimens.spacingMd),
-              const LinearProgressIndicator(minHeight: 2),
-            ],
-          ],
+          ),
         ),
       ),
     );
@@ -230,8 +231,7 @@ class _Empty extends StatelessWidget {
           child: Text(
             label,
             textAlign: TextAlign.center,
-            style: context.mboaText.body
-                .copyWith(color: context.mboaColors.textSecondary),
+            style: context.mboaText.body.copyWith(color: context.mboaColors.textSecondary),
           ),
         ),
       ],

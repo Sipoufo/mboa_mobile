@@ -11,21 +11,53 @@ class AnnonceRepository {
 
   final DioClient _dioClient;
 
+  ResidencesApi get _residencesApi => _dioClient.api.getResidencesApi();
+
   /// One page big enough for any realistic portfolio — the API paginates but
   /// the Pro screens present a single list. Revisit if portfolios grow.
   static const int _pageSize = 100;
 
   AnnoncesApi get _api => _dioClient.api.getAnnoncesApi();
 
+  /// Standalone listings only — residence units are excluded.
+  ///
+  /// `GET /annonces` returns **every** listing the prestataire owns, including
+  /// the units a residence expanded into, and `AnnonceResponse` carries no
+  /// residence link to filter on. So the unit ids are collected from the
+  /// residences side and subtracted here.
+  ///
+  /// If that lookup fails, the full list is returned unfiltered — showing a few
+  /// extra rows beats showing none.
   Future<List<Annonce>> list() async {
     final response = await _api.listMine2(
       pageable: Pageable((b) => b
         ..page = 0
         ..size = _pageSize),
     );
-    return (response.data?.content ?? const <AnnonceResponse>[])
+    final all = (response.data?.content ?? const <AnnonceResponse>[])
         .map(Annonce.fromResponse)
         .toList();
+
+    final unitIds = await _residenceUnitIds();
+    if (unitIds.isEmpty) return all;
+    return all.where((a) => !unitIds.contains(a.id)).toList();
+  }
+
+  Future<Set<String>> _residenceUnitIds() async {
+    try {
+      final response = await _residencesApi.listMine(
+        pageable: Pageable((b) => b
+          ..page = 0
+          ..size = _pageSize),
+      );
+      return {
+        for (final residence in response.data?.content ?? const <ResidenceResponse>[])
+          for (final unit in residence.units ?? const <UnitSummary>[])
+            if (unit.id != null) unit.id!,
+      };
+    } catch (_) {
+      return const {};
+    }
   }
 
   Future<Annonce> getOne(String id) async {

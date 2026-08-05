@@ -94,6 +94,10 @@ class _Loaded extends StatelessWidget {
                 value: AnnonceFilter.occupied,
                 label: l10n.annoncesTabOccupied,
               ),
+              MboaSegment(
+                value: AnnonceFilter.archived,
+                label: l10n.annoncesTabArchived,
+              ),
             ],
             onChanged: (filter) =>
                 context.read<AnnoncesBloc>().add(AnnoncesFilterChanged(filter)),
@@ -106,9 +110,11 @@ class _Loaded extends StatelessWidget {
                 .add(const AnnoncesRefreshRequested()),
             child: items.isEmpty
                 ? _Empty(
-                    label: state.filter == AnnonceFilter.available
-                        ? l10n.annoncesEmptyAvailable
-                        : l10n.annoncesEmptyOccupied,
+                    label: switch (state.filter) {
+                      AnnonceFilter.available => l10n.annoncesEmptyAvailable,
+                      AnnonceFilter.occupied => l10n.annoncesEmptyOccupied,
+                      AnnonceFilter.archived => l10n.annoncesEmptyArchived,
+                    },
                   )
                 : ListView.builder(
                     padding: const EdgeInsets.fromLTRB(

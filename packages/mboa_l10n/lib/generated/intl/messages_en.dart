@@ -240,6 +240,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "annoncesActionEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "annoncesActionHistory": MessageLookupByLibrary.simpleMessage("History"),
     "annoncesActionMore": MessageLookupByLibrary.simpleMessage("More actions"),
+    "annoncesEmptyArchived": MessageLookupByLibrary.simpleMessage(
+      "No archived property.",
+    ),
     "annoncesEmptyAvailable": MessageLookupByLibrary.simpleMessage(
       "No available property. Tap + to register one.",
     ),
@@ -253,6 +256,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Single properties",
     ),
     "annoncesSurface": m6,
+    "annoncesTabArchived": MessageLookupByLibrary.simpleMessage("Archived"),
     "annoncesTabAvailable": MessageLookupByLibrary.simpleMessage("Available"),
     "annoncesTabOccupied": MessageLookupByLibrary.simpleMessage("Occupied"),
     "annoncesUnitsPublished": m7,
@@ -608,6 +612,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "registerRolePrestataire": MessageLookupByLibrary.simpleMessage("Provider"),
     "registerSignInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
+    "residenceDetailTitle": MessageLookupByLibrary.simpleMessage(
+      "Residence details",
+    ),
+    "residenceUnitStatus": MessageLookupByLibrary.simpleMessage("Status"),
+    "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
+      "Editing a unit is coming soon.",
+    ),
+    "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Identity documents and any other required verifications",

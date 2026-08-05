@@ -165,17 +165,27 @@ class _EditProfileViewState extends State<EditProfileView> {
                               labelText: l10n.authEmailLabel,
                               variant: InputVariant.underline,
                             ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _searchCity,
-                              readOnly: true,
-                              enabled: !saving,
-                              onTap: _pickSearchCity,
-                              labelText: l10n.profileLocation,
-                              hintText: l10n.cityPickerSearchHint,
-                              variant: InputVariant.underline,
-                              suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
-                            ),
+                            // Doc 10 gives a prestataire "Ville principale"
+                            // only; "Ville de recherche" belongs to the
+                            // Utilisateur profile. Showing both here read as
+                            // two fields doing the same thing.
+                            //
+                            // An agent's real field is "Zone d'intervention"
+                            // (villes/quartiers, M15) — unmodelled in the API,
+                            // so the single city stands in until it exists.
+                            if (!_isPrestataire) ...[
+                              const SizedBox(height: Dimens.spacingLg),
+                              Input(
+                                controller: _searchCity,
+                                readOnly: true,
+                                enabled: !saving,
+                                onTap: _pickSearchCity,
+                                labelText: l10n.profileLocation,
+                                hintText: l10n.cityPickerSearchHint,
+                                variant: InputVariant.underline,
+                                suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
+                              ),
+                            ],
                             if (_isPrestataire) ...[
                               const SizedBox(height: Dimens.spacingLg),
                               Input(

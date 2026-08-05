@@ -641,5 +641,17 @@
   "errorKycRequired": "Vos certifications doivent être validées avant cette action.",
   "@errorKycRequired": {},
   "errorValidation": "Certaines informations sont invalides. Vérifiez le formulaire.",
-  "@errorValidation": {}
+  "@errorValidation": {},
+  "annoncesTabArchived": "Archivés",
+  "@annoncesTabArchived": {},
+  "annoncesEmptyArchived": "Aucun bien archivé.",
+  "@annoncesEmptyArchived": {},
+  "residenceDetailTitle": "Détails de la résidence",
+  "@residenceDetailTitle": {},
+  "residenceUnitsTitle": "Unités",
+  "@residenceUnitsTitle": {},
+  "residenceUnitsPending": "La modification d’une unité arrivera prochainement.",
+  "@residenceUnitsPending": {},
+  "residenceUnitStatus": "Statut",
+  "@residenceUnitStatus": {}
 }

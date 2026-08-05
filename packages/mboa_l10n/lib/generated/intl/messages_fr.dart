@@ -247,6 +247,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "annoncesActionMore": MessageLookupByLibrary.simpleMessage(
       "Plus d’actions",
     ),
+    "annoncesEmptyArchived": MessageLookupByLibrary.simpleMessage(
+      "Aucun bien archivé.",
+    ),
     "annoncesEmptyAvailable": MessageLookupByLibrary.simpleMessage(
       "Aucun bien disponible. Appuyez sur + pour en enregistrer un.",
     ),
@@ -260,6 +263,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annoncesRooms": m5,
     "annoncesSingleTitle": MessageLookupByLibrary.simpleMessage("Biens Unique"),
     "annoncesSurface": m6,
+    "annoncesTabArchived": MessageLookupByLibrary.simpleMessage("Archivés"),
     "annoncesTabAvailable": MessageLookupByLibrary.simpleMessage("Disponibles"),
     "annoncesTabOccupied": MessageLookupByLibrary.simpleMessage("Occupés"),
     "annoncesUnitsPublished": m7,
@@ -657,6 +661,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Connectez-vous",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Créer un compte"),
+    "residenceDetailTitle": MessageLookupByLibrary.simpleMessage(
+      "Détails de la résidence",
+    ),
+    "residenceUnitStatus": MessageLookupByLibrary.simpleMessage("Statut"),
+    "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
+      "La modification d’une unité arrivera prochainement.",
+    ),
+    "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Pièces d’identifications et tout autres vérifications requises",
