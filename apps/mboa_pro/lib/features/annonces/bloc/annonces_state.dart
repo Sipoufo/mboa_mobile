@@ -38,13 +38,21 @@ final class AnnoncesReady extends AnnoncesState {
   /// Set for one emission after a failed transition/delete, for a toast.
   final bool lastActionFailed;
 
-  /// Listings in the active tab. Archived listings appear in neither — they are
-  /// out of circulation, and the design has no tab for them.
+  /// Standalone listings only — `items` may also hold a residence unit fetched
+  /// for its detail screen, and those belong to the residence, not this list.
+  List<Annonce> get standalone =>
+      items.where((a) => a.residenceId == null).toList();
+
+  /// Listings in the active tab. Archived listings appear only under Archivés.
   List<Annonce> get visible =>
-      items.where((a) => filter.matches(a.status)).toList();
+      standalone.where((a) => filter.matches(a.status)).toList();
 
   /// Counts against the tier's `activeListingLimit` (RM-M10-02).
-  int get activeCount => items.where((a) => a.status.isActive).length;
+  ///
+  /// Units are excluded deliberately: the backend does not charge a unit
+  /// against the active-listing quota — a residence's allowance is enforced at
+  /// creation instead.
+  int get activeCount => standalone.where((a) => a.status.isActive).length;
 
   AnnoncesReady copyWith({
     List<Annonce>? items,

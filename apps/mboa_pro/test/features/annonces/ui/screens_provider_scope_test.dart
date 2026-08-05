@@ -93,7 +93,13 @@ void main() {
   tearDown(() => getIt.reset());
 
   /// Mirrors what `AuthenticatedWrapper` provides to every authenticated route.
-  Future<void> pump(WidgetTester tester, Widget screen) async {
+  ///
+  /// [settle] must be false when a loader is on screen — it animates forever.
+  Future<void> pump(
+    WidgetTester tester,
+    Widget screen, {
+    bool settle = true,
+  }) async {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('fr'),
@@ -112,7 +118,11 @@ void main() {
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    if (settle) {
+      await tester.pumpAndSettle();
+    } else {
+      await tester.pump();
+    }
   }
 
   testWidgets('AnnoncesListPage renders from the inherited bloc', (tester) async {
@@ -150,10 +160,56 @@ void main() {
     expect(find.text('Publier'), findsNothing);
   });
 
-  testWidgets('AnnonceDetailPage survives an unknown id', (tester) async {
-    await pump(tester, const AnnonceDetailPage(id: 'missing'));
+  testWidgets('AnnonceDetailPage waits rather than erroring on an unknown id', (tester) async {
+    // A residence unit is not in the list, so "not there yet" is normal —
+    // showing an error would be wrong.
+    await pump(tester, const AnnonceDetailPage(id: 'missing'), settle: false);
 
     expect(tester.takeException(), isNull);
+    verify(() => annonces.add(const AnnonceDetailRequested('missing')))
+        .called(1);
+  });
+
+  testWidgets('AnnonceDetailPage opens a residence unit', (tester) async {
+    const unit = Annonce(
+      id: 'u1',
+      title: 'Chambre 1',
+      status: AnnonceStatus.published,
+      propertyType: PropertyType.room,
+      residenceId: 'r1',
+      photoKeys: ['a', 'b', 'c'],
+    );
+    when(() => annonces.state).thenReturn(
+      const AnnoncesReady(
+        items: [listing, unit],
+        filter: AnnonceFilter.available,
+      ),
+    );
+
+    await pump(tester, const AnnonceDetailPage(id: 'u1'));
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('Chambre 1'), findsOneWidget);
+    // Says what it is, since the unit is absent from Biens Uniques.
+    expect(find.textContaining('résidence'), findsOneWidget);
+  });
+
+  test('the list hides units while the bloc still holds them', () {
+    const unit = Annonce(
+      id: 'u1',
+      title: 'Chambre 1',
+      status: AnnonceStatus.published,
+      propertyType: PropertyType.room,
+      residenceId: 'r1',
+    );
+    const state = AnnoncesReady(
+      items: [listing, unit],
+      filter: AnnonceFilter.available,
+    );
+
+    expect(state.visible.map((a) => a.id), ['a']);
+    // A unit does not consume the tier's active-listing allowance.
+    expect(state.activeCount, 1);
   });
 
   testWidgets('AnnonceFormPage renders with its own bloc', (tester) async {

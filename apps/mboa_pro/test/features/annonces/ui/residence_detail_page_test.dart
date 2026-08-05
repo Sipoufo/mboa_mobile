@@ -145,10 +145,13 @@ void main() {
     expect(find.textContaining('1 publiées'), findsOneWidget);
   });
 
-  testWidgets('is honest that units cannot be edited yet', (tester) async {
+  testWidgets('every unit row is tappable and offers an edit', (tester) async {
+    // A unit id is an annonce id, so a row opens the ordinary listing detail
+    // and the ordinary edit form — nothing unit-specific beyond the entry.
     await pump(tester);
 
-    expect(find.textContaining('prochainement'), findsOneWidget);
+    expect(find.byType(InkWell), findsWidgets);
+    expect(find.byIcon(LucideIcons.squarePen), findsNWidgets(2));
   });
 
   testWidgets('offers the bulk transitions for the status', (tester) async {

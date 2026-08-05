@@ -21,10 +21,23 @@ import 'widgets/annonce_status_chip.dart';
 /// "Aucune information disponible pour le moment" state the design itself
 /// specifies for an empty listing.
 @RoutePage()
-class AnnonceDetailPage extends StatelessWidget {
+class AnnonceDetailPage extends StatefulWidget {
   const AnnonceDetailPage({super.key, required this.id});
 
   final String id;
+
+  @override
+  State<AnnonceDetailPage> createState() => _AnnonceDetailPageState();
+}
+
+class _AnnonceDetailPageState extends State<AnnonceDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    // A residence unit is not in the list, and a deep link may arrive before
+    // the list loads — fetch either way.
+    context.read<AnnoncesBloc>().add(AnnonceDetailRequested(widget.id));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +53,9 @@ class AnnonceDetailPage extends StatelessWidget {
           }
 
           final annonce =
-              state.items.where((a) => a.id == id).firstOrNull;
-          if (annonce == null) {
-            return Center(child: Text(l10n.commonError));
-          }
+              state.items.where((a) => a.id == widget.id).firstOrNull;
+          // Still fetching, or genuinely gone.
+          if (annonce == null) return const Center(child: Loader());
 
           return ListView(
             padding: const EdgeInsets.all(Dimens.spacing),
@@ -51,6 +63,14 @@ class AnnonceDetailPage extends StatelessWidget {
               _Header(annonce: annonce),
               const SizedBox(height: Dimens.spacing),
               _Actions(annonce: annonce, activeCount: state.activeCount),
+              if (annonce.residenceId != null) ...[
+                const SizedBox(height: Dimens.spacingSm),
+                Text(
+                  l10n.annonceDetailUnitOfResidence,
+                  style: context.mboaText.caption
+                      .copyWith(color: context.mboaColors.textSecondary),
+                ),
+              ],
               const SizedBox(height: Dimens.spacing),
               IntrinsicHeight(
                 child: Row(
@@ -255,7 +275,10 @@ class _Actions extends StatelessWidget {
           (profile.mainCityId ?? profile.searchCityId) != null,
       photoCount: annonce.photoKeys.length,
       activeCount: activeCount,
-      activeListingLimit: plan?.activeListingLimit,
+      // A unit does not count against the active-listing quota: a residence's
+      // allowance is enforced when it is created (RESIDENCE_UNIT_LIMIT).
+      activeListingLimit:
+          annonce.residenceId != null ? null : plan?.activeListingLimit,
     );
 
     if (decision.isAllowed) return true;

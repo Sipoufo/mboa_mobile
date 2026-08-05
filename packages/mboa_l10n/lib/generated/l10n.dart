@@ -3052,6 +3052,16 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Unité d’une résidence`
+  String get annonceDetailUnitOfResidence {
+    return Intl.message(
+      'Unité d’une résidence',
+      name: 'annonceDetailUnitOfResidence',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -669,5 +669,7 @@
   "errorConstraintViolation": "Une écriture concurrente a échoué. Réessayez.",
   "@errorConstraintViolation": {},
   "errorAccessDenied": "Votre compte n’a pas les droits pour cette action.",
-  "@errorAccessDenied": {}
+  "@errorAccessDenied": {},
+  "annonceDetailUnitOfResidence": "Unité d’une résidence",
+  "@annonceDetailUnitOfResidence": {}
 }

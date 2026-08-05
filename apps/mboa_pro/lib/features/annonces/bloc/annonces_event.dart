@@ -26,6 +26,17 @@ final class AnnoncesFilterChanged extends AnnoncesEvent {
   List<Object?> get props => [filter];
 }
 
+/// Loads one listing that may not be in the list — a residence *unit* is
+/// excluded from "Biens Uniques" but still has a detail screen.
+final class AnnonceDetailRequested extends AnnoncesEvent {
+  const AnnonceDetailRequested(this.id);
+
+  final String id;
+
+  @override
+  List<Object?> get props => [id];
+}
+
 final class AnnonceStatusChangeRequested extends AnnoncesEvent {
   const AnnonceStatusChangeRequested(this.id, this.transition);
 

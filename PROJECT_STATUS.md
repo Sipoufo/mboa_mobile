@@ -254,18 +254,22 @@ designs is unbuilt **because there is no endpoint**, and routes to the
 | Surface | State |
 |---|---|
 | Biens Uniques / Résidences CRUD + lifecycle | ✅ built |
-| Residence detail (counts, bulk actions, **read-only** unit list) | ✅ built + widget-tested |
-| Per-unit view/edit | ❌ **needs a backend answer** — see below |
+| Residence detail (counts, bulk actions, unit list) | ✅ built + widget-tested |
+| Per-unit view/edit | ✅ a unit id **is** an annonce id — rows open the ordinary detail and edit form |
 | Attributions, Réservations, Prospections | ❌ no endpoint |
 | En attente de validation | ❌ no moderation-status endpoint |
 | Occupant / Mes locataires, Historique, rating | ❌ no endpoint — the detail uses the design's own "Aucune information" empty state |
 | Gestionnaire hub (agents, annuaires) | ❌ M15/M16, still a tab placeholder |
 
-**Open question for the backend:** is a residence unit id also an *annonce* id?
-If yes, `AnnoncesApi.getOne1/update1/publish` work on units and per-unit
-view/edit is a short job. If no, it stays blocked — `ResidencesApi` exposes only
-bulk transitions and `UnitSummary` (id, title, type, status, rent) is all the
-data there is.
+**Units are annonces.** Confirmed by the backend, so nothing about the unit
+screens is unit-specific — a row opens `AnnonceDetailPage` and `AnnonceFormPage`.
+Two consequences that are easy to get wrong:
+- `AnnoncesReady.standalone` filters `residenceId == null`, so a unit fetched
+  for its detail sits in `items` without appearing in Biens Uniques. **Read
+  `visible`/`standalone`, never `items`, when showing the list.**
+- A unit **does not** consume the tier's active-listing quota — the allowance is
+  enforced at residence creation (`RESIDENCE_UNIT_LIMIT`). `PublishGate` is
+  therefore passed a null limit for a unit.
 
 Behaviour worth knowing before changing it:
 - **`GET /annonces` returns residence units too**, and `AnnonceResponse` has no

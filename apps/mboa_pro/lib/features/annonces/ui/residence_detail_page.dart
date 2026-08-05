@@ -9,6 +9,8 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../bloc/residences_bloc.dart';
 import '../models/annonce.dart';
 import '../models/residence.dart';
+import '../models/annonce_draft.dart';
+import '../../../app/router/app_router.gr.dart';
 import 'residences_list_page.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
@@ -16,10 +18,9 @@ import 'widgets/status_actions_menu.dart';
 /// Residence detail (CDC M10) — the property, its unit counts, and the units
 /// themselves.
 ///
-/// **Units are read-only here.** `ResidenceResponse.units` gives a summary
-/// (id, title, type, status, rent) and there is no per-unit endpoint — the API
-/// exposes only the *bulk* transitions. Editing a single unit lands once the
-/// backend says whether a unit id is an annonce id.
+/// A unit id **is** an annonce id (confirmed by the backend), so each row opens
+/// the ordinary listing detail and the ordinary edit form. Nothing here is
+/// unit-specific beyond the entry point.
 @RoutePage()
 class ResidenceDetailPage extends StatefulWidget {
   const ResidenceDetailPage({super.key, required this.id});
@@ -38,6 +39,16 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
     context.read<ResidencesBloc>().add(ResidenceDetailRequested(widget.id));
   }
 
+  /// Opens the ordinary edit form on the unit, then re-reads the residence so
+  /// the row reflects the change on return.
+  Future<void> _editUnit(ResidenceUnit unit) async {
+    await context.router.push(
+      AnnonceFormRoute(kind: AnnonceKind.single, annonceId: unit.id),
+    );
+    if (!mounted) return;
+    context.read<ResidencesBloc>().add(ResidenceDetailRequested(widget.id));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
@@ -51,15 +62,12 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
             return const Center(child: Loader());
           }
 
-          final residence =
-              state.items.where((r) => r.id == widget.id).firstOrNull;
+          final residence = state.items.where((r) => r.id == widget.id).firstOrNull;
           // Still fetching, or genuinely gone.
           if (residence == null) return const Center(child: Loader());
 
           return RefreshIndicator(
-            onRefresh: () async => context
-                .read<ResidencesBloc>()
-                .add(ResidenceDetailRequested(widget.id)),
+            onRefresh: () async => context.read<ResidencesBloc>().add(ResidenceDetailRequested(widget.id)),
             child: ListView(
               padding: const EdgeInsets.all(Dimens.spacing),
               children: [
@@ -82,12 +90,12 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                       photoCount: 3,
                       activeCount: state.activeCount,
                       enabled: state.mutatingId != residence.id,
-                      onSelected: (transition) => context
-                          .read<ResidencesBloc>()
-                          .add(ResidenceStatusChangeRequested(
-                            residence.id,
-                            transition,
-                          )),
+                      onSelected: (transition) => context.read<ResidencesBloc>().add(
+                        ResidenceStatusChangeRequested(
+                          residence.id,
+                          transition,
+                        ),
+                      ),
                       onDelete: () async {
                         await confirmDeleteResidence(context, residence);
                         if (context.mounted) await context.router.maybePop();
@@ -99,17 +107,15 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                 if (residence.units.isEmpty)
                   Text(
                     l10n.annoncesEmptyAvailable,
-                    style: context.mboaText.body
-                        .copyWith(color: context.mboaColors.textSecondary),
+                    style: context.mboaText.body.copyWith(color: context.mboaColors.textSecondary),
                   )
                 else
-                  for (final unit in residence.units) _UnitRow(unit: unit),
-                const SizedBox(height: Dimens.spacingMd),
-                Text(
-                  l10n.residenceUnitsPending,
-                  style: context.mboaText.micro
-                      .copyWith(color: context.mboaColors.textTertiary),
-                ),
+                  for (final unit in residence.units)
+                    _UnitRow(
+                      unit: unit,
+                      onOpen: () => context.router.push(AnnonceDetailRoute(id: unit.id)),
+                      onEdit: () => _editUnit(unit),
+                    ),
               ],
             ),
           );
@@ -175,16 +181,14 @@ class _Header extends StatelessWidget {
                     children: [
                       Text(
                         residence.name,
-                        style: context.mboaText.h2
-                            .copyWith(color: colors.onBrand),
+                        style: context.mboaText.h2.copyWith(color: colors.onBrand),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (residence.district case final district?)
                         Text(
                           district,
-                          style: context.mboaText.caption
-                              .copyWith(color: colors.onBrand),
+                          style: context.mboaText.caption.copyWith(color: colors.onBrand),
                         ),
                     ],
                   ),
@@ -248,18 +252,24 @@ class _Pill extends StatelessWidget {
 }
 
 String _typeLabel(PropertyType type) => switch (type) {
-      PropertyType.apartment => 'Appartement',
-      PropertyType.studio => 'Studio',
-      PropertyType.villa => 'Villa',
-      PropertyType.room => 'Chambre',
-      PropertyType.office => 'Bureau',
-      PropertyType.commercialSpace => 'Local commercial',
-    };
+  PropertyType.apartment => 'Appartement',
+  PropertyType.studio => 'Studio',
+  PropertyType.villa => 'Villa',
+  PropertyType.room => 'Chambre',
+  PropertyType.office => 'Bureau',
+  PropertyType.commercialSpace => 'Local commercial',
+};
 
 class _UnitRow extends StatelessWidget {
-  const _UnitRow({required this.unit});
+  const _UnitRow({
+    required this.unit,
+    required this.onOpen,
+    required this.onEdit,
+  });
 
   final ResidenceUnit unit;
+  final VoidCallback onOpen;
+  final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -268,47 +278,56 @@ class _UnitRow extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: Dimens.spacingSm),
-      padding: const EdgeInsets.all(Dimens.spacingMd),
       decoration: BoxDecoration(
         color: colors.surface,
         borderRadius: BorderRadius.circular(Dimens.radius),
         border: Border.all(color: colors.border),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  unit.title,
-                  style: context.mboaText.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (unit.propertyType case final type?) ...[
-                  const SizedBox(height: Dimens.spacingXs),
-                  Text(
-                    _typeLabel(type),
-                    style: context.mboaText.caption
-                        .copyWith(color: colors.textSecondary),
-                  ),
-                ],
-                if (unit.monthlyRent case final rent?) ...[
-                  const SizedBox(height: Dimens.spacingXs),
-                  Text(
-                    l10n.annoncesPerMonth(
-                      NumberFormat.decimalPattern().format(rent),
+      child: InkWell(
+        onTap: onOpen,
+        borderRadius: BorderRadius.circular(Dimens.radius),
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.spacingMd),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      unit.title,
+                      style: context.mboaText.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    style: context.mboaText.caption
-                        .copyWith(color: colors.primary),
-                  ),
-                ],
-              ],
-            ),
+                    if (unit.propertyType case final type?) ...[
+                      const SizedBox(height: Dimens.spacingXs),
+                      Text(
+                        _typeLabel(type),
+                        style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                      ),
+                    ],
+                    if (unit.monthlyRent case final rent?) ...[
+                      const SizedBox(height: Dimens.spacingXs),
+                      Text(
+                        l10n.annoncesPerMonth(
+                          NumberFormat.decimalPattern().format(rent),
+                        ),
+                        style: context.mboaText.caption.copyWith(color: colors.primary),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              AnnonceStatusChip(status: unit.status),
+              IconButton(
+                tooltip: l10n.annoncesActionEdit,
+                onPressed: onEdit,
+                icon: Icon(LucideIcons.squarePen, size: Dimens.icon, color: colors.primary),
+              ),
+            ],
           ),
-          AnnonceStatusChip(status: unit.status),
-        ],
+        ),
       ),
     );
   }

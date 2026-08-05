@@ -669,5 +669,7 @@
   "errorConstraintViolation": "A concurrent write failed. Try again.",
   "@errorConstraintViolation": {},
   "errorAccessDenied": "Your account isn’t allowed to do that.",
-  "@errorAccessDenied": {}
+  "@errorAccessDenied": {},
+  "annonceDetailUnitOfResidence": "Unit of a residence",
+  "@annonceDetailUnitOfResidence": {}
 }

@@ -20,6 +20,7 @@ class AnnoncesBloc extends Bloc<AnnoncesEvent, AnnoncesState> {
     on<AnnoncesLoadRequested>(_onLoad);
     on<AnnoncesRefreshRequested>(_onRefresh);
     on<AnnoncesFilterChanged>(_onFilterChanged);
+    on<AnnonceDetailRequested>(_onDetailRequested);
     on<AnnonceStatusChangeRequested>(_onStatusChange);
     on<AnnonceDeleteRequested>(_onDelete);
   }
@@ -61,6 +62,35 @@ class AnnoncesBloc extends Bloc<AnnoncesEvent, AnnoncesState> {
       final current = state;
       // A failed refresh keeps whatever is on screen.
       if (current is! AnnoncesReady) emit(const AnnoncesFailure());
+    }
+  }
+
+  /// Fetches one listing and merges it in, so the detail works for a unit the
+  /// list deliberately hides. [AnnoncesReady.visible] filters units back out.
+  Future<void> _onDetailRequested(
+    AnnonceDetailRequested event,
+    Emitter<AnnoncesState> emit,
+  ) async {
+    try {
+      final annonce = await _repository.getOne(event.id);
+      final current = state;
+      final items =
+          current is AnnoncesReady ? [...current.items] : <Annonce>[];
+
+      final index = items.indexWhere((a) => a.id == annonce.id);
+      if (index >= 0) {
+        items[index] = annonce;
+      } else {
+        items.add(annonce);
+      }
+
+      emit(
+        current is AnnoncesReady
+            ? current.copyWith(items: items)
+            : AnnoncesReady(items: items, filter: AnnonceFilter.available),
+      );
+    } catch (_) {
+      if (state is! AnnoncesReady) emit(const AnnoncesFailure());
     }
   }
 

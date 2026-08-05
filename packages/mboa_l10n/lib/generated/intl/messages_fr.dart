@@ -139,6 +139,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Details du bien",
     ),
+    "annonceDetailUnitOfResidence": MessageLookupByLibrary.simpleMessage(
+      "Unité d’une résidence",
+    ),
     "annonceFormAddress": MessageLookupByLibrary.simpleMessage(
       "Adresse exacte",
     ),
