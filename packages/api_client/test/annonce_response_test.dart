@@ -12,6 +12,11 @@ void main() {
       // TODO
     });
 
+    // String residenceId
+    test('to test the property `residenceId`', () async {
+      // TODO
+    });
+
     // String propertyType
     test('to test the property `propertyType`', () async {
       // TODO
@@ -119,6 +124,11 @@ void main() {
 
     // DateTime publishedAt
     test('to test the property `publishedAt`', () async {
+      // TODO
+    });
+
+    // DateTime expiresAt
+    test('to test the property `expiresAt`', () async {
       // TODO
     });
 

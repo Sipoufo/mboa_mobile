@@ -1,5 +1,11 @@
 # Backend requests — mobile
 
+> **Answered 2026-08-05** — see `api/backend-response.md`. Status per item is
+> marked inline below. Items 1–5 and 7 are resolved on the backend; the mobile
+> side of 2 and 3 is **waiting on an updated `mboa.openapi.yaml` export**, which
+> has not arrived in this repo yet (`tools/gac/mboa.openapi.yaml` still predates
+> the change: no `residenceId`, no `ErrorResponse`).
+
 Everything the Flutter apps need from the Spring Boot API, with the symptom each
 one causes today and the workaround currently shipped.
 
@@ -12,9 +18,12 @@ that stays disabled. They are ordered by that cost.
 
 ---
 
-## 1. Document the error responses
+## 1. Document the error responses — ✅ DONE
 
-**Priority: high — this one is guesswork.**
+**Outcome:** `api/docs/api-error-codes.md` lists all 63 codes. The machine code
+is in **`error`**, not `code`. Our parser already read `error` (it was last in
+the fallback list), but **the guessed code *names* were wrong on three rows of
+four** — now corrected against the real list. Never invent these again.
 
 The spec declares **no error schema at all**, only success responses. So the app
 cannot know what a failure means.
@@ -60,9 +69,13 @@ in place for some routes, those failures stay generic.
 
 ---
 
-## 2. Link a listing to its residence
+## 2. Link a listing to its residence — ✅ DONE, mobile blocked on the spec export
 
-**Priority: high — costs an extra request on every listing load.**
+**Outcome:** `AnnonceResponse.residenceId` shipped (null = standalone), plus
+`expiresAt` for the RM-M10-04 countdown. The empty `units` on the residences
+list is deliberate (aggregate count query), not a bug.
+**To do here once the spec lands:** regenerate, filter on `residenceId == null`,
+and delete the N+1 subtraction in `AnnonceRepository`.
 
 `GET /api/v1/annonces` returns **every** listing the prestataire owns, including
 the units a residence expanded into. `AnnonceResponse` carries no residence
@@ -86,9 +99,12 @@ The first is more useful — it also lets a listing screen link back to its pare
 
 ---
 
-## 3. Is a residence unit id also an annonce id?
+## 3. Is a residence unit id also an annonce id? — ✅ YES
 
-**Priority: high — a question, not a change. It unblocks a feature.**
+**Outcome:** confirmed end to end; `getOne`/`update`/`publish` work on a unit
+today, no API change. Per-unit view/edit is unblocked. Two caveats: publishing a
+unit **skips** the active-listing quota (enforced at residence creation), and
+`DELETE /annonces/{unitId}` removes a unit from its residence unguarded.
 
 `ResidenceResponse.units` returns `UnitSummary { id, title, propertyType,
 status, monthlyRent }`. There is no `GET /residences/{id}/units/{unitId}`, no
@@ -109,9 +125,12 @@ its units — not the rent, not the status.
 
 ---
 
-## 4. List a prestataire's payments
+## 4. List a prestataire's payments — ✅ DONE
 
-**Priority: medium — a CDC rule is currently only partly satisfied.**
+**Outcome:** `GET /subscriptions/payments`, paginated, with `hasReceipt` so the
+download can be shown or hidden without a probe call.
+**To do here:** delete the Hive `subscriptionBox` cache and the device-local
+caveat once the spec lands.
 
 `POST /subscriptions` returns `paymentId` **once**. `GET /subscriptions/payments/{id}/receipt`
 needs that id, and there is no endpoint listing past payments.
@@ -129,9 +148,17 @@ then deleted.
 
 ---
 
-## 5. Payment status, or push on confirmation
+## 5. Payment status, or push on confirmation — ✅ BOTH DONE
 
-**Priority: medium — a UX compromise, not a bug.**
+**Outcome:** `GET /subscriptions/payments/{id}` is the source of truth — poll it
+instead of `mySubscription()`, since it distinguishes `FAILED` from "not yet".
+Push now fires on settlement (confirmed *and* failed) with
+`{type: PAYMENT_CONFIRMED, entityId: <paymentId>}`.
+
+**Their correction, and it matters:** `POST /subscriptions` has always accepted
+`Idempotency-Key`, but **the server generates a random one when the header is
+absent** — so a double-tap without it creates two payments. We do send it
+(`SubscribeBloc` mints one per purchase and reuses it on retry), so we are safe.
 
 `POST /subscriptions` returns `PENDING`. Confirmation arrives by webhook, and
 there is no endpoint to ask about a payment's status. The only observable is
@@ -151,9 +178,12 @@ The second is better: it closes the loop even if the app was backgrounded.
 
 ---
 
-## 6. Dashboard metrics (M14)
+## 6. Dashboard metrics (M14) — ❌ NOT POSSIBLE YET
 
-**Priority: medium — the feature is built and empty.**
+**Outcome:** an aggregate endpoint would not help — the events are not captured.
+Contacts are available now (M12 shipped); views need RM-M05-06 (M05), and the
+rest arrive with M08/M16/M04. They explicitly endorsed keeping the nullable
+model with "Bientôt" rather than fabricating zeroes.
 
 Doc 10 §M14 specifies views, contacts, conversion rate, agent visits, signed
 contracts and average ranking. **None of them exist in the API.**
@@ -173,9 +203,11 @@ UI change.
 
 ---
 
-## 7. Notification payload contract
+## 7. Notification payload contract — ✅ DONE
 
-**Priority: medium — blocks CA-M03-02.**
+**Outcome:** every push previously carried *only* `deepLink` — no `type`, no
+`entityId` — which is exactly why taps landed on the shell. Now fixed, with the
+five type names we proposed, and a test pinning the wire keys.
 
 FCM works end to end on Android in both apps. What is missing is agreement on
 what a notification *says*.
@@ -226,7 +258,7 @@ the app cannot be the only thing checking.
 | Item | Why |
 |---|---|
 | **Operation ids are unstable** | The 2026-08-05 regen renamed `listMine1` → `listMine2` and broke the build. Explicit `operationId`s in the spec would stop generated names shifting when unrelated endpoints are added. |
-| **Un-archiving is undefined** | Doc 10's lifecycle draws no arrow back from *Archivée*. The app now offers "Republier" on an archived listing and calls `POST /annonces/{id}/publish`. Confirm whether that is allowed, or give us the correct call. |
+| **Un-archiving** ⚠️ | **Confirmed broken.** `publish` rejects anything not `DRAFT`, so "Republier" returns 409 `INVALID_STATUS_TRANSITION` in the shipped app. Backend recommends `POST /annonces/{id}/unarchive` → `DRAFT`, so re-publishing re-checks the tier quota and the 3-photo rule. **Awaiting the founder's decision.** |
 | **Subscription tier on `/me`** | `MeResponse` has no tier, so the app makes a second call to `GET /subscriptions/me` on every session start purely to know what to gate. |
 | **No `residenceUnitAllowance` docs** | `TierInfo.residenceUnitAllowance` exists and nothing in Doc 10 defines it. It is displayed on the plans screen as "N unités de résidence" — confirm that is right. |
 | **Doc 10 has no Bien Multiple section** | `ResidencesApi` is fully built and the Pro designs have a complete flow, but M10 in Doc 10 describes single listings only. The spec is ahead of the CDC. |

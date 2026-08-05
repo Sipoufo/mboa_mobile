@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/page_response_type_change_review_item.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/reject_type_change_request.dart';

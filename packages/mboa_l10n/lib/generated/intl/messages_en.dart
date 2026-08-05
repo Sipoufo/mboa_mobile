@@ -335,6 +335,18 @@ class MessageLookup extends MessageLookupByLibrary {
       "This is permanent. Your personal data will be deleted and you will lose access to your account.",
     ),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+    "errorAccessDenied": MessageLookupByLibrary.simpleMessage(
+      "Your account isn’t allowed to do that.",
+    ),
+    "errorConstraintViolation": MessageLookupByLibrary.simpleMessage(
+      "A concurrent write failed. Try again.",
+    ),
+    "errorInsufficientPhotos": MessageLookupByLibrary.simpleMessage(
+      "Add at least 3 photos to publish.",
+    ),
+    "errorInvalidTransition": MessageLookupByLibrary.simpleMessage(
+      "That status change isn’t possible for this property.",
+    ),
     "errorKycRequired": MessageLookupByLibrary.simpleMessage(
       "Your certifications must be approved before this action.",
     ),
@@ -614,6 +626,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "registerRolePrestataire": MessageLookupByLibrary.simpleMessage("Provider"),
     "registerSignInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
+    "residenceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
+      "This is permanent and removes all of its units too.",
+    ),
+    "residenceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
+      "Delete this residence?",
+    ),
     "residenceDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Residence details",
     ),

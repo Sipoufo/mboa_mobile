@@ -7,6 +7,20 @@ void main() {
   final instance = ApiClient().getSubscriptionsApi();
 
   group(SubscriptionsApi, () {
+    // Get one payment's current status (poll this after initiating a payment)
+    //
+    //Future<PaymentSummary> getPayment(String id) async
+    test('test getPayment', () async {
+      // TODO
+    });
+
+    // List the authenticated prestataire's payments, most recent first
+    //
+    //Future<PageResponsePaymentSummary> listMyPayments(Pageable pageable) async
+    test('test listMyPayments', () async {
+      // TODO
+    });
+
     // Get the authenticated account's current subscription
     //
     //Future<SubscriptionResponse> mySubscription() async

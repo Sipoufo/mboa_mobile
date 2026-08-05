@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/create_residence_request.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/page_response_residence_response.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/residence_response.dart';

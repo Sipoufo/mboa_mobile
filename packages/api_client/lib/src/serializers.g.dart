@@ -21,6 +21,8 @@ Serializers _$serializers =
           ..add(CreateResidenceRequest.serializer)
           ..add(CreateUploadRequest.serializer)
           ..add(CreateUploadRequestCategoryEnum.serializer)
+          ..add(ErrorResponse.serializer)
+          ..add(FieldError.serializer)
           ..add(ForgotPasswordRequest.serializer)
           ..add(GrantSubscriptionRequest.serializer)
           ..add(GrantSubscriptionRequestTierEnum.serializer)
@@ -41,12 +43,17 @@ Serializers _$serializers =
           ..add(PageResponseConversationResponse.serializer)
           ..add(PageResponseKycReviewItem.serializer)
           ..add(PageResponseMessageResponse.serializer)
+          ..add(PageResponsePaymentSummary.serializer)
           ..add(PageResponseResidenceResponse.serializer)
           ..add(PageResponseSearchResult.serializer)
           ..add(PageResponseTypeChangeReviewItem.serializer)
           ..add(Pageable.serializer)
           ..add(PaymentInitiatedResponse.serializer)
           ..add(PaymentInitiatedResponseStatusEnum.serializer)
+          ..add(PaymentSummary.serializer)
+          ..add(PaymentSummaryMethodEnum.serializer)
+          ..add(PaymentSummaryStatusEnum.serializer)
+          ..add(PaymentSummaryTierEnum.serializer)
           ..add(PaymentWebhookRequest.serializer)
           ..add(PaymentWebhookRequestStatusEnum.serializer)
           ..add(PhoneChangeResponse.serializer)
@@ -127,6 +134,10 @@ Serializers _$serializers =
             () => ListBuilder<ConversationResponse>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(FieldError)]),
+            () => ListBuilder<FieldError>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(KycReviewItem)]),
             () => ListBuilder<KycReviewItem>(),
           )
@@ -139,6 +150,10 @@ Serializers _$serializers =
               const FullType(NotificationSetting),
             ]),
             () => ListBuilder<NotificationSetting>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(PaymentSummary)]),
+            () => ListBuilder<PaymentSummary>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [

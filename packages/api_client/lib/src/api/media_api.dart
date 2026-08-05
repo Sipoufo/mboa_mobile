@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/model/create_upload_request.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/presigned_upload.dart';
 
 class MediaApi {

@@ -125,6 +125,8 @@ Class | Method | HTTP request | Description
 [*ResidencesApi*](doc/ResidencesApi.md) | [**update**](doc/ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
 [*SearchApi*](doc/SearchApi.md) | [**residenceDetail**](doc/SearchApi.md#residencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**search**](doc/SearchApi.md#search) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPayment**](doc/SubscriptionsApi.md#getpayment) | **GET** /api/v1/subscriptions/payments/{id} | Get one payment&#39;s current status (poll this after initiating a payment)
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**listMyPayments**](doc/SubscriptionsApi.md#listmypayments) | **GET** /api/v1/subscriptions/payments | List the authenticated prestataire&#39;s payments, most recent first
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**mySubscription**](doc/SubscriptionsApi.md#mysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**receipt**](doc/SubscriptionsApi.md#receipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**subscribe**](doc/SubscriptionsApi.md#subscribe) | **POST** /api/v1/subscriptions | Subscribe to (or upgrade to) a paid tier; initiates a mobile-money payment
@@ -147,6 +149,8 @@ Class | Method | HTTP request | Description
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
  - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
+ - [ErrorResponse](doc/ErrorResponse.md)
+ - [FieldError](doc/FieldError.md)
  - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
  - [GrantSubscriptionRequest](doc/GrantSubscriptionRequest.md)
  - [KycReviewItem](doc/KycReviewItem.md)
@@ -162,11 +166,13 @@ Class | Method | HTTP request | Description
  - [PageResponseConversationResponse](doc/PageResponseConversationResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
+ - [PageResponsePaymentSummary](doc/PageResponsePaymentSummary.md)
  - [PageResponseResidenceResponse](doc/PageResponseResidenceResponse.md)
  - [PageResponseSearchResult](doc/PageResponseSearchResult.md)
  - [PageResponseTypeChangeReviewItem](doc/PageResponseTypeChangeReviewItem.md)
  - [Pageable](doc/Pageable.md)
  - [PaymentInitiatedResponse](doc/PaymentInitiatedResponse.md)
+ - [PaymentSummary](doc/PaymentSummary.md)
  - [PaymentWebhookRequest](doc/PaymentWebhookRequest.md)
  - [PhoneChangeResponse](doc/PhoneChangeResponse.md)
  - [PresignedUpload](doc/PresignedUpload.md)

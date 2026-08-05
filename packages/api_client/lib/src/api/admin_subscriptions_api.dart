@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/grant_subscription_request.dart';
 import 'package:api_client/src/model/tier_info.dart';
 import 'package:api_client/src/model/update_plan_request.dart';

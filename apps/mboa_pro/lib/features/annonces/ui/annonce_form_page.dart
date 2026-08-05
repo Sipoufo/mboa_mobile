@@ -127,22 +127,32 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
 
 /// Turns a backend error into something actionable.
 ///
-/// Known codes get a written explanation; an unknown code still shows the
-/// backend's own message if it sent one, and only a truly opaque failure falls
-/// back to "try again".
+/// Codes are the real ones from `api/docs/api-error-codes.md` (63 of them,
+/// generated from the source). An earlier guessed list was wrong on three rows
+/// of four — never invent these.
+///
+/// An unrecognised code still shows the backend's own `message`; only a truly
+/// opaque failure falls back to "try again". `message` is prose and gets
+/// reworded upstream, so nothing branches on it.
 String _saveMessage(I18n l10n, ApiError? error) {
   if (error == null) return l10n.annonceFormErrorSave;
 
   if (error.hasCode('RESIDENCE_UNIT_LIMIT')) return l10n.errorResidenceUnitLimit;
-  if (error.hasCode('LISTING_LIMIT') ||
-      error.hasCode('ANNONCE_LIMIT') ||
-      error.hasCode('ACTIVE_LISTING_LIMIT')) {
-    return l10n.errorListingLimit;
-  }
+  if (error.hasCode('LISTING_LIMIT_REACHED')) return l10n.errorListingLimit;
   if (error.hasCode('PROFILE_INCOMPLETE')) return l10n.errorProfileIncomplete;
-  if (error.hasCode('KYC_REQUIRED')) return l10n.errorKycRequired;
-  if (error.statusCode == 400 || error.statusCode == 422) {
-    return error.message ?? l10n.errorValidation;
+  if (error.hasCode('INSUFFICIENT_PHOTOS')) return l10n.errorInsufficientPhotos;
+  if (error.hasCode('INVALID_STATUS_TRANSITION')) {
+    return l10n.errorInvalidTransition;
+  }
+  if (error.hasCode('CONSTRAINT_VIOLATION')) {
+    return l10n.errorConstraintViolation;
+  }
+  if (error.hasCode('ACCESS_DENIED')) return l10n.errorAccessDenied;
+
+  // VALIDATION_ERROR carries a per-field breakdown; the first one is the most
+  // useful thing to show on a form.
+  if (error.hasCode('VALIDATION_ERROR')) {
+    return error.firstFieldMessage ?? error.message ?? l10n.errorValidation;
   }
 
   return error.message ?? l10n.annonceFormErrorSave;

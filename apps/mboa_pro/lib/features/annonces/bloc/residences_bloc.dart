@@ -20,6 +20,7 @@ class ResidencesBloc extends Bloc<ResidencesEvent, ResidencesState> {
     on<ResidencesRefreshRequested>(_onRefresh);
     on<ResidenceDetailRequested>(_onDetailRequested);
     on<ResidenceStatusChangeRequested>(_onStatusChange);
+    on<ResidenceDeleteRequested>(_onDelete);
   }
 
   final ResidenceRepository _repository;
@@ -67,6 +68,27 @@ class ResidencesBloc extends Bloc<ResidencesEvent, ResidencesState> {
       emit(ResidencesReady(items: items));
     } catch (_) {
       if (state is! ResidencesReady) emit(const ResidencesFailure());
+    }
+  }
+
+  Future<void> _onDelete(
+    ResidenceDeleteRequested event,
+    Emitter<ResidencesState> emit,
+  ) async {
+    final current = state;
+    if (current is! ResidencesReady) return;
+
+    emit(current.copyWith(mutatingId: event.id));
+    try {
+      await _repository.delete(event.id);
+      emit(
+        current.copyWith(
+          items: current.items.where((r) => r.id != event.id).toList(),
+          clearMutating: true,
+        ),
+      );
+    } catch (_) {
+      emit(current.copyWith(clearMutating: true, lastActionFailed: true));
     }
   }
 

@@ -14,6 +14,7 @@ part 'annonce_response.g.dart';
 ///
 /// Properties:
 /// * [id] 
+/// * [residenceId] 
 /// * [propertyType] 
 /// * [title] 
 /// * [cityId] 
@@ -36,11 +37,15 @@ part 'annonce_response.g.dart';
 /// * [tierRank] 
 /// * [photoKeys] 
 /// * [publishedAt] 
+/// * [expiresAt] 
 /// * [createdAt] 
 @BuiltValue()
 abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponseBuilder> {
   @BuiltValueField(wireName: r'id')
   String? get id;
+
+  @BuiltValueField(wireName: r'residenceId')
+  String? get residenceId;
 
   @BuiltValueField(wireName: r'propertyType')
   AnnonceResponsePropertyTypeEnum? get propertyType;
@@ -110,6 +115,9 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
   @BuiltValueField(wireName: r'publishedAt')
   DateTime? get publishedAt;
 
+  @BuiltValueField(wireName: r'expiresAt')
+  DateTime? get expiresAt;
+
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
 
@@ -140,6 +148,13 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
       yield r'id';
       yield serializers.serialize(
         object.id,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.residenceId != null) {
+      yield r'residenceId';
+      yield serializers.serialize(
+        object.residenceId,
         specifiedType: const FullType(String),
       );
     }
@@ -297,6 +312,13 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
         specifiedType: const FullType(DateTime),
       );
     }
+    if (object.expiresAt != null) {
+      yield r'expiresAt';
+      yield serializers.serialize(
+        object.expiresAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
     if (object.createdAt != null) {
       yield r'createdAt';
       yield serializers.serialize(
@@ -334,6 +356,14 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           ) as String?;
           if (valueDes == null) continue;
           result.id = valueDes;
+          break;
+        case r'residenceId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.residenceId = valueDes;
           break;
         case r'propertyType':
           final valueDes = serializers.deserialize(
@@ -510,6 +540,14 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           ) as DateTime?;
           if (valueDes == null) continue;
           result.publishedAt = valueDes;
+          break;
+        case r'expiresAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DateTime),
+          ) as DateTime?;
+          if (valueDes == null) continue;
+          result.expiresAt = valueDes;
           break;
         case r'createdAt':
           final valueDes = serializers.deserialize(

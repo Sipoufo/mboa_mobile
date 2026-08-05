@@ -15,6 +15,52 @@ void main() {
         ),
       );
 
+  test('reads the real wire shape the backend documented', () {
+    // Verbatim from api/docs/api-error-codes.md — the machine code is in
+    // `error`, not `code`.
+    final error = ApiError.from(
+      dioError({
+        'timestamp': '2026-08-05T22:29:05Z',
+        'status': 409,
+        'error': 'LISTING_LIMIT_REACHED',
+        'message': "Your plan's active-listing limit is reached.",
+        'path': '/api/v1/annonces/{id}/publish',
+      }, status: 409),
+    );
+
+    expect(error.code, 'LISTING_LIMIT_REACHED');
+    expect(error.hasCode('LISTING_LIMIT_REACHED'), isTrue);
+    expect(error.statusCode, 409);
+  });
+
+  test('reads the per-field breakdown of a VALIDATION_ERROR', () {
+    final error = ApiError.from(
+      dioError({
+        'error': 'VALIDATION_ERROR',
+        'message': 'attachmentKeys: ...; annonceId: must not be null',
+        'fields': [
+          {'field': 'attachmentKeys', 'message': 'A message carries at most 3 images.'},
+          {'field': 'annonceId', 'message': 'must not be null'},
+        ],
+      }),
+    );
+
+    expect(error.fields, hasLength(2));
+    expect(error.fields.first.field, 'attachmentKeys');
+    // The first complaint is what a form shows.
+    expect(error.firstFieldMessage, 'A message carries at most 3 images.');
+  });
+
+  test('ignores a malformed fields array rather than throwing', () {
+    for (final raw in <Object?>['nope', 42, [1, 2], [{'field': 'x'}]]) {
+      expect(
+        ApiError.from(dioError({'error': 'VALIDATION_ERROR', 'fields': raw})).fields,
+        isEmpty,
+        reason: '$raw',
+      );
+    }
+  });
+
   test('reads a code/message pair', () {
     final error = ApiError.from(
       dioError({'code': 'RESIDENCE_UNIT_LIMIT', 'message': 'Too many units'}),

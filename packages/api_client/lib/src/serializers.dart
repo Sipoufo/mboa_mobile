@@ -23,6 +23,8 @@ import 'package:api_client/src/model/country_response.dart';
 import 'package:api_client/src/model/create_annonce_request.dart';
 import 'package:api_client/src/model/create_residence_request.dart';
 import 'package:api_client/src/model/create_upload_request.dart';
+import 'package:api_client/src/model/error_response.dart';
+import 'package:api_client/src/model/field_error.dart';
 import 'package:api_client/src/model/forgot_password_request.dart';
 import 'package:api_client/src/model/grant_subscription_request.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
@@ -38,11 +40,13 @@ import 'package:api_client/src/model/page_response_annonce_response.dart';
 import 'package:api_client/src/model/page_response_conversation_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';
+import 'package:api_client/src/model/page_response_payment_summary.dart';
 import 'package:api_client/src/model/page_response_residence_response.dart';
 import 'package:api_client/src/model/page_response_search_result.dart';
 import 'package:api_client/src/model/page_response_type_change_review_item.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/payment_initiated_response.dart';
+import 'package:api_client/src/model/payment_summary.dart';
 import 'package:api_client/src/model/payment_webhook_request.dart';
 import 'package:api_client/src/model/phone_change_response.dart';
 import 'package:api_client/src/model/presigned_upload.dart';
@@ -97,6 +101,8 @@ part 'serializers.g.dart';
   CreateAnnonceRequest,
   CreateResidenceRequest,
   CreateUploadRequest,
+  ErrorResponse,
+  FieldError,
   ForgotPasswordRequest,
   GrantSubscriptionRequest,
   KycReviewItem,
@@ -112,11 +118,13 @@ part 'serializers.g.dart';
   PageResponseConversationResponse,
   PageResponseKycReviewItem,
   PageResponseMessageResponse,
+  PageResponsePaymentSummary,
   PageResponseResidenceResponse,
   PageResponseSearchResult,
   PageResponseTypeChangeReviewItem,
   Pageable,
   PaymentInitiatedResponse,
+  PaymentSummary,
   PaymentWebhookRequest,
   PhoneChangeResponse,
   PresignedUpload,
@@ -173,12 +181,20 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<NotificationSetting>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(FieldError)]),
+        () => ListBuilder<FieldError>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ConversationResponse)]),
         () => ListBuilder<ConversationResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(UnitSummary)]),
         () => ListBuilder<UnitSummary>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(PaymentSummary)]),
+        () => ListBuilder<PaymentSummary>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(KycReviewItem)]),

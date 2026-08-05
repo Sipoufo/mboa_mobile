@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/country_response.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/location_option.dart';
 import 'package:built_collection/built_collection.dart';
 

@@ -2992,6 +2992,66 @@ class I18n {
   String get commonCancel {
     return Intl.message('Annuler', name: 'commonCancel', desc: '', args: []);
   }
+
+  /// `Supprimer cette résidence ?`
+  String get residenceDeleteConfirmTitle {
+    return Intl.message(
+      'Supprimer cette résidence ?',
+      name: 'residenceDeleteConfirmTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cette action est définitive et supprime aussi toutes ses unités.`
+  String get residenceDeleteConfirmBody {
+    return Intl.message(
+      'Cette action est définitive et supprime aussi toutes ses unités.',
+      name: 'residenceDeleteConfirmBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ajoute au moins 3 photos pour publier.`
+  String get errorInsufficientPhotos {
+    return Intl.message(
+      'Ajoute au moins 3 photos pour publier.',
+      name: 'errorInsufficientPhotos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ce changement de statut n’est pas possible pour ce bien.`
+  String get errorInvalidTransition {
+    return Intl.message(
+      'Ce changement de statut n’est pas possible pour ce bien.',
+      name: 'errorInvalidTransition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Une écriture concurrente a échoué. Réessayez.`
+  String get errorConstraintViolation {
+    return Intl.message(
+      'Une écriture concurrente a échoué. Réessayez.',
+      name: 'errorConstraintViolation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Votre compte n’a pas les droits pour cette action.`
+  String get errorAccessDenied {
+    return Intl.message(
+      'Votre compte n’a pas les droits pour cette action.',
+      name: 'errorAccessDenied',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

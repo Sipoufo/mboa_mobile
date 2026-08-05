@@ -13,6 +13,41 @@ import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
 
+/// Two-step confirmation for deleting a residence (RM-M10-07).
+///
+/// Spelled out separately from a listing's, because deleting a residence takes
+/// its units with it.
+Future<void> confirmDeleteResidence(
+  BuildContext context,
+  Residence residence,
+) async {
+  final l10n = I18n.of(context);
+  final bloc = context.read<ResidencesBloc>();
+
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(l10n.residenceDeleteConfirmTitle),
+      content: Text(l10n.residenceDeleteConfirmBody),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(l10n.commonCancel),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          style: TextButton.styleFrom(
+            foregroundColor: context.mboaColors.error,
+          ),
+          child: Text(l10n.annonceActionDelete),
+        ),
+      ],
+    ),
+  );
+
+  if (confirmed ?? false) bloc.add(ResidenceDeleteRequested(residence.id));
+}
+
 /// Biens Multiples list (CDC M10).
 @RoutePage()
 class ResidencesListPage extends StatefulWidget {
@@ -83,6 +118,8 @@ class _ResidencesListPageState extends State<ResidencesListPage> {
                           transition,
                         ),
                       ),
+                      onDelete: () =>
+                          confirmDeleteResidence(context, items[index]),
                     ),
                   ),
           ),
@@ -98,6 +135,7 @@ class _ResidenceCard extends StatelessWidget {
     required this.isBusy,
     required this.activeCount,
     required this.onTransition,
+    required this.onDelete,
     required this.onTap,
   });
 
@@ -105,6 +143,7 @@ class _ResidenceCard extends StatelessWidget {
   final bool isBusy;
   final int activeCount;
   final ValueChanged<AnnonceTransition> onTransition;
+  final VoidCallback onDelete;
   final VoidCallback onTap;
 
   @override

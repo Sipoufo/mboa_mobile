@@ -657,5 +657,17 @@
   "annonceActionUnarchive": "Republish",
   "@annonceActionUnarchive": {},
   "commonCancel": "Cancel",
-  "@commonCancel": {}
+  "@commonCancel": {},
+  "residenceDeleteConfirmTitle": "Delete this residence?",
+  "@residenceDeleteConfirmTitle": {},
+  "residenceDeleteConfirmBody": "This is permanent and removes all of its units too.",
+  "@residenceDeleteConfirmBody": {},
+  "errorInsufficientPhotos": "Add at least 3 photos to publish.",
+  "@errorInsufficientPhotos": {},
+  "errorInvalidTransition": "That status change isn’t possible for this property.",
+  "@errorInvalidTransition": {},
+  "errorConstraintViolation": "A concurrent write failed. Try again.",
+  "@errorConstraintViolation": {},
+  "errorAccessDenied": "Your account isn’t allowed to do that.",
+  "@errorAccessDenied": {}
 }

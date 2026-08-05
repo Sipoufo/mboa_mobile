@@ -657,5 +657,17 @@
   "annonceActionUnarchive": "Republier",
   "@annonceActionUnarchive": {},
   "commonCancel": "Annuler",
-  "@commonCancel": {}
+  "@commonCancel": {},
+  "residenceDeleteConfirmTitle": "Supprimer cette résidence ?",
+  "@residenceDeleteConfirmTitle": {},
+  "residenceDeleteConfirmBody": "Cette action est définitive et supprime aussi toutes ses unités.",
+  "@residenceDeleteConfirmBody": {},
+  "errorInsufficientPhotos": "Ajoute au moins 3 photos pour publier.",
+  "@errorInsufficientPhotos": {},
+  "errorInvalidTransition": "Ce changement de statut n’est pas possible pour ce bien.",
+  "@errorInvalidTransition": {},
+  "errorConstraintViolation": "Une écriture concurrente a échoué. Réessayez.",
+  "@errorConstraintViolation": {},
+  "errorAccessDenied": "Votre compte n’a pas les droits pour cette action.",
+  "@errorAccessDenied": {}
 }

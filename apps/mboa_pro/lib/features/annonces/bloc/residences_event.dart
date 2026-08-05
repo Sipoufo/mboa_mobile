@@ -29,6 +29,17 @@ final class ResidenceDetailRequested extends ResidencesEvent {
   List<Object?> get props => [id];
 }
 
+/// RM-M10-07 — the UI confirms in two steps before dispatching this. Deleting a
+/// residence removes its units with it, so the confirmation says so.
+final class ResidenceDeleteRequested extends ResidencesEvent {
+  const ResidenceDeleteRequested(this.id);
+
+  final String id;
+
+  @override
+  List<Object?> get props => [id];
+}
+
 /// Bulk transition — applies to every unit in the residence.
 final class ResidenceStatusChangeRequested extends ResidencesEvent {
   const ResidenceStatusChangeRequested(this.id, this.transition);

@@ -9,6 +9,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../bloc/residences_bloc.dart';
 import '../models/annonce.dart';
 import '../models/residence.dart';
+import 'residences_list_page.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
 
@@ -87,6 +88,10 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                             residence.id,
                             transition,
                           )),
+                      onDelete: () async {
+                        await confirmDeleteResidence(context, residence);
+                        if (context.mounted) await context.router.maybePop();
+                      },
                     ),
                   ],
                 ),

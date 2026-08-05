@@ -8,6 +8,7 @@ import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/prestataire_profile_response.dart';
 import 'package:api_client/src/model/request_type_change_request.dart';
 import 'package:api_client/src/model/type_change_result.dart';

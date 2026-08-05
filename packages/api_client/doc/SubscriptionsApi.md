@@ -9,12 +9,96 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**getPayment**](SubscriptionsApi.md#getpayment) | **GET** /api/v1/subscriptions/payments/{id} | Get one payment&#39;s current status (poll this after initiating a payment)
+[**listMyPayments**](SubscriptionsApi.md#listmypayments) | **GET** /api/v1/subscriptions/payments | List the authenticated prestataire&#39;s payments, most recent first
 [**mySubscription**](SubscriptionsApi.md#mysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
 [**receipt**](SubscriptionsApi.md#receipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
 [**subscribe**](SubscriptionsApi.md#subscribe) | **POST** /api/v1/subscriptions | Subscribe to (or upgrade to) a paid tier; initiates a mobile-money payment
 [**tiers**](SubscriptionsApi.md#tiers) | **GET** /api/v1/subscriptions/tiers | List the subscription tiers and their current parameters
 [**webhook**](SubscriptionsApi.md#webhook) | **POST** /api/v1/subscriptions/webhook | Payment confirmation webhook (HMAC-verified)
 
+
+# **getPayment**
+> PaymentSummary getPayment(id)
+
+Get one payment's current status (poll this after initiating a payment)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getSubscriptionsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.getPayment(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling SubscriptionsApi->getPayment: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**PaymentSummary**](PaymentSummary.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **listMyPayments**
+> PageResponsePaymentSummary listMyPayments(pageable)
+
+List the authenticated prestataire's payments, most recent first
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getSubscriptionsApi();
+final Pageable pageable = ; // Pageable | 
+
+try {
+    final response = api.listMyPayments(pageable);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling SubscriptionsApi->listMyPayments: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pageable** | [**Pageable**](.md)|  | 
+
+### Return type
+
+[**PageResponsePaymentSummary**](PageResponsePaymentSummary.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **mySubscription**
 > SubscriptionResponse mySubscription()
@@ -49,7 +133,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -90,7 +174,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -133,7 +217,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
+ - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -170,7 +254,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -210,7 +294,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

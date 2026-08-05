@@ -198,6 +198,8 @@ class _$AnnonceResponse extends AnnonceResponse {
   @override
   final String? id;
   @override
+  final String? residenceId;
+  @override
   final AnnonceResponsePropertyTypeEnum? propertyType;
   @override
   final String? title;
@@ -242,6 +244,8 @@ class _$AnnonceResponse extends AnnonceResponse {
   @override
   final DateTime? publishedAt;
   @override
+  final DateTime? expiresAt;
+  @override
   final DateTime? createdAt;
 
   factory _$AnnonceResponse([void Function(AnnonceResponseBuilder)? updates]) =>
@@ -249,6 +253,7 @@ class _$AnnonceResponse extends AnnonceResponse {
 
   _$AnnonceResponse._({
     this.id,
+    this.residenceId,
     this.propertyType,
     this.title,
     this.cityId,
@@ -271,6 +276,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.tierRank,
     this.photoKeys,
     this.publishedAt,
+    this.expiresAt,
     this.createdAt,
   }) : super._();
   @override
@@ -285,6 +291,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     if (identical(other, this)) return true;
     return other is AnnonceResponse &&
         id == other.id &&
+        residenceId == other.residenceId &&
         propertyType == other.propertyType &&
         title == other.title &&
         cityId == other.cityId &&
@@ -307,6 +314,7 @@ class _$AnnonceResponse extends AnnonceResponse {
         tierRank == other.tierRank &&
         photoKeys == other.photoKeys &&
         publishedAt == other.publishedAt &&
+        expiresAt == other.expiresAt &&
         createdAt == other.createdAt;
   }
 
@@ -314,6 +322,7 @@ class _$AnnonceResponse extends AnnonceResponse {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, residenceId.hashCode);
     _$hash = $jc(_$hash, propertyType.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, cityId.hashCode);
@@ -336,6 +345,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, tierRank.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jc(_$hash, publishedAt.hashCode);
+    _$hash = $jc(_$hash, expiresAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -345,6 +355,7 @@ class _$AnnonceResponse extends AnnonceResponse {
   String toString() {
     return (newBuiltValueToStringHelper(r'AnnonceResponse')
           ..add('id', id)
+          ..add('residenceId', residenceId)
           ..add('propertyType', propertyType)
           ..add('title', title)
           ..add('cityId', cityId)
@@ -367,6 +378,7 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('tierRank', tierRank)
           ..add('photoKeys', photoKeys)
           ..add('publishedAt', publishedAt)
+          ..add('expiresAt', expiresAt)
           ..add('createdAt', createdAt))
         .toString();
   }
@@ -379,6 +391,10 @@ class AnnonceResponseBuilder
   String? _id;
   String? get id => _$this._id;
   set id(String? id) => _$this._id = id;
+
+  String? _residenceId;
+  String? get residenceId => _$this._residenceId;
+  set residenceId(String? residenceId) => _$this._residenceId = residenceId;
 
   AnnonceResponsePropertyTypeEnum? _propertyType;
   AnnonceResponsePropertyTypeEnum? get propertyType => _$this._propertyType;
@@ -475,6 +491,10 @@ class AnnonceResponseBuilder
   DateTime? get publishedAt => _$this._publishedAt;
   set publishedAt(DateTime? publishedAt) => _$this._publishedAt = publishedAt;
 
+  DateTime? _expiresAt;
+  DateTime? get expiresAt => _$this._expiresAt;
+  set expiresAt(DateTime? expiresAt) => _$this._expiresAt = expiresAt;
+
   DateTime? _createdAt;
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
@@ -487,6 +507,7 @@ class AnnonceResponseBuilder
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
+      _residenceId = $v.residenceId;
       _propertyType = $v.propertyType;
       _title = $v.title;
       _cityId = $v.cityId;
@@ -509,6 +530,7 @@ class AnnonceResponseBuilder
       _tierRank = $v.tierRank;
       _photoKeys = $v.photoKeys?.toBuilder();
       _publishedAt = $v.publishedAt;
+      _expiresAt = $v.expiresAt;
       _createdAt = $v.createdAt;
       _$v = null;
     }
@@ -535,6 +557,7 @@ class AnnonceResponseBuilder
           _$v ??
           _$AnnonceResponse._(
             id: id,
+            residenceId: residenceId,
             propertyType: propertyType,
             title: title,
             cityId: cityId,
@@ -557,6 +580,7 @@ class AnnonceResponseBuilder
             tierRank: tierRank,
             photoKeys: _photoKeys?.build(),
             publishedAt: publishedAt,
+            expiresAt: expiresAt,
             createdAt: createdAt,
           );
     } catch (_) {

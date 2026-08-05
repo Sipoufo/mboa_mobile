@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/model/confirm_phone_change_request.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/phone_change_response.dart';
 import 'package:api_client/src/model/request_phone_change_request.dart';
 

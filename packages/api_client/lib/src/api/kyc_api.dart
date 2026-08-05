@@ -8,6 +8,7 @@ import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
 import 'package:api_client/src/model/submit_kyc_request.dart';
 

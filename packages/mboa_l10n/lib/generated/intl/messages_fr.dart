@@ -358,6 +358,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "editProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Editer le Profil",
     ),
+    "errorAccessDenied": MessageLookupByLibrary.simpleMessage(
+      "Votre compte n’a pas les droits pour cette action.",
+    ),
+    "errorConstraintViolation": MessageLookupByLibrary.simpleMessage(
+      "Une écriture concurrente a échoué. Réessayez.",
+    ),
+    "errorInsufficientPhotos": MessageLookupByLibrary.simpleMessage(
+      "Ajoute au moins 3 photos pour publier.",
+    ),
+    "errorInvalidTransition": MessageLookupByLibrary.simpleMessage(
+      "Ce changement de statut n’est pas possible pour ce bien.",
+    ),
     "errorKycRequired": MessageLookupByLibrary.simpleMessage(
       "Vos certifications doivent être validées avant cette action.",
     ),
@@ -663,6 +675,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Connectez-vous",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Créer un compte"),
+    "residenceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
+      "Cette action est définitive et supprime aussi toutes ses unités.",
+    ),
+    "residenceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
+      "Supprimer cette résidence ?",
+    ),
     "residenceDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Détails de la résidence",
     ),

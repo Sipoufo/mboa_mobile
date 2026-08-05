@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/model/change_password_request.dart';
+import 'package:api_client/src/model/error_response.dart';
 
 class PasswordApi {
 

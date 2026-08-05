@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/model/auth_tokens.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/forgot_password_request.dart';
 import 'package:api_client/src/model/login_otp_request.dart';
 import 'package:api_client/src/model/login_request.dart';

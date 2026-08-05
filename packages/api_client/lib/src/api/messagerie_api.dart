@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/conversation_response.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/message_response.dart';
 import 'package:api_client/src/model/page_response_conversation_response.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';

@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
+import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/register_device_request.dart';
 
 class NotificationDevicesApi {
