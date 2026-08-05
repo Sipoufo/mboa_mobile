@@ -14,6 +14,9 @@ import '../../features/profile/profile_types.dart';
 import '../../features/register/bloc/register_bloc.dart';
 import '../../features/register/data/register_repository.dart';
 import '../../features/splash/logic/splash_cubit.dart';
+import '../../features/subscription/bloc/subscribe_bloc.dart';
+import '../../features/subscription/bloc/subscription_bloc.dart';
+import '../../features/subscription/data/subscription_repository.dart';
 
 /// Registers App-Mboa-Pro dependencies on top of the shared core module.
 void registerAppModule() {
@@ -121,6 +124,21 @@ void registerAppModule() {
   );
   getIt.registerFactory<HomeBloc>(
     () => HomeBloc(repository: getIt<ProDashboardRepository>()),
+  );
+
+  // Subscriptions (M13). SubscriptionBloc is a singleton because it feeds
+  // AccessContext.tier for the whole app; SubscribeBloc is per-checkout.
+  getIt.registerLazySingleton<SubscriptionRepository>(
+    () => SubscriptionRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerLazySingleton<SubscriptionBloc>(
+    () => SubscriptionBloc(repository: getIt<SubscriptionRepository>()),
+  );
+  getIt.registerFactory<SubscribeBloc>(
+    () => SubscribeBloc(repository: getIt<SubscriptionRepository>()),
   );
 
   getIt.registerLazySingleton<KycCubit>(

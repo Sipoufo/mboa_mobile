@@ -3,7 +3,7 @@
 > Working tracker for the Flutter monorepo. Update this at the end of each work
 > session. Architecture rules live in `CLAUDE.md`; functional spec in
 > `Documents/Claude/Projects/MyHome/Mboa_Doc10_CDC_Fonctionnel.md` (outside repo).
-> Last updated: 2026-08-05 (api_client regen; profile hub reachability fixed).
+> Last updated: 2026-08-05 (M13 subscriptions; real tier now gates M14).
 
 ## How to resume
 1. Read `CLAUDE.md` (rules) + this file (state).
@@ -68,6 +68,10 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 ## Done
 - **M01 auth** — user (phone OTP login/register) + pro (credential login + professional registration). Shared login flow in `mboa_shared`.
 - **M02 profile** — Settings hub + Edit Profile, both apps. Base profile unified in `mboa_shared` (generic `ProfileBloc<D,E>`, `BaseProfile`, `BaseProfileRepository`); pro extends with business fields + `ProfileData`/`ProProfileRepository`.
+- **M13 subscriptions** (pro) — `SubscriptionBloc` (current plan, session-scoped,
+  **the single source of `AccessContext.tier`**) + `SubscribeBloc` (checkout).
+  Screens: Mon abonnement, Formules, payment-method sheet, payment-flow sheet.
+  See the payment caveats below.
 - **M14 Pro home** — header (greeting/location/menu), the three CTA cards
   (Mes biens / Portefeuille / Mes agents), and the "Statistiques Globales" card.
   `HomeBloc` + `ProDashboardRepository`, offline-first over a 5-min Hive cache
@@ -105,7 +109,7 @@ endpoint, and `MeResponse` carries no subscription tier.
 | Vues, Contacts, Contrats | ❌ no endpoint — render as "Bientôt" (null, never a fabricated 0) |
 | Conversion, Visites | ❌ no endpoint **and** tier-gated (Basic+) |
 | Position moyenne | ❌ no endpoint **and** tier-gated (Pro+) |
-| Subscription tier | ⚠️ **endpoint now exists** (`SubscriptionsApi.mySubscription`) but is **not wired yet** — `AccessContext.tier` is still hardcoded `gratuit` (TODO in `home_page.dart`). Closes with M13. |
+| Subscription tier | ✅ **real** — `SubscriptionBloc.tier` feeds `AccessContext`. RM-M14-02 gating now reflects the actual plan. |
 
 Locked metrics get the RM-M14-02 treatment (blurred value + lock + a single
 "Passer à Basic+" CTA); unavailable ones say so. When the backend ships the
@@ -115,15 +119,37 @@ endpoints, fill `DashboardStats`' nullable fields — the bloc and UI don't chan
 card is built against Doc 10's M14 metrics, not the mockup's "Entrées/Sorties".
 Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
 
+## M13 payments — behaviour to know before touching it
+- **Confirmation is webhook-driven and there is no payment-status endpoint.**
+  The only observable is `mySubscription()` changing tier, so `SubscribeBloc`
+  polls it (3s) and gives up after **90s** into `SubscribePendingHandoff`
+  ("you'll be notified") rather than spinning for the 15 minutes RM-M13-05
+  allows. **This makes M13's UX depend on M03 notifications to close the loop.**
+  Replace the polling if a status endpoint ever lands.
+- **Idempotency matters.** `POST /subscriptions` takes an `Idempotency-Key`.
+  `SubscribeRequested` mints a new key (a new charge); `SubscribeRetryRequested`
+  **reuses** it, so retrying a request that actually landed cannot double-charge.
+  Covered by tests — do not "simplify" that away.
+- **Receipts are device-local.** `paymentId` is returned only by the initiating
+  call and there is no payments-list endpoint, so payments are cached in
+  `subscriptionBox`. Lost on reinstall, invisible across devices.
+  **Ask the backend for `GET /subscriptions/payments`** and delete the cache.
+- **Downgrade vs upgrade semantics are unverified.** RM-M13-03/04 differ, but
+  `subscribe()` takes only `{tier, method}` — the UI only warns (RM-M13-03) and
+  makes no promise. Confirm with the backend.
+- An unknown/failed plan read always resolves to **Gratuit**, never upward — a
+  slow or broken load must not unlock a paid feature.
+- Receipt opening surfaces the URL in a toast; wiring `url_launcher` is a TODO.
+
 ## Pending / next (no blockers unless noted)
-- **M13 subscriptions — next up** (reordered ahead of M10 on 2026-08-05).
-  `SubscriptionsApi` (mySubscription / tiers / subscribe / receipt) + the
-  `MessagerieApi` (M12) arrived in the 2026-08-05 client regen. M13 is the
-  revenue module, is unblocked now, and wiring the real tier makes the M14
-  gating honest; M10 then respects `activeListingLimit` from day one.
-  **Note:** `listMine1` was renamed `listMine2` in that regen — generated
+- **M10 annonces — next up.** Should respect `activeListingLimit` from the
+  plan (`SubscriptionBloc.state`), which M13 now makes available.
+  **Note:** the 2026-08-05 regen renamed `listMine1` -> `listMine2`; generated
   operation ids are not stable, expect this on every spec change.
-- **M10 annonces — after M13.** Pro-first: the prestataire must be able to create
+- **M12 messagerie** — `MessagerieApi` arrived in the same regen, unbuilt.
+- **M03 notifications** — see `docs/notifications-setup.md`. Partly blocked on
+  the owner (Firebase console for `mboa_user`, APNs key). `mboa_pro` client
+  config is in place. **M13's pending-payment handoff depends on this.** Pro-first: the prestataire must be able to create
   listings before M04/M05 (which are user-app consumption). M10 is also what
   fills "Mes biens" behind the home CTA, which currently dead-ends in
   `AccessRestrictedRoute(comingSoon)`.
@@ -138,6 +164,10 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
 - **Subscription tier has no API.** `AccessPolicy` gates M14 metrics on
   `SubscriptionTier`, but `MeResponse` carries no tier — `AccessContext.tier`
   defaults to `gratuit` until an endpoint exists. Wire it when M13 lands.
+- **Goldens are macOS-rendered** (`home/ui/goldens/pro_home.png`,
+  `subscription/ui/goldens/plans.png`). Both have caught real layout bugs — an
+  overflowing metric grid, and unformatted prices / a `1 annonces` plural bug.
+  Platform-dependent, so a Linux CI needs them regenerated or excluded.
 - **The Pro home golden is macOS-rendered.** `test/features/home/ui/goldens/pro_home.png`
   is a real visual check (it caught a grid overflow), but goldens are
   platform-dependent — a Linux CI will need it regenerated or excluded.
@@ -156,7 +186,7 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 145 passing — `mboa_user` 14, `mboa_pro` 68, `mboa_core` 12, `mboa_shared` 51.
+- Tests: 174 passing — `mboa_user` 14, `mboa_pro` 97, `mboa_core` 12, `mboa_shared` 51.
 - `make test` now runs the **package** suites too, not just the two apps, and
   fails the target on the first failing suite.
 - Convention: every bloc/cubit + repository has tests (`bloc_test` + `mocktail`); shared doubles in `test/_helpers/mocks`.

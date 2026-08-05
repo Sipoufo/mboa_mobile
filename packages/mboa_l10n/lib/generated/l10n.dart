@@ -1638,6 +1638,341 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mon abonnement`
+  String get subscriptionTitle {
+    return Intl.message(
+      'Mon abonnement',
+      name: 'subscriptionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Formule actuelle`
+  String get subscriptionCurrentPlan {
+    return Intl.message(
+      'Formule actuelle',
+      name: 'subscriptionCurrentPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Valable jusqu’au {date}`
+  String subscriptionRenewsOn(String date) {
+    return Intl.message(
+      'Valable jusqu’au $date',
+      name: 'subscriptionRenewsOn',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `Sans expiration`
+  String get subscriptionNoExpiry {
+    return Intl.message(
+      'Sans expiration',
+      name: 'subscriptionNoExpiry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Votre abonnement a expiré`
+  String get subscriptionExpired {
+    return Intl.message(
+      'Votre abonnement a expiré',
+      name: 'subscriptionExpired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Aucune annonce active} one{1 annonce active} other{{count} annonces actives}}`
+  String subscriptionListingLimit(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucune annonce active',
+      one: '1 annonce active',
+      other: '$count annonces actives',
+      name: 'subscriptionListingLimit',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Annonces illimitées`
+  String get subscriptionListingLimitUnlimited {
+    return Intl.message(
+      'Annonces illimitées',
+      name: 'subscriptionListingLimitUnlimited',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.`
+  String get subscriptionUnknown {
+    return Intl.message(
+      'Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.',
+      name: 'subscriptionUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changer de formule`
+  String get subscriptionChangePlan {
+    return Intl.message(
+      'Changer de formule',
+      name: 'subscriptionChangePlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mes reçus`
+  String get subscriptionReceipts {
+    return Intl.message(
+      'Mes reçus',
+      name: 'subscriptionReceipts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ouvrir le reçu`
+  String get subscriptionReceiptOpen {
+    return Intl.message(
+      'Ouvrir le reçu',
+      name: 'subscriptionReceiptOpen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aucun paiement enregistré sur cet appareil.`
+  String get subscriptionNoReceipts {
+    return Intl.message(
+      'Aucun paiement enregistré sur cet appareil.',
+      name: 'subscriptionNoReceipts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Les reçus sont liés à cet appareil pour le moment.`
+  String get subscriptionReceiptsLocalHint {
+    return Intl.message(
+      'Les reçus sont liés à cet appareil pour le moment.',
+      name: 'subscriptionReceiptsLocalHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Formules`
+  String get plansTitle {
+    return Intl.message('Formules', name: 'plansTitle', desc: '', args: []);
+  }
+
+  /// `Formule actuelle`
+  String get plansCurrent {
+    return Intl.message(
+      'Formule actuelle',
+      name: 'plansCurrent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{price} FCFA / mois`
+  String plansPriceMonthly(String price) {
+    return Intl.message(
+      '$price FCFA / mois',
+      name: 'plansPriceMonthly',
+      desc: '',
+      args: [price],
+    );
+  }
+
+  /// `Gratuit`
+  String get plansPriceFree {
+    return Intl.message('Gratuit', name: 'plansPriceFree', desc: '', args: []);
+  }
+
+  /// `Choisir`
+  String get plansChoose {
+    return Intl.message('Choisir', name: 'plansChoose', desc: '', args: []);
+  }
+
+  /// `{count, plural, one{1 unité de résidence} other{{count} unités de résidence}}`
+  String plansResidenceAllowance(int count) {
+    return Intl.plural(
+      count,
+      one: '1 unité de résidence',
+      other: '$count unités de résidence',
+      name: 'plansResidenceAllowance',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Un passage à une formule inférieure prend effet au prochain cycle.`
+  String get plansDowngradeNote {
+    return Intl.message(
+      'Un passage à une formule inférieure prend effet au prochain cycle.',
+      name: 'plansDowngradeNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mode de paiement`
+  String get paymentMethodTitle {
+    return Intl.message(
+      'Mode de paiement',
+      name: 'paymentMethodTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MTN Mobile Money`
+  String get paymentMethodMtn {
+    return Intl.message(
+      'MTN Mobile Money',
+      name: 'paymentMethodMtn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orange Money`
+  String get paymentMethodOrange {
+    return Intl.message(
+      'Orange Money',
+      name: 'paymentMethodOrange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Initialisation du paiement…`
+  String get paymentInitiating {
+    return Intl.message(
+      'Initialisation du paiement…',
+      name: 'paymentInitiating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finalisez sur votre téléphone`
+  String get paymentAwaitingTitle {
+    return Intl.message(
+      'Finalisez sur votre téléphone',
+      name: 'paymentAwaitingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.`
+  String get paymentAwaitingBody {
+    return Intl.message(
+      'Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.',
+      name: 'paymentAwaitingBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Référence : {ref}`
+  String paymentReference(String ref) {
+    return Intl.message(
+      'Référence : $ref',
+      name: 'paymentReference',
+      desc: '',
+      args: [ref],
+    );
+  }
+
+  /// `Paiement confirmé`
+  String get paymentConfirmedTitle {
+    return Intl.message(
+      'Paiement confirmé',
+      name: 'paymentConfirmedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Votre formule {tier} est active.`
+  String paymentConfirmedBody(String tier) {
+    return Intl.message(
+      'Votre formule $tier est active.',
+      name: 'paymentConfirmedBody',
+      desc: '',
+      args: [tier],
+    );
+  }
+
+  /// `Paiement en attente`
+  String get paymentPendingTitle {
+    return Intl.message(
+      'Paiement en attente',
+      name: 'paymentPendingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.`
+  String get paymentPendingBody {
+    return Intl.message(
+      'Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.',
+      name: 'paymentPendingBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paiement échoué`
+  String get paymentFailedTitle {
+    return Intl.message(
+      'Paiement échoué',
+      name: 'paymentFailedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `La transaction n’a pas abouti. Aucun montant n’a été débité.`
+  String get paymentFailedBody {
+    return Intl.message(
+      'La transaction n’a pas abouti. Aucun montant n’a été débité.',
+      name: 'paymentFailedBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Réessayer le paiement`
+  String get paymentRetry {
+    return Intl.message(
+      'Réessayer le paiement',
+      name: 'paymentRetry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terminé`
+  String get paymentDone {
+    return Intl.message('Terminé', name: 'paymentDone', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

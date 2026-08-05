@@ -11,6 +11,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../../kyc/logic/kyc_cubit.dart';
 import '../../kyc/models/kyc_status.dart';
 import '../../profile/profile_types.dart';
+import '../../subscription/bloc/subscription_bloc.dart';
 import '../bloc/home_bloc.dart';
 import 'widgets/global_stats_card.dart';
 import 'widgets/home_cta_card.dart';
@@ -162,11 +163,9 @@ class _StatsSection extends StatelessWidget {
                 stats: stats,
                 access: _accessOf(context),
                 policy: getIt<AccessPolicy>(),
-                onUpgrade: () => context.router.push(
-                  AccessRestrictedRoute(
-                    restriction: AccessRestriction.tierRequired,
-                  ),
-                ),
+                // Straight to the plans — the explainer would be a detour now
+                // that there is somewhere real to send them.
+                onUpgrade: () => context.router.push(const PlansRoute()),
               ),
             ],
           ),
@@ -246,7 +245,6 @@ AccessContext _accessOf(BuildContext context) {
     role: role,
     isKycApproved: kyc == KycStatus.approved,
     isKycPending: kyc == KycStatus.pending,
-    // TODO(M13): no subscription endpoint yet — MeResponse carries no tier, so
-    // everyone reads as Gratuit and the tier-gated metrics stay locked.
+    tier: context.read<SubscriptionBloc>().state.tier,
   );
 }

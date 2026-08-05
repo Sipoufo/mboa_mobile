@@ -23,6 +23,10 @@ class StorageKeys {
   static const String pendingMessagesBox = 'pendingMessagesBox';
   // App preferences (permanent): selected language, etc.
   static const String appSettingsBox = 'appSettings';
+  // Subscription payment handles (M13). `paymentId` is returned once by
+  // `POST /subscriptions` and is the only key to the receipt, so it is kept
+  // locally until a payments-list endpoint exists.
+  static const String subscriptionBox = 'subscriptionBox';
   // Prestataire dashboard counters (M14) — cheap to refetch, cached so the Pro
   // home renders instantly and works offline.
   static const String dashboardBox = 'dashboardBox';
@@ -34,6 +38,7 @@ class StorageKeys {
     pendingMessagesBox,
     appSettingsBox,
     dashboardBox,
+    subscriptionBox,
   ];
 }
 

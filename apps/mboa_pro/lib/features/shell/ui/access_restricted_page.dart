@@ -106,10 +106,9 @@ class AccessRestrictedPage extends StatelessWidget {
             title: l10n.accessKycRequiredCta,
             onPressed: () => context.router.push(CertificationsRoute()),
           ),
-        // Subscriptions (M13) aren't built — the CTA lands when they are.
         AccessRestriction.tierRequired => Button.primary(
             title: l10n.accessUpgradeCta(tier),
-            onPressed: null,
+            onPressed: () => context.router.push(const PlansRoute()),
           ),
         _ => null,
       };

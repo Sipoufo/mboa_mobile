@@ -291,5 +291,111 @@
     }
   },
   "homeEmptyBiens": "Vous n’avez encore enregistré aucun bien.",
-  "@homeEmptyBiens": {}
+  "@homeEmptyBiens": {},
+  "subscriptionTitle": "Mon abonnement",
+  "@subscriptionTitle": {},
+  "subscriptionCurrentPlan": "Formule actuelle",
+  "@subscriptionCurrentPlan": {},
+  "subscriptionRenewsOn": "Valable jusqu’au {date}",
+  "@subscriptionRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionNoExpiry": "Sans expiration",
+  "@subscriptionNoExpiry": {},
+  "subscriptionExpired": "Votre abonnement a expiré",
+  "@subscriptionExpired": {},
+  "subscriptionListingLimit": "{count, plural, =0{Aucune annonce active} one{1 annonce active} other{{count} annonces actives}}",
+  "@subscriptionListingLimit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subscriptionListingLimitUnlimited": "Annonces illimitées",
+  "@subscriptionListingLimitUnlimited": {},
+  "subscriptionUnknown": "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
+  "@subscriptionUnknown": {},
+  "subscriptionChangePlan": "Changer de formule",
+  "@subscriptionChangePlan": {},
+  "subscriptionReceipts": "Mes reçus",
+  "@subscriptionReceipts": {},
+  "subscriptionReceiptOpen": "Ouvrir le reçu",
+  "@subscriptionReceiptOpen": {},
+  "subscriptionNoReceipts": "Aucun paiement enregistré sur cet appareil.",
+  "@subscriptionNoReceipts": {},
+  "subscriptionReceiptsLocalHint": "Les reçus sont liés à cet appareil pour le moment.",
+  "@subscriptionReceiptsLocalHint": {},
+  "plansTitle": "Formules",
+  "@plansTitle": {},
+  "plansCurrent": "Formule actuelle",
+  "@plansCurrent": {},
+  "plansPriceMonthly": "{price} FCFA / mois",
+  "@plansPriceMonthly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "plansPriceFree": "Gratuit",
+  "@plansPriceFree": {},
+  "plansChoose": "Choisir",
+  "@plansChoose": {},
+  "plansResidenceAllowance": "{count, plural, one{1 unité de résidence} other{{count} unités de résidence}}",
+  "@plansResidenceAllowance": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "plansDowngradeNote": "Un passage à une formule inférieure prend effet au prochain cycle.",
+  "@plansDowngradeNote": {},
+  "paymentMethodTitle": "Mode de paiement",
+  "@paymentMethodTitle": {},
+  "paymentMethodMtn": "MTN Mobile Money",
+  "@paymentMethodMtn": {},
+  "paymentMethodOrange": "Orange Money",
+  "@paymentMethodOrange": {},
+  "paymentInitiating": "Initialisation du paiement…",
+  "@paymentInitiating": {},
+  "paymentAwaitingTitle": "Finalisez sur votre téléphone",
+  "@paymentAwaitingTitle": {},
+  "paymentAwaitingBody": "Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.",
+  "@paymentAwaitingBody": {},
+  "paymentReference": "Référence : {ref}",
+  "@paymentReference": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentConfirmedTitle": "Paiement confirmé",
+  "@paymentConfirmedTitle": {},
+  "paymentConfirmedBody": "Votre formule {tier} est active.",
+  "@paymentConfirmedBody": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentPendingTitle": "Paiement en attente",
+  "@paymentPendingTitle": {},
+  "paymentPendingBody": "Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.",
+  "@paymentPendingBody": {},
+  "paymentFailedTitle": "Paiement échoué",
+  "@paymentFailedTitle": {},
+  "paymentFailedBody": "La transaction n’a pas abouti. Aucun montant n’a été débité.",
+  "@paymentFailedBody": {},
+  "paymentRetry": "Réessayer le paiement",
+  "@paymentRetry": {},
+  "paymentDone": "Terminé",
+  "@paymentDone": {}
 }

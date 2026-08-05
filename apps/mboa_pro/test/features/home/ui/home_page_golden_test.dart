@@ -12,6 +12,8 @@ import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
+import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
+import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
@@ -25,10 +27,15 @@ class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
 
 class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
 
+class MockSubscriptionBloc
+    extends MockBloc<SubscriptionEvent, SubscriptionState>
+    implements SubscriptionBloc {}
+
 void main() {
   late MockHomeBloc homeBloc;
   late MockProProfileBloc profileBloc;
   late MockKycCubit kycCubit;
+  late MockSubscriptionBloc subscriptionBloc;
 
   const profile = ProfileData(
     firstName: 'Inesse',
@@ -48,12 +55,16 @@ void main() {
     homeBloc = MockHomeBloc();
     profileBloc = MockProProfileBloc();
     kycCubit = MockKycCubit();
+    subscriptionBloc = MockSubscriptionBloc();
 
     when(() => homeBloc.state).thenReturn(const HomeReady(stats));
     when(() => profileBloc.state).thenReturn(const ProProfileReady(profile));
     when(() => kycCubit.state).thenReturn(
       const KycReady(KycStatusData(status: KycStatus.approved), KycDraft()),
     );
+    // Gratuit, so the M14 tier-gated metrics render locked.
+    when(() => subscriptionBloc.state)
+        .thenReturn(const SubscriptionReady(SubscriptionPlan.free()));
 
     if (!getIt.isRegistered<AccessPolicy>()) {
       getIt.registerLazySingleton<AccessPolicy>(AccessPolicy.new);
@@ -78,6 +89,7 @@ void main() {
           providers: [
             BlocProvider<ProProfileBloc>.value(value: profileBloc),
             BlocProvider<KycCubit>.value(value: kycCubit),
+            BlocProvider<SubscriptionBloc>.value(value: subscriptionBloc),
             BlocProvider<HomeBloc>.value(value: homeBloc),
           ],
           child: const HomePage(),

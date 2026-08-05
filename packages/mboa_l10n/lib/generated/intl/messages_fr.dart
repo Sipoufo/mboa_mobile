@@ -37,6 +37,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m7(seconds) => "Renvoyer dans ${seconds}s";
 
+  static String m8(tier) => "Votre formule ${tier} est active.";
+
+  static String m9(ref) => "Référence : ${ref}";
+
+  static String m10(price) => "${price} FCFA / mois";
+
+  static String m11(count) =>
+      "${Intl.plural(count, one: '1 unité de résidence', other: '${count} unités de résidence')}";
+
+  static String m12(count) =>
+      "${Intl.plural(count, zero: 'Aucune annonce active', one: '1 annonce active', other: '${count} annonces actives')}";
+
+  static String m13(date) => "Valable jusqu’au ${date}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accessComingSoonBody": MessageLookupByLibrary.simpleMessage(
@@ -331,6 +345,52 @@ class MessageLookup extends MessageLookupByLibrary {
     "otpResendIn": m7,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
+    "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
+      "Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.",
+    ),
+    "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
+      "Finalisez sur votre téléphone",
+    ),
+    "paymentConfirmedBody": m8,
+    "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
+      "Paiement confirmé",
+    ),
+    "paymentDone": MessageLookupByLibrary.simpleMessage("Terminé"),
+    "paymentFailedBody": MessageLookupByLibrary.simpleMessage(
+      "La transaction n’a pas abouti. Aucun montant n’a été débité.",
+    ),
+    "paymentFailedTitle": MessageLookupByLibrary.simpleMessage(
+      "Paiement échoué",
+    ),
+    "paymentInitiating": MessageLookupByLibrary.simpleMessage(
+      "Initialisation du paiement…",
+    ),
+    "paymentMethodMtn": MessageLookupByLibrary.simpleMessage(
+      "MTN Mobile Money",
+    ),
+    "paymentMethodOrange": MessageLookupByLibrary.simpleMessage("Orange Money"),
+    "paymentMethodTitle": MessageLookupByLibrary.simpleMessage(
+      "Mode de paiement",
+    ),
+    "paymentPendingBody": MessageLookupByLibrary.simpleMessage(
+      "Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.",
+    ),
+    "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "Paiement en attente",
+    ),
+    "paymentReference": m9,
+    "paymentRetry": MessageLookupByLibrary.simpleMessage(
+      "Réessayer le paiement",
+    ),
+    "plansChoose": MessageLookupByLibrary.simpleMessage("Choisir"),
+    "plansCurrent": MessageLookupByLibrary.simpleMessage("Formule actuelle"),
+    "plansDowngradeNote": MessageLookupByLibrary.simpleMessage(
+      "Un passage à une formule inférieure prend effet au prochain cycle.",
+    ),
+    "plansPriceFree": MessageLookupByLibrary.simpleMessage("Gratuit"),
+    "plansPriceMonthly": m10,
+    "plansResidenceAllowance": m11,
+    "plansTitle": MessageLookupByLibrary.simpleMessage("Formules"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("Prénom"),
     "profileLastName": MessageLookupByLibrary.simpleMessage("Nom"),
@@ -383,6 +443,37 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsMenuTitle": MessageLookupByLibrary.simpleMessage("Paramètres"),
     "settingsProfileCard": MessageLookupByLibrary.simpleMessage("Profil"),
     "settingsTitle": MessageLookupByLibrary.simpleMessage("Profil"),
+    "subscriptionChangePlan": MessageLookupByLibrary.simpleMessage(
+      "Changer de formule",
+    ),
+    "subscriptionCurrentPlan": MessageLookupByLibrary.simpleMessage(
+      "Formule actuelle",
+    ),
+    "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
+      "Votre abonnement a expiré",
+    ),
+    "subscriptionListingLimit": m12,
+    "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
+      "Annonces illimitées",
+    ),
+    "subscriptionNoExpiry": MessageLookupByLibrary.simpleMessage(
+      "Sans expiration",
+    ),
+    "subscriptionNoReceipts": MessageLookupByLibrary.simpleMessage(
+      "Aucun paiement enregistré sur cet appareil.",
+    ),
+    "subscriptionReceiptOpen": MessageLookupByLibrary.simpleMessage(
+      "Ouvrir le reçu",
+    ),
+    "subscriptionReceipts": MessageLookupByLibrary.simpleMessage("Mes reçus"),
+    "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
+      "Les reçus sont liés à cet appareil pour le moment.",
+    ),
+    "subscriptionRenewsOn": m13,
+    "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
+    "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
+      "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
+    ),
     "welcome_inscriptionButton": MessageLookupByLibrary.simpleMessage(
       "Inscription",
     ),

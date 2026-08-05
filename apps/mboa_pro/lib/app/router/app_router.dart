@@ -80,6 +80,10 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: CertificationsRoute.page, path: 'kyc'),
             AutoRoute(page: IdDocumentRoute.page, path: 'kyc/id-document'),
 
+            // Subscriptions (M13).
+            AutoRoute(page: SubscriptionRoute.page, path: 'subscription'),
+            AutoRoute(page: PlansRoute.page, path: 'subscription/plans'),
+
             // Gated-feature explainer.
             AutoRoute(page: AccessRestrictedRoute.page, path: 'access-restricted'),
           ],

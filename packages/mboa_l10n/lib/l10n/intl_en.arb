@@ -291,5 +291,111 @@
     }
   },
   "homeEmptyBiens": "You haven’t registered any property yet.",
-  "@homeEmptyBiens": {}
+  "@homeEmptyBiens": {},
+  "subscriptionTitle": "My subscription",
+  "@subscriptionTitle": {},
+  "subscriptionCurrentPlan": "Current plan",
+  "@subscriptionCurrentPlan": {},
+  "subscriptionRenewsOn": "Valid until {date}",
+  "@subscriptionRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionNoExpiry": "No expiry",
+  "@subscriptionNoExpiry": {},
+  "subscriptionExpired": "Your subscription has expired",
+  "@subscriptionExpired": {},
+  "subscriptionListingLimit": "{count, plural, =0{No active listing} one{1 active listing} other{{count} active listings}}",
+  "@subscriptionListingLimit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subscriptionListingLimitUnlimited": "Unlimited listings",
+  "@subscriptionListingLimitUnlimited": {},
+  "subscriptionUnknown": "Couldn’t verify your subscription. Free plan applied in the meantime.",
+  "@subscriptionUnknown": {},
+  "subscriptionChangePlan": "Change plan",
+  "@subscriptionChangePlan": {},
+  "subscriptionReceipts": "My receipts",
+  "@subscriptionReceipts": {},
+  "subscriptionReceiptOpen": "Open receipt",
+  "@subscriptionReceiptOpen": {},
+  "subscriptionNoReceipts": "No payment recorded on this device.",
+  "@subscriptionNoReceipts": {},
+  "subscriptionReceiptsLocalHint": "Receipts are tied to this device for now.",
+  "@subscriptionReceiptsLocalHint": {},
+  "plansTitle": "Plans",
+  "@plansTitle": {},
+  "plansCurrent": "Current plan",
+  "@plansCurrent": {},
+  "plansPriceMonthly": "{price} FCFA / month",
+  "@plansPriceMonthly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "plansPriceFree": "Free",
+  "@plansPriceFree": {},
+  "plansChoose": "Choose",
+  "@plansChoose": {},
+  "plansResidenceAllowance": "{count, plural, one{1 residence unit} other{{count} residence units}}",
+  "@plansResidenceAllowance": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "plansDowngradeNote": "Moving to a lower plan takes effect next cycle.",
+  "@plansDowngradeNote": {},
+  "paymentMethodTitle": "Payment method",
+  "@paymentMethodTitle": {},
+  "paymentMethodMtn": "MTN Mobile Money",
+  "@paymentMethodMtn": {},
+  "paymentMethodOrange": "Orange Money",
+  "@paymentMethodOrange": {},
+  "paymentInitiating": "Starting the payment…",
+  "@paymentInitiating": {},
+  "paymentAwaitingTitle": "Finish on your phone",
+  "@paymentAwaitingTitle": {},
+  "paymentAwaitingBody": "Approve the payment request on your phone (USSD or the Mobile Money app). This screen updates on its own.",
+  "@paymentAwaitingBody": {},
+  "paymentReference": "Reference: {ref}",
+  "@paymentReference": {
+    "placeholders": {
+      "ref": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentConfirmedTitle": "Payment confirmed",
+  "@paymentConfirmedTitle": {},
+  "paymentConfirmedBody": "Your {tier} plan is active.",
+  "@paymentConfirmedBody": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentPendingTitle": "Payment pending",
+  "@paymentPendingTitle": {},
+  "paymentPendingBody": "We haven’t received confirmation yet. It can take a few minutes — you’ll get a notification as soon as your plan is active.",
+  "@paymentPendingBody": {},
+  "paymentFailedTitle": "Payment failed",
+  "@paymentFailedTitle": {},
+  "paymentFailedBody": "The transaction didn’t go through. You haven’t been charged.",
+  "@paymentFailedBody": {},
+  "paymentRetry": "Retry payment",
+  "@paymentRetry": {},
+  "paymentDone": "Done",
+  "@paymentDone": {}
 }
