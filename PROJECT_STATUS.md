@@ -202,6 +202,21 @@ Behaviour worth knowing before changing it:
 - Messaging (M12), favorites (M06), visits (M07), contract (M08), Mboa Score (M09).
 
 ## Tech debt / optimizations to revisit
+- **iOS: a stale `Podfile.lock` will masquerade as a deployment-target error.**
+  After the sentry 8.x -> 9.x bump, `pod install` failed with *"Sentry/HybridSDK
+  ... required a higher minimum deployment target"*. That message is a red
+  herring — Sentry 8.58.4's podspec allows iOS 11. The real cause was the lock
+  pinning 8.46.0 while the new plugin demanded 8.58.4, i.e. an unsatisfiable
+  pair. Fix: delete `ios/Podfile.lock` and `pod install --repo-update`. Both
+  Podfiles now pin `platform :ios, '13.0'` explicitly (Firebase 11.x needs 13),
+  because an implicit platform makes these errors even harder to read.
+- **CocoaPods on this Mac needs a UTF-8 locale**: run pod with
+  `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8`, or it dies with
+  *"Unicode Normalization not appropriate for ASCII-8BIT"*.
+- **The CocoaPods "did not set the base configuration ... Pods-Runner.profile"
+  warning is benign.** Flutter's template points the Profile build config at
+  `Release.xcconfig`, which already includes the Pods release xcconfig.
+  Verified: `flutter build ios --profile` succeeds. Don't "fix" it.
 - **`sentry_flutter` was pinned to 8.x, which broke the Android build outright**
   (it ships Kotlin language version 1.6; the Kotlin 2.2.20 compiler rejects it).
   Upgraded to 9.x on 2026-08-05 — our `SentryBlocObserver` needed no changes.
@@ -233,8 +248,10 @@ Behaviour worth knowing before changing it:
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
 - Tests: 223 passing — `mboa_user` 14, `mboa_pro` 138, `mboa_core` 12, `mboa_shared` 59.
-- **Android release build verified** (`flutter build apk --debug`) — worth doing
-  after any Gradle/plugin change, since `flutter analyze` cannot catch these.
+- **Android and iOS builds verified** (`flutter build apk --debug`,
+  `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
+  doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the
+  test suite cannot catch native build breakage.
 - `make test` now runs the **package** suites too, not just the two apps, and
   fails the target on the first failing suite.
 - Convention: every bloc/cubit + repository has tests (`bloc_test` + `mocktail`); shared doubles in `test/_helpers/mocks`.
