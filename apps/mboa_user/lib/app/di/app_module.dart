@@ -17,10 +17,17 @@ void registerAppModule() {
   getIt.registerLazySingleton<AccessPolicy>(AccessPolicy.new);
 
   // Session gate.
+  // Push notifications (M03). Registered before AuthRepository because logout
+  // has to revoke the device *before* the tokens are cleared.
+  getIt.registerLazySingleton<NotificationsRepository>(
+    () => NotificationsRepository(dioClient: getIt<DioClient>()),
+  );
+
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepository(
       dioClient: getIt<DioClient>(),
       tokenStorage: getIt<SecureTokenStorage>(),
+      notifications: getIt<NotificationsRepository>(),
     ),
   );
   // The global AuthBloc is a singleton — the one BLoC shared app-wide.

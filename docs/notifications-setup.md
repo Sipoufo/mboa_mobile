@@ -55,7 +55,7 @@ APNs is required; FCM is only a relay on iOS.
 
 Simulators cannot receive push. Device testing is required.
 
-## 3. Flutter wiring — **done for `mboa_pro`** (2026-08-05)
+## 3. Flutter wiring — **done for both apps** (2026-08-05)
 
 Built and verified against a real Android debug build.
 
@@ -76,7 +76,7 @@ Still open: `PushType`/`entityId` parsing is deliberately lenient because the
 payload contract is unagreed (§3.6 below); routing for M10/M12/M16 types lands
 on the shell until those modules exist.
 
-### Original plan *(for `mboa_user`, still to do)*
+### Original plan *(kept for reference)*
 
 1. Add `firebase_core` + `firebase_messaging` to both apps.
 2. Android: Google Services Gradle plugin; confirm `minSdk >= 21`.
@@ -117,9 +117,10 @@ token refresh→ re-register (only while a session exists)
 | Item | State |
 |---|---|
 | `mboa_pro` Android push | ✅ **working end to end** — APK builds, wiring done |
-| `mboa_pro` `google-services.json` | ✅ placed (`cm.mboa.mboa_pro`) |
+| `mboa_user` Android push | ✅ **working end to end** — APK builds, wiring done |
+| `google-services.json` | ✅ placed in **both** apps. The file now carries both clients (`cm.mboa.mboa_pro`, `cm.mboa.mboa_user`); the Gradle plugin selects by applicationId. |
 | `mboa_pro` `GoogleService-Info.plist` | ✅ placed (`cm.mboa.mboaPro`) — **still needs adding to the Runner target in Xcode** |
-| `mboa_user` client config (both platforms) | ❌ not created in the Firebase console yet |
+| `mboa_user` `GoogleService-Info.plist` | ✅ placed (`cm.mboa.mboaUser`) — **same Xcode step needed** |
 | APNs `.p8` | ⏸ deferred (paid Apple Developer account) |
 
 **Consequence of the deferred `.p8`: Android push can ship end-to-end; iOS push
@@ -129,9 +130,12 @@ call so a missing iOS token is a no-op rather than an error.
 
 ## 5. Blocked on
 
-- `google-services.json` and `GoogleService-Info.plist` for **both** apps (§1).
-- APNs key uploaded to Firebase (§2).
-- The notification payload contract for deep links (§3.6).
+- **APNs key uploaded to Firebase** (§2) — the only thing standing between the
+  current state and working iOS push.
+- **Adding both `GoogleService-Info.plist` files to their Runner targets in
+  Xcode** — the files are on disk but not in the app bundles.
+- **The notification payload contract** for deep links (§3.6). Until `{type,
+  entityId}` is agreed, taps land on the shell rather than the right screen.
 
 Everything else is ready: `NotificationDevicesApi` is generated, and the
 `onSessionExpired` / logout path that `unregister` has to hook into already

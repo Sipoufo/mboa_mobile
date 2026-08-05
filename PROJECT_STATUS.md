@@ -68,12 +68,13 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 ## Done
 - **M01 auth** — user (phone OTP login/register) + pro (credential login + professional registration). Shared login flow in `mboa_shared`.
 - **M02 profile** — Settings hub + Edit Profile, both apps. Base profile unified in `mboa_shared` (generic `ProfileBloc<D,E>`, `BaseProfile`, `BaseProfileRepository`); pro extends with business fields + `ProfileData`/`ProProfileRepository`.
-- **M03 push, Android/`mboa_pro` only** — shared `NotificationsRepository`
+- **M03 push, Android, both apps** — shared `NotificationsRepository`
   (register/refresh/unregister + foreground/opened/terminated intake), top-level
   background handler, `Firebase.initializeApp` guarded so a bad setup can't stop
   boot. **Deregistration happens in `AuthRepository.logout()` before the tokens
-  are cleared** — order is load-bearing and tested. iOS is blocked on the APNs
-  key; `mboa_user` has no Firebase apps yet. See `docs/notifications-setup.md`.
+  are cleared** — order is load-bearing and tested. Both Android APKs build.
+  iOS is blocked on the APNs key + the Xcode target-membership step for the two
+  `GoogleService-Info.plist` files. See `docs/notifications-setup.md`.
 - **M13 subscriptions** (pro) — `SubscriptionBloc` (current plan, session-scoped,
   **the single source of `AccessContext.tier`**) + `SubscribeBloc` (checkout).
   Screens: Mon abonnement, Formules, payment-method sheet, payment-flow sheet.
@@ -153,10 +154,10 @@ Not built from the mockup: "Explorez de nouveaux horizons" (no CDC module).
   **Note:** the 2026-08-05 regen renamed `listMine1` -> `listMine2`; generated
   operation ids are not stable, expect this on every spec change.
 - **M12 messagerie** — `MessagerieApi` arrived in the same regen, unbuilt.
-- **M03 notifications** — `mboa_pro` **Android done**. Remaining: iOS (APNs key,
-  and adding the plist to the Runner target in Xcode), `mboa_user` (no Firebase
-  apps registered), the payload contract for CA-M03-02 deep links, and per-type
-  preferences in `user_settings`. See `docs/notifications-setup.md`. Pro-first: the prestataire must be able to create
+- **M03 notifications** — **Android done in both apps.** Remaining: iOS (APNs
+  key + adding both plists to their Runner targets in Xcode), the payload
+  contract for CA-M03-02 deep links, and per-type preferences in
+  `user_settings`. See `docs/notifications-setup.md`. Pro-first: the prestataire must be able to create
   listings before M04/M05 (which are user-app consumption). M10 is also what
   fills "Mes biens" behind the home CTA, which currently dead-ends in
   `AccessRestrictedRoute(comingSoon)`.
