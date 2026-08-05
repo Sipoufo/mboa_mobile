@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../../features/home/bloc/home_bloc.dart';
 import '../../../features/kyc/logic/kyc_cubit.dart';
 import '../../../features/profile/profile_types.dart';
 import '../../../features/subscription/bloc/subscription_bloc.dart';
@@ -31,6 +32,9 @@ class AuthenticatedWrapper extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<SubscriptionBloc>.value(
           value: getIt<SubscriptionBloc>()
             ..add(const SubscriptionLoadRequested()),
+        ),
+        BlocProvider<HomeBloc>.value(
+          value: getIt<HomeBloc>()..add(const HomeLoadRequested()),
         ),
       ],
       child: this,

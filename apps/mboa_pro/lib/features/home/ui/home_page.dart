@@ -19,16 +19,8 @@ import 'widgets/home_header.dart';
 
 /// Prestataire home / dashboard (CDC M14).
 @RoutePage()
-class HomePage extends StatelessWidget implements AutoRouteWrapper {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider<HomeBloc>(
-      create: (_) => getIt<HomeBloc>()..add(const HomeLoadRequested()),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

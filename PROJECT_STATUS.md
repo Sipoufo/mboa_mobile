@@ -94,6 +94,21 @@ Reworked 2026-08-04, modelled on the Zeney project but trimmed to what Mboa need
 - iOS camera/photo Info.plist permissions in **both** apps.
 - Role-aware account (`AccountRole`) surfaced in KYC Statut label.
 
+## Bloc scoping (learned the hard way, twice)
+`AuthenticatedWrapper` provides the **session-scoped** blocs — `ProProfileBloc`,
+`KycCubit`, `SubscriptionBloc`, `HomeBloc`. Anything read by more than one route
+belongs there; anything provided by a single page's `wrappedRoute` is visible
+**only to that route and its children**, not to siblings.
+
+`HomeBloc` was originally created in `HomePage.wrappedRoute`, so the Mes biens
+hub — a sibling route that renders the same dashboard card — threw
+`ProviderNotFoundException` the moment it opened. Analyze and the bloc tests
+could not see it; only pumping the page could.
+
+**Rule:** a screen that reads a bloc it does not provide itself needs a widget
+test that pumps it in isolation with *only* the blocs its route inherits. See
+`test/features/annonces/ui/mes_biens_page_test.dart`.
+
 ## Route reachability (learned the hard way)
 A route in the table is **not** proof it is reachable. The profile hub
 (`SettingsRoute`, the `screenshots/profil/profil.png` design) was orphaned when
@@ -247,7 +262,7 @@ Behaviour worth knowing before changing it:
 ## Test/analyze status (last run)
 - Analyze: **fully clean** (the `stacked_loader_view` info is fixed — `mboa_ui`
   now declares `mboa_l10n`). `make analyze` exits 0.
-- Tests: 223 passing — `mboa_user` 14, `mboa_pro` 138, `mboa_core` 12, `mboa_shared` 59.
+- Tests: 227 passing — `mboa_user` 14, `mboa_pro` 142, `mboa_core` 12, `mboa_shared` 59.
 - **Android and iOS builds verified** (`flutter build apk --debug`,
   `flutter build ios --debug --simulator`, plus `--profile` on pro) — worth
   doing after any Gradle/Podfile/plugin change, since `flutter analyze` and the

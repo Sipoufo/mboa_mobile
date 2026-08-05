@@ -345,7 +345,7 @@ class HomeRoute extends _i26.PageRouteInfo<void> {
   static _i26.PageInfo page = _i26.PageInfo(
     name,
     builder: (data) {
-      return _i26.WrappedRoute(child: const _i12.HomePage());
+      return const _i12.HomePage();
     },
   );
 }

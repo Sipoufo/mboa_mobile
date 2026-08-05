@@ -134,7 +134,10 @@ void registerAppModule() {
       cache: getIt<HiveCache>(),
     ),
   );
-  getIt.registerFactory<HomeBloc>(
+  // Singleton, not a factory: the dashboard figures appear on both the home
+  // and the Mes biens hub, and AuthenticatedWrapper provides this one instance
+  // to every authenticated route.
+  getIt.registerLazySingleton<HomeBloc>(
     () => HomeBloc(repository: getIt<ProDashboardRepository>()),
   );
 
