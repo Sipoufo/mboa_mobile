@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**297 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 190 ·
+**309 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 202 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -147,6 +147,28 @@ They land with M05 (views/contacts), M08, M16, M04.
 `DashboardStats` models them nullable and the UI renders "Bientôt". The backend
 explicitly endorsed this over fabricating zeroes. Tier-gated metrics show the
 RM-M14-02 blur + upgrade CTA, which *is* real behaviour.
+
+### M02 profile — three routes, and the Pro avatar is the logo
+The Pro profile loads `GET /me` (account: phone, email, role), `GET /users/me`
+(the *person*: names, searchCity, `photoObjectKey`) and `GET /prestataires/me`
+(the *business*: displayName, `logoObjectKey`, type, mainCity, `profileComplete`).
+All three are needed — a prestataire account **is** a user account with a
+business profile attached, and the Pro edit form writes names back to
+`/users/me`. The three calls are sequential; `Future.wait` would save a round
+trip.
+
+- **The avatar is `logoObjectKey`, falling back to `photoObjectKey`** — read it
+  through `ProfileData.avatarUrl`, never `photoUrl`. `logoObjectKey` was loaded
+  and never displayed or written for a while, so the logo could not be set at
+  all. Agents have no business profile and keep the personal photo.
+- **`updatePhoto` re-sends displayName / type / mainCityId** with the key.
+  Partial-update semantics on `/prestataires/me` are an *assumption*; omitting
+  them would wipe the business profile to set an avatar. Pinned by
+  `pro_profile_photo_test.dart`.
+- **RM-M10-01 completeness is the server's** `profileComplete`, via
+  `ProfileData.isProfileComplete` — it is what `publish` enforces. A **null**
+  flag falls back to the local three-part check on purpose: treating it as
+  `false` would block every publish in the app.
 
 ### M13 payments
 - Confirmation is webhook-driven. `SubscribeBloc` polls

@@ -139,10 +139,8 @@ class StatusActionsMenu extends StatelessWidget {
     final plan = subscription is SubscriptionReady ? subscription.plan : null;
 
     final decision = gate.check(
-      profileComplete: profile != null &&
-          profile.photoObjectKey != null &&
-          profile.type != null &&
-          (profile.mainCityId ?? profile.searchCityId) != null,
+      // RM-M10-01 — the server's verdict, since it is what `publish` enforces.
+      profileComplete: profile?.isProfileComplete ?? false,
       photoCount: photoCount,
       activeCount: activeCount,
       activeListingLimit: plan?.activeListingLimit,

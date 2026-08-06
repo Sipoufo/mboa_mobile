@@ -107,7 +107,7 @@ class HomeHeader extends StatelessWidget {
                 ),
                 const SizedBox(width: Dimens.spacingMd),
                 MboaAvatar(
-                  imageUrl: profile?.photoUrl,
+                  imageUrl: profile?.avatarUrl,
                   initials: profile?.initials,
                   size: Dimens.avatar,
                 ),

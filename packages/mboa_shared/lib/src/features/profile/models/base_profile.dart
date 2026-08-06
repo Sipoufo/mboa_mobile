@@ -53,6 +53,10 @@ class BaseProfile extends Equatable {
   /// Absolute URL for the profile photo, or null when unset.
   String? get photoUrl => mediaUrl(photoObjectKey);
 
+  /// What an avatar should render. The personal photo here; App Mboa Pro
+  /// overrides it, because a prestataire's identity is their business logo.
+  String? get avatarUrl => photoUrl;
+
   /// Builds an absolute R2 URL from a stored object key.
   static String? mediaUrl(String? key) {
     if (key == null || key.isEmpty) return null;

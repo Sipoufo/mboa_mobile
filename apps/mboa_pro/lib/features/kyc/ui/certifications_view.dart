@@ -136,7 +136,7 @@ class _StatutTab extends StatelessWidget {
         title: _accountLabel(l10n),
         subtitle: chip.label,
         subtitleColor: chip.color,
-        enabled: false,
+        enabled: true,
         trailing: Icon(
           verified ? LucideIcons.badgeCheck : LucideIcons.clock,
           color: chip.color,

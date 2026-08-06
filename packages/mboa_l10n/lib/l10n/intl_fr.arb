@@ -574,7 +574,7 @@
   "@annonceDetailNoInfo": {},
   "publishBlockedProfileTitle": "Profil incomplet",
   "@publishBlockedProfileTitle": {},
-  "publishBlockedProfileBody": "Complétez votre profil (photo, type, ville) avant de publier.",
+  "publishBlockedProfileBody": "Complétez votre profil (logo, type, ville) avant de publier.",
   "@publishBlockedProfileBody": {},
   "publishBlockedPhotosTitle": "Photos manquantes",
   "@publishBlockedPhotosTitle": {},

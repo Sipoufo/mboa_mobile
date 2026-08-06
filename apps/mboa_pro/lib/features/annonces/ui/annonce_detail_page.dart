@@ -268,11 +268,8 @@ class _Actions extends StatelessWidget {
     final plan = subscription is SubscriptionReady ? subscription.plan : null;
 
     final decision = gate.check(
-      // RM-M10-01 — photo, type and city.
-      profileComplete: profile != null &&
-          profile.photoObjectKey != null &&
-          profile.type != null &&
-          (profile.mainCityId ?? profile.searchCityId) != null,
+      // RM-M10-01 — the server's verdict, since it is what `publish` enforces.
+      profileComplete: profile?.isProfileComplete ?? false,
       photoCount: annonce.photoKeys.length,
       activeCount: activeCount,
       // A unit does not count against the active-listing quota: a residence's

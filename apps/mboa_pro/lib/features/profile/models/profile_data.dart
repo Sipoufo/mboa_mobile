@@ -20,6 +20,7 @@ class ProfileData extends BaseProfile {
     this.mainCityId,
     this.type,
     this.logoObjectKey,
+    this.profileComplete,
   });
 
   /// Adds the business fields on top of a loaded [base].
@@ -30,6 +31,7 @@ class ProfileData extends BaseProfile {
     String? mainCityId,
     PrestataireType? type,
     String? logoObjectKey,
+    bool? profileComplete,
   }) {
     return ProfileData(
       email: base.email,
@@ -45,6 +47,7 @@ class ProfileData extends BaseProfile {
       mainCityId: mainCityId,
       type: type,
       logoObjectKey: logoObjectKey,
+      profileComplete: profileComplete,
     );
   }
 
@@ -53,6 +56,28 @@ class ProfileData extends BaseProfile {
   final String? mainCityId;
   final PrestataireType? type;
   final String? logoObjectKey;
+
+  /// Server-computed (`PrestataireProfileResponse.profileComplete`) — the
+  /// authority for RM-M10-01, since it is what `publish` enforces.
+  ///
+  /// Null for an agent (no business profile) and on any backend that does not
+  /// send it; [isProfileComplete] decides what to do about that.
+  final bool? profileComplete;
+
+  /// The prestataire's logo, falling back to their personal photo — so an
+  /// account that only ever uploaded a photo does not lose its avatar, and an
+  /// agent (who has no business profile) keeps theirs.
+  @override
+  String? get avatarUrl => BaseProfile.mediaUrl(logoObjectKey) ?? super.avatarUrl;
+
+  /// RM-M10-01. Prefers the server's verdict; falls back to checking the same
+  /// three things ourselves when it is absent, because treating a missing flag
+  /// as "incomplete" would block every publish in the app.
+  bool get isProfileComplete =>
+      profileComplete ??
+      (logoObjectKey != null || photoObjectKey != null) &&
+          type != null &&
+          (mainCityId ?? searchCityId) != null;
 
   /// "Prénom Nom", falling back to the business display name.
   @override
@@ -70,9 +95,18 @@ class ProfileData extends BaseProfile {
     return (first + last).toUpperCase();
   }
 
+  // Every field — a partial list makes bloc drop an emission as a no-op and the
+  // screen silently not update. See the invariant in PROJECT_STATUS.md.
   @override
-  List<Object?> get props =>
-      [...super.props, displayName, mainCity, mainCityId, type, logoObjectKey];
+  List<Object?> get props => [
+        ...super.props,
+        displayName,
+        mainCity,
+        mainCityId,
+        type,
+        logoObjectKey,
+        profileComplete,
+      ];
 }
 
 /// The editable subset submitted from the Pro Edit Profile screen. City IDs

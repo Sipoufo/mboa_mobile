@@ -206,7 +206,7 @@ class _Header extends StatelessWidget {
           bottom: 0,
           child: Center(
             child: MboaAvatar(
-              imageUrl: data?.photoUrl,
+              imageUrl: data?.avatarUrl,
               initials: data?.initials,
               size: 96,
               showEditBadge: true,

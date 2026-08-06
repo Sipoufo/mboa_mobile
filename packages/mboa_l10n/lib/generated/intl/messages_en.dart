@@ -612,7 +612,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Missing photos",
     ),
     "publishBlockedProfileBody": MessageLookupByLibrary.simpleMessage(
-      "Complete your profile (photo, type, city) before publishing.",
+      "Complete your profile (logo, type, city) before publishing.",
     ),
     "publishBlockedProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Incomplete profile",

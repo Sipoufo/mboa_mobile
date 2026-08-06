@@ -2673,10 +2673,10 @@ class I18n {
     );
   }
 
-  /// `Complétez votre profil (photo, type, ville) avant de publier.`
+  /// `Complétez votre profil (logo, type, ville) avant de publier.`
   String get publishBlockedProfileBody {
     return Intl.message(
-      'Complétez votre profil (photo, type, ville) avant de publier.',
+      'Complétez votre profil (logo, type, ville) avant de publier.',
       name: 'publishBlockedProfileBody',
       desc: '',
       args: [],

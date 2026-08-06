@@ -33,6 +33,7 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
       mainCityId: prestataire?.mainCityId,
       type: PrestataireType.fromResponse(prestataire?.type),
       logoObjectKey: prestataire?.logoObjectKey,
+      profileComplete: prestataire?.profileComplete,
     );
   }
 
@@ -56,9 +57,28 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
     return load();
   }
 
+  /// A prestataire's avatar is their business logo, so the key goes to
+  /// `/prestataires/me`; an agent has no business profile and keeps the
+  /// personal photo on `/users/me`.
   @override
   Future<ProfileData> updatePhoto(String objectKey) async {
-    await _base.updatePhoto(objectKey);
+    final role = AccountRole.fromResponse((await _api.getCurrentUserApi().me()).data?.role);
+    if (!role.isPrestataire) {
+      await _base.updatePhoto(objectKey);
+      return load();
+    }
+
+    // The other fields are re-sent with their current values rather than
+    // omitted: partial-update semantics are an assumption here, and guessing
+    // wrong would wipe the business profile to set an avatar.
+    final current = (await _api.getPrestataireProfileApi().myProfile1()).data;
+    await _api.getPrestataireProfileApi().updateMyProfile1(
+          updatePrestataireProfileRequest: UpdatePrestataireProfileRequest((b) => b
+            ..logoObjectKey = objectKey
+            ..displayName = current?.displayName
+            ..mainCityId = current?.mainCityId
+            ..type = PrestataireType.fromResponse(current?.type)?.updateValue),
+        );
     return load();
   }
 }

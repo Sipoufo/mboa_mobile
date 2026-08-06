@@ -659,7 +659,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Photos manquantes",
     ),
     "publishBlockedProfileBody": MessageLookupByLibrary.simpleMessage(
-      "Complétez votre profil (photo, type, ville) avant de publier.",
+      "Complétez votre profil (logo, type, ville) avant de publier.",
     ),
     "publishBlockedProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Profil incomplet",

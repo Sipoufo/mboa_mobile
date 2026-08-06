@@ -574,7 +574,7 @@
   "@annonceDetailNoInfo": {},
   "publishBlockedProfileTitle": "Incomplete profile",
   "@publishBlockedProfileTitle": {},
-  "publishBlockedProfileBody": "Complete your profile (photo, type, city) before publishing.",
+  "publishBlockedProfileBody": "Complete your profile (logo, type, city) before publishing.",
   "@publishBlockedProfileBody": {},
   "publishBlockedPhotosTitle": "Missing photos",
   "@publishBlockedPhotosTitle": {},
