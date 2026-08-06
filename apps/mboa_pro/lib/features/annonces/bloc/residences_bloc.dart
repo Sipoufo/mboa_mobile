@@ -99,6 +99,9 @@ class ResidencesBloc extends Bloc<ResidencesEvent, ResidencesState> {
     final current = state;
     if (current is! ResidencesReady) return;
 
+    final held = current.items.indexWhere((r) => r.id == event.id);
+    final hadUnits = held >= 0 && current.items[held].units.isNotEmpty;
+
     emit(current.copyWith(mutatingId: event.id));
     try {
       final updated = await _repository.transition(event.id, event.transition);
@@ -106,13 +109,34 @@ class ResidencesBloc extends Bloc<ResidencesEvent, ResidencesState> {
         current.copyWith(
           items: [
             for (final item in current.items)
-              if (item.id == updated.id) updated else item,
+              if (item.id == updated.id)
+                await _withUnits(updated, refetch: hadUnits)
+              else
+                item,
           ],
           clearMutating: true,
         ),
       );
     } catch (_) {
       emit(current.copyWith(clearMutating: true, lastActionFailed: true));
+    }
+  }
+
+  /// A bulk transition answers with the aggregate shape, whose `units` array is
+  /// empty by design — so writing it straight back over a residence we were
+  /// holding units for empties the detail screen's list.
+  ///
+  /// Refetching rather than carrying the old units forward, because the
+  /// transition just changed every unit's own status (unarchive returns them
+  /// all to DRAFT); keeping the stale ones would show the wrong chips.
+  Future<Residence> _withUnits(Residence updated, {required bool refetch}) async {
+    if (!refetch || updated.units.isNotEmpty) return updated;
+    try {
+      return await _repository.getOne(updated.id);
+    } catch (_) {
+      // The transition itself succeeded — reporting a failure here would be a
+      // lie. Pull-to-refresh recovers the units.
+      return updated;
     }
   }
 }

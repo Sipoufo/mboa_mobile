@@ -258,7 +258,7 @@ the app cannot be the only thing checking.
 | Item | Why |
 |---|---|
 | **Operation ids are unstable** | The 2026-08-05 regen renamed `listMine1` → `listMine2` and broke the build. Explicit `operationId`s in the spec would stop generated names shifting when unrelated endpoints are added. |
-| **Un-archiving** ⚠️ | **Confirmed broken.** `publish` rejects anything not `DRAFT`, so "Republier" returns 409 `INVALID_STATUS_TRANSITION` in the shipped app. Backend recommends `POST /annonces/{id}/unarchive` → `DRAFT`, so re-publishing re-checks the tier quota and the 3-photo rule. **Awaiting the founder's decision.** |
+| **Un-archiving** ✅ | **Resolved.** `POST /annonces/{id}/unarchive` and `POST /residences/{id}/unarchive` (`unarchiveAll`, RM-M10-08) both ship and both are wired; they return the item to `DRAFT` so re-publishing re-checks the tier quota and the 3-photo rule. The residence path lagged the listing one — the repository still threw client-side after the endpoint landed — and reported the generic *"Action impossible pour le moment."* |
 | **Subscription tier on `/me`** | `MeResponse` has no tier, so the app makes a second call to `GET /subscriptions/me` on every session start purely to know what to gate. |
 | **No `residenceUnitAllowance` docs** | `TierInfo.residenceUnitAllowance` exists and nothing in Doc 10 defines it. It is displayed on the plans screen as "N unités de résidence" — confirm that is right. |
 | **Doc 10 has no Bien Multiple section** | `ResidencesApi` is fully built and the Pro designs have a complete flow, but M10 in Doc 10 describes single listings only. The spec is ahead of the CDC. |

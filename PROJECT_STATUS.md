@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**290 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 183 ·
+**297 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 190 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -165,9 +165,19 @@ RM-M14-02 blur + upgrade CTA, which *is* real behaviour.
 - **Enregistrer saves a draft.** Publishing is separate, because only publishing
   hits the tier limit and the photo minimum.
 - Drafts appear under *Disponibles* with a badge; archived have their own tab.
-- **Un-archiving is its own endpoint** (`POST /annonces/{id}/unarchive` → DRAFT).
+- **Un-archiving is its own endpoint** (`POST /annonces/{id}/unarchive` → DRAFT,
+  and `POST /residences/{id}/unarchive` → `unarchiveAll` for a residence).
   `publish` rejects anything but DRAFT with a 409 — an earlier "Republier" button
-  calling `publish` was broken in a shipped build.
+  calling `publish` was broken in a shipped build. The residence side then
+  reported *"Action impossible pour le moment."* for a second reason: the
+  repository still threw `UnsupportedError`, written when `ResidencesApi` really
+  had only the four bulk transitions. Pinned by `residence_repository_test.dart`.
+- **A bulk transition answers with the aggregate shape** — counts, `units`
+  empty by design (backend-requests §2). Writing that response straight into the
+  list empties the detail screen's unit list, so `ResidencesBloc` refetches with
+  `getOne` when it was holding units. Carrying the old units forward instead
+  would show pre-transition status chips. Pinned by
+  `residences_transition_test.dart`.
 - `PublishGate` is a pure function over (profile complete, photo count, active
   count, tier limit). It reports the profile blocker first — the one the
   prestataire can act on.

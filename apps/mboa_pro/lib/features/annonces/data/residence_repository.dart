@@ -72,9 +72,10 @@ class ResidenceRepository {
       AnnonceTransition.reserve => _api.reserveAll(id: id),
       AnnonceTransition.markRented => _api.rentAll(id: id),
       AnnonceTransition.archive => _api.archiveAll(id: id),
-      // ResidencesApi exposes only the bulk four; there is no unarchiveAll.
-      AnnonceTransition.unarchive =>
-        throw UnsupportedError('Residences cannot be un-archived'),
+      // Not `publishAll`: that rejects anything but DRAFT with a 409. Unarchive
+      // (RM-M10-08) returns every unit to DRAFT, so publishing again re-checks
+      // the quota and the photo rule.
+      AnnonceTransition.unarchive => _api.unarchiveAll(id: id),
     };
 
     final data = response.data;
