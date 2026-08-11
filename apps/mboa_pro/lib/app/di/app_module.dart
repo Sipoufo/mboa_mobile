@@ -233,3 +233,41 @@ void registerAppModule() {
     ),
   );
 }
+
+/// Drops every bloc scoped to a signed-in session.
+///
+/// These are get_it **singletons**, so without this they survive a sign-out and
+/// the next account inherits them. That is not only a stale-data problem: the
+/// previous prestataire's listings, subscription and profile would be sitting
+/// in memory for whoever signs in next on the same device.
+///
+/// It also caused a hang. `ProfileBloc` skips `ProfileLoadInProgress` when it
+/// already holds data, and a reload producing an equal `ProfileReady` is
+/// dropped as a duplicate — so a second sign-in to the same account emitted
+/// **nothing**, and anything waiting on a state change waited forever.
+///
+/// Call **after** navigating away from the authenticated stack, so the widgets
+/// holding these are already gone.
+Future<void> resetSessionScopedBlocs() async {
+  await getIt.resetLazySingleton<ProProfileBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<HomeBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<AnnoncesBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<ResidencesBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<AgentProfileBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<SubscriptionBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<KycCubit>(
+    disposingFunction: (cubit) => cubit.close(),
+  );
+}

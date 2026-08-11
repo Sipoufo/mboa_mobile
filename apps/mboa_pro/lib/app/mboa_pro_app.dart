@@ -6,6 +6,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/auth/bloc/auth_bloc.dart';
+import 'di/app_module.dart';
 import 'notifications_bootstrap.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
@@ -45,6 +46,12 @@ class _MboaProAppState extends State<MboaProApp> {
               getIt<SessionSnapshot>().markUnauthenticated();
               getIt<SessionExpiryWatcher>().stop();
               _router.replaceAll([const LoginRoute()]);
+              // After the stack is gone, so nothing is still listening. These
+              // are singletons: without this the next account signs in to the
+              // previous one's profile, listings and subscription.
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) => resetSessionScopedBlocs(),
+              );
             default:
               break;
           }
