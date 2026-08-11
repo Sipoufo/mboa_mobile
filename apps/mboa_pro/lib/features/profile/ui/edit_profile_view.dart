@@ -32,6 +32,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   String? _mainCityId;
 
   bool _isPrestataire = false;
+  bool _isAgent = false;
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _mainCityId = data.mainCityId;
     _type = data.type ?? PrestataireType.agence;
     _isPrestataire = data.isPrestataire;
+    _isAgent = data.isAgent;
   }
 
   Future<void> _pickSearchCity() async {
@@ -94,6 +96,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               lastName: _lastName.text.trim(),
               searchCityId: _searchCityId,
               isPrestataire: _isPrestataire,
+              isAgent: _isAgent,
               displayName: _isPrestataire ? _displayName.text.trim() : null,
               mainCityId: _isPrestataire ? _mainCityId : null,
               type: _isPrestataire ? _type : null,

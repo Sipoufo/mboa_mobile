@@ -57,6 +57,25 @@ class BaseProfile extends Equatable {
   /// overrides it, because a prestataire's identity is their business logo.
   String? get avatarUrl => photoUrl;
 
+  /// Overlays the role-specific identity onto the account fields. App Mboa Pro
+  /// uses it for an agent, whose name and photo live on `/agents/me` rather
+  /// than on the base profile.
+  BaseProfile copyWith({
+    String? firstName,
+    String? lastName,
+    String? photoObjectKey,
+  }) =>
+      BaseProfile(
+        email: email,
+        phoneNumber: phoneNumber,
+        role: role,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        searchCity: searchCity,
+        searchCityId: searchCityId,
+        photoObjectKey: photoObjectKey ?? this.photoObjectKey,
+      );
+
   /// Builds an absolute R2 URL from a stored object key.
   static String? mediaUrl(String? key) {
     if (key == null || key.isEmpty) return null;

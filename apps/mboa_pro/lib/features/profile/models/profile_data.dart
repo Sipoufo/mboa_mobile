@@ -4,7 +4,11 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'prestataire_type.dart';
 
 /// App Mboa Pro's profile: the shared [BaseProfile] plus the prestataire
-/// business fields (`/prestataires/me`). Agents carry no business fields.
+/// business fields (`/prestataires/me`).
+///
+/// An agent has no business fields; their name and photo are overlaid from
+/// `/agents/me` by the repository, because the agent record — not the base
+/// profile — is what the server and other prestataires read.
 class ProfileData extends BaseProfile {
   const ProfileData({
     super.email,
@@ -60,13 +64,14 @@ class ProfileData extends BaseProfile {
   /// Server-computed (`PrestataireProfileResponse.profileComplete`) — the
   /// authority for RM-M10-01, since it is what `publish` enforces.
   ///
-  /// Null for an agent (no business profile) and on any backend that does not
-  /// send it; [isProfileComplete] decides what to do about that.
+  /// For an agent this is the **agent record's** flag (name + photo + a zone).
+  /// Null on any backend that does not send it; [isProfileComplete] decides
+  /// what to do about that.
   final bool? profileComplete;
 
-  /// The prestataire's logo, falling back to their personal photo — so an
-  /// account that only ever uploaded a photo does not lose its avatar, and an
-  /// agent (who has no business profile) keeps theirs.
+  /// The prestataire's logo, falling back to the personal photo — so an account
+  /// that only ever uploaded a photo does not lose its avatar. An agent has no
+  /// logo, and their `photoObjectKey` is already the agent record's.
   @override
   String? get avatarUrl => BaseProfile.mediaUrl(logoObjectKey) ?? super.avatarUrl;
 
@@ -116,6 +121,7 @@ class ProfileEdit extends Equatable {
     required this.firstName,
     required this.lastName,
     required this.isPrestataire,
+    this.isAgent = false,
     this.searchCityId,
     this.displayName,
     this.mainCityId,
@@ -125,12 +131,24 @@ class ProfileEdit extends Equatable {
   final String firstName;
   final String lastName;
   final bool isPrestataire;
+
+  /// An agent's name lives on `/agents/me`, not `/users/me` — it is what a
+  /// prestataire sees when choosing a candidate, so the save has to write it.
+  final bool isAgent;
   final String? searchCityId;
   final String? displayName;
   final String? mainCityId;
   final PrestataireType? type;
 
   @override
-  List<Object?> get props =>
-      [firstName, lastName, isPrestataire, searchCityId, displayName, mainCityId, type];
+  List<Object?> get props => [
+        firstName,
+        lastName,
+        isPrestataire,
+        isAgent,
+        searchCityId,
+        displayName,
+        mainCityId,
+        type,
+      ];
 }

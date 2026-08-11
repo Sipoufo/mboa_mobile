@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**387 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 280 ·
+**391 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 284 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -154,6 +154,22 @@ data**. They land with M12/M05, M08, M16, M04.
 `DashboardStats` models them nullable and the UI renders "Bientôt". The backend
 explicitly endorsed this over fabricating zeroes. Tier-gated metrics show the
 RM-M14-02 blur + upgrade CTA, which *is* real behaviour.
+
+### M02 profile — one identity record per role
+**Whose record is authoritative depends on the role, and writing the wrong one
+is silent.** `ProProfileRepository` branches three ways:
+
+| Role | Identity lives on | Avatar |
+|---|---|---|
+| prestataire | `/prestataires/me` | `logoObjectKey` |
+| **agent** | **`/agents/me`** — its own name and photo | `photoObjectKey` there |
+| user | `/users/me` | `photoObjectKey` |
+
+An agent's record is created **empty** on first read, with nothing copied from
+`/users/me`, so the base profile is not secondary for them — it is unrelated.
+`profileComplete` and the prestataire-facing `AgentCandidate` card both read the
+agent record. Writing `/users/me` showed the agent their new photo while leaving
+them unassignable. Pinned by `pro_profile_photo_test.dart`.
 
 ### M02 profile — three routes, and the Pro avatar is the logo
 The Pro profile loads `GET /me` (account: phone, email, role), `GET /users/me`
