@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-08-06.
+> Last updated: 2026-08-11.
 
 ## How to resume
 
@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**349 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 242 ·
+**387 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 280 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
