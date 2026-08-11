@@ -20,7 +20,7 @@ class ResidenceRepository {
   ResidencesApi get _api => _dioClient.api.getResidencesApi();
 
   Future<List<Residence>> list() async {
-    final response = await _api.listMine(
+    final response = await _api.listMyResidences(
       pageable: Pageable((b) => b
         ..page = 0
         ..size = _pageSize),
@@ -31,7 +31,7 @@ class ResidenceRepository {
   }
 
   Future<Residence> getOne(String id) async {
-    final response = await _api.getOne(id: id);
+    final response = await _api.getMyResidence(id: id);
     final data = response.data;
     if (data == null) throw StateError('Residence $id not found');
     return Residence.fromResponse(data);
@@ -47,7 +47,7 @@ class ResidenceRepository {
       throw StateError('A residence needs at least one unit group');
     }
 
-    final response = await _api.create(
+    final response = await _api.createResidence(
       createResidenceRequest: CreateResidenceRequest((b) => b
         ..name = draft.title.trim()
         ..districtId = location.districtId
@@ -68,14 +68,14 @@ class ResidenceRepository {
   /// Bulk lifecycle transition — these act on every unit in the residence.
   Future<Residence> transition(String id, AnnonceTransition transition) async {
     final response = await switch (transition) {
-      AnnonceTransition.publish => _api.publishAll(id: id),
-      AnnonceTransition.reserve => _api.reserveAll(id: id),
-      AnnonceTransition.markRented => _api.rentAll(id: id),
-      AnnonceTransition.archive => _api.archiveAll(id: id),
-      // Not `publishAll`: that rejects anything but DRAFT with a 409. Unarchive
+      AnnonceTransition.publish => _api.publishResidenceUnits(id: id),
+      AnnonceTransition.reserve => _api.reserveResidenceUnits(id: id),
+      AnnonceTransition.markRented => _api.rentResidenceUnits(id: id),
+      AnnonceTransition.archive => _api.archiveResidenceUnits(id: id),
+      // Not `publishResidenceUnits`: that rejects anything but DRAFT with a 409. Unarchive
       // (RM-M10-08) returns every unit to DRAFT, so publishing again re-checks
       // the quota and the photo rule.
-      AnnonceTransition.unarchive => _api.unarchiveAll(id: id),
+      AnnonceTransition.unarchive => _api.unarchiveResidenceUnits(id: id),
     };
 
     final data = response.data;
@@ -83,7 +83,7 @@ class ResidenceRepository {
     return Residence.fromResponse(data);
   }
 
-  Future<void> delete(String id) => _api.delete(id: id);
+  Future<void> delete(String id) => _api.deleteResidence(id: id);
 
   UnitGroup _toUnitGroup(UnitGroupDraft draft) => UnitGroup((b) => b
     ..propertyType = draft.propertyType.asUnitGroup

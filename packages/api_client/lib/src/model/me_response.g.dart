@@ -114,12 +114,53 @@ final BuiltSet<MeResponseAuthProviderEnum> _$meResponseAuthProviderEnumValues =
       _$meResponseAuthProviderEnum_unknownDefaultOpenApi,
     ]);
 
+const MeResponseTierEnum _$meResponseTierEnum_FREE = const MeResponseTierEnum._(
+  'FREE',
+);
+const MeResponseTierEnum _$meResponseTierEnum_BASIC_PLUS =
+    const MeResponseTierEnum._('BASIC_PLUS');
+const MeResponseTierEnum _$meResponseTierEnum_PRO = const MeResponseTierEnum._(
+  'PRO',
+);
+const MeResponseTierEnum _$meResponseTierEnum_PRO_PLUS =
+    const MeResponseTierEnum._('PRO_PLUS');
+const MeResponseTierEnum _$meResponseTierEnum_unknownDefaultOpenApi =
+    const MeResponseTierEnum._('unknownDefaultOpenApi');
+
+MeResponseTierEnum _$meResponseTierEnumValueOf(String name) {
+  switch (name) {
+    case 'FREE':
+      return _$meResponseTierEnum_FREE;
+    case 'BASIC_PLUS':
+      return _$meResponseTierEnum_BASIC_PLUS;
+    case 'PRO':
+      return _$meResponseTierEnum_PRO;
+    case 'PRO_PLUS':
+      return _$meResponseTierEnum_PRO_PLUS;
+    case 'unknownDefaultOpenApi':
+      return _$meResponseTierEnum_unknownDefaultOpenApi;
+    default:
+      return _$meResponseTierEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<MeResponseTierEnum> _$meResponseTierEnumValues =
+    BuiltSet<MeResponseTierEnum>(const <MeResponseTierEnum>[
+      _$meResponseTierEnum_FREE,
+      _$meResponseTierEnum_BASIC_PLUS,
+      _$meResponseTierEnum_PRO,
+      _$meResponseTierEnum_PRO_PLUS,
+      _$meResponseTierEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<MeResponseRoleEnum> _$meResponseRoleEnumSerializer =
     _$MeResponseRoleEnumSerializer();
 Serializer<MeResponseStatusEnum> _$meResponseStatusEnumSerializer =
     _$MeResponseStatusEnumSerializer();
 Serializer<MeResponseAuthProviderEnum> _$meResponseAuthProviderEnumSerializer =
     _$MeResponseAuthProviderEnumSerializer();
+Serializer<MeResponseTierEnum> _$meResponseTierEnumSerializer =
+    _$MeResponseTierEnumSerializer();
 
 class _$MeResponseRoleEnumSerializer
     implements PrimitiveSerializer<MeResponseRoleEnum> {
@@ -236,6 +277,45 @@ class _$MeResponseAuthProviderEnumSerializer
   );
 }
 
+class _$MeResponseTierEnumSerializer
+    implements PrimitiveSerializer<MeResponseTierEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'FREE': 'FREE',
+    'BASIC_PLUS': 'BASIC_PLUS',
+    'PRO': 'PRO',
+    'PRO_PLUS': 'PRO_PLUS',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'FREE': 'FREE',
+    'BASIC_PLUS': 'BASIC_PLUS',
+    'PRO': 'PRO',
+    'PRO_PLUS': 'PRO_PLUS',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[MeResponseTierEnum];
+  @override
+  final String wireName = 'MeResponseTierEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    MeResponseTierEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  MeResponseTierEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => MeResponseTierEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$MeResponse extends MeResponse {
   @override
   final String? id;
@@ -252,6 +332,8 @@ class _$MeResponse extends MeResponse {
   @override
   final bool? emailVerified;
   @override
+  final MeResponseTierEnum? tier;
+  @override
   final DateTime? createdAt;
 
   factory _$MeResponse([void Function(MeResponseBuilder)? updates]) =>
@@ -265,6 +347,7 @@ class _$MeResponse extends MeResponse {
     this.status,
     this.authProvider,
     this.emailVerified,
+    this.tier,
     this.createdAt,
   }) : super._();
   @override
@@ -285,6 +368,7 @@ class _$MeResponse extends MeResponse {
         status == other.status &&
         authProvider == other.authProvider &&
         emailVerified == other.emailVerified &&
+        tier == other.tier &&
         createdAt == other.createdAt;
   }
 
@@ -298,6 +382,7 @@ class _$MeResponse extends MeResponse {
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, authProvider.hashCode);
     _$hash = $jc(_$hash, emailVerified.hashCode);
+    _$hash = $jc(_$hash, tier.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -313,6 +398,7 @@ class _$MeResponse extends MeResponse {
           ..add('status', status)
           ..add('authProvider', authProvider)
           ..add('emailVerified', emailVerified)
+          ..add('tier', tier)
           ..add('createdAt', createdAt))
         .toString();
   }
@@ -351,6 +437,10 @@ class MeResponseBuilder implements Builder<MeResponse, MeResponseBuilder> {
   set emailVerified(bool? emailVerified) =>
       _$this._emailVerified = emailVerified;
 
+  MeResponseTierEnum? _tier;
+  MeResponseTierEnum? get tier => _$this._tier;
+  set tier(MeResponseTierEnum? tier) => _$this._tier = tier;
+
   DateTime? _createdAt;
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
@@ -369,6 +459,7 @@ class MeResponseBuilder implements Builder<MeResponse, MeResponseBuilder> {
       _status = $v.status;
       _authProvider = $v.authProvider;
       _emailVerified = $v.emailVerified;
+      _tier = $v.tier;
       _createdAt = $v.createdAt;
       _$v = null;
     }
@@ -399,6 +490,7 @@ class MeResponseBuilder implements Builder<MeResponse, MeResponseBuilder> {
           status: status,
           authProvider: authProvider,
           emailVerified: emailVerified,
+          tier: tier,
           createdAt: createdAt,
         );
     replace(_$result);

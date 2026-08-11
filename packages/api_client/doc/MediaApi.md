@@ -9,11 +9,11 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createUpload**](MediaApi.md#createupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
+[**createMediaUpload**](MediaApi.md#createmediaupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
 
 
-# **createUpload**
-> PresignedUpload createUpload(createUploadRequest)
+# **createMediaUpload**
+> PresignedUpload createMediaUpload(createUploadRequest)
 
 Get a pre-signed URL to upload a file directly to storage
 
@@ -25,10 +25,10 @@ final api = ApiClient().getMediaApi();
 final CreateUploadRequest createUploadRequest = ; // CreateUploadRequest | 
 
 try {
-    final response = api.createUpload(createUploadRequest);
+    final response = api.createMediaUpload(createUploadRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling MediaApi->createUpload: $e\n');
+    print('Exception when calling MediaApi->createMediaUpload: $e\n');
 }
 ```
 

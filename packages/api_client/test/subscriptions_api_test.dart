@@ -7,10 +7,24 @@ void main() {
   final instance = ApiClient().getSubscriptionsApi();
 
   group(SubscriptionsApi, () {
+    // Get the authenticated account's current subscription
+    //
+    //Future<SubscriptionResponse> getMySubscription() async
+    test('test getMySubscription', () async {
+      // TODO
+    });
+
     // Get one payment's current status (poll this after initiating a payment)
     //
     //Future<PaymentSummary> getPayment(String id) async
     test('test getPayment', () async {
+      // TODO
+    });
+
+    // Get a short-lived URL to download a payment's PDF receipt
+    //
+    //Future<ReceiptResponse> getPaymentReceipt(String id) async
+    test('test getPaymentReceipt', () async {
       // TODO
     });
 
@@ -21,17 +35,17 @@ void main() {
       // TODO
     });
 
-    // Get the authenticated account's current subscription
+    // List the subscription tiers and their current parameters
     //
-    //Future<SubscriptionResponse> mySubscription() async
-    test('test mySubscription', () async {
+    //Future<BuiltList<TierInfo>> listSubscriptionTiers() async
+    test('test listSubscriptionTiers', () async {
       // TODO
     });
 
-    // Get a short-lived URL to download a payment's PDF receipt
+    // Payment confirmation webhook (HMAC-verified)
     //
-    //Future<ReceiptResponse> receipt(String id) async
-    test('test receipt', () async {
+    //Future paymentWebhook(PaymentWebhookRequest paymentWebhookRequest) async
+    test('test paymentWebhook', () async {
       // TODO
     });
 
@@ -39,20 +53,6 @@ void main() {
     //
     //Future<PaymentInitiatedResponse> subscribe(SubscribeRequest subscribeRequest, { String idempotencyKey }) async
     test('test subscribe', () async {
-      // TODO
-    });
-
-    // List the subscription tiers and their current parameters
-    //
-    //Future<BuiltList<TierInfo>> tiers() async
-    test('test tiers', () async {
-      // TODO
-    });
-
-    // Payment confirmation webhook (HMAC-verified)
-    //
-    //Future webhook(PaymentWebhookRequest paymentWebhookRequest) async
-    test('test webhook', () async {
       // TODO
     });
 

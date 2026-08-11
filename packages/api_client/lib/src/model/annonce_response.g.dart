@@ -61,6 +61,45 @@ _$annonceResponsePropertyTypeEnumValues =
       ],
     );
 
+const AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnum_MONTH =
+    const AnnonceResponseRentalPeriodEnum._('MONTH');
+const AnnonceResponseRentalPeriodEnum
+_$annonceResponseRentalPeriodEnum_QUARTER =
+    const AnnonceResponseRentalPeriodEnum._('QUARTER');
+const AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnum_YEAR =
+    const AnnonceResponseRentalPeriodEnum._('YEAR');
+const AnnonceResponseRentalPeriodEnum
+_$annonceResponseRentalPeriodEnum_unknownDefaultOpenApi =
+    const AnnonceResponseRentalPeriodEnum._('unknownDefaultOpenApi');
+
+AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'MONTH':
+      return _$annonceResponseRentalPeriodEnum_MONTH;
+    case 'QUARTER':
+      return _$annonceResponseRentalPeriodEnum_QUARTER;
+    case 'YEAR':
+      return _$annonceResponseRentalPeriodEnum_YEAR;
+    case 'unknownDefaultOpenApi':
+      return _$annonceResponseRentalPeriodEnum_unknownDefaultOpenApi;
+    default:
+      return _$annonceResponseRentalPeriodEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<AnnonceResponseRentalPeriodEnum>
+_$annonceResponseRentalPeriodEnumValues =
+    BuiltSet<AnnonceResponseRentalPeriodEnum>(
+      const <AnnonceResponseRentalPeriodEnum>[
+        _$annonceResponseRentalPeriodEnum_MONTH,
+        _$annonceResponseRentalPeriodEnum_QUARTER,
+        _$annonceResponseRentalPeriodEnum_YEAR,
+        _$annonceResponseRentalPeriodEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 const AnnonceResponseStatusEnum _$annonceResponseStatusEnum_DRAFT =
     const AnnonceResponseStatusEnum._('DRAFT');
 const AnnonceResponseStatusEnum _$annonceResponseStatusEnum_PUBLISHED =
@@ -71,6 +110,8 @@ const AnnonceResponseStatusEnum _$annonceResponseStatusEnum_RENTED =
     const AnnonceResponseStatusEnum._('RENTED');
 const AnnonceResponseStatusEnum _$annonceResponseStatusEnum_ARCHIVED =
     const AnnonceResponseStatusEnum._('ARCHIVED');
+const AnnonceResponseStatusEnum _$annonceResponseStatusEnum_SUSPENDED =
+    const AnnonceResponseStatusEnum._('SUSPENDED');
 const AnnonceResponseStatusEnum
 _$annonceResponseStatusEnum_unknownDefaultOpenApi =
     const AnnonceResponseStatusEnum._('unknownDefaultOpenApi');
@@ -87,6 +128,8 @@ AnnonceResponseStatusEnum _$annonceResponseStatusEnumValueOf(String name) {
       return _$annonceResponseStatusEnum_RENTED;
     case 'ARCHIVED':
       return _$annonceResponseStatusEnum_ARCHIVED;
+    case 'SUSPENDED':
+      return _$annonceResponseStatusEnum_SUSPENDED;
     case 'unknownDefaultOpenApi':
       return _$annonceResponseStatusEnum_unknownDefaultOpenApi;
     default:
@@ -101,14 +144,74 @@ final BuiltSet<AnnonceResponseStatusEnum> _$annonceResponseStatusEnumValues =
       _$annonceResponseStatusEnum_RESERVED,
       _$annonceResponseStatusEnum_RENTED,
       _$annonceResponseStatusEnum_ARCHIVED,
+      _$annonceResponseStatusEnum_SUSPENDED,
       _$annonceResponseStatusEnum_unknownDefaultOpenApi,
+    ]);
+
+const AnnonceResponseAmenitiesEnum
+_$annonceResponseAmenitiesEnum_AIR_CONDITIONING =
+    const AnnonceResponseAmenitiesEnum._('AIR_CONDITIONING');
+const AnnonceResponseAmenitiesEnum _$annonceResponseAmenitiesEnum_HOT_WATER =
+    const AnnonceResponseAmenitiesEnum._('HOT_WATER');
+const AnnonceResponseAmenitiesEnum _$annonceResponseAmenitiesEnum_GENERATOR =
+    const AnnonceResponseAmenitiesEnum._('GENERATOR');
+const AnnonceResponseAmenitiesEnum
+_$annonceResponseAmenitiesEnum_SECURITY_GUARD =
+    const AnnonceResponseAmenitiesEnum._('SECURITY_GUARD');
+const AnnonceResponseAmenitiesEnum _$annonceResponseAmenitiesEnum_PARKING =
+    const AnnonceResponseAmenitiesEnum._('PARKING');
+const AnnonceResponseAmenitiesEnum _$annonceResponseAmenitiesEnum_WIFI =
+    const AnnonceResponseAmenitiesEnum._('WIFI');
+const AnnonceResponseAmenitiesEnum
+_$annonceResponseAmenitiesEnum_unknownDefaultOpenApi =
+    const AnnonceResponseAmenitiesEnum._('unknownDefaultOpenApi');
+
+AnnonceResponseAmenitiesEnum _$annonceResponseAmenitiesEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'AIR_CONDITIONING':
+      return _$annonceResponseAmenitiesEnum_AIR_CONDITIONING;
+    case 'HOT_WATER':
+      return _$annonceResponseAmenitiesEnum_HOT_WATER;
+    case 'GENERATOR':
+      return _$annonceResponseAmenitiesEnum_GENERATOR;
+    case 'SECURITY_GUARD':
+      return _$annonceResponseAmenitiesEnum_SECURITY_GUARD;
+    case 'PARKING':
+      return _$annonceResponseAmenitiesEnum_PARKING;
+    case 'WIFI':
+      return _$annonceResponseAmenitiesEnum_WIFI;
+    case 'unknownDefaultOpenApi':
+      return _$annonceResponseAmenitiesEnum_unknownDefaultOpenApi;
+    default:
+      return _$annonceResponseAmenitiesEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<AnnonceResponseAmenitiesEnum>
+_$annonceResponseAmenitiesEnumValues =
+    BuiltSet<AnnonceResponseAmenitiesEnum>(const <AnnonceResponseAmenitiesEnum>[
+      _$annonceResponseAmenitiesEnum_AIR_CONDITIONING,
+      _$annonceResponseAmenitiesEnum_HOT_WATER,
+      _$annonceResponseAmenitiesEnum_GENERATOR,
+      _$annonceResponseAmenitiesEnum_SECURITY_GUARD,
+      _$annonceResponseAmenitiesEnum_PARKING,
+      _$annonceResponseAmenitiesEnum_WIFI,
+      _$annonceResponseAmenitiesEnum_unknownDefaultOpenApi,
     ]);
 
 Serializer<AnnonceResponsePropertyTypeEnum>
 _$annonceResponsePropertyTypeEnumSerializer =
     _$AnnonceResponsePropertyTypeEnumSerializer();
+Serializer<AnnonceResponseRentalPeriodEnum>
+_$annonceResponseRentalPeriodEnumSerializer =
+    _$AnnonceResponseRentalPeriodEnumSerializer();
 Serializer<AnnonceResponseStatusEnum> _$annonceResponseStatusEnumSerializer =
     _$AnnonceResponseStatusEnumSerializer();
+Serializer<AnnonceResponseAmenitiesEnum>
+_$annonceResponseAmenitiesEnumSerializer =
+    _$AnnonceResponseAmenitiesEnumSerializer();
 
 class _$AnnonceResponsePropertyTypeEnumSerializer
     implements PrimitiveSerializer<AnnonceResponsePropertyTypeEnum> {
@@ -153,6 +256,43 @@ class _$AnnonceResponsePropertyTypeEnumSerializer
   );
 }
 
+class _$AnnonceResponseRentalPeriodEnumSerializer
+    implements PrimitiveSerializer<AnnonceResponseRentalPeriodEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[AnnonceResponseRentalPeriodEnum];
+  @override
+  final String wireName = 'AnnonceResponseRentalPeriodEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AnnonceResponseRentalPeriodEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  AnnonceResponseRentalPeriodEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AnnonceResponseRentalPeriodEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$AnnonceResponseStatusEnumSerializer
     implements PrimitiveSerializer<AnnonceResponseStatusEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
@@ -161,6 +301,7 @@ class _$AnnonceResponseStatusEnumSerializer
     'RESERVED': 'RESERVED',
     'RENTED': 'RENTED',
     'ARCHIVED': 'ARCHIVED',
+    'SUSPENDED': 'SUSPENDED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -169,6 +310,7 @@ class _$AnnonceResponseStatusEnumSerializer
     'RESERVED': 'RESERVED',
     'RENTED': 'RENTED',
     'ARCHIVED': 'ARCHIVED',
+    'SUSPENDED': 'SUSPENDED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -190,6 +332,49 @@ class _$AnnonceResponseStatusEnumSerializer
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) => AnnonceResponseStatusEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
+class _$AnnonceResponseAmenitiesEnumSerializer
+    implements PrimitiveSerializer<AnnonceResponseAmenitiesEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'AIR_CONDITIONING': 'AIR_CONDITIONING',
+    'HOT_WATER': 'HOT_WATER',
+    'GENERATOR': 'GENERATOR',
+    'SECURITY_GUARD': 'SECURITY_GUARD',
+    'PARKING': 'PARKING',
+    'WIFI': 'WIFI',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'AIR_CONDITIONING': 'AIR_CONDITIONING',
+    'HOT_WATER': 'HOT_WATER',
+    'GENERATOR': 'GENERATOR',
+    'SECURITY_GUARD': 'SECURITY_GUARD',
+    'PARKING': 'PARKING',
+    'WIFI': 'WIFI',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[AnnonceResponseAmenitiesEnum];
+  @override
+  final String wireName = 'AnnonceResponseAmenitiesEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AnnonceResponseAmenitiesEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  AnnonceResponseAmenitiesEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AnnonceResponseAmenitiesEnum.valueOf(
     _fromWire[serialized] ?? (serialized is String ? serialized : ''),
   );
 }
@@ -218,6 +403,10 @@ class _$AnnonceResponse extends AnnonceResponse {
   @override
   final double? longitude;
   @override
+  final int? price;
+  @override
+  final AnnonceResponseRentalPeriodEnum? rentalPeriod;
+  @override
   final int? monthlyRent;
   @override
   final bool? chargesIncluded;
@@ -238,9 +427,15 @@ class _$AnnonceResponse extends AnnonceResponse {
   @override
   final AnnonceResponseStatusEnum? status;
   @override
+  final String? suspensionReason;
+  @override
   final int? tierRank;
   @override
   final BuiltList<String>? photoKeys;
+  @override
+  final BuiltSet<AnnonceResponseAmenitiesEnum>? amenities;
+  @override
+  final int? viewCount;
   @override
   final DateTime? publishedAt;
   @override
@@ -263,6 +458,8 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.exactAddress,
     this.latitude,
     this.longitude,
+    this.price,
+    this.rentalPeriod,
     this.monthlyRent,
     this.chargesIncluded,
     this.chargesAmount,
@@ -273,8 +470,11 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.availableFrom,
     this.description,
     this.status,
+    this.suspensionReason,
     this.tierRank,
     this.photoKeys,
+    this.amenities,
+    this.viewCount,
     this.publishedAt,
     this.expiresAt,
     this.createdAt,
@@ -301,6 +501,8 @@ class _$AnnonceResponse extends AnnonceResponse {
         exactAddress == other.exactAddress &&
         latitude == other.latitude &&
         longitude == other.longitude &&
+        price == other.price &&
+        rentalPeriod == other.rentalPeriod &&
         monthlyRent == other.monthlyRent &&
         chargesIncluded == other.chargesIncluded &&
         chargesAmount == other.chargesAmount &&
@@ -311,8 +513,11 @@ class _$AnnonceResponse extends AnnonceResponse {
         availableFrom == other.availableFrom &&
         description == other.description &&
         status == other.status &&
+        suspensionReason == other.suspensionReason &&
         tierRank == other.tierRank &&
         photoKeys == other.photoKeys &&
+        amenities == other.amenities &&
+        viewCount == other.viewCount &&
         publishedAt == other.publishedAt &&
         expiresAt == other.expiresAt &&
         createdAt == other.createdAt;
@@ -332,6 +537,8 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, exactAddress.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, rentalPeriod.hashCode);
     _$hash = $jc(_$hash, monthlyRent.hashCode);
     _$hash = $jc(_$hash, chargesIncluded.hashCode);
     _$hash = $jc(_$hash, chargesAmount.hashCode);
@@ -342,8 +549,11 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, availableFrom.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, suspensionReason.hashCode);
     _$hash = $jc(_$hash, tierRank.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
+    _$hash = $jc(_$hash, amenities.hashCode);
+    _$hash = $jc(_$hash, viewCount.hashCode);
     _$hash = $jc(_$hash, publishedAt.hashCode);
     _$hash = $jc(_$hash, expiresAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -365,6 +575,8 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('exactAddress', exactAddress)
           ..add('latitude', latitude)
           ..add('longitude', longitude)
+          ..add('price', price)
+          ..add('rentalPeriod', rentalPeriod)
           ..add('monthlyRent', monthlyRent)
           ..add('chargesIncluded', chargesIncluded)
           ..add('chargesAmount', chargesAmount)
@@ -375,8 +587,11 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('availableFrom', availableFrom)
           ..add('description', description)
           ..add('status', status)
+          ..add('suspensionReason', suspensionReason)
           ..add('tierRank', tierRank)
           ..add('photoKeys', photoKeys)
+          ..add('amenities', amenities)
+          ..add('viewCount', viewCount)
           ..add('publishedAt', publishedAt)
           ..add('expiresAt', expiresAt)
           ..add('createdAt', createdAt))
@@ -433,6 +648,15 @@ class AnnonceResponseBuilder
   double? get longitude => _$this._longitude;
   set longitude(double? longitude) => _$this._longitude = longitude;
 
+  int? _price;
+  int? get price => _$this._price;
+  set price(int? price) => _$this._price = price;
+
+  AnnonceResponseRentalPeriodEnum? _rentalPeriod;
+  AnnonceResponseRentalPeriodEnum? get rentalPeriod => _$this._rentalPeriod;
+  set rentalPeriod(AnnonceResponseRentalPeriodEnum? rentalPeriod) =>
+      _$this._rentalPeriod = rentalPeriod;
+
   int? _monthlyRent;
   int? get monthlyRent => _$this._monthlyRent;
   set monthlyRent(int? monthlyRent) => _$this._monthlyRent = monthlyRent;
@@ -477,6 +701,11 @@ class AnnonceResponseBuilder
   AnnonceResponseStatusEnum? get status => _$this._status;
   set status(AnnonceResponseStatusEnum? status) => _$this._status = status;
 
+  String? _suspensionReason;
+  String? get suspensionReason => _$this._suspensionReason;
+  set suspensionReason(String? suspensionReason) =>
+      _$this._suspensionReason = suspensionReason;
+
   int? _tierRank;
   int? get tierRank => _$this._tierRank;
   set tierRank(int? tierRank) => _$this._tierRank = tierRank;
@@ -486,6 +715,16 @@ class AnnonceResponseBuilder
       _$this._photoKeys ??= ListBuilder<String>();
   set photoKeys(ListBuilder<String>? photoKeys) =>
       _$this._photoKeys = photoKeys;
+
+  SetBuilder<AnnonceResponseAmenitiesEnum>? _amenities;
+  SetBuilder<AnnonceResponseAmenitiesEnum> get amenities =>
+      _$this._amenities ??= SetBuilder<AnnonceResponseAmenitiesEnum>();
+  set amenities(SetBuilder<AnnonceResponseAmenitiesEnum>? amenities) =>
+      _$this._amenities = amenities;
+
+  int? _viewCount;
+  int? get viewCount => _$this._viewCount;
+  set viewCount(int? viewCount) => _$this._viewCount = viewCount;
 
   DateTime? _publishedAt;
   DateTime? get publishedAt => _$this._publishedAt;
@@ -517,6 +756,8 @@ class AnnonceResponseBuilder
       _exactAddress = $v.exactAddress;
       _latitude = $v.latitude;
       _longitude = $v.longitude;
+      _price = $v.price;
+      _rentalPeriod = $v.rentalPeriod;
       _monthlyRent = $v.monthlyRent;
       _chargesIncluded = $v.chargesIncluded;
       _chargesAmount = $v.chargesAmount;
@@ -527,8 +768,11 @@ class AnnonceResponseBuilder
       _availableFrom = $v.availableFrom;
       _description = $v.description;
       _status = $v.status;
+      _suspensionReason = $v.suspensionReason;
       _tierRank = $v.tierRank;
       _photoKeys = $v.photoKeys?.toBuilder();
+      _amenities = $v.amenities?.toBuilder();
+      _viewCount = $v.viewCount;
       _publishedAt = $v.publishedAt;
       _expiresAt = $v.expiresAt;
       _createdAt = $v.createdAt;
@@ -567,6 +811,8 @@ class AnnonceResponseBuilder
             exactAddress: exactAddress,
             latitude: latitude,
             longitude: longitude,
+            price: price,
+            rentalPeriod: rentalPeriod,
             monthlyRent: monthlyRent,
             chargesIncluded: chargesIncluded,
             chargesAmount: chargesAmount,
@@ -577,8 +823,11 @@ class AnnonceResponseBuilder
             availableFrom: availableFrom,
             description: description,
             status: status,
+            suspensionReason: suspensionReason,
             tierRank: tierRank,
             photoKeys: _photoKeys?.build(),
+            amenities: _amenities?.build(),
+            viewCount: viewCount,
             publishedAt: publishedAt,
             expiresAt: expiresAt,
             createdAt: createdAt,
@@ -588,6 +837,8 @@ class AnnonceResponseBuilder
       try {
         _$failedField = 'photoKeys';
         _photoKeys?.build();
+        _$failedField = 'amenities';
+        _amenities?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'AnnonceResponse',

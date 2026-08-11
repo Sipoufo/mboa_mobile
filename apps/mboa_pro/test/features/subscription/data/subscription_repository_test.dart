@@ -52,7 +52,7 @@ void main() {
   group('myPlan', () {
     test('maps the tier and period', () async {
       final end = DateTime.utc(2026, 9, 1);
-      when(() => api.mySubscription()).thenAnswer(
+      when(() => api.getMySubscription()).thenAnswer(
         (_) async => ok(
           SubscriptionResponse((b) => b
             ..tier = SubscriptionResponseTierEnum.PRO
@@ -69,14 +69,14 @@ void main() {
     });
 
     test('treats a missing body as the free tier, not an error', () async {
-      when(() => api.mySubscription())
+      when(() => api.getMySubscription())
           .thenAnswer((_) async => okEmpty<SubscriptionResponse>());
 
       expect((await repository.myPlan()).tier, SubscriptionTier.gratuit);
     });
 
     test('maps an unrecognised tier down to Gratuit', () async {
-      when(() => api.mySubscription()).thenAnswer(
+      when(() => api.getMySubscription()).thenAnswer(
         (_) async => ok(SubscriptionResponse((b) => b..tier = null)),
       );
 
@@ -87,7 +87,7 @@ void main() {
 
   group('tiers', () {
     test('sorts by rank, cheapest first', () async {
-      when(() => api.tiers()).thenAnswer(
+      when(() => api.listSubscriptionTiers()).thenAnswer(
         (_) async => ok(
           BuiltList<TierInfo>([
             TierInfo((b) => b
@@ -224,7 +224,7 @@ void main() {
   });
 
   test('receiptUrl returns the signed download link', () async {
-    when(() => api.receipt(id: 'pay-1')).thenAnswer(
+    when(() => api.getPaymentReceipt(id: 'pay-1')).thenAnswer(
       (_) async => ok(
         ReceiptResponse((b) => b..downloadUrl = 'https://r2/receipt.pdf'),
       ),

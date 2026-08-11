@@ -37,7 +37,7 @@ class AdminTypeChangeApi {
   ///
   /// Returns a [Future] containing a [Response] with a [TypeChangeReviewResult] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<TypeChangeReviewResult>> approve({ 
+  Future<Response<TypeChangeReviewResult>> approveTypeChangeRequest({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -118,7 +118,7 @@ class AdminTypeChangeApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseTypeChangeReviewItem] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseTypeChangeReviewItem>> listPending({ 
+  Future<Response<PageResponseTypeChangeReviewItem>> listPendingTypeChangeRequests({ 
     required Pageable pageable,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -205,7 +205,7 @@ class AdminTypeChangeApi {
   ///
   /// Returns a [Future] containing a [Response] with a [TypeChangeReviewResult] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<TypeChangeReviewResult>> reject({ 
+  Future<Response<TypeChangeReviewResult>> rejectTypeChangeRequest({ 
     required String id,
     required RejectTypeChangeRequest rejectTypeChangeRequest,
     CancelToken? cancelToken,

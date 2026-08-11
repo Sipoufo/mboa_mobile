@@ -38,7 +38,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> archiveAll({ 
+  Future<Response<ResidenceResponse>> archiveResidenceUnits({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -119,7 +119,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> create({ 
+  Future<Response<ResidenceResponse>> createResidence({ 
     required CreateResidenceRequest createResidenceRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -220,7 +220,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> delete({ 
+  Future<Response<void>> deleteResidence({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -273,7 +273,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> getOne({ 
+  Future<Response<ResidenceResponse>> getMyResidence({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -354,7 +354,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseResidenceResponse>> listMine({ 
+  Future<Response<PageResponseResidenceResponse>> listMyResidences({ 
     required Pageable pageable,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -440,7 +440,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> publishAll({ 
+  Future<Response<ResidenceResponse>> publishResidenceUnits({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -521,7 +521,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> rentAll({ 
+  Future<Response<ResidenceResponse>> rentResidenceUnits({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -602,7 +602,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> reserveAll({ 
+  Future<Response<ResidenceResponse>> reserveResidenceUnits({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -683,7 +683,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> unarchiveAll({ 
+  Future<Response<ResidenceResponse>> unarchiveResidenceUnits({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -765,7 +765,7 @@ class ResidencesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ResidenceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ResidenceResponse>> update({ 
+  Future<Response<ResidenceResponse>> updateResidence({ 
     required String id,
     required UpdateResidenceRequest updateResidenceRequest,
     CancelToken? cancelToken,

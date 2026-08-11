@@ -15,6 +15,8 @@ part 'unit_group.g.dart';
 /// * [propertyType] 
 /// * [count] 
 /// * [namePrefix] 
+/// * [price] 
+/// * [rentalPeriod] 
 /// * [monthlyRent] 
 /// * [chargesIncluded] 
 /// * [chargesAmount] 
@@ -35,8 +37,15 @@ abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
   @BuiltValueField(wireName: r'namePrefix')
   String get namePrefix;
 
+  @BuiltValueField(wireName: r'price')
+  int? get price;
+
+  @BuiltValueField(wireName: r'rentalPeriod')
+  UnitGroupRentalPeriodEnum? get rentalPeriod;
+  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+
   @BuiltValueField(wireName: r'monthlyRent')
-  int get monthlyRent;
+  int? get monthlyRent;
 
   @BuiltValueField(wireName: r'chargesIncluded')
   bool? get chargesIncluded;
@@ -97,11 +106,27 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
       object.namePrefix,
       specifiedType: const FullType(String),
     );
-    yield r'monthlyRent';
-    yield serializers.serialize(
-      object.monthlyRent,
-      specifiedType: const FullType(int),
-    );
+    if (object.price != null) {
+      yield r'price';
+      yield serializers.serialize(
+        object.price,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.rentalPeriod != null) {
+      yield r'rentalPeriod';
+      yield serializers.serialize(
+        object.rentalPeriod,
+        specifiedType: const FullType(UnitGroupRentalPeriodEnum),
+      );
+    }
+    if (object.monthlyRent != null) {
+      yield r'monthlyRent';
+      yield serializers.serialize(
+        object.monthlyRent,
+        specifiedType: const FullType(int),
+      );
+    }
     if (object.chargesIncluded != null) {
       yield r'chargesIncluded';
       yield serializers.serialize(
@@ -195,11 +220,28 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
           ) as String;
           result.namePrefix = valueDes;
           break;
+        case r'price':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.price = valueDes;
+          break;
+        case r'rentalPeriod':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(UnitGroupRentalPeriodEnum),
+          ) as UnitGroupRentalPeriodEnum?;
+          if (valueDes == null) continue;
+          result.rentalPeriod = valueDes;
+          break;
         case r'monthlyRent':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
           result.monthlyRent = valueDes;
           break;
         case r'chargesIncluded':
@@ -310,5 +352,24 @@ class UnitGroupPropertyTypeEnum extends EnumClass {
 
   static BuiltSet<UnitGroupPropertyTypeEnum> get values => _$unitGroupPropertyTypeEnumValues;
   static UnitGroupPropertyTypeEnum valueOf(String name) => _$unitGroupPropertyTypeEnumValueOf(name);
+}
+
+class UnitGroupRentalPeriodEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'MONTH')
+  static const UnitGroupRentalPeriodEnum MONTH = _$unitGroupRentalPeriodEnum_MONTH;
+  @BuiltValueEnumConst(wireName: r'QUARTER')
+  static const UnitGroupRentalPeriodEnum QUARTER = _$unitGroupRentalPeriodEnum_QUARTER;
+  @BuiltValueEnumConst(wireName: r'YEAR')
+  static const UnitGroupRentalPeriodEnum YEAR = _$unitGroupRentalPeriodEnum_YEAR;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const UnitGroupRentalPeriodEnum unknownDefaultOpenApi = _$unitGroupRentalPeriodEnum_unknownDefaultOpenApi;
+
+  static Serializer<UnitGroupRentalPeriodEnum> get serializer => _$unitGroupRentalPeriodEnumSerializer;
+
+  const UnitGroupRentalPeriodEnum._(String name): super(name);
+
+  static BuiltSet<UnitGroupRentalPeriodEnum> get values => _$unitGroupRentalPeriodEnumValues;
+  static UnitGroupRentalPeriodEnum valueOf(String name) => _$unitGroupRentalPeriodEnumValueOf(name);
 }
 

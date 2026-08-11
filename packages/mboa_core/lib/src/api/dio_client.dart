@@ -78,7 +78,7 @@ class DioClient {
   /// domain [AuthTokens]. Returns `null` if the refresh token is rejected.
   Future<AuthTokens?> _refreshTokens(String refreshToken) async {
     try {
-      final response = await AuthenticationApi(_bareDio, standardSerializers).refresh(
+      final response = await AuthenticationApi(_bareDio, standardSerializers).refreshToken(
         refreshTokenRequest: RefreshTokenRequest((b) => b..refreshToken = refreshToken),
       );
       final pair = response.data;

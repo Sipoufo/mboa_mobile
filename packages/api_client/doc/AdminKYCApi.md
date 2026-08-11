@@ -9,13 +9,13 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**approve1**](AdminKYCApi.md#approve1) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
-[**listPending1**](AdminKYCApi.md#listpending1) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
-[**reject1**](AdminKYCApi.md#reject1) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
+[**approveKycSubmission**](AdminKYCApi.md#approvekycsubmission) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
+[**listPendingKycSubmissions**](AdminKYCApi.md#listpendingkycsubmissions) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
+[**rejectKycSubmission**](AdminKYCApi.md#rejectkycsubmission) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
 
 
-# **approve1**
-> KycStatusResponse approve1(id)
+# **approveKycSubmission**
+> KycStatusResponse approveKycSubmission(id)
 
 Approve a KYC submission and activate the account
 
@@ -27,10 +27,10 @@ final api = ApiClient().getAdminKYCApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.approve1(id);
+    final response = api.approveKycSubmission(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AdminKYCApi->approve1: $e\n');
+    print('Exception when calling AdminKYCApi->approveKycSubmission: $e\n');
 }
 ```
 
@@ -55,8 +55,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listPending1**
-> PageResponseKycReviewItem listPending1(pageable)
+# **listPendingKycSubmissions**
+> PageResponseKycReviewItem listPendingKycSubmissions(pageable)
 
 List pending KYC submissions (with pre-signed document URLs)
 
@@ -68,10 +68,10 @@ final api = ApiClient().getAdminKYCApi();
 final Pageable pageable = ; // Pageable | 
 
 try {
-    final response = api.listPending1(pageable);
+    final response = api.listPendingKycSubmissions(pageable);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AdminKYCApi->listPending1: $e\n');
+    print('Exception when calling AdminKYCApi->listPendingKycSubmissions: $e\n');
 }
 ```
 
@@ -96,8 +96,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **reject1**
-> KycStatusResponse reject1(id, rejectKycRequest)
+# **rejectKycSubmission**
+> KycStatusResponse rejectKycSubmission(id, rejectKycRequest)
 
 Reject a KYC submission with a reason
 
@@ -110,10 +110,10 @@ final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final RejectKycRequest rejectKycRequest = ; // RejectKycRequest | 
 
 try {
-    final response = api.reject1(id, rejectKycRequest);
+    final response = api.rejectKycSubmission(id, rejectKycRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AdminKYCApi->reject1: $e\n');
+    print('Exception when calling AdminKYCApi->rejectKycSubmission: $e\n');
 }
 ```
 

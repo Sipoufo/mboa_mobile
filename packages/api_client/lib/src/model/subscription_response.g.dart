@@ -97,13 +97,22 @@ class _$SubscriptionResponse extends SubscriptionResponse {
   final DateTime? periodEnd;
   @override
   final int? activeListingLimit;
+  @override
+  final String? currentPaymentId;
+  @override
+  final bool? currentPaymentHasReceipt;
 
   factory _$SubscriptionResponse([
     void Function(SubscriptionResponseBuilder)? updates,
   ]) => (SubscriptionResponseBuilder()..update(updates))._build();
 
-  _$SubscriptionResponse._({this.tier, this.periodEnd, this.activeListingLimit})
-    : super._();
+  _$SubscriptionResponse._({
+    this.tier,
+    this.periodEnd,
+    this.activeListingLimit,
+    this.currentPaymentId,
+    this.currentPaymentHasReceipt,
+  }) : super._();
   @override
   SubscriptionResponse rebuild(
     void Function(SubscriptionResponseBuilder) updates,
@@ -119,7 +128,9 @@ class _$SubscriptionResponse extends SubscriptionResponse {
     return other is SubscriptionResponse &&
         tier == other.tier &&
         periodEnd == other.periodEnd &&
-        activeListingLimit == other.activeListingLimit;
+        activeListingLimit == other.activeListingLimit &&
+        currentPaymentId == other.currentPaymentId &&
+        currentPaymentHasReceipt == other.currentPaymentHasReceipt;
   }
 
   @override
@@ -128,6 +139,8 @@ class _$SubscriptionResponse extends SubscriptionResponse {
     _$hash = $jc(_$hash, tier.hashCode);
     _$hash = $jc(_$hash, periodEnd.hashCode);
     _$hash = $jc(_$hash, activeListingLimit.hashCode);
+    _$hash = $jc(_$hash, currentPaymentId.hashCode);
+    _$hash = $jc(_$hash, currentPaymentHasReceipt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -137,7 +150,9 @@ class _$SubscriptionResponse extends SubscriptionResponse {
     return (newBuiltValueToStringHelper(r'SubscriptionResponse')
           ..add('tier', tier)
           ..add('periodEnd', periodEnd)
-          ..add('activeListingLimit', activeListingLimit))
+          ..add('activeListingLimit', activeListingLimit)
+          ..add('currentPaymentId', currentPaymentId)
+          ..add('currentPaymentHasReceipt', currentPaymentHasReceipt))
         .toString();
   }
 }
@@ -159,6 +174,16 @@ class SubscriptionResponseBuilder
   set activeListingLimit(int? activeListingLimit) =>
       _$this._activeListingLimit = activeListingLimit;
 
+  String? _currentPaymentId;
+  String? get currentPaymentId => _$this._currentPaymentId;
+  set currentPaymentId(String? currentPaymentId) =>
+      _$this._currentPaymentId = currentPaymentId;
+
+  bool? _currentPaymentHasReceipt;
+  bool? get currentPaymentHasReceipt => _$this._currentPaymentHasReceipt;
+  set currentPaymentHasReceipt(bool? currentPaymentHasReceipt) =>
+      _$this._currentPaymentHasReceipt = currentPaymentHasReceipt;
+
   SubscriptionResponseBuilder() {
     SubscriptionResponse._defaults(this);
   }
@@ -169,6 +194,8 @@ class SubscriptionResponseBuilder
       _tier = $v.tier;
       _periodEnd = $v.periodEnd;
       _activeListingLimit = $v.activeListingLimit;
+      _currentPaymentId = $v.currentPaymentId;
+      _currentPaymentHasReceipt = $v.currentPaymentHasReceipt;
       _$v = null;
     }
     return this;
@@ -194,6 +221,8 @@ class SubscriptionResponseBuilder
           tier: tier,
           periodEnd: periodEnd,
           activeListingLimit: activeListingLimit,
+          currentPaymentId: currentPaymentId,
+          currentPaymentHasReceipt: currentPaymentHasReceipt,
         );
     replace(_$result);
     return _$result;

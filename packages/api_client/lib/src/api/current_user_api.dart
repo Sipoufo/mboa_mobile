@@ -32,7 +32,7 @@ class CurrentUserApi {
   ///
   /// Returns a [Future] containing a [Response] with a [MeResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<MeResponse>> me({ 
+  Future<Response<MeResponse>> getMe({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,

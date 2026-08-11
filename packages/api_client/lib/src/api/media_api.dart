@@ -34,7 +34,7 @@ class MediaApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PresignedUpload] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PresignedUpload>> createUpload({ 
+  Future<Response<PresignedUpload>> createMediaUpload({ 
     required CreateUploadRequest createUploadRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

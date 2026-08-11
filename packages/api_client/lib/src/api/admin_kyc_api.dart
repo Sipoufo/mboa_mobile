@@ -37,7 +37,7 @@ class AdminKYCApi {
   ///
   /// Returns a [Future] containing a [Response] with a [KycStatusResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<KycStatusResponse>> approve1({ 
+  Future<Response<KycStatusResponse>> approveKycSubmission({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -118,7 +118,7 @@ class AdminKYCApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseKycReviewItem] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseKycReviewItem>> listPending1({ 
+  Future<Response<PageResponseKycReviewItem>> listPendingKycSubmissions({ 
     required Pageable pageable,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -205,7 +205,7 @@ class AdminKYCApi {
   ///
   /// Returns a [Future] containing a [Response] with a [KycStatusResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<KycStatusResponse>> reject1({ 
+  Future<Response<KycStatusResponse>> rejectKycSubmission({ 
     required String id,
     required RejectKycRequest rejectKycRequest,
     CancelToken? cancelToken,

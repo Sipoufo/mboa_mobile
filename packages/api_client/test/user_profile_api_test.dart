@@ -9,15 +9,15 @@ void main() {
   group(UserProfileApi, () {
     // Get the authenticated user's profile
     //
-    //Future<UserProfileResponse> myProfile() async
-    test('test myProfile', () async {
+    //Future<UserProfileResponse> getMyUserProfile() async
+    test('test getMyUserProfile', () async {
       // TODO
     });
 
     // Partially update the authenticated user's profile
     //
-    //Future<UserProfileResponse> updateMyProfile(UpdateUserProfileRequest updateUserProfileRequest) async
-    test('test updateMyProfile', () async {
+    //Future<UserProfileResponse> updateMyUserProfile(UpdateUserProfileRequest updateUserProfileRequest) async
+    test('test updateMyUserProfile', () async {
       // TODO
     });
 

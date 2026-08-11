@@ -19,6 +19,8 @@ part 'update_annonce_request.g.dart';
 /// * [exactAddress] 
 /// * [latitude] 
 /// * [longitude] 
+/// * [price] 
+/// * [rentalPeriod] 
 /// * [monthlyRent] 
 /// * [chargesIncluded] 
 /// * [chargesAmount] 
@@ -29,6 +31,7 @@ part 'update_annonce_request.g.dart';
 /// * [availableFrom] 
 /// * [description] 
 /// * [photoKeys] 
+/// * [amenities] 
 @BuiltValue()
 abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, UpdateAnnonceRequestBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -49,6 +52,13 @@ abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, Updat
 
   @BuiltValueField(wireName: r'longitude')
   double? get longitude;
+
+  @BuiltValueField(wireName: r'price')
+  int? get price;
+
+  @BuiltValueField(wireName: r'rentalPeriod')
+  UpdateAnnonceRequestRentalPeriodEnum? get rentalPeriod;
+  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -79,6 +89,10 @@ abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, Updat
 
   @BuiltValueField(wireName: r'photoKeys')
   BuiltList<String>? get photoKeys;
+
+  @BuiltValueField(wireName: r'amenities')
+  BuiltSet<UpdateAnnonceRequestAmenitiesEnum>? get amenities;
+  // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
 
   UpdateAnnonceRequest._();
 
@@ -143,6 +157,20 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
       yield serializers.serialize(
         object.longitude,
         specifiedType: const FullType(double),
+      );
+    }
+    if (object.price != null) {
+      yield r'price';
+      yield serializers.serialize(
+        object.price,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.rentalPeriod != null) {
+      yield r'rentalPeriod';
+      yield serializers.serialize(
+        object.rentalPeriod,
+        specifiedType: const FullType(UpdateAnnonceRequestRentalPeriodEnum),
       );
     }
     if (object.monthlyRent != null) {
@@ -215,6 +243,13 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
         specifiedType: const FullType(BuiltList, [FullType(String)]),
       );
     }
+    if (object.amenities != null) {
+      yield r'amenities';
+      yield serializers.serialize(
+        object.amenities,
+        specifiedType: const FullType(BuiltSet, [FullType(UpdateAnnonceRequestAmenitiesEnum)]),
+      );
+    }
   }
 
   @override
@@ -285,6 +320,22 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
           ) as double?;
           if (valueDes == null) continue;
           result.longitude = valueDes;
+          break;
+        case r'price':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.price = valueDes;
+          break;
+        case r'rentalPeriod':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(UpdateAnnonceRequestRentalPeriodEnum),
+          ) as UpdateAnnonceRequestRentalPeriodEnum?;
+          if (valueDes == null) continue;
+          result.rentalPeriod = valueDes;
           break;
         case r'monthlyRent':
           final valueDes = serializers.deserialize(
@@ -366,6 +417,14 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
           if (valueDes == null) continue;
           result.photoKeys.replace(valueDes);
           break;
+        case r'amenities':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltSet, [FullType(UpdateAnnonceRequestAmenitiesEnum)]),
+          ) as BuiltSet<UpdateAnnonceRequestAmenitiesEnum>?;
+          if (valueDes == null) continue;
+          result.amenities.replace(valueDes);
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -418,5 +477,49 @@ class UpdateAnnonceRequestPropertyTypeEnum extends EnumClass {
 
   static BuiltSet<UpdateAnnonceRequestPropertyTypeEnum> get values => _$updateAnnonceRequestPropertyTypeEnumValues;
   static UpdateAnnonceRequestPropertyTypeEnum valueOf(String name) => _$updateAnnonceRequestPropertyTypeEnumValueOf(name);
+}
+
+class UpdateAnnonceRequestRentalPeriodEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'MONTH')
+  static const UpdateAnnonceRequestRentalPeriodEnum MONTH = _$updateAnnonceRequestRentalPeriodEnum_MONTH;
+  @BuiltValueEnumConst(wireName: r'QUARTER')
+  static const UpdateAnnonceRequestRentalPeriodEnum QUARTER = _$updateAnnonceRequestRentalPeriodEnum_QUARTER;
+  @BuiltValueEnumConst(wireName: r'YEAR')
+  static const UpdateAnnonceRequestRentalPeriodEnum YEAR = _$updateAnnonceRequestRentalPeriodEnum_YEAR;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const UpdateAnnonceRequestRentalPeriodEnum unknownDefaultOpenApi = _$updateAnnonceRequestRentalPeriodEnum_unknownDefaultOpenApi;
+
+  static Serializer<UpdateAnnonceRequestRentalPeriodEnum> get serializer => _$updateAnnonceRequestRentalPeriodEnumSerializer;
+
+  const UpdateAnnonceRequestRentalPeriodEnum._(String name): super(name);
+
+  static BuiltSet<UpdateAnnonceRequestRentalPeriodEnum> get values => _$updateAnnonceRequestRentalPeriodEnumValues;
+  static UpdateAnnonceRequestRentalPeriodEnum valueOf(String name) => _$updateAnnonceRequestRentalPeriodEnumValueOf(name);
+}
+
+class UpdateAnnonceRequestAmenitiesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'AIR_CONDITIONING')
+  static const UpdateAnnonceRequestAmenitiesEnum AIR_CONDITIONING = _$updateAnnonceRequestAmenitiesEnum_AIR_CONDITIONING;
+  @BuiltValueEnumConst(wireName: r'HOT_WATER')
+  static const UpdateAnnonceRequestAmenitiesEnum HOT_WATER = _$updateAnnonceRequestAmenitiesEnum_HOT_WATER;
+  @BuiltValueEnumConst(wireName: r'GENERATOR')
+  static const UpdateAnnonceRequestAmenitiesEnum GENERATOR = _$updateAnnonceRequestAmenitiesEnum_GENERATOR;
+  @BuiltValueEnumConst(wireName: r'SECURITY_GUARD')
+  static const UpdateAnnonceRequestAmenitiesEnum SECURITY_GUARD = _$updateAnnonceRequestAmenitiesEnum_SECURITY_GUARD;
+  @BuiltValueEnumConst(wireName: r'PARKING')
+  static const UpdateAnnonceRequestAmenitiesEnum PARKING = _$updateAnnonceRequestAmenitiesEnum_PARKING;
+  @BuiltValueEnumConst(wireName: r'WIFI')
+  static const UpdateAnnonceRequestAmenitiesEnum WIFI = _$updateAnnonceRequestAmenitiesEnum_WIFI;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const UpdateAnnonceRequestAmenitiesEnum unknownDefaultOpenApi = _$updateAnnonceRequestAmenitiesEnum_unknownDefaultOpenApi;
+
+  static Serializer<UpdateAnnonceRequestAmenitiesEnum> get serializer => _$updateAnnonceRequestAmenitiesEnumSerializer;
+
+  const UpdateAnnonceRequestAmenitiesEnum._(String name): super(name);
+
+  static BuiltSet<UpdateAnnonceRequestAmenitiesEnum> get values => _$updateAnnonceRequestAmenitiesEnumValues;
+  static UpdateAnnonceRequestAmenitiesEnum valueOf(String name) => _$updateAnnonceRequestAmenitiesEnumValueOf(name);
 }
 

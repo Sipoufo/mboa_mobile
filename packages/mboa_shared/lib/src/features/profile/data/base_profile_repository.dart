@@ -16,8 +16,8 @@ class BaseProfileRepository implements ProfileRepository<BaseProfile, BaseProfil
 
   @override
   Future<BaseProfile> load() async {
-    final me = (await _api.getCurrentUserApi().me()).data;
-    final user = (await _api.getUserProfileApi().myProfile()).data;
+    final me = (await _api.getCurrentUserApi().getMe()).data;
+    final user = (await _api.getUserProfileApi().getMyUserProfile()).data;
     return BaseProfile(
       email: me?.email,
       phoneNumber: me?.phoneNumber,
@@ -32,7 +32,7 @@ class BaseProfileRepository implements ProfileRepository<BaseProfile, BaseProfil
 
   @override
   Future<BaseProfile> save(BaseProfileEdit edit) async {
-    await _api.getUserProfileApi().updateMyProfile(
+    await _api.getUserProfileApi().updateMyUserProfile(
           updateUserProfileRequest: UpdateUserProfileRequest((b) => b
             ..firstName = edit.firstName
             ..lastName = edit.lastName
@@ -45,7 +45,7 @@ class BaseProfileRepository implements ProfileRepository<BaseProfile, BaseProfil
   Future<BaseProfile> updatePhoto(String objectKey) async {
     // The update DTO fields are all optional (partial update), so sending only
     // the photo key leaves the other fields untouched.
-    await _api.getUserProfileApi().updateMyProfile(
+    await _api.getUserProfileApi().updateMyUserProfile(
           updateUserProfileRequest: UpdateUserProfileRequest((b) => b..photoObjectKey = objectKey),
         );
     return load();

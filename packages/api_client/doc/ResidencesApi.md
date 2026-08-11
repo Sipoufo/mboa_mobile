@@ -9,20 +9,20 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archiveAll**](ResidencesApi.md#archiveall) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
-[**create**](ResidencesApi.md#create) | **POST** /api/v1/residences | Bulk-create a residence and its units (drafts)
-[**delete**](ResidencesApi.md#delete) | **DELETE** /api/v1/residences/{id} | Delete a residence and all its units
-[**getOne**](ResidencesApi.md#getone) | **GET** /api/v1/residences/{id} | Get a residence with its units
-[**listMine**](ResidencesApi.md#listmine) | **GET** /api/v1/residences | List the authenticated prestataire&#39;s residences
-[**publishAll**](ResidencesApi.md#publishall) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
-[**rentAll**](ResidencesApi.md#rentall) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
-[**reserveAll**](ResidencesApi.md#reserveall) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
-[**unarchiveAll**](ResidencesApi.md#unarchiveall) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
-[**update**](ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
+[**archiveResidenceUnits**](ResidencesApi.md#archiveresidenceunits) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
+[**createResidence**](ResidencesApi.md#createresidence) | **POST** /api/v1/residences | Bulk-create a residence and its units (drafts)
+[**deleteResidence**](ResidencesApi.md#deleteresidence) | **DELETE** /api/v1/residences/{id} | Delete a residence and all its units
+[**getMyResidence**](ResidencesApi.md#getmyresidence) | **GET** /api/v1/residences/{id} | Get a residence with its units
+[**listMyResidences**](ResidencesApi.md#listmyresidences) | **GET** /api/v1/residences | List the authenticated prestataire&#39;s residences
+[**publishResidenceUnits**](ResidencesApi.md#publishresidenceunits) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
+[**rentResidenceUnits**](ResidencesApi.md#rentresidenceunits) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
+[**reserveResidenceUnits**](ResidencesApi.md#reserveresidenceunits) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
+[**unarchiveResidenceUnits**](ResidencesApi.md#unarchiveresidenceunits) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
+[**updateResidence**](ResidencesApi.md#updateresidence) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
 
 
-# **archiveAll**
-> ResidenceResponse archiveAll(id)
+# **archiveResidenceUnits**
+> ResidenceResponse archiveResidenceUnits(id)
 
 Archive all units at once
 
@@ -34,10 +34,10 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.archiveAll(id);
+    final response = api.archiveResidenceUnits(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->archiveAll: $e\n');
+    print('Exception when calling ResidencesApi->archiveResidenceUnits: $e\n');
 }
 ```
 
@@ -62,8 +62,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create**
-> ResidenceResponse create(createResidenceRequest)
+# **createResidence**
+> ResidenceResponse createResidence(createResidenceRequest)
 
 Bulk-create a residence and its units (drafts)
 
@@ -75,10 +75,10 @@ final api = ApiClient().getResidencesApi();
 final CreateResidenceRequest createResidenceRequest = ; // CreateResidenceRequest | 
 
 try {
-    final response = api.create(createResidenceRequest);
+    final response = api.createResidence(createResidenceRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->create: $e\n');
+    print('Exception when calling ResidencesApi->createResidence: $e\n');
 }
 ```
 
@@ -103,8 +103,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete**
-> delete(id)
+# **deleteResidence**
+> deleteResidence(id)
 
 Delete a residence and all its units
 
@@ -116,9 +116,9 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    api.delete(id);
+    api.deleteResidence(id);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->delete: $e\n');
+    print('Exception when calling ResidencesApi->deleteResidence: $e\n');
 }
 ```
 
@@ -143,8 +143,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getOne**
-> ResidenceResponse getOne(id)
+# **getMyResidence**
+> ResidenceResponse getMyResidence(id)
 
 Get a residence with its units
 
@@ -156,10 +156,10 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.getOne(id);
+    final response = api.getMyResidence(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->getOne: $e\n');
+    print('Exception when calling ResidencesApi->getMyResidence: $e\n');
 }
 ```
 
@@ -184,8 +184,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listMine**
-> PageResponseResidenceResponse listMine(pageable)
+# **listMyResidences**
+> PageResponseResidenceResponse listMyResidences(pageable)
 
 List the authenticated prestataire's residences
 
@@ -197,10 +197,10 @@ final api = ApiClient().getResidencesApi();
 final Pageable pageable = ; // Pageable | 
 
 try {
-    final response = api.listMine(pageable);
+    final response = api.listMyResidences(pageable);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->listMine: $e\n');
+    print('Exception when calling ResidencesApi->listMyResidences: $e\n');
 }
 ```
 
@@ -225,8 +225,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **publishAll**
-> ResidenceResponse publishAll(id)
+# **publishResidenceUnits**
+> ResidenceResponse publishResidenceUnits(id)
 
 Publish all draft units at once
 
@@ -238,10 +238,10 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.publishAll(id);
+    final response = api.publishResidenceUnits(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->publishAll: $e\n');
+    print('Exception when calling ResidencesApi->publishResidenceUnits: $e\n');
 }
 ```
 
@@ -266,8 +266,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **rentAll**
-> ResidenceResponse rentAll(id)
+# **rentResidenceUnits**
+> ResidenceResponse rentResidenceUnits(id)
 
 Mark all live units (published or reserved) as rented at once
 
@@ -279,10 +279,10 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.rentAll(id);
+    final response = api.rentResidenceUnits(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->rentAll: $e\n');
+    print('Exception when calling ResidencesApi->rentResidenceUnits: $e\n');
 }
 ```
 
@@ -307,8 +307,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **reserveAll**
-> ResidenceResponse reserveAll(id)
+# **reserveResidenceUnits**
+> ResidenceResponse reserveResidenceUnits(id)
 
 Reserve all published units at once
 
@@ -320,10 +320,10 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.reserveAll(id);
+    final response = api.reserveResidenceUnits(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->reserveAll: $e\n');
+    print('Exception when calling ResidencesApi->reserveResidenceUnits: $e\n');
 }
 ```
 
@@ -348,8 +348,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **unarchiveAll**
-> ResidenceResponse unarchiveAll(id)
+# **unarchiveResidenceUnits**
+> ResidenceResponse unarchiveResidenceUnits(id)
 
 Return all archived units to draft so the residence can be published again (RM-M10-08)
 
@@ -361,10 +361,10 @@ final api = ApiClient().getResidencesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.unarchiveAll(id);
+    final response = api.unarchiveResidenceUnits(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->unarchiveAll: $e\n');
+    print('Exception when calling ResidencesApi->unarchiveResidenceUnits: $e\n');
 }
 ```
 
@@ -389,8 +389,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update**
-> ResidenceResponse update(id, updateResidenceRequest)
+# **updateResidence**
+> ResidenceResponse updateResidence(id, updateResidenceRequest)
 
 Update the residence's shared attributes (cascades to units)
 
@@ -403,10 +403,10 @@ final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final UpdateResidenceRequest updateResidenceRequest = ; // UpdateResidenceRequest | 
 
 try {
-    final response = api.update(id, updateResidenceRequest);
+    final response = api.updateResidence(id, updateResidenceRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling ResidencesApi->update: $e\n');
+    print('Exception when calling ResidencesApi->updateResidence: $e\n');
 }
 ```
 

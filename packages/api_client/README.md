@@ -65,28 +65,80 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 [*AccountApi*](doc/AccountApi.md) | [**deleteMyAccount**](doc/AccountApi.md#deletemyaccount) | **DELETE** /api/v1/account | Delete the authenticated account (RGPD): anonymises personal data
-[*AdminKYCApi*](doc/AdminKYCApi.md) | [**approve1**](doc/AdminKYCApi.md#approve1) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
-[*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPending1**](doc/AdminKYCApi.md#listpending1) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
-[*AdminKYCApi*](doc/AdminKYCApi.md) | [**reject1**](doc/AdminKYCApi.md#reject1) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
-[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grant**](doc/AdminSubscriptionsApi.md#grant) | **POST** /api/v1/admin/subscriptions | Grant a tier to an account for a number of days, without payment
+[*AdminAnnoncesApi*](doc/AdminAnnoncesApi.md) | [**listAdminAnnonces**](doc/AdminAnnoncesApi.md#listadminannonces) | **GET** /api/v1/admin/annonces | Search listings by title or owner phone/email, filtered by status
+[*AdminAnnoncesApi*](doc/AdminAnnoncesApi.md) | [**suspendAnnonce**](doc/AdminAnnoncesApi.md#suspendannonce) | **POST** /api/v1/admin/annonces/{id}/suspend | Suspend a listing with a reason; its owner is told (RM-M19-02, CA-M19-02)
+[*AdminAnnoncesApi*](doc/AdminAnnoncesApi.md) | [**updateAnnonceAsAdmin**](doc/AdminAnnoncesApi.md#updateannonceasadmin) | **PATCH** /api/v1/admin/annonces/{id} | Edit a listing&#39;s content directly; its owner is told what changed (RM-M19-05)
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**approveKycSubmission**](doc/AdminKYCApi.md#approvekycsubmission) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPendingKycSubmissions**](doc/AdminKYCApi.md#listpendingkycsubmissions) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**rejectKycSubmission**](doc/AdminKYCApi.md#rejectkycsubmission) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
+[*AdminModrationApi*](doc/AdminModrationApi.md) | [**listSignalements**](doc/AdminModrationApi.md#listsignalements) | **GET** /api/v1/admin/signalements | The moderation queue, oldest first; optionally filtered by status
+[*AdminModrationApi*](doc/AdminModrationApi.md) | [**rejectSignalement**](doc/AdminModrationApi.md#rejectsignalement) | **POST** /api/v1/admin/signalements/{id}/reject | Dismiss a report as a false positive
+[*AdminModrationApi*](doc/AdminModrationApi.md) | [**restoreAnnonce**](doc/AdminModrationApi.md#restoreannonce) | **POST** /api/v1/admin/annonces/{id}/restore | Restore a suspended listing (false positive — RM-M19-04)
+[*AdminModrationApi*](doc/AdminModrationApi.md) | [**validateSignalement**](doc/AdminModrationApi.md#validatesignalement) | **POST** /api/v1/admin/signalements/{id}/validate | Uphold a report; the 3rd upheld one on a listing suspends it automatically
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantSubscription**](doc/AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier to an account for a number of days, without payment
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updatePlan**](doc/AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
-[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approve**](doc/AdminTypeChangeApi.md#approve) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
-[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPending**](doc/AdminTypeChangeApi.md#listpending) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
-[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**reject**](doc/AdminTypeChangeApi.md#reject) | **POST** /api/v1/admin/type-change-requests/{id}/reject | Reject a type-change request with a reason
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**archive**](doc/AnnoncesApi.md#archive) | **POST** /api/v1/annonces/{id}/archive | Archive a listing
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**create1**](doc/AnnoncesApi.md#create1) | **POST** /api/v1/annonces | Create a listing (draft)
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**delete1**](doc/AnnoncesApi.md#delete1) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**getOne1**](doc/AnnoncesApi.md#getone1) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**listMine2**](doc/AnnoncesApi.md#listmine2) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**markRented**](doc/AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**publish**](doc/AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**reserve**](doc/AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**unarchive**](doc/AnnoncesApi.md#unarchive) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
-[*AnnoncesApi*](doc/AnnoncesApi.md) | [**update1**](doc/AnnoncesApi.md#update1) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
+[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approveTypeChangeRequest**](doc/AdminTypeChangeApi.md#approvetypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
+[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPendingTypeChangeRequests**](doc/AdminTypeChangeApi.md#listpendingtypechangerequests) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
+[*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**rejectTypeChangeRequest**](doc/AdminTypeChangeApi.md#rejecttypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/reject | Reject a type-change request with a reason
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**listAdminUsers**](doc/AdminUtilisateursApi.md#listadminusers) | **GET** /api/v1/admin/users | Search accounts by phone or email, with their subscription (RM-M18-01)
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**reactivateAccount**](doc/AdminUtilisateursApi.md#reactivateaccount) | **POST** /api/v1/admin/users/{id}/reactivate | Lift a suspension
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**suspendAccount**](doc/AdminUtilisateursApi.md#suspendaccount) | **POST** /api/v1/admin/users/{id}/suspend | Suspend an account; sessions are revoked at once (RM-M18-02)
+[*AgentApi*](doc/AgentApi.md) | [**blockMyAgentDay**](doc/AgentApi.md#blockmyagentday) | **POST** /api/v1/agents/me/days-off | Block a whole day off (congés — RM-M15-03)
+[*AgentApi*](doc/AgentApi.md) | [**getMyAgentAvailability**](doc/AgentApi.md#getmyagentavailability) | **GET** /api/v1/agents/me/availability | The agent&#39;s weekly working pattern, visit length and days off
+[*AgentApi*](doc/AgentApi.md) | [**getMyAgentProfile**](doc/AgentApi.md#getmyagentprofile) | **GET** /api/v1/agents/me | Get the authenticated agent&#39;s profile
+[*AgentApi*](doc/AgentApi.md) | [**listMyAgentDaysOff**](doc/AgentApi.md#listmyagentdaysoff) | **GET** /api/v1/agents/me/days-off | Days the agent has blocked off
+[*AgentApi*](doc/AgentApi.md) | [**unblockMyAgentDay**](doc/AgentApi.md#unblockmyagentday) | **DELETE** /api/v1/agents/me/days-off/{day} | Reopen a blocked day
+[*AgentApi*](doc/AgentApi.md) | [**updateMyAgentAvailability**](doc/AgentApi.md#updatemyagentavailability) | **PUT** /api/v1/agents/me/availability | Replace the weekly pattern, e.g. Mon-Sat 08:00-18:00 (RM-M15-01)
+[*AgentApi*](doc/AgentApi.md) | [**updateMyAgentProfile**](doc/AgentApi.md#updatemyagentprofile) | **PATCH** /api/v1/agents/me | Update the agent&#39;s profile; acceptingAssignments&#x3D;false is \&quot;Inactif\&quot; (RM-M15-05)
+[*AgentApi*](doc/AgentApi.md) | [**updateMyAgentZones**](doc/AgentApi.md#updatemyagentzones) | **PUT** /api/v1/agents/me/zones | Replace the agent&#39;s intervention zones — cities and/or districts (RM-M15-04)
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**acceptAgentAssignment**](doc/AgentAssignationsApi.md#acceptagentassignment) | **POST** /api/v1/agents/me/assignments/{id}/accept | Accept an offer; the listing can then offer visits (RM-M05-07)
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**acceptResidenceAssignment**](doc/AgentAssignationsApi.md#acceptresidenceassignment) | **POST** /api/v1/agents/me/assignments/residence/{residenceId}/accept | Accept a whole residence batch; answering unit by unit is the same tedium in reverse
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**applyToAnnonce**](doc/AgentAssignationsApi.md#applytoannonce) | **POST** /api/v1/agents/me/assignments/apply/{annonceId} | Apply to a listing; the prestataire still decides (RM-M11-04)
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**applyToResidence**](doc/AgentAssignationsApi.md#applytoresidence) | **POST** /api/v1/agents/me/assignments/apply/residence/{residenceId} | Apply to every open unit of a residence in one act (M11)
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**declineAgentAssignment**](doc/AgentAssignationsApi.md#declineagentassignment) | **POST** /api/v1/agents/me/assignments/{id}/decline | Decline an offer; the prestataire is told so they can ask someone else
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**declineResidenceAssignment**](doc/AgentAssignationsApi.md#declineresidenceassignment) | **POST** /api/v1/agents/me/assignments/residence/{residenceId}/decline | Decline a whole residence batch
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**listAgentOpportunities**](doc/AgentAssignationsApi.md#listagentopportunities) | **GET** /api/v1/agents/me/assignments/opportunities | What the agent may apply to: standalone listings and whole residences, in their zones
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**listMyAgentAssignments**](doc/AgentAssignationsApi.md#listmyagentassignments) | **GET** /api/v1/agents/me/assignments | Everything the agent holds, newest first — offers and accepted applications alike
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**resignAgentAssignment**](doc/AgentAssignationsApi.md#resignagentassignment) | **POST** /api/v1/agents/me/assignments/{id}/resign | Step down from an assignment already accepted; booked visits are cancelled
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**resignResidenceAssignment**](doc/AgentAssignationsApi.md#resignresidenceassignment) | **POST** /api/v1/agents/me/assignments/residence/{residenceId}/resign | Step down from a whole residence at once (RM-M10bis-10)
+[*AgentAssignationsApi*](doc/AgentAssignationsApi.md) | [**withdrawAgentApplication**](doc/AgentAssignationsApi.md#withdrawagentapplication) | **DELETE** /api/v1/agents/me/assignments/{id} | Withdraw an unanswered application (superseded by DELETE /agents/me/applications/{id})
+[*AgentCandidaturesApi*](doc/AgentCandidaturesApi.md) | [**listMyAgentApplications**](doc/AgentCandidaturesApi.md#listmyagentapplications) | **GET** /api/v1/agents/me/applications | Applications the agent has sent, newest first
+[*AgentCandidaturesApi*](doc/AgentCandidaturesApi.md) | [**withdrawMyAgentApplication**](doc/AgentCandidaturesApi.md#withdrawmyagentapplication) | **DELETE** /api/v1/agents/me/applications/{id} | Withdraw an application nobody has answered
+[*AgentCandidaturesApi*](doc/AgentCandidaturesApi.md) | [**withdrawResidenceApplication**](doc/AgentCandidaturesApi.md#withdrawresidenceapplication) | **DELETE** /api/v1/agents/me/applications/residence/{residenceId} | Withdraw a whole residence application at once (RM-M10bis-10)
+[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**cancelAgentVisite**](doc/AgentVisitesApi.md#cancelagentvisite) | **POST** /api/v1/agents/me/visites/{id}/cancel | Cancel a visit, up to one hour before the slot (RM-M16-04)
+[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**getMyAgentVisite**](doc/AgentVisitesApi.md#getmyagentvisite) | **GET** /api/v1/agents/me/visites/{id} | One visit in full: exact address, both contacts, whether it can start (RM-M16-01)
+[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**listMyAgentVisites**](doc/AgentVisitesApi.md#listmyagentvisites) | **GET** /api/v1/agents/me/visites | Visits assigned to the authenticated agent
+[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**listMyAgentVisitesToday**](doc/AgentVisitesApi.md#listmyagentvisitestoday) | **GET** /api/v1/agents/me/visites/today | The agent&#39;s round for today, soonest first
+[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**startMyAgentVisite**](doc/AgentVisitesApi.md#startmyagentvisite) | **POST** /api/v1/agents/me/visites/{id}/start | Start the visit on site; beyond 500 m a justification is required (RM-M16-02)
+[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**submitVisiteReport**](doc/AgentVisitesApi.md#submitvisitereport) | **POST** /api/v1/agents/me/visites/{id}/report | File the visit report; locked once submitted (RM-M07-06, RM-M16-03)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**archiveAnnonce**](doc/AnnoncesApi.md#archiveannonce) | **POST** /api/v1/annonces/{id}/archive | Archive a listing
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**createAnnonce**](doc/AnnoncesApi.md#createannonce) | **POST** /api/v1/annonces | Create a listing (draft)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**deleteAnnonce**](doc/AnnoncesApi.md#deleteannonce) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**getMyAnnonce**](doc/AnnoncesApi.md#getmyannonce) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**listMyAnnonces**](doc/AnnoncesApi.md#listmyannonces) | **GET** /api/v1/annonces | The prestataire&#39;s standalone listings; residence units are managed under /residences
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**markAnnonceRented**](doc/AnnoncesApi.md#markannoncerented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**publishAnnonce**](doc/AnnoncesApi.md#publishannonce) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**reserveAnnonce**](doc/AnnoncesApi.md#reserveannonce) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**unarchiveAnnonce**](doc/AnnoncesApi.md#unarchiveannonce) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**updateAnnonce**](doc/AnnoncesApi.md#updateannonce) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**acceptAnnonceApplication**](doc/AssignationAgentApi.md#acceptannonceapplication) | **POST** /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/accept | Accept an application; the other applicants are declined automatically
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**assignAgent**](doc/AssignationAgentApi.md#assignagent) | **POST** /api/v1/annonces/{annonceId}/agent | Offer the listing to an agent (RM-M11-04)
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**declineAnnonceApplication**](doc/AssignationAgentApi.md#declineannonceapplication) | **POST** /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/decline | Turn an application down
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**listAgentCandidates**](doc/AssignationAgentApi.md#listagentcandidates) | **GET** /api/v1/annonces/{annonceId}/agent/candidates | Agents who cover this listing&#39;s area; query matches a name or phone (RM-M11-03)
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**listAnnonceApplications**](doc/AssignationAgentApi.md#listannonceapplications) | **GET** /api/v1/annonces/{annonceId}/agent/applications | Agents who applied to this listing, oldest first
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**listMyAnnonceAssignments**](doc/AssignationAgentApi.md#listmyannonceassignments) | **GET** /api/v1/annonces/agent/assignments | Every assignment across the prestataire&#39;s listings, newest first
+[*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**withdrawAgentAssignment**](doc/AssignationAgentApi.md#withdrawagentassignment) | **DELETE** /api/v1/annonces/{annonceId}/agent | Remove the listing&#39;s agent; visits already planned are cancelled (RM-M11-06)
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**acceptResidenceApplication**](doc/AssignationAgentRsidenceApi.md#acceptresidenceapplication) | **POST** /api/v1/residences/{residenceId}/agent/applications/{agentAccountId}/accept | Choose this agent for the residence; rival applications on those units are declined
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**assignAgentToResidence**](doc/AssignationAgentRsidenceApi.md#assignagenttoresidence) | **POST** /api/v1/residences/{residenceId}/agent | Offer every published unit to one agent; units that already have one are skipped
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**declineResidenceApplication**](doc/AssignationAgentRsidenceApi.md#declineresidenceapplication) | **POST** /api/v1/residences/{residenceId}/agent/applications/{agentAccountId}/decline | Turn one agent&#39;s residence application down
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**listResidenceAgentCandidates**](doc/AssignationAgentRsidenceApi.md#listresidenceagentcandidates) | **GET** /api/v1/residences/{residenceId}/agent/candidates | Agents who cover this residence&#39;s area; query matches a name or phone
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**listResidenceApplications**](doc/AssignationAgentRsidenceApi.md#listresidenceapplications) | **GET** /api/v1/residences/{residenceId}/agent/applications | Agents who applied, one entry each with their unit count (RM-M10bis-09)
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**listResidenceAssignments**](doc/AssignationAgentRsidenceApi.md#listresidenceassignments) | **GET** /api/v1/residences/{residenceId}/agent | The residence&#39;s assignments unit by unit — which room has whom
+[*AssignationAgentRsidenceApi*](doc/AssignationAgentRsidenceApi.md) | [**withdrawResidenceAgentAssignment**](doc/AssignationAgentRsidenceApi.md#withdrawresidenceagentassignment) | **DELETE** /api/v1/residences/{residenceId}/agent | Take the whole residence back; each unit&#39;s planned visits are cancelled
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**forgotPassword**](doc/AuthenticationApi.md#forgotpassword) | **POST** /api/v1/auth/password/forgot | Start a password reset; sends an OTP if the email has a password account
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**login**](doc/AuthenticationApi.md#login) | **POST** /api/v1/auth/login | Credential login step 1: verify email + password, sends an OTP second factor
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**logout**](doc/AuthenticationApi.md#logout) | **POST** /api/v1/auth/logout | Revoke a refresh token (logout)
-[*AuthenticationApi*](doc/AuthenticationApi.md) | [**refresh**](doc/AuthenticationApi.md#refresh) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
+[*AuthenticationApi*](doc/AuthenticationApi.md) | [**refreshToken**](doc/AuthenticationApi.md#refreshtoken) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**registerProfessional**](doc/AuthenticationApi.md#registerprofessional) | **POST** /api/v1/auth/register/professional | Register a professional (AGENT or PRESTATAIRE); sends an OTP to verify the phone
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**requestOtp**](doc/AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**resendOtp**](doc/AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone that has a pending verification
@@ -94,67 +146,100 @@ Class | Method | HTTP request | Description
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**socialLogin**](doc/AuthenticationApi.md#sociallogin) | **POST** /api/v1/auth/social/login | Log in with a Google or Apple ID token
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyLoginOtp**](doc/AuthenticationApi.md#verifyloginotp) | **POST** /api/v1/auth/login/verify | Credential login step 2: verify the OTP and obtain access + refresh tokens
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyOtp**](doc/AuthenticationApi.md#verifyotp) | **POST** /api/v1/auth/otp/verify | Verify an OTP and obtain access + refresh tokens
-[*CurrentUserApi*](doc/CurrentUserApi.md) | [**me**](doc/CurrentUserApi.md#me) | **GET** /api/v1/me | Get the currently authenticated account
-[*KYCApi*](doc/KYCApi.md) | [**myStatus**](doc/KYCApi.md#mystatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
-[*KYCApi*](doc/KYCApi.md) | [**submit**](doc/KYCApi.md#submit) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
-[*LocationsApi*](doc/LocationsApi.md) | [**cities**](doc/LocationsApi.md#cities) | **GET** /api/v1/locations/cities | List cities (optionally filtered by region)
-[*LocationsApi*](doc/LocationsApi.md) | [**countries**](doc/LocationsApi.md#countries) | **GET** /api/v1/locations/countries | List countries
-[*LocationsApi*](doc/LocationsApi.md) | [**districts**](doc/LocationsApi.md#districts) | **GET** /api/v1/locations/cities/{cityId}/districts | List a city&#39;s districts (quartiers)
-[*LocationsApi*](doc/LocationsApi.md) | [**regions**](doc/LocationsApi.md#regions) | **GET** /api/v1/locations/regions | List regions (optionally filtered by country)
-[*MediaApi*](doc/MediaApi.md) | [**createUpload**](doc/MediaApi.md#createupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
-[*MessagerieApi*](doc/MessagerieApi.md) | [**listMessages**](doc/MessagerieApi.md#listmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first
-[*MessagerieApi*](doc/MessagerieApi.md) | [**listMine1**](doc/MessagerieApi.md#listmine1) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
-[*MessagerieApi*](doc/MessagerieApi.md) | [**markRead**](doc/MessagerieApi.md#markread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
-[*MessagerieApi*](doc/MessagerieApi.md) | [**send**](doc/MessagerieApi.md#send) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
-[*MessagerieApi*](doc/MessagerieApi.md) | [**start**](doc/MessagerieApi.md#start) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
-[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**register**](doc/NotificationDevicesApi.md#register) | **POST** /api/v1/notifications/devices | Register or refresh a device push token
-[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**unregister**](doc/NotificationDevicesApi.md#unregister) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
+[*CurrentUserApi*](doc/CurrentUserApi.md) | [**getMe**](doc/CurrentUserApi.md#getme) | **GET** /api/v1/me | Get the currently authenticated account
+[*FavorisApi*](doc/FavorisApi.md) | [**addFavori**](doc/FavorisApi.md#addfavori) | **POST** /api/v1/favoris | Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
+[*FavorisApi*](doc/FavorisApi.md) | [**listMyFavoris**](doc/FavorisApi.md#listmyfavoris) | **GET** /api/v1/favoris | List saved listings; unavailable ones stay for 30 days flagged available&#x3D;false
+[*FavorisApi*](doc/FavorisApi.md) | [**removeFavori**](doc/FavorisApi.md#removefavori) | **DELETE** /api/v1/favoris/{annonceId} | Unsave a listing; unsaving one that is not saved is not an error
+[*HistoriqueApi*](doc/HistoriqueApi.md) | [**clearMyHistorique**](doc/HistoriqueApi.md#clearmyhistorique) | **DELETE** /api/v1/historique | Reset the consultation history (RM-M06-05)
+[*HistoriqueApi*](doc/HistoriqueApi.md) | [**listMyHistorique**](doc/HistoriqueApi.md#listmyhistorique) | **GET** /api/v1/historique | The 30 most recently consulted listings, newest first
+[*KYCApi*](doc/KYCApi.md) | [**getMyKycStatus**](doc/KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
+[*KYCApi*](doc/KYCApi.md) | [**submitKyc**](doc/KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
+[*LocationsApi*](doc/LocationsApi.md) | [**listCities**](doc/LocationsApi.md#listcities) | **GET** /api/v1/locations/cities | List cities (optionally filtered by region)
+[*LocationsApi*](doc/LocationsApi.md) | [**listCountries**](doc/LocationsApi.md#listcountries) | **GET** /api/v1/locations/countries | List countries
+[*LocationsApi*](doc/LocationsApi.md) | [**listDistricts**](doc/LocationsApi.md#listdistricts) | **GET** /api/v1/locations/cities/{cityId}/districts | List a city&#39;s districts (quartiers)
+[*LocationsApi*](doc/LocationsApi.md) | [**listRegions**](doc/LocationsApi.md#listregions) | **GET** /api/v1/locations/regions | List regions (optionally filtered by country)
+[*MediaApi*](doc/MediaApi.md) | [**createMediaUpload**](doc/MediaApi.md#createmediaupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
+[*MessagerieApi*](doc/MessagerieApi.md) | [**listConversationMessages**](doc/MessagerieApi.md#listconversationmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first
+[*MessagerieApi*](doc/MessagerieApi.md) | [**listMyConversations**](doc/MessagerieApi.md#listmyconversations) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
+[*MessagerieApi*](doc/MessagerieApi.md) | [**markConversationRead**](doc/MessagerieApi.md#markconversationread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
+[*MessagerieApi*](doc/MessagerieApi.md) | [**sendMessage**](doc/MessagerieApi.md#sendmessage) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
+[*MessagerieApi*](doc/MessagerieApi.md) | [**startConversation**](doc/MessagerieApi.md#startconversation) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
+[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**registerDevice**](doc/NotificationDevicesApi.md#registerdevice) | **POST** /api/v1/notifications/devices | Register or refresh a device push token
+[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**unregisterDevice**](doc/NotificationDevicesApi.md#unregisterdevice) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
 [*PasswordApi*](doc/PasswordApi.md) | [**changePassword**](doc/PasswordApi.md#changepassword) | **POST** /api/v1/account/password | Change the password (revokes other sessions)
-[*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**confirmChange**](doc/PhoneChangeApi.md#confirmchange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
-[*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**requestChange**](doc/PhoneChangeApi.md#requestchange) | **POST** /api/v1/account/phone/change | Step 1: request OTPs on the current and the new number
-[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**changeType**](doc/PrestataireProfileApi.md#changetype) | **POST** /api/v1/prestataires/me/type-change | Change the provider type — applied directly if eligible, else opens an admin request
-[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**myProfile1**](doc/PrestataireProfileApi.md#myprofile1) | **GET** /api/v1/prestataires/me | Get the authenticated prestataire&#39;s profile
-[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**updateMyProfile1**](doc/PrestataireProfileApi.md#updatemyprofile1) | **PATCH** /api/v1/prestataires/me | Partially update the authenticated prestataire&#39;s profile
-[*ResidencesApi*](doc/ResidencesApi.md) | [**archiveAll**](doc/ResidencesApi.md#archiveall) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
-[*ResidencesApi*](doc/ResidencesApi.md) | [**create**](doc/ResidencesApi.md#create) | **POST** /api/v1/residences | Bulk-create a residence and its units (drafts)
-[*ResidencesApi*](doc/ResidencesApi.md) | [**delete**](doc/ResidencesApi.md#delete) | **DELETE** /api/v1/residences/{id} | Delete a residence and all its units
-[*ResidencesApi*](doc/ResidencesApi.md) | [**getOne**](doc/ResidencesApi.md#getone) | **GET** /api/v1/residences/{id} | Get a residence with its units
-[*ResidencesApi*](doc/ResidencesApi.md) | [**listMine**](doc/ResidencesApi.md#listmine) | **GET** /api/v1/residences | List the authenticated prestataire&#39;s residences
-[*ResidencesApi*](doc/ResidencesApi.md) | [**publishAll**](doc/ResidencesApi.md#publishall) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
-[*ResidencesApi*](doc/ResidencesApi.md) | [**rentAll**](doc/ResidencesApi.md#rentall) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
-[*ResidencesApi*](doc/ResidencesApi.md) | [**reserveAll**](doc/ResidencesApi.md#reserveall) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
-[*ResidencesApi*](doc/ResidencesApi.md) | [**unarchiveAll**](doc/ResidencesApi.md#unarchiveall) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
-[*ResidencesApi*](doc/ResidencesApi.md) | [**update**](doc/ResidencesApi.md#update) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
-[*SearchApi*](doc/SearchApi.md) | [**residenceDetail**](doc/SearchApi.md#residencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
-[*SearchApi*](doc/SearchApi.md) | [**search**](doc/SearchApi.md#search) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
+[*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**confirmPhoneChange**](doc/PhoneChangeApi.md#confirmphonechange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
+[*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**requestPhoneChange**](doc/PhoneChangeApi.md#requestphonechange) | **POST** /api/v1/account/phone/change | Step 1: request OTPs on the current and the new number
+[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**getMyPrestataireProfile**](doc/PrestataireProfileApi.md#getmyprestataireprofile) | **GET** /api/v1/prestataires/me | Get the authenticated prestataire&#39;s profile
+[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**requestPrestataireTypeChange**](doc/PrestataireProfileApi.md#requestprestatairetypechange) | **POST** /api/v1/prestataires/me/type-change | Change the provider type — applied directly if eligible, else opens an admin request
+[*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**updateMyPrestataireProfile**](doc/PrestataireProfileApi.md#updatemyprestataireprofile) | **PATCH** /api/v1/prestataires/me | Partially update the authenticated prestataire&#39;s profile
+[*ResidencesApi*](doc/ResidencesApi.md) | [**archiveResidenceUnits**](doc/ResidencesApi.md#archiveresidenceunits) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**createResidence**](doc/ResidencesApi.md#createresidence) | **POST** /api/v1/residences | Bulk-create a residence and its units (drafts)
+[*ResidencesApi*](doc/ResidencesApi.md) | [**deleteResidence**](doc/ResidencesApi.md#deleteresidence) | **DELETE** /api/v1/residences/{id} | Delete a residence and all its units
+[*ResidencesApi*](doc/ResidencesApi.md) | [**getMyResidence**](doc/ResidencesApi.md#getmyresidence) | **GET** /api/v1/residences/{id} | Get a residence with its units
+[*ResidencesApi*](doc/ResidencesApi.md) | [**listMyResidences**](doc/ResidencesApi.md#listmyresidences) | **GET** /api/v1/residences | List the authenticated prestataire&#39;s residences
+[*ResidencesApi*](doc/ResidencesApi.md) | [**publishResidenceUnits**](doc/ResidencesApi.md#publishresidenceunits) | **POST** /api/v1/residences/{id}/publish | Publish all draft units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**rentResidenceUnits**](doc/ResidencesApi.md#rentresidenceunits) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**reserveResidenceUnits**](doc/ResidencesApi.md#reserveresidenceunits) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
+[*ResidencesApi*](doc/ResidencesApi.md) | [**unarchiveResidenceUnits**](doc/ResidencesApi.md#unarchiveresidenceunits) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
+[*ResidencesApi*](doc/ResidencesApi.md) | [**updateResidence**](doc/ResidencesApi.md#updateresidence) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
+[*SearchApi*](doc/SearchApi.md) | [**getAnnonceDetail**](doc/SearchApi.md#getannoncedetail) | **GET** /api/v1/search/annonces/{id} | Public fiche of a listing (M05)
+[*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
+[*SearchApi*](doc/SearchApi.md) | [**searchListings**](doc/SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
+[*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing or a message
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getMySubscription**](doc/SubscriptionsApi.md#getmysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPayment**](doc/SubscriptionsApi.md#getpayment) | **GET** /api/v1/subscriptions/payments/{id} | Get one payment&#39;s current status (poll this after initiating a payment)
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPaymentReceipt**](doc/SubscriptionsApi.md#getpaymentreceipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**listMyPayments**](doc/SubscriptionsApi.md#listmypayments) | **GET** /api/v1/subscriptions/payments | List the authenticated prestataire&#39;s payments, most recent first
-[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**mySubscription**](doc/SubscriptionsApi.md#mysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
-[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**receipt**](doc/SubscriptionsApi.md#receipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**listSubscriptionTiers**](doc/SubscriptionsApi.md#listsubscriptiontiers) | **GET** /api/v1/subscriptions/tiers | List the subscription tiers and their current parameters
+[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**paymentWebhook**](doc/SubscriptionsApi.md#paymentwebhook) | **POST** /api/v1/subscriptions/webhook | Payment confirmation webhook (HMAC-verified)
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**subscribe**](doc/SubscriptionsApi.md#subscribe) | **POST** /api/v1/subscriptions | Subscribe to (or upgrade to) a paid tier; initiates a mobile-money payment
-[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**tiers**](doc/SubscriptionsApi.md#tiers) | **GET** /api/v1/subscriptions/tiers | List the subscription tiers and their current parameters
-[*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**webhook**](doc/SubscriptionsApi.md#webhook) | **POST** /api/v1/subscriptions/webhook | Payment confirmation webhook (HMAC-verified)
-[*UserProfileApi*](doc/UserProfileApi.md) | [**myProfile**](doc/UserProfileApi.md#myprofile) | **GET** /api/v1/users/me | Get the authenticated user&#39;s profile
-[*UserProfileApi*](doc/UserProfileApi.md) | [**updateMyProfile**](doc/UserProfileApi.md#updatemyprofile) | **PATCH** /api/v1/users/me | Partially update the authenticated user&#39;s profile
-[*UserSettingsApi*](doc/UserSettingsApi.md) | [**mySettings**](doc/UserSettingsApi.md#mysettings) | **GET** /api/v1/users/me/settings | Get the authenticated account&#39;s settings
-[*UserSettingsApi*](doc/UserSettingsApi.md) | [**updateMySettings**](doc/UserSettingsApi.md#updatemysettings) | **PATCH** /api/v1/users/me/settings | Partially update the authenticated account&#39;s settings
+[*UserProfileApi*](doc/UserProfileApi.md) | [**getMyUserProfile**](doc/UserProfileApi.md#getmyuserprofile) | **GET** /api/v1/users/me | Get the authenticated user&#39;s profile
+[*UserProfileApi*](doc/UserProfileApi.md) | [**updateMyUserProfile**](doc/UserProfileApi.md#updatemyuserprofile) | **PATCH** /api/v1/users/me | Partially update the authenticated user&#39;s profile
+[*UserSettingsApi*](doc/UserSettingsApi.md) | [**getMyUserSettings**](doc/UserSettingsApi.md#getmyusersettings) | **GET** /api/v1/users/me/settings | Get the authenticated account&#39;s settings
+[*UserSettingsApi*](doc/UserSettingsApi.md) | [**updateMyUserSettings**](doc/UserSettingsApi.md#updatemyusersettings) | **PATCH** /api/v1/users/me/settings | Partially update the authenticated account&#39;s settings
+[*VisitesApi*](doc/VisitesApi.md) | [**bookVisite**](doc/VisitesApi.md#bookvisite) | **POST** /api/v1/visites | Book a visit in one of the agent&#39;s free slots
+[*VisitesApi*](doc/VisitesApi.md) | [**cancelMyVisite**](doc/VisitesApi.md#cancelmyvisite) | **POST** /api/v1/visites/{id}/cancel | Cancel a visit — allowed up to 4 hours before the slot (RM-M07-04)
+[*VisitesApi*](doc/VisitesApi.md) | [**listBookableSlots**](doc/VisitesApi.md#listbookableslots) | **GET** /api/v1/visites/slots | The assigned agent&#39;s free slots over the next 7 days; an empty list carries a reason
+[*VisitesApi*](doc/VisitesApi.md) | [**listMyVisites**](doc/VisitesApi.md#listmyvisites) | **GET** /api/v1/visites | The authenticated user&#39;s visits
+[*VisitesApi*](doc/VisitesApi.md) | [**rateVisiteAgent**](doc/VisitesApi.md#ratevisiteagent) | **POST** /api/v1/visites/{id}/rating | Rate the agent 1–5 after the visit; optional, and only once (RM-M07-07)
+[*VisitesRapportApi*](doc/VisitesRapportApi.md) | [**getVisiteReport**](doc/VisitesRapportApi.md#getvisitereport) | **GET** /api/v1/visites/{id}/report | The agent&#39;s report on a visit — user, agent and prestataire only
 
 
 ## Documentation For Models
 
+ - [AddFavoriRequest](doc/AddFavoriRequest.md)
+ - [AdminUserSummary](doc/AdminUserSummary.md)
+ - [AgentCandidate](doc/AgentCandidate.md)
+ - [AgentOpportunity](doc/AgentOpportunity.md)
+ - [AgentProfileResponse](doc/AgentProfileResponse.md)
+ - [AgentVisiteDetail](doc/AgentVisiteDetail.md)
+ - [AnnonceDetailResponse](doc/AnnonceDetailResponse.md)
  - [AnnonceResponse](doc/AnnonceResponse.md)
+ - [AssignAgentRequest](doc/AssignAgentRequest.md)
+ - [AssignmentItem](doc/AssignmentItem.md)
+ - [AssignmentResponse](doc/AssignmentResponse.md)
  - [AuthTokens](doc/AuthTokens.md)
+ - [AvailabilityResponse](doc/AvailabilityResponse.md)
+ - [AvailabilityRuleRequest](doc/AvailabilityRuleRequest.md)
+ - [BatchResult](doc/BatchResult.md)
+ - [BlockDayRequest](doc/BlockDayRequest.md)
+ - [BookVisiteRequest](doc/BookVisiteRequest.md)
+ - [BookableSlot](doc/BookableSlot.md)
+ - [BookableSlotsResponse](doc/BookableSlotsResponse.md)
  - [ChangePasswordRequest](doc/ChangePasswordRequest.md)
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
  - [ConversationResponse](doc/ConversationResponse.md)
  - [CountryResponse](doc/CountryResponse.md)
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
  - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
+ - [CreateSignalementRequest](doc/CreateSignalementRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
  - [ErrorResponse](doc/ErrorResponse.md)
+ - [FavoriResponse](doc/FavoriResponse.md)
  - [FieldError](doc/FieldError.md)
  - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
  - [GrantSubscriptionRequest](doc/GrantSubscriptionRequest.md)
+ - [HistoriqueResponse](doc/HistoriqueResponse.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
  - [LocationOption](doc/LocationOption.md)
@@ -164,14 +249,21 @@ Class | Method | HTTP request | Description
  - [MeResponse](doc/MeResponse.md)
  - [MessageResponse](doc/MessageResponse.md)
  - [NotificationSetting](doc/NotificationSetting.md)
+ - [OpportunityItem](doc/OpportunityItem.md)
+ - [PageResponseAdminUserSummary](doc/PageResponseAdminUserSummary.md)
  - [PageResponseAnnonceResponse](doc/PageResponseAnnonceResponse.md)
+ - [PageResponseAssignmentItem](doc/PageResponseAssignmentItem.md)
  - [PageResponseConversationResponse](doc/PageResponseConversationResponse.md)
+ - [PageResponseFavoriResponse](doc/PageResponseFavoriResponse.md)
+ - [PageResponseHistoriqueResponse](doc/PageResponseHistoriqueResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
  - [PageResponsePaymentSummary](doc/PageResponsePaymentSummary.md)
  - [PageResponseResidenceResponse](doc/PageResponseResidenceResponse.md)
  - [PageResponseSearchResult](doc/PageResponseSearchResult.md)
+ - [PageResponseSignalementResponse](doc/PageResponseSignalementResponse.md)
  - [PageResponseTypeChangeReviewItem](doc/PageResponseTypeChangeReviewItem.md)
+ - [PageResponseVisiteResponse](doc/PageResponseVisiteResponse.md)
  - [Pageable](doc/Pageable.md)
  - [PaymentInitiatedResponse](doc/PaymentInitiatedResponse.md)
  - [PaymentSummary](doc/PaymentSummary.md)
@@ -179,6 +271,8 @@ Class | Method | HTTP request | Description
  - [PhoneChangeResponse](doc/PhoneChangeResponse.md)
  - [PresignedUpload](doc/PresignedUpload.md)
  - [PrestataireProfileResponse](doc/PrestataireProfileResponse.md)
+ - [ProviderCard](doc/ProviderCard.md)
+ - [RateAgentRequest](doc/RateAgentRequest.md)
  - [ReceiptResponse](doc/ReceiptResponse.md)
  - [RefreshTokenRequest](doc/RefreshTokenRequest.md)
  - [RegisterDeviceRequest](doc/RegisterDeviceRequest.md)
@@ -188,18 +282,29 @@ Class | Method | HTTP request | Description
  - [RequestPhoneChangeRequest](doc/RequestPhoneChangeRequest.md)
  - [RequestTypeChangeRequest](doc/RequestTypeChangeRequest.md)
  - [ResetPasswordRequest](doc/ResetPasswordRequest.md)
+ - [ResidenceApplicationSummary](doc/ResidenceApplicationSummary.md)
+ - [ResidenceAssignmentResult](doc/ResidenceAssignmentResult.md)
+ - [ResidenceAssignmentSummary](doc/ResidenceAssignmentSummary.md)
  - [ResidenceDetailResponse](doc/ResidenceDetailResponse.md)
+ - [ResidenceOpportunity](doc/ResidenceOpportunity.md)
  - [ResidenceResponse](doc/ResidenceResponse.md)
  - [ResidenceSearchCard](doc/ResidenceSearchCard.md)
+ - [ReviewSignalementRequest](doc/ReviewSignalementRequest.md)
  - [SearchResult](doc/SearchResult.md)
  - [SearchResultItem](doc/SearchResultItem.md)
  - [SendMessageRequest](doc/SendMessageRequest.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
+ - [SignalementResponse](doc/SignalementResponse.md)
+ - [SkippedUnit](doc/SkippedUnit.md)
  - [SocialLoginRequest](doc/SocialLoginRequest.md)
  - [StartConversationRequest](doc/StartConversationRequest.md)
+ - [StartVisiteRequest](doc/StartVisiteRequest.md)
  - [SubmitKycRequest](doc/SubmitKycRequest.md)
+ - [SubmitVisiteReportRequest](doc/SubmitVisiteReportRequest.md)
  - [SubscribeRequest](doc/SubscribeRequest.md)
  - [SubscriptionResponse](doc/SubscriptionResponse.md)
+ - [SuspendAccountRequest](doc/SuspendAccountRequest.md)
+ - [SuspendAnnonceRequest](doc/SuspendAnnonceRequest.md)
  - [TierInfo](doc/TierInfo.md)
  - [TypeChangeResult](doc/TypeChangeResult.md)
  - [TypeChangeReviewItem](doc/TypeChangeReviewItem.md)
@@ -207,15 +312,21 @@ Class | Method | HTTP request | Description
  - [TypeCount](doc/TypeCount.md)
  - [UnitGroup](doc/UnitGroup.md)
  - [UnitSummary](doc/UnitSummary.md)
+ - [UpdateAgentProfileRequest](doc/UpdateAgentProfileRequest.md)
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
+ - [UpdateAvailabilityRequest](doc/UpdateAvailabilityRequest.md)
  - [UpdatePlanRequest](doc/UpdatePlanRequest.md)
  - [UpdatePrestataireProfileRequest](doc/UpdatePrestataireProfileRequest.md)
  - [UpdateResidenceRequest](doc/UpdateResidenceRequest.md)
  - [UpdateUserProfileRequest](doc/UpdateUserProfileRequest.md)
  - [UpdateUserSettingsRequest](doc/UpdateUserSettingsRequest.md)
+ - [UpdateZonesRequest](doc/UpdateZonesRequest.md)
  - [UserProfileResponse](doc/UserProfileResponse.md)
  - [UserSettingsResponse](doc/UserSettingsResponse.md)
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
+ - [VisiteReportResponse](doc/VisiteReportResponse.md)
+ - [VisiteResponse](doc/VisiteResponse.md)
+ - [ZoneResponse](doc/ZoneResponse.md)
 
 
 ## Documentation For Authorization

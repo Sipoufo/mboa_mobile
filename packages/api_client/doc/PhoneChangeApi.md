@@ -9,12 +9,12 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**confirmChange**](PhoneChangeApi.md#confirmchange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
-[**requestChange**](PhoneChangeApi.md#requestchange) | **POST** /api/v1/account/phone/change | Step 1: request OTPs on the current and the new number
+[**confirmPhoneChange**](PhoneChangeApi.md#confirmphonechange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
+[**requestPhoneChange**](PhoneChangeApi.md#requestphonechange) | **POST** /api/v1/account/phone/change | Step 1: request OTPs on the current and the new number
 
 
-# **confirmChange**
-> PhoneChangeResponse confirmChange(confirmPhoneChangeRequest)
+# **confirmPhoneChange**
+> PhoneChangeResponse confirmPhoneChange(confirmPhoneChangeRequest)
 
 Step 2: verify both codes and switch the number
 
@@ -26,10 +26,10 @@ final api = ApiClient().getPhoneChangeApi();
 final ConfirmPhoneChangeRequest confirmPhoneChangeRequest = ; // ConfirmPhoneChangeRequest | 
 
 try {
-    final response = api.confirmChange(confirmPhoneChangeRequest);
+    final response = api.confirmPhoneChange(confirmPhoneChangeRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling PhoneChangeApi->confirmChange: $e\n');
+    print('Exception when calling PhoneChangeApi->confirmPhoneChange: $e\n');
 }
 ```
 
@@ -54,8 +54,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **requestChange**
-> requestChange(requestPhoneChangeRequest)
+# **requestPhoneChange**
+> requestPhoneChange(requestPhoneChangeRequest)
 
 Step 1: request OTPs on the current and the new number
 
@@ -67,9 +67,9 @@ final api = ApiClient().getPhoneChangeApi();
 final RequestPhoneChangeRequest requestPhoneChangeRequest = ; // RequestPhoneChangeRequest | 
 
 try {
-    api.requestChange(requestPhoneChangeRequest);
+    api.requestPhoneChange(requestPhoneChangeRequest);
 } on DioException catch (e) {
-    print('Exception when calling PhoneChangeApi->requestChange: $e\n');
+    print('Exception when calling PhoneChangeApi->requestPhoneChange: $e\n');
 }
 ```
 

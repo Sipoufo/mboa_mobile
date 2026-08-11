@@ -9,8 +9,8 @@ void main() {
   group(AdminSubscriptionsApi, () {
     // Grant a tier to an account for a number of days, without payment
     //
-    //Future grant(GrantSubscriptionRequest grantSubscriptionRequest) async
-    test('test grant', () async {
+    //Future grantSubscription(GrantSubscriptionRequest grantSubscriptionRequest) async
+    test('test grantSubscription', () async {
       // TODO
     });
 

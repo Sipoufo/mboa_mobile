@@ -9,14 +9,51 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**getMySubscription**](SubscriptionsApi.md#getmysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
 [**getPayment**](SubscriptionsApi.md#getpayment) | **GET** /api/v1/subscriptions/payments/{id} | Get one payment&#39;s current status (poll this after initiating a payment)
+[**getPaymentReceipt**](SubscriptionsApi.md#getpaymentreceipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
 [**listMyPayments**](SubscriptionsApi.md#listmypayments) | **GET** /api/v1/subscriptions/payments | List the authenticated prestataire&#39;s payments, most recent first
-[**mySubscription**](SubscriptionsApi.md#mysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
-[**receipt**](SubscriptionsApi.md#receipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
+[**listSubscriptionTiers**](SubscriptionsApi.md#listsubscriptiontiers) | **GET** /api/v1/subscriptions/tiers | List the subscription tiers and their current parameters
+[**paymentWebhook**](SubscriptionsApi.md#paymentwebhook) | **POST** /api/v1/subscriptions/webhook | Payment confirmation webhook (HMAC-verified)
 [**subscribe**](SubscriptionsApi.md#subscribe) | **POST** /api/v1/subscriptions | Subscribe to (or upgrade to) a paid tier; initiates a mobile-money payment
-[**tiers**](SubscriptionsApi.md#tiers) | **GET** /api/v1/subscriptions/tiers | List the subscription tiers and their current parameters
-[**webhook**](SubscriptionsApi.md#webhook) | **POST** /api/v1/subscriptions/webhook | Payment confirmation webhook (HMAC-verified)
 
+
+# **getMySubscription**
+> SubscriptionResponse getMySubscription()
+
+Get the authenticated account's current subscription
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getSubscriptionsApi();
+
+try {
+    final response = api.getMySubscription();
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling SubscriptionsApi->getMySubscription: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**SubscriptionResponse**](SubscriptionResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getPayment**
 > PaymentSummary getPayment(id)
@@ -47,6 +84,47 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PaymentSummary**](PaymentSummary.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getPaymentReceipt**
+> ReceiptResponse getPaymentReceipt(id)
+
+Get a short-lived URL to download a payment's PDF receipt
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getSubscriptionsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.getPaymentReceipt(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling SubscriptionsApi->getPaymentReceipt: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**ReceiptResponse**](ReceiptResponse.md)
 
 ### Authorization
 
@@ -100,10 +178,10 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **mySubscription**
-> SubscriptionResponse mySubscription()
+# **listSubscriptionTiers**
+> BuiltList<TierInfo> listSubscriptionTiers()
 
-Get the authenticated account's current subscription
+List the subscription tiers and their current parameters
 
 ### Example
 ```dart
@@ -112,10 +190,10 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getSubscriptionsApi();
 
 try {
-    final response = api.mySubscription();
+    final response = api.listSubscriptionTiers();
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling SubscriptionsApi->mySubscription: $e\n');
+    print('Exception when calling SubscriptionsApi->listSubscriptionTiers: $e\n');
 }
 ```
 
@@ -124,7 +202,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**SubscriptionResponse**](SubscriptionResponse.md)
+[**BuiltList&lt;TierInfo&gt;**](TierInfo.md)
 
 ### Authorization
 
@@ -137,23 +215,22 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **receipt**
-> ReceiptResponse receipt(id)
+# **paymentWebhook**
+> paymentWebhook(paymentWebhookRequest)
 
-Get a short-lived URL to download a payment's PDF receipt
+Payment confirmation webhook (HMAC-verified)
 
 ### Example
 ```dart
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getSubscriptionsApi();
-final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final PaymentWebhookRequest paymentWebhookRequest = ; // PaymentWebhookRequest | 
 
 try {
-    final response = api.receipt(id);
-    print(response);
+    api.paymentWebhook(paymentWebhookRequest);
 } on DioException catch (e) {
-    print('Exception when calling SubscriptionsApi->receipt: $e\n');
+    print('Exception when calling SubscriptionsApi->paymentWebhook: $e\n');
 }
 ```
 
@@ -161,11 +238,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
+ **paymentWebhookRequest** | [**PaymentWebhookRequest**](PaymentWebhookRequest.md)|  | 
 
 ### Return type
 
-[**ReceiptResponse**](ReceiptResponse.md)
+void (empty response body)
 
 ### Authorization
 
@@ -173,8 +250,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: */*, application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -218,83 +295,6 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: application/json
  - **Accept**: */*, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **tiers**
-> BuiltList<TierInfo> tiers()
-
-List the subscription tiers and their current parameters
-
-### Example
-```dart
-import 'package:api_client/api.dart';
-
-final api = ApiClient().getSubscriptionsApi();
-
-try {
-    final response = api.tiers();
-    print(response);
-} on DioException catch (e) {
-    print('Exception when calling SubscriptionsApi->tiers: $e\n');
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**BuiltList&lt;TierInfo&gt;**](TierInfo.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **webhook**
-> webhook(paymentWebhookRequest)
-
-Payment confirmation webhook (HMAC-verified)
-
-### Example
-```dart
-import 'package:api_client/api.dart';
-
-final api = ApiClient().getSubscriptionsApi();
-final PaymentWebhookRequest paymentWebhookRequest = ; // PaymentWebhookRequest | 
-
-try {
-    api.webhook(paymentWebhookRequest);
-} on DioException catch (e) {
-    print('Exception when calling SubscriptionsApi->webhook: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **paymentWebhookRequest** | [**PaymentWebhookRequest**](PaymentWebhookRequest.md)|  | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

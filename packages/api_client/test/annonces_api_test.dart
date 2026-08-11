@@ -9,71 +9,71 @@ void main() {
   group(AnnoncesApi, () {
     // Archive a listing
     //
-    //Future<AnnonceResponse> archive(String id) async
-    test('test archive', () async {
+    //Future<AnnonceResponse> archiveAnnonce(String id) async
+    test('test archiveAnnonce', () async {
       // TODO
     });
 
     // Create a listing (draft)
     //
-    //Future<AnnonceResponse> create1(CreateAnnonceRequest createAnnonceRequest) async
-    test('test create1', () async {
+    //Future<AnnonceResponse> createAnnonce(CreateAnnonceRequest createAnnonceRequest) async
+    test('test createAnnonce', () async {
       // TODO
     });
 
     // Delete one of the authenticated prestataire's listings
     //
-    //Future delete1(String id) async
-    test('test delete1', () async {
+    //Future deleteAnnonce(String id) async
+    test('test deleteAnnonce', () async {
       // TODO
     });
 
     // Get one of the authenticated prestataire's listings
     //
-    //Future<AnnonceResponse> getOne1(String id) async
-    test('test getOne1', () async {
+    //Future<AnnonceResponse> getMyAnnonce(String id) async
+    test('test getMyAnnonce', () async {
       // TODO
     });
 
-    // List the authenticated prestataire's listings
+    // The prestataire's standalone listings; residence units are managed under /residences
     //
-    //Future<PageResponseAnnonceResponse> listMine2(Pageable pageable) async
-    test('test listMine2', () async {
+    //Future<PageResponseAnnonceResponse> listMyAnnonces(Pageable pageable, { bool includeResidenceUnits, String residenceId }) async
+    test('test listMyAnnonces', () async {
       // TODO
     });
 
     // Mark a published or reserved listing as rented
     //
-    //Future<AnnonceResponse> markRented(String id) async
-    test('test markRented', () async {
+    //Future<AnnonceResponse> markAnnonceRented(String id) async
+    test('test markAnnonceRented', () async {
       // TODO
     });
 
     // Publish a draft listing (profile complete + ≥3 photos + tier limit)
     //
-    //Future<AnnonceResponse> publish(String id) async
-    test('test publish', () async {
+    //Future<AnnonceResponse> publishAnnonce(String id) async
+    test('test publishAnnonce', () async {
       // TODO
     });
 
     // Reserve a published listing (temporary hold)
     //
-    //Future<AnnonceResponse> reserve(String id) async
-    test('test reserve', () async {
+    //Future<AnnonceResponse> reserveAnnonce(String id) async
+    test('test reserveAnnonce', () async {
       // TODO
     });
 
     // Return an archived listing to draft so it can be published again (RM-M10-08)
     //
-    //Future<AnnonceResponse> unarchive(String id) async
-    test('test unarchive', () async {
+    //Future<AnnonceResponse> unarchiveAnnonce(String id) async
+    test('test unarchiveAnnonce', () async {
       // TODO
     });
 
     // Partially update one of the authenticated prestataire's listings
     //
-    //Future<AnnonceResponse> update1(String id, UpdateAnnonceRequest updateAnnonceRequest) async
-    test('test update1', () async {
+    //Future<AnnonceResponse> updateAnnonce(String id, UpdateAnnonceRequest updateAnnonceRequest) async
+    test('test updateAnnonce', () async {
       // TODO
     });
 

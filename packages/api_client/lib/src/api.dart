@@ -10,12 +10,23 @@ import 'package:api_client/src/auth/basic_auth.dart';
 import 'package:api_client/src/auth/bearer_auth.dart';
 import 'package:api_client/src/auth/oauth.dart';
 import 'package:api_client/src/api/account_api.dart';
+import 'package:api_client/src/api/admin_annonces_api.dart';
 import 'package:api_client/src/api/admin_kyc_api.dart';
+import 'package:api_client/src/api/admin_modration_api.dart';
 import 'package:api_client/src/api/admin_subscriptions_api.dart';
 import 'package:api_client/src/api/admin_type_change_api.dart';
+import 'package:api_client/src/api/admin_utilisateurs_api.dart';
+import 'package:api_client/src/api/agent_api.dart';
+import 'package:api_client/src/api/agent_assignations_api.dart';
+import 'package:api_client/src/api/agent_candidatures_api.dart';
+import 'package:api_client/src/api/agent_visites_api.dart';
 import 'package:api_client/src/api/annonces_api.dart';
+import 'package:api_client/src/api/assignation_agent_api.dart';
+import 'package:api_client/src/api/assignation_agent_rsidence_api.dart';
 import 'package:api_client/src/api/authentication_api.dart';
 import 'package:api_client/src/api/current_user_api.dart';
+import 'package:api_client/src/api/favoris_api.dart';
+import 'package:api_client/src/api/historique_api.dart';
 import 'package:api_client/src/api/kyc_api.dart';
 import 'package:api_client/src/api/locations_api.dart';
 import 'package:api_client/src/api/media_api.dart';
@@ -26,9 +37,12 @@ import 'package:api_client/src/api/phone_change_api.dart';
 import 'package:api_client/src/api/prestataire_profile_api.dart';
 import 'package:api_client/src/api/residences_api.dart';
 import 'package:api_client/src/api/search_api.dart';
+import 'package:api_client/src/api/signalements_api.dart';
 import 'package:api_client/src/api/subscriptions_api.dart';
 import 'package:api_client/src/api/user_profile_api.dart';
 import 'package:api_client/src/api/user_settings_api.dart';
+import 'package:api_client/src/api/visites_api.dart';
+import 'package:api_client/src/api/visites_rapport_api.dart';
 
 class ApiClient {
   static const String basePath = r'https://api.mboa.cm/api/v1';
@@ -130,10 +144,22 @@ class ApiClient {
     return AccountApi(dio, serializers);
   }
 
+  /// Get AdminAnnoncesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminAnnoncesApi getAdminAnnoncesApi() {
+    return AdminAnnoncesApi(dio, serializers);
+  }
+
   /// Get AdminKYCApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AdminKYCApi getAdminKYCApi() {
     return AdminKYCApi(dio, serializers);
+  }
+
+  /// Get AdminModrationApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminModrationApi getAdminModrationApi() {
+    return AdminModrationApi(dio, serializers);
   }
 
   /// Get AdminSubscriptionsApi instance, base route and serializer can be overridden by a given but be careful,
@@ -148,10 +174,52 @@ class ApiClient {
     return AdminTypeChangeApi(dio, serializers);
   }
 
+  /// Get AdminUtilisateursApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminUtilisateursApi getAdminUtilisateursApi() {
+    return AdminUtilisateursApi(dio, serializers);
+  }
+
+  /// Get AgentApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AgentApi getAgentApi() {
+    return AgentApi(dio, serializers);
+  }
+
+  /// Get AgentAssignationsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AgentAssignationsApi getAgentAssignationsApi() {
+    return AgentAssignationsApi(dio, serializers);
+  }
+
+  /// Get AgentCandidaturesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AgentCandidaturesApi getAgentCandidaturesApi() {
+    return AgentCandidaturesApi(dio, serializers);
+  }
+
+  /// Get AgentVisitesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AgentVisitesApi getAgentVisitesApi() {
+    return AgentVisitesApi(dio, serializers);
+  }
+
   /// Get AnnoncesApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AnnoncesApi getAnnoncesApi() {
     return AnnoncesApi(dio, serializers);
+  }
+
+  /// Get AssignationAgentApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AssignationAgentApi getAssignationAgentApi() {
+    return AssignationAgentApi(dio, serializers);
+  }
+
+  /// Get AssignationAgentRsidenceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AssignationAgentRsidenceApi getAssignationAgentRsidenceApi() {
+    return AssignationAgentRsidenceApi(dio, serializers);
   }
 
   /// Get AuthenticationApi instance, base route and serializer can be overridden by a given but be careful,
@@ -164,6 +232,18 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   CurrentUserApi getCurrentUserApi() {
     return CurrentUserApi(dio, serializers);
+  }
+
+  /// Get FavorisApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  FavorisApi getFavorisApi() {
+    return FavorisApi(dio, serializers);
+  }
+
+  /// Get HistoriqueApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  HistoriqueApi getHistoriqueApi() {
+    return HistoriqueApi(dio, serializers);
   }
 
   /// Get KYCApi instance, base route and serializer can be overridden by a given but be careful,
@@ -226,6 +306,12 @@ class ApiClient {
     return SearchApi(dio, serializers);
   }
 
+  /// Get SignalementsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  SignalementsApi getSignalementsApi() {
+    return SignalementsApi(dio, serializers);
+  }
+
   /// Get SubscriptionsApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   SubscriptionsApi getSubscriptionsApi() {
@@ -242,5 +328,17 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   UserSettingsApi getUserSettingsApi() {
     return UserSettingsApi(dio, serializers);
+  }
+
+  /// Get VisitesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  VisitesApi getVisitesApi() {
+    return VisitesApi(dio, serializers);
+  }
+
+  /// Get VisitesRapportApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  VisitesRapportApi getVisitesRapportApi() {
+    return VisitesRapportApi(dio, serializers);
   }
 }

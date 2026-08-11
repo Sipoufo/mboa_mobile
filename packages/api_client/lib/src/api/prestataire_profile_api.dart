@@ -22,6 +22,85 @@ class PrestataireProfileApi {
 
   const PrestataireProfileApi(this._dio, this._serializers);
 
+  /// Get the authenticated prestataire&#39;s profile
+  /// 
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [PrestataireProfileResponse] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<PrestataireProfileResponse>> getMyPrestataireProfile({ 
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/prestataires/me';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    PrestataireProfileResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(PrestataireProfileResponse),
+      ) as PrestataireProfileResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<PrestataireProfileResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// Change the provider type — applied directly if eligible, else opens an admin request
   /// 
   ///
@@ -36,7 +115,7 @@ class PrestataireProfileApi {
   ///
   /// Returns a [Future] containing a [Response] with a [TypeChangeResult] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<TypeChangeResult>> changeType({ 
+  Future<Response<TypeChangeResult>> requestPrestataireTypeChange({ 
     required RequestTypeChangeRequest requestTypeChangeRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -123,85 +202,6 @@ class PrestataireProfileApi {
     );
   }
 
-  /// Get the authenticated prestataire&#39;s profile
-  /// 
-  ///
-  /// Parameters:
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PrestataireProfileResponse] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PrestataireProfileResponse>> myProfile1({ 
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/api/v1/prestataires/me';
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'bearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PrestataireProfileResponse? _responseData;
-
-    try {
-      final rawResponse = _response.data;
-      _responseData = rawResponse == null ? null : _serializers.deserialize(
-        rawResponse,
-        specifiedType: const FullType(PrestataireProfileResponse),
-      ) as PrestataireProfileResponse;
-
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PrestataireProfileResponse>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
   /// Partially update the authenticated prestataire&#39;s profile
   /// 
   ///
@@ -216,7 +216,7 @@ class PrestataireProfileApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PrestataireProfileResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PrestataireProfileResponse>> updateMyProfile1({ 
+  Future<Response<PrestataireProfileResponse>> updateMyPrestataireProfile({ 
     required UpdatePrestataireProfileRequest updatePrestataireProfileRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

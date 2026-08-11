@@ -13,7 +13,7 @@ class AccountRepository {
   /// Requests a phone-number change; the backend sends an OTP to both the old
   /// and the new number (RM-M02-02).
   Future<void> requestPhoneChange(String newPhoneNumber) {
-    return _dioClient.api.getPhoneChangeApi().requestChange(
+    return _dioClient.api.getPhoneChangeApi().requestPhoneChange(
           requestPhoneChangeRequest:
               RequestPhoneChangeRequest((b) => b..newPhoneNumber = newPhoneNumber),
         );
@@ -25,7 +25,7 @@ class AccountRepository {
     required String oldCode,
     required String newCode,
   }) async {
-    await _dioClient.api.getPhoneChangeApi().confirmChange(
+    await _dioClient.api.getPhoneChangeApi().confirmPhoneChange(
           confirmPhoneChangeRequest: ConfirmPhoneChangeRequest((b) => b
             ..newPhoneNumber = newPhoneNumber
             ..oldCode = oldCode

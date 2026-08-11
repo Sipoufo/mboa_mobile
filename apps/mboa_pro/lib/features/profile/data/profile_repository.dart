@@ -24,7 +24,7 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
     final base = await _base.load();
     PrestataireProfileResponse? prestataire;
     if (base.role.isPrestataire) {
-      prestataire = (await _api.getPrestataireProfileApi().myProfile1()).data;
+      prestataire = (await _api.getPrestataireProfileApi().getMyPrestataireProfile()).data;
     }
     return ProfileData.fromBase(
       base,
@@ -47,7 +47,7 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
       ),
     );
     if (edit.isPrestataire) {
-      await _api.getPrestataireProfileApi().updateMyProfile1(
+      await _api.getPrestataireProfileApi().updateMyPrestataireProfile(
             updatePrestataireProfileRequest: UpdatePrestataireProfileRequest((b) => b
               ..displayName = edit.displayName
               ..mainCityId = edit.mainCityId
@@ -62,7 +62,7 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
   /// personal photo on `/users/me`.
   @override
   Future<ProfileData> updatePhoto(String objectKey) async {
-    final role = AccountRole.fromResponse((await _api.getCurrentUserApi().me()).data?.role);
+    final role = AccountRole.fromResponse((await _api.getCurrentUserApi().getMe()).data?.role);
     if (!role.isPrestataire) {
       await _base.updatePhoto(objectKey);
       return load();
@@ -71,8 +71,8 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
     // The other fields are re-sent with their current values rather than
     // omitted: partial-update semantics are an assumption here, and guessing
     // wrong would wipe the business profile to set an avatar.
-    final current = (await _api.getPrestataireProfileApi().myProfile1()).data;
-    await _api.getPrestataireProfileApi().updateMyProfile1(
+    final current = (await _api.getPrestataireProfileApi().getMyPrestataireProfile()).data;
+    await _api.getPrestataireProfileApi().updateMyPrestataireProfile(
           updatePrestataireProfileRequest: UpdatePrestataireProfileRequest((b) => b
             ..logoObjectKey = objectKey
             ..displayName = current?.displayName

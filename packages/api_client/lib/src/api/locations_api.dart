@@ -36,7 +36,7 @@ class LocationsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<LocationOption>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<LocationOption>>> cities({ 
+  Future<Response<BuiltList<LocationOption>>> listCities({ 
     String? regionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -121,7 +121,7 @@ class LocationsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<CountryResponse>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<CountryResponse>>> countries({ 
+  Future<Response<BuiltList<CountryResponse>>> listCountries({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -201,7 +201,7 @@ class LocationsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<LocationOption>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<LocationOption>>> districts({ 
+  Future<Response<BuiltList<LocationOption>>> listDistricts({ 
     required String cityId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -282,7 +282,7 @@ class LocationsApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<LocationOption>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<LocationOption>>> regions({ 
+  Future<Response<BuiltList<LocationOption>>> listRegions({ 
     String? countryId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

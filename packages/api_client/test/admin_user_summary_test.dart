@@ -1,0 +1,61 @@
+import 'package:test/test.dart';
+import 'package:api_client/api_client.dart';
+
+// tests for AdminUserSummary
+void main() {
+  final instance = AdminUserSummaryBuilder();
+  // TODO add properties to the builder and call build()
+
+  group(AdminUserSummary, () {
+    // String accountId
+    test('to test the property `accountId`', () async {
+      // TODO
+    });
+
+    // String displayName
+    test('to test the property `displayName`', () async {
+      // TODO
+    });
+
+    // String phoneNumber
+    test('to test the property `phoneNumber`', () async {
+      // TODO
+    });
+
+    // String email
+    test('to test the property `email`', () async {
+      // TODO
+    });
+
+    // String role
+    test('to test the property `role`', () async {
+      // TODO
+    });
+
+    // String status
+    test('to test the property `status`', () async {
+      // TODO
+    });
+
+    // String tier
+    test('to test the property `tier`', () async {
+      // TODO
+    });
+
+    // DateTime periodEnd
+    test('to test the property `periodEnd`', () async {
+      // TODO
+    });
+
+    // int listingCount
+    test('to test the property `listingCount`', () async {
+      // TODO
+    });
+
+    // DateTime createdAt
+    test('to test the property `createdAt`', () async {
+      // TODO
+    });
+
+  });
+}

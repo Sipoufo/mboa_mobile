@@ -9,15 +9,15 @@ void main() {
   group(NotificationDevicesApi, () {
     // Register or refresh a device push token
     //
-    //Future register(RegisterDeviceRequest registerDeviceRequest) async
-    test('test register', () async {
+    //Future registerDevice(RegisterDeviceRequest registerDeviceRequest) async
+    test('test registerDevice', () async {
       // TODO
     });
 
     // Unregister a device push token
     //
-    //Future unregister(String token) async
-    test('test unregister', () async {
+    //Future unregisterDevice(String token) async
+    test('test unregisterDevice', () async {
       // TODO
     });
 

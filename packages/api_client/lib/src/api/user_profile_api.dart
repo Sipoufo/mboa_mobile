@@ -33,7 +33,7 @@ class UserProfileApi {
   ///
   /// Returns a [Future] containing a [Response] with a [UserProfileResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<UserProfileResponse>> myProfile({ 
+  Future<Response<UserProfileResponse>> getMyUserProfile({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -113,7 +113,7 @@ class UserProfileApi {
   ///
   /// Returns a [Future] containing a [Response] with a [UserProfileResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<UserProfileResponse>> updateMyProfile({ 
+  Future<Response<UserProfileResponse>> updateMyUserProfile({ 
     required UpdateUserProfileRequest updateUserProfileRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

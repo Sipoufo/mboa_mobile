@@ -41,7 +41,7 @@ class MessagerieApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseMessageResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseMessageResponse>> listMessages({ 
+  Future<Response<PageResponseMessageResponse>> listConversationMessages({ 
     required String id,
     required Pageable pageable,
     CancelToken? cancelToken,
@@ -128,7 +128,7 @@ class MessagerieApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseConversationResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseConversationResponse>> listMine1({ 
+  Future<Response<PageResponseConversationResponse>> listMyConversations({ 
     required Pageable pageable,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -214,7 +214,7 @@ class MessagerieApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> markRead({ 
+  Future<Response<void>> markConversationRead({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -268,7 +268,7 @@ class MessagerieApi {
   ///
   /// Returns a [Future] containing a [Response] with a [MessageResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<MessageResponse>> send({ 
+  Future<Response<MessageResponse>> sendMessage({ 
     required String id,
     required SendMessageRequest sendMessageRequest,
     CancelToken? cancelToken,
@@ -370,7 +370,7 @@ class MessagerieApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ConversationResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ConversationResponse>> start({ 
+  Future<Response<ConversationResponse>> startConversation({ 
     required StartConversationRequest startConversationRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

@@ -36,7 +36,7 @@ class AdminSubscriptionsApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> grant({ 
+  Future<Response<void>> grantSubscription({ 
     required GrantSubscriptionRequest grantSubscriptionRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

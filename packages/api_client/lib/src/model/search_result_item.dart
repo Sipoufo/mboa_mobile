@@ -18,6 +18,8 @@ part 'search_result_item.g.dart';
 /// * [propertyType] 
 /// * [city] 
 /// * [district] 
+/// * [price] 
+/// * [rentalPeriod] 
 /// * [monthlyRent] 
 /// * [furnished] 
 /// * [roomCount] 
@@ -46,6 +48,13 @@ abstract class SearchResultItem implements Built<SearchResultItem, SearchResultI
   @BuiltValueField(wireName: r'district')
   String? get district;
 
+  @BuiltValueField(wireName: r'price')
+  int? get price;
+
+  @BuiltValueField(wireName: r'rentalPeriod')
+  SearchResultItemRentalPeriodEnum? get rentalPeriod;
+  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
 
@@ -63,7 +72,7 @@ abstract class SearchResultItem implements Built<SearchResultItem, SearchResultI
 
   @BuiltValueField(wireName: r'status')
   SearchResultItemStatusEnum? get status;
-  // enum statusEnum {  DRAFT,  PUBLISHED,  RESERVED,  RENTED,  ARCHIVED,  };
+  // enum statusEnum {  DRAFT,  PUBLISHED,  RESERVED,  RENTED,  ARCHIVED,  SUSPENDED,  };
 
   @BuiltValueField(wireName: r'tierRank')
   int? get tierRank;
@@ -133,6 +142,20 @@ class _$SearchResultItemSerializer implements PrimitiveSerializer<SearchResultIt
       yield serializers.serialize(
         object.district,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.price != null) {
+      yield r'price';
+      yield serializers.serialize(
+        object.price,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.rentalPeriod != null) {
+      yield r'rentalPeriod';
+      yield serializers.serialize(
+        object.rentalPeriod,
+        specifiedType: const FullType(SearchResultItemRentalPeriodEnum),
       );
     }
     if (object.monthlyRent != null) {
@@ -268,6 +291,22 @@ class _$SearchResultItemSerializer implements PrimitiveSerializer<SearchResultIt
           if (valueDes == null) continue;
           result.district = valueDes;
           break;
+        case r'price':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.price = valueDes;
+          break;
+        case r'rentalPeriod':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(SearchResultItemRentalPeriodEnum),
+          ) as SearchResultItemRentalPeriodEnum?;
+          if (valueDes == null) continue;
+          result.rentalPeriod = valueDes;
+          break;
         case r'monthlyRent':
           final valueDes = serializers.deserialize(
             value,
@@ -402,6 +441,25 @@ class SearchResultItemPropertyTypeEnum extends EnumClass {
   static SearchResultItemPropertyTypeEnum valueOf(String name) => _$searchResultItemPropertyTypeEnumValueOf(name);
 }
 
+class SearchResultItemRentalPeriodEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'MONTH')
+  static const SearchResultItemRentalPeriodEnum MONTH = _$searchResultItemRentalPeriodEnum_MONTH;
+  @BuiltValueEnumConst(wireName: r'QUARTER')
+  static const SearchResultItemRentalPeriodEnum QUARTER = _$searchResultItemRentalPeriodEnum_QUARTER;
+  @BuiltValueEnumConst(wireName: r'YEAR')
+  static const SearchResultItemRentalPeriodEnum YEAR = _$searchResultItemRentalPeriodEnum_YEAR;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const SearchResultItemRentalPeriodEnum unknownDefaultOpenApi = _$searchResultItemRentalPeriodEnum_unknownDefaultOpenApi;
+
+  static Serializer<SearchResultItemRentalPeriodEnum> get serializer => _$searchResultItemRentalPeriodEnumSerializer;
+
+  const SearchResultItemRentalPeriodEnum._(String name): super(name);
+
+  static BuiltSet<SearchResultItemRentalPeriodEnum> get values => _$searchResultItemRentalPeriodEnumValues;
+  static SearchResultItemRentalPeriodEnum valueOf(String name) => _$searchResultItemRentalPeriodEnumValueOf(name);
+}
+
 class SearchResultItemStatusEnum extends EnumClass {
 
   @BuiltValueEnumConst(wireName: r'DRAFT')
@@ -414,6 +472,8 @@ class SearchResultItemStatusEnum extends EnumClass {
   static const SearchResultItemStatusEnum RENTED = _$searchResultItemStatusEnum_RENTED;
   @BuiltValueEnumConst(wireName: r'ARCHIVED')
   static const SearchResultItemStatusEnum ARCHIVED = _$searchResultItemStatusEnum_ARCHIVED;
+  @BuiltValueEnumConst(wireName: r'SUSPENDED')
+  static const SearchResultItemStatusEnum SUSPENDED = _$searchResultItemStatusEnum_SUSPENDED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const SearchResultItemStatusEnum unknownDefaultOpenApi = _$searchResultItemStatusEnum_unknownDefaultOpenApi;
 

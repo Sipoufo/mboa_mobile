@@ -9,11 +9,11 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**me**](CurrentUserApi.md#me) | **GET** /api/v1/me | Get the currently authenticated account
+[**getMe**](CurrentUserApi.md#getme) | **GET** /api/v1/me | Get the currently authenticated account
 
 
-# **me**
-> MeResponse me()
+# **getMe**
+> MeResponse getMe()
 
 Get the currently authenticated account
 
@@ -24,10 +24,10 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getCurrentUserApi();
 
 try {
-    final response = api.me();
+    final response = api.getMe();
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling CurrentUserApi->me: $e\n');
+    print('Exception when calling CurrentUserApi->getMe: $e\n');
 }
 ```
 

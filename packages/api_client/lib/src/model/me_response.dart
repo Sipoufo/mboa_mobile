@@ -19,6 +19,7 @@ part 'me_response.g.dart';
 /// * [status] 
 /// * [authProvider] 
 /// * [emailVerified] 
+/// * [tier] 
 /// * [createdAt] 
 @BuiltValue()
 abstract class MeResponse implements Built<MeResponse, MeResponseBuilder> {
@@ -45,6 +46,10 @@ abstract class MeResponse implements Built<MeResponse, MeResponseBuilder> {
 
   @BuiltValueField(wireName: r'emailVerified')
   bool? get emailVerified;
+
+  @BuiltValueField(wireName: r'tier')
+  MeResponseTierEnum? get tier;
+  // enum tierEnum {  FREE,  BASIC_PLUS,  PRO,  PRO_PLUS,  };
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -119,6 +124,13 @@ class _$MeResponseSerializer implements PrimitiveSerializer<MeResponse> {
       yield serializers.serialize(
         object.emailVerified,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.tier != null) {
+      yield r'tier';
+      yield serializers.serialize(
+        object.tier,
+        specifiedType: const FullType(MeResponseTierEnum),
       );
     }
     if (object.createdAt != null) {
@@ -206,6 +218,14 @@ class _$MeResponseSerializer implements PrimitiveSerializer<MeResponse> {
           ) as bool?;
           if (valueDes == null) continue;
           result.emailVerified = valueDes;
+          break;
+        case r'tier':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(MeResponseTierEnum),
+          ) as MeResponseTierEnum?;
+          if (valueDes == null) continue;
+          result.tier = valueDes;
           break;
         case r'createdAt':
           final valueDes = serializers.deserialize(
@@ -303,5 +323,26 @@ class MeResponseAuthProviderEnum extends EnumClass {
 
   static BuiltSet<MeResponseAuthProviderEnum> get values => _$meResponseAuthProviderEnumValues;
   static MeResponseAuthProviderEnum valueOf(String name) => _$meResponseAuthProviderEnumValueOf(name);
+}
+
+class MeResponseTierEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'FREE')
+  static const MeResponseTierEnum FREE = _$meResponseTierEnum_FREE;
+  @BuiltValueEnumConst(wireName: r'BASIC_PLUS')
+  static const MeResponseTierEnum BASIC_PLUS = _$meResponseTierEnum_BASIC_PLUS;
+  @BuiltValueEnumConst(wireName: r'PRO')
+  static const MeResponseTierEnum PRO = _$meResponseTierEnum_PRO;
+  @BuiltValueEnumConst(wireName: r'PRO_PLUS')
+  static const MeResponseTierEnum PRO_PLUS = _$meResponseTierEnum_PRO_PLUS;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const MeResponseTierEnum unknownDefaultOpenApi = _$meResponseTierEnum_unknownDefaultOpenApi;
+
+  static Serializer<MeResponseTierEnum> get serializer => _$meResponseTierEnumSerializer;
+
+  const MeResponseTierEnum._(String name): super(name);
+
+  static BuiltSet<MeResponseTierEnum> get values => _$meResponseTierEnumValues;
+  static MeResponseTierEnum valueOf(String name) => _$meResponseTierEnumValueOf(name);
 }
 

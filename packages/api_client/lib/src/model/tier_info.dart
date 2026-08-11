@@ -17,6 +17,7 @@ part 'tier_info.g.dart';
 /// * [monthlyPrice] 
 /// * [activeListingLimit] 
 /// * [residenceUnitAllowance] 
+/// * [descriptions] 
 @BuiltValue()
 abstract class TierInfo implements Built<TierInfo, TierInfoBuilder> {
   @BuiltValueField(wireName: r'tier')
@@ -34,6 +35,9 @@ abstract class TierInfo implements Built<TierInfo, TierInfoBuilder> {
 
   @BuiltValueField(wireName: r'residenceUnitAllowance')
   int? get residenceUnitAllowance;
+
+  @BuiltValueField(wireName: r'descriptions')
+  BuiltMap<String, String>? get descriptions;
 
   TierInfo._();
 
@@ -91,6 +95,13 @@ class _$TierInfoSerializer implements PrimitiveSerializer<TierInfo> {
       yield serializers.serialize(
         object.residenceUnitAllowance,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.descriptions != null) {
+      yield r'descriptions';
+      yield serializers.serialize(
+        object.descriptions,
+        specifiedType: const FullType(BuiltMap, [FullType(String), FullType(String)]),
       );
     }
   }
@@ -155,6 +166,14 @@ class _$TierInfoSerializer implements PrimitiveSerializer<TierInfo> {
           ) as int?;
           if (valueDes == null) continue;
           result.residenceUnitAllowance = valueDes;
+          break;
+        case r'descriptions':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltMap, [FullType(String), FullType(String)]),
+          ) as BuiltMap<String, String>?;
+          if (valueDes == null) continue;
+          result.descriptions.replace(valueDes);
           break;
         default:
           unhandled.add(key);

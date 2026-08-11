@@ -9,15 +9,15 @@ void main() {
   group(UserSettingsApi, () {
     // Get the authenticated account's settings
     //
-    //Future<UserSettingsResponse> mySettings() async
-    test('test mySettings', () async {
+    //Future<UserSettingsResponse> getMyUserSettings() async
+    test('test getMyUserSettings', () async {
       // TODO
     });
 
     // Partially update the authenticated account's settings
     //
-    //Future<UserSettingsResponse> updateMySettings(UpdateUserSettingsRequest updateUserSettingsRequest) async
-    test('test updateMySettings', () async {
+    //Future<UserSettingsResponse> updateMyUserSettings(UpdateUserSettingsRequest updateUserSettingsRequest) async
+    test('test updateMyUserSettings', () async {
       // TODO
     });
 

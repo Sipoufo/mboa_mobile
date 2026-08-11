@@ -98,6 +98,8 @@ class _$TierInfo extends TierInfo {
   final int? activeListingLimit;
   @override
   final int? residenceUnitAllowance;
+  @override
+  final BuiltMap<String, String>? descriptions;
 
   factory _$TierInfo([void Function(TierInfoBuilder)? updates]) =>
       (TierInfoBuilder()..update(updates))._build();
@@ -108,6 +110,7 @@ class _$TierInfo extends TierInfo {
     this.monthlyPrice,
     this.activeListingLimit,
     this.residenceUnitAllowance,
+    this.descriptions,
   }) : super._();
   @override
   TierInfo rebuild(void Function(TierInfoBuilder) updates) =>
@@ -124,7 +127,8 @@ class _$TierInfo extends TierInfo {
         rank == other.rank &&
         monthlyPrice == other.monthlyPrice &&
         activeListingLimit == other.activeListingLimit &&
-        residenceUnitAllowance == other.residenceUnitAllowance;
+        residenceUnitAllowance == other.residenceUnitAllowance &&
+        descriptions == other.descriptions;
   }
 
   @override
@@ -135,6 +139,7 @@ class _$TierInfo extends TierInfo {
     _$hash = $jc(_$hash, monthlyPrice.hashCode);
     _$hash = $jc(_$hash, activeListingLimit.hashCode);
     _$hash = $jc(_$hash, residenceUnitAllowance.hashCode);
+    _$hash = $jc(_$hash, descriptions.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -146,7 +151,8 @@ class _$TierInfo extends TierInfo {
           ..add('rank', rank)
           ..add('monthlyPrice', monthlyPrice)
           ..add('activeListingLimit', activeListingLimit)
-          ..add('residenceUnitAllowance', residenceUnitAllowance))
+          ..add('residenceUnitAllowance', residenceUnitAllowance)
+          ..add('descriptions', descriptions))
         .toString();
   }
 }
@@ -176,6 +182,12 @@ class TierInfoBuilder implements Builder<TierInfo, TierInfoBuilder> {
   set residenceUnitAllowance(int? residenceUnitAllowance) =>
       _$this._residenceUnitAllowance = residenceUnitAllowance;
 
+  MapBuilder<String, String>? _descriptions;
+  MapBuilder<String, String> get descriptions =>
+      _$this._descriptions ??= MapBuilder<String, String>();
+  set descriptions(MapBuilder<String, String>? descriptions) =>
+      _$this._descriptions = descriptions;
+
   TierInfoBuilder() {
     TierInfo._defaults(this);
   }
@@ -188,6 +200,7 @@ class TierInfoBuilder implements Builder<TierInfo, TierInfoBuilder> {
       _monthlyPrice = $v.monthlyPrice;
       _activeListingLimit = $v.activeListingLimit;
       _residenceUnitAllowance = $v.residenceUnitAllowance;
+      _descriptions = $v.descriptions?.toBuilder();
       _$v = null;
     }
     return this;
@@ -207,15 +220,32 @@ class TierInfoBuilder implements Builder<TierInfo, TierInfoBuilder> {
   TierInfo build() => _build();
 
   _$TierInfo _build() {
-    final _$result =
-        _$v ??
-        _$TierInfo._(
-          tier: tier,
-          rank: rank,
-          monthlyPrice: monthlyPrice,
-          activeListingLimit: activeListingLimit,
-          residenceUnitAllowance: residenceUnitAllowance,
+    _$TierInfo _$result;
+    try {
+      _$result =
+          _$v ??
+          _$TierInfo._(
+            tier: tier,
+            rank: rank,
+            monthlyPrice: monthlyPrice,
+            activeListingLimit: activeListingLimit,
+            residenceUnitAllowance: residenceUnitAllowance,
+            descriptions: _descriptions?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'descriptions';
+        _descriptions?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'TierInfo',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

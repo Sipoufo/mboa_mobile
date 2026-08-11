@@ -62,10 +62,10 @@ void main() {
     when(apiClient.getUserProfileApi).thenReturn(userProfileApi);
     when(apiClient.getPrestataireProfileApi).thenReturn(prestataireApi);
 
-    when(() => prestataireApi.myProfile1())
+    when(() => prestataireApi.getMyPrestataireProfile())
         .thenAnswer((_) async => ok(existing));
     when(
-      () => prestataireApi.updateMyProfile1(
+      () => prestataireApi.updateMyPrestataireProfile(
         updatePrestataireProfileRequest: any(
           named: 'updatePrestataireProfileRequest',
         ),
@@ -79,7 +79,7 @@ void main() {
   });
 
   test('a prestataire writes the key to logoObjectKey', () async {
-    when(() => currentUserApi.me()).thenAnswer(
+    when(() => currentUserApi.getMe()).thenAnswer(
       (_) async => ok(account(MeResponseRoleEnum.PRESTATAIRE), path: '/api/v1/me'),
     );
     when(() => base.load()).thenAnswer(
@@ -89,7 +89,7 @@ void main() {
     await repository.updatePhoto('logo.jpg');
 
     final sent = verify(
-      () => prestataireApi.updateMyProfile1(
+      () => prestataireApi.updateMyPrestataireProfile(
         updatePrestataireProfileRequest: captureAny(
           named: 'updatePrestataireProfileRequest',
         ),
@@ -102,7 +102,7 @@ void main() {
   });
 
   test('the other business fields are re-sent, not dropped', () async {
-    when(() => currentUserApi.me()).thenAnswer(
+    when(() => currentUserApi.getMe()).thenAnswer(
       (_) async => ok(account(MeResponseRoleEnum.PRESTATAIRE), path: '/api/v1/me'),
     );
     when(() => base.load()).thenAnswer(
@@ -112,7 +112,7 @@ void main() {
     await repository.updatePhoto('logo.jpg');
 
     final sent = verify(
-      () => prestataireApi.updateMyProfile1(
+      () => prestataireApi.updateMyPrestataireProfile(
         updatePrestataireProfileRequest: captureAny(
           named: 'updatePrestataireProfileRequest',
         ),
@@ -127,7 +127,7 @@ void main() {
   });
 
   test('an agent has no business profile and keeps the personal photo', () async {
-    when(() => currentUserApi.me()).thenAnswer(
+    when(() => currentUserApi.getMe()).thenAnswer(
       (_) async => ok(account(MeResponseRoleEnum.AGENT), path: '/api/v1/me'),
     );
     when(() => base.load()).thenAnswer(
@@ -138,7 +138,7 @@ void main() {
 
     verify(() => base.updatePhoto('photo.jpg')).called(1);
     verifyNever(
-      () => prestataireApi.updateMyProfile1(
+      () => prestataireApi.updateMyPrestataireProfile(
         updatePrestataireProfileRequest: any(
           named: 'updatePrestataireProfileRequest',
         ),

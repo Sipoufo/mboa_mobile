@@ -61,7 +61,7 @@ void main() {
 
       when(() => dioClient.api).thenReturn(apiClient);
       when(apiClient.getLocationsApi).thenReturn(locationsApi);
-      when(() => locationsApi.districts(cityId: any(named: 'cityId')))
+      when(() => locationsApi.listDistricts(cityId: any(named: 'cityId')))
           .thenAnswer(
         (_) async => Response(
           data: BuiltList<LocationOption>([

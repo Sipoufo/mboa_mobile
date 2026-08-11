@@ -11,7 +11,7 @@ class AppSettingsRepository {
     final language = languageCode.toLowerCase() == 'en'
         ? UpdateUserSettingsRequestLanguageEnum.EN
         : UpdateUserSettingsRequestLanguageEnum.FR;
-    await _dioClient.api.getUserSettingsApi().updateMySettings(
+    await _dioClient.api.getUserSettingsApi().updateMyUserSettings(
           updateUserSettingsRequest: UpdateUserSettingsRequest((b) => b..language = language),
         );
   }

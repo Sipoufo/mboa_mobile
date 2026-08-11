@@ -12,7 +12,7 @@ class KycRepository {
   KYCApi get _api => _dioClient.api.getKYCApi();
 
   Future<KycStatusData> loadStatus() async {
-    final response = await _api.myStatus();
+    final response = await _api.getMyKycStatus();
     return _map(response.data);
   }
 
@@ -22,7 +22,7 @@ class KycRepository {
     required String idFrontKey,
     required String idBackKey,
   }) async {
-    final response = await _api.submit(
+    final response = await _api.submitKyc(
       submitKycRequest: SubmitKycRequest((b) => b
         ..selfieKey = selfieKey
         ..idDocumentFrontKey = idFrontKey

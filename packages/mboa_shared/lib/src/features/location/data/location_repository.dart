@@ -11,7 +11,7 @@ class LocationRepository {
 
   /// All cities, or those in [regionId] when provided.
   Future<List<CityOption>> cities({String? regionId}) async {
-    final response = await _dioClient.api.getLocationsApi().cities(regionId: regionId);
+    final response = await _dioClient.api.getLocationsApi().listCities(regionId: regionId);
     final data = response.data;
     if (data == null) return const [];
     return [
@@ -26,7 +26,7 @@ class LocationRepository {
   /// (`CreateAnnonceRequest.districtId`), so M10's location step needs this.
   Future<List<CityOption>> districts(String cityId) async {
     final response =
-        await _dioClient.api.getLocationsApi().districts(cityId: cityId);
+        await _dioClient.api.getLocationsApi().listDistricts(cityId: cityId);
     final data = response.data;
     if (data == null) return const [];
     return [

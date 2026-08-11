@@ -34,7 +34,7 @@ class NotificationDevicesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> register({ 
+  Future<Response<void>> registerDevice({ 
     required RegisterDeviceRequest registerDeviceRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -107,7 +107,7 @@ class NotificationDevicesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> unregister({ 
+  Future<Response<void>> unregisterDevice({ 
     required String token,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

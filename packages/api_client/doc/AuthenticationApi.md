@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**forgotPassword**](AuthenticationApi.md#forgotpassword) | **POST** /api/v1/auth/password/forgot | Start a password reset; sends an OTP if the email has a password account
 [**login**](AuthenticationApi.md#login) | **POST** /api/v1/auth/login | Credential login step 1: verify email + password, sends an OTP second factor
 [**logout**](AuthenticationApi.md#logout) | **POST** /api/v1/auth/logout | Revoke a refresh token (logout)
-[**refresh**](AuthenticationApi.md#refresh) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
+[**refreshToken**](AuthenticationApi.md#refreshtoken) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
 [**registerProfessional**](AuthenticationApi.md#registerprofessional) | **POST** /api/v1/auth/register/professional | Register a professional (AGENT or PRESTATAIRE); sends an OTP to verify the phone
 [**requestOtp**](AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number
 [**resendOtp**](AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone that has a pending verification
@@ -142,8 +142,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **refresh**
-> AuthTokens refresh(refreshTokenRequest)
+# **refreshToken**
+> AuthTokens refreshToken(refreshTokenRequest)
 
 Exchange a refresh token for a new token pair
 
@@ -155,10 +155,10 @@ final api = ApiClient().getAuthenticationApi();
 final RefreshTokenRequest refreshTokenRequest = ; // RefreshTokenRequest | 
 
 try {
-    final response = api.refresh(refreshTokenRequest);
+    final response = api.refreshToken(refreshTokenRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AuthenticationApi->refresh: $e\n');
+    print('Exception when calling AuthenticationApi->refreshToken: $e\n');
 }
 ```
 

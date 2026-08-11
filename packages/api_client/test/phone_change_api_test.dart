@@ -9,15 +9,15 @@ void main() {
   group(PhoneChangeApi, () {
     // Step 2: verify both codes and switch the number
     //
-    //Future<PhoneChangeResponse> confirmChange(ConfirmPhoneChangeRequest confirmPhoneChangeRequest) async
-    test('test confirmChange', () async {
+    //Future<PhoneChangeResponse> confirmPhoneChange(ConfirmPhoneChangeRequest confirmPhoneChangeRequest) async
+    test('test confirmPhoneChange', () async {
       // TODO
     });
 
     // Step 1: request OTPs on the current and the new number
     //
-    //Future requestChange(RequestPhoneChangeRequest requestPhoneChangeRequest) async
-    test('test requestChange', () async {
+    //Future requestPhoneChange(RequestPhoneChangeRequest requestPhoneChangeRequest) async
+    test('test requestPhoneChange', () async {
       // TODO
     });
 

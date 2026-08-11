@@ -16,6 +16,8 @@ part 'unit_summary.g.dart';
 /// * [title] 
 /// * [propertyType] 
 /// * [status] 
+/// * [price] 
+/// * [rentalPeriod] 
 /// * [monthlyRent] 
 @BuiltValue()
 abstract class UnitSummary implements Built<UnitSummary, UnitSummaryBuilder> {
@@ -31,7 +33,14 @@ abstract class UnitSummary implements Built<UnitSummary, UnitSummaryBuilder> {
 
   @BuiltValueField(wireName: r'status')
   UnitSummaryStatusEnum? get status;
-  // enum statusEnum {  DRAFT,  PUBLISHED,  RESERVED,  RENTED,  ARCHIVED,  };
+  // enum statusEnum {  DRAFT,  PUBLISHED,  RESERVED,  RENTED,  ARCHIVED,  SUSPENDED,  };
+
+  @BuiltValueField(wireName: r'price')
+  int? get price;
+
+  @BuiltValueField(wireName: r'rentalPeriod')
+  UnitSummaryRentalPeriodEnum? get rentalPeriod;
+  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -85,6 +94,20 @@ class _$UnitSummarySerializer implements PrimitiveSerializer<UnitSummary> {
       yield serializers.serialize(
         object.status,
         specifiedType: const FullType(UnitSummaryStatusEnum),
+      );
+    }
+    if (object.price != null) {
+      yield r'price';
+      yield serializers.serialize(
+        object.price,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.rentalPeriod != null) {
+      yield r'rentalPeriod';
+      yield serializers.serialize(
+        object.rentalPeriod,
+        specifiedType: const FullType(UnitSummaryRentalPeriodEnum),
       );
     }
     if (object.monthlyRent != null) {
@@ -148,6 +171,22 @@ class _$UnitSummarySerializer implements PrimitiveSerializer<UnitSummary> {
           ) as UnitSummaryStatusEnum?;
           if (valueDes == null) continue;
           result.status = valueDes;
+          break;
+        case r'price':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.price = valueDes;
+          break;
+        case r'rentalPeriod':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(UnitSummaryRentalPeriodEnum),
+          ) as UnitSummaryRentalPeriodEnum?;
+          if (valueDes == null) continue;
+          result.rentalPeriod = valueDes;
           break;
         case r'monthlyRent':
           final valueDes = serializers.deserialize(
@@ -223,6 +262,8 @@ class UnitSummaryStatusEnum extends EnumClass {
   static const UnitSummaryStatusEnum RENTED = _$unitSummaryStatusEnum_RENTED;
   @BuiltValueEnumConst(wireName: r'ARCHIVED')
   static const UnitSummaryStatusEnum ARCHIVED = _$unitSummaryStatusEnum_ARCHIVED;
+  @BuiltValueEnumConst(wireName: r'SUSPENDED')
+  static const UnitSummaryStatusEnum SUSPENDED = _$unitSummaryStatusEnum_SUSPENDED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const UnitSummaryStatusEnum unknownDefaultOpenApi = _$unitSummaryStatusEnum_unknownDefaultOpenApi;
 
@@ -232,5 +273,24 @@ class UnitSummaryStatusEnum extends EnumClass {
 
   static BuiltSet<UnitSummaryStatusEnum> get values => _$unitSummaryStatusEnumValues;
   static UnitSummaryStatusEnum valueOf(String name) => _$unitSummaryStatusEnumValueOf(name);
+}
+
+class UnitSummaryRentalPeriodEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'MONTH')
+  static const UnitSummaryRentalPeriodEnum MONTH = _$unitSummaryRentalPeriodEnum_MONTH;
+  @BuiltValueEnumConst(wireName: r'QUARTER')
+  static const UnitSummaryRentalPeriodEnum QUARTER = _$unitSummaryRentalPeriodEnum_QUARTER;
+  @BuiltValueEnumConst(wireName: r'YEAR')
+  static const UnitSummaryRentalPeriodEnum YEAR = _$unitSummaryRentalPeriodEnum_YEAR;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const UnitSummaryRentalPeriodEnum unknownDefaultOpenApi = _$unitSummaryRentalPeriodEnum_unknownDefaultOpenApi;
+
+  static Serializer<UnitSummaryRentalPeriodEnum> get serializer => _$unitSummaryRentalPeriodEnumSerializer;
+
+  const UnitSummaryRentalPeriodEnum._(String name): super(name);
+
+  static BuiltSet<UnitSummaryRentalPeriodEnum> get values => _$unitSummaryRentalPeriodEnumValues;
+  static UnitSummaryRentalPeriodEnum valueOf(String name) => _$unitSummaryRentalPeriodEnumValueOf(name);
 }
 

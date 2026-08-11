@@ -54,8 +54,43 @@ final BuiltSet<UnitGroupPropertyTypeEnum> _$unitGroupPropertyTypeEnumValues =
       _$unitGroupPropertyTypeEnum_unknownDefaultOpenApi,
     ]);
 
+const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_MONTH =
+    const UnitGroupRentalPeriodEnum._('MONTH');
+const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_QUARTER =
+    const UnitGroupRentalPeriodEnum._('QUARTER');
+const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_YEAR =
+    const UnitGroupRentalPeriodEnum._('YEAR');
+const UnitGroupRentalPeriodEnum
+_$unitGroupRentalPeriodEnum_unknownDefaultOpenApi =
+    const UnitGroupRentalPeriodEnum._('unknownDefaultOpenApi');
+
+UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnumValueOf(String name) {
+  switch (name) {
+    case 'MONTH':
+      return _$unitGroupRentalPeriodEnum_MONTH;
+    case 'QUARTER':
+      return _$unitGroupRentalPeriodEnum_QUARTER;
+    case 'YEAR':
+      return _$unitGroupRentalPeriodEnum_YEAR;
+    case 'unknownDefaultOpenApi':
+      return _$unitGroupRentalPeriodEnum_unknownDefaultOpenApi;
+    default:
+      return _$unitGroupRentalPeriodEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<UnitGroupRentalPeriodEnum> _$unitGroupRentalPeriodEnumValues =
+    BuiltSet<UnitGroupRentalPeriodEnum>(const <UnitGroupRentalPeriodEnum>[
+      _$unitGroupRentalPeriodEnum_MONTH,
+      _$unitGroupRentalPeriodEnum_QUARTER,
+      _$unitGroupRentalPeriodEnum_YEAR,
+      _$unitGroupRentalPeriodEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<UnitGroupPropertyTypeEnum> _$unitGroupPropertyTypeEnumSerializer =
     _$UnitGroupPropertyTypeEnumSerializer();
+Serializer<UnitGroupRentalPeriodEnum> _$unitGroupRentalPeriodEnumSerializer =
+    _$UnitGroupRentalPeriodEnumSerializer();
 
 class _$UnitGroupPropertyTypeEnumSerializer
     implements PrimitiveSerializer<UnitGroupPropertyTypeEnum> {
@@ -100,6 +135,43 @@ class _$UnitGroupPropertyTypeEnumSerializer
   );
 }
 
+class _$UnitGroupRentalPeriodEnumSerializer
+    implements PrimitiveSerializer<UnitGroupRentalPeriodEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[UnitGroupRentalPeriodEnum];
+  @override
+  final String wireName = 'UnitGroupRentalPeriodEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    UnitGroupRentalPeriodEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  UnitGroupRentalPeriodEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UnitGroupRentalPeriodEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$UnitGroup extends UnitGroup {
   @override
   final UnitGroupPropertyTypeEnum propertyType;
@@ -108,7 +180,11 @@ class _$UnitGroup extends UnitGroup {
   @override
   final String namePrefix;
   @override
-  final int monthlyRent;
+  final int? price;
+  @override
+  final UnitGroupRentalPeriodEnum? rentalPeriod;
+  @override
+  final int? monthlyRent;
   @override
   final bool? chargesIncluded;
   @override
@@ -131,7 +207,9 @@ class _$UnitGroup extends UnitGroup {
     required this.propertyType,
     required this.count,
     required this.namePrefix,
-    required this.monthlyRent,
+    this.price,
+    this.rentalPeriod,
+    this.monthlyRent,
     this.chargesIncluded,
     this.chargesAmount,
     this.surfaceArea,
@@ -154,6 +232,8 @@ class _$UnitGroup extends UnitGroup {
         propertyType == other.propertyType &&
         count == other.count &&
         namePrefix == other.namePrefix &&
+        price == other.price &&
+        rentalPeriod == other.rentalPeriod &&
         monthlyRent == other.monthlyRent &&
         chargesIncluded == other.chargesIncluded &&
         chargesAmount == other.chargesAmount &&
@@ -170,6 +250,8 @@ class _$UnitGroup extends UnitGroup {
     _$hash = $jc(_$hash, propertyType.hashCode);
     _$hash = $jc(_$hash, count.hashCode);
     _$hash = $jc(_$hash, namePrefix.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, rentalPeriod.hashCode);
     _$hash = $jc(_$hash, monthlyRent.hashCode);
     _$hash = $jc(_$hash, chargesIncluded.hashCode);
     _$hash = $jc(_$hash, chargesAmount.hashCode);
@@ -188,6 +270,8 @@ class _$UnitGroup extends UnitGroup {
           ..add('propertyType', propertyType)
           ..add('count', count)
           ..add('namePrefix', namePrefix)
+          ..add('price', price)
+          ..add('rentalPeriod', rentalPeriod)
           ..add('monthlyRent', monthlyRent)
           ..add('chargesIncluded', chargesIncluded)
           ..add('chargesAmount', chargesAmount)
@@ -215,6 +299,15 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
   String? _namePrefix;
   String? get namePrefix => _$this._namePrefix;
   set namePrefix(String? namePrefix) => _$this._namePrefix = namePrefix;
+
+  int? _price;
+  int? get price => _$this._price;
+  set price(int? price) => _$this._price = price;
+
+  UnitGroupRentalPeriodEnum? _rentalPeriod;
+  UnitGroupRentalPeriodEnum? get rentalPeriod => _$this._rentalPeriod;
+  set rentalPeriod(UnitGroupRentalPeriodEnum? rentalPeriod) =>
+      _$this._rentalPeriod = rentalPeriod;
 
   int? _monthlyRent;
   int? get monthlyRent => _$this._monthlyRent;
@@ -261,6 +354,8 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
       _propertyType = $v.propertyType;
       _count = $v.count;
       _namePrefix = $v.namePrefix;
+      _price = $v.price;
+      _rentalPeriod = $v.rentalPeriod;
       _monthlyRent = $v.monthlyRent;
       _chargesIncluded = $v.chargesIncluded;
       _chargesAmount = $v.chargesAmount;
@@ -306,11 +401,9 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
             r'UnitGroup',
             'namePrefix',
           ),
-          monthlyRent: BuiltValueNullFieldError.checkNotNull(
-            monthlyRent,
-            r'UnitGroup',
-            'monthlyRent',
-          ),
+          price: price,
+          rentalPeriod: rentalPeriod,
+          monthlyRent: monthlyRent,
           chargesIncluded: chargesIncluded,
           chargesAmount: chargesAmount,
           surfaceArea: surfaceArea,

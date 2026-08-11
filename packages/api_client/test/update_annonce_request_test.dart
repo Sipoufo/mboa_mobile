@@ -37,6 +37,16 @@ void main() {
       // TODO
     });
 
+    // int price
+    test('to test the property `price`', () async {
+      // TODO
+    });
+
+    // String rentalPeriod
+    test('to test the property `rentalPeriod`', () async {
+      // TODO
+    });
+
     // int monthlyRent
     test('to test the property `monthlyRent`', () async {
       // TODO
@@ -84,6 +94,11 @@ void main() {
 
     // BuiltList<String> photoKeys
     test('to test the property `photoKeys`', () async {
+      // TODO
+    });
+
+    // BuiltSet<String> amenities
+    test('to test the property `amenities`', () async {
       // TODO
     });
 

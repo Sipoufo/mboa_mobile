@@ -22,5 +22,15 @@ void main() {
       // TODO
     });
 
+    // String currentPaymentId
+    test('to test the property `currentPaymentId`', () async {
+      // TODO
+    });
+
+    // bool currentPaymentHasReceipt
+    test('to test the property `currentPaymentHasReceipt`', () async {
+      // TODO
+    });
+
   });
 }

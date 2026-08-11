@@ -64,6 +64,46 @@ _$searchResultItemPropertyTypeEnumValues =
       ],
     );
 
+const SearchResultItemRentalPeriodEnum
+_$searchResultItemRentalPeriodEnum_MONTH =
+    const SearchResultItemRentalPeriodEnum._('MONTH');
+const SearchResultItemRentalPeriodEnum
+_$searchResultItemRentalPeriodEnum_QUARTER =
+    const SearchResultItemRentalPeriodEnum._('QUARTER');
+const SearchResultItemRentalPeriodEnum _$searchResultItemRentalPeriodEnum_YEAR =
+    const SearchResultItemRentalPeriodEnum._('YEAR');
+const SearchResultItemRentalPeriodEnum
+_$searchResultItemRentalPeriodEnum_unknownDefaultOpenApi =
+    const SearchResultItemRentalPeriodEnum._('unknownDefaultOpenApi');
+
+SearchResultItemRentalPeriodEnum _$searchResultItemRentalPeriodEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'MONTH':
+      return _$searchResultItemRentalPeriodEnum_MONTH;
+    case 'QUARTER':
+      return _$searchResultItemRentalPeriodEnum_QUARTER;
+    case 'YEAR':
+      return _$searchResultItemRentalPeriodEnum_YEAR;
+    case 'unknownDefaultOpenApi':
+      return _$searchResultItemRentalPeriodEnum_unknownDefaultOpenApi;
+    default:
+      return _$searchResultItemRentalPeriodEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<SearchResultItemRentalPeriodEnum>
+_$searchResultItemRentalPeriodEnumValues =
+    BuiltSet<SearchResultItemRentalPeriodEnum>(
+      const <SearchResultItemRentalPeriodEnum>[
+        _$searchResultItemRentalPeriodEnum_MONTH,
+        _$searchResultItemRentalPeriodEnum_QUARTER,
+        _$searchResultItemRentalPeriodEnum_YEAR,
+        _$searchResultItemRentalPeriodEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 const SearchResultItemStatusEnum _$searchResultItemStatusEnum_DRAFT =
     const SearchResultItemStatusEnum._('DRAFT');
 const SearchResultItemStatusEnum _$searchResultItemStatusEnum_PUBLISHED =
@@ -74,6 +114,8 @@ const SearchResultItemStatusEnum _$searchResultItemStatusEnum_RENTED =
     const SearchResultItemStatusEnum._('RENTED');
 const SearchResultItemStatusEnum _$searchResultItemStatusEnum_ARCHIVED =
     const SearchResultItemStatusEnum._('ARCHIVED');
+const SearchResultItemStatusEnum _$searchResultItemStatusEnum_SUSPENDED =
+    const SearchResultItemStatusEnum._('SUSPENDED');
 const SearchResultItemStatusEnum
 _$searchResultItemStatusEnum_unknownDefaultOpenApi =
     const SearchResultItemStatusEnum._('unknownDefaultOpenApi');
@@ -90,6 +132,8 @@ SearchResultItemStatusEnum _$searchResultItemStatusEnumValueOf(String name) {
       return _$searchResultItemStatusEnum_RENTED;
     case 'ARCHIVED':
       return _$searchResultItemStatusEnum_ARCHIVED;
+    case 'SUSPENDED':
+      return _$searchResultItemStatusEnum_SUSPENDED;
     case 'unknownDefaultOpenApi':
       return _$searchResultItemStatusEnum_unknownDefaultOpenApi;
     default:
@@ -104,12 +148,16 @@ final BuiltSet<SearchResultItemStatusEnum> _$searchResultItemStatusEnumValues =
       _$searchResultItemStatusEnum_RESERVED,
       _$searchResultItemStatusEnum_RENTED,
       _$searchResultItemStatusEnum_ARCHIVED,
+      _$searchResultItemStatusEnum_SUSPENDED,
       _$searchResultItemStatusEnum_unknownDefaultOpenApi,
     ]);
 
 Serializer<SearchResultItemPropertyTypeEnum>
 _$searchResultItemPropertyTypeEnumSerializer =
     _$SearchResultItemPropertyTypeEnumSerializer();
+Serializer<SearchResultItemRentalPeriodEnum>
+_$searchResultItemRentalPeriodEnumSerializer =
+    _$SearchResultItemRentalPeriodEnumSerializer();
 Serializer<SearchResultItemStatusEnum> _$searchResultItemStatusEnumSerializer =
     _$SearchResultItemStatusEnumSerializer();
 
@@ -156,6 +204,43 @@ class _$SearchResultItemPropertyTypeEnumSerializer
   );
 }
 
+class _$SearchResultItemRentalPeriodEnumSerializer
+    implements PrimitiveSerializer<SearchResultItemRentalPeriodEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[SearchResultItemRentalPeriodEnum];
+  @override
+  final String wireName = 'SearchResultItemRentalPeriodEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    SearchResultItemRentalPeriodEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  SearchResultItemRentalPeriodEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => SearchResultItemRentalPeriodEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$SearchResultItemStatusEnumSerializer
     implements PrimitiveSerializer<SearchResultItemStatusEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
@@ -164,6 +249,7 @@ class _$SearchResultItemStatusEnumSerializer
     'RESERVED': 'RESERVED',
     'RENTED': 'RENTED',
     'ARCHIVED': 'ARCHIVED',
+    'SUSPENDED': 'SUSPENDED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -172,6 +258,7 @@ class _$SearchResultItemStatusEnumSerializer
     'RESERVED': 'RESERVED',
     'RENTED': 'RENTED',
     'ARCHIVED': 'ARCHIVED',
+    'SUSPENDED': 'SUSPENDED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -209,6 +296,10 @@ class _$SearchResultItem extends SearchResultItem {
   @override
   final String? district;
   @override
+  final int? price;
+  @override
+  final SearchResultItemRentalPeriodEnum? rentalPeriod;
+  @override
   final int? monthlyRent;
   @override
   final bool? furnished;
@@ -239,6 +330,8 @@ class _$SearchResultItem extends SearchResultItem {
     this.propertyType,
     this.city,
     this.district,
+    this.price,
+    this.rentalPeriod,
     this.monthlyRent,
     this.furnished,
     this.roomCount,
@@ -267,6 +360,8 @@ class _$SearchResultItem extends SearchResultItem {
         propertyType == other.propertyType &&
         city == other.city &&
         district == other.district &&
+        price == other.price &&
+        rentalPeriod == other.rentalPeriod &&
         monthlyRent == other.monthlyRent &&
         furnished == other.furnished &&
         roomCount == other.roomCount &&
@@ -287,6 +382,8 @@ class _$SearchResultItem extends SearchResultItem {
     _$hash = $jc(_$hash, propertyType.hashCode);
     _$hash = $jc(_$hash, city.hashCode);
     _$hash = $jc(_$hash, district.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, rentalPeriod.hashCode);
     _$hash = $jc(_$hash, monthlyRent.hashCode);
     _$hash = $jc(_$hash, furnished.hashCode);
     _$hash = $jc(_$hash, roomCount.hashCode);
@@ -309,6 +406,8 @@ class _$SearchResultItem extends SearchResultItem {
           ..add('propertyType', propertyType)
           ..add('city', city)
           ..add('district', district)
+          ..add('price', price)
+          ..add('rentalPeriod', rentalPeriod)
           ..add('monthlyRent', monthlyRent)
           ..add('furnished', furnished)
           ..add('roomCount', roomCount)
@@ -347,6 +446,15 @@ class SearchResultItemBuilder
   String? _district;
   String? get district => _$this._district;
   set district(String? district) => _$this._district = district;
+
+  int? _price;
+  int? get price => _$this._price;
+  set price(int? price) => _$this._price = price;
+
+  SearchResultItemRentalPeriodEnum? _rentalPeriod;
+  SearchResultItemRentalPeriodEnum? get rentalPeriod => _$this._rentalPeriod;
+  set rentalPeriod(SearchResultItemRentalPeriodEnum? rentalPeriod) =>
+      _$this._rentalPeriod = rentalPeriod;
 
   int? _monthlyRent;
   int? get monthlyRent => _$this._monthlyRent;
@@ -402,6 +510,8 @@ class SearchResultItemBuilder
       _propertyType = $v.propertyType;
       _city = $v.city;
       _district = $v.district;
+      _price = $v.price;
+      _rentalPeriod = $v.rentalPeriod;
       _monthlyRent = $v.monthlyRent;
       _furnished = $v.furnished;
       _roomCount = $v.roomCount;
@@ -439,6 +549,8 @@ class SearchResultItemBuilder
           propertyType: propertyType,
           city: city,
           district: district,
+          price: price,
+          rentalPeriod: rentalPeriod,
           monthlyRent: monthlyRent,
           furnished: furnished,
           roomCount: roomCount,

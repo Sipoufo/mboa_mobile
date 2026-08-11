@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **propertyType** | **String** |  | [optional] 
 **city** | **String** |  | [optional] 
 **district** | **String** |  | [optional] 
+**price** | **int** |  | [optional] 
+**rentalPeriod** | **String** |  | [optional] 
 **monthlyRent** | **int** |  | [optional] 
 **furnished** | **bool** |  | [optional] 
 **roomCount** | **int** |  | [optional] 

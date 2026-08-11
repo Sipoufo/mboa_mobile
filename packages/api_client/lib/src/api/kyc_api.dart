@@ -33,7 +33,7 @@ class KYCApi {
   ///
   /// Returns a [Future] containing a [Response] with a [KycStatusResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<KycStatusResponse>> myStatus({ 
+  Future<Response<KycStatusResponse>> getMyKycStatus({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -113,7 +113,7 @@ class KYCApi {
   ///
   /// Returns a [Future] containing a [Response] with a [KycStatusResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<KycStatusResponse>> submit({ 
+  Future<Response<KycStatusResponse>> submitKyc({ 
     required SubmitKycRequest submitKycRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

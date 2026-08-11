@@ -42,6 +42,11 @@ void main() {
       // TODO
     });
 
+    // String tier
+    test('to test the property `tier`', () async {
+      // TODO
+    });
+
     // DateTime createdAt
     test('to test the property `createdAt`', () async {
       // TODO

@@ -32,5 +32,10 @@ void main() {
       // TODO
     });
 
+    // BuiltMap<String, String> descriptions
+    test('to test the property `descriptions`', () async {
+      // TODO
+    });
+
   });
 }

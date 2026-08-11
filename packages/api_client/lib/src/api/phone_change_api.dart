@@ -35,7 +35,7 @@ class PhoneChangeApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PhoneChangeResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PhoneChangeResponse>> confirmChange({ 
+  Future<Response<PhoneChangeResponse>> confirmPhoneChange({ 
     required ConfirmPhoneChangeRequest confirmPhoneChangeRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -136,7 +136,7 @@ class PhoneChangeApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> requestChange({ 
+  Future<Response<void>> requestPhoneChange({ 
     required RequestPhoneChangeRequest requestPhoneChangeRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

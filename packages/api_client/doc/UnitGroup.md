@@ -11,7 +11,9 @@ Name | Type | Description | Notes
 **propertyType** | **String** |  | 
 **count** | **int** |  | 
 **namePrefix** | **String** |  | 
-**monthlyRent** | **int** |  | 
+**price** | **int** |  | [optional] 
+**rentalPeriod** | **String** |  | [optional] 
+**monthlyRent** | **int** |  | [optional] 
 **chargesIncluded** | **bool** |  | [optional] 
 **chargesAmount** | **int** |  | [optional] 
 **surfaceArea** | **int** |  | [optional] 

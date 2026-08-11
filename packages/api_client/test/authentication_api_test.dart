@@ -30,8 +30,8 @@ void main() {
 
     // Exchange a refresh token for a new token pair
     //
-    //Future<AuthTokens> refresh(RefreshTokenRequest refreshTokenRequest) async
-    test('test refresh', () async {
+    //Future<AuthTokens> refreshToken(RefreshTokenRequest refreshTokenRequest) async
+    test('test refreshToken', () async {
       // TODO
     });
 

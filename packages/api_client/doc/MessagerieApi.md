@@ -9,15 +9,15 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**listMessages**](MessagerieApi.md#listmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first
-[**listMine1**](MessagerieApi.md#listmine1) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
-[**markRead**](MessagerieApi.md#markread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
-[**send**](MessagerieApi.md#send) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
-[**start**](MessagerieApi.md#start) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
+[**listConversationMessages**](MessagerieApi.md#listconversationmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first
+[**listMyConversations**](MessagerieApi.md#listmyconversations) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
+[**markConversationRead**](MessagerieApi.md#markconversationread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
+[**sendMessage**](MessagerieApi.md#sendmessage) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
+[**startConversation**](MessagerieApi.md#startconversation) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
 
 
-# **listMessages**
-> PageResponseMessageResponse listMessages(id, pageable)
+# **listConversationMessages**
+> PageResponseMessageResponse listConversationMessages(id, pageable)
 
 List a conversation's messages, newest first
 
@@ -30,10 +30,10 @@ final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final Pageable pageable = ; // Pageable | 
 
 try {
-    final response = api.listMessages(id, pageable);
+    final response = api.listConversationMessages(id, pageable);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling MessagerieApi->listMessages: $e\n');
+    print('Exception when calling MessagerieApi->listConversationMessages: $e\n');
 }
 ```
 
@@ -59,8 +59,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listMine1**
-> PageResponseConversationResponse listMine1(pageable)
+# **listMyConversations**
+> PageResponseConversationResponse listMyConversations(pageable)
 
 List the authenticated participant's conversations
 
@@ -72,10 +72,10 @@ final api = ApiClient().getMessagerieApi();
 final Pageable pageable = ; // Pageable | 
 
 try {
-    final response = api.listMine1(pageable);
+    final response = api.listMyConversations(pageable);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling MessagerieApi->listMine1: $e\n');
+    print('Exception when calling MessagerieApi->listMyConversations: $e\n');
 }
 ```
 
@@ -100,8 +100,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **markRead**
-> markRead(id)
+# **markConversationRead**
+> markConversationRead(id)
 
 Mark the conversation's incoming messages as read
 
@@ -113,9 +113,9 @@ final api = ApiClient().getMessagerieApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    api.markRead(id);
+    api.markConversationRead(id);
 } on DioException catch (e) {
-    print('Exception when calling MessagerieApi->markRead: $e\n');
+    print('Exception when calling MessagerieApi->markConversationRead: $e\n');
 }
 ```
 
@@ -140,8 +140,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **send**
-> MessageResponse send(id, sendMessageRequest)
+# **sendMessage**
+> MessageResponse sendMessage(id, sendMessageRequest)
 
 Post a message in a conversation
 
@@ -154,10 +154,10 @@ final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final SendMessageRequest sendMessageRequest = ; // SendMessageRequest | 
 
 try {
-    final response = api.send(id, sendMessageRequest);
+    final response = api.sendMessage(id, sendMessageRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling MessagerieApi->send: $e\n');
+    print('Exception when calling MessagerieApi->sendMessage: $e\n');
 }
 ```
 
@@ -183,8 +183,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **start**
-> ConversationResponse start(startConversationRequest)
+# **startConversation**
+> ConversationResponse startConversation(startConversationRequest)
 
 Contact a listing — opens (or reuses) the thread and posts the first message
 
@@ -196,10 +196,10 @@ final api = ApiClient().getMessagerieApi();
 final StartConversationRequest startConversationRequest = ; // StartConversationRequest | 
 
 try {
-    final response = api.start(startConversationRequest);
+    final response = api.startConversation(startConversationRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling MessagerieApi->start: $e\n');
+    print('Exception when calling MessagerieApi->startConversation: $e\n');
 }
 ```
 

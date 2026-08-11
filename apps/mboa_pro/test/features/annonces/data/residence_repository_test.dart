@@ -44,9 +44,9 @@ void main() {
     repository = ResidenceRepository(dioClient: dioClient);
   });
 
-  test('unarchive calls unarchiveAll and returns the residence as a draft',
+  test('unarchive calls unarchiveResidenceUnits and returns the residence as a draft',
       () async {
-    when(() => api.unarchiveAll(id: 'r1')).thenAnswer(
+    when(() => api.unarchiveResidenceUnits(id: 'r1')).thenAnswer(
       (_) async => ok(residence(ResidenceResponseStatusEnum.DRAFT)),
     );
 
@@ -54,22 +54,22 @@ void main() {
         await repository.transition('r1', AnnonceTransition.unarchive);
 
     expect(updated.status, AnnonceStatus.draft);
-    verify(() => api.unarchiveAll(id: 'r1')).called(1);
+    verify(() => api.unarchiveResidenceUnits(id: 'r1')).called(1);
     // Publishing an archived residence is a 409 — un-archiving is its own step.
-    verifyNever(() => api.publishAll(id: any(named: 'id')));
+    verifyNever(() => api.publishResidenceUnits(id: any(named: 'id')));
   });
 
   test('each of the other transitions reaches its own endpoint', () async {
-    when(() => api.publishAll(id: 'r1')).thenAnswer(
+    when(() => api.publishResidenceUnits(id: 'r1')).thenAnswer(
       (_) async => ok(residence(ResidenceResponseStatusEnum.PUBLISHED)),
     );
-    when(() => api.reserveAll(id: 'r1')).thenAnswer(
+    when(() => api.reserveResidenceUnits(id: 'r1')).thenAnswer(
       (_) async => ok(residence(ResidenceResponseStatusEnum.RESERVED)),
     );
-    when(() => api.rentAll(id: 'r1')).thenAnswer(
+    when(() => api.rentResidenceUnits(id: 'r1')).thenAnswer(
       (_) async => ok(residence(ResidenceResponseStatusEnum.RENTED)),
     );
-    when(() => api.archiveAll(id: 'r1')).thenAnswer(
+    when(() => api.archiveResidenceUnits(id: 'r1')).thenAnswer(
       (_) async => ok(residence(ResidenceResponseStatusEnum.ARCHIVED)),
     );
 

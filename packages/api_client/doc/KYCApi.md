@@ -9,12 +9,12 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**myStatus**](KYCApi.md#mystatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
-[**submit**](KYCApi.md#submit) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
+[**getMyKycStatus**](KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
+[**submitKyc**](KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
 
 
-# **myStatus**
-> KycStatusResponse myStatus()
+# **getMyKycStatus**
+> KycStatusResponse getMyKycStatus()
 
 Get the authenticated account's KYC status
 
@@ -25,10 +25,10 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getKYCApi();
 
 try {
-    final response = api.myStatus();
+    final response = api.getMyKycStatus();
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling KYCApi->myStatus: $e\n');
+    print('Exception when calling KYCApi->getMyKycStatus: $e\n');
 }
 ```
 
@@ -50,8 +50,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **submit**
-> KycStatusResponse submit(submitKycRequest)
+# **submitKyc**
+> KycStatusResponse submitKyc(submitKycRequest)
 
 Submit KYC documents (R2 object keys) for verification
 
@@ -63,10 +63,10 @@ final api = ApiClient().getKYCApi();
 final SubmitKycRequest submitKycRequest = ; // SubmitKycRequest | 
 
 try {
-    final response = api.submit(submitKycRequest);
+    final response = api.submitKyc(submitKycRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling KYCApi->submit: $e\n');
+    print('Exception when calling KYCApi->submitKyc: $e\n');
 }
 ```
 

@@ -29,6 +29,85 @@ class SubscriptionsApi {
 
   const SubscriptionsApi(this._dio, this._serializers);
 
+  /// Get the authenticated account&#39;s current subscription
+  /// 
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [SubscriptionResponse] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<SubscriptionResponse>> getMySubscription({ 
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/subscriptions/me';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    SubscriptionResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(SubscriptionResponse),
+      ) as SubscriptionResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<SubscriptionResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// Get one payment&#39;s current status (poll this after initiating a payment)
   /// 
   ///
@@ -99,6 +178,87 @@ class SubscriptionsApi {
     }
 
     return Response<PaymentSummary>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// Get a short-lived URL to download a payment&#39;s PDF receipt
+  /// 
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ReceiptResponse] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ReceiptResponse>> getPaymentReceipt({ 
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/subscriptions/payments/{id}/receipt'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ReceiptResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(ReceiptResponse),
+      ) as ReceiptResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ReceiptResponse>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -196,7 +356,7 @@ class SubscriptionsApi {
     );
   }
 
-  /// Get the authenticated account&#39;s current subscription
+  /// List the subscription tiers and their current parameters
   /// 
   ///
   /// Parameters:
@@ -207,9 +367,9 @@ class SubscriptionsApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [SubscriptionResponse] as data
+  /// Returns a [Future] containing a [Response] with a [BuiltList<TierInfo>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<SubscriptionResponse>> mySubscription({ 
+  Future<Response<BuiltList<TierInfo>>> listSubscriptionTiers({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -217,7 +377,7 @@ class SubscriptionsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/v1/subscriptions/me';
+    final _path = r'/api/v1/subscriptions/tiers';
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -244,14 +404,14 @@ class SubscriptionsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    SubscriptionResponse? _responseData;
+    BuiltList<TierInfo>? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(SubscriptionResponse),
-      ) as SubscriptionResponse;
+        specifiedType: const FullType(BuiltList, [FullType(TierInfo)]),
+      ) as BuiltList<TierInfo>;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -263,7 +423,7 @@ class SubscriptionsApi {
       );
     }
 
-    return Response<SubscriptionResponse>(
+    return Response<BuiltList<TierInfo>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -275,11 +435,11 @@ class SubscriptionsApi {
     );
   }
 
-  /// Get a short-lived URL to download a payment&#39;s PDF receipt
+  /// Payment confirmation webhook (HMAC-verified)
   /// 
   ///
   /// Parameters:
-  /// * [id] 
+  /// * [paymentWebhookRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -287,10 +447,10 @@ class SubscriptionsApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ReceiptResponse] as data
+  /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ReceiptResponse>> receipt({ 
-    required String id,
+  Future<Response<void>> paymentWebhook({ 
+    required PaymentWebhookRequest paymentWebhookRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -298,9 +458,9 @@ class SubscriptionsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/v1/subscriptions/payments/{id}/receipt'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _path = r'/api/v1/subscriptions/webhook';
     final _options = Options(
-      method: r'GET',
+      method: r'POST',
       headers: <String, dynamic>{
         ...?headers,
       },
@@ -314,46 +474,38 @@ class SubscriptionsApi {
         ],
         ...?extra,
       },
+      contentType: 'application/json',
       validateStatus: validateStatus,
     );
 
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    ReceiptResponse? _responseData;
+    dynamic _bodyData;
 
     try {
-      final rawResponse = _response.data;
-      _responseData = rawResponse == null ? null : _serializers.deserialize(
-        rawResponse,
-        specifiedType: const FullType(ReceiptResponse),
-      ) as ReceiptResponse;
+      const _type = FullType(PaymentWebhookRequest);
+      _bodyData = _serializers.serialize(paymentWebhookRequest, specifiedType: _type);
 
-    } catch (error, stackTrace) {
+    } catch(error, stackTrace) {
       throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
     }
 
-    return Response<ReceiptResponse>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
+
+    return _response;
   }
 
   /// Subscribe to (or upgrade to) a paid tier; initiates a mobile-money payment
@@ -458,158 +610,6 @@ class SubscriptionsApi {
       statusMessage: _response.statusMessage,
       extra: _response.extra,
     );
-  }
-
-  /// List the subscription tiers and their current parameters
-  /// 
-  ///
-  /// Parameters:
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [BuiltList<TierInfo>] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<TierInfo>>> tiers({ 
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/api/v1/subscriptions/tiers';
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'bearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    BuiltList<TierInfo>? _responseData;
-
-    try {
-      final rawResponse = _response.data;
-      _responseData = rawResponse == null ? null : _serializers.deserialize(
-        rawResponse,
-        specifiedType: const FullType(BuiltList, [FullType(TierInfo)]),
-      ) as BuiltList<TierInfo>;
-
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<BuiltList<TierInfo>>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// Payment confirmation webhook (HMAC-verified)
-  /// 
-  ///
-  /// Parameters:
-  /// * [paymentWebhookRequest] 
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future]
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> webhook({ 
-    required PaymentWebhookRequest paymentWebhookRequest,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/api/v1/subscriptions/webhook';
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'bearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      const _type = FullType(PaymentWebhookRequest);
-      _bodyData = _serializers.serialize(paymentWebhookRequest, specifiedType: _type);
-
-    } catch(error, stackTrace) {
-      throw DioException(
-         requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    return _response;
   }
 
 }

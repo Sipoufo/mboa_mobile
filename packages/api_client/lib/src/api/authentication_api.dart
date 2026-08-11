@@ -262,7 +262,7 @@ class AuthenticationApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AuthTokens] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AuthTokens>> refresh({ 
+  Future<Response<AuthTokens>> refreshToken({ 
     required RefreshTokenRequest refreshTokenRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,

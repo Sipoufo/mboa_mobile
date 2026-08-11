@@ -63,7 +63,7 @@ void main() {
 
     expect(await repository.resolve(), isA<SessionUnauthenticated>());
     verifyNever(() => network.isOnline);
-    verifyNever(currentUserApi.me);
+    verifyNever(currentUserApi.getMe);
   });
 
   test('token + offline → authenticated from cache (offline-first)', () async {
@@ -74,13 +74,13 @@ void main() {
 
     expect(result, isA<SessionAuthenticated>());
     expect((result as SessionAuthenticated).fromCache, isTrue);
-    verifyNever(currentUserApi.me);
+    verifyNever(currentUserApi.getMe);
   });
 
   test('token (unexpired) + online + /me 200 → authenticated', () async {
     when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
-    when(currentUserApi.me).thenAnswer(
+    when(currentUserApi.getMe).thenAnswer(
       (_) async => Response<MeResponse>(requestOptions: RequestOptions(path: '/me')),
     );
 
@@ -93,18 +93,18 @@ void main() {
   test('token with null expiry falls through to /me (backward compatible)', () async {
     when(storage.readTokens).thenAnswer((_) async => _tokens());
     when(() => network.isOnline).thenAnswer((_) async => true);
-    when(currentUserApi.me).thenAnswer(
+    when(currentUserApi.getMe).thenAnswer(
       (_) async => Response<MeResponse>(requestOptions: RequestOptions(path: '/me')),
     );
 
     expect(await repository.resolve(), isA<SessionAuthenticated>());
-    verify(currentUserApi.me).called(1);
+    verify(currentUserApi.getMe).called(1);
   });
 
   test('token + online + /me 401 → unauthenticated (refresh already failed)', () async {
     when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
-    when(currentUserApi.me).thenThrow(_dio('/me', status: 401));
+    when(currentUserApi.getMe).thenThrow(_dio('/me', status: 401));
 
     expect(await repository.resolve(), isA<SessionUnauthenticated>());
   });
@@ -112,7 +112,7 @@ void main() {
   test('token + online + connectivity error → authenticated from cache', () async {
     when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
-    when(currentUserApi.me)
+    when(currentUserApi.getMe)
         .thenThrow(_dio('/me', type: DioExceptionType.connectionError));
 
     final result = await repository.resolve();
@@ -124,7 +124,7 @@ void main() {
   test('token + online + server error → retryable check error', () async {
     when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: future));
     when(() => network.isOnline).thenAnswer((_) async => true);
-    when(currentUserApi.me).thenThrow(_dio('/me', status: 500));
+    when(currentUserApi.getMe).thenThrow(_dio('/me', status: 500));
 
     expect(await repository.resolve(), isA<SessionCheckError>());
   });

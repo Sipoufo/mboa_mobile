@@ -31,7 +31,7 @@ void main() {
   });
 
   test('maps cities and drops entries missing an id or name', () async {
-    when(() => locationsApi.cities(regionId: any(named: 'regionId'))).thenAnswer(
+    when(() => locationsApi.listCities(regionId: any(named: 'regionId'))).thenAnswer(
       (_) async => _response(
         BuiltList<LocationOption>([
           _opt('1', 'Douala'),
@@ -51,7 +51,7 @@ void main() {
   });
 
   test('returns an empty list when the response has no data', () async {
-    when(() => locationsApi.cities(regionId: any(named: 'regionId'))).thenAnswer(
+    when(() => locationsApi.listCities(regionId: any(named: 'regionId'))).thenAnswer(
       (_) async => Response<BuiltList<LocationOption>>(
         requestOptions: RequestOptions(path: '/locations/cities'),
         data: null,

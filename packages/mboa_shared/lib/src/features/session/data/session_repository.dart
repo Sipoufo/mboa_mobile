@@ -51,7 +51,7 @@ class SessionRepository {
     }
 
     try {
-      await _dioClient.api.getCurrentUserApi().me();
+      await _dioClient.api.getCurrentUserApi().getMe();
       return const SessionAuthenticated();
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {

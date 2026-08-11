@@ -9,20 +9,20 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archive**](AnnoncesApi.md#archive) | **POST** /api/v1/annonces/{id}/archive | Archive a listing
-[**create1**](AnnoncesApi.md#create1) | **POST** /api/v1/annonces | Create a listing (draft)
-[**delete1**](AnnoncesApi.md#delete1) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
-[**getOne1**](AnnoncesApi.md#getone1) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
-[**listMine2**](AnnoncesApi.md#listmine2) | **GET** /api/v1/annonces | List the authenticated prestataire&#39;s listings
-[**markRented**](AnnoncesApi.md#markrented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
-[**publish**](AnnoncesApi.md#publish) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
-[**reserve**](AnnoncesApi.md#reserve) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
-[**unarchive**](AnnoncesApi.md#unarchive) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
-[**update1**](AnnoncesApi.md#update1) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
+[**archiveAnnonce**](AnnoncesApi.md#archiveannonce) | **POST** /api/v1/annonces/{id}/archive | Archive a listing
+[**createAnnonce**](AnnoncesApi.md#createannonce) | **POST** /api/v1/annonces | Create a listing (draft)
+[**deleteAnnonce**](AnnoncesApi.md#deleteannonce) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
+[**getMyAnnonce**](AnnoncesApi.md#getmyannonce) | **GET** /api/v1/annonces/{id} | Get one of the authenticated prestataire&#39;s listings
+[**listMyAnnonces**](AnnoncesApi.md#listmyannonces) | **GET** /api/v1/annonces | The prestataire&#39;s standalone listings; residence units are managed under /residences
+[**markAnnonceRented**](AnnoncesApi.md#markannoncerented) | **POST** /api/v1/annonces/{id}/rented | Mark a published or reserved listing as rented
+[**publishAnnonce**](AnnoncesApi.md#publishannonce) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
+[**reserveAnnonce**](AnnoncesApi.md#reserveannonce) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
+[**unarchiveAnnonce**](AnnoncesApi.md#unarchiveannonce) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
+[**updateAnnonce**](AnnoncesApi.md#updateannonce) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
 
 
-# **archive**
-> AnnonceResponse archive(id)
+# **archiveAnnonce**
+> AnnonceResponse archiveAnnonce(id)
 
 Archive a listing
 
@@ -34,10 +34,10 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.archive(id);
+    final response = api.archiveAnnonce(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->archive: $e\n');
+    print('Exception when calling AnnoncesApi->archiveAnnonce: $e\n');
 }
 ```
 
@@ -62,8 +62,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create1**
-> AnnonceResponse create1(createAnnonceRequest)
+# **createAnnonce**
+> AnnonceResponse createAnnonce(createAnnonceRequest)
 
 Create a listing (draft)
 
@@ -75,10 +75,10 @@ final api = ApiClient().getAnnoncesApi();
 final CreateAnnonceRequest createAnnonceRequest = ; // CreateAnnonceRequest | 
 
 try {
-    final response = api.create1(createAnnonceRequest);
+    final response = api.createAnnonce(createAnnonceRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->create1: $e\n');
+    print('Exception when calling AnnoncesApi->createAnnonce: $e\n');
 }
 ```
 
@@ -103,8 +103,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete1**
-> delete1(id)
+# **deleteAnnonce**
+> deleteAnnonce(id)
 
 Delete one of the authenticated prestataire's listings
 
@@ -116,9 +116,9 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    api.delete1(id);
+    api.deleteAnnonce(id);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->delete1: $e\n');
+    print('Exception when calling AnnoncesApi->deleteAnnonce: $e\n');
 }
 ```
 
@@ -143,8 +143,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getOne1**
-> AnnonceResponse getOne1(id)
+# **getMyAnnonce**
+> AnnonceResponse getMyAnnonce(id)
 
 Get one of the authenticated prestataire's listings
 
@@ -156,10 +156,10 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.getOne1(id);
+    final response = api.getMyAnnonce(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->getOne1: $e\n');
+    print('Exception when calling AnnoncesApi->getMyAnnonce: $e\n');
 }
 ```
 
@@ -184,10 +184,10 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listMine2**
-> PageResponseAnnonceResponse listMine2(pageable)
+# **listMyAnnonces**
+> PageResponseAnnonceResponse listMyAnnonces(pageable, includeResidenceUnits, residenceId)
 
-List the authenticated prestataire's listings
+The prestataire's standalone listings; residence units are managed under /residences
 
 ### Example
 ```dart
@@ -195,12 +195,14 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getAnnoncesApi();
 final Pageable pageable = ; // Pageable | 
+final bool includeResidenceUnits = true; // bool | 
+final String residenceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.listMine2(pageable);
+    final response = api.listMyAnnonces(pageable, includeResidenceUnits, residenceId);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->listMine2: $e\n');
+    print('Exception when calling AnnoncesApi->listMyAnnonces: $e\n');
 }
 ```
 
@@ -209,6 +211,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pageable** | [**Pageable**](.md)|  | 
+ **includeResidenceUnits** | **bool**|  | [optional] [default to false]
+ **residenceId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -225,8 +229,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **markRented**
-> AnnonceResponse markRented(id)
+# **markAnnonceRented**
+> AnnonceResponse markAnnonceRented(id)
 
 Mark a published or reserved listing as rented
 
@@ -238,10 +242,10 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.markRented(id);
+    final response = api.markAnnonceRented(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->markRented: $e\n');
+    print('Exception when calling AnnoncesApi->markAnnonceRented: $e\n');
 }
 ```
 
@@ -266,8 +270,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **publish**
-> AnnonceResponse publish(id)
+# **publishAnnonce**
+> AnnonceResponse publishAnnonce(id)
 
 Publish a draft listing (profile complete + ≥3 photos + tier limit)
 
@@ -279,10 +283,10 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.publish(id);
+    final response = api.publishAnnonce(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->publish: $e\n');
+    print('Exception when calling AnnoncesApi->publishAnnonce: $e\n');
 }
 ```
 
@@ -307,8 +311,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **reserve**
-> AnnonceResponse reserve(id)
+# **reserveAnnonce**
+> AnnonceResponse reserveAnnonce(id)
 
 Reserve a published listing (temporary hold)
 
@@ -320,10 +324,10 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.reserve(id);
+    final response = api.reserveAnnonce(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->reserve: $e\n');
+    print('Exception when calling AnnoncesApi->reserveAnnonce: $e\n');
 }
 ```
 
@@ -348,8 +352,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **unarchive**
-> AnnonceResponse unarchive(id)
+# **unarchiveAnnonce**
+> AnnonceResponse unarchiveAnnonce(id)
 
 Return an archived listing to draft so it can be published again (RM-M10-08)
 
@@ -361,10 +365,10 @@ final api = ApiClient().getAnnoncesApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.unarchive(id);
+    final response = api.unarchiveAnnonce(id);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->unarchive: $e\n');
+    print('Exception when calling AnnoncesApi->unarchiveAnnonce: $e\n');
 }
 ```
 
@@ -389,8 +393,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update1**
-> AnnonceResponse update1(id, updateAnnonceRequest)
+# **updateAnnonce**
+> AnnonceResponse updateAnnonce(id, updateAnnonceRequest)
 
 Partially update one of the authenticated prestataire's listings
 
@@ -403,10 +407,10 @@ final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String |
 final UpdateAnnonceRequest updateAnnonceRequest = ; // UpdateAnnonceRequest | 
 
 try {
-    final response = api.update1(id, updateAnnonceRequest);
+    final response = api.updateAnnonce(id, updateAnnonceRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling AnnoncesApi->update1: $e\n');
+    print('Exception when calling AnnoncesApi->updateAnnonce: $e\n');
 }
 ```
 

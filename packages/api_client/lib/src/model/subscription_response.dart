@@ -15,6 +15,8 @@ part 'subscription_response.g.dart';
 /// * [tier] 
 /// * [periodEnd] 
 /// * [activeListingLimit] 
+/// * [currentPaymentId] 
+/// * [currentPaymentHasReceipt] 
 @BuiltValue()
 abstract class SubscriptionResponse implements Built<SubscriptionResponse, SubscriptionResponseBuilder> {
   @BuiltValueField(wireName: r'tier')
@@ -26,6 +28,12 @@ abstract class SubscriptionResponse implements Built<SubscriptionResponse, Subsc
 
   @BuiltValueField(wireName: r'activeListingLimit')
   int? get activeListingLimit;
+
+  @BuiltValueField(wireName: r'currentPaymentId')
+  String? get currentPaymentId;
+
+  @BuiltValueField(wireName: r'currentPaymentHasReceipt')
+  bool? get currentPaymentHasReceipt;
 
   SubscriptionResponse._();
 
@@ -69,6 +77,20 @@ class _$SubscriptionResponseSerializer implements PrimitiveSerializer<Subscripti
       yield serializers.serialize(
         object.activeListingLimit,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.currentPaymentId != null) {
+      yield r'currentPaymentId';
+      yield serializers.serialize(
+        object.currentPaymentId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.currentPaymentHasReceipt != null) {
+      yield r'currentPaymentHasReceipt';
+      yield serializers.serialize(
+        object.currentPaymentHasReceipt,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -117,6 +139,22 @@ class _$SubscriptionResponseSerializer implements PrimitiveSerializer<Subscripti
           ) as int?;
           if (valueDes == null) continue;
           result.activeListingLimit = valueDes;
+          break;
+        case r'currentPaymentId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.currentPaymentId = valueDes;
+          break;
+        case r'currentPaymentHasReceipt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.currentPaymentHasReceipt = valueDes;
           break;
         default:
           unhandled.add(key);

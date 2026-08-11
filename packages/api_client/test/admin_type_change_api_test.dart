@@ -9,22 +9,22 @@ void main() {
   group(AdminTypeChangeApi, () {
     // Approve a type-change request and apply the new type
     //
-    //Future<TypeChangeReviewResult> approve(String id) async
-    test('test approve', () async {
+    //Future<TypeChangeReviewResult> approveTypeChangeRequest(String id) async
+    test('test approveTypeChangeRequest', () async {
       // TODO
     });
 
     // List pending type-change requests
     //
-    //Future<PageResponseTypeChangeReviewItem> listPending(Pageable pageable) async
-    test('test listPending', () async {
+    //Future<PageResponseTypeChangeReviewItem> listPendingTypeChangeRequests(Pageable pageable) async
+    test('test listPendingTypeChangeRequests', () async {
       // TODO
     });
 
     // Reject a type-change request with a reason
     //
-    //Future<TypeChangeReviewResult> reject(String id, RejectTypeChangeRequest rejectTypeChangeRequest) async
-    test('test reject', () async {
+    //Future<TypeChangeReviewResult> rejectTypeChangeRequest(String id, RejectTypeChangeRequest rejectTypeChangeRequest) async
+    test('test rejectTypeChangeRequest', () async {
       // TODO
     });
 

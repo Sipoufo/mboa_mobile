@@ -38,7 +38,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> archive({ 
+  Future<Response<AnnonceResponse>> archiveAnnonce({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -119,7 +119,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> create1({ 
+  Future<Response<AnnonceResponse>> createAnnonce({ 
     required CreateAnnonceRequest createAnnonceRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -220,7 +220,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> delete1({ 
+  Future<Response<void>> deleteAnnonce({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -273,7 +273,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> getOne1({ 
+  Future<Response<AnnonceResponse>> getMyAnnonce({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -340,11 +340,13 @@ class AnnoncesApi {
     );
   }
 
-  /// List the authenticated prestataire&#39;s listings
+  /// The prestataire&#39;s standalone listings; residence units are managed under /residences
   /// 
   ///
   /// Parameters:
   /// * [pageable] 
+  /// * [includeResidenceUnits] 
+  /// * [residenceId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -354,8 +356,10 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [PageResponseAnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseAnnonceResponse>> listMine2({ 
+  Future<Response<PageResponseAnnonceResponse>> listMyAnnonces({ 
     required Pageable pageable,
+    bool? includeResidenceUnits = false,
+    String? residenceId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -383,6 +387,8 @@ class AnnoncesApi {
     );
 
     final _queryParameters = <String, dynamic>{
+      if (includeResidenceUnits != null) r'includeResidenceUnits': encodeQueryParameter(_serializers, includeResidenceUnits, const FullType(bool)),
+      if (residenceId != null) r'residenceId': encodeQueryParameter(_serializers, residenceId, const FullType(String)),
       r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
     };
 
@@ -440,7 +446,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> markRented({ 
+  Future<Response<AnnonceResponse>> markAnnonceRented({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -521,7 +527,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> publish({ 
+  Future<Response<AnnonceResponse>> publishAnnonce({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -602,7 +608,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> reserve({ 
+  Future<Response<AnnonceResponse>> reserveAnnonce({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -683,7 +689,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> unarchive({ 
+  Future<Response<AnnonceResponse>> unarchiveAnnonce({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -765,7 +771,7 @@ class AnnoncesApi {
   ///
   /// Returns a [Future] containing a [Response] with a [AnnonceResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<AnnonceResponse>> update1({ 
+  Future<Response<AnnonceResponse>> updateAnnonce({ 
     required String id,
     required UpdateAnnonceRequest updateAnnonceRequest,
     CancelToken? cancelToken,

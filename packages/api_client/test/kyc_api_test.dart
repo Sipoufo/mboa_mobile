@@ -9,15 +9,15 @@ void main() {
   group(KYCApi, () {
     // Get the authenticated account's KYC status
     //
-    //Future<KycStatusResponse> myStatus() async
-    test('test myStatus', () async {
+    //Future<KycStatusResponse> getMyKycStatus() async
+    test('test getMyKycStatus', () async {
       // TODO
     });
 
     // Submit KYC documents (R2 object keys) for verification
     //
-    //Future<KycStatusResponse> submit(SubmitKycRequest submitKycRequest) async
-    test('test submit', () async {
+    //Future<KycStatusResponse> submitKyc(SubmitKycRequest submitKycRequest) async
+    test('test submitKyc', () async {
       // TODO
     });
 

@@ -9,12 +9,12 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**grant**](AdminSubscriptionsApi.md#grant) | **POST** /api/v1/admin/subscriptions | Grant a tier to an account for a number of days, without payment
+[**grantSubscription**](AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier to an account for a number of days, without payment
 [**updatePlan**](AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
 
 
-# **grant**
-> grant(grantSubscriptionRequest)
+# **grantSubscription**
+> grantSubscription(grantSubscriptionRequest)
 
 Grant a tier to an account for a number of days, without payment
 
@@ -26,9 +26,9 @@ final api = ApiClient().getAdminSubscriptionsApi();
 final GrantSubscriptionRequest grantSubscriptionRequest = ; // GrantSubscriptionRequest | 
 
 try {
-    api.grant(grantSubscriptionRequest);
+    api.grantSubscription(grantSubscriptionRequest);
 } on DioException catch (e) {
-    print('Exception when calling AdminSubscriptionsApi->grant: $e\n');
+    print('Exception when calling AdminSubscriptionsApi->grantSubscription: $e\n');
 }
 ```
 

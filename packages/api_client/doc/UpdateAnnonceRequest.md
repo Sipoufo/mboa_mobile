@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **exactAddress** | **String** |  | [optional] 
 **latitude** | **double** |  | [optional] 
 **longitude** | **double** |  | [optional] 
+**price** | **int** |  | [optional] 
+**rentalPeriod** | **String** |  | [optional] 
 **monthlyRent** | **int** |  | [optional] 
 **chargesIncluded** | **bool** |  | [optional] 
 **chargesAmount** | **int** |  | [optional] 
@@ -24,6 +26,7 @@ Name | Type | Description | Notes
 **availableFrom** | [**Date**](Date.md) |  | [optional] 
 **description** | **String** |  | [optional] 
 **photoKeys** | **BuiltList&lt;String&gt;** |  | [optional] 
+**amenities** | **BuiltSet&lt;String&gt;** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

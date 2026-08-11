@@ -36,7 +36,7 @@ class ProDashboardRepository {
   }
 
   Future<DashboardStats> fetch() async {
-    final response = await _dioClient.api.getAnnoncesApi().listMine2(
+    final response = await _dioClient.api.getAnnoncesApi().listMyAnnonces(
           pageable: Pageable((b) => b
             ..page = 0
             ..size = _pageSize),

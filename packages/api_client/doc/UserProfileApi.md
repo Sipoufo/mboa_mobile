@@ -9,12 +9,12 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**myProfile**](UserProfileApi.md#myprofile) | **GET** /api/v1/users/me | Get the authenticated user&#39;s profile
-[**updateMyProfile**](UserProfileApi.md#updatemyprofile) | **PATCH** /api/v1/users/me | Partially update the authenticated user&#39;s profile
+[**getMyUserProfile**](UserProfileApi.md#getmyuserprofile) | **GET** /api/v1/users/me | Get the authenticated user&#39;s profile
+[**updateMyUserProfile**](UserProfileApi.md#updatemyuserprofile) | **PATCH** /api/v1/users/me | Partially update the authenticated user&#39;s profile
 
 
-# **myProfile**
-> UserProfileResponse myProfile()
+# **getMyUserProfile**
+> UserProfileResponse getMyUserProfile()
 
 Get the authenticated user's profile
 
@@ -25,10 +25,10 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getUserProfileApi();
 
 try {
-    final response = api.myProfile();
+    final response = api.getMyUserProfile();
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling UserProfileApi->myProfile: $e\n');
+    print('Exception when calling UserProfileApi->getMyUserProfile: $e\n');
 }
 ```
 
@@ -50,8 +50,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **updateMyProfile**
-> UserProfileResponse updateMyProfile(updateUserProfileRequest)
+# **updateMyUserProfile**
+> UserProfileResponse updateMyUserProfile(updateUserProfileRequest)
 
 Partially update the authenticated user's profile
 
@@ -63,10 +63,10 @@ final api = ApiClient().getUserProfileApi();
 final UpdateUserProfileRequest updateUserProfileRequest = ; // UpdateUserProfileRequest | 
 
 try {
-    final response = api.updateMyProfile(updateUserProfileRequest);
+    final response = api.updateMyUserProfile(updateUserProfileRequest);
     print(response);
 } on DioException catch (e) {
-    print('Exception when calling UserProfileApi->updateMyProfile: $e\n');
+    print('Exception when calling UserProfileApi->updateMyUserProfile: $e\n');
 }
 ```
 

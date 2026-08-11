@@ -9,29 +9,29 @@ void main() {
   group(LocationsApi, () {
     // List cities (optionally filtered by region)
     //
-    //Future<BuiltList<LocationOption>> cities({ String regionId }) async
-    test('test cities', () async {
+    //Future<BuiltList<LocationOption>> listCities({ String regionId }) async
+    test('test listCities', () async {
       // TODO
     });
 
     // List countries
     //
-    //Future<BuiltList<CountryResponse>> countries() async
-    test('test countries', () async {
+    //Future<BuiltList<CountryResponse>> listCountries() async
+    test('test listCountries', () async {
       // TODO
     });
 
     // List a city's districts (quartiers)
     //
-    //Future<BuiltList<LocationOption>> districts(String cityId) async
-    test('test districts', () async {
+    //Future<BuiltList<LocationOption>> listDistricts(String cityId) async
+    test('test listDistricts', () async {
       // TODO
     });
 
     // List regions (optionally filtered by country)
     //
-    //Future<BuiltList<LocationOption>> regions({ String countryId }) async
-    test('test regions', () async {
+    //Future<BuiltList<LocationOption>> listRegions({ String countryId }) async
+    test('test listRegions', () async {
       // TODO
     });
 

@@ -64,9 +64,114 @@ _$createAnnonceRequestPropertyTypeEnumValues =
       ],
     );
 
+const CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnum_MONTH =
+    const CreateAnnonceRequestRentalPeriodEnum._('MONTH');
+const CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnum_QUARTER =
+    const CreateAnnonceRequestRentalPeriodEnum._('QUARTER');
+const CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnum_YEAR =
+    const CreateAnnonceRequestRentalPeriodEnum._('YEAR');
+const CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnum_unknownDefaultOpenApi =
+    const CreateAnnonceRequestRentalPeriodEnum._('unknownDefaultOpenApi');
+
+CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnumValueOf(String name) {
+  switch (name) {
+    case 'MONTH':
+      return _$createAnnonceRequestRentalPeriodEnum_MONTH;
+    case 'QUARTER':
+      return _$createAnnonceRequestRentalPeriodEnum_QUARTER;
+    case 'YEAR':
+      return _$createAnnonceRequestRentalPeriodEnum_YEAR;
+    case 'unknownDefaultOpenApi':
+      return _$createAnnonceRequestRentalPeriodEnum_unknownDefaultOpenApi;
+    default:
+      return _$createAnnonceRequestRentalPeriodEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<CreateAnnonceRequestRentalPeriodEnum>
+_$createAnnonceRequestRentalPeriodEnumValues =
+    BuiltSet<CreateAnnonceRequestRentalPeriodEnum>(
+      const <CreateAnnonceRequestRentalPeriodEnum>[
+        _$createAnnonceRequestRentalPeriodEnum_MONTH,
+        _$createAnnonceRequestRentalPeriodEnum_QUARTER,
+        _$createAnnonceRequestRentalPeriodEnum_YEAR,
+        _$createAnnonceRequestRentalPeriodEnum_unknownDefaultOpenApi,
+      ],
+    );
+
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_AIR_CONDITIONING =
+    const CreateAnnonceRequestAmenitiesEnum._('AIR_CONDITIONING');
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_HOT_WATER =
+    const CreateAnnonceRequestAmenitiesEnum._('HOT_WATER');
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_GENERATOR =
+    const CreateAnnonceRequestAmenitiesEnum._('GENERATOR');
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_SECURITY_GUARD =
+    const CreateAnnonceRequestAmenitiesEnum._('SECURITY_GUARD');
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_PARKING =
+    const CreateAnnonceRequestAmenitiesEnum._('PARKING');
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_WIFI =
+    const CreateAnnonceRequestAmenitiesEnum._('WIFI');
+const CreateAnnonceRequestAmenitiesEnum
+_$createAnnonceRequestAmenitiesEnum_unknownDefaultOpenApi =
+    const CreateAnnonceRequestAmenitiesEnum._('unknownDefaultOpenApi');
+
+CreateAnnonceRequestAmenitiesEnum _$createAnnonceRequestAmenitiesEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'AIR_CONDITIONING':
+      return _$createAnnonceRequestAmenitiesEnum_AIR_CONDITIONING;
+    case 'HOT_WATER':
+      return _$createAnnonceRequestAmenitiesEnum_HOT_WATER;
+    case 'GENERATOR':
+      return _$createAnnonceRequestAmenitiesEnum_GENERATOR;
+    case 'SECURITY_GUARD':
+      return _$createAnnonceRequestAmenitiesEnum_SECURITY_GUARD;
+    case 'PARKING':
+      return _$createAnnonceRequestAmenitiesEnum_PARKING;
+    case 'WIFI':
+      return _$createAnnonceRequestAmenitiesEnum_WIFI;
+    case 'unknownDefaultOpenApi':
+      return _$createAnnonceRequestAmenitiesEnum_unknownDefaultOpenApi;
+    default:
+      return _$createAnnonceRequestAmenitiesEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<CreateAnnonceRequestAmenitiesEnum>
+_$createAnnonceRequestAmenitiesEnumValues =
+    BuiltSet<CreateAnnonceRequestAmenitiesEnum>(
+      const <CreateAnnonceRequestAmenitiesEnum>[
+        _$createAnnonceRequestAmenitiesEnum_AIR_CONDITIONING,
+        _$createAnnonceRequestAmenitiesEnum_HOT_WATER,
+        _$createAnnonceRequestAmenitiesEnum_GENERATOR,
+        _$createAnnonceRequestAmenitiesEnum_SECURITY_GUARD,
+        _$createAnnonceRequestAmenitiesEnum_PARKING,
+        _$createAnnonceRequestAmenitiesEnum_WIFI,
+        _$createAnnonceRequestAmenitiesEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 Serializer<CreateAnnonceRequestPropertyTypeEnum>
 _$createAnnonceRequestPropertyTypeEnumSerializer =
     _$CreateAnnonceRequestPropertyTypeEnumSerializer();
+Serializer<CreateAnnonceRequestRentalPeriodEnum>
+_$createAnnonceRequestRentalPeriodEnumSerializer =
+    _$CreateAnnonceRequestRentalPeriodEnumSerializer();
+Serializer<CreateAnnonceRequestAmenitiesEnum>
+_$createAnnonceRequestAmenitiesEnumSerializer =
+    _$CreateAnnonceRequestAmenitiesEnumSerializer();
 
 class _$CreateAnnonceRequestPropertyTypeEnumSerializer
     implements PrimitiveSerializer<CreateAnnonceRequestPropertyTypeEnum> {
@@ -113,6 +218,88 @@ class _$CreateAnnonceRequestPropertyTypeEnumSerializer
   );
 }
 
+class _$CreateAnnonceRequestRentalPeriodEnumSerializer
+    implements PrimitiveSerializer<CreateAnnonceRequestRentalPeriodEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[
+    CreateAnnonceRequestRentalPeriodEnum,
+  ];
+  @override
+  final String wireName = 'CreateAnnonceRequestRentalPeriodEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    CreateAnnonceRequestRentalPeriodEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  CreateAnnonceRequestRentalPeriodEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => CreateAnnonceRequestRentalPeriodEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
+class _$CreateAnnonceRequestAmenitiesEnumSerializer
+    implements PrimitiveSerializer<CreateAnnonceRequestAmenitiesEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'AIR_CONDITIONING': 'AIR_CONDITIONING',
+    'HOT_WATER': 'HOT_WATER',
+    'GENERATOR': 'GENERATOR',
+    'SECURITY_GUARD': 'SECURITY_GUARD',
+    'PARKING': 'PARKING',
+    'WIFI': 'WIFI',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'AIR_CONDITIONING': 'AIR_CONDITIONING',
+    'HOT_WATER': 'HOT_WATER',
+    'GENERATOR': 'GENERATOR',
+    'SECURITY_GUARD': 'SECURITY_GUARD',
+    'PARKING': 'PARKING',
+    'WIFI': 'WIFI',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[CreateAnnonceRequestAmenitiesEnum];
+  @override
+  final String wireName = 'CreateAnnonceRequestAmenitiesEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    CreateAnnonceRequestAmenitiesEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  CreateAnnonceRequestAmenitiesEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => CreateAnnonceRequestAmenitiesEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$CreateAnnonceRequest extends CreateAnnonceRequest {
   @override
   final CreateAnnonceRequestPropertyTypeEnum propertyType;
@@ -127,7 +314,11 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
   @override
   final double longitude;
   @override
-  final int monthlyRent;
+  final int? price;
+  @override
+  final CreateAnnonceRequestRentalPeriodEnum? rentalPeriod;
+  @override
+  final int? monthlyRent;
   @override
   final bool? chargesIncluded;
   @override
@@ -146,6 +337,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
   final String? description;
   @override
   final BuiltList<String>? photoKeys;
+  @override
+  final BuiltSet<CreateAnnonceRequestAmenitiesEnum>? amenities;
 
   factory _$CreateAnnonceRequest([
     void Function(CreateAnnonceRequestBuilder)? updates,
@@ -158,7 +351,9 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     required this.exactAddress,
     required this.latitude,
     required this.longitude,
-    required this.monthlyRent,
+    this.price,
+    this.rentalPeriod,
+    this.monthlyRent,
     this.chargesIncluded,
     this.chargesAmount,
     this.surfaceArea,
@@ -168,6 +363,7 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     required this.availableFrom,
     this.description,
     this.photoKeys,
+    this.amenities,
   }) : super._();
   @override
   CreateAnnonceRequest rebuild(
@@ -188,6 +384,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
         exactAddress == other.exactAddress &&
         latitude == other.latitude &&
         longitude == other.longitude &&
+        price == other.price &&
+        rentalPeriod == other.rentalPeriod &&
         monthlyRent == other.monthlyRent &&
         chargesIncluded == other.chargesIncluded &&
         chargesAmount == other.chargesAmount &&
@@ -197,7 +395,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
         furnished == other.furnished &&
         availableFrom == other.availableFrom &&
         description == other.description &&
-        photoKeys == other.photoKeys;
+        photoKeys == other.photoKeys &&
+        amenities == other.amenities;
   }
 
   @override
@@ -209,6 +408,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     _$hash = $jc(_$hash, exactAddress.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, rentalPeriod.hashCode);
     _$hash = $jc(_$hash, monthlyRent.hashCode);
     _$hash = $jc(_$hash, chargesIncluded.hashCode);
     _$hash = $jc(_$hash, chargesAmount.hashCode);
@@ -219,6 +420,7 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     _$hash = $jc(_$hash, availableFrom.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
+    _$hash = $jc(_$hash, amenities.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -232,6 +434,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
           ..add('exactAddress', exactAddress)
           ..add('latitude', latitude)
           ..add('longitude', longitude)
+          ..add('price', price)
+          ..add('rentalPeriod', rentalPeriod)
           ..add('monthlyRent', monthlyRent)
           ..add('chargesIncluded', chargesIncluded)
           ..add('chargesAmount', chargesAmount)
@@ -241,7 +445,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
           ..add('furnished', furnished)
           ..add('availableFrom', availableFrom)
           ..add('description', description)
-          ..add('photoKeys', photoKeys))
+          ..add('photoKeys', photoKeys)
+          ..add('amenities', amenities))
         .toString();
   }
 }
@@ -275,6 +480,16 @@ class CreateAnnonceRequestBuilder
   double? _longitude;
   double? get longitude => _$this._longitude;
   set longitude(double? longitude) => _$this._longitude = longitude;
+
+  int? _price;
+  int? get price => _$this._price;
+  set price(int? price) => _$this._price = price;
+
+  CreateAnnonceRequestRentalPeriodEnum? _rentalPeriod;
+  CreateAnnonceRequestRentalPeriodEnum? get rentalPeriod =>
+      _$this._rentalPeriod;
+  set rentalPeriod(CreateAnnonceRequestRentalPeriodEnum? rentalPeriod) =>
+      _$this._rentalPeriod = rentalPeriod;
 
   int? _monthlyRent;
   int? get monthlyRent => _$this._monthlyRent;
@@ -322,6 +537,12 @@ class CreateAnnonceRequestBuilder
   set photoKeys(ListBuilder<String>? photoKeys) =>
       _$this._photoKeys = photoKeys;
 
+  SetBuilder<CreateAnnonceRequestAmenitiesEnum>? _amenities;
+  SetBuilder<CreateAnnonceRequestAmenitiesEnum> get amenities =>
+      _$this._amenities ??= SetBuilder<CreateAnnonceRequestAmenitiesEnum>();
+  set amenities(SetBuilder<CreateAnnonceRequestAmenitiesEnum>? amenities) =>
+      _$this._amenities = amenities;
+
   CreateAnnonceRequestBuilder() {
     CreateAnnonceRequest._defaults(this);
   }
@@ -335,6 +556,8 @@ class CreateAnnonceRequestBuilder
       _exactAddress = $v.exactAddress;
       _latitude = $v.latitude;
       _longitude = $v.longitude;
+      _price = $v.price;
+      _rentalPeriod = $v.rentalPeriod;
       _monthlyRent = $v.monthlyRent;
       _chargesIncluded = $v.chargesIncluded;
       _chargesAmount = $v.chargesAmount;
@@ -345,6 +568,7 @@ class CreateAnnonceRequestBuilder
       _availableFrom = $v.availableFrom;
       _description = $v.description;
       _photoKeys = $v.photoKeys?.toBuilder();
+      _amenities = $v.amenities?.toBuilder();
       _$v = null;
     }
     return this;
@@ -399,11 +623,9 @@ class CreateAnnonceRequestBuilder
               r'CreateAnnonceRequest',
               'longitude',
             ),
-            monthlyRent: BuiltValueNullFieldError.checkNotNull(
-              monthlyRent,
-              r'CreateAnnonceRequest',
-              'monthlyRent',
-            ),
+            price: price,
+            rentalPeriod: rentalPeriod,
+            monthlyRent: monthlyRent,
             chargesIncluded: chargesIncluded,
             chargesAmount: chargesAmount,
             surfaceArea: surfaceArea,
@@ -417,12 +639,15 @@ class CreateAnnonceRequestBuilder
             ),
             description: description,
             photoKeys: _photoKeys?.build(),
+            amenities: _amenities?.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'photoKeys';
         _photoKeys?.build();
+        _$failedField = 'amenities';
+        _amenities?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'CreateAnnonceRequest',

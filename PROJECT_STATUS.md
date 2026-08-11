@@ -120,9 +120,11 @@ residence creation, so `PublishGate` gets a null limit for a unit.
 - **Send `Idempotency-Key`** on `POST /subscriptions`. The server generates a
   random one when absent, so a double-tap creates two payments. `SubscribeBloc`
   mints one per purchase and reuses it on retry.
-- **Generated operation ids are unstable** — `listMine1` → `listMine2` once broke
-  the build. The backend agreed to pin explicit `operationId`s; until then expect
-  churn on every regen.
+- **Operation ids are now stable and explicit** (2026-08-11 export): every one is
+  named for what it does — `listMyAnnonces`, `getMyResidence`,
+  `unarchiveResidenceUnits`, `updateMyPrestataireProfile`. The old generated
+  names (`listMine2`, `getOne1`, `publishAll`) are gone; adding an endpoint no
+  longer renumbers its neighbours. This closed `backend-requests.md` §9.
 - **R2 needs `Environment.r2PublicBaseUrl`** to display images (placeholder + TODO).
 
 ## Auth model

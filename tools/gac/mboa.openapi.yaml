@@ -19,48 +19,483 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Visites — rapport
+    description: "The agent's report, for the three parties to the visit"
+  - name: Historique
+    description: Recently consulted listings
   - name: Annonces
     description: Create and manage the prestataire's listings
   - name: Media
     description: Direct-to-R2 uploads via pre-signed URLs
   - name: Search
     description: Public listing search
-  - name: Messagerie
-    description: Conversations between a user and a prestataire about a listing
-  - name: Admin — Type Change
-    description: Review prestataire type-change requests
+  - name: Assignation agent
+    description: Assign an Agent Mboa to a listing
   - name: Password
     description: Change the account password
   - name: Residences
     description: Bulk-create and manage grouped listings
-  - name: Prestataire Profile
-    description: Profile of the App Mboa Pro service provider
   - name: Phone Change
     description: Change the account phone number with double OTP verification
-  - name: User Profile
-    description: Personal profile of the App Mboa user
-  - name: KYC
-    description: Identity verification
+  - name: Agent — visites
+    description: Visits assigned to the agent
+  - name: Admin — utilisateurs
+    description: Browse accounts and suspend them
   - name: Current user
     description: The authenticated account's identity
-  - name: User Settings
-    description: "Language, notification and privacy preferences"
-  - name: Admin — Subscriptions
-    description: Grant subscriptions and edit plan parameters
+  - name: Agent — candidatures
+    description: Applications an agent has sent
   - name: Locations
     description: Country / region / city / district reference
-  - name: Authentication
-    description: "Phone-OTP login, token refresh and logout"
-  - name: Notification Devices
-    description: Register device tokens for push notifications
   - name: Admin — KYC
     description: Review identity-verification submissions
   - name: Subscriptions
     description: "Tiers, subscription and payment"
+  - name: Admin — annonces
+    description: "Moderate listings: search, suspend, edit"
+  - name: Assignation agent — résidence
+    description: Assign an Agent Mboa to every unit at once
+  - name: Messagerie
+    description: Conversations between a user and a prestataire about a listing
+  - name: Admin — Type Change
+    description: Review prestataire type-change requests
+  - name: Prestataire Profile
+    description: Profile of the App Mboa Pro service provider
+  - name: User Profile
+    description: Personal profile of the App Mboa user
+  - name: Visites
+    description: Book a visit with an Agent Mboa
+  - name: Admin — modération
+    description: Review reports and moderate listings
+  - name: Favoris
+    description: Save listings and list what you saved
+  - name: KYC
+    description: Identity verification
+  - name: Agent
+    description: "The agent's profile, intervention zones and availability"
+  - name: User Settings
+    description: "Language, notification and privacy preferences"
+  - name: Admin — Subscriptions
+    description: Grant subscriptions and edit plan parameters
+  - name: Authentication
+    description: "Phone-OTP login, token refresh and logout"
+  - name: Signalements
+    description: Report a listing or a message
+  - name: Agent — assignations
+    description: Offers an agent has received
+  - name: Notification Devices
+    description: Register device tokens for push notifications
   - name: Account
     description: Account-wide operations (any role)
 
 paths:
+  /api/v1/agents/me/zones:
+    put:
+      tags:
+        - Agent
+      summary: Replace the agent's intervention zones — cities and/or districts (RM-M15-04)
+      operationId: updateMyAgentZones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateZonesRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AgentProfileResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/availability:
+    get:
+      tags:
+        - Agent
+      summary: "The agent's weekly working pattern, visit length and days off"
+      operationId: getMyAgentAvailability
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AvailabilityResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - Agent
+      summary: "Replace the weekly pattern, e.g. Mon-Sat 08:00-18:00 (RM-M15-01)"
+      operationId: updateMyAgentAvailability
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAvailabilityRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AvailabilityResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/visites:
+    get:
+      tags:
+        - Visites
+      summary: The authenticated user's visits
+      operationId: listMyVisites
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - SCHEDULED
+                - CANCELLED
+                - COMPLETED
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseVisiteResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Visites
+      summary: Book a visit in one of the agent's free slots
+      operationId: bookVisite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookVisiteRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VisiteResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/visites/{id}/rating:
+    post:
+      tags:
+        - Visites
+      summary: "Rate the agent 1–5 after the visit; optional, and only once (RM-M07-07)"
+      operationId: rateVisiteAgent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RateAgentRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/visites/{id}/cancel:
+    post:
+      tags:
+        - Visites
+      summary: Cancel a visit — allowed up to 4 hours before the slot (RM-M07-04)
+      operationId: cancelMyVisite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/subscriptions:
     post:
       tags:
@@ -129,7 +564,7 @@ paths:
       tags:
         - Subscriptions
       summary: Payment confirmation webhook (HMAC-verified)
-      operationId: webhook
+      operationId: paymentWebhook
       requestBody:
         content:
           application/json:
@@ -176,12 +611,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/signalements:
+    post:
+      tags:
+        - Signalements
+      summary: Report a listing or a message
+      description: The reporter is only told the report was received — the outcome
+        is never disclosed to them (RM-M23-05).
+      operationId: createSignalement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSignalementRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SignalementResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/residences:
     get:
       tags:
         - Residences
       summary: List the authenticated prestataire's residences
-      operationId: listMine
+      operationId: listMyResidences
       parameters:
         - name: pageable
           in: query
@@ -236,7 +729,7 @@ paths:
       tags:
         - Residences
       summary: Bulk-create a residence and its units (drafts)
-      operationId: create
+      operationId: createResidence
       requestBody:
         content:
           application/json:
@@ -287,13 +780,333 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/residences/{residenceId}/agent:
+    get:
+      tags:
+        - Assignation agent — résidence
+      summary: The residence's assignments unit by unit — which room has whom
+      operationId: listResidenceAssignments
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - APPLIED
+                - PENDING
+                - ACCEPTED
+                - DECLINED
+                - WITHDRAWN
+                - REVOKED
+                - RESIGNED
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Assignation agent — résidence
+      summary: Offer every published unit to one agent; units that already have one
+        are skipped
+      operationId: assignAgentToResidence
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignAgentRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceAssignmentResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - Assignation agent — résidence
+      summary: Take the whole residence back; each unit's planned visits are cancelled
+      operationId: withdrawResidenceAgentAssignment
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BatchResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/residences/{residenceId}/agent/applications/{agentAccountId}/decline:
+    post:
+      tags:
+        - Assignation agent — résidence
+      summary: Turn one agent's residence application down
+      operationId: declineResidenceApplication
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: agentAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BatchResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/residences/{residenceId}/agent/applications/{agentAccountId}/accept:
+    post:
+      tags:
+        - Assignation agent — résidence
+      summary: Choose this agent for the residence; rival applications on those units
+        are declined
+      operationId: acceptResidenceApplication
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: agentAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceAssignmentResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/residences/{id}/unarchive:
     post:
       tags:
         - Residences
       summary: Return all archived units to draft so the residence can be published
         again (RM-M10-08)
-      operationId: unarchiveAll
+      operationId: unarchiveResidenceUnits
       parameters:
         - name: id
           in: path
@@ -350,7 +1163,7 @@ paths:
       tags:
         - Residences
       summary: Reserve all published units at once
-      operationId: reserveAll
+      operationId: reserveResidenceUnits
       parameters:
         - name: id
           in: path
@@ -407,7 +1220,7 @@ paths:
       tags:
         - Residences
       summary: Mark all live units (published or reserved) as rented at once
-      operationId: rentAll
+      operationId: rentResidenceUnits
       parameters:
         - name: id
           in: path
@@ -464,7 +1277,7 @@ paths:
       tags:
         - Residences
       summary: Publish all draft units at once
-      operationId: publishAll
+      operationId: publishResidenceUnits
       parameters:
         - name: id
           in: path
@@ -521,7 +1334,7 @@ paths:
       tags:
         - Residences
       summary: Archive all units at once
-      operationId: archiveAll
+      operationId: archiveResidenceUnits
       parameters:
         - name: id
           in: path
@@ -579,7 +1392,7 @@ paths:
         - Prestataire Profile
       summary: "Change the provider type — applied directly if eligible, else opens\
         \ an admin request"
-      operationId: changeType
+      operationId: requestPrestataireTypeChange
       requestBody:
         content:
           application/json:
@@ -635,7 +1448,7 @@ paths:
       tags:
         - Notification Devices
       summary: Register or refresh a device push token
-      operationId: register
+      operationId: registerDevice
       requestBody:
         content:
           application/json:
@@ -687,7 +1500,7 @@ paths:
       tags:
         - Media
       summary: Get a pre-signed URL to upload a file directly to storage
-      operationId: createUpload
+      operationId: createMediaUpload
       requestBody:
         content:
           application/json:
@@ -743,7 +1556,7 @@ paths:
       tags:
         - KYC
       summary: Submit KYC documents (R2 object keys) for verification
-      operationId: submit
+      operationId: submitKyc
       requestBody:
         content:
           application/json:
@@ -794,12 +1607,123 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/favoris:
+    get:
+      tags:
+        - Favoris
+      summary: List saved listings; unavailable ones stay for 30 days flagged available=false
+      operationId: listMyFavoris
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseFavoriResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Favoris
+      summary: Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
+      operationId: addFavori
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddFavoriRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/FavoriResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/conversations:
     get:
       tags:
         - Messagerie
       summary: List the authenticated participant's conversations
-      operationId: listMine_1
+      operationId: listMyConversations
       parameters:
         - name: pageable
           in: query
@@ -855,7 +1779,7 @@ paths:
         - Messagerie
       summary: Contact a listing — opens (or reuses) the thread and posts the first
         message
-      operationId: start
+      operationId: startConversation
       requestBody:
         content:
           application/json:
@@ -911,7 +1835,7 @@ paths:
       tags:
         - Messagerie
       summary: Mark the conversation's incoming messages as read
-      operationId: markRead
+      operationId: markConversationRead
       parameters:
         - name: id
           in: path
@@ -964,7 +1888,7 @@ paths:
       tags:
         - Messagerie
       summary: "List a conversation's messages, newest first"
-      operationId: listMessages
+      operationId: listConversationMessages
       parameters:
         - name: id
           in: path
@@ -1025,7 +1949,7 @@ paths:
       tags:
         - Messagerie
       summary: Post a message in a conversation
-      operationId: send
+      operationId: sendMessage
       parameters:
         - name: id
           in: path
@@ -1088,7 +2012,7 @@ paths:
       tags:
         - Authentication
       summary: Exchange a refresh token for a new token pair
-      operationId: refresh
+      operationId: refreshToken
       requestBody:
         content:
           application/json:
@@ -1678,9 +2602,22 @@ paths:
     get:
       tags:
         - Annonces
-      summary: List the authenticated prestataire's listings
-      operationId: listMine_2
+      summary: The prestataire's standalone listings; residence units are managed
+        under /residences
+      operationId: listMyAnnonces
       parameters:
+        - name: includeResidenceUnits
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: residenceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
         - name: pageable
           in: query
           required: true
@@ -1734,7 +2671,7 @@ paths:
       tags:
         - Annonces
       summary: Create a listing (draft)
-      operationId: create_1
+      operationId: createAnnonce
       requestBody:
         content:
           application/json:
@@ -1790,7 +2727,7 @@ paths:
       tags:
         - Annonces
       summary: Return an archived listing to draft so it can be published again (RM-M10-08)
-      operationId: unarchive
+      operationId: unarchiveAnnonce
       parameters:
         - name: id
           in: path
@@ -1847,7 +2784,7 @@ paths:
       tags:
         - Annonces
       summary: Reserve a published listing (temporary hold)
-      operationId: reserve
+      operationId: reserveAnnonce
       parameters:
         - name: id
           in: path
@@ -1904,7 +2841,7 @@ paths:
       tags:
         - Annonces
       summary: Mark a published or reserved listing as rented
-      operationId: markRented
+      operationId: markAnnonceRented
       parameters:
         - name: id
           in: path
@@ -1961,7 +2898,7 @@ paths:
       tags:
         - Annonces
       summary: Publish a draft listing (profile complete + ≥3 photos + tier limit)
-      operationId: publish
+      operationId: publishAnnonce
       parameters:
         - name: id
           in: path
@@ -2018,7 +2955,7 @@ paths:
       tags:
         - Annonces
       summary: Archive a listing
-      operationId: archive
+      operationId: archiveAnnonce
       parameters:
         - name: id
           in: path
@@ -2070,12 +3007,1105 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/{annonceId}/agent:
+    post:
+      tags:
+        - Assignation agent
+      summary: Offer the listing to an agent (RM-M11-04)
+      operationId: assignAgent
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignAgentRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - Assignation agent
+      summary: Remove the listing's agent; visits already planned are cancelled (RM-M11-06)
+      operationId: withdrawAgentAssignment
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/decline:
+    post:
+      tags:
+        - Assignation agent
+      summary: Turn an application down
+      operationId: declineAnnonceApplication
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/accept:
+    post:
+      tags:
+        - Assignation agent
+      summary: Accept an application; the other applicants are declined automatically
+      operationId: acceptAnnonceApplication
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/visites/{id}/start:
+    post:
+      tags:
+        - Agent — visites
+      summary: Start the visit on site; beyond 500 m a justification is required (RM-M16-02)
+      operationId: startMyAgentVisite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartVisiteRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VisiteResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/visites/{id}/report:
+    post:
+      tags:
+        - Agent — visites
+      summary: "File the visit report; locked once submitted (RM-M07-06, RM-M16-03)"
+      operationId: submitVisiteReport
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitVisiteReportRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VisiteReportResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/visites/{id}/cancel:
+    post:
+      tags:
+        - Agent — visites
+      summary: "Cancel a visit, up to one hour before the slot (RM-M16-04)"
+      operationId: cancelAgentVisite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/days-off:
+    get:
+      tags:
+        - Agent
+      summary: Days the agent has blocked off
+      operationId: listMyAgentDaysOff
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: date
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Agent
+      summary: Block a whole day off (congés — RM-M15-03)
+      operationId: blockMyAgentDay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlockDayRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/{id}/resign:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Step down from an assignment already accepted; booked visits are cancelled
+      operationId: resignAgentAssignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/{id}/decline:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Decline an offer; the prestataire is told so they can ask someone else
+      operationId: declineAgentAssignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/{id}/accept:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Accept an offer; the listing can then offer visits (RM-M05-07)
+      operationId: acceptAgentAssignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/residence/{residenceId}/resign:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Step down from a whole residence at once (RM-M10bis-10)
+      operationId: resignResidenceAssignment
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BatchResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/residence/{residenceId}/decline:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Decline a whole residence batch
+      operationId: declineResidenceAssignment
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BatchResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/residence/{residenceId}/accept:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Accept a whole residence batch; answering unit by unit is the same
+        tedium in reverse
+      operationId: acceptResidenceAssignment
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BatchResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/apply/{annonceId}:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Apply to a listing; the prestataire still decides (RM-M11-04)
+      operationId: applyToAnnonce
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/apply/residence/{residenceId}:
+    post:
+      tags:
+        - Agent — assignations
+      summary: Apply to every open unit of a residence in one act (M11)
+      operationId: applyToResidence
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResidenceAssignmentResult"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/users/{id}/suspend:
+    post:
+      tags:
+        - Admin — utilisateurs
+      summary: Suspend an account; sessions are revoked at once (RM-M18-02)
+      operationId: suspendAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuspendAccountRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/users/{id}/reactivate:
+    post:
+      tags:
+        - Admin — utilisateurs
+      summary: Lift a suspension
+      operationId: reactivateAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/admin/type-change-requests/{id}/reject:
     post:
       tags:
         - Admin — Type Change
       summary: Reject a type-change request with a reason
-      operationId: reject
+      operationId: rejectTypeChangeRequest
       parameters:
         - name: id
           in: path
@@ -2138,7 +4168,7 @@ paths:
       tags:
         - Admin — Type Change
       summary: Approve a type-change request and apply the new type
-      operationId: approve
+      operationId: approveTypeChangeRequest
       parameters:
         - name: id
           in: path
@@ -2195,7 +4225,7 @@ paths:
       tags:
         - Admin — Subscriptions
       summary: "Grant a tier to an account for a number of days, without payment"
-      operationId: grant
+      operationId: grantSubscription
       requestBody:
         content:
           application/json:
@@ -2242,12 +4272,136 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/signalements/{id}/validate:
+    post:
+      tags:
+        - Admin — modération
+      summary: Uphold a report; the 3rd upheld one on a listing suspends it automatically
+      operationId: validateSignalement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewSignalementRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SignalementResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/signalements/{id}/reject:
+    post:
+      tags:
+        - Admin — modération
+      summary: Dismiss a report as a false positive
+      operationId: rejectSignalement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewSignalementRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SignalementResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/admin/kyc/{id}/reject:
     post:
       tags:
         - Admin — KYC
       summary: Reject a KYC submission with a reason
-      operationId: reject_1
+      operationId: rejectKycSubmission
       parameters:
         - name: id
           in: path
@@ -2310,7 +4464,7 @@ paths:
       tags:
         - Admin — KYC
       summary: Approve a KYC submission and activate the account
-      operationId: approve_1
+      operationId: approveKycSubmission
       parameters:
         - name: id
           in: path
@@ -2362,12 +4516,128 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/annonces/{id}/suspend:
+    post:
+      tags:
+        - Admin — annonces
+      summary: "Suspend a listing with a reason; its owner is told (RM-M19-02, CA-M19-02)"
+      operationId: suspendAnnonce
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuspendAnnonceRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/annonces/{id}/restore:
+    post:
+      tags:
+        - Admin — modération
+      summary: Restore a suspended listing (false positive — RM-M19-04)
+      operationId: restoreAnnonce
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/account/phone/verify:
     post:
       tags:
         - Phone Change
       summary: "Step 2: verify both codes and switch the number"
-      operationId: confirmChange
+      operationId: confirmPhoneChange
       requestBody:
         content:
           application/json:
@@ -2423,7 +4693,7 @@ paths:
       tags:
         - Phone Change
       summary: "Step 1: request OTPs on the current and the new number"
-      operationId: requestChange
+      operationId: requestPhoneChange
       requestBody:
         content:
           application/json:
@@ -2527,7 +4797,7 @@ paths:
       tags:
         - User Profile
       summary: Get the authenticated user's profile
-      operationId: myProfile
+      operationId: getMyUserProfile
       responses:
         "200":
           description: OK
@@ -2576,7 +4846,7 @@ paths:
       tags:
         - User Profile
       summary: Partially update the authenticated user's profile
-      operationId: updateMyProfile
+      operationId: updateMyUserProfile
       requestBody:
         content:
           application/json:
@@ -2632,7 +4902,7 @@ paths:
       tags:
         - User Settings
       summary: Get the authenticated account's settings
-      operationId: mySettings
+      operationId: getMyUserSettings
       responses:
         "200":
           description: OK
@@ -2681,7 +4951,7 @@ paths:
       tags:
         - User Settings
       summary: Partially update the authenticated account's settings
-      operationId: updateMySettings
+      operationId: updateMyUserSettings
       requestBody:
         content:
           application/json:
@@ -2737,7 +5007,7 @@ paths:
       tags:
         - Residences
       summary: Get a residence with its units
-      operationId: getOne
+      operationId: getMyResidence
       parameters:
         - name: id
           in: path
@@ -2793,7 +5063,7 @@ paths:
       tags:
         - Residences
       summary: Delete a residence and all its units
-      operationId: delete
+      operationId: deleteResidence
       parameters:
         - name: id
           in: path
@@ -2845,7 +5115,7 @@ paths:
       tags:
         - Residences
       summary: Update the residence's shared attributes (cascades to units)
-      operationId: update
+      operationId: updateResidence
       parameters:
         - name: id
           in: path
@@ -2908,7 +5178,7 @@ paths:
       tags:
         - Prestataire Profile
       summary: Get the authenticated prestataire's profile
-      operationId: myProfile_1
+      operationId: getMyPrestataireProfile
       responses:
         "200":
           description: OK
@@ -2957,7 +5227,7 @@ paths:
       tags:
         - Prestataire Profile
       summary: Partially update the authenticated prestataire's profile
-      operationId: updateMyProfile_1
+      operationId: updateMyPrestataireProfile
       requestBody:
         content:
           application/json:
@@ -3013,7 +5283,7 @@ paths:
       tags:
         - Annonces
       summary: Get one of the authenticated prestataire's listings
-      operationId: getOne_1
+      operationId: getMyAnnonce
       parameters:
         - name: id
           in: path
@@ -3069,7 +5339,7 @@ paths:
       tags:
         - Annonces
       summary: Delete one of the authenticated prestataire's listings
-      operationId: delete_1
+      operationId: deleteAnnonce
       parameters:
         - name: id
           in: path
@@ -3121,7 +5391,7 @@ paths:
       tags:
         - Annonces
       summary: Partially update one of the authenticated prestataire's listings
-      operationId: update_1
+      operationId: updateAnnonce
       parameters:
         - name: id
           in: path
@@ -3142,6 +5412,112 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me:
+    get:
+      tags:
+        - Agent
+      summary: Get the authenticated agent's profile
+      operationId: getMyAgentProfile
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AgentProfileResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      tags:
+        - Agent
+      summary: Update the agent's profile; acceptingAssignments=false is "Inactif"
+        (RM-M15-05)
+      operationId: updateMyAgentProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAgentProfileRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AgentProfileResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
           content:
@@ -3246,12 +5622,190 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/annonces/{id}:
+    patch:
+      tags:
+        - Admin — annonces
+      summary: Edit a listing's content directly; its owner is told what changed (RM-M19-05)
+      operationId: updateAnnonceAsAdmin
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAnnonceRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/visites/{id}/report:
+    get:
+      tags:
+        - Visites — rapport
+      summary: "The agent's report on a visit — user, agent and prestataire only"
+      operationId: getVisiteReport
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/VisiteReportResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/visites/slots:
+    get:
+      tags:
+        - Visites
+      summary: The assigned agent's free slots over the next 7 days; an empty list
+        carries a reason
+      operationId: listBookableSlots
+      parameters:
+        - name: annonceId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BookableSlotsResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/subscriptions/tiers:
     get:
       tags:
         - Subscriptions
       summary: List the subscription tiers and their current parameters
-      operationId: tiers
+      operationId: listSubscriptionTiers
       responses:
         "200":
           description: OK
@@ -3416,7 +5970,7 @@ paths:
       tags:
         - Subscriptions
       summary: Get a short-lived URL to download a payment's PDF receipt
-      operationId: receipt
+      operationId: getPaymentReceipt
       parameters:
         - name: id
           in: path
@@ -3473,7 +6027,7 @@ paths:
       tags:
         - Subscriptions
       summary: Get the authenticated account's current subscription
-      operationId: mySubscription
+      operationId: getMySubscription
       responses:
         "200":
           description: OK
@@ -3524,7 +6078,7 @@ paths:
         - Search
       summary: Search listings and residences (city/district required; other filters
         cumulative)
-      operationId: search
+      operationId: searchListings
       parameters:
         - name: cityId
           in: query
@@ -3554,6 +6108,17 @@ paths:
                 - ROOM
                 - OFFICE
                 - COMMERCIAL_SPACE
+        - name: rentalPeriods
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - MONTH
+                - QUARTER
+                - YEAR
         - name: rentMin
           in: query
           required: false
@@ -3657,7 +6222,7 @@ paths:
       tags:
         - Search
       summary: Public detail of a residence with its live units
-      operationId: residenceDetail
+      operationId: getResidenceDetail
       parameters:
         - name: id
           in: path
@@ -3709,12 +6274,200 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/search/annonces/{id}:
+    get:
+      tags:
+        - Search
+      summary: Public fiche of a listing (M05)
+      description: Readable without an account. The exact address is never returned
+        and the coordinates are fuzzed by ~200m. Send X-Device-Id so anonymous views
+        are counted once per device per 24h; signed-in views are counted by account.
+      operationId: getAnnonceDetail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Device-Id
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AnnonceDetailResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/residences/{residenceId}/agent/candidates:
+    get:
+      tags:
+        - Assignation agent — résidence
+      summary: Agents who cover this residence's area; query matches a name or phone
+      operationId: listResidenceAgentCandidates
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AgentCandidate"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/residences/{residenceId}/agent/applications:
+    get:
+      tags:
+        - Assignation agent — résidence
+      summary: "Agents who applied, one entry each with their unit count (RM-M10bis-09)"
+      operationId: listResidenceApplications
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResidenceApplicationSummary"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/me:
     get:
       tags:
         - Current user
       summary: Get the currently authenticated account
-      operationId: me
+      operationId: getMe
       responses:
         "200":
           description: OK
@@ -3764,7 +6517,7 @@ paths:
       tags:
         - Locations
       summary: List regions (optionally filtered by country)
-      operationId: regions
+      operationId: listRegions
       parameters:
         - name: countryId
           in: query
@@ -3823,7 +6576,7 @@ paths:
       tags:
         - Locations
       summary: List countries
-      operationId: countries
+      operationId: listCountries
       responses:
         "200":
           description: OK
@@ -3875,7 +6628,7 @@ paths:
       tags:
         - Locations
       summary: List cities (optionally filtered by region)
-      operationId: cities
+      operationId: listCities
       parameters:
         - name: regionId
           in: query
@@ -3934,7 +6687,7 @@ paths:
       tags:
         - Locations
       summary: List a city's districts (quartiers)
-      operationId: districts
+      operationId: listDistricts
       parameters:
         - name: cityId
           in: path
@@ -3993,7 +6746,7 @@ paths:
       tags:
         - KYC
       summary: Get the authenticated account's KYC status
-      operationId: myStatus
+      operationId: getMyKycStatus
       responses:
         "200":
           description: OK
@@ -4038,12 +6791,784 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/historique:
+    get:
+      tags:
+        - Historique
+      summary: "The 30 most recently consulted listings, newest first"
+      operationId: listMyHistorique
+      parameters:
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseHistoriqueResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - Historique
+      summary: Reset the consultation history (RM-M06-05)
+      operationId: clearMyHistorique
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/{annonceId}/agent/candidates:
+    get:
+      tags:
+        - Assignation agent
+      summary: Agents who cover this listing's area; query matches a name or phone
+        (RM-M11-03)
+      operationId: listAgentCandidates
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AgentCandidate"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/{annonceId}/agent/applications:
+    get:
+      tags:
+        - Assignation agent
+      summary: "Agents who applied to this listing, oldest first"
+      operationId: listAnnonceApplications
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AssignmentResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/annonces/agent/assignments:
+    get:
+      tags:
+        - Assignation agent
+      summary: "Every assignment across the prestataire's listings, newest first"
+      operationId: listMyAnnonceAssignments
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - APPLIED
+                - PENDING
+                - ACCEPTED
+                - DECLINED
+                - WITHDRAWN
+                - REVOKED
+                - RESIGNED
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseAssignmentItem"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/visites:
+    get:
+      tags:
+        - Agent — visites
+      summary: Visits assigned to the authenticated agent
+      operationId: listMyAgentVisites
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - SCHEDULED
+                - CANCELLED
+                - COMPLETED
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseVisiteResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/visites/{id}:
+    get:
+      tags:
+        - Agent — visites
+      summary: "One visit in full: exact address, both contacts, whether it can start\
+        \ (RM-M16-01)"
+      operationId: getMyAgentVisite
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AgentVisiteDetail"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/visites/today:
+    get:
+      tags:
+        - Agent — visites
+      summary: "The agent's round for today, soonest first"
+      operationId: listMyAgentVisitesToday
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VisiteResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments:
+    get:
+      tags:
+        - Agent — assignations
+      summary: "Everything the agent holds, newest first — offers and accepted applications\
+        \ alike"
+      operationId: listMyAgentAssignments
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - APPLIED
+                - PENDING
+                - ACCEPTED
+                - DECLINED
+                - WITHDRAWN
+                - REVOKED
+                - RESIGNED
+        - name: initiatedBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - PRESTATAIRE
+                - AGENT
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseAssignmentItem"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/opportunities:
+    get:
+      tags:
+        - Agent — assignations
+      summary: "What the agent may apply to: standalone listings and whole residences,\
+        \ in their zones"
+      operationId: listAgentOpportunities
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OpportunityItem"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/applications:
+    get:
+      tags:
+        - Agent — candidatures
+      summary: "Applications the agent has sent, newest first"
+      operationId: listMyAgentApplications
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - APPLIED
+                - PENDING
+                - ACCEPTED
+                - DECLINED
+                - WITHDRAWN
+                - REVOKED
+                - RESIGNED
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseAssignmentItem"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/users:
+    get:
+      tags:
+        - Admin — utilisateurs
+      summary: "Search accounts by phone or email, with their subscription (RM-M18-01)"
+      operationId: listAdminUsers
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - USER
+              - PRESTATAIRE
+              - AGENT
+              - ADMIN
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - PENDING
+              - ACTIVE
+              - SUSPENDED
+              - DELETED
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseAdminUserSummary"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/admin/type-change-requests:
     get:
       tags:
         - Admin — Type Change
       summary: List pending type-change requests
-      operationId: listPending
+      operationId: listPendingTypeChangeRequests
       parameters:
         - name: pageable
           in: query
@@ -4094,12 +7619,77 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/signalements:
+    get:
+      tags:
+        - Admin — modération
+      summary: "The moderation queue, oldest first; optionally filtered by status"
+      operationId: listSignalements
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - PENDING
+              - VALIDATED
+              - REJECTED
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseSignalementResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/admin/kyc:
     get:
       tags:
         - Admin — KYC
       summary: List pending KYC submissions (with pre-signed document URLs)
-      operationId: listPending_1
+      operationId: listPendingKycSubmissions
       parameters:
         - name: pageable
           in: query
@@ -4150,12 +7740,85 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/annonces:
+    get:
+      tags:
+        - Admin — annonces
+      summary: "Search listings by title or owner phone/email, filtered by status"
+      operationId: listAdminAnnonces
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - DRAFT
+              - PUBLISHED
+              - RESERVED
+              - RENTED
+              - ARCHIVED
+              - SUSPENDED
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseAnnonceResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/notifications/devices/{token}:
     delete:
       tags:
         - Notification Devices
       summary: Unregister a device push token
-      operationId: unregister
+      operationId: unregisterDevice
       parameters:
         - name: token
           in: path
@@ -4165,6 +7828,275 @@ paths:
       responses:
         "204":
           description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/favoris/{annonceId}:
+    delete:
+      tags:
+        - Favoris
+      summary: Unsave a listing; unsaving one that is not saved is not an error
+      operationId: removeFavori
+      parameters:
+        - name: annonceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/days-off/{day}:
+    delete:
+      tags:
+        - Agent
+      summary: Reopen a blocked day
+      operationId: unblockMyAgentDay
+      parameters:
+        - name: day
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/assignments/{id}:
+    delete:
+      tags:
+        - Agent — assignations
+      summary: "Withdraw an unanswered application (superseded by DELETE /agents/me/applications/{id})"
+      operationId: withdrawAgentApplication
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/applications/{id}:
+    delete:
+      tags:
+        - Agent — candidatures
+      summary: Withdraw an application nobody has answered
+      operationId: withdrawMyAgentApplication
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/agents/me/applications/residence/{residenceId}:
+    delete:
+      tags:
+        - Agent — candidatures
+      summary: Withdraw a whole residence application at once (RM-M10bis-10)
+      operationId: withdrawResidenceApplication
+      parameters:
+        - name: residenceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BatchResult"
         "409":
           description: Conflicts with the current state — see the `error` code
           content:
@@ -4250,6 +8182,176 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
+    UpdateZonesRequest:
+      type: object
+      properties:
+        cityIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 20
+          minItems: 0
+        districtIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 100
+          minItems: 0
+      required:
+        - cityIds
+        - districtIds
+    AgentProfileResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        photoObjectKey:
+          type: string
+        zones:
+          type: array
+          items:
+            $ref: "#/components/schemas/ZoneResponse"
+        acceptingAssignments:
+          type: boolean
+        completedVisitCount:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: double
+        ratingCount:
+          type: integer
+          format: int32
+        status:
+          type: string
+          enum:
+            - PENDING
+            - ACTIVE
+            - SUSPENDED
+            - DELETED
+        profileComplete:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    ZoneResponse:
+      type: object
+      properties:
+        cityId:
+          type: string
+          format: uuid
+        districtId:
+          type: string
+          format: uuid
+    AvailabilityRuleRequest:
+      type: object
+      properties:
+        dayOfWeek:
+          type: integer
+          format: int32
+          maximum: 7
+          minimum: 1
+        startTime:
+          type: string
+        endTime:
+          type: string
+      required:
+        - dayOfWeek
+        - endTime
+        - startTime
+    UpdateAvailabilityRequest:
+      type: object
+      properties:
+        rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/AvailabilityRuleRequest"
+          maxItems: 30
+          minItems: 0
+        visitDurationMinutes:
+          type: integer
+          format: int32
+          maximum: 480
+          minimum: 15
+      required:
+        - rules
+    AvailabilityResponse:
+      type: object
+      properties:
+        rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/AvailabilityRuleRequest"
+        visitDurationMinutes:
+          type: integer
+          format: int32
+        daysOff:
+          type: array
+          items:
+            type: string
+            format: date
+    BookVisiteRequest:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+        startsAt:
+          type: string
+          format: date-time
+      required:
+        - annonceId
+        - startsAt
+    VisiteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        annonceTitle:
+          type: string
+        agentAccountId:
+          type: string
+          format: uuid
+        scheduledAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - SCHEDULED
+            - CANCELLED
+            - COMPLETED
+        cancellationReason:
+          type: string
+          enum:
+            - BY_USER
+            - BY_AGENT
+            - AGENT_UNAVAILABLE
+            - AGENT_REMOVED
+        createdAt:
+          type: string
+          format: date-time
+    RateAgentRequest:
+      type: object
+      properties:
+        rating:
+          type: integer
+          format: int32
+          maximum: 5
+          minimum: 1
+      required:
+        - rating
     SubscribeRequest:
       type: object
       properties:
@@ -4306,6 +8408,82 @@ components:
         - providerRef
         - signature
         - status
+    CreateSignalementRequest:
+      type: object
+      properties:
+        targetType:
+          type: string
+          enum:
+            - ANNONCE
+            - MESSAGE
+        targetId:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          enum:
+            - FRAUDULENT_LISTING
+            - ABNORMAL_PRICE
+            - INAPPROPRIATE_CONTENT
+            - HARASSMENT
+        comment:
+          type: string
+          maxLength: 500
+          minLength: 0
+      required:
+        - reason
+        - targetId
+        - targetType
+    SignalementResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        targetType:
+          type: string
+          enum:
+            - ANNONCE
+            - MESSAGE
+        targetId:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          enum:
+            - FRAUDULENT_LISTING
+            - ABNORMAL_PRICE
+            - INAPPROPRIATE_CONTENT
+            - HARASSMENT
+        comment:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING
+            - VALIDATED
+            - REJECTED
+        reporterAccountId:
+          type: string
+          format: uuid
+        reporterSuspect:
+          type: boolean
+        targetValidatedCount:
+          type: integer
+          format: int64
+        providerAlert:
+          type: boolean
+        reviewedBy:
+          type: string
+          format: uuid
+        reviewedAt:
+          type: string
+          format: date-time
+        reviewNote:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
     CreateResidenceRequest:
       type: object
       properties:
@@ -4377,6 +8555,15 @@ components:
           type: string
           maxLength: 80
           minLength: 0
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
         monthlyRent:
           type: integer
           format: int32
@@ -4402,7 +8589,6 @@ components:
           minLength: 0
       required:
         - count
-        - monthlyRent
         - namePrefix
         - propertyType
     ResidenceResponse:
@@ -4489,7 +8675,59 @@ components:
             - RESERVED
             - RENTED
             - ARCHIVED
+            - SUSPENDED
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
         monthlyRent:
+          type: integer
+          format: int32
+    AssignAgentRequest:
+      type: object
+      properties:
+        agentAccountId:
+          type: string
+          format: uuid
+      required:
+        - agentAccountId
+    ResidenceAssignmentResult:
+      type: object
+      properties:
+        residenceId:
+          type: string
+          format: uuid
+        residenceName:
+          type: string
+        agentAccountId:
+          type: string
+          format: uuid
+        offered:
+          type: integer
+          format: int32
+        skipped:
+          type: array
+          items:
+            $ref: "#/components/schemas/SkippedUnit"
+    SkippedUnit:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        reason:
+          type: string
+    BatchResult:
+      type: object
+      properties:
+        count:
           type: integer
           format: int32
     RequestTypeChangeRequest:
@@ -4600,6 +8838,45 @@ components:
           format: date-time
         rejectionReason:
           type: string
+    AddFavoriRequest:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+      required:
+        - annonceId
+    FavoriResponse:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        primaryPhotoKey:
+          type: string
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
+        monthlyRent:
+          type: integer
+          format: int32
+        city:
+          type: string
+        district:
+          type: string
+        available:
+          type: boolean
+        savedAt:
+          type: string
+          format: date-time
     StartConversationRequest:
       type: object
       properties:
@@ -4864,6 +9141,15 @@ components:
           format: double
           maximum: 180
           minimum: -180
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
         monthlyRent:
           type: integer
           format: int32
@@ -4897,13 +9183,24 @@ components:
             minLength: 1
           maxItems: 15
           minItems: 0
+        amenities:
+          type: array
+          items:
+            type: string
+            enum:
+              - AIR_CONDITIONING
+              - HOT_WATER
+              - GENERATOR
+              - SECURITY_GUARD
+              - PARKING
+              - WIFI
+          uniqueItems: true
       required:
         - availableFrom
         - districtId
         - exactAddress
         - latitude
         - longitude
-        - monthlyRent
         - propertyType
         - title
     AnnonceResponse:
@@ -4944,6 +9241,15 @@ components:
         longitude:
           type: number
           format: double
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
         monthlyRent:
           type: integer
           format: int32
@@ -4976,6 +9282,9 @@ components:
             - RESERVED
             - RENTED
             - ARCHIVED
+            - SUSPENDED
+        suspensionReason:
+          type: string
         tierRank:
           type: integer
           format: int32
@@ -4983,6 +9292,21 @@ components:
           type: array
           items:
             type: string
+        amenities:
+          type: array
+          items:
+            type: string
+            enum:
+              - AIR_CONDITIONING
+              - HOT_WATER
+              - GENERATOR
+              - SECURITY_GUARD
+              - PARKING
+              - WIFI
+          uniqueItems: true
+        viewCount:
+          type: integer
+          format: int32
         publishedAt:
           type: string
           format: date-time
@@ -4992,6 +9316,142 @@ components:
         createdAt:
           type: string
           format: date-time
+    AssignmentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        annonceTitle:
+          type: string
+        agentAccountId:
+          type: string
+          format: uuid
+        agentName:
+          type: string
+        status:
+          type: string
+          enum:
+            - APPLIED
+            - PENDING
+            - ACCEPTED
+            - DECLINED
+            - WITHDRAWN
+            - REVOKED
+            - RESIGNED
+        initiatedBy:
+          type: string
+          enum:
+            - PRESTATAIRE
+            - AGENT
+        residenceId:
+          type: string
+          format: uuid
+        respondedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    StartVisiteRequest:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        longitude:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+        overrideReason:
+          type: string
+          maxLength: 500
+          minLength: 0
+      required:
+        - latitude
+        - longitude
+    SubmitVisiteReportRequest:
+      type: object
+      properties:
+        overallCondition:
+          type: integer
+          format: int32
+          maximum: 5
+          minimum: 1
+        listingConformity:
+          type: string
+          enum:
+            - OUI
+            - PARTIELLEMENT
+            - NON
+        comment:
+          type: string
+          maxLength: 2000
+          minLength: 0
+        photoKeys:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 15
+          minItems: 3
+      required:
+        - listingConformity
+        - overallCondition
+        - photoKeys
+    VisiteReportResponse:
+      type: object
+      properties:
+        visiteId:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        agentAccountId:
+          type: string
+          format: uuid
+        overallCondition:
+          type: integer
+          format: int32
+        listingConformity:
+          type: string
+          enum:
+            - OUI
+            - PARTIELLEMENT
+            - NON
+        comment:
+          type: string
+        photoKeys:
+          type: array
+          items:
+            type: string
+        submittedAt:
+          type: string
+          format: date-time
+    BlockDayRequest:
+      type: object
+      properties:
+        day:
+          type: string
+          format: date
+      required:
+        - day
+    SuspendAccountRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 300
+          minLength: 0
+      required:
+        - reason
     RejectTypeChangeRequest:
       type: object
       properties:
@@ -5041,7 +9501,23 @@ components:
         - accountId
         - days
         - tier
+    ReviewSignalementRequest:
+      type: object
+      properties:
+        note:
+          type: string
+          maxLength: 500
+          minLength: 0
     RejectKycRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 0
+      required:
+        - reason
+    SuspendAnnonceRequest:
       type: object
       properties:
         reason:
@@ -5171,6 +9647,9 @@ components:
               - N12
               - N13
               - N14
+              - N15
+              - N16
+              - N17
           uniqueItems: true
     NotificationSetting:
       type: object
@@ -5192,6 +9671,9 @@ components:
             - N12
             - N13
             - N14
+            - N15
+            - N16
+            - N17
         enabled:
           type: boolean
         mandatory:
@@ -5327,6 +9809,15 @@ components:
           format: double
           maximum: 180
           minimum: -180
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
         monthlyRent:
           type: integer
           format: int32
@@ -5360,6 +9851,35 @@ components:
             minLength: 1
           maxItems: 15
           minItems: 0
+        amenities:
+          type: array
+          items:
+            type: string
+            enum:
+              - AIR_CONDITIONING
+              - HOT_WATER
+              - GENERATOR
+              - SECURITY_GUARD
+              - PARKING
+              - WIFI
+          uniqueItems: true
+    UpdateAgentProfileRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        photoObjectKey:
+          type: string
+          maxLength: 512
+          minLength: 0
+        acceptingAssignments:
+          type: boolean
     UpdatePlanRequest:
       type: object
       properties:
@@ -5394,6 +9914,10 @@ components:
         residenceUnitAllowance:
           type: integer
           format: int32
+        descriptions:
+          type: object
+          additionalProperties:
+            type: string
     Pageable:
       type: object
       properties:
@@ -5409,6 +9933,49 @@ components:
           type: array
           items:
             type: string
+    PageResponseVisiteResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/VisiteResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    BookableSlot:
+      type: object
+      properties:
+        startsAt:
+          type: string
+          format: date-time
+        endsAt:
+          type: string
+          format: date-time
+    BookableSlotsResponse:
+      type: object
+      properties:
+        slots:
+          type: array
+          items:
+            $ref: "#/components/schemas/BookableSlot"
+        reason:
+          type: string
+          enum:
+            - AGENT_NO_AVAILABILITY
+            - ALL_DAYS_BLOCKED
+            - FULLY_BOOKED
     PageResponsePaymentSummary:
       type: object
       properties:
@@ -5487,6 +10054,11 @@ components:
         activeListingLimit:
           type: integer
           format: int32
+        currentPaymentId:
+          type: string
+          format: uuid
+        currentPaymentHasReceipt:
+          type: boolean
     PageResponseSearchResult:
       type: object
       properties:
@@ -5577,6 +10149,15 @@ components:
           type: string
         district:
           type: string
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
         monthlyRent:
           type: integer
           format: int32
@@ -5598,6 +10179,7 @@ components:
             - RESERVED
             - RENTED
             - ARCHIVED
+            - SUSPENDED
         tierRank:
           type: integer
           format: int32
@@ -5653,6 +10235,126 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/SearchResultItem"
+    AnnonceDetailResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        residenceId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        propertyType:
+          type: string
+          enum:
+            - APARTMENT
+            - STUDIO
+            - VILLA
+            - ROOM
+            - OFFICE
+            - COMMERCIAL_SPACE
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
+        monthlyRent:
+          type: integer
+          format: int32
+        chargesIncluded:
+          type: boolean
+        chargesAmount:
+          type: integer
+          format: int32
+        city:
+          type: string
+        district:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        surfaceArea:
+          type: integer
+          format: int32
+        roomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        availableFrom:
+          type: string
+          format: date
+        description:
+          type: string
+        amenities:
+          type: array
+          items:
+            type: string
+            enum:
+              - AIR_CONDITIONING
+              - HOT_WATER
+              - GENERATOR
+              - SECURITY_GUARD
+              - PARKING
+              - WIFI
+          uniqueItems: true
+        photoKeys:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PUBLISHED
+            - RESERVED
+            - RENTED
+            - ARCHIVED
+            - SUSPENDED
+        provider:
+          $ref: "#/components/schemas/ProviderCard"
+        canContact:
+          type: boolean
+        canPlanVisit:
+          type: boolean
+        viewCount:
+          type: integer
+          format: int32
+    ProviderCard:
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        logoObjectKey:
+          type: string
+        type:
+          type: string
+          enum:
+            - PARTICULIER
+            - AGENCE
+            - PROMOTEUR
+        tierRank:
+          type: integer
+          format: int32
+        badges:
+          type: array
+          items:
+            type: string
     PageResponseResidenceResponse:
       type: object
       properties:
@@ -5674,6 +10376,43 @@ components:
           format: int32
         last:
           type: boolean
+    AgentCandidate:
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        photoObjectKey:
+          type: string
+        completedVisitCount:
+          type: integer
+          format: int32
+    ResidenceApplicationSummary:
+      type: object
+      properties:
+        residenceId:
+          type: string
+          format: uuid
+        agentAccountId:
+          type: string
+          format: uuid
+        agentName:
+          type: string
+        photoObjectKey:
+          type: string
+        completedVisitCount:
+          type: integer
+          format: int32
+        unitCount:
+          type: integer
+          format: int32
+        appliedAt:
+          type: string
+          format: date-time
     MeResponse:
       type: object
       properties:
@@ -5706,6 +10445,13 @@ components:
             - APPLE
         emailVerified:
           type: boolean
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
         createdAt:
           type: string
           format: date-time
@@ -5727,6 +10473,77 @@ components:
           type: string
         name:
           type: string
+    HistoriqueResponse:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        primaryPhotoKey:
+          type: string
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
+        monthlyRent:
+          type: integer
+          format: int32
+        city:
+          type: string
+        district:
+          type: string
+        viewedAt:
+          type: string
+          format: date-time
+    PageResponseHistoriqueResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/HistoriqueResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    PageResponseFavoriResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/FavoriResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
     PageResponseConversationResponse:
       type: object
       properties:
@@ -5790,6 +10607,253 @@ components:
           format: int32
         last:
           type: boolean
+    AssignmentItem:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - LISTING
+            - RESIDENCE
+        assignment:
+          $ref: "#/components/schemas/AssignmentResponse"
+        residence:
+          $ref: "#/components/schemas/ResidenceAssignmentSummary"
+    PageResponseAssignmentItem:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssignmentItem"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    ResidenceAssignmentSummary:
+      type: object
+      properties:
+        residenceId:
+          type: string
+          format: uuid
+        residenceName:
+          type: string
+        agentAccountId:
+          type: string
+          format: uuid
+        agentName:
+          type: string
+        status:
+          type: string
+          enum:
+            - APPLIED
+            - PENDING
+            - ACCEPTED
+            - DECLINED
+            - WITHDRAWN
+            - REVOKED
+            - RESIGNED
+        initiatedBy:
+          type: string
+          enum:
+            - PRESTATAIRE
+            - AGENT
+        unitCount:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        respondedAt:
+          type: string
+          format: date-time
+    AgentVisiteDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        annonceTitle:
+          type: string
+        exactAddress:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        scheduledAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - SCHEDULED
+            - CANCELLED
+            - COMPLETED
+        userName:
+          type: string
+        userPhone:
+          type: string
+        prestataireName:
+          type: string
+        prestatairePhone:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+        canStart:
+          type: boolean
+        reportSubmitted:
+          type: boolean
+    AgentOpportunity:
+      type: object
+      properties:
+        annonceId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        primaryPhotoKey:
+          type: string
+        price:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
+        monthlyRent:
+          type: integer
+          format: int32
+        city:
+          type: string
+        district:
+          type: string
+    OpportunityItem:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - LISTING
+            - RESIDENCE
+        listing:
+          $ref: "#/components/schemas/AgentOpportunity"
+        residence:
+          $ref: "#/components/schemas/ResidenceOpportunity"
+    ResidenceOpportunity:
+      type: object
+      properties:
+        residenceId:
+          type: string
+          format: uuid
+        residenceName:
+          type: string
+        primaryPhotoKey:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        unitCount:
+          type: integer
+          format: int32
+        breakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/TypeCount"
+        fromPrice:
+          type: integer
+          format: int32
+        fromRentalPeriod:
+          type: string
+          enum:
+            - MONTH
+            - QUARTER
+            - YEAR
+        fromMonthlyRent:
+          type: integer
+          format: int32
+    AdminUserSummary:
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+            - USER
+            - PRESTATAIRE
+            - AGENT
+            - ADMIN
+        status:
+          type: string
+          enum:
+            - PENDING
+            - ACTIVE
+            - SUSPENDED
+            - DELETED
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
+        periodEnd:
+          type: string
+          format: date-time
+        listingCount:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+    PageResponseAdminUserSummary:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminUserSummary"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
     PageResponseTypeChangeReviewItem:
       type: object
       properties:
@@ -5837,6 +10901,27 @@ components:
         createdAt:
           type: string
           format: date-time
+    PageResponseSignalementResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/SignalementResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
     KycReviewItem:
       type: object
       properties:

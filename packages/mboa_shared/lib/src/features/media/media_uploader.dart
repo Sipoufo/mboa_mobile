@@ -49,7 +49,7 @@ class MediaUploader {
         ) ??
         await picked.readAsBytes();
 
-    final presigned = (await _dioClient.api.getMediaApi().createUpload(
+    final presigned = (await _dioClient.api.getMediaApi().createMediaUpload(
           createUploadRequest: CreateUploadRequest((b) => b
             ..category = category
             ..contentType = _contentType

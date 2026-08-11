@@ -9,8 +9,8 @@ void main() {
   group(CurrentUserApi, () {
     // Get the currently authenticated account
     //
-    //Future<MeResponse> me() async
-    test('test me', () async {
+    //Future<MeResponse> getMe() async
+    test('test getMe', () async {
       // TODO
     });
 

@@ -7,24 +7,24 @@ void main() {
   final instance = ApiClient().getPrestataireProfileApi();
 
   group(PrestataireProfileApi, () {
-    // Change the provider type — applied directly if eligible, else opens an admin request
+    // Get the authenticated prestataire's profile
     //
-    //Future<TypeChangeResult> changeType(RequestTypeChangeRequest requestTypeChangeRequest) async
-    test('test changeType', () async {
+    //Future<PrestataireProfileResponse> getMyPrestataireProfile() async
+    test('test getMyPrestataireProfile', () async {
       // TODO
     });
 
-    // Get the authenticated prestataire's profile
+    // Change the provider type — applied directly if eligible, else opens an admin request
     //
-    //Future<PrestataireProfileResponse> myProfile1() async
-    test('test myProfile1', () async {
+    //Future<TypeChangeResult> requestPrestataireTypeChange(RequestTypeChangeRequest requestTypeChangeRequest) async
+    test('test requestPrestataireTypeChange', () async {
       // TODO
     });
 
     // Partially update the authenticated prestataire's profile
     //
-    //Future<PrestataireProfileResponse> updateMyProfile1(UpdatePrestataireProfileRequest updatePrestataireProfileRequest) async
-    test('test updateMyProfile1', () async {
+    //Future<PrestataireProfileResponse> updateMyPrestataireProfile(UpdatePrestataireProfileRequest updatePrestataireProfileRequest) async
+    test('test updateMyPrestataireProfile', () async {
       // TODO
     });
 

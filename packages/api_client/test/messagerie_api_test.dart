@@ -9,36 +9,36 @@ void main() {
   group(MessagerieApi, () {
     // List a conversation's messages, newest first
     //
-    //Future<PageResponseMessageResponse> listMessages(String id, Pageable pageable) async
-    test('test listMessages', () async {
+    //Future<PageResponseMessageResponse> listConversationMessages(String id, Pageable pageable) async
+    test('test listConversationMessages', () async {
       // TODO
     });
 
     // List the authenticated participant's conversations
     //
-    //Future<PageResponseConversationResponse> listMine1(Pageable pageable) async
-    test('test listMine1', () async {
+    //Future<PageResponseConversationResponse> listMyConversations(Pageable pageable) async
+    test('test listMyConversations', () async {
       // TODO
     });
 
     // Mark the conversation's incoming messages as read
     //
-    //Future markRead(String id) async
-    test('test markRead', () async {
+    //Future markConversationRead(String id) async
+    test('test markConversationRead', () async {
       // TODO
     });
 
     // Post a message in a conversation
     //
-    //Future<MessageResponse> send(String id, SendMessageRequest sendMessageRequest) async
-    test('test send', () async {
+    //Future<MessageResponse> sendMessage(String id, SendMessageRequest sendMessageRequest) async
+    test('test sendMessage', () async {
       // TODO
     });
 
     // Contact a listing — opens (or reuses) the thread and posts the first message
     //
-    //Future<ConversationResponse> start(StartConversationRequest startConversationRequest) async
-    test('test start', () async {
+    //Future<ConversationResponse> startConversation(StartConversationRequest startConversationRequest) async
+    test('test startConversation', () async {
       // TODO
     });
 

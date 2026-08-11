@@ -66,6 +66,8 @@ const UnitSummaryStatusEnum _$unitSummaryStatusEnum_RENTED =
     const UnitSummaryStatusEnum._('RENTED');
 const UnitSummaryStatusEnum _$unitSummaryStatusEnum_ARCHIVED =
     const UnitSummaryStatusEnum._('ARCHIVED');
+const UnitSummaryStatusEnum _$unitSummaryStatusEnum_SUSPENDED =
+    const UnitSummaryStatusEnum._('SUSPENDED');
 const UnitSummaryStatusEnum _$unitSummaryStatusEnum_unknownDefaultOpenApi =
     const UnitSummaryStatusEnum._('unknownDefaultOpenApi');
 
@@ -81,6 +83,8 @@ UnitSummaryStatusEnum _$unitSummaryStatusEnumValueOf(String name) {
       return _$unitSummaryStatusEnum_RENTED;
     case 'ARCHIVED':
       return _$unitSummaryStatusEnum_ARCHIVED;
+    case 'SUSPENDED':
+      return _$unitSummaryStatusEnum_SUSPENDED;
     case 'unknownDefaultOpenApi':
       return _$unitSummaryStatusEnum_unknownDefaultOpenApi;
     default:
@@ -95,7 +99,42 @@ final BuiltSet<UnitSummaryStatusEnum> _$unitSummaryStatusEnumValues =
       _$unitSummaryStatusEnum_RESERVED,
       _$unitSummaryStatusEnum_RENTED,
       _$unitSummaryStatusEnum_ARCHIVED,
+      _$unitSummaryStatusEnum_SUSPENDED,
       _$unitSummaryStatusEnum_unknownDefaultOpenApi,
+    ]);
+
+const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_MONTH =
+    const UnitSummaryRentalPeriodEnum._('MONTH');
+const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_QUARTER =
+    const UnitSummaryRentalPeriodEnum._('QUARTER');
+const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_YEAR =
+    const UnitSummaryRentalPeriodEnum._('YEAR');
+const UnitSummaryRentalPeriodEnum
+_$unitSummaryRentalPeriodEnum_unknownDefaultOpenApi =
+    const UnitSummaryRentalPeriodEnum._('unknownDefaultOpenApi');
+
+UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnumValueOf(String name) {
+  switch (name) {
+    case 'MONTH':
+      return _$unitSummaryRentalPeriodEnum_MONTH;
+    case 'QUARTER':
+      return _$unitSummaryRentalPeriodEnum_QUARTER;
+    case 'YEAR':
+      return _$unitSummaryRentalPeriodEnum_YEAR;
+    case 'unknownDefaultOpenApi':
+      return _$unitSummaryRentalPeriodEnum_unknownDefaultOpenApi;
+    default:
+      return _$unitSummaryRentalPeriodEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<UnitSummaryRentalPeriodEnum>
+_$unitSummaryRentalPeriodEnumValues =
+    BuiltSet<UnitSummaryRentalPeriodEnum>(const <UnitSummaryRentalPeriodEnum>[
+      _$unitSummaryRentalPeriodEnum_MONTH,
+      _$unitSummaryRentalPeriodEnum_QUARTER,
+      _$unitSummaryRentalPeriodEnum_YEAR,
+      _$unitSummaryRentalPeriodEnum_unknownDefaultOpenApi,
     ]);
 
 Serializer<UnitSummaryPropertyTypeEnum>
@@ -103,6 +142,9 @@ _$unitSummaryPropertyTypeEnumSerializer =
     _$UnitSummaryPropertyTypeEnumSerializer();
 Serializer<UnitSummaryStatusEnum> _$unitSummaryStatusEnumSerializer =
     _$UnitSummaryStatusEnumSerializer();
+Serializer<UnitSummaryRentalPeriodEnum>
+_$unitSummaryRentalPeriodEnumSerializer =
+    _$UnitSummaryRentalPeriodEnumSerializer();
 
 class _$UnitSummaryPropertyTypeEnumSerializer
     implements PrimitiveSerializer<UnitSummaryPropertyTypeEnum> {
@@ -155,6 +197,7 @@ class _$UnitSummaryStatusEnumSerializer
     'RESERVED': 'RESERVED',
     'RENTED': 'RENTED',
     'ARCHIVED': 'ARCHIVED',
+    'SUSPENDED': 'SUSPENDED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -163,6 +206,7 @@ class _$UnitSummaryStatusEnumSerializer
     'RESERVED': 'RESERVED',
     'RENTED': 'RENTED',
     'ARCHIVED': 'ARCHIVED',
+    'SUSPENDED': 'SUSPENDED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -188,6 +232,43 @@ class _$UnitSummaryStatusEnumSerializer
   );
 }
 
+class _$UnitSummaryRentalPeriodEnumSerializer
+    implements PrimitiveSerializer<UnitSummaryRentalPeriodEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[UnitSummaryRentalPeriodEnum];
+  @override
+  final String wireName = 'UnitSummaryRentalPeriodEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    UnitSummaryRentalPeriodEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  UnitSummaryRentalPeriodEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UnitSummaryRentalPeriodEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$UnitSummary extends UnitSummary {
   @override
   final String? id;
@@ -197,6 +278,10 @@ class _$UnitSummary extends UnitSummary {
   final UnitSummaryPropertyTypeEnum? propertyType;
   @override
   final UnitSummaryStatusEnum? status;
+  @override
+  final int? price;
+  @override
+  final UnitSummaryRentalPeriodEnum? rentalPeriod;
   @override
   final int? monthlyRent;
 
@@ -208,6 +293,8 @@ class _$UnitSummary extends UnitSummary {
     this.title,
     this.propertyType,
     this.status,
+    this.price,
+    this.rentalPeriod,
     this.monthlyRent,
   }) : super._();
   @override
@@ -225,6 +312,8 @@ class _$UnitSummary extends UnitSummary {
         title == other.title &&
         propertyType == other.propertyType &&
         status == other.status &&
+        price == other.price &&
+        rentalPeriod == other.rentalPeriod &&
         monthlyRent == other.monthlyRent;
   }
 
@@ -235,6 +324,8 @@ class _$UnitSummary extends UnitSummary {
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, propertyType.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, rentalPeriod.hashCode);
     _$hash = $jc(_$hash, monthlyRent.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -247,6 +338,8 @@ class _$UnitSummary extends UnitSummary {
           ..add('title', title)
           ..add('propertyType', propertyType)
           ..add('status', status)
+          ..add('price', price)
+          ..add('rentalPeriod', rentalPeriod)
           ..add('monthlyRent', monthlyRent))
         .toString();
   }
@@ -272,6 +365,15 @@ class UnitSummaryBuilder implements Builder<UnitSummary, UnitSummaryBuilder> {
   UnitSummaryStatusEnum? get status => _$this._status;
   set status(UnitSummaryStatusEnum? status) => _$this._status = status;
 
+  int? _price;
+  int? get price => _$this._price;
+  set price(int? price) => _$this._price = price;
+
+  UnitSummaryRentalPeriodEnum? _rentalPeriod;
+  UnitSummaryRentalPeriodEnum? get rentalPeriod => _$this._rentalPeriod;
+  set rentalPeriod(UnitSummaryRentalPeriodEnum? rentalPeriod) =>
+      _$this._rentalPeriod = rentalPeriod;
+
   int? _monthlyRent;
   int? get monthlyRent => _$this._monthlyRent;
   set monthlyRent(int? monthlyRent) => _$this._monthlyRent = monthlyRent;
@@ -287,6 +389,8 @@ class UnitSummaryBuilder implements Builder<UnitSummary, UnitSummaryBuilder> {
       _title = $v.title;
       _propertyType = $v.propertyType;
       _status = $v.status;
+      _price = $v.price;
+      _rentalPeriod = $v.rentalPeriod;
       _monthlyRent = $v.monthlyRent;
       _$v = null;
     }
@@ -314,6 +418,8 @@ class UnitSummaryBuilder implements Builder<UnitSummary, UnitSummaryBuilder> {
           title: title,
           propertyType: propertyType,
           status: status,
+          price: price,
+          rentalPeriod: rentalPeriod,
           monthlyRent: monthlyRent,
         );
     replace(_$result);

@@ -24,6 +24,8 @@ part 'annonce_response.g.dart';
 /// * [exactAddress] 
 /// * [latitude] 
 /// * [longitude] 
+/// * [price] 
+/// * [rentalPeriod] 
 /// * [monthlyRent] 
 /// * [chargesIncluded] 
 /// * [chargesAmount] 
@@ -34,8 +36,11 @@ part 'annonce_response.g.dart';
 /// * [availableFrom] 
 /// * [description] 
 /// * [status] 
+/// * [suspensionReason] 
 /// * [tierRank] 
 /// * [photoKeys] 
+/// * [amenities] 
+/// * [viewCount] 
 /// * [publishedAt] 
 /// * [expiresAt] 
 /// * [createdAt] 
@@ -75,6 +80,13 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
   @BuiltValueField(wireName: r'longitude')
   double? get longitude;
 
+  @BuiltValueField(wireName: r'price')
+  int? get price;
+
+  @BuiltValueField(wireName: r'rentalPeriod')
+  AnnonceResponseRentalPeriodEnum? get rentalPeriod;
+  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
 
@@ -104,13 +116,23 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
 
   @BuiltValueField(wireName: r'status')
   AnnonceResponseStatusEnum? get status;
-  // enum statusEnum {  DRAFT,  PUBLISHED,  RESERVED,  RENTED,  ARCHIVED,  };
+  // enum statusEnum {  DRAFT,  PUBLISHED,  RESERVED,  RENTED,  ARCHIVED,  SUSPENDED,  };
+
+  @BuiltValueField(wireName: r'suspensionReason')
+  String? get suspensionReason;
 
   @BuiltValueField(wireName: r'tierRank')
   int? get tierRank;
 
   @BuiltValueField(wireName: r'photoKeys')
   BuiltList<String>? get photoKeys;
+
+  @BuiltValueField(wireName: r'amenities')
+  BuiltSet<AnnonceResponseAmenitiesEnum>? get amenities;
+  // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
+
+  @BuiltValueField(wireName: r'viewCount')
+  int? get viewCount;
 
   @BuiltValueField(wireName: r'publishedAt')
   DateTime? get publishedAt;
@@ -221,6 +243,20 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
         specifiedType: const FullType(double),
       );
     }
+    if (object.price != null) {
+      yield r'price';
+      yield serializers.serialize(
+        object.price,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.rentalPeriod != null) {
+      yield r'rentalPeriod';
+      yield serializers.serialize(
+        object.rentalPeriod,
+        specifiedType: const FullType(AnnonceResponseRentalPeriodEnum),
+      );
+    }
     if (object.monthlyRent != null) {
       yield r'monthlyRent';
       yield serializers.serialize(
@@ -291,6 +327,13 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
         specifiedType: const FullType(AnnonceResponseStatusEnum),
       );
     }
+    if (object.suspensionReason != null) {
+      yield r'suspensionReason';
+      yield serializers.serialize(
+        object.suspensionReason,
+        specifiedType: const FullType(String),
+      );
+    }
     if (object.tierRank != null) {
       yield r'tierRank';
       yield serializers.serialize(
@@ -303,6 +346,20 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
       yield serializers.serialize(
         object.photoKeys,
         specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.amenities != null) {
+      yield r'amenities';
+      yield serializers.serialize(
+        object.amenities,
+        specifiedType: const FullType(BuiltSet, [FullType(AnnonceResponseAmenitiesEnum)]),
+      );
+    }
+    if (object.viewCount != null) {
+      yield r'viewCount';
+      yield serializers.serialize(
+        object.viewCount,
+        specifiedType: const FullType(int),
       );
     }
     if (object.publishedAt != null) {
@@ -437,6 +494,22 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           if (valueDes == null) continue;
           result.longitude = valueDes;
           break;
+        case r'price':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.price = valueDes;
+          break;
+        case r'rentalPeriod':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(AnnonceResponseRentalPeriodEnum),
+          ) as AnnonceResponseRentalPeriodEnum?;
+          if (valueDes == null) continue;
+          result.rentalPeriod = valueDes;
+          break;
         case r'monthlyRent':
           final valueDes = serializers.deserialize(
             value,
@@ -517,6 +590,14 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           if (valueDes == null) continue;
           result.status = valueDes;
           break;
+        case r'suspensionReason':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.suspensionReason = valueDes;
+          break;
         case r'tierRank':
           final valueDes = serializers.deserialize(
             value,
@@ -532,6 +613,22 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           ) as BuiltList<String>?;
           if (valueDes == null) continue;
           result.photoKeys.replace(valueDes);
+          break;
+        case r'amenities':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltSet, [FullType(AnnonceResponseAmenitiesEnum)]),
+          ) as BuiltSet<AnnonceResponseAmenitiesEnum>?;
+          if (valueDes == null) continue;
+          result.amenities.replace(valueDes);
+          break;
+        case r'viewCount':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.viewCount = valueDes;
           break;
         case r'publishedAt':
           final valueDes = serializers.deserialize(
@@ -611,6 +708,25 @@ class AnnonceResponsePropertyTypeEnum extends EnumClass {
   static AnnonceResponsePropertyTypeEnum valueOf(String name) => _$annonceResponsePropertyTypeEnumValueOf(name);
 }
 
+class AnnonceResponseRentalPeriodEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'MONTH')
+  static const AnnonceResponseRentalPeriodEnum MONTH = _$annonceResponseRentalPeriodEnum_MONTH;
+  @BuiltValueEnumConst(wireName: r'QUARTER')
+  static const AnnonceResponseRentalPeriodEnum QUARTER = _$annonceResponseRentalPeriodEnum_QUARTER;
+  @BuiltValueEnumConst(wireName: r'YEAR')
+  static const AnnonceResponseRentalPeriodEnum YEAR = _$annonceResponseRentalPeriodEnum_YEAR;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const AnnonceResponseRentalPeriodEnum unknownDefaultOpenApi = _$annonceResponseRentalPeriodEnum_unknownDefaultOpenApi;
+
+  static Serializer<AnnonceResponseRentalPeriodEnum> get serializer => _$annonceResponseRentalPeriodEnumSerializer;
+
+  const AnnonceResponseRentalPeriodEnum._(String name): super(name);
+
+  static BuiltSet<AnnonceResponseRentalPeriodEnum> get values => _$annonceResponseRentalPeriodEnumValues;
+  static AnnonceResponseRentalPeriodEnum valueOf(String name) => _$annonceResponseRentalPeriodEnumValueOf(name);
+}
+
 class AnnonceResponseStatusEnum extends EnumClass {
 
   @BuiltValueEnumConst(wireName: r'DRAFT')
@@ -623,6 +739,8 @@ class AnnonceResponseStatusEnum extends EnumClass {
   static const AnnonceResponseStatusEnum RENTED = _$annonceResponseStatusEnum_RENTED;
   @BuiltValueEnumConst(wireName: r'ARCHIVED')
   static const AnnonceResponseStatusEnum ARCHIVED = _$annonceResponseStatusEnum_ARCHIVED;
+  @BuiltValueEnumConst(wireName: r'SUSPENDED')
+  static const AnnonceResponseStatusEnum SUSPENDED = _$annonceResponseStatusEnum_SUSPENDED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const AnnonceResponseStatusEnum unknownDefaultOpenApi = _$annonceResponseStatusEnum_unknownDefaultOpenApi;
 
@@ -632,5 +750,30 @@ class AnnonceResponseStatusEnum extends EnumClass {
 
   static BuiltSet<AnnonceResponseStatusEnum> get values => _$annonceResponseStatusEnumValues;
   static AnnonceResponseStatusEnum valueOf(String name) => _$annonceResponseStatusEnumValueOf(name);
+}
+
+class AnnonceResponseAmenitiesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'AIR_CONDITIONING')
+  static const AnnonceResponseAmenitiesEnum AIR_CONDITIONING = _$annonceResponseAmenitiesEnum_AIR_CONDITIONING;
+  @BuiltValueEnumConst(wireName: r'HOT_WATER')
+  static const AnnonceResponseAmenitiesEnum HOT_WATER = _$annonceResponseAmenitiesEnum_HOT_WATER;
+  @BuiltValueEnumConst(wireName: r'GENERATOR')
+  static const AnnonceResponseAmenitiesEnum GENERATOR = _$annonceResponseAmenitiesEnum_GENERATOR;
+  @BuiltValueEnumConst(wireName: r'SECURITY_GUARD')
+  static const AnnonceResponseAmenitiesEnum SECURITY_GUARD = _$annonceResponseAmenitiesEnum_SECURITY_GUARD;
+  @BuiltValueEnumConst(wireName: r'PARKING')
+  static const AnnonceResponseAmenitiesEnum PARKING = _$annonceResponseAmenitiesEnum_PARKING;
+  @BuiltValueEnumConst(wireName: r'WIFI')
+  static const AnnonceResponseAmenitiesEnum WIFI = _$annonceResponseAmenitiesEnum_WIFI;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const AnnonceResponseAmenitiesEnum unknownDefaultOpenApi = _$annonceResponseAmenitiesEnum_unknownDefaultOpenApi;
+
+  static Serializer<AnnonceResponseAmenitiesEnum> get serializer => _$annonceResponseAmenitiesEnumSerializer;
+
+  const AnnonceResponseAmenitiesEnum._(String name): super(name);
+
+  static BuiltSet<AnnonceResponseAmenitiesEnum> get values => _$annonceResponseAmenitiesEnumValues;
+  static AnnonceResponseAmenitiesEnum valueOf(String name) => _$annonceResponseAmenitiesEnumValueOf(name);
 }
 

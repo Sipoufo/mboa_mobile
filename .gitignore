@@ -30,3 +30,6 @@ coverage/
 **/android/key.properties
 **/android/app/google-services.json
 **/ios/Runner/GoogleService-Info.plist
+
+# Kotlin incremental-compilation sessions (Gradle build artifact)
+.kotlin/

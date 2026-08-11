@@ -9,8 +9,8 @@ void main() {
   group(MediaApi, () {
     // Get a pre-signed URL to upload a file directly to storage
     //
-    //Future<PresignedUpload> createUpload(CreateUploadRequest createUploadRequest) async
-    test('test createUpload', () async {
+    //Future<PresignedUpload> createMediaUpload(CreateUploadRequest createUploadRequest) async
+    test('test createMediaUpload', () async {
       // TODO
     });
 

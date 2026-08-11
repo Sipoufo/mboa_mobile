@@ -18,7 +18,7 @@ class SubscriptionRepository {
   /// body — an account without a subscription is on Gratuit, not in an error
   /// state.
   Future<SubscriptionPlan> myPlan() async {
-    final response = await _api.mySubscription();
+    final response = await _api.getMySubscription();
     final data = response.data;
     return data == null
         ? const SubscriptionPlan.free()
@@ -27,7 +27,7 @@ class SubscriptionRepository {
 
   /// The purchasable plans, cheapest first.
   Future<List<TierOption>> tiers() async {
-    final response = await _api.tiers();
+    final response = await _api.listSubscriptionTiers();
     final options = (response.data ?? const <TierInfo>[])
         .map(TierOption.fromResponse)
         .toList()
@@ -63,7 +63,7 @@ class SubscriptionRepository {
 
   /// A signed URL for the payment receipt (RM-M13-07).
   Future<String?> receiptUrl(String paymentId) async {
-    final response = await _api.receipt(id: paymentId);
+    final response = await _api.getPaymentReceipt(id: paymentId);
     return response.data?.downloadUrl;
   }
 

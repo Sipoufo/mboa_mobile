@@ -84,7 +84,7 @@ class NotificationsRepository {
 
     if (token != null && token.isNotEmpty) {
       try {
-        await _dioClient.api.getNotificationDevicesApi().unregister(token: token);
+        await _dioClient.api.getNotificationDevicesApi().unregisterDevice(token: token);
       } catch (error, stack) {
         // Best-effort, exactly like the logout revoke.
         _log('device unregister failed', error, stack);
@@ -101,7 +101,7 @@ class NotificationsRepository {
 
   Future<void> _register(String token) async {
     try {
-      await _dioClient.api.getNotificationDevicesApi().register(
+      await _dioClient.api.getNotificationDevicesApi().registerDevice(
             registerDeviceRequest: RegisterDeviceRequest((b) => b
               ..token = token
               ..platform = _platform),

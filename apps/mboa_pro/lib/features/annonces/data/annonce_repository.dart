@@ -24,7 +24,7 @@ class AnnonceRepository {
   /// unit, so one request and a local filter is the whole job — this replaced
   /// an N+1 that fetched each residence to subtract its unit ids.
   Future<List<Annonce>> list() async {
-    final response = await _api.listMine2(
+    final response = await _api.listMyAnnonces(
       pageable: Pageable((b) => b
         ..page = 0
         ..size = _pageSize),
@@ -36,7 +36,7 @@ class AnnonceRepository {
   }
 
   Future<Annonce> getOne(String id) async {
-    final response = await _api.getOne1(id: id);
+    final response = await _api.getMyAnnonce(id: id);
     final data = response.data;
     if (data == null) throw StateError('Listing $id not found');
     return Annonce.fromResponse(data);
@@ -49,7 +49,7 @@ class AnnonceRepository {
       throw StateError('Draft is missing its location or availability date');
     }
 
-    final response = await _api.create1(
+    final response = await _api.createAnnonce(
       createAnnonceRequest: CreateAnnonceRequest((b) => b
         ..propertyType = draft.propertyType.asCreate
         ..title = draft.title.trim()
@@ -79,7 +79,7 @@ class AnnonceRepository {
     if (id == null) throw StateError('Cannot update a draft with no id');
 
     final location = draft.location;
-    final response = await _api.update1(
+    final response = await _api.updateAnnonce(
       id: id,
       updateAnnonceRequest: UpdateAnnonceRequest((b) => b
         ..propertyType = draft.propertyType.asUpdate
@@ -108,14 +108,14 @@ class AnnonceRepository {
   /// Applies a lifecycle transition and returns the updated listing.
   Future<Annonce> transition(String id, AnnonceTransition transition) async {
     final response = await switch (transition) {
-      AnnonceTransition.publish => _api.publish(id: id),
-      AnnonceTransition.reserve => _api.reserve(id: id),
-      AnnonceTransition.markRented => _api.markRented(id: id),
-      AnnonceTransition.archive => _api.archive(id: id),
+      AnnonceTransition.publish => _api.publishAnnonce(id: id),
+      AnnonceTransition.reserve => _api.reserveAnnonce(id: id),
+      AnnonceTransition.markRented => _api.markAnnonceRented(id: id),
+      AnnonceTransition.archive => _api.archiveAnnonce(id: id),
       // Not `publish`: that rejects anything but DRAFT with 409. Unarchive
       // returns the listing to DRAFT so republishing re-checks the tier quota
       // and the 3-photo rule.
-      AnnonceTransition.unarchive => _api.unarchive(id: id),
+      AnnonceTransition.unarchive => _api.unarchiveAnnonce(id: id),
     };
 
     final data = response.data;
@@ -125,5 +125,5 @@ class AnnonceRepository {
 
   /// RM-M10-07 — only permitted when no active Mboa contract references it;
   /// the backend enforces that, the UI adds the two-step confirmation.
-  Future<void> delete(String id) => _api.delete1(id: id);
+  Future<void> delete(String id) => _api.deleteAnnonce(id: id);
 }
