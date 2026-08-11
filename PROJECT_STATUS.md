@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**412 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 302 ·
+**428 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 318 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -38,7 +38,7 @@
 | M10 listings + residences | ✅ complete for everything the API supports |
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
-| M11 assignments | ✅ prestataire side · ❌ agent side (stage 2) |
+| M11 assignments | ✅ both sides — offer, apply, accept, decline, resign |
 | M16 agent visits | ❌ endpoints exist, no screens |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
@@ -323,6 +323,14 @@ in `docs/backend-requests.md` §11.
   application and a prestataire's accepted offer are the same thing afterwards.
 - Mes agents lists **people**, not assignments — an agent on four properties is
   one row.
+- **The agent's Missions tab keys off status, not origin.** `offers` is
+  `pending` (the prestataire is waiting on *them*); an `applied` row is the
+  agent's own application, which belongs under their own missions with a
+  withdraw action. Confusing the two would ask the agent to accept something
+  they already asked for.
+- **The listing endpoints key on the assignment id, the residence ones on the
+  residence id.** `AgentMissionRepository` picks; no screen or bloc branches on
+  it.
 
 ## Open decisions (product, not code)
 

@@ -353,3 +353,65 @@ class SkippedUnitView extends Equatable {
   @override
   List<Object?> get props => [title, reason];
 }
+
+
+/// A published property in one of the agent's zones that has no agent yet
+/// (RM-M11-07 / RM-M11-08).
+///
+/// `OpportunityItem` is a discriminated union on `kind`; flattening it here
+/// means the screen renders one list instead of switching on a nullable pair.
+class Opportunity extends Equatable {
+  const Opportunity({
+    required this.target,
+    required this.title,
+    this.photoKey,
+    this.city,
+    this.district,
+    this.price,
+    this.unitCount,
+  });
+
+  final AssignmentTarget target;
+  final String title;
+  final String? photoKey;
+  final String? city;
+  final String? district;
+  final int? price;
+
+  /// Residences only — how many units applying would cover (RM-M10bis-05).
+  final int? unitCount;
+
+  String? get photoUrl => BaseProfile.mediaUrl(photoKey);
+
+  bool get isResidence => target is ResidenceTarget;
+
+  static Opportunity? fromItem(OpportunityItem item) {
+    if (item.listing case final listing?) {
+      return Opportunity(
+        target: AnnonceTarget(listing.annonceId ?? ''),
+        title: listing.title ?? '',
+        photoKey: listing.primaryPhotoKey,
+        city: listing.city,
+        district: listing.district,
+        price: listing.price ?? listing.monthlyRent,
+      );
+    }
+    if (item.residence case final residence?) {
+      return Opportunity(
+        target: ResidenceTarget(residence.residenceId ?? ''),
+        title: residence.residenceName ?? '',
+        photoKey: residence.primaryPhotoKey,
+        city: residence.city,
+        district: residence.district,
+        price: residence.fromPrice ?? residence.fromMonthlyRent,
+        unitCount: residence.unitCount,
+      );
+    }
+    // A kind this build does not know: drop the row rather than render a blank.
+    return null;
+  }
+
+  @override
+  List<Object?> get props =>
+      [target, title, photoKey, city, district, price, unitCount];
+}

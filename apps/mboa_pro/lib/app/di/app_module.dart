@@ -2,8 +2,10 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../features/agent/bloc/agent_availability_bloc.dart';
+import '../../features/assignments/bloc/agent_missions_bloc.dart';
 import '../../features/assignments/bloc/my_agents_bloc.dart';
 import '../../features/assignments/bloc/property_agent_bloc.dart';
+import '../../features/assignments/data/agent_mission_repository.dart';
 import '../../features/assignments/data/assignment_repository.dart';
 import '../../features/agent/bloc/agent_profile_bloc.dart';
 import '../../features/agent/data/agent_repository.dart';
@@ -181,6 +183,12 @@ void registerAppModule() {
   // Both route-scoped: one instance per property screen, one per hub visit.
   getIt.registerFactory<PropertyAgentBloc>(
     () => PropertyAgentBloc(repository: getIt<AssignmentRepository>()),
+  );
+  getIt.registerLazySingleton<AgentMissionRepository>(
+    () => AgentMissionRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<AgentMissionsBloc>(
+    () => AgentMissionsBloc(repository: getIt<AgentMissionRepository>()),
   );
   getIt.registerFactory<MyAgentsBloc>(
     () => MyAgentsBloc(repository: getIt<AssignmentRepository>()),

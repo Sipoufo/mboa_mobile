@@ -71,30 +71,32 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m23(reason) => "Reason: ${reason}";
 
-  static String m24(phone) => "Code sent to ${phone}";
+  static String m24(count) => "${count} unit(s)";
 
-  static String m25(seconds) => "Resend in ${seconds}s";
+  static String m25(phone) => "Code sent to ${phone}";
 
-  static String m26(tier) => "Your ${tier} plan is active.";
+  static String m26(seconds) => "Resend in ${seconds}s";
 
-  static String m27(ref) => "Reference: ${ref}";
+  static String m27(tier) => "Your ${tier} plan is active.";
 
-  static String m28(price) => "${price} FCFA / month";
+  static String m28(ref) => "Reference: ${ref}";
 
-  static String m29(count) =>
+  static String m29(price) => "${price} FCFA / month";
+
+  static String m30(count) =>
       "${Intl.plural(count, one: '1 residence unit', other: '${count} residence units')}";
 
-  static String m30(tier) =>
+  static String m31(tier) =>
       "Limit reached. Upgrade to ${tier} to publish more listings.";
 
-  static String m31(min) => "Add at least ${min} photos to publish.";
+  static String m32(min) => "Add at least ${min} photos to publish.";
 
-  static String m32(query) => "No unit matches “${query}”.";
+  static String m33(query) => "No unit matches “${query}”.";
 
-  static String m33(count) =>
+  static String m34(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m34(date) => "Valid until ${date}";
+  static String m35(date) => "Valid until ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -744,12 +746,45 @@ class MessageLookup extends MessageLookupByLibrary {
       "Single\nproperties",
     ),
     "mesBiensTitle": MessageLookupByLibrary.simpleMessage("My properties"),
+    "missionsAccept": MessageLookupByLibrary.simpleMessage("Accept"),
+    "missionsActionFailed": MessageLookupByLibrary.simpleMessage(
+      "That action isn\'t possible right now.",
+    ),
+    "missionsApplied": MessageLookupByLibrary.simpleMessage("Application sent"),
+    "missionsApply": MessageLookupByLibrary.simpleMessage("Apply"),
+    "missionsApplyNote": MessageLookupByLibrary.simpleMessage(
+      "The owner chooses among the applicants.",
+    ),
+    "missionsDecline": MessageLookupByLibrary.simpleMessage("Decline"),
+    "missionsEmptyMine": MessageLookupByLibrary.simpleMessage(
+      "No missions in progress",
+    ),
+    "missionsEmptyOffers": MessageLookupByLibrary.simpleMessage(
+      "No offers waiting",
+    ),
+    "missionsEmptyOpportunities": MessageLookupByLibrary.simpleMessage(
+      "No opportunities in your areas",
+    ),
+    "missionsEmptyOpportunitiesBody": MessageLookupByLibrary.simpleMessage(
+      "Widen your working areas to receive more offers.",
+    ),
+    "missionsResign": MessageLookupByLibrary.simpleMessage("Step down"),
+    "missionsResignConfirm": MessageLookupByLibrary.simpleMessage(
+      "Visits already scheduled will be cancelled.",
+    ),
+    "missionsTabMine": MessageLookupByLibrary.simpleMessage("My missions"),
+    "missionsTabOffers": MessageLookupByLibrary.simpleMessage("Offers"),
+    "missionsTabOpportunities": MessageLookupByLibrary.simpleMessage(
+      "Opportunities",
+    ),
+    "missionsUnits": m24,
+    "missionsWithdraw": MessageLookupByLibrary.simpleMessage("Withdraw"),
     "navFinance": MessageLookupByLibrary.simpleMessage("Finance"),
     "navHome": MessageLookupByLibrary.simpleMessage("Home"),
     "navManager": MessageLookupByLibrary.simpleMessage("Manager"),
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("6-digit code"),
-    "otpCodeSentTo": m24,
+    "otpCodeSentTo": m25,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Invalid code. Please try again.",
     ),
@@ -757,7 +792,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Didn’t receive the code?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Resend code"),
-    "otpResendIn": m25,
+    "otpResendIn": m26,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Verification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Confirm"),
     "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
@@ -766,7 +801,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
       "Finish on your phone",
     ),
-    "paymentConfirmedBody": m26,
+    "paymentConfirmedBody": m27,
     "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
       "Payment confirmed",
     ),
@@ -793,7 +828,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Payment pending",
     ),
-    "paymentReference": m27,
+    "paymentReference": m28,
     "paymentRetry": MessageLookupByLibrary.simpleMessage("Retry payment"),
     "plansChoose": MessageLookupByLibrary.simpleMessage("Choose"),
     "plansCurrent": MessageLookupByLibrary.simpleMessage("Current plan"),
@@ -801,8 +836,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Moving to a lower plan takes effect next cycle.",
     ),
     "plansPriceFree": MessageLookupByLibrary.simpleMessage("Free"),
-    "plansPriceMonthly": m28,
-    "plansResidenceAllowance": m29,
+    "plansPriceMonthly": m29,
+    "plansResidenceAllowance": m30,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Plans"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Display name"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("First name"),
@@ -823,11 +858,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Individual",
     ),
     "profileTypePromoteur": MessageLookupByLibrary.simpleMessage("Promoter"),
-    "publishBlockedLimitBody": m30,
+    "publishBlockedLimitBody": m31,
     "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
       "Limit reached",
     ),
-    "publishBlockedPhotosBody": m31,
+    "publishBlockedPhotosBody": m32,
     "publishBlockedPhotosTitle": MessageLookupByLibrary.simpleMessage(
       "Missing photos",
     ),
@@ -862,7 +897,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "Editing a unit is coming soon.",
     ),
-    "residenceUnitsSearchEmpty": m32,
+    "residenceUnitsSearchEmpty": m33,
     "residenceUnitsSearchHint": MessageLookupByLibrary.simpleMessage(
       "Search for a unit",
     ),
@@ -894,7 +929,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m33,
+    "subscriptionListingLimit": m34,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -909,7 +944,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m34,
+    "subscriptionRenewsOn": m35,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),

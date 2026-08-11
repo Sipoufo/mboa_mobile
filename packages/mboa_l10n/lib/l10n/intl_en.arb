@@ -1138,5 +1138,78 @@
         "type": "int"
       }
     }
+  },
+  "missionsTabOffers": "Offers",
+  "@missionsTabOffers": {
+    "description": "Offers awaiting the agent's answer."
+  },
+  "missionsTabMine": "My missions",
+  "@missionsTabMine": {
+    "description": "Work the agent holds (RM-M11-09 — status, not origin)."
+  },
+  "missionsTabOpportunities": "Opportunities",
+  "@missionsTabOpportunities": {
+    "description": "Properties in the agent's zones with no agent (RM-M11-07)."
+  },
+  "missionsEmptyOffers": "No offers waiting",
+  "@missionsEmptyOffers": {
+    "description": "Empty offers segment."
+  },
+  "missionsEmptyMine": "No missions in progress",
+  "@missionsEmptyMine": {
+    "description": "Empty missions segment."
+  },
+  "missionsEmptyOpportunities": "No opportunities in your areas",
+  "@missionsEmptyOpportunities": {
+    "description": "Empty opportunities — tied to RM-M15-04 zones."
+  },
+  "missionsEmptyOpportunitiesBody": "Widen your working areas to receive more offers.",
+  "@missionsEmptyOpportunitiesBody": {
+    "description": "Points at the fixable cause: the agent's zones."
+  },
+  "missionsAccept": "Accept",
+  "@missionsAccept": {
+    "description": "Accept an offer."
+  },
+  "missionsDecline": "Decline",
+  "@missionsDecline": {
+    "description": "Decline an offer."
+  },
+  "missionsResign": "Step down",
+  "@missionsResign": {
+    "description": "RM-M11-06 — step down from a mission."
+  },
+  "missionsResignConfirm": "Visits already scheduled will be cancelled.",
+  "@missionsResignConfirm": {
+    "description": "Doc 10 RM-M11-06 / CE-M07-02."
+  },
+  "missionsApply": "Apply",
+  "@missionsApply": {
+    "description": "Apply to an opportunity."
+  },
+  "missionsApplied": "Application sent",
+  "@missionsApplied": {
+    "description": "The agent already applied and is waiting."
+  },
+  "missionsWithdraw": "Withdraw",
+  "@missionsWithdraw": {
+    "description": "Take back an application."
+  },
+  "missionsApplyNote": "The owner chooses among the applicants.",
+  "@missionsApplyNote": {
+    "description": "RM-M11-07 — applying is not self-assignment."
+  },
+  "missionsUnits": "{count} unit(s)",
+  "@missionsUnits": {
+    "description": "Units a residence mission covers.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "missionsActionFailed": "That action isn't possible right now.",
+  "@missionsActionFailed": {
+    "description": "Generic failure on the missions screen."
   }
 }

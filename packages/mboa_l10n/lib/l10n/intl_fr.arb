@@ -1138,5 +1138,78 @@
         "type": "int"
       }
     }
+  },
+  "missionsTabOffers": "Propositions",
+  "@missionsTabOffers": {
+    "description": "Offers awaiting the agent's answer."
+  },
+  "missionsTabMine": "Mes missions",
+  "@missionsTabMine": {
+    "description": "Work the agent holds (RM-M11-09 — status, not origin)."
+  },
+  "missionsTabOpportunities": "Opportunités",
+  "@missionsTabOpportunities": {
+    "description": "Properties in the agent's zones with no agent (RM-M11-07)."
+  },
+  "missionsEmptyOffers": "Aucune proposition en attente",
+  "@missionsEmptyOffers": {
+    "description": "Empty offers segment."
+  },
+  "missionsEmptyMine": "Aucune mission en cours",
+  "@missionsEmptyMine": {
+    "description": "Empty missions segment."
+  },
+  "missionsEmptyOpportunities": "Aucune opportunité dans vos zones",
+  "@missionsEmptyOpportunities": {
+    "description": "Empty opportunities — tied to RM-M15-04 zones."
+  },
+  "missionsEmptyOpportunitiesBody": "Élargissez vos zones d'intervention pour recevoir plus de propositions.",
+  "@missionsEmptyOpportunitiesBody": {
+    "description": "Points at the fixable cause: the agent's zones."
+  },
+  "missionsAccept": "Accepter",
+  "@missionsAccept": {
+    "description": "Accept an offer."
+  },
+  "missionsDecline": "Refuser",
+  "@missionsDecline": {
+    "description": "Decline an offer."
+  },
+  "missionsResign": "Me désister",
+  "@missionsResign": {
+    "description": "RM-M11-06 — step down from a mission."
+  },
+  "missionsResignConfirm": "Les visites déjà planifiées seront annulées.",
+  "@missionsResignConfirm": {
+    "description": "Doc 10 RM-M11-06 / CE-M07-02."
+  },
+  "missionsApply": "Candidater",
+  "@missionsApply": {
+    "description": "Apply to an opportunity."
+  },
+  "missionsApplied": "Candidature envoyée",
+  "@missionsApplied": {
+    "description": "The agent already applied and is waiting."
+  },
+  "missionsWithdraw": "Retirer",
+  "@missionsWithdraw": {
+    "description": "Take back an application."
+  },
+  "missionsApplyNote": "Le prestataire choisit parmi les candidats.",
+  "@missionsApplyNote": {
+    "description": "RM-M11-07 — applying is not self-assignment."
+  },
+  "missionsUnits": "{count} unité(s)",
+  "@missionsUnits": {
+    "description": "Units a residence mission covers.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "missionsActionFailed": "Action impossible pour le moment.",
+  "@missionsActionFailed": {
+    "description": "Generic failure on the missions screen."
   }
 }

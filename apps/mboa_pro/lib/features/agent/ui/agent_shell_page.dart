@@ -17,9 +17,9 @@ import '../../shell/ui/widgets/pro_bottom_nav.dart';
 /// `if (isAgent)` in every screen and a dashboard about properties they do not
 /// own.
 ///
-/// Visites (M16) and Missions (M11) have endpoints but no screens yet, so they
-/// land on the coming-soon page — the same treatment Attributions and
-/// Réservations get on the prestataire side, where the hub is the product's map.
+/// Visites (M16) has endpoints but no screens yet, so it lands on the
+/// coming-soon page — the same treatment Attributions and Réservations get on
+/// the prestataire side, where the hub is the product's map. Missions is M11.
 @RoutePage()
 class AgentShellPage extends StatelessWidget {
   const AgentShellPage({super.key});
@@ -67,17 +67,6 @@ class AgentShellPage extends StatelessWidget {
 @RoutePage()
 class AgentVisitsPage extends StatelessWidget {
   const AgentVisitsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => const AccessRestrictedPage(
-        restriction: AccessRestriction.comingSoon,
-      );
-}
-
-/// M11 — endpoints exist (`/agents/me/assignments`), screens do not yet.
-@RoutePage()
-class AgentMissionsPage extends StatelessWidget {
-  const AgentMissionsPage({super.key});
 
   @override
   Widget build(BuildContext context) => const AccessRestrictedPage(

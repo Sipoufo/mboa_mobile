@@ -4088,6 +4088,176 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Propositions`
+  String get missionsTabOffers {
+    return Intl.message(
+      'Propositions',
+      name: 'missionsTabOffers',
+      desc: 'Offers awaiting the agent\'s answer.',
+      args: [],
+    );
+  }
+
+  /// `Mes missions`
+  String get missionsTabMine {
+    return Intl.message(
+      'Mes missions',
+      name: 'missionsTabMine',
+      desc: 'Work the agent holds (RM-M11-09 — status, not origin).',
+      args: [],
+    );
+  }
+
+  /// `Opportunités`
+  String get missionsTabOpportunities {
+    return Intl.message(
+      'Opportunités',
+      name: 'missionsTabOpportunities',
+      desc: 'Properties in the agent\'s zones with no agent (RM-M11-07).',
+      args: [],
+    );
+  }
+
+  /// `Aucune proposition en attente`
+  String get missionsEmptyOffers {
+    return Intl.message(
+      'Aucune proposition en attente',
+      name: 'missionsEmptyOffers',
+      desc: 'Empty offers segment.',
+      args: [],
+    );
+  }
+
+  /// `Aucune mission en cours`
+  String get missionsEmptyMine {
+    return Intl.message(
+      'Aucune mission en cours',
+      name: 'missionsEmptyMine',
+      desc: 'Empty missions segment.',
+      args: [],
+    );
+  }
+
+  /// `Aucune opportunité dans vos zones`
+  String get missionsEmptyOpportunities {
+    return Intl.message(
+      'Aucune opportunité dans vos zones',
+      name: 'missionsEmptyOpportunities',
+      desc: 'Empty opportunities — tied to RM-M15-04 zones.',
+      args: [],
+    );
+  }
+
+  /// `Élargissez vos zones d'intervention pour recevoir plus de propositions.`
+  String get missionsEmptyOpportunitiesBody {
+    return Intl.message(
+      'Élargissez vos zones d\'intervention pour recevoir plus de propositions.',
+      name: 'missionsEmptyOpportunitiesBody',
+      desc: 'Points at the fixable cause: the agent\'s zones.',
+      args: [],
+    );
+  }
+
+  /// `Accepter`
+  String get missionsAccept {
+    return Intl.message(
+      'Accepter',
+      name: 'missionsAccept',
+      desc: 'Accept an offer.',
+      args: [],
+    );
+  }
+
+  /// `Refuser`
+  String get missionsDecline {
+    return Intl.message(
+      'Refuser',
+      name: 'missionsDecline',
+      desc: 'Decline an offer.',
+      args: [],
+    );
+  }
+
+  /// `Me désister`
+  String get missionsResign {
+    return Intl.message(
+      'Me désister',
+      name: 'missionsResign',
+      desc: 'RM-M11-06 — step down from a mission.',
+      args: [],
+    );
+  }
+
+  /// `Les visites déjà planifiées seront annulées.`
+  String get missionsResignConfirm {
+    return Intl.message(
+      'Les visites déjà planifiées seront annulées.',
+      name: 'missionsResignConfirm',
+      desc: 'Doc 10 RM-M11-06 / CE-M07-02.',
+      args: [],
+    );
+  }
+
+  /// `Candidater`
+  String get missionsApply {
+    return Intl.message(
+      'Candidater',
+      name: 'missionsApply',
+      desc: 'Apply to an opportunity.',
+      args: [],
+    );
+  }
+
+  /// `Candidature envoyée`
+  String get missionsApplied {
+    return Intl.message(
+      'Candidature envoyée',
+      name: 'missionsApplied',
+      desc: 'The agent already applied and is waiting.',
+      args: [],
+    );
+  }
+
+  /// `Retirer`
+  String get missionsWithdraw {
+    return Intl.message(
+      'Retirer',
+      name: 'missionsWithdraw',
+      desc: 'Take back an application.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire choisit parmi les candidats.`
+  String get missionsApplyNote {
+    return Intl.message(
+      'Le prestataire choisit parmi les candidats.',
+      name: 'missionsApplyNote',
+      desc: 'RM-M11-07 — applying is not self-assignment.',
+      args: [],
+    );
+  }
+
+  /// `{count} unité(s)`
+  String missionsUnits(int count) {
+    return Intl.message(
+      '$count unité(s)',
+      name: 'missionsUnits',
+      desc: 'Units a residence mission covers.',
+      args: [count],
+    );
+  }
+
+  /// `Action impossible pour le moment.`
+  String get missionsActionFailed {
+    return Intl.message(
+      'Action impossible pour le moment.',
+      name: 'missionsActionFailed',
+      desc: 'Generic failure on the missions screen.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {
