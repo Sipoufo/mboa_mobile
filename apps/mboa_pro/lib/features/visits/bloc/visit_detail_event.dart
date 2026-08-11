@@ -34,3 +34,8 @@ class VisitStartOverridden extends VisitDetailEvent {
 class VisitOverrideDismissed extends VisitDetailEvent {
   const VisitOverrideDismissed();
 }
+
+/// RM-M16-04 — allowed up to an hour before the slot.
+class VisitCancelRequested extends VisitDetailEvent {
+  const VisitCancelRequested();
+}

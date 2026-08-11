@@ -28,9 +28,12 @@ class MockVisitReportBloc extends MockBloc<VisitReportEvent, VisitReportState>
 ///
 /// `VisitDetailRoute` and `VisitReportRoute` are siblings of the Visites tab
 /// under `/app`, so anything they read has to come from `AuthenticatedWrapper`
-/// or from their own `wrappedRoute` — the mistake that shipped twice in M11.
-/// The detail reads `AgentVisitsBloc` to cancel, which is why it is provided
-/// here: that dependency is the one to keep honest.
+/// or from their own `wrappedRoute`.
+///
+/// **Each screen gets only its own bloc.** The detail shipped reaching for
+/// `AgentVisitsBloc` to cancel and threw on a device; this test provided it and
+/// so proved nothing. Cancelling now goes through the detail's own bloc, and
+/// the absence of `AgentVisitsBloc` below is the assertion.
 void main() {
   late MockAgentVisitsBloc visits;
   late MockVisitDetailBloc detail;
@@ -80,6 +83,15 @@ void main() {
     when(() => report.state).thenReturn(const ReportEditing());
   });
 
+  Widget withVisits(Widget child) =>
+      BlocProvider<AgentVisitsBloc>.value(value: visits, child: child);
+
+  Widget withDetail(Widget child) =>
+      BlocProvider<VisitDetailBloc>.value(value: detail, child: child);
+
+  Widget withReport(Widget child) =>
+      BlocProvider<VisitReportBloc>.value(value: report, child: child);
+
   Future<void> pump(WidgetTester tester, Widget child) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -87,14 +99,7 @@ void main() {
         theme: MboaTheme.light(),
         localizationsDelegates: MboaLocalizations.delegates,
         supportedLocales: MboaLocalizations.supportedLocales,
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider<AgentVisitsBloc>.value(value: visits),
-            BlocProvider<VisitDetailBloc>.value(value: detail),
-            BlocProvider<VisitReportBloc>.value(value: report),
-          ],
-          child: child,
-        ),
+        home: child,
       ),
     );
     await tester.pump();
@@ -102,7 +107,7 @@ void main() {
 
   group('the list', () {
     testWidgets('opens on today', (tester) async {
-      await pump(tester, const AgentVisitsPage());
+      await pump(tester, withVisits(const AgentVisitsPage()));
 
       expect(tester.takeException(), isNull);
       expect(find.text("Aujourd'hui (1)"), findsOneWidget);
@@ -111,7 +116,7 @@ void main() {
 
     testWidgets('no badge when there is nothing today', (tester) async {
       when(() => visits.state).thenReturn(const VisitsReady());
-      await pump(tester, const AgentVisitsPage());
+      await pump(tester, withVisits(const AgentVisitsPage()));
 
       expect(find.text("Aujourd'hui"), findsOneWidget);
       expect(find.text('Aucune visite aujourd\'hui'), findsOneWidget);
@@ -121,7 +126,7 @@ void main() {
   group('the detail', () {
     testWidgets('shows the exact address, which exists nowhere else',
         (tester) async {
-      await pump(tester, const VisitDetailPage(id: 'v-1'));
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       // RM-M16-01 — the agent's view is the only place it appears.
       expect(find.text('Rue 1.234, Bonapriso'), findsOneWidget);
@@ -129,7 +134,7 @@ void main() {
     });
 
     testWidgets('gives the agent both numbers', (tester) async {
-      await pump(tester, const VisitDetailPage(id: 'v-1'));
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       // They are going to a stranger's property to meet another stranger.
       expect(find.textContaining('+237690000000'), findsOneWidget);
@@ -138,7 +143,7 @@ void main() {
 
     testWidgets('cannot start before the day — the server decides',
         (tester) async {
-      await pump(tester, const VisitDetailPage(id: 'v-1'));
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       final button = tester.widget<Button>(find.byType(Button));
       expect(button.onPressed, isNull);
@@ -148,7 +153,7 @@ void main() {
     testWidgets('starts when the server says it may', (tester) async {
       when(() => detail.state)
           .thenReturn(VisitDetailReady(detailFor(canStart: true)));
-      await pump(tester, const VisitDetailPage(id: 'v-1'));
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       await tester.tap(find.text('Démarrer la visite'));
       await tester.pump();
@@ -160,7 +165,7 @@ void main() {
       when(() => detail.state).thenReturn(
         VisitDetailReady(detailFor(canStart: true, started: true)),
       );
-      await pump(tester, const VisitDetailPage(id: 'v-1'));
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       expect(find.text('Rédiger le rapport'), findsOneWidget);
       expect(find.text('Démarrer la visite'), findsNothing);
@@ -173,7 +178,7 @@ void main() {
           detailFor(started: true, reportSubmitted: true),
         ),
       );
-      await pump(tester, const VisitDetailPage(id: 'v-1'));
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       // RM-M16-03 — offering an edit the server would refuse is worse than
       // saying it cannot be changed.
@@ -188,7 +193,7 @@ void main() {
 
   group('the report', () {
     testWidgets('cannot be sent until it is complete', (tester) async {
-      await pump(tester, const VisitReportPage(visitId: 'v-1'));
+      await pump(tester, withReport(const VisitReportPage(visitId: 'v-1')));
 
       final button = tester.widget<Button>(find.byType(Button));
       expect(button.onPressed, isNull);
@@ -202,7 +207,7 @@ void main() {
           draft: VisitReportDraft(photoKeys: ['a', 'b', 'c']),
         ),
       );
-      await pump(tester, const VisitReportPage(visitId: 'v-1'));
+      await pump(tester, withReport(const VisitReportPage(visitId: 'v-1')));
 
       // Condition and conformity are required too.
       expect(tester.widget<Button>(find.byType(Button)).onPressed, isNull);
@@ -219,7 +224,7 @@ void main() {
           ),
         ),
       );
-      await pump(tester, const VisitReportPage(visitId: 'v-1'));
+      await pump(tester, withReport(const VisitReportPage(visitId: 'v-1')));
 
       await tester.tap(find.text('Envoyer le rapport'));
       await tester.pumpAndSettle();

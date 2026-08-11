@@ -68,6 +68,16 @@ listing detail).
 pumping it with *only* the blocs its route inherits. See
 `screens_provider_scope_test.dart` and `assignments_provider_scope_test.dart`.
 
+**A fourth time, in M16 — same shape, same test mistake.** The visit detail
+reached for `AgentVisitsBloc` to cancel; it is a sibling of the Visites tab.
+Cancelling moved onto the detail's own bloc, which already had the repository,
+and the list reloads when the detail closes. Its scope test had provided every
+bloc again, so it caught nothing.
+
+**Rule, restated because writing it once was not enough:** in a scope test,
+provide **one bloc per screen — its own** — plus whatever `AuthenticatedWrapper`
+really provides. The absence is the assertion.
+
 **A third time, and the test is only worth what it withholds.** The agent detail
 read `MyAgentsBloc` while *Mes agents* provided it, and they are siblings under
 `/app` — so it threw on a device. Its widget test passed the whole time, because

@@ -24,6 +24,7 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     on<VisitStartRequested>(_onStart);
     on<VisitStartOverridden>(_onOverride);
     on<VisitOverrideDismissed>(_onDismiss);
+    on<VisitCancelRequested>(_onCancel);
   }
 
   final AgentVisitRepository _repository;
@@ -116,6 +117,24 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     final current = state;
     if (current is! VisitDetailReady) return;
     emit(current.copyWith(clearPendingFix: true));
+  }
+
+  /// RM-M16-04 — the server owns the one-hour cutoff, so a refusal comes back
+  /// as a failure rather than being pre-empted here.
+  Future<void> _onCancel(
+    VisitCancelRequested event,
+    Emitter<VisitDetailState> emit,
+  ) async {
+    final current = state;
+    if (current is! VisitDetailReady) return;
+
+    emit(current.copyWith(isCancelling: true));
+    try {
+      await _repository.cancel(current.visit.id);
+      emit(const VisitWasCancelled());
+    } catch (_) {
+      emit(current.copyWith(isCancelling: false, lastActionFailed: true));
+    }
   }
 
   Future<void> _send(

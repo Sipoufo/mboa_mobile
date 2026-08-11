@@ -99,6 +99,13 @@ class AgentVisitsPage extends StatelessWidget implements AutoRouteWrapper {
                               visit: ready.visible[index],
                               isBusy: ready.mutatingId ==
                                   ready.visible[index].id,
+                              // The detail cancels and files reports through
+                              // its own bloc — it is a sibling route and cannot
+                              // reach this one. Reloading on return is how the
+                              // list learns what happened there.
+                              onClosed: () => context
+                                  .read<AgentVisitsBloc>()
+                                  .add(const VisitsRefreshRequested()),
                             ),
                           ),
                   ),
@@ -138,9 +145,14 @@ class _Empty extends StatelessWidget {
 }
 
 class _VisitCard extends StatelessWidget {
-  const _VisitCard({required this.visit, this.isBusy = false});
+  const _VisitCard({
+    required this.visit,
+    required this.onClosed,
+    this.isBusy = false,
+  });
 
   final AgentVisit visit;
+  final VoidCallback onClosed;
   final bool isBusy;
 
   @override
@@ -173,7 +185,10 @@ class _VisitCard extends StatelessWidget {
           trailing: _StatusChip(status: visit.status),
           onTap: isBusy
               ? null
-              : () => context.router.push(VisitDetailRoute(id: visit.id)),
+              : () async {
+                  await context.router.push(VisitDetailRoute(id: visit.id));
+                  onClosed();
+                },
         ),
       ),
     );

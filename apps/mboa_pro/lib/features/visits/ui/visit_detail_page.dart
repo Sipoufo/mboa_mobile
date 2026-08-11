@@ -9,7 +9,6 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
-import '../bloc/agent_visits_bloc.dart';
 import '../bloc/visit_detail_bloc.dart';
 import '../models/agent_visit.dart';
 
@@ -40,11 +39,18 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
       appBar: AppBar(title: Text(l10n.visitsDetailTitle)),
       body: BlocConsumer<VisitDetailBloc, VisitDetailState>(
         listenWhen: (prev, curr) =>
-            curr is VisitDetailReady &&
-            (curr.lastActionFailed ||
-                curr.locationFailure != null ||
-                curr.needsOverride),
+            curr is VisitWasCancelled ||
+            (curr is VisitDetailReady &&
+                (curr.lastActionFailed ||
+                    curr.locationFailure != null ||
+                    curr.needsOverride)),
         listener: (context, state) {
+          if (state is VisitWasCancelled) {
+            // The list is a sibling route and cannot be reached from here, so
+            // it reloads when the agent lands back on it.
+            context.router.maybePop();
+            return;
+          }
           final ready = state as VisitDetailReady;
           if (ready.needsOverride) {
             _askForJustification(context, ready);
@@ -68,6 +74,7 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
         builder: (context, state) => switch (state) {
           VisitDetailInitial() || VisitDetailLoadInProgress() =>
             const Center(child: Loader()),
+          VisitWasCancelled() => const Center(child: Loader()),
           VisitDetailFailure() => Center(
               child: TextButton(
                 onPressed: () => context
@@ -88,50 +95,78 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
     BuildContext context,
     VisitDetailReady state,
   ) async {
-    final l10n = I18n.of(context);
     final bloc = context.read<VisitDetailBloc>();
-    final controller = TextEditingController();
 
     final reason = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.visitsTooFarTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              l10n.visitsTooFarBody((state.distanceMetres ?? 0).round()),
-            ),
-            const SizedBox(height: Dimens.spacing),
-            TextField(
-              controller: controller,
-              autofocus: true,
-              maxLines: 2,
-              decoration: InputDecoration(hintText: l10n.visitsTooFarHint),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(l10n.commonCancel),
-          ),
-          TextButton(
-            onPressed: () =>
-                Navigator.of(dialogContext).pop(controller.text.trim()),
-            child: Text(l10n.visitsTooFarConfirm),
-          ),
-        ],
+      builder: (_) => _JustificationDialog(
+        distanceMetres: (state.distanceMetres ?? 0).round(),
       ),
     );
 
-    controller.dispose();
     if (reason == null || reason.isEmpty) {
       // No justification, no start — the record has to say why.
       bloc.add(const VisitOverrideDismissed());
       return;
     }
     bloc.add(VisitStartOverridden(reason));
+  }
+}
+
+/// Owns its controller, so the framework disposes it when the route is gone.
+///
+/// Disposing it by hand after `showDialog` returns is too early: the dialog is
+/// still animating out and its TextField still reads the controller, which
+/// threw "used after being disposed" and took the frame down with it.
+class _JustificationDialog extends StatefulWidget {
+  const _JustificationDialog({required this.distanceMetres});
+
+  final int distanceMetres;
+
+  @override
+  State<_JustificationDialog> createState() => _JustificationDialogState();
+}
+
+class _JustificationDialogState extends State<_JustificationDialog> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    return AlertDialog(
+      title: Text(l10n.visitsTooFarTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.visitsTooFarBody(widget.distanceMetres)),
+          const SizedBox(height: Dimens.spacing),
+          TextField(
+            controller: _controller,
+            autofocus: true,
+            maxLines: 2,
+            decoration: InputDecoration(hintText: l10n.visitsTooFarHint),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.commonCancel),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(_controller.text.trim()),
+          child: Text(l10n.visitsTooFarConfirm),
+        ),
+      ],
+    );
   }
 }
 
@@ -298,8 +333,7 @@ class _Actions extends StatelessWidget {
   ) async {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
-    final router = context.router;
-    final visits = context.read<AgentVisitsBloc>();
+    final bloc = context.read<VisitDetailBloc>();
 
     final confirmed = await showDialog<bool>(
       context: context,
@@ -322,13 +356,9 @@ class _Actions extends StatelessWidget {
       ),
     );
 
-    if (confirmed ?? false) {
-      visits.add(
-        VisitCancelled(
-          AgentVisit(id: visit.id, status: visit.status),
-        ),
-      );
-      await router.maybePop();
-    }
+    // Through the detail's own bloc: AgentVisitsBloc lives on the Visites tab,
+    // a sibling route, and reaching for it from here threw
+    // ProviderNotFoundException on a device.
+    if (confirmed ?? false) bloc.add(const VisitCancelRequested());
   }
 }

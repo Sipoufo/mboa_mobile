@@ -19,6 +19,7 @@ class VisitDetailReady extends VisitDetailState {
   const VisitDetailReady(
     this.visit, {
     this.isStarting = false,
+    this.isCancelling = false,
     this.lastActionFailed = false,
     this.locationFailure,
     this.pendingFix,
@@ -27,6 +28,7 @@ class VisitDetailReady extends VisitDetailState {
 
   final AgentVisitDetail visit;
   final bool isStarting;
+  final bool isCancelling;
   final bool lastActionFailed;
 
   /// Set when the fix could not be taken at all — the agent needs to know it is
@@ -44,6 +46,7 @@ class VisitDetailReady extends VisitDetailState {
   VisitDetailReady copyWith({
     AgentVisitDetail? visit,
     bool? isStarting,
+    bool? isCancelling,
     bool lastActionFailed = false,
     LocationFailure? locationFailure,
     LocationFix? pendingFix,
@@ -53,6 +56,7 @@ class VisitDetailReady extends VisitDetailState {
       VisitDetailReady(
         visit ?? this.visit,
         isStarting: isStarting ?? this.isStarting,
+        isCancelling: isCancelling ?? this.isCancelling,
         lastActionFailed: lastActionFailed,
         locationFailure: locationFailure,
         pendingFix: clearPendingFix ? null : (pendingFix ?? this.pendingFix),
@@ -63,11 +67,18 @@ class VisitDetailReady extends VisitDetailState {
   List<Object?> get props => [
         visit,
         isStarting,
+        isCancelling,
         lastActionFailed,
         locationFailure,
         pendingFix,
         distanceMetres,
       ];
+}
+
+/// Cancelled. Terminal: the screen closes rather than showing a visit that no
+/// longer exists.
+class VisitWasCancelled extends VisitDetailState {
+  const VisitWasCancelled();
 }
 
 class VisitDetailFailure extends VisitDetailState {
