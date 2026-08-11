@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**396 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 289 ·
+**412 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 302 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -38,7 +38,8 @@
 | M10 listings + residences | ✅ complete for everything the API supports |
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
-| M16 agent visits · M11 assignments | ❌ endpoints exist, no screens |
+| M11 assignments | ✅ prestataire side · ❌ agent side (stage 2) |
+| M16 agent visits | ❌ endpoints exist, no screens |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -302,6 +303,26 @@ Missions have endpoints but no screens; they show the coming-soon page.
 - `AgentProfileBloc` is provided by `AuthenticatedWrapper`, not the agent shell —
   the zones screen is a *sibling* of the shell, and a bloc provided by one route
   is invisible to its siblings.
+
+### M11 — the designs describe a different feature
+`screenshots/pro/agents/` shows **staff with permissions**: job titles, a Droits
+tab (Finance / Agents / Locataires), invitation by affiliation link, a global
+directory, and agent contact details. Doc 10 §M11 is **assigning a certified
+agent to one listing so a tenant can book a visit** (RM-M07-01). The app builds
+M11; the visual language is reused, the absent concepts are not invented. Logged
+in `docs/backend-requests.md` §11.
+
+- **One active agent per property** (RM-M11-01), so the candidate picker hides
+  while somebody holds the property *or* is being waited on — two people
+  believing they have it is the failure to avoid.
+- **Accepting an application auto-declines the others** server-side (RM-M11-07),
+  so every mutation reloads rather than patching state locally.
+- **A residence offer reports what it skipped** (RM-M10bis-06). Swallowing
+  `skipped[]` would claim the whole residence was offered when part was not.
+- **Origin is recorded, never a filter** (RM-M11-09): an agent's accepted
+  application and a prestataire's accepted offer are the same thing afterwards.
+- Mes agents lists **people**, not assignments — an agent on four properties is
+  one row.
 
 ## Open decisions (product, not code)
 

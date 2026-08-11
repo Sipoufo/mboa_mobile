@@ -17,16 +17,56 @@ void main() {
       );
 
   group('coming-soon surfaces', () {
-    test('portefeuille and mes agents are denied on every tier', () {
-      final context = prestataire(tier: SubscriptionTier.proPlus);
-
+    test('portefeuille is denied on every tier', () {
+      // Still no endpoints behind it.
       expect(
-        policy.check(FeatureKey.portefeuille, context),
+        policy.check(
+          FeatureKey.portefeuille,
+          prestataire(tier: SubscriptionTier.proPlus),
+        ),
         const AccessDenied(AccessRestriction.comingSoon),
       );
+    });
+  });
+
+  group('mesAgents (M11)', () {
+    test('granted for a KYC-approved prestataire on any tier', () {
+      // Assigning an agent is not tier-gated — it is what makes the "Planifier
+      // une visite" button appear at all (RM-M07-01).
       expect(
-        policy.check(FeatureKey.mesAgents, context),
-        const AccessDenied(AccessRestriction.comingSoon),
+        policy.check(FeatureKey.mesAgents, prestataire()).isGranted,
+        isTrue,
+      );
+      expect(
+        policy
+            .check(
+              FeatureKey.mesAgents,
+              prestataire(tier: SubscriptionTier.gratuit),
+            )
+            .isGranted,
+        isTrue,
+      );
+    });
+
+    test('denied without approved KYC, like the listings it hangs off', () {
+      expect(
+        policy.check(FeatureKey.mesAgents, prestataire(approved: false)),
+        const AccessDenied(AccessRestriction.kycRequired),
+      );
+    });
+
+    test('denied for an agent — they receive assignments, not make them', () {
+      expect(
+        policy.check(
+          FeatureKey.mesAgents,
+          const AccessContext(
+            role: AccountRole.agent,
+            isKycApproved: true,
+            isKycPending: false,
+            tier: SubscriptionTier.gratuit,
+          ),
+        ),
+        const AccessDenied(AccessRestriction.roleRequired),
       );
     });
   });

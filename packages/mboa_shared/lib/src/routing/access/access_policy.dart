@@ -22,10 +22,17 @@ class AccessPolicy {
 
   AccessDecision check(FeatureKey feature, AccessContext context) {
     switch (feature) {
-      // Not built: no backend endpoints exist for either surface yet.
+      // Not built: no backend endpoints exist for it yet.
       case FeatureKey.portefeuille:
-      case FeatureKey.mesAgents:
         return const AccessDenied(AccessRestriction.comingSoon);
+
+      // M11 — assigning agents is a verified-prestataire surface, like the
+      // listings it hangs off.
+      case FeatureKey.mesAgents:
+        if (!context.role.isPrestataire) {
+          return const AccessDenied(AccessRestriction.roleRequired);
+        }
+        return _requireApprovedKyc(context);
 
       // Publishing and managing listings is a verified-prestataire surface.
       case FeatureKey.mesBiens:

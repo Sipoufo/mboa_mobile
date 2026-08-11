@@ -3816,6 +3816,278 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mes agents`
+  String get agentsMineTitle {
+    return Intl.message(
+      'Mes agents',
+      name: 'agentsMineTitle',
+      desc: 'M11 hub — the prestataire\'s assigned agents.',
+      args: [],
+    );
+  }
+
+  /// `Aucun agent assigné`
+  String get agentsMineEmpty {
+    return Intl.message(
+      'Aucun agent assigné',
+      name: 'agentsMineEmpty',
+      desc: 'Empty state for Mes agents.',
+      args: [],
+    );
+  }
+
+  /// `Assignez un agent à un bien pour que les locataires puissent planifier une visite.`
+  String get agentsMineEmptyBody {
+    return Intl.message(
+      'Assignez un agent à un bien pour que les locataires puissent planifier une visite.',
+      name: 'agentsMineEmptyBody',
+      desc: 'Doc 10 RM-M07-01 — the point of an assignment.',
+      args: [],
+    );
+  }
+
+  /// `{count} biens`
+  String agentsPropertyCount(int count) {
+    return Intl.message(
+      '$count biens',
+      name: 'agentsPropertyCount',
+      desc: 'How many properties an agent covers.',
+      args: [count],
+    );
+  }
+
+  /// `En attente de réponse`
+  String get agentsAwaitingResponse {
+    return Intl.message(
+      'En attente de réponse',
+      name: 'agentsAwaitingResponse',
+      desc: 'An offer the agent has not answered (RM-M11-04).',
+      args: [],
+    );
+  }
+
+  /// `Choisir un bien`
+  String get agentsPickPropertyTitle {
+    return Intl.message(
+      'Choisir un bien',
+      name: 'agentsPickPropertyTitle',
+      desc: 'Property picker before choosing an agent.',
+      args: [],
+    );
+  }
+
+  /// `Un agent est assigné à un bien précis.`
+  String get agentsPickPropertyBody {
+    return Intl.message(
+      'Un agent est assigné à un bien précis.',
+      name: 'agentsPickPropertyBody',
+      desc: 'Explains why a property comes first.',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien disponible pour une assignation.`
+  String get agentsPickPropertyEmpty {
+    return Intl.message(
+      'Aucun bien disponible pour une assignation.',
+      name: 'agentsPickPropertyEmpty',
+      desc: 'No assignable property.',
+      args: [],
+    );
+  }
+
+  /// `Liste`
+  String get agentsAssignTitle {
+    return Intl.message(
+      'Liste',
+      name: 'agentsAssignTitle',
+      desc: 'Candidate picker title, matching the Annuaire design.',
+      args: [],
+    );
+  }
+
+  /// `Aucun agent disponible dans cette zone.`
+  String get agentsAssignEmpty {
+    return Intl.message(
+      'Aucun agent disponible dans cette zone.',
+      name: 'agentsAssignEmpty',
+      desc:
+          'Doc 10 RM-M15-04 / RM-M11-08 — candidates are filtered to the property\'s zone.',
+      args: [],
+    );
+  }
+
+  /// `{count} visites réalisées`
+  String agentsVisitCount(int count) {
+    return Intl.message(
+      '$count visites réalisées',
+      name: 'agentsVisitCount',
+      desc:
+          'An agent\'s completed visit count — the only quality signal available.',
+      args: [count],
+    );
+  }
+
+  /// `Assigner`
+  String get agentsAssignAction {
+    return Intl.message(
+      'Assigner',
+      name: 'agentsAssignAction',
+      desc: 'Offer the property to this agent.',
+      args: [],
+    );
+  }
+
+  /// `Assigner {name} ?`
+  String agentsAssignConfirmTitle(String name) {
+    return Intl.message(
+      'Assigner $name ?',
+      name: 'agentsAssignConfirmTitle',
+      desc: 'Confirmation before offering.',
+      args: [name],
+    );
+  }
+
+  /// `Il ou elle recevra une proposition et pourra l'accepter ou la refuser.`
+  String get agentsAssignConfirmBody {
+    return Intl.message(
+      'Il ou elle recevra une proposition et pourra l\'accepter ou la refuser.',
+      name: 'agentsAssignConfirmBody',
+      desc: 'Doc 10 RM-M11-04.',
+      args: [],
+    );
+  }
+
+  /// `Assignation d'agent`
+  String get agentsOfferSentTitle {
+    return Intl.message(
+      'Assignation d\'agent',
+      name: 'agentsOfferSentTitle',
+      desc: 'Success screen title.',
+      args: [],
+    );
+  }
+
+  /// `Une proposition a été envoyée à {name}`
+  String agentsOfferSent(String name) {
+    return Intl.message(
+      'Une proposition a été envoyée à $name',
+      name: 'agentsOfferSent',
+      desc: 'Success screen body — an offer, not a completed assignment.',
+      args: [name],
+    );
+  }
+
+  /// `Vous serez notifié de sa réponse.`
+  String get agentsOfferSentBody {
+    return Intl.message(
+      'Vous serez notifié de sa réponse.',
+      name: 'agentsOfferSentBody',
+      desc: 'Doc 10 RM-M11-04.',
+      args: [],
+    );
+  }
+
+  /// `{count} unité(s) avaient déjà un agent et ont été ignorées.`
+  String agentsOfferSkipped(int count) {
+    return Intl.message(
+      '$count unité(s) avaient déjà un agent et ont été ignorées.',
+      name: 'agentsOfferSkipped',
+      desc: 'Doc 10 RM-M10bis-06.',
+      args: [count],
+    );
+  }
+
+  /// `Candidatures`
+  String get agentsApplicationsTitle {
+    return Intl.message(
+      'Candidatures',
+      name: 'agentsApplicationsTitle',
+      desc: 'Agents who applied (RM-M11-07).',
+      args: [],
+    );
+  }
+
+  /// `Accepter`
+  String get agentsApplicationAccept {
+    return Intl.message(
+      'Accepter',
+      name: 'agentsApplicationAccept',
+      desc: 'Accept an application.',
+      args: [],
+    );
+  }
+
+  /// `Refuser`
+  String get agentsApplicationDecline {
+    return Intl.message(
+      'Refuser',
+      name: 'agentsApplicationDecline',
+      desc: 'Decline an application.',
+      args: [],
+    );
+  }
+
+  /// `Accepter cette candidature refusera automatiquement les autres.`
+  String get agentsAcceptWarning {
+    return Intl.message(
+      'Accepter cette candidature refusera automatiquement les autres.',
+      name: 'agentsAcceptWarning',
+      desc: 'Doc 10 RM-M11-07.',
+      args: [],
+    );
+  }
+
+  /// `Agent assigné`
+  String get agentsCurrentTitle {
+    return Intl.message(
+      'Agent assigné',
+      name: 'agentsCurrentTitle',
+      desc: 'The live assignment on a property.',
+      args: [],
+    );
+  }
+
+  /// `Retirer l'assignation`
+  String get agentsWithdraw {
+    return Intl.message(
+      'Retirer l\'assignation',
+      name: 'agentsWithdraw',
+      desc: 'RM-M11-06.',
+      args: [],
+    );
+  }
+
+  /// `Les visites déjà planifiées seront annulées.`
+  String get agentsWithdrawConfirm {
+    return Intl.message(
+      'Les visites déjà planifiées seront annulées.',
+      name: 'agentsWithdrawConfirm',
+      desc: 'Doc 10 RM-M11-06 / CE-M07-02.',
+      args: [],
+    );
+  }
+
+  /// `Action impossible pour le moment.`
+  String get agentsActionFailed {
+    return Intl.message(
+      'Action impossible pour le moment.',
+      name: 'agentsActionFailed',
+      desc: 'Generic failure on the assignment screens.',
+      args: [],
+    );
+  }
+
+  /// `{count} unité(s)`
+  String agentsUnitsCovered(int count) {
+    return Intl.message(
+      '$count unité(s)',
+      name: 'agentsUnitsCovered',
+      desc: 'How many units a residence assignment covers.',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

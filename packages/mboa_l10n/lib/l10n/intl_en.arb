@@ -1000,5 +1000,143 @@
   "daySunday": "Sunday",
   "@daySunday": {
     "description": "Day of week 7."
+  },
+  "agentsMineTitle": "My agents",
+  "@agentsMineTitle": {
+    "description": "M11 hub — the prestataire's assigned agents."
+  },
+  "agentsMineEmpty": "No agent assigned",
+  "@agentsMineEmpty": {
+    "description": "Empty state for Mes agents."
+  },
+  "agentsMineEmptyBody": "Assign an agent to a property so tenants can schedule a visit.",
+  "@agentsMineEmptyBody": {
+    "description": "Doc 10 RM-M07-01 — the point of an assignment."
+  },
+  "agentsPropertyCount": "{count} properties",
+  "@agentsPropertyCount": {
+    "description": "How many properties an agent covers.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentsAwaitingResponse": "Awaiting a response",
+  "@agentsAwaitingResponse": {
+    "description": "An offer the agent has not answered (RM-M11-04)."
+  },
+  "agentsPickPropertyTitle": "Choose a property",
+  "@agentsPickPropertyTitle": {
+    "description": "Property picker before choosing an agent."
+  },
+  "agentsPickPropertyBody": "An agent is assigned to a specific property.",
+  "@agentsPickPropertyBody": {
+    "description": "Explains why a property comes first."
+  },
+  "agentsPickPropertyEmpty": "No property available for assignment.",
+  "@agentsPickPropertyEmpty": {
+    "description": "No assignable property."
+  },
+  "agentsAssignTitle": "List",
+  "@agentsAssignTitle": {
+    "description": "Candidate picker title, matching the Annuaire design."
+  },
+  "agentsAssignEmpty": "No agent available in this area.",
+  "@agentsAssignEmpty": {
+    "description": "Doc 10 RM-M15-04 / RM-M11-08 — candidates are filtered to the property's zone."
+  },
+  "agentsVisitCount": "{count} visits completed",
+  "@agentsVisitCount": {
+    "description": "An agent's completed visit count — the only quality signal available.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentsAssignAction": "Assign",
+  "@agentsAssignAction": {
+    "description": "Offer the property to this agent."
+  },
+  "agentsAssignConfirmTitle": "Assign {name}?",
+  "@agentsAssignConfirmTitle": {
+    "description": "Confirmation before offering.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "agentsAssignConfirmBody": "They will receive an offer and can accept or decline it.",
+  "@agentsAssignConfirmBody": {
+    "description": "Doc 10 RM-M11-04."
+  },
+  "agentsOfferSentTitle": "Agent assignment",
+  "@agentsOfferSentTitle": {
+    "description": "Success screen title."
+  },
+  "agentsOfferSent": "An offer has been sent to {name}",
+  "@agentsOfferSent": {
+    "description": "Success screen body — an offer, not a completed assignment.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "agentsOfferSentBody": "You will be notified of their response.",
+  "@agentsOfferSentBody": {
+    "description": "Doc 10 RM-M11-04."
+  },
+  "agentsOfferSkipped": "{count} unit(s) already had an agent and were skipped.",
+  "@agentsOfferSkipped": {
+    "description": "Doc 10 RM-M10bis-06.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentsApplicationsTitle": "Applications",
+  "@agentsApplicationsTitle": {
+    "description": "Agents who applied (RM-M11-07)."
+  },
+  "agentsApplicationAccept": "Accept",
+  "@agentsApplicationAccept": {
+    "description": "Accept an application."
+  },
+  "agentsApplicationDecline": "Decline",
+  "@agentsApplicationDecline": {
+    "description": "Decline an application."
+  },
+  "agentsAcceptWarning": "Accepting this application will automatically decline the others.",
+  "@agentsAcceptWarning": {
+    "description": "Doc 10 RM-M11-07."
+  },
+  "agentsCurrentTitle": "Assigned agent",
+  "@agentsCurrentTitle": {
+    "description": "The live assignment on a property."
+  },
+  "agentsWithdraw": "Remove assignment",
+  "@agentsWithdraw": {
+    "description": "RM-M11-06."
+  },
+  "agentsWithdrawConfirm": "Visits already scheduled will be cancelled.",
+  "@agentsWithdrawConfirm": {
+    "description": "Doc 10 RM-M11-06 / CE-M07-02."
+  },
+  "agentsActionFailed": "That action isn't possible right now.",
+  "@agentsActionFailed": {
+    "description": "Generic failure on the assignment screens."
+  },
+  "agentsUnitsCovered": "{count} unit(s)",
+  "@agentsUnitsCovered": {
+    "description": "How many units a residence assignment covers.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

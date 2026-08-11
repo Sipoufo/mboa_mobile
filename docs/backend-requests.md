@@ -290,3 +290,38 @@ not guesses. Recorded because the next person will hit the same questions.
   `AgentCandidate` read it. The app writes `/agents/me` for agents. **Ask:**
   is the base profile meaningful for an agent at all? If not, saying so in the
   spec would stop the next client writing the wrong one.
+
+
+---
+
+## 11. M11 — what the designs need and the API does not have
+
+The Pro designs for "Mes agents" (`screenshots/pro/agents/`) describe a
+**staff-with-permissions** product; Doc 10 §M11 and the API describe **assigning
+a certified agent to a listing for visits**. The app builds the latter. Recording
+the gap so the screens are not read as a backlog.
+
+**Blocking a useful screen — small ask:**
+
+- **`averageRating` + `ratingCount` on `AgentCandidate`.** Both already exist on
+  `AgentProfileResponse`, but a prestataire choosing between candidates sees only
+  `completedVisitCount`. The choice screen is the point of M11 for them, and a
+  visit count alone is a weak basis. Two fields; the card picks them up with no
+  UI change.
+
+**Would complete a designed screen:**
+
+- **No endpoint lists individual ratings.** `POST /visites/{id}/rating` writes
+  one; nothing reads them. The design's "Avis" tab has no data source.
+
+**Product-level, not API asks — these need a CDC section before any endpoint:**
+
+- **Permissions** (the "Droits" tab: Finance / Agents / Locataires toggles). A
+  delegated-access model, with real consequences — the design's copy includes
+  *"effectuer des retraits"*. Not built: switches that gate nothing would read as
+  security controls while being decoration.
+- **Invitation by affiliation link.** RM-M11-03 assigns by *searching existing
+  active agents*; there is no invite flow, and the API has no endpoint for one.
+- **Agent contact details** (email, phone on the profile card). No agent payload
+  carries them.
+- **Job titles** ("Concierge", "Gestionnaire des biens"). No such field.

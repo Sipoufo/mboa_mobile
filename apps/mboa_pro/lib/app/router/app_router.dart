@@ -75,6 +75,10 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: AgentZonesRoute.page, path: 'agent/zones'),
             AutoRoute(page: AgentAvailabilityRoute.page, path: 'agent/availability'),
 
+            // Agent assignment (M11).
+            AutoRoute(page: MesAgentsRoute.page, path: 'agents'),
+            AutoRoute(page: AgentAssignmentRoute.page, path: 'agents/assign'),
+
             // Slide menu — pushed over the shell, not a tab.
             CustomRoute(
               page: ProMenuRoute.page,

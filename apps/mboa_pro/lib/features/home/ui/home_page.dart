@@ -118,7 +118,13 @@ class _CtaCarousel extends StatelessWidget {
       return;
     }
 
-    context.router.push(const MesBiensRoute());
+    // Every granted feature has its own destination. This pushed Mes biens
+    // unconditionally, which was invisible while agents was coming-soon and
+    // wrong the moment M11 granted it.
+    context.router.push(switch (feature) {
+      FeatureKey.mesAgents => const MesAgentsRoute(),
+      _ => const MesBiensRoute(),
+    });
   }
 }
 
