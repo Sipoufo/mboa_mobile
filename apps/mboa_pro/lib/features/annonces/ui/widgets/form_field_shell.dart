@@ -13,12 +13,16 @@ class FormFieldShell extends StatelessWidget {
     required this.child,
     this.trailing,
     this.onTap,
+    this.helpText,
   });
 
   final String label;
   final Widget child;
   final Widget? trailing;
   final VoidCallback? onTap;
+
+  /// Doc 10's definition of the field, shown behind an info icon on the label.
+  final String? helpText;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +31,19 @@ class FormFieldShell extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: context.mboaText.label.copyWith(
-            fontWeight: FontWeight.w400,
-            color: colors.textSecondary,
-          ),
+        Row(
+          children: [
+            Flexible(
+              child: Text(
+                label,
+                style: context.mboaText.label.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: colors.textSecondary,
+                ),
+              ),
+            ),
+            if (helpText case final help?) FieldHelp(label: label, text: help),
+          ],
         ),
         const SizedBox(height: Dimens.spacingXs),
         InkWell(

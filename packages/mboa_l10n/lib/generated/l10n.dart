@@ -3062,6 +3062,123 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Un Bien Multiple regroupe plusieurs unités qui partagent une adresse et des caractéristiques : immeuble, cité, hôtel, résidence meublée. Les unités se créent par groupes au moment de la création — aucune unité ne peut être ajoutée par la suite.`
+  String get annonceFormHelpKind {
+    return Intl.message(
+      'Un Bien Multiple regroupe plusieurs unités qui partagent une adresse et des caractéristiques : immeuble, cité, hôtel, résidence meublée. Les unités se créent par groupes au moment de la création — aucune unité ne peut être ajoutée par la suite.',
+      name: 'annonceFormHelpKind',
+      desc:
+          'Doc 10 §M10bis (Modèle). Help text on the Bien Unique / Bien Multiple selector.',
+      args: [],
+    );
+  }
+
+  /// `Appartement, Studio, Villa, Chambre, Bureau ou Local commercial. Les locataires filtrent leur recherche sur ce critère.`
+  String get annonceFormHelpPropertyType {
+    return Intl.message(
+      'Appartement, Studio, Villa, Chambre, Bureau ou Local commercial. Les locataires filtrent leur recherche sur ce critère.',
+      name: 'annonceFormHelpPropertyType',
+      desc:
+          'Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field.',
+      args: [],
+    );
+  }
+
+  /// `Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.`
+  String get annonceFormHelpPrice {
+    return Intl.message(
+      'Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.',
+      name: 'annonceFormHelpPrice',
+      desc:
+          'Doc 10 §M04 (filtres). Help text on the rent field. Revisit with RM-M10-09 (loyer + périodicité), not yet in the API.',
+      args: [],
+    );
+  }
+
+  /// `Facultatif. Indiquez si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.`
+  String get annonceFormHelpCharges {
+    return Intl.message(
+      'Facultatif. Indiquez si l\'eau et l\'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.',
+      name: 'annonceFormHelpCharges',
+      desc:
+          'Doc 10 §M10 (Champs) — « Charges incluses (oui/non + montant) », facultatif, visible par les users.',
+      args: [],
+    );
+  }
+
+  /// `Facultatif, mais les locataires filtrent leur recherche sur ces critères : un bien sans ces informations ressort moins souvent.`
+  String get annonceFormHelpOptionalFilters {
+    return Intl.message(
+      'Facultatif, mais les locataires filtrent leur recherche sur ces critères : un bien sans ces informations ressort moins souvent.',
+      name: 'annonceFormHelpOptionalFilters',
+      desc:
+          'Doc 10 §M04 (filtres) — surface, pièces, meublé. Help text shared by the optional characteristics.',
+      args: [],
+    );
+  }
+
+  /// `La ville et le quartier sont visibles par les locataires. L'adresse exacte ne l'est jamais : elle n'apparaît que dans le Contrat Mboa signé.`
+  String get annonceFormHelpLocation {
+    return Intl.message(
+      'La ville et le quartier sont visibles par les locataires. L\'adresse exacte ne l\'est jamais : elle n\'apparaît que dans le Contrat Mboa signé.',
+      name: 'annonceFormHelpLocation',
+      desc:
+          'Doc 10 §M10 (Champs) — « Adresse exacte : visible par les users = Non ».',
+      args: [],
+    );
+  }
+
+  /// `Obligatoire. Les locataires peuvent filtrer sur la disponibilité immédiate.`
+  String get annonceFormHelpAvailability {
+    return Intl.message(
+      'Obligatoire. Les locataires peuvent filtrer sur la disponibilité immédiate.',
+      name: 'annonceFormHelpAvailability',
+      desc: 'Doc 10 §M10 (Champs) + §M04 (filtre « Disponibilité immédiate »).',
+      args: [],
+    );
+  }
+
+  /// `3 photos minimum et 15 maximum. Elles sont compressées automatiquement avant l'envoi. Modifier les photos d'une annonce publiée relance la validation du badge « Photos vérifiées ».`
+  String get annonceFormHelpPhotos {
+    return Intl.message(
+      '3 photos minimum et 15 maximum. Elles sont compressées automatiquement avant l\'envoi. Modifier les photos d\'une annonce publiée relance la validation du badge « Photos vérifiées ».',
+      name: 'annonceFormHelpPhotos',
+      desc: 'Doc 10 RM-M10-03, RM-M10-06, CE-M10-03.',
+      args: [],
+    );
+  }
+
+  /// `Facultatif, 1 500 caractères maximum.`
+  String get annonceFormHelpDescription {
+    return Intl.message(
+      'Facultatif, 1 500 caractères maximum.',
+      name: 'annonceFormHelpDescription',
+      desc: 'Doc 10 §M10 (Champs).',
+      args: [],
+    );
+  }
+
+  /// `Type d'annonce`
+  String get annonceFormKindLabel {
+    return Intl.message(
+      'Type d\'annonce',
+      name: 'annonceFormKindLabel',
+      desc:
+          'Label above the Bien Unique / Bien Multiple selector; also the title of its help sheet.',
+      args: [],
+    );
+  }
+
+  /// `Photos`
+  String get annonceFormPhotosLabel {
+    return Intl.message(
+      'Photos',
+      name: 'annonceFormPhotosLabel',
+      desc: 'Label above the photo strip; also the title of its help sheet.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

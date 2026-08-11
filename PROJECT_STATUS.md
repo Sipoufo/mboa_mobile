@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**309 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 202 ·
+**313 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 206 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -203,6 +203,13 @@ trip.
 - `PublishGate` is a pure function over (profile complete, photo count, active
   count, tier limit). It reports the profile blocker first — the one the
   prestataire can act on.
+- **Per-field help** (`FieldHelp`, mboa_ui): an info icon by the label opens a
+  bottom sheet — not a tooltip, which needs a long-press on touch and advertises
+  nothing. Copy comes from Doc 10 and each ARB entry cites its source in
+  `@description`; keep that when editing. It is deliberately **not** on every
+  field — an icon everywhere becomes wallpaper. The 44×44 tap target makes a
+  helped label row ~24px taller, which is enough to push later fields out of a
+  default 800×600 test viewport (see `screens_provider_scope_test.dart`).
 - **Location flow:** GPS fix → reverse geocode to a city → preselect it → load
   *that city's* districts → pick one. `matchCity` is deliberately loose (accents,
   casing, "Douala 5e") and **may return null**; the city is always confirmable by
@@ -218,19 +225,34 @@ trip.
 
 ## Open decisions (product, not code)
 
-1. **Doc 10 has no Bien Multiple section.** Residences are fully shipped — bulk
-   lifecycle, per-residence quota, `residenceUnitAllowance` — against a CDC that
-   describes single listings only. No RM-IDs to cite, nothing to validate
-   against. The backend flagged this as the most consequential item on either
-   list.
-2. **`residenceUnitAllowance` is not in Doc 10** — the name was invented in the
-   backend. Shown on the plans screen as "N unités de résidence".
-3. **Water/electricity metering** — the designs show "Compteur Prépayé" on a
-   listing card, but Doc 10 does not define it. The backend will add it once it
-   is in the CDC. See `docs/openapi-proposal-m10-fields.md`.
-4. **Photos: 3 vs 5** — Doc 10 says 3, the mockup says 5. Built as 3.
+> **Doc 10 moved on 2026-08-09** and closed the first three. Re-read §M10bis
+> before assuming anything below is still open.
+
+1. ~~Doc 10 has no Bien Multiple section~~ — **§M10bis now exists**, explicitly
+   documenting "une fonctionnalité déjà construite avant d'être spécifiée".
+   RM-M10bis-01…11 cover the 200-unit cap, the quota model, the bulk lifecycle
+   (including *désarchiver*) and residence-level agent assignment.
+2. ~~`residenceUnitAllowance` is not in Doc 10~~ — **specified in RM-M10bis-02**:
+   a residence counts as one active listing, and the tier caps units per
+   residence separately.
+3. **Water/electricity metering** — still undefined in Doc 10; the designs show
+   "Compteur Prépayé". See `docs/openapi-proposal-m10-fields.md`.
+4. ~~Photos: 3 vs 5~~ — **Doc 10 confirms min 3, max 15**. Built correctly.
 5. **French wording for residences** — English says "Residences", French keeps the
    design's "Biens Multiples".
+
+### RM-M10-09 — rent periodicity, specified and unbuilt
+
+Doc 10 now requires a listing to carry **a rent *and its periodicity*** (month,
+quarter, year), with a derived monthly equivalent used *only* to filter, sort and
+compare. Neither the app nor the API has it — `monthlyRent` is the only field in
+the spec. Note `docs/backend-requests.md` §8 currently argues **against** a price
+period on the grounds that it contradicts Doc 10; that reasoning is now stale.
+Waiting on the updated OpenAPI export before doing anything here.
+
+Doc 10's RM-M10-01 still words the profile requirement as "photo + type + ville";
+the API models a prestataire's image as `logoObjectKey`, and the app treats those
+as the same thing.
 
 ---
 

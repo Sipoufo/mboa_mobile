@@ -26,6 +26,7 @@ export 'src/ui/controls/segmented_control.dart';
 export 'src/ui/media/mboa_avatar.dart';
 
 // Inputs
+export 'src/ui/inputs/field_help.dart';
 export 'src/ui/inputs/input.dart';
 export 'src/ui/inputs/otp_field.dart';
 export 'src/ui/inputs/password_field.dart';

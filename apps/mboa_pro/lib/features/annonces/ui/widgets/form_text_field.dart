@@ -17,9 +17,13 @@ class FormTextField extends StatefulWidget {
     this.maxLines = 1,
     this.minLines,
     this.suffixText,
+    this.helpText,
   });
 
   final String label;
+
+  /// Doc 10's definition of the field, shown behind an info icon on the label.
+  final String? helpText;
   final String initialValue;
   final ValueChanged<String> onChanged;
   final TextInputType? keyboardType;
@@ -71,6 +75,7 @@ class _FormTextFieldState extends State<FormTextField> {
     return Input(
       controller: _controller,
       labelText: widget.label,
+      helpText: widget.helpText,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,

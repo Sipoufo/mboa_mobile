@@ -181,7 +181,11 @@ class _Form extends StatelessWidget {
       children: [
         // The kind is fixed once a listing exists — the two are different
         // resources on the backend, so switching would mean re-creating.
-        if (!draft.isEditing)
+        if (!draft.isEditing) ...[
+          _HelpLabel(
+            label: l10n.annonceFormKindLabel,
+            helpText: l10n.annonceFormHelpKind,
+          ),
           MboaSegmentedControl<AnnonceKind>(
             value: draft.kind,
             segments: [
@@ -198,7 +202,12 @@ class _Form extends StatelessWidget {
                 .read<AnnonceFormBloc>()
                 .add(AnnonceFormStarted(kind: kind)),
           ),
+        ],
         const SizedBox(height: Dimens.spacing),
+        _HelpLabel(
+          label: l10n.annonceFormPhotosLabel,
+          helpText: l10n.annonceFormHelpPhotos,
+        ),
         PhotoStrip(
           photoKeys: draft.photoKeys,
           isUploading: state.uploadingPhoto,
@@ -227,6 +236,7 @@ class _Form extends StatelessWidget {
           const SizedBox(height: Dimens.spacing),
           FormTextField(
             label: l10n.annonceFormFieldPrice,
+            helpText: l10n.annonceFormHelpPrice,
             suffixText: l10n.annonceFormCurrency,
             keyboardType: TextInputType.number,
             initialValue: draft.monthlyRent?.toString() ?? '',
@@ -243,6 +253,7 @@ class _Form extends StatelessWidget {
             Expanded(
               child: FormTextField(
                 label: l10n.annonceFormFieldSurface,
+                helpText: l10n.annonceFormHelpOptionalFilters,
                 suffixText: l10n.annonceFormUnitSquareMetres,
                 keyboardType: TextInputType.number,
                 initialValue: draft.surfaceArea?.toString() ?? '',
@@ -297,6 +308,7 @@ class _Form extends StatelessWidget {
         const SizedBox(height: Dimens.spacing),
         FormFieldShell(
           label: l10n.annonceFormFieldCharges,
+          helpText: l10n.annonceFormHelpCharges,
           trailing: Switch(
             value: draft.chargesIncluded ?? false,
             onChanged: (value) =>
@@ -334,6 +346,7 @@ class _Form extends StatelessWidget {
         const SizedBox(height: Dimens.spacing),
         FormTextField(
           label: l10n.annonceFormFieldDescription,
+          helpText: l10n.annonceFormHelpDescription,
           minLines: 4,
           maxLines: 8,
           initialValue: draft.description ?? '',
@@ -351,6 +364,32 @@ class _Form extends StatelessWidget {
   }
 }
 
+/// A label + info icon for the sections that are not fields — the kind
+/// selector and the photo strip — so they carry the same affordance as the
+/// labelled inputs below them.
+class _HelpLabel extends StatelessWidget {
+  const _HelpLabel({required this.label, required this.helpText});
+
+  final String label;
+  final String helpText;
+
+  @override
+  Widget build(BuildContext context) => Row(
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              style: context.mboaText.label.copyWith(
+                fontWeight: FontWeight.w400,
+                color: context.mboaColors.textSecondary,
+              ),
+            ),
+          ),
+          FieldHelp(label: label, text: helpText),
+        ],
+      );
+}
+
 class _PropertyTypeField extends StatelessWidget {
   const _PropertyTypeField({required this.value, required this.onChanged});
 
@@ -363,6 +402,7 @@ class _PropertyTypeField extends StatelessWidget {
 
     return FormFieldShell(
       label: l10n.annonceFormFieldType,
+      helpText: l10n.annonceFormHelpPropertyType,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<PropertyType>(
           value: value,
@@ -415,6 +455,7 @@ class _AvailabilityField extends StatelessWidget {
       },
       child: FormFieldShell(
         label: l10n.annonceFormFieldAvailability,
+        helpText: l10n.annonceFormHelpAvailability,
         trailing: Icon(LucideIcons.calendar, color: colors.primary),
         child: Text(
           value == null ? '--/--' : DateFormat.yMMMMd().format(value!),

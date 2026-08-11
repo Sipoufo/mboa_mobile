@@ -35,6 +35,11 @@ class Input extends StatelessWidget {
   final List<String>? autofillHints;
   final String? labelText;
   final String? labelSuffix;
+
+  /// When set, an info affordance sits next to the label and opens a sheet
+  /// explaining the field. Only worth it where the answer is not obvious — an
+  /// icon on every label becomes wallpaper and stops being read.
+  final String? helpText;
   final TextCapitalization? textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
@@ -81,6 +86,7 @@ class Input extends StatelessWidget {
     this.borderColor,
     this.focusedBorderColor,
     this.variant = InputVariant.outlined,
+    this.helpText,
   });
 
   @override
@@ -145,25 +151,33 @@ class Input extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (labelText != null) ...[
-          Text.rich(
-            TextSpan(
-              text: labelText!,
-              style: context.mboaText.label.copyWith(
-                fontWeight: FontWeight.w400,
-                color: context.mboaColors.textSecondary,
-              ),
-              children: [
-                if (labelSuffix != null) ...[
+          Row(
+            children: [
+              Flexible(
+                child: Text.rich(
                   TextSpan(
-                    text: ' ($labelSuffix)',
+                    text: labelText!,
                     style: context.mboaText.label.copyWith(
                       fontWeight: FontWeight.w400,
-                      color: context.mboaColors.textTertiary,
+                      color: context.mboaColors.textSecondary,
                     ),
+                    children: [
+                      if (labelSuffix != null) ...[
+                        TextSpan(
+                          text: ' ($labelSuffix)',
+                          style: context.mboaText.label.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: context.mboaColors.textTertiary,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                ],
-              ],
-            ),
+                ),
+              ),
+              if (helpText case final help?)
+                FieldHelp(label: labelText!, text: help),
+            ],
           ),
           const SizedBox(height: Dimens.spacingXs),
         ],

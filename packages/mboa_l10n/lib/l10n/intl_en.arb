@@ -671,5 +671,49 @@
   "errorAccessDenied": "Your account isn’t allowed to do that.",
   "@errorAccessDenied": {},
   "annonceDetailUnitOfResidence": "Unit of a residence",
-  "@annonceDetailUnitOfResidence": {}
+  "@annonceDetailUnitOfResidence": {},
+  "annonceFormHelpKind": "A Multiple Property groups several units sharing one address and set of characteristics: a building, a compound, a hotel, a serviced residence. Units are created in groups up front — none can be added afterwards.",
+  "@annonceFormHelpKind": {
+    "description": "Doc 10 §M10bis (Modèle). Help text on the Bien Unique / Bien Multiple selector."
+  },
+  "annonceFormHelpPropertyType": "Apartment, studio, villa, room, office or commercial space. Tenants filter their search on this.",
+  "@annonceFormHelpPropertyType": {
+    "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
+  },
+  "annonceFormHelpPrice": "The monthly rent in FCFA. It is used as a search filter, over a 0 – 500,000 F range.",
+  "@annonceFormHelpPrice": {
+    "description": "Doc 10 §M04 (filtres). Help text on the rent field. Revisit with RM-M10-09 (loyer + périodicité), not yet in the API."
+  },
+  "annonceFormHelpCharges": "Optional. Say whether water and electricity are included in the rent, and how much they cost if they are not.",
+  "@annonceFormHelpCharges": {
+    "description": "Doc 10 §M10 (Champs) — « Charges incluses (oui/non + montant) », facultatif, visible par les users."
+  },
+  "annonceFormHelpOptionalFilters": "Optional, but tenants filter their search on these — a listing without them comes up less often.",
+  "@annonceFormHelpOptionalFilters": {
+    "description": "Doc 10 §M04 (filtres) — surface, pièces, meublé. Help text shared by the optional characteristics."
+  },
+  "annonceFormHelpLocation": "The city and district are visible to tenants. The exact address never is: it appears only in the signed Mboa Contract.",
+  "@annonceFormHelpLocation": {
+    "description": "Doc 10 §M10 (Champs) — « Adresse exacte : visible par les users = Non »."
+  },
+  "annonceFormHelpAvailability": "Required. Tenants can filter on immediate availability.",
+  "@annonceFormHelpAvailability": {
+    "description": "Doc 10 §M10 (Champs) + §M04 (filtre « Disponibilité immédiate »)."
+  },
+  "annonceFormHelpPhotos": "3 photos minimum, 15 maximum. They are compressed automatically before upload. Changing the photos on a published listing re-triggers validation of the “Verified photos” badge.",
+  "@annonceFormHelpPhotos": {
+    "description": "Doc 10 RM-M10-03, RM-M10-06, CE-M10-03."
+  },
+  "annonceFormHelpDescription": "Optional, 1,500 characters maximum.",
+  "@annonceFormHelpDescription": {
+    "description": "Doc 10 §M10 (Champs)."
+  },
+  "annonceFormKindLabel": "Listing type",
+  "@annonceFormKindLabel": {
+    "description": "Label above the Bien Unique / Bien Multiple selector; also the title of its help sheet."
+  },
+  "annonceFormPhotosLabel": "Photos",
+  "@annonceFormPhotosLabel": {
+    "description": "Label above the photo strip; also the title of its help sheet."
+  }
 }

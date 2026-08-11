@@ -671,5 +671,49 @@
   "errorAccessDenied": "Votre compte n’a pas les droits pour cette action.",
   "@errorAccessDenied": {},
   "annonceDetailUnitOfResidence": "Unité d’une résidence",
-  "@annonceDetailUnitOfResidence": {}
+  "@annonceDetailUnitOfResidence": {},
+  "annonceFormHelpKind": "Un Bien Multiple regroupe plusieurs unités qui partagent une adresse et des caractéristiques : immeuble, cité, hôtel, résidence meublée. Les unités se créent par groupes au moment de la création — aucune unité ne peut être ajoutée par la suite.",
+  "@annonceFormHelpKind": {
+    "description": "Doc 10 §M10bis (Modèle). Help text on the Bien Unique / Bien Multiple selector."
+  },
+  "annonceFormHelpPropertyType": "Appartement, Studio, Villa, Chambre, Bureau ou Local commercial. Les locataires filtrent leur recherche sur ce critère.",
+  "@annonceFormHelpPropertyType": {
+    "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
+  },
+  "annonceFormHelpPrice": "Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.",
+  "@annonceFormHelpPrice": {
+    "description": "Doc 10 §M04 (filtres). Help text on the rent field. Revisit with RM-M10-09 (loyer + périodicité), not yet in the API."
+  },
+  "annonceFormHelpCharges": "Facultatif. Indiquez si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
+  "@annonceFormHelpCharges": {
+    "description": "Doc 10 §M10 (Champs) — « Charges incluses (oui/non + montant) », facultatif, visible par les users."
+  },
+  "annonceFormHelpOptionalFilters": "Facultatif, mais les locataires filtrent leur recherche sur ces critères : un bien sans ces informations ressort moins souvent.",
+  "@annonceFormHelpOptionalFilters": {
+    "description": "Doc 10 §M04 (filtres) — surface, pièces, meublé. Help text shared by the optional characteristics."
+  },
+  "annonceFormHelpLocation": "La ville et le quartier sont visibles par les locataires. L'adresse exacte ne l'est jamais : elle n'apparaît que dans le Contrat Mboa signé.",
+  "@annonceFormHelpLocation": {
+    "description": "Doc 10 §M10 (Champs) — « Adresse exacte : visible par les users = Non »."
+  },
+  "annonceFormHelpAvailability": "Obligatoire. Les locataires peuvent filtrer sur la disponibilité immédiate.",
+  "@annonceFormHelpAvailability": {
+    "description": "Doc 10 §M10 (Champs) + §M04 (filtre « Disponibilité immédiate »)."
+  },
+  "annonceFormHelpPhotos": "3 photos minimum et 15 maximum. Elles sont compressées automatiquement avant l'envoi. Modifier les photos d'une annonce publiée relance la validation du badge « Photos vérifiées ».",
+  "@annonceFormHelpPhotos": {
+    "description": "Doc 10 RM-M10-03, RM-M10-06, CE-M10-03."
+  },
+  "annonceFormHelpDescription": "Facultatif, 1 500 caractères maximum.",
+  "@annonceFormHelpDescription": {
+    "description": "Doc 10 §M10 (Champs)."
+  },
+  "annonceFormKindLabel": "Type d'annonce",
+  "@annonceFormKindLabel": {
+    "description": "Label above the Bien Unique / Bien Multiple selector; also the title of its help sheet."
+  },
+  "annonceFormPhotosLabel": "Photos",
+  "@annonceFormPhotosLabel": {
+    "description": "Label above the photo strip; also the title of its help sheet."
+  }
 }

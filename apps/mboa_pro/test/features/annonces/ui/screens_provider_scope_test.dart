@@ -213,6 +213,13 @@ void main() {
   });
 
   testWidgets('AnnonceFormPage renders with its own bloc', (tester) async {
+    // The form is longer than the default 800×600 surface, and a ListView only
+    // builds what is near the viewport — the property-type dropdown would not
+    // exist to be found. Give it room rather than scrolling, so both label
+    // assertions below hold at the same moment.
+    await tester.binding.setSurfaceSize(const Size(800, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
     final form = MockAnnonceFormBloc();
     when(() => form.state).thenReturn(
       const AnnonceFormEditing(AnnonceDraft(kind: AnnonceKind.single)),

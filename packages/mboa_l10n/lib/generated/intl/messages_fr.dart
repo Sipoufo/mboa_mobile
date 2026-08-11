@@ -197,6 +197,36 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormFieldTitle": MessageLookupByLibrary.simpleMessage("Titre"),
     "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
+    "annonceFormHelpAvailability": MessageLookupByLibrary.simpleMessage(
+      "Obligatoire. Les locataires peuvent filtrer sur la disponibilité immédiate.",
+    ),
+    "annonceFormHelpCharges": MessageLookupByLibrary.simpleMessage(
+      "Facultatif. Indiquez si l\'eau et l\'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
+    ),
+    "annonceFormHelpDescription": MessageLookupByLibrary.simpleMessage(
+      "Facultatif, 1 500 caractères maximum.",
+    ),
+    "annonceFormHelpKind": MessageLookupByLibrary.simpleMessage(
+      "Un Bien Multiple regroupe plusieurs unités qui partagent une adresse et des caractéristiques : immeuble, cité, hôtel, résidence meublée. Les unités se créent par groupes au moment de la création — aucune unité ne peut être ajoutée par la suite.",
+    ),
+    "annonceFormHelpLocation": MessageLookupByLibrary.simpleMessage(
+      "La ville et le quartier sont visibles par les locataires. L\'adresse exacte ne l\'est jamais : elle n\'apparaît que dans le Contrat Mboa signé.",
+    ),
+    "annonceFormHelpOptionalFilters": MessageLookupByLibrary.simpleMessage(
+      "Facultatif, mais les locataires filtrent leur recherche sur ces critères : un bien sans ces informations ressort moins souvent.",
+    ),
+    "annonceFormHelpPhotos": MessageLookupByLibrary.simpleMessage(
+      "3 photos minimum et 15 maximum. Elles sont compressées automatiquement avant l\'envoi. Modifier les photos d\'une annonce publiée relance la validation du badge « Photos vérifiées ».",
+    ),
+    "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
+      "Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.",
+    ),
+    "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
+      "Appartement, Studio, Villa, Chambre, Bureau ou Local commercial. Les locataires filtrent leur recherche sur ce critère.",
+    ),
+    "annonceFormKindLabel": MessageLookupByLibrary.simpleMessage(
+      "Type d\'annonce",
+    ),
     "annonceFormKindMultiple": MessageLookupByLibrary.simpleMessage(
       "Bien multiple",
     ),
@@ -219,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun quartier disponible pour cette ville.",
     ),
     "annonceFormPhotosHint": m3,
+    "annonceFormPhotosLabel": MessageLookupByLibrary.simpleMessage("Photos"),
     "annonceFormPickDistrict": MessageLookupByLibrary.simpleMessage(
       "Choisir le quartier",
     ),

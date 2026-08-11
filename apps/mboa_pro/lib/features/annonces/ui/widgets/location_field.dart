@@ -139,6 +139,7 @@ class _LocationFieldState extends State<LocationField> {
       children: [
         FormFieldShell(
           label: l10n.annonceFormFieldLocation,
+          helpText: l10n.annonceFormHelpLocation,
           onTap: _busy ? null : _start,
           trailing: _busy
               ? const SizedBox(

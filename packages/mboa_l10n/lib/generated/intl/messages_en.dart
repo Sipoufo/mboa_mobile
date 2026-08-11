@@ -192,6 +192,36 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormFieldTitle": MessageLookupByLibrary.simpleMessage("Title"),
     "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
+    "annonceFormHelpAvailability": MessageLookupByLibrary.simpleMessage(
+      "Required. Tenants can filter on immediate availability.",
+    ),
+    "annonceFormHelpCharges": MessageLookupByLibrary.simpleMessage(
+      "Optional. Say whether water and electricity are included in the rent, and how much they cost if they are not.",
+    ),
+    "annonceFormHelpDescription": MessageLookupByLibrary.simpleMessage(
+      "Optional, 1,500 characters maximum.",
+    ),
+    "annonceFormHelpKind": MessageLookupByLibrary.simpleMessage(
+      "A Multiple Property groups several units sharing one address and set of characteristics: a building, a compound, a hotel, a serviced residence. Units are created in groups up front — none can be added afterwards.",
+    ),
+    "annonceFormHelpLocation": MessageLookupByLibrary.simpleMessage(
+      "The city and district are visible to tenants. The exact address never is: it appears only in the signed Mboa Contract.",
+    ),
+    "annonceFormHelpOptionalFilters": MessageLookupByLibrary.simpleMessage(
+      "Optional, but tenants filter their search on these — a listing without them comes up less often.",
+    ),
+    "annonceFormHelpPhotos": MessageLookupByLibrary.simpleMessage(
+      "3 photos minimum, 15 maximum. They are compressed automatically before upload. Changing the photos on a published listing re-triggers validation of the “Verified photos” badge.",
+    ),
+    "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
+      "The monthly rent in FCFA. It is used as a search filter, over a 0 – 500,000 F range.",
+    ),
+    "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
+      "Apartment, studio, villa, room, office or commercial space. Tenants filter their search on this.",
+    ),
+    "annonceFormKindLabel": MessageLookupByLibrary.simpleMessage(
+      "Listing type",
+    ),
     "annonceFormKindMultiple": MessageLookupByLibrary.simpleMessage(
       "Residence",
     ),
@@ -214,6 +244,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "No district available for this city.",
     ),
     "annonceFormPhotosHint": m3,
+    "annonceFormPhotosLabel": MessageLookupByLibrary.simpleMessage("Photos"),
     "annonceFormPickDistrict": MessageLookupByLibrary.simpleMessage(
       "Choose the district",
     ),
