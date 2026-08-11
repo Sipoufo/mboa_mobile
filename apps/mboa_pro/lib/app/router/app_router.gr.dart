@@ -602,7 +602,7 @@ class MesAgentsRoute extends _i36.PageRouteInfo<void> {
   static _i36.PageInfo page = _i36.PageInfo(
     name,
     builder: (data) {
-      return _i36.WrappedRoute(child: const _i23.MesAgentsPage());
+      return const _i23.MesAgentsPage();
     },
   );
 }

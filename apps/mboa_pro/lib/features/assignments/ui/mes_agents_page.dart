@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
@@ -17,15 +16,21 @@ import 'widgets/property_picker_sheet.dart';
 /// The design's second line is a job title, which agents do not have, so it
 /// carries the property they work, or how many.
 @RoutePage()
-class MesAgentsPage extends StatelessWidget implements AutoRouteWrapper {
+class MesAgentsPage extends StatefulWidget {
   const MesAgentsPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<MyAgentsBloc>(
-        create: (_) =>
-            getIt<MyAgentsBloc>()..add(const MyAgentsLoadRequested()),
-        child: this,
-      );
+  State<MesAgentsPage> createState() => _MesAgentsPageState();
+}
+
+class _MesAgentsPageState extends State<MesAgentsPage> {
+  @override
+  void initState() {
+    super.initState();
+    // The bloc is session-scoped and deliberately not loaded there, so the
+    // screen that needs it asks for it.
+    context.read<MyAgentsBloc>().add(const MyAgentsLoadRequested());
+  }
 
   @override
   Widget build(BuildContext context) {

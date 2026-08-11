@@ -56,7 +56,9 @@ pinned by tests; do not "simplify" them away.
 
 ### Bloc scoping
 `AuthenticatedWrapper` provides the **session-scoped** blocs: `ProProfileBloc`,
-`KycCubit`, `SubscriptionBloc`, `HomeBloc`, `AnnoncesBloc`, `ResidencesBloc`.
+`KycCubit`, `SubscriptionBloc`, `HomeBloc`, `AnnoncesBloc`, `ResidencesBloc`,
+`AgentProfileBloc`, `MyAgentsBloc`. All are dropped by
+`resetSessionScopedBlocs()` on sign-out.
 Anything read by more than one route belongs there. A bloc provided in a single
 page's `wrappedRoute` is visible **only to that route and its children** — not to
 siblings. This threw `ProviderNotFoundException` twice (Mes biens hub, then
@@ -64,7 +66,14 @@ listing detail).
 
 **Rule:** a screen reading a bloc it does not provide itself needs a widget test
 pumping it with *only* the blocs its route inherits. See
-`screens_provider_scope_test.dart`.
+`screens_provider_scope_test.dart` and `assignments_provider_scope_test.dart`.
+
+**A third time, and the test is only worth what it withholds.** The agent detail
+read `MyAgentsBloc` while *Mes agents* provided it, and they are siblings under
+`/app` — so it threw on a device. Its widget test passed the whole time, because
+it provided every bloc the screen might want. Providing more than the route
+inherits does not test scoping, it hides it. `MyAgentsBloc` is now session-scoped
+like the rest, and every M11 screen is pumped with the wrapper's set only.
 
 ### Two personas, one entry point
 `/app` opens on `RoleGateRoute`, **not** on a shell. The login response carries

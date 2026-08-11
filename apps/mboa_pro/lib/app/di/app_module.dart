@@ -194,7 +194,9 @@ void registerAppModule() {
   getIt.registerFactory<AgentDetailBloc>(
     () => AgentDetailBloc(repository: getIt<AssignmentRepository>()),
   );
-  getIt.registerFactory<MyAgentsBloc>(
+  // Session-scoped, not route-scoped: Mes agents *and* the agent detail read
+  // it, and a bloc provided by one route is invisible to its siblings.
+  getIt.registerLazySingleton<MyAgentsBloc>(
     () => MyAgentsBloc(repository: getIt<AssignmentRepository>()),
   );
 
@@ -269,6 +271,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<SubscriptionBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<MyAgentsBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<KycCubit>(

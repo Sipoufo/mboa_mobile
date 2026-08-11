@@ -5,6 +5,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../../features/agent/bloc/agent_profile_bloc.dart';
+import '../../../features/assignments/bloc/my_agents_bloc.dart';
 import '../../../features/annonces/bloc/annonces_bloc.dart';
 import '../../../features/annonces/bloc/residences_bloc.dart';
 import '../../../features/home/bloc/home_bloc.dart';
@@ -49,6 +50,9 @@ class AuthenticatedWrapper extends StatelessWidget implements AutoRouteWrapper {
         // siblings, which has bitten this app twice. Loaded by the agent
         // profile screen, so a prestataire session never calls /agents/me.
         BlocProvider<AgentProfileBloc>.value(value: getIt<AgentProfileBloc>()),
+        // Read by Mes agents and by the agent detail, which are siblings under
+        // `/app` — so it cannot live on either one's route.
+        BlocProvider<MyAgentsBloc>.value(value: getIt<MyAgentsBloc>()),
       ],
       child: this,
     );

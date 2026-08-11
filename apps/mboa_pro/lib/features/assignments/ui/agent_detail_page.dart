@@ -23,7 +23,7 @@ import '../models/assignment.dart';
 /// number reaches the people who need it on the day of a visit, not everyone
 /// who has ever been offered their services.
 @RoutePage()
-class AgentDetailPage extends StatelessWidget implements AutoRouteWrapper {
+class AgentDetailPage extends StatefulWidget implements AutoRouteWrapper {
   const AgentDetailPage({super.key, required this.agentAccountId});
 
   final String agentAccountId;
@@ -34,6 +34,21 @@ class AgentDetailPage extends StatelessWidget implements AutoRouteWrapper {
           ..add(AgentDetailRequested(agentAccountId)),
         child: this,
       );
+
+  @override
+  State<AgentDetailPage> createState() => _AgentDetailPageState();
+}
+
+class _AgentDetailPageState extends State<AgentDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    // A deep link reaches this without passing through Mes agents, so the
+    // properties list would otherwise be empty.
+    if (context.read<MyAgentsBloc>().state is! MyAgentsReady) {
+      context.read<MyAgentsBloc>().add(const MyAgentsLoadRequested());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +63,9 @@ class AgentDetailPage extends StatelessWidget implements AutoRouteWrapper {
           // screen does not strand it on a stale row.
           final row = switch (agentsState) {
             MyAgentsReady(:final rows) =>
-              rows.where((r) => r.agentAccountId == agentAccountId).firstOrNull,
+              rows
+                .where((r) => r.agentAccountId == widget.agentAccountId)
+                .firstOrNull,
             _ => null,
           };
 
