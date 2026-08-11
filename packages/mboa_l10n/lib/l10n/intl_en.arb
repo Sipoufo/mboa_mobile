@@ -1219,5 +1219,55 @@
   "agentsPickPropertyNoneBody": "An agent can only be assigned to a published property. Publish a listing or a residence unit to continue.",
   "@agentsPickPropertyNoneBody": {
     "description": "The backend refuses a non-published listing (ANNONCE_NOT_PUBLISHED) and a residence with no published unit (NO_PUBLISHED_UNITS)."
+  },
+  "agentDetailTitle": "Agent profile",
+  "@agentDetailTitle": {
+    "description": "M11 agent detail screen."
+  },
+  "agentDetailMemberSince": "Member since {date}",
+  "@agentDetailMemberSince": {
+    "description": "AgentPublicProfile.memberSince.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "agentDetailZones": "Working areas",
+  "@agentDetailZones": {
+    "description": "The agent's declared zones (RM-M15-04)."
+  },
+  "agentDetailWholeCity": "The whole city",
+  "@agentDetailWholeCity": {
+    "description": "A zone covering a whole city — district is absent."
+  },
+  "agentDetailProperties": "Properties handled",
+  "@agentDetailProperties": {
+    "description": "Properties this agent works for this prestataire."
+  },
+  "agentDetailPending": "Awaiting a response",
+  "@agentDetailPending": {
+    "description": "Offers this agent has not answered."
+  },
+  "agentDetailNoProperties": "No properties handled yet",
+  "@agentDetailNoProperties": {
+    "description": "Empty state."
+  },
+  "agentDetailUnavailable": "Profile unavailable",
+  "@agentDetailUnavailable": {
+    "description": "The public profile could not be loaded."
+  },
+  "agentRatingNone": "Not rated yet",
+  "@agentRatingNone": {
+    "description": "averageRating is null until someone rates — never render 0 ★."
+  },
+  "agentRatingCount": "{count} reviews",
+  "@agentRatingCount": {
+    "description": "How many ratings the average rests on.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

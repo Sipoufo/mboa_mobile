@@ -83,6 +83,7 @@ class AppRouter extends RootStackRouter {
             // Agent assignment (M11).
             AutoRoute(page: MesAgentsRoute.page, path: 'agents'),
             AutoRoute(page: AgentAssignmentRoute.page, path: 'agents/assign'),
+            AutoRoute(page: AgentDetailRoute.page, path: 'agents/:id'),
 
             // Slide menu — pushed over the shell, not a tab.
             CustomRoute(

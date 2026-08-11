@@ -4279,6 +4279,106 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Profil de l'agent`
+  String get agentDetailTitle {
+    return Intl.message(
+      'Profil de l\'agent',
+      name: 'agentDetailTitle',
+      desc: 'M11 agent detail screen.',
+      args: [],
+    );
+  }
+
+  /// `Membre depuis {date}`
+  String agentDetailMemberSince(String date) {
+    return Intl.message(
+      'Membre depuis $date',
+      name: 'agentDetailMemberSince',
+      desc: 'AgentPublicProfile.memberSince.',
+      args: [date],
+    );
+  }
+
+  /// `Zones d'intervention`
+  String get agentDetailZones {
+    return Intl.message(
+      'Zones d\'intervention',
+      name: 'agentDetailZones',
+      desc: 'The agent\'s declared zones (RM-M15-04).',
+      args: [],
+    );
+  }
+
+  /// `Toute la ville`
+  String get agentDetailWholeCity {
+    return Intl.message(
+      'Toute la ville',
+      name: 'agentDetailWholeCity',
+      desc: 'A zone covering a whole city — district is absent.',
+      args: [],
+    );
+  }
+
+  /// `Biens confiés`
+  String get agentDetailProperties {
+    return Intl.message(
+      'Biens confiés',
+      name: 'agentDetailProperties',
+      desc: 'Properties this agent works for this prestataire.',
+      args: [],
+    );
+  }
+
+  /// `En attente de réponse`
+  String get agentDetailPending {
+    return Intl.message(
+      'En attente de réponse',
+      name: 'agentDetailPending',
+      desc: 'Offers this agent has not answered.',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien confié pour le moment`
+  String get agentDetailNoProperties {
+    return Intl.message(
+      'Aucun bien confié pour le moment',
+      name: 'agentDetailNoProperties',
+      desc: 'Empty state.',
+      args: [],
+    );
+  }
+
+  /// `Profil indisponible`
+  String get agentDetailUnavailable {
+    return Intl.message(
+      'Profil indisponible',
+      name: 'agentDetailUnavailable',
+      desc: 'The public profile could not be loaded.',
+      args: [],
+    );
+  }
+
+  /// `Pas encore noté`
+  String get agentRatingNone {
+    return Intl.message(
+      'Pas encore noté',
+      name: 'agentRatingNone',
+      desc: 'averageRating is null until someone rates — never render 0 ★.',
+      args: [],
+    );
+  }
+
+  /// `{count} avis`
+  String agentRatingCount(int count) {
+    return Intl.message(
+      '$count avis',
+      name: 'agentRatingCount',
+      desc: 'How many ratings the average rests on.',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -18,6 +18,7 @@ Serializers _$serializers =
           ..add(AgentOpportunityRentalPeriodEnum.serializer)
           ..add(AgentProfileResponse.serializer)
           ..add(AgentProfileResponseStatusEnum.serializer)
+          ..add(AgentPublicProfile.serializer)
           ..add(AgentVisiteDetail.serializer)
           ..add(AgentVisiteDetailStatusEnum.serializer)
           ..add(AnnonceDetailResponse.serializer)
@@ -208,6 +209,7 @@ Serializers _$serializers =
           ..add(VisiteResponse.serializer)
           ..add(VisiteResponseCancellationReasonEnum.serializer)
           ..add(VisiteResponseStatusEnum.serializer)
+          ..add(Zone.serializer)
           ..add(ZoneResponse.serializer)
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(AdminUserSummary)]),
@@ -410,6 +412,10 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(VisiteResponse)]),
             () => ListBuilder<VisiteResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(Zone)]),
+            () => ListBuilder<Zone>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ZoneResponse)]),

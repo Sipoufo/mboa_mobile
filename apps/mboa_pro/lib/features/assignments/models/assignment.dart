@@ -122,6 +122,7 @@ class Assignment extends Equatable {
     this.propertyTitle,
     this.agentAccountId,
     this.agentName,
+    this.agentPhotoObjectKey,
     this.unitCount,
     this.createdAt,
     this.respondedAt,
@@ -134,6 +135,11 @@ class Assignment extends Equatable {
   final String? propertyTitle;
   final String? agentAccountId;
   final String? agentName;
+
+  /// Added 2026-08-11 — the assigned-agent list had no face to show before it.
+  final String? agentPhotoObjectKey;
+
+  String? get agentPhotoUrl => BaseProfile.mediaUrl(agentPhotoObjectKey);
 
   /// Residences only — how many units the assignment covers (RM-M10bis-11
   /// shows one entry per lot with its count, never one per unit).
@@ -157,6 +163,7 @@ class Assignment extends Equatable {
       propertyTitle: response.annonceTitle,
       agentAccountId: response.agentAccountId,
       agentName: response.agentName,
+      agentPhotoObjectKey: response.agentPhotoObjectKey,
       createdAt: response.createdAt,
       respondedAt: response.respondedAt,
     );
@@ -193,6 +200,7 @@ class Assignment extends Equatable {
         propertyTitle: summary.residenceName,
         agentAccountId: summary.agentAccountId,
         agentName: summary.agentName,
+        agentPhotoObjectKey: summary.agentPhotoObjectKey,
         unitCount: summary.unitCount,
         createdAt: summary.createdAt,
         respondedAt: summary.respondedAt,
@@ -207,6 +215,7 @@ class Assignment extends Equatable {
         propertyTitle,
         agentAccountId,
         agentName,
+        agentPhotoObjectKey,
         unitCount,
         createdAt,
         respondedAt,
@@ -225,17 +234,23 @@ class AgentCandidateView extends Equatable {
     this.lastName,
     this.photoObjectKey,
     this.completedVisitCount = 0,
+    this.averageRating,
+    this.ratingCount = 0,
   });
 
   final String accountId;
   final String? firstName;
   final String? lastName;
   final String? photoObjectKey;
-
-  /// The only quality signal a prestataire currently gets. `averageRating` and
-  /// `ratingCount` exist on the agent record but are not exposed here — see
-  /// `docs/backend-requests.md` §11.
   final int completedVisitCount;
+
+  /// **Null until somebody rates them**, and rating a visit is optional
+  /// (RM-M07-07), so twelve visits with no rating is an ordinary state. Never
+  /// render that as "0 ★" — it libels a perfectly good agent.
+  final double? averageRating;
+  final int ratingCount;
+
+  bool get hasRating => averageRating != null && ratingCount > 0;
 
   String get fullName =>
       [firstName, lastName].where((p) => p != null && p.isNotEmpty).join(' ');
@@ -261,11 +276,20 @@ class AgentCandidateView extends Equatable {
         lastName: candidate.lastName,
         photoObjectKey: candidate.photoObjectKey,
         completedVisitCount: candidate.completedVisitCount ?? 0,
+        averageRating: candidate.averageRating,
+        ratingCount: candidate.ratingCount ?? 0,
       );
 
   @override
-  List<Object?> get props =>
-      [accountId, firstName, lastName, photoObjectKey, completedVisitCount];
+  List<Object?> get props => [
+        accountId,
+        firstName,
+        lastName,
+        photoObjectKey,
+        completedVisitCount,
+        averageRating,
+        ratingCount,
+      ];
 }
 
 /// An agent who applied and is waiting on the prestataire (RM-M11-07).
@@ -430,4 +454,103 @@ class Opportunity extends Equatable {
   @override
   List<Object?> get props =>
       [target, title, photoKey, city, district, price, unitCount];
+}
+
+/// One place an agent works, as the public profile names it.
+///
+/// `district` is absent when the agent covers the whole city — the same
+/// either/or the agent's own zones use, expressed here as names rather than
+/// ids, because nothing on this screen needs to look them up.
+class AgentZoneLabel extends Equatable {
+  const AgentZoneLabel({required this.city, this.district});
+
+  final String city;
+  final String? district;
+
+  bool get isWholeCity => district == null || district!.isEmpty;
+
+  String get label => isWholeCity ? city : '$district, $city';
+
+  @override
+  List<Object?> get props => [city, district];
+}
+
+/// What a prestataire may see about an agent (`GET /search/agents/{id}`).
+///
+/// Public, and deliberately thin: **no phone, no email, nothing from KYC** —
+/// the agent's number reaches only the people who need it, and the visit sheet
+/// gives the agent the user's number rather than the other way round.
+///
+/// A suspended or pending agent still resolves. They are named on every visit
+/// they carried out, and 404-ing would dead-link that history; the payload
+/// makes no claim that they are currently working.
+class AgentPublicProfileView extends Equatable {
+  const AgentPublicProfileView({
+    required this.accountId,
+    this.firstName,
+    this.lastName,
+    this.photoObjectKey,
+    this.completedVisitCount = 0,
+    this.averageRating,
+    this.ratingCount = 0,
+    this.zones = const [],
+    this.memberSince,
+  });
+
+  final String accountId;
+  final String? firstName;
+  final String? lastName;
+  final String? photoObjectKey;
+  final int completedVisitCount;
+
+  /// Null until somebody rates them; rating is optional (RM-M07-07).
+  final double? averageRating;
+  final int ratingCount;
+
+  final List<AgentZoneLabel> zones;
+  final DateTime? memberSince;
+
+  String get fullName =>
+      [firstName, lastName].where((p) => p != null && p.isNotEmpty).join(' ');
+
+  String get initials => initialsFromFullName(fullName);
+
+  String? get photoUrl => BaseProfile.mediaUrl(photoObjectKey);
+
+  bool get hasRating => averageRating != null && ratingCount > 0;
+
+  static AgentPublicProfileView fromResponse(AgentPublicProfile response) =>
+      AgentPublicProfileView(
+        accountId: response.accountId ?? '',
+        firstName: response.firstName,
+        lastName: response.lastName,
+        photoObjectKey: response.photoObjectKey,
+        completedVisitCount: response.completedVisitCount ?? 0,
+        averageRating: response.averageRating,
+        ratingCount: response.ratingCount ?? 0,
+        zones: response.zones
+                ?.map(
+                  (z) => AgentZoneLabel(
+                    city: z.city ?? '',
+                    district: z.district,
+                  ),
+                )
+                .where((z) => z.city.isNotEmpty)
+                .toList() ??
+            const [],
+        memberSince: response.memberSince,
+      );
+
+  @override
+  List<Object?> get props => [
+        accountId,
+        firstName,
+        lastName,
+        photoObjectKey,
+        completedVisitCount,
+        averageRating,
+        ratingCount,
+        zones,
+        memberSince,
+      ];
 }

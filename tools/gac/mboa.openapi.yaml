@@ -108,12 +108,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AgentProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -141,6 +135,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -158,12 +158,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AvailabilityResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -191,6 +185,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -213,12 +213,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AvailabilityResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -246,6 +240,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -292,12 +292,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseVisiteResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -325,6 +319,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -347,12 +347,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/VisiteResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -380,6 +374,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -406,12 +406,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -439,6 +433,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -459,12 +459,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -492,6 +486,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -522,12 +522,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PaymentInitiatedResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -555,6 +549,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -574,12 +574,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -607,6 +601,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -632,12 +632,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SignalementResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -665,6 +659,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -688,12 +688,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -721,6 +715,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -743,12 +743,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -776,6 +770,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -817,12 +817,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -850,6 +844,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -880,12 +880,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceAssignmentResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -913,6 +907,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -936,12 +936,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BatchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -969,6 +963,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -999,12 +999,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BatchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1032,6 +1026,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1063,12 +1063,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceAssignmentResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1096,6 +1090,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1121,12 +1121,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1154,6 +1148,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1178,12 +1178,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1211,6 +1205,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1235,12 +1235,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1268,6 +1262,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1292,12 +1292,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1325,6 +1319,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1349,12 +1349,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1382,6 +1376,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1406,12 +1406,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1439,6 +1433,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1458,12 +1458,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1491,6 +1485,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1514,12 +1514,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PresignedUpload"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1547,6 +1541,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1570,12 +1570,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1603,6 +1597,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1626,12 +1626,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseFavoriResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1659,6 +1653,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1681,12 +1681,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/FavoriResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1714,6 +1708,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1737,12 +1737,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseConversationResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1770,6 +1764,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1793,12 +1793,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ConversationResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1826,6 +1820,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1846,12 +1846,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1879,6 +1873,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1908,12 +1908,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseMessageResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -1941,6 +1935,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -1970,12 +1970,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/MessageResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2003,6 +1997,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2026,12 +2026,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2059,6 +2053,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2082,12 +2082,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2115,6 +2109,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2135,12 +2135,6 @@ paths:
       responses:
         "202":
           description: Accepted
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2168,6 +2162,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2187,12 +2187,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2220,6 +2214,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2239,12 +2239,6 @@ paths:
       responses:
         "202":
           description: Accepted
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2272,6 +2266,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2295,12 +2295,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2328,6 +2322,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2347,12 +2347,6 @@ paths:
       responses:
         "202":
           description: Accepted
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2380,6 +2374,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2399,12 +2399,6 @@ paths:
       responses:
         "202":
           description: Accepted
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2432,6 +2426,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2451,12 +2451,6 @@ paths:
       responses:
         "200":
           description: OK
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2484,6 +2478,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2504,12 +2504,6 @@ paths:
       responses:
         "202":
           description: Accepted
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2537,6 +2531,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2561,12 +2561,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AuthTokens"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2594,6 +2588,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2630,12 +2630,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2663,6 +2657,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2685,12 +2685,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2718,6 +2712,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2742,12 +2742,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2775,6 +2769,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2799,12 +2799,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2832,6 +2826,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2856,12 +2856,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2889,6 +2883,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2913,12 +2913,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2946,6 +2940,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -2970,12 +2970,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3003,6 +2997,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3033,12 +3033,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3066,6 +3060,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3085,12 +3085,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3118,6 +3112,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3148,12 +3148,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3181,6 +3175,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3211,12 +3211,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3244,6 +3238,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3274,12 +3274,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/VisiteResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3307,6 +3301,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3337,12 +3337,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/VisiteReportResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3370,6 +3364,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3390,12 +3390,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3423,6 +3417,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3443,12 +3443,6 @@ paths:
                 items:
                   type: string
                   format: date
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3476,6 +3470,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3494,12 +3494,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3527,6 +3521,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3551,12 +3551,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3584,6 +3578,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3608,12 +3608,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3641,6 +3635,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3665,12 +3665,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3698,6 +3692,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3722,12 +3722,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BatchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3755,6 +3749,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3779,12 +3779,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BatchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3812,6 +3806,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3837,12 +3837,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BatchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3870,6 +3864,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3894,12 +3894,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3927,6 +3921,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -3951,12 +3951,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceAssignmentResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -3984,6 +3978,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4010,12 +4010,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4043,6 +4037,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4063,12 +4063,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4096,6 +4090,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4126,12 +4126,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeReviewResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4159,6 +4153,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4183,12 +4183,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TypeChangeReviewResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4216,6 +4210,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4235,12 +4235,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4268,6 +4262,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4297,12 +4297,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SignalementResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4330,6 +4324,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4359,12 +4359,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SignalementResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4392,6 +4386,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4422,12 +4422,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4455,6 +4449,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4479,12 +4479,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4512,6 +4506,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4538,12 +4538,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4571,6 +4565,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4595,12 +4595,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4628,6 +4622,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4651,12 +4651,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PhoneChangeResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4684,6 +4678,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4703,12 +4703,6 @@ paths:
       responses:
         "202":
           description: Accepted
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4736,6 +4730,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4755,12 +4755,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4788,6 +4782,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4805,12 +4805,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4838,6 +4832,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4860,12 +4860,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4893,6 +4887,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4910,12 +4910,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserSettingsResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4943,6 +4937,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -4965,12 +4965,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserSettingsResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -4998,6 +4992,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5022,12 +5022,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5055,6 +5049,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5074,12 +5074,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5107,6 +5101,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5136,12 +5136,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5169,6 +5163,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5186,12 +5186,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PrestataireProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5219,6 +5213,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5241,12 +5241,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PrestataireProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5274,6 +5268,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5298,12 +5298,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5331,6 +5325,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5350,12 +5350,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5383,6 +5377,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5412,12 +5412,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5445,6 +5439,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5462,12 +5462,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AgentProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5495,6 +5489,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5518,12 +5518,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AgentProfileResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5551,6 +5545,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5585,12 +5585,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TierInfo"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5618,6 +5612,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5648,12 +5648,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5681,6 +5675,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5705,12 +5705,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/VisiteReportResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5738,6 +5732,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5763,12 +5763,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BookableSlotsResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5796,6 +5790,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5815,12 +5815,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/TierInfo"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5848,6 +5842,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5871,12 +5871,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponsePaymentSummary"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5904,6 +5898,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5928,12 +5928,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PaymentSummary"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5961,6 +5955,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -5985,12 +5985,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ReceiptResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6018,6 +6012,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6035,12 +6035,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SubscriptionResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6068,6 +6062,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6182,12 +6182,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseSearchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6215,6 +6209,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6239,12 +6239,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ResidenceDetailResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6272,6 +6266,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6304,12 +6304,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AnnonceDetailResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6337,6 +6331,73 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/search/agents/{id}:
+    get:
+      tags:
+        - Search
+      summary: Public profile of an Agent Mboa (M15)
+      description: "Readable without an account, like a listing's fiche. Carries no\
+        \ phone number, no email and nothing from KYC. A suspended agent still resolves\
+        \ — they are named on every visit they carried out; only a deleted account\
+        \ is withheld."
+      operationId: getAgentPublicProfile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AgentPublicProfile"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6368,12 +6429,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AgentCandidate"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6401,6 +6456,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6427,12 +6488,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/ResidenceApplicationSummary"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6460,6 +6515,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6477,12 +6538,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/MeResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6510,6 +6565,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6536,12 +6597,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LocationOption"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6569,6 +6624,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6588,12 +6649,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/CountryResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6621,6 +6676,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6647,12 +6708,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LocationOption"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6680,6 +6735,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6706,12 +6767,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/LocationOption"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6739,6 +6794,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6756,12 +6817,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6789,6 +6844,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6812,12 +6873,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseHistoriqueResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6845,6 +6900,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6857,12 +6918,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6890,6 +6945,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6922,12 +6983,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AgentCandidate"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6955,6 +7010,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -6981,12 +7042,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AssignmentResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7014,6 +7069,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7052,12 +7113,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAssignmentItem"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7085,6 +7140,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7131,12 +7192,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseVisiteResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7164,6 +7219,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7189,12 +7250,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AgentVisiteDetail"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7222,6 +7277,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7241,12 +7302,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/VisiteResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7274,6 +7329,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7323,12 +7384,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAssignmentItem"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7356,6 +7411,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7376,12 +7437,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/OpportunityItem"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7409,6 +7464,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7447,12 +7508,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAssignmentItem"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7480,6 +7535,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7528,12 +7589,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAdminUserSummary"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7561,6 +7616,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7584,12 +7645,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseTypeChangeReviewItem"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7617,6 +7672,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7649,12 +7710,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseSignalementResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7682,6 +7737,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7705,12 +7766,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseKycReviewItem"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7738,6 +7793,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7778,12 +7839,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAnnonceResponse"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7811,6 +7866,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7830,12 +7891,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7863,6 +7918,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7883,12 +7944,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7916,6 +7971,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7936,12 +7997,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7969,6 +8024,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -7989,12 +8050,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -8022,6 +8077,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -8042,12 +8103,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -8075,6 +8130,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -8099,12 +8160,6 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/BatchResult"
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -8132,6 +8187,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -8145,12 +8206,6 @@ paths:
       responses:
         "204":
           description: No Content
-        "404":
-          description: "The resource does not exist, or is not the caller's"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -8178,6 +8233,12 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "409":
           description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
           content:
             application/json:
               schema:
@@ -9344,6 +9405,8 @@ components:
           format: uuid
         agentName:
           type: string
+        agentPhotoObjectKey:
+          type: string
         status:
           type: string
           enum:
@@ -10373,6 +10436,41 @@ components:
           type: array
           items:
             type: string
+    AgentPublicProfile:
+      type: object
+      properties:
+        accountId:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        photoObjectKey:
+          type: string
+        completedVisitCount:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: double
+        ratingCount:
+          type: integer
+          format: int32
+        zones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Zone"
+        memberSince:
+          type: string
+          format: date-time
+    Zone:
+      type: object
+      properties:
+        city:
+          type: string
+        district:
+          type: string
     PageResponseResidenceResponse:
       type: object
       properties:
@@ -10407,6 +10505,12 @@ components:
         photoObjectKey:
           type: string
         completedVisitCount:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: double
+        ratingCount:
           type: integer
           format: int32
     ResidenceApplicationSummary:
@@ -10672,6 +10776,8 @@ components:
           type: string
           format: uuid
         agentName:
+          type: string
+        agentPhotoObjectKey:
           type: string
         status:
           type: string

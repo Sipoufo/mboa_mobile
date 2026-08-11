@@ -182,6 +182,7 @@ Class | Method | HTTP request | Description
 [*ResidencesApi*](doc/ResidencesApi.md) | [**reserveResidenceUnits**](doc/ResidencesApi.md#reserveresidenceunits) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**unarchiveResidenceUnits**](doc/ResidencesApi.md#unarchiveresidenceunits) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
 [*ResidencesApi*](doc/ResidencesApi.md) | [**updateResidence**](doc/ResidencesApi.md#updateresidence) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
+[*SearchApi*](doc/SearchApi.md) | [**getAgentPublicProfile**](doc/SearchApi.md#getagentpublicprofile) | **GET** /api/v1/search/agents/{id} | Public profile of an Agent Mboa (M15)
 [*SearchApi*](doc/SearchApi.md) | [**getAnnonceDetail**](doc/SearchApi.md#getannoncedetail) | **GET** /api/v1/search/annonces/{id} | Public fiche of a listing (M05)
 [*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**searchListings**](doc/SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
@@ -212,6 +213,7 @@ Class | Method | HTTP request | Description
  - [AgentCandidate](doc/AgentCandidate.md)
  - [AgentOpportunity](doc/AgentOpportunity.md)
  - [AgentProfileResponse](doc/AgentProfileResponse.md)
+ - [AgentPublicProfile](doc/AgentPublicProfile.md)
  - [AgentVisiteDetail](doc/AgentVisiteDetail.md)
  - [AnnonceDetailResponse](doc/AnnonceDetailResponse.md)
  - [AnnonceResponse](doc/AnnonceResponse.md)
@@ -326,6 +328,7 @@ Class | Method | HTTP request | Description
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
  - [VisiteReportResponse](doc/VisiteReportResponse.md)
  - [VisiteResponse](doc/VisiteResponse.md)
+ - [Zone](doc/Zone.md)
  - [ZoneResponse](doc/ZoneResponse.md)
 
 

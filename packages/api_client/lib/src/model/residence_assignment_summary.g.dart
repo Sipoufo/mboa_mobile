@@ -205,6 +205,8 @@ class _$ResidenceAssignmentSummary extends ResidenceAssignmentSummary {
   @override
   final String? agentName;
   @override
+  final String? agentPhotoObjectKey;
+  @override
   final ResidenceAssignmentSummaryStatusEnum? status;
   @override
   final ResidenceAssignmentSummaryInitiatedByEnum? initiatedBy;
@@ -224,6 +226,7 @@ class _$ResidenceAssignmentSummary extends ResidenceAssignmentSummary {
     this.residenceName,
     this.agentAccountId,
     this.agentName,
+    this.agentPhotoObjectKey,
     this.status,
     this.initiatedBy,
     this.unitCount,
@@ -247,6 +250,7 @@ class _$ResidenceAssignmentSummary extends ResidenceAssignmentSummary {
         residenceName == other.residenceName &&
         agentAccountId == other.agentAccountId &&
         agentName == other.agentName &&
+        agentPhotoObjectKey == other.agentPhotoObjectKey &&
         status == other.status &&
         initiatedBy == other.initiatedBy &&
         unitCount == other.unitCount &&
@@ -261,6 +265,7 @@ class _$ResidenceAssignmentSummary extends ResidenceAssignmentSummary {
     _$hash = $jc(_$hash, residenceName.hashCode);
     _$hash = $jc(_$hash, agentAccountId.hashCode);
     _$hash = $jc(_$hash, agentName.hashCode);
+    _$hash = $jc(_$hash, agentPhotoObjectKey.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, initiatedBy.hashCode);
     _$hash = $jc(_$hash, unitCount.hashCode);
@@ -277,6 +282,7 @@ class _$ResidenceAssignmentSummary extends ResidenceAssignmentSummary {
           ..add('residenceName', residenceName)
           ..add('agentAccountId', agentAccountId)
           ..add('agentName', agentName)
+          ..add('agentPhotoObjectKey', agentPhotoObjectKey)
           ..add('status', status)
           ..add('initiatedBy', initiatedBy)
           ..add('unitCount', unitCount)
@@ -308,6 +314,11 @@ class ResidenceAssignmentSummaryBuilder
   String? _agentName;
   String? get agentName => _$this._agentName;
   set agentName(String? agentName) => _$this._agentName = agentName;
+
+  String? _agentPhotoObjectKey;
+  String? get agentPhotoObjectKey => _$this._agentPhotoObjectKey;
+  set agentPhotoObjectKey(String? agentPhotoObjectKey) =>
+      _$this._agentPhotoObjectKey = agentPhotoObjectKey;
 
   ResidenceAssignmentSummaryStatusEnum? _status;
   ResidenceAssignmentSummaryStatusEnum? get status => _$this._status;
@@ -343,6 +354,7 @@ class ResidenceAssignmentSummaryBuilder
       _residenceName = $v.residenceName;
       _agentAccountId = $v.agentAccountId;
       _agentName = $v.agentName;
+      _agentPhotoObjectKey = $v.agentPhotoObjectKey;
       _status = $v.status;
       _initiatedBy = $v.initiatedBy;
       _unitCount = $v.unitCount;
@@ -374,6 +386,7 @@ class ResidenceAssignmentSummaryBuilder
           residenceName: residenceName,
           agentAccountId: agentAccountId,
           agentName: agentName,
+          agentPhotoObjectKey: agentPhotoObjectKey,
           status: status,
           initiatedBy: initiatedBy,
           unitCount: unitCount,

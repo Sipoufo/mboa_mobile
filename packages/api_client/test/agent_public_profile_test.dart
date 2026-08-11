@@ -1,12 +1,12 @@
 import 'package:test/test.dart';
 import 'package:api_client/api_client.dart';
 
-// tests for AgentCandidate
+// tests for AgentPublicProfile
 void main() {
-  final instance = AgentCandidateBuilder();
+  final instance = AgentPublicProfileBuilder();
   // TODO add properties to the builder and call build()
 
-  group(AgentCandidate, () {
+  group(AgentPublicProfile, () {
     // String accountId
     test('to test the property `accountId`', () async {
       // TODO
@@ -39,6 +39,16 @@ void main() {
 
     // int ratingCount
     test('to test the property `ratingCount`', () async {
+      // TODO
+    });
+
+    // BuiltList<Zone> zones
+    test('to test the property `zones`', () async {
+      // TODO
+    });
+
+    // DateTime memberSince
+    test('to test the property `memberSince`', () async {
       // TODO
     });
 

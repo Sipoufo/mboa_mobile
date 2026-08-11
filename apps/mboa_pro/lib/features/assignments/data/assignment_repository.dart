@@ -152,6 +152,19 @@ class AssignmentRepository {
     }
   }
 
+  /// What a prestataire may see about an agent — public, no contact details.
+  ///
+  /// Resolves for a suspended or pending agent too: they are named on visits
+  /// they carried out, and 404-ing would dead-link that history. Only a deleted
+  /// account is withheld.
+  Future<AgentPublicProfileView> publicProfile(String accountId) async {
+    final response =
+        await _dioClient.api.getSearchApi().getAgentPublicProfile(id: accountId);
+    final data = response.data;
+    if (data == null) throw StateError('No agent profile for $accountId');
+    return AgentPublicProfileView.fromResponse(data);
+  }
+
   /// Every assignment across the portfolio, listings and residences alike.
   ///
   /// `AssignmentItem` is a discriminated union — one entry per *lot*, so a

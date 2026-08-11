@@ -7,6 +7,15 @@ void main() {
   final instance = ApiClient().getSearchApi();
 
   group(SearchApi, () {
+    // Public profile of an Agent Mboa (M15)
+    //
+    // Readable without an account, like a listing's fiche. Carries no phone number, no email and nothing from KYC. A suspended agent still resolves — they are named on every visit they carried out; only a deleted account is withheld.
+    //
+    //Future<AgentPublicProfile> getAgentPublicProfile(String id) async
+    test('test getAgentPublicProfile', () async {
+      // TODO
+    });
+
     // Public fiche of a listing (M05)
     //
     // Readable without an account. The exact address is never returned and the coordinates are fuzzed by ~200m. Send X-Device-Id so anonymous views are counted once per device per 24h; signed-in views are counted by account.

@@ -1219,5 +1219,55 @@
   "agentsPickPropertyNoneBody": "Un agent ne peut être assigné qu'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.",
   "@agentsPickPropertyNoneBody": {
     "description": "The backend refuses a non-published listing (ANNONCE_NOT_PUBLISHED) and a residence with no published unit (NO_PUBLISHED_UNITS)."
+  },
+  "agentDetailTitle": "Profil de l'agent",
+  "@agentDetailTitle": {
+    "description": "M11 agent detail screen."
+  },
+  "agentDetailMemberSince": "Membre depuis {date}",
+  "@agentDetailMemberSince": {
+    "description": "AgentPublicProfile.memberSince.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "agentDetailZones": "Zones d'intervention",
+  "@agentDetailZones": {
+    "description": "The agent's declared zones (RM-M15-04)."
+  },
+  "agentDetailWholeCity": "Toute la ville",
+  "@agentDetailWholeCity": {
+    "description": "A zone covering a whole city — district is absent."
+  },
+  "agentDetailProperties": "Biens confiés",
+  "@agentDetailProperties": {
+    "description": "Properties this agent works for this prestataire."
+  },
+  "agentDetailPending": "En attente de réponse",
+  "@agentDetailPending": {
+    "description": "Offers this agent has not answered."
+  },
+  "agentDetailNoProperties": "Aucun bien confié pour le moment",
+  "@agentDetailNoProperties": {
+    "description": "Empty state."
+  },
+  "agentDetailUnavailable": "Profil indisponible",
+  "@agentDetailUnavailable": {
+    "description": "The public profile could not be loaded."
+  },
+  "agentRatingNone": "Pas encore noté",
+  "@agentRatingNone": {
+    "description": "averageRating is null until someone rates — never render 0 ★."
+  },
+  "agentRatingCount": "{count} avis",
+  "@agentRatingCount": {
+    "description": "How many ratings the average rests on.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

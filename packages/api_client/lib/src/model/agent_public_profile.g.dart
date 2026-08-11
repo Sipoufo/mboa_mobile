@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'agent_candidate.dart';
+part of 'agent_public_profile.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-class _$AgentCandidate extends AgentCandidate {
+class _$AgentPublicProfile extends AgentPublicProfile {
   @override
   final String? accountId;
   @override
@@ -21,11 +21,16 @@ class _$AgentCandidate extends AgentCandidate {
   final double? averageRating;
   @override
   final int? ratingCount;
+  @override
+  final BuiltList<Zone>? zones;
+  @override
+  final DateTime? memberSince;
 
-  factory _$AgentCandidate([void Function(AgentCandidateBuilder)? updates]) =>
-      (AgentCandidateBuilder()..update(updates))._build();
+  factory _$AgentPublicProfile([
+    void Function(AgentPublicProfileBuilder)? updates,
+  ]) => (AgentPublicProfileBuilder()..update(updates))._build();
 
-  _$AgentCandidate._({
+  _$AgentPublicProfile._({
     this.accountId,
     this.firstName,
     this.lastName,
@@ -33,25 +38,31 @@ class _$AgentCandidate extends AgentCandidate {
     this.completedVisitCount,
     this.averageRating,
     this.ratingCount,
+    this.zones,
+    this.memberSince,
   }) : super._();
   @override
-  AgentCandidate rebuild(void Function(AgentCandidateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+  AgentPublicProfile rebuild(
+    void Function(AgentPublicProfileBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
-  AgentCandidateBuilder toBuilder() => AgentCandidateBuilder()..replace(this);
+  AgentPublicProfileBuilder toBuilder() =>
+      AgentPublicProfileBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AgentCandidate &&
+    return other is AgentPublicProfile &&
         accountId == other.accountId &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         photoObjectKey == other.photoObjectKey &&
         completedVisitCount == other.completedVisitCount &&
         averageRating == other.averageRating &&
-        ratingCount == other.ratingCount;
+        ratingCount == other.ratingCount &&
+        zones == other.zones &&
+        memberSince == other.memberSince;
   }
 
   @override
@@ -64,27 +75,31 @@ class _$AgentCandidate extends AgentCandidate {
     _$hash = $jc(_$hash, completedVisitCount.hashCode);
     _$hash = $jc(_$hash, averageRating.hashCode);
     _$hash = $jc(_$hash, ratingCount.hashCode);
+    _$hash = $jc(_$hash, zones.hashCode);
+    _$hash = $jc(_$hash, memberSince.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'AgentCandidate')
+    return (newBuiltValueToStringHelper(r'AgentPublicProfile')
           ..add('accountId', accountId)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('photoObjectKey', photoObjectKey)
           ..add('completedVisitCount', completedVisitCount)
           ..add('averageRating', averageRating)
-          ..add('ratingCount', ratingCount))
+          ..add('ratingCount', ratingCount)
+          ..add('zones', zones)
+          ..add('memberSince', memberSince))
         .toString();
   }
 }
 
-class AgentCandidateBuilder
-    implements Builder<AgentCandidate, AgentCandidateBuilder> {
-  _$AgentCandidate? _$v;
+class AgentPublicProfileBuilder
+    implements Builder<AgentPublicProfile, AgentPublicProfileBuilder> {
+  _$AgentPublicProfile? _$v;
 
   String? _accountId;
   String? get accountId => _$this._accountId;
@@ -117,11 +132,19 @@ class AgentCandidateBuilder
   int? get ratingCount => _$this._ratingCount;
   set ratingCount(int? ratingCount) => _$this._ratingCount = ratingCount;
 
-  AgentCandidateBuilder() {
-    AgentCandidate._defaults(this);
+  ListBuilder<Zone>? _zones;
+  ListBuilder<Zone> get zones => _$this._zones ??= ListBuilder<Zone>();
+  set zones(ListBuilder<Zone>? zones) => _$this._zones = zones;
+
+  DateTime? _memberSince;
+  DateTime? get memberSince => _$this._memberSince;
+  set memberSince(DateTime? memberSince) => _$this._memberSince = memberSince;
+
+  AgentPublicProfileBuilder() {
+    AgentPublicProfile._defaults(this);
   }
 
-  AgentCandidateBuilder get _$this {
+  AgentPublicProfileBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _accountId = $v.accountId;
@@ -131,36 +154,56 @@ class AgentCandidateBuilder
       _completedVisitCount = $v.completedVisitCount;
       _averageRating = $v.averageRating;
       _ratingCount = $v.ratingCount;
+      _zones = $v.zones?.toBuilder();
+      _memberSince = $v.memberSince;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(AgentCandidate other) {
-    _$v = other as _$AgentCandidate;
+  void replace(AgentPublicProfile other) {
+    _$v = other as _$AgentPublicProfile;
   }
 
   @override
-  void update(void Function(AgentCandidateBuilder)? updates) {
+  void update(void Function(AgentPublicProfileBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  AgentCandidate build() => _build();
+  AgentPublicProfile build() => _build();
 
-  _$AgentCandidate _build() {
-    final _$result =
-        _$v ??
-        _$AgentCandidate._(
-          accountId: accountId,
-          firstName: firstName,
-          lastName: lastName,
-          photoObjectKey: photoObjectKey,
-          completedVisitCount: completedVisitCount,
-          averageRating: averageRating,
-          ratingCount: ratingCount,
+  _$AgentPublicProfile _build() {
+    _$AgentPublicProfile _$result;
+    try {
+      _$result =
+          _$v ??
+          _$AgentPublicProfile._(
+            accountId: accountId,
+            firstName: firstName,
+            lastName: lastName,
+            photoObjectKey: photoObjectKey,
+            completedVisitCount: completedVisitCount,
+            averageRating: averageRating,
+            ratingCount: ratingCount,
+            zones: _zones?.build(),
+            memberSince: memberSince,
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'zones';
+        _zones?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'AgentPublicProfile',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

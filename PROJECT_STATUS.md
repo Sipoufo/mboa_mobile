@@ -38,7 +38,7 @@
 | M10 listings + residences | ✅ complete for everything the API supports |
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
-| M11 assignments | ✅ both sides — offer, apply, accept, decline, resign |
+| M11 assignments | ✅ both sides + agent detail (public profile) |
 | M16 agent visits | ❌ endpoints exist, no screens |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
@@ -346,6 +346,16 @@ in `docs/backend-requests.md` §11.
 - **The listing endpoints key on the assignment id, the residence ones on the
   residence id.** `AgentMissionRepository` picks; no screen or bloc branches on
   it.
+
+### An agent's rating is null until somebody rates them
+Rating a visit is optional (RM-M07-07), so `completedVisitCount: 12` with
+`ratingCount: 0` is an ordinary state, not a bad agent. **Never render that as
+"0 ★".** Both the candidate picker and the agent detail show the visit count
+instead. Pinned by `agent_detail_page_test.dart`.
+
+`GET /search/agents/{id}` is public and carries **no phone or email** by design —
+an agent's number reaches the people who need it on the day of a visit, through
+the visit sheet, not everyone who has been offered their services.
 
 ## Open decisions (product, not code)
 

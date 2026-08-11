@@ -1,4 +1,4 @@
-# api_client.model.AgentCandidate
+# api_client.model.AgentPublicProfile
 
 ## Load the model package
 ```dart
@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **completedVisitCount** | **int** |  | [optional] 
 **averageRating** | **double** |  | [optional] 
 **ratingCount** | **int** |  | [optional] 
+**zones** | [**BuiltList&lt;Zone&gt;**](Zone.md) |  | [optional] 
+**memberSince** | [**DateTime**](DateTime.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

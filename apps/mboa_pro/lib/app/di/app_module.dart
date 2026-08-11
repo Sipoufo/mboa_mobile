@@ -2,6 +2,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../features/agent/bloc/agent_availability_bloc.dart';
+import '../../features/assignments/bloc/agent_detail_bloc.dart';
 import '../../features/assignments/bloc/agent_missions_bloc.dart';
 import '../../features/assignments/bloc/my_agents_bloc.dart';
 import '../../features/assignments/bloc/property_agent_bloc.dart';
@@ -189,6 +190,9 @@ void registerAppModule() {
   );
   getIt.registerFactory<AgentMissionsBloc>(
     () => AgentMissionsBloc(repository: getIt<AgentMissionRepository>()),
+  );
+  getIt.registerFactory<AgentDetailBloc>(
+    () => AgentDetailBloc(repository: getIt<AssignmentRepository>()),
   );
   getIt.registerFactory<MyAgentsBloc>(
     () => MyAgentsBloc(repository: getIt<AssignmentRepository>()),

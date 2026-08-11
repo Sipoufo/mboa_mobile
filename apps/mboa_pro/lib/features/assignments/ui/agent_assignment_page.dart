@@ -204,7 +204,13 @@ class _Body extends StatelessWidget {
       widgets.add(
         AgentRowTile(
           name: candidate.fullName,
-          subtitle: l10n.agentsVisitCount(candidate.completedVisitCount),
+          // The rating shipped 2026-08-11; before it, a prestataire chose
+          // between candidates on a visit count alone. An unrated agent shows
+          // their visits rather than "0 ★" — rating is optional (RM-M07-07).
+          subtitle: candidate.hasRating
+              ? '${candidate.averageRating!.toStringAsFixed(1)} ★ · '
+                  '${l10n.agentsVisitCount(candidate.completedVisitCount)}'
+              : l10n.agentsVisitCount(candidate.completedVisitCount),
           photoUrl: candidate.photoUrl,
           initials: candidate.initials,
           isBusy: state.mutatingId == candidate.accountId,

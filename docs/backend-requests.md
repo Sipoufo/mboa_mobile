@@ -329,7 +329,22 @@ the gap so the screens are not read as a backlog.
 
 ---
 
-## 12. Assignment payloads carry no agent photo
+## 12. Assignment payloads carry no agent photo — ✅ DONE (2026-08-11)
+
+**Outcome:** `agentPhotoObjectKey` shipped on `AssignmentResponse` and on the
+residence half of `AssignmentItem`; `averageRating` + `ratingCount` shipped on
+`AgentCandidate` (§11); and `GET /search/agents/{id}` was added — a *public*
+agent profile with zones and `memberSince`, deliberately carrying **no phone or
+email**. All three are wired.
+
+**Their note, and it matters:** `averageRating` is null until somebody rates,
+and rating is optional (RM-M07-07), so `completedVisitCount: 12, ratingCount: 0`
+is an ordinary state. The app never renders it as "0 ★" — pinned by
+`agent_detail_page_test.dart`.
+
+<details><summary>Original request</summary>
+
+
 
 `AssignmentResponse` and `ResidenceAssignmentSummary` return `agentAccountId`
 and `agentName` — **no photo key**. `AgentCandidate` and
@@ -345,3 +360,5 @@ agent assigné". The app now shows initials, which is the best it can do.
 `ResidenceAssignmentSummary`. With §11's `averageRating` / `ratingCount` on
 `AgentCandidate`, that is also what an agent detail screen needs to be worth
 opening — otherwise it can only ever show a name and a list of properties.
+
+</details>

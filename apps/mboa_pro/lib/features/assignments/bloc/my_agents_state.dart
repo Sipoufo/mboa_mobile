@@ -17,6 +17,12 @@ class AgentRow extends Equatable {
   /// and showing nothing was the bug.
   String get initials => initialsFromFullName(agentName);
 
+  /// Shipped 2026-08-11 on `AssignmentResponse`; before that the list had no
+  /// face to show at all. Any assignment of theirs carries the same key.
+  String? get photoUrl => assignments
+      .map((a) => a.agentPhotoUrl)
+      .firstWhere((url) => url != null, orElse: () => null);
+
   /// Live assignments only — an offer still awaiting an answer is not yet a
   /// property this agent works.
   List<Assignment> get live =>

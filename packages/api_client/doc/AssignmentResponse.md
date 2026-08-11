@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **annonceTitle** | **String** |  | [optional] 
 **agentAccountId** | **String** |  | [optional] 
 **agentName** | **String** |  | [optional] 
+**agentPhotoObjectKey** | **String** |  | [optional] 
 **status** | **String** |  | [optional] 
 **initiatedBy** | **String** |  | [optional] 
 **residenceId** | **String** |  | [optional] 

@@ -50,6 +50,7 @@ export 'package:api_client/src/model/admin_user_summary.dart';
 export 'package:api_client/src/model/agent_candidate.dart';
 export 'package:api_client/src/model/agent_opportunity.dart';
 export 'package:api_client/src/model/agent_profile_response.dart';
+export 'package:api_client/src/model/agent_public_profile.dart';
 export 'package:api_client/src/model/agent_visite_detail.dart';
 export 'package:api_client/src/model/annonce_detail_response.dart';
 export 'package:api_client/src/model/annonce_response.dart';
@@ -164,5 +165,6 @@ export 'package:api_client/src/model/user_settings_response.dart';
 export 'package:api_client/src/model/verify_otp_request.dart';
 export 'package:api_client/src/model/visite_report_response.dart';
 export 'package:api_client/src/model/visite_response.dart';
+export 'package:api_client/src/model/zone.dart';
 export 'package:api_client/src/model/zone_response.dart';
 

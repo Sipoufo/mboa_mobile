@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **residenceName** | **String** |  | [optional] 
 **agentAccountId** | **String** |  | [optional] 
 **agentName** | **String** |  | [optional] 
+**agentPhotoObjectKey** | **String** |  | [optional] 
 **status** | **String** |  | [optional] 
 **initiatedBy** | **String** |  | [optional] 
 **unitCount** | **int** |  | [optional] 

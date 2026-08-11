@@ -74,6 +74,7 @@ class MesAgentsPage extends StatelessWidget implements AutoRouteWrapper {
                         return AgentRowTile(
                           name: row.agentName ?? '',
                           initials: row.initials,
+                          photoUrl: row.photoUrl,
                           subtitle: row.isAwaitingResponse
                               ? l10n.agentsAwaitingResponse
                               : row.soleProperty ??
@@ -82,9 +83,11 @@ class MesAgentsPage extends StatelessWidget implements AutoRouteWrapper {
                             LucideIcons.chevronRight,
                             color: colors.textTertiary,
                           ),
-                          onTap: row.live.isEmpty
-                              ? null
-                              : () => _openProperty(context, row),
+                          onTap: () => context.router.push(
+                            AgentDetailRoute(
+                              agentAccountId: row.agentAccountId,
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -93,11 +96,6 @@ class MesAgentsPage extends StatelessWidget implements AutoRouteWrapper {
       ),
     );
   }
-
-  /// One property: straight there. Several: the row is a summary, so open the
-  /// first — a per-agent detail screen has no endpoint behind it.
-  void _openProperty(BuildContext context, AgentRow row) =>
-      context.router.push(AgentAssignmentRoute(target: row.live.first.target));
 
   Future<void> _pickProperty(BuildContext context) async {
     final target = await showPropertyPickerSheet(context);

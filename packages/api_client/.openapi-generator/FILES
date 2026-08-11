@@ -15,6 +15,7 @@ doc/AgentCandidate.md
 doc/AgentCandidaturesApi.md
 doc/AgentOpportunity.md
 doc/AgentProfileResponse.md
+doc/AgentPublicProfile.md
 doc/AgentVisiteDetail.md
 doc/AgentVisitesApi.md
 doc/AnnonceDetailResponse.md
@@ -153,6 +154,7 @@ doc/VisiteReportResponse.md
 doc/VisiteResponse.md
 doc/VisitesApi.md
 doc/VisitesRapportApi.md
+doc/Zone.md
 doc/ZoneResponse.md
 lib/api_client.dart
 lib/src/api.dart
@@ -202,6 +204,7 @@ lib/src/model/admin_user_summary.dart
 lib/src/model/agent_candidate.dart
 lib/src/model/agent_opportunity.dart
 lib/src/model/agent_profile_response.dart
+lib/src/model/agent_public_profile.dart
 lib/src/model/agent_visite_detail.dart
 lib/src/model/annonce_detail_response.dart
 lib/src/model/annonce_response.dart
@@ -317,6 +320,7 @@ lib/src/model/user_settings_response.dart
 lib/src/model/verify_otp_request.dart
 lib/src/model/visite_report_response.dart
 lib/src/model/visite_response.dart
+lib/src/model/zone.dart
 lib/src/model/zone_response.dart
 lib/src/serializers.dart
 test/account_api_test.dart
@@ -334,6 +338,7 @@ test/agent_candidate_test.dart
 test/agent_candidatures_api_test.dart
 test/agent_opportunity_test.dart
 test/agent_profile_response_test.dart
+test/agent_public_profile_test.dart
 test/agent_visite_detail_test.dart
 test/agent_visites_api_test.dart
 test/annonce_detail_response_test.dart
@@ -473,3 +478,4 @@ test/visite_response_test.dart
 test/visites_api_test.dart
 test/visites_rapport_api_test.dart
 test/zone_response_test.dart
+test/zone_test.dart

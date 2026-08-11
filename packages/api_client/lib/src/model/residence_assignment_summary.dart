@@ -16,6 +16,7 @@ part 'residence_assignment_summary.g.dart';
 /// * [residenceName] 
 /// * [agentAccountId] 
 /// * [agentName] 
+/// * [agentPhotoObjectKey] 
 /// * [status] 
 /// * [initiatedBy] 
 /// * [unitCount] 
@@ -34,6 +35,9 @@ abstract class ResidenceAssignmentSummary implements Built<ResidenceAssignmentSu
 
   @BuiltValueField(wireName: r'agentName')
   String? get agentName;
+
+  @BuiltValueField(wireName: r'agentPhotoObjectKey')
+  String? get agentPhotoObjectKey;
 
   @BuiltValueField(wireName: r'status')
   ResidenceAssignmentSummaryStatusEnum? get status;
@@ -100,6 +104,13 @@ class _$ResidenceAssignmentSummarySerializer implements PrimitiveSerializer<Resi
       yield r'agentName';
       yield serializers.serialize(
         object.agentName,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.agentPhotoObjectKey != null) {
+      yield r'agentPhotoObjectKey';
+      yield serializers.serialize(
+        object.agentPhotoObjectKey,
         specifiedType: const FullType(String),
       );
     }
@@ -192,6 +203,14 @@ class _$ResidenceAssignmentSummarySerializer implements PrimitiveSerializer<Resi
           ) as String?;
           if (valueDes == null) continue;
           result.agentName = valueDes;
+          break;
+        case r'agentPhotoObjectKey':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.agentPhotoObjectKey = valueDes;
           break;
         case r'status':
           final valueDes = serializers.deserialize(

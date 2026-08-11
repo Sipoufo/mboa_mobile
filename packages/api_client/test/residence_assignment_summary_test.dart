@@ -27,6 +27,11 @@ void main() {
       // TODO
     });
 
+    // String agentPhotoObjectKey
+    test('to test the property `agentPhotoObjectKey`', () async {
+      // TODO
+    });
+
     // String status
     test('to test the property `status`', () async {
       // TODO

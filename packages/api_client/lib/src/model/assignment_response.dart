@@ -17,6 +17,7 @@ part 'assignment_response.g.dart';
 /// * [annonceTitle] 
 /// * [agentAccountId] 
 /// * [agentName] 
+/// * [agentPhotoObjectKey] 
 /// * [status] 
 /// * [initiatedBy] 
 /// * [residenceId] 
@@ -38,6 +39,9 @@ abstract class AssignmentResponse implements Built<AssignmentResponse, Assignmen
 
   @BuiltValueField(wireName: r'agentName')
   String? get agentName;
+
+  @BuiltValueField(wireName: r'agentPhotoObjectKey')
+  String? get agentPhotoObjectKey;
 
   @BuiltValueField(wireName: r'status')
   AssignmentResponseStatusEnum? get status;
@@ -111,6 +115,13 @@ class _$AssignmentResponseSerializer implements PrimitiveSerializer<AssignmentRe
       yield r'agentName';
       yield serializers.serialize(
         object.agentName,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.agentPhotoObjectKey != null) {
+      yield r'agentPhotoObjectKey';
+      yield serializers.serialize(
+        object.agentPhotoObjectKey,
         specifiedType: const FullType(String),
       );
     }
@@ -211,6 +222,14 @@ class _$AssignmentResponseSerializer implements PrimitiveSerializer<AssignmentRe
           ) as String?;
           if (valueDes == null) continue;
           result.agentName = valueDes;
+          break;
+        case r'agentPhotoObjectKey':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.agentPhotoObjectKey = valueDes;
           break;
         case r'status':
           final valueDes = serializers.deserialize(

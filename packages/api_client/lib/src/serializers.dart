@@ -19,6 +19,7 @@ import 'package:api_client/src/model/admin_user_summary.dart';
 import 'package:api_client/src/model/agent_candidate.dart';
 import 'package:api_client/src/model/agent_opportunity.dart';
 import 'package:api_client/src/model/agent_profile_response.dart';
+import 'package:api_client/src/model/agent_public_profile.dart';
 import 'package:api_client/src/model/agent_visite_detail.dart';
 import 'package:api_client/src/model/annonce_detail_response.dart';
 import 'package:api_client/src/model/annonce_response.dart';
@@ -133,6 +134,7 @@ import 'package:api_client/src/model/user_settings_response.dart';
 import 'package:api_client/src/model/verify_otp_request.dart';
 import 'package:api_client/src/model/visite_report_response.dart';
 import 'package:api_client/src/model/visite_response.dart';
+import 'package:api_client/src/model/zone.dart';
 import 'package:api_client/src/model/zone_response.dart';
 
 part 'serializers.g.dart';
@@ -143,6 +145,7 @@ part 'serializers.g.dart';
   AgentCandidate,
   AgentOpportunity,
   AgentProfileResponse,
+  AgentPublicProfile,
   AgentVisiteDetail,
   AnnonceDetailResponse,
   AnnonceResponse,
@@ -257,12 +260,17 @@ part 'serializers.g.dart';
   VerifyOtpRequest,
   VisiteReportResponse,
   VisiteResponse,
+  Zone,
   ZoneResponse,
 ])
 Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltMap, [FullType(String), FullType(String)]),
         () => MapBuilder<String, String>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Zone)]),
+        () => ListBuilder<Zone>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AssignmentResponse)]),

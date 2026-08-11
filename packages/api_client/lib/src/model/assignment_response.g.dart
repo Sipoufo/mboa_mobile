@@ -196,6 +196,8 @@ class _$AssignmentResponse extends AssignmentResponse {
   @override
   final String? agentName;
   @override
+  final String? agentPhotoObjectKey;
+  @override
   final AssignmentResponseStatusEnum? status;
   @override
   final AssignmentResponseInitiatedByEnum? initiatedBy;
@@ -216,6 +218,7 @@ class _$AssignmentResponse extends AssignmentResponse {
     this.annonceTitle,
     this.agentAccountId,
     this.agentName,
+    this.agentPhotoObjectKey,
     this.status,
     this.initiatedBy,
     this.residenceId,
@@ -240,6 +243,7 @@ class _$AssignmentResponse extends AssignmentResponse {
         annonceTitle == other.annonceTitle &&
         agentAccountId == other.agentAccountId &&
         agentName == other.agentName &&
+        agentPhotoObjectKey == other.agentPhotoObjectKey &&
         status == other.status &&
         initiatedBy == other.initiatedBy &&
         residenceId == other.residenceId &&
@@ -255,6 +259,7 @@ class _$AssignmentResponse extends AssignmentResponse {
     _$hash = $jc(_$hash, annonceTitle.hashCode);
     _$hash = $jc(_$hash, agentAccountId.hashCode);
     _$hash = $jc(_$hash, agentName.hashCode);
+    _$hash = $jc(_$hash, agentPhotoObjectKey.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, initiatedBy.hashCode);
     _$hash = $jc(_$hash, residenceId.hashCode);
@@ -272,6 +277,7 @@ class _$AssignmentResponse extends AssignmentResponse {
           ..add('annonceTitle', annonceTitle)
           ..add('agentAccountId', agentAccountId)
           ..add('agentName', agentName)
+          ..add('agentPhotoObjectKey', agentPhotoObjectKey)
           ..add('status', status)
           ..add('initiatedBy', initiatedBy)
           ..add('residenceId', residenceId)
@@ -306,6 +312,11 @@ class AssignmentResponseBuilder
   String? get agentName => _$this._agentName;
   set agentName(String? agentName) => _$this._agentName = agentName;
 
+  String? _agentPhotoObjectKey;
+  String? get agentPhotoObjectKey => _$this._agentPhotoObjectKey;
+  set agentPhotoObjectKey(String? agentPhotoObjectKey) =>
+      _$this._agentPhotoObjectKey = agentPhotoObjectKey;
+
   AssignmentResponseStatusEnum? _status;
   AssignmentResponseStatusEnum? get status => _$this._status;
   set status(AssignmentResponseStatusEnum? status) => _$this._status = status;
@@ -339,6 +350,7 @@ class AssignmentResponseBuilder
       _annonceTitle = $v.annonceTitle;
       _agentAccountId = $v.agentAccountId;
       _agentName = $v.agentName;
+      _agentPhotoObjectKey = $v.agentPhotoObjectKey;
       _status = $v.status;
       _initiatedBy = $v.initiatedBy;
       _residenceId = $v.residenceId;
@@ -371,6 +383,7 @@ class AssignmentResponseBuilder
           annonceTitle: annonceTitle,
           agentAccountId: agentAccountId,
           agentName: agentName,
+          agentPhotoObjectKey: agentPhotoObjectKey,
           status: status,
           initiatedBy: initiatedBy,
           residenceId: residenceId,
