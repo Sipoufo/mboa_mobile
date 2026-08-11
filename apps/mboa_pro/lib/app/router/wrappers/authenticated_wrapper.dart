@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../app_router.gr.dart';
+
+import '../../../features/agent/bloc/agent_profile_bloc.dart';
 import '../../../features/annonces/bloc/annonces_bloc.dart';
 import '../../../features/annonces/bloc/residences_bloc.dart';
 import '../../../features/home/bloc/home_bloc.dart';
@@ -42,11 +45,41 @@ class AuthenticatedWrapper extends StatelessWidget implements AutoRouteWrapper {
         // open, so a session that never visits Mes biens costs no requests.
         BlocProvider<AnnoncesBloc>.value(value: getIt<AnnoncesBloc>()),
         BlocProvider<ResidencesBloc>.value(value: getIt<ResidencesBloc>()),
+        // The agent's own profile. Provided here rather than inside the agent
+        // shell so the zones screen — pushed as a sibling of the shell, not a
+        // child — can read it; a bloc provided by one route is invisible to its
+        // siblings, which has bitten this app twice. Loaded by the agent
+        // profile screen, so a prestataire session never calls /agents/me.
+        BlocProvider<AgentProfileBloc>.value(value: getIt<AgentProfileBloc>()),
       ],
       child: this,
     );
   }
 
   @override
-  Widget build(BuildContext context) => const AutoRouter();
+  Widget build(BuildContext context) => const _RoleRouter();
+}
+
+/// Sends an agent to their own shell once the role is known.
+///
+/// The role arrives with the profile, after the first frame, so this cannot be
+/// a route guard on the table — it is the same pattern as the root `AuthBloc`
+/// listener that drives login/logout transitions.
+class _RoleRouter extends StatelessWidget {
+  const _RoleRouter();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<ProProfileBloc, ProfileState>(
+      listenWhen: (prev, curr) => curr is ProProfileReady,
+      listener: (context, state) {
+        if (state is! ProProfileReady || !state.data.role.isAgent) return;
+        final router = AutoRouter.of(context);
+        // Already there — a profile refresh must not reset the agent's tab.
+        if (router.current.name == AgentShellRoute.name) return;
+        router.replaceAll([const AgentShellRoute()]);
+      },
+      child: const AutoRouter(),
+    );
+  }
 }

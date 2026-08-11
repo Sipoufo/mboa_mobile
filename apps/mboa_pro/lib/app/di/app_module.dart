@@ -1,6 +1,9 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/agent/bloc/agent_availability_bloc.dart';
+import '../../features/agent/bloc/agent_profile_bloc.dart';
+import '../../features/agent/data/agent_repository.dart';
 import '../../features/annonces/bloc/annonce_form_bloc.dart';
 import '../../features/annonces/bloc/annonces_bloc.dart';
 import '../../features/annonces/bloc/residences_bloc.dart';
@@ -168,6 +171,28 @@ void registerAppModule() {
 
   // Subscriptions (M13). SubscriptionBloc is a singleton because it feeds
   // AccessContext.tier for the whole app; SubscribeBloc is per-checkout.
+  // --- Agent (M15) ---
+  getIt.registerLazySingleton<AgentRepository>(
+    () => AgentRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerLazySingleton<AgentAvailabilityRepository>(
+    () => AgentAvailabilityRepository(dioClient: getIt<DioClient>()),
+  );
+  // Session-scoped, like ProProfileBloc — the shell, the profile screen and the
+  // zones screen all read one instance.
+  getIt.registerLazySingleton<AgentProfileBloc>(
+    () => AgentProfileBloc(
+      repository: getIt<AgentRepository>(),
+      uploader: getIt<MediaUploader>(),
+    ),
+  );
+  // Route-scoped: only the availability screen reads it.
+  getIt.registerFactory<AgentAvailabilityBloc>(
+    () => AgentAvailabilityBloc(
+      repository: getIt<AgentAvailabilityRepository>(),
+    ),
+  );
+
   getIt.registerLazySingleton<SubscriptionRepository>(
     () => SubscriptionRepository(dioClient: getIt<DioClient>()),
   );

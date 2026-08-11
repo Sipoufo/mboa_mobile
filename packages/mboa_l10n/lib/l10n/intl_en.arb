@@ -800,5 +800,205 @@
   "annoncePeriodWeek": "week",
   "@annoncePeriodWeek": {
     "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
+  },
+  "agentNavVisits": "My visits",
+  "@agentNavVisits": {
+    "description": "Agent shell tab (M16)."
+  },
+  "agentNavMissions": "My missions",
+  "@agentNavMissions": {
+    "description": "Agent shell tab (M11 assignments)."
+  },
+  "agentNavProfile": "My profile",
+  "@agentNavProfile": {
+    "description": "Agent shell tab (M15)."
+  },
+  "agentProfileTitle": "My agent profile",
+  "@agentProfileTitle": {
+    "description": "Agent profile screen title (M15)."
+  },
+  "agentStatusPending": "Awaiting approval",
+  "@agentStatusPending": {
+    "description": "AgentProfileResponse.status = PENDING."
+  },
+  "agentStatusActive": "Active",
+  "@agentStatusActive": {
+    "description": "AgentProfileResponse.status = ACTIVE."
+  },
+  "agentStatusSuspended": "Suspended",
+  "@agentStatusSuspended": {
+    "description": "AgentProfileResponse.status = SUSPENDED."
+  },
+  "agentStatusDeleted": "Account closed",
+  "@agentStatusDeleted": {
+    "description": "AgentProfileResponse.status = DELETED."
+  },
+  "agentStatusUnknown": "Status unknown",
+  "@agentStatusUnknown": {
+    "description": "AgentProfileResponse.status absent or unrecognised."
+  },
+  "agentStatsVisits": "Visits completed",
+  "@agentStatsVisits": {
+    "description": "completedVisitCount on the agent profile."
+  },
+  "agentStatsRating": "Average rating",
+  "@agentStatsRating": {
+    "description": "averageRating on the agent profile."
+  },
+  "agentStatsRatingCount": "{count} reviews",
+  "@agentStatsRatingCount": {
+    "description": "How many ratings the average is based on.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentStatsNoRating": "Not rated yet",
+  "@agentStatsNoRating": {
+    "description": "Shown instead of an average when ratingCount is 0."
+  },
+  "agentAcceptingTitle": "I take on missions",
+  "@agentAcceptingTitle": {
+    "description": "RM-M15-05 toggle."
+  },
+  "agentAcceptingOn": "You can receive new assignments.",
+  "@agentAcceptingOn": {
+    "description": "RM-M15-05, accepting."
+  },
+  "agentAcceptingOff": "You will not receive new assignments. Visits already scheduled still stand.",
+  "@agentAcceptingOff": {
+    "description": "RM-M15-05, inactive — Doc 10 is explicit that scheduled visits are still carried out."
+  },
+  "agentIncompleteTitle": "Profile incomplete",
+  "@agentIncompleteTitle": {
+    "description": "profileComplete == false."
+  },
+  "agentIncompleteBody": "Add your name, a photo and at least one zone to receive missions.",
+  "@agentIncompleteBody": {
+    "description": "The server's completeness rule, spelled out: firstName + lastName + photoObjectKey + >=1 zone."
+  },
+  "agentZonesTitle": "My working areas",
+  "@agentZonesTitle": {
+    "description": "RM-M15-04 screen title."
+  },
+  "agentZonesSubtitle": "{count} area(s)",
+  "@agentZonesSubtitle": {
+    "description": "Zone count on the profile screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentZonesNone": "No areas",
+  "@agentZonesNone": {
+    "description": "No zones selected yet."
+  },
+  "agentZonesHelp": "Pick a whole city, or only certain districts. You will only be offered properties inside your areas.",
+  "@agentZonesHelp": {
+    "description": "Doc 10 RM-M15-04."
+  },
+  "agentZonesEmptyError": "Pick at least one city or district.",
+  "@agentZonesEmptyError": {
+    "description": "The backend rejects a zones update where both lists are empty."
+  },
+  "agentZonesWholeCity": "The whole city",
+  "@agentZonesWholeCity": {
+    "description": "Option to cover a whole city rather than picking districts."
+  },
+  "agentAvailabilityTitle": "My availability",
+  "@agentAvailabilityTitle": {
+    "description": "RM-M15-01 screen title."
+  },
+  "agentAvailabilitySubtitle": "{count} slot(s) per week",
+  "@agentAvailabilitySubtitle": {
+    "description": "Weekly rule count on the profile screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentAvailabilityHelp": "Set your usual hours. Bookable slots are derived from them, minus your blocked days and visits already scheduled.",
+  "@agentAvailabilityHelp": {
+    "description": "Doc 10 RM-M15-01."
+  },
+  "agentVisitDuration": "Visit length",
+  "@agentVisitDuration": {
+    "description": "visitDurationMinutes label."
+  },
+  "agentVisitDurationValue": "{minutes} min",
+  "@agentVisitDurationValue": {
+    "description": "visitDurationMinutes value.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "agentAddSlot": "Add a slot",
+  "@agentAddSlot": {
+    "description": "Add an availability window."
+  },
+  "agentSlotOverlap": "That slot overlaps another one.",
+  "@agentSlotOverlap": {
+    "description": "Rejected: overlapping window on the same day."
+  },
+  "agentDaysOffTitle": "Blocked days",
+  "@agentDaysOffTitle": {
+    "description": "RM-M15-03 section."
+  },
+  "agentDaysOffHelp": "Blocking a day cancels the visits already scheduled on it.",
+  "@agentDaysOffHelp": {
+    "description": "Doc 10 RM-M15-03 — the cancellation is why this saves immediately."
+  },
+  "agentDaysOffNone": "No blocked days",
+  "@agentDaysOffNone": {
+    "description": "Empty state for days off."
+  },
+  "agentBlockDay": "Block a day",
+  "@agentBlockDay": {
+    "description": "Add a day off."
+  },
+  "agentNoSlots": "No slots set",
+  "@agentNoSlots": {
+    "description": "Empty state for the weekly pattern."
+  },
+  "agentSaved": "Changes saved",
+  "@agentSaved": {
+    "description": "Confirmation toast."
+  },
+  "agentSaveFailed": "Could not save. Try again.",
+  "@agentSaveFailed": {
+    "description": "Generic failure toast on the agent screens."
+  },
+  "dayMonday": "Monday",
+  "@dayMonday": {
+    "description": "Day of week 1."
+  },
+  "dayTuesday": "Tuesday",
+  "@dayTuesday": {
+    "description": "Day of week 2."
+  },
+  "dayWednesday": "Wednesday",
+  "@dayWednesday": {
+    "description": "Day of week 3."
+  },
+  "dayThursday": "Thursday",
+  "@dayThursday": {
+    "description": "Day of week 4."
+  },
+  "dayFriday": "Friday",
+  "@dayFriday": {
+    "description": "Day of week 5."
+  },
+  "daySaturday": "Saturday",
+  "@daySaturday": {
+    "description": "Day of week 6."
+  },
+  "daySunday": "Sunday",
+  "@daySunday": {
+    "description": "Day of week 7."
   }
 }

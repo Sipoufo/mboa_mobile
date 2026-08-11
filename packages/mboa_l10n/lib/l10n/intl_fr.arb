@@ -800,5 +800,205 @@
   "annoncePeriodWeek": "Semaine",
   "@annoncePeriodWeek": {
     "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
+  },
+  "agentNavVisits": "Mes visites",
+  "@agentNavVisits": {
+    "description": "Agent shell tab (M16)."
+  },
+  "agentNavMissions": "Mes missions",
+  "@agentNavMissions": {
+    "description": "Agent shell tab (M11 assignments)."
+  },
+  "agentNavProfile": "Mon profil",
+  "@agentNavProfile": {
+    "description": "Agent shell tab (M15)."
+  },
+  "agentProfileTitle": "Mon profil agent",
+  "@agentProfileTitle": {
+    "description": "Agent profile screen title (M15)."
+  },
+  "agentStatusPending": "En attente de validation",
+  "@agentStatusPending": {
+    "description": "AgentProfileResponse.status = PENDING."
+  },
+  "agentStatusActive": "Actif",
+  "@agentStatusActive": {
+    "description": "AgentProfileResponse.status = ACTIVE."
+  },
+  "agentStatusSuspended": "Suspendu",
+  "@agentStatusSuspended": {
+    "description": "AgentProfileResponse.status = SUSPENDED."
+  },
+  "agentStatusDeleted": "Compte clôturé",
+  "@agentStatusDeleted": {
+    "description": "AgentProfileResponse.status = DELETED."
+  },
+  "agentStatusUnknown": "Statut inconnu",
+  "@agentStatusUnknown": {
+    "description": "AgentProfileResponse.status absent or unrecognised."
+  },
+  "agentStatsVisits": "Visites réalisées",
+  "@agentStatsVisits": {
+    "description": "completedVisitCount on the agent profile."
+  },
+  "agentStatsRating": "Note moyenne",
+  "@agentStatsRating": {
+    "description": "averageRating on the agent profile."
+  },
+  "agentStatsRatingCount": "{count} avis",
+  "@agentStatsRatingCount": {
+    "description": "How many ratings the average is based on.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentStatsNoRating": "Pas encore noté",
+  "@agentStatsNoRating": {
+    "description": "Shown instead of an average when ratingCount is 0."
+  },
+  "agentAcceptingTitle": "Je reçois des missions",
+  "@agentAcceptingTitle": {
+    "description": "RM-M15-05 toggle."
+  },
+  "agentAcceptingOn": "Vous pouvez recevoir de nouvelles assignations.",
+  "@agentAcceptingOn": {
+    "description": "RM-M15-05, accepting."
+  },
+  "agentAcceptingOff": "Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.",
+  "@agentAcceptingOff": {
+    "description": "RM-M15-05, inactive — Doc 10 is explicit that scheduled visits are still carried out."
+  },
+  "agentIncompleteTitle": "Profil incomplet",
+  "@agentIncompleteTitle": {
+    "description": "profileComplete == false."
+  },
+  "agentIncompleteBody": "Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.",
+  "@agentIncompleteBody": {
+    "description": "The server's completeness rule, spelled out: firstName + lastName + photoObjectKey + >=1 zone."
+  },
+  "agentZonesTitle": "Mes zones d'intervention",
+  "@agentZonesTitle": {
+    "description": "RM-M15-04 screen title."
+  },
+  "agentZonesSubtitle": "{count} zone(s)",
+  "@agentZonesSubtitle": {
+    "description": "Zone count on the profile screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentZonesNone": "Aucune zone",
+  "@agentZonesNone": {
+    "description": "No zones selected yet."
+  },
+  "agentZonesHelp": "Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.",
+  "@agentZonesHelp": {
+    "description": "Doc 10 RM-M15-04."
+  },
+  "agentZonesEmptyError": "Choisissez au moins une ville ou un quartier.",
+  "@agentZonesEmptyError": {
+    "description": "The backend rejects a zones update where both lists are empty."
+  },
+  "agentZonesWholeCity": "Toute la ville",
+  "@agentZonesWholeCity": {
+    "description": "Option to cover a whole city rather than picking districts."
+  },
+  "agentAvailabilityTitle": "Mes disponibilités",
+  "@agentAvailabilityTitle": {
+    "description": "RM-M15-01 screen title."
+  },
+  "agentAvailabilitySubtitle": "{count} créneau(x) par semaine",
+  "@agentAvailabilitySubtitle": {
+    "description": "Weekly rule count on the profile screen.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "agentAvailabilityHelp": "Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.",
+  "@agentAvailabilityHelp": {
+    "description": "Doc 10 RM-M15-01."
+  },
+  "agentVisitDuration": "Durée d'une visite",
+  "@agentVisitDuration": {
+    "description": "visitDurationMinutes label."
+  },
+  "agentVisitDurationValue": "{minutes} min",
+  "@agentVisitDurationValue": {
+    "description": "visitDurationMinutes value.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "agentAddSlot": "Ajouter un créneau",
+  "@agentAddSlot": {
+    "description": "Add an availability window."
+  },
+  "agentSlotOverlap": "Ce créneau en chevauche un autre.",
+  "@agentSlotOverlap": {
+    "description": "Rejected: overlapping window on the same day."
+  },
+  "agentDaysOffTitle": "Jours bloqués",
+  "@agentDaysOffTitle": {
+    "description": "RM-M15-03 section."
+  },
+  "agentDaysOffHelp": "Un jour bloqué annule les visites déjà planifiées ce jour-là.",
+  "@agentDaysOffHelp": {
+    "description": "Doc 10 RM-M15-03 — the cancellation is why this saves immediately."
+  },
+  "agentDaysOffNone": "Aucun jour bloqué",
+  "@agentDaysOffNone": {
+    "description": "Empty state for days off."
+  },
+  "agentBlockDay": "Bloquer un jour",
+  "@agentBlockDay": {
+    "description": "Add a day off."
+  },
+  "agentNoSlots": "Aucun créneau défini",
+  "@agentNoSlots": {
+    "description": "Empty state for the weekly pattern."
+  },
+  "agentSaved": "Modifications enregistrées",
+  "@agentSaved": {
+    "description": "Confirmation toast."
+  },
+  "agentSaveFailed": "Enregistrement impossible. Réessayez.",
+  "@agentSaveFailed": {
+    "description": "Generic failure toast on the agent screens."
+  },
+  "dayMonday": "Lundi",
+  "@dayMonday": {
+    "description": "Day of week 1."
+  },
+  "dayTuesday": "Mardi",
+  "@dayTuesday": {
+    "description": "Day of week 2."
+  },
+  "dayWednesday": "Mercredi",
+  "@dayWednesday": {
+    "description": "Day of week 3."
+  },
+  "dayThursday": "Jeudi",
+  "@dayThursday": {
+    "description": "Day of week 4."
+  },
+  "dayFriday": "Vendredi",
+  "@dayFriday": {
+    "description": "Day of week 5."
+  },
+  "daySaturday": "Samedi",
+  "@daySaturday": {
+    "description": "Day of week 6."
+  },
+  "daySunday": "Dimanche",
+  "@daySunday": {
+    "description": "Day of week 7."
   }
 }

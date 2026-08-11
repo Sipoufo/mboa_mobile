@@ -37,7 +37,8 @@
 | M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports |
 | M04 search · M05 detail · M12 messaging | ❌ not started |
-| M15/M16 agents | ❌ no endpoints |
+| M15 agent profile, zones, availability | ✅ shell + screens |
+| M16 agent visits · M11 assignments | ❌ endpoints exist, no screens |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -246,6 +247,36 @@ trip.
   rather than being hidden — the hub is the product's map.
 
 ---
+
+### M15 agents — a second persona in the same app
+An agent gets **their own shell** (`AgentShellRoute`: Visites / Missions /
+Profil), not role checks inside the prestataire one — Accueil, Gestionnaire and
+Finance are about listings and subscriptions an agent does not have. A signed-in
+agent is redirected there by the role listener in `AuthenticatedWrapper`, because
+the role only arrives with the profile, after the first frame. Visites and
+Missions have endpoints but no screens; they show the coming-soon page.
+
+- **`/agents/me` is a separate record from `/users/me`**, with its own name and
+  photo. The server's `profileComplete` is firstName && lastName &&
+  photoObjectKey && ≥1 zone, all read from the *agent* record, and the
+  prestataire's `AgentCandidate` card reads the agent photo too. Write the base
+  profile instead and the agent looks complete in the app while being
+  unassignable on the server.
+- **A zone is either a whole city or one district, never a pair** — the backend
+  builds them with `ofCity`/`ofDistrict`, leaving the other id null. Modelled as
+  a sealed pair so "both set" cannot exist. An update with both lists empty is
+  rejected, so the picker keeps the save button disabled until something is
+  chosen.
+- **Availability times had no documented format.** The field is a Java
+  `LocalTime`, so it emits `"08:00"` or `"08:00:30"` and accepts any ISO local
+  time. `TimeCodec` parses leniently and always writes `HH:mm:ss`. Pinned by
+  `availability_test.dart` — a wrong format means no agent can be booked.
+- **Days off save on tap**, not behind the form: blocking one cancels the visits
+  already booked that day (RM-M15-03). The weekly pattern is a draft PUT as a
+  whole, since a rule left out is a rule deleted.
+- `AgentProfileBloc` is provided by `AuthenticatedWrapper`, not the agent shell —
+  the zones screen is a *sibling* of the shell, and a bloc provided by one route
+  is invisible to its siblings.
 
 ## Open decisions (product, not code)
 

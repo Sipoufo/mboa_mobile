@@ -60,6 +60,21 @@ class AppRouter extends RootStackRouter {
               ],
             ),
 
+            // Agent shell (M15). A separate persona: a signed-in agent is
+            // redirected here by the role listener in AuthenticatedWrapper,
+            // because the prestataire tabs are about listings they do not have.
+            AutoRoute(
+              page: AgentShellRoute.page,
+              path: 'agent',
+              children: [
+                AutoRoute(page: AgentVisitsRoute.page, path: 'visits', initial: true),
+                AutoRoute(page: AgentMissionsRoute.page, path: 'missions'),
+                AutoRoute(page: AgentProfileRoute.page, path: 'profile'),
+              ],
+            ),
+            AutoRoute(page: AgentZonesRoute.page, path: 'agent/zones'),
+            AutoRoute(page: AgentAvailabilityRoute.page, path: 'agent/availability'),
+
             // Slide menu — pushed over the shell, not a tab.
             CustomRoute(
               page: ProMenuRoute.page,

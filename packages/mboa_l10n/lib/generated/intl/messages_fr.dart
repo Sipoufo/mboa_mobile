@@ -25,56 +25,64 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(tier) => "Passer à ${tier}";
 
-  static String m2(city) => "Ville détectée : ${city}";
+  static String m2(count) => "${count} créneau(x) par semaine";
 
-  static String m3(min) => "Ajouter des images (${min} photos minimum)";
+  static String m3(count) => "${count} avis";
 
-  static String m4(price, period) => "${price} XAF / ${period}";
+  static String m4(minutes) => "${minutes} min";
 
-  static String m5(price) => "${price} XAF / Mois";
+  static String m5(count) => "${count} zone(s)";
 
-  static String m6(count) =>
+  static String m6(city) => "Ville détectée : ${city}";
+
+  static String m7(min) => "Ajouter des images (${min} photos minimum)";
+
+  static String m8(price, period) => "${price} XAF / ${period}";
+
+  static String m9(price) => "${price} XAF / Mois";
+
+  static String m10(count) =>
       "${Intl.plural(count, one: '1 Pièce', other: '${count} Pièces')}";
 
-  static String m7(value) => "${value} m²";
+  static String m11(value) => "${value} m²";
 
-  static String m8(count) => "${count} publiées";
+  static String m12(count) => "${count} publiées";
 
-  static String m9(count) =>
+  static String m13(count) =>
       "${Intl.plural(count, one: '1 unité', other: '${count} unités')}";
 
-  static String m10(phone) => "Code reçu sur ${phone}";
+  static String m14(phone) => "Code reçu sur ${phone}";
 
-  static String m11(word) => "Tapez « ${word} » pour confirmer";
+  static String m15(word) => "Tapez « ${word} » pour confirmer";
 
-  static String m12(tier) => "Inclus dans ${tier}";
+  static String m16(tier) => "Inclus dans ${tier}";
 
-  static String m13(reason) => "Motif : ${reason}";
+  static String m17(reason) => "Motif : ${reason}";
 
-  static String m14(phone) => "Code envoyé au ${phone}";
+  static String m18(phone) => "Code envoyé au ${phone}";
 
-  static String m15(seconds) => "Renvoyer dans ${seconds}s";
+  static String m19(seconds) => "Renvoyer dans ${seconds}s";
 
-  static String m16(tier) => "Votre formule ${tier} est active.";
+  static String m20(tier) => "Votre formule ${tier} est active.";
 
-  static String m17(ref) => "Référence : ${ref}";
+  static String m21(ref) => "Référence : ${ref}";
 
-  static String m18(price) => "${price} FCFA / mois";
-
-  static String m19(count) =>
-      "${Intl.plural(count, one: '1 unité de résidence', other: '${count} unités de résidence')}";
-
-  static String m20(tier) =>
-      "Limite atteinte. Passe à ${tier} pour publier plus d’annonces.";
-
-  static String m21(min) => "Ajoute au moins ${min} photos pour publier.";
-
-  static String m22(query) => "Aucune unité ne correspond à « ${query} ».";
+  static String m22(price) => "${price} FCFA / mois";
 
   static String m23(count) =>
+      "${Intl.plural(count, one: '1 unité de résidence', other: '${count} unités de résidence')}";
+
+  static String m24(tier) =>
+      "Limite atteinte. Passe à ${tier} pour publier plus d’annonces.";
+
+  static String m25(min) => "Ajoute au moins ${min} photos pour publier.";
+
+  static String m26(query) => "Aucune unité ne correspond à « ${query} ».";
+
+  static String m27(count) =>
       "${Intl.plural(count, zero: 'Aucune annonce active', one: '1 annonce active', other: '${count} annonces actives')}";
 
-  static String m24(date) => "Valable jusqu’au ${date}";
+  static String m28(date) => "Valable jusqu’au ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -113,6 +121,92 @@ class MessageLookup extends MessageLookupByLibrary {
       "Réservé aux abonnés",
     ),
     "accessUpgradeCta": m1,
+    "agentAcceptingOff": MessageLookupByLibrary.simpleMessage(
+      "Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.",
+    ),
+    "agentAcceptingOn": MessageLookupByLibrary.simpleMessage(
+      "Vous pouvez recevoir de nouvelles assignations.",
+    ),
+    "agentAcceptingTitle": MessageLookupByLibrary.simpleMessage(
+      "Je reçois des missions",
+    ),
+    "agentAddSlot": MessageLookupByLibrary.simpleMessage("Ajouter un créneau"),
+    "agentAvailabilityHelp": MessageLookupByLibrary.simpleMessage(
+      "Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.",
+    ),
+    "agentAvailabilitySubtitle": m2,
+    "agentAvailabilityTitle": MessageLookupByLibrary.simpleMessage(
+      "Mes disponibilités",
+    ),
+    "agentBlockDay": MessageLookupByLibrary.simpleMessage("Bloquer un jour"),
+    "agentDaysOffHelp": MessageLookupByLibrary.simpleMessage(
+      "Un jour bloqué annule les visites déjà planifiées ce jour-là.",
+    ),
+    "agentDaysOffNone": MessageLookupByLibrary.simpleMessage(
+      "Aucun jour bloqué",
+    ),
+    "agentDaysOffTitle": MessageLookupByLibrary.simpleMessage("Jours bloqués"),
+    "agentIncompleteBody": MessageLookupByLibrary.simpleMessage(
+      "Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.",
+    ),
+    "agentIncompleteTitle": MessageLookupByLibrary.simpleMessage(
+      "Profil incomplet",
+    ),
+    "agentNavMissions": MessageLookupByLibrary.simpleMessage("Mes missions"),
+    "agentNavProfile": MessageLookupByLibrary.simpleMessage("Mon profil"),
+    "agentNavVisits": MessageLookupByLibrary.simpleMessage("Mes visites"),
+    "agentNoSlots": MessageLookupByLibrary.simpleMessage(
+      "Aucun créneau défini",
+    ),
+    "agentProfileTitle": MessageLookupByLibrary.simpleMessage(
+      "Mon profil agent",
+    ),
+    "agentSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "Enregistrement impossible. Réessayez.",
+    ),
+    "agentSaved": MessageLookupByLibrary.simpleMessage(
+      "Modifications enregistrées",
+    ),
+    "agentSlotOverlap": MessageLookupByLibrary.simpleMessage(
+      "Ce créneau en chevauche un autre.",
+    ),
+    "agentStatsNoRating": MessageLookupByLibrary.simpleMessage(
+      "Pas encore noté",
+    ),
+    "agentStatsRating": MessageLookupByLibrary.simpleMessage("Note moyenne"),
+    "agentStatsRatingCount": m3,
+    "agentStatsVisits": MessageLookupByLibrary.simpleMessage(
+      "Visites réalisées",
+    ),
+    "agentStatusActive": MessageLookupByLibrary.simpleMessage("Actif"),
+    "agentStatusDeleted": MessageLookupByLibrary.simpleMessage(
+      "Compte clôturé",
+    ),
+    "agentStatusPending": MessageLookupByLibrary.simpleMessage(
+      "En attente de validation",
+    ),
+    "agentStatusSuspended": MessageLookupByLibrary.simpleMessage("Suspendu"),
+    "agentStatusUnknown": MessageLookupByLibrary.simpleMessage(
+      "Statut inconnu",
+    ),
+    "agentVisitDuration": MessageLookupByLibrary.simpleMessage(
+      "Durée d\'une visite",
+    ),
+    "agentVisitDurationValue": m4,
+    "agentZonesEmptyError": MessageLookupByLibrary.simpleMessage(
+      "Choisissez au moins une ville ou un quartier.",
+    ),
+    "agentZonesHelp": MessageLookupByLibrary.simpleMessage(
+      "Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.",
+    ),
+    "agentZonesNone": MessageLookupByLibrary.simpleMessage("Aucune zone"),
+    "agentZonesSubtitle": m5,
+    "agentZonesTitle": MessageLookupByLibrary.simpleMessage(
+      "Mes zones d\'intervention",
+    ),
+    "agentZonesWholeCity": MessageLookupByLibrary.simpleMessage(
+      "Toute la ville",
+    ),
     "amenityAirConditioning": MessageLookupByLibrary.simpleMessage(
       "Climatisation",
     ),
@@ -162,7 +256,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormAddress": MessageLookupByLibrary.simpleMessage(
       "Adresse exacte",
     ),
-    "annonceFormCityDetected": m2,
+    "annonceFormCityDetected": m6,
     "annonceFormCityNotDetected": MessageLookupByLibrary.simpleMessage(
       "Ville non détectée. Choisissez-la manuellement.",
     ),
@@ -274,7 +368,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormNoDistricts": MessageLookupByLibrary.simpleMessage(
       "Aucun quartier disponible pour cette ville.",
     ),
-    "annonceFormPhotosHint": m3,
+    "annonceFormPhotosHint": m7,
     "annonceFormPhotosLabel": MessageLookupByLibrary.simpleMessage("Photos"),
     "annonceFormPickDistrict": MessageLookupByLibrary.simpleMessage(
       "Choisir le quartier",
@@ -303,7 +397,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annoncePeriodQuarter": MessageLookupByLibrary.simpleMessage("Trimestre"),
     "annoncePeriodWeek": MessageLookupByLibrary.simpleMessage("Semaine"),
     "annoncePeriodYear": MessageLookupByLibrary.simpleMessage("An"),
-    "annoncePricePerPeriod": m4,
+    "annoncePricePerPeriod": m8,
     "annonceStatusArchived": MessageLookupByLibrary.simpleMessage("Archivé"),
     "annonceStatusDraft": MessageLookupByLibrary.simpleMessage("Brouillon"),
     "annonceStatusPublished": MessageLookupByLibrary.simpleMessage(
@@ -328,15 +422,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "annoncesMultipleTitle": MessageLookupByLibrary.simpleMessage(
       "Biens Multiples",
     ),
-    "annoncesPerMonth": m5,
-    "annoncesRooms": m6,
+    "annoncesPerMonth": m9,
+    "annoncesRooms": m10,
     "annoncesSingleTitle": MessageLookupByLibrary.simpleMessage("Biens Unique"),
-    "annoncesSurface": m7,
+    "annoncesSurface": m11,
     "annoncesTabArchived": MessageLookupByLibrary.simpleMessage("Archivés"),
     "annoncesTabAvailable": MessageLookupByLibrary.simpleMessage("Disponibles"),
     "annoncesTabOccupied": MessageLookupByLibrary.simpleMessage("Occupés"),
-    "annoncesUnitsPublished": m8,
-    "annoncesUnitsSummary": m9,
+    "annoncesUnitsPublished": m12,
+    "annoncesUnitsSummary": m13,
     "appName": MessageLookupByLibrary.simpleMessage("Mboa"),
     "appNamePro": MessageLookupByLibrary.simpleMessage("Mboa Pro"),
     "authEmailHint": MessageLookupByLibrary.simpleMessage("nom@exemple.com"),
@@ -381,7 +475,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer le changement",
     ),
-    "changePhoneNewCodeLabel": m10,
+    "changePhoneNewCodeLabel": m14,
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code reçu sur l’ancien numéro",
     ),
@@ -407,10 +501,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonErrorTitle": MessageLookupByLibrary.simpleMessage("Oups"),
     "commonOr": MessageLookupByLibrary.simpleMessage("Ou"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Réessayer"),
+    "dayFriday": MessageLookupByLibrary.simpleMessage("Vendredi"),
+    "dayMonday": MessageLookupByLibrary.simpleMessage("Lundi"),
+    "daySaturday": MessageLookupByLibrary.simpleMessage("Samedi"),
+    "daySunday": MessageLookupByLibrary.simpleMessage("Dimanche"),
+    "dayThursday": MessageLookupByLibrary.simpleMessage("Jeudi"),
+    "dayTuesday": MessageLookupByLibrary.simpleMessage("Mardi"),
+    "dayWednesday": MessageLookupByLibrary.simpleMessage("Mercredi"),
     "deleteAccountButton": MessageLookupByLibrary.simpleMessage(
       "Supprimer définitivement",
     ),
-    "deleteAccountConfirmLabel": m11,
+    "deleteAccountConfirmLabel": m15,
     "deleteAccountConfirmWord": MessageLookupByLibrary.simpleMessage(
       "SUPPRIMER",
     ),
@@ -497,7 +598,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeStatsContacts": MessageLookupByLibrary.simpleMessage("Contacts"),
     "homeStatsContracts": MessageLookupByLibrary.simpleMessage("Contrats"),
     "homeStatsConversion": MessageLookupByLibrary.simpleMessage("Conversion"),
-    "homeStatsLockedHint": m12,
+    "homeStatsLockedHint": m16,
     "homeStatsPublished": MessageLookupByLibrary.simpleMessage("Publiés"),
     "homeStatsRank": MessageLookupByLibrary.simpleMessage("Position"),
     "homeStatsRented": MessageLookupByLibrary.simpleMessage("Loués"),
@@ -541,7 +642,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Recto"),
-    "kycRejectionReason": m13,
+    "kycRejectionReason": m17,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Vérifié"),
     "kycStatusNotSubmitted": MessageLookupByLibrary.simpleMessage(
       "Informations requises",
@@ -637,7 +738,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "navManager": MessageLookupByLibrary.simpleMessage("Gestionnaire"),
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
-    "otpCodeSentTo": m14,
+    "otpCodeSentTo": m18,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Code invalide. Réessayez.",
     ),
@@ -645,7 +746,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous n’avez pas reçu le code ?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Renvoyer le code"),
-    "otpResendIn": m15,
+    "otpResendIn": m19,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
     "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
@@ -654,7 +755,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
       "Finalisez sur votre téléphone",
     ),
-    "paymentConfirmedBody": m16,
+    "paymentConfirmedBody": m20,
     "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement confirmé",
     ),
@@ -681,7 +782,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement en attente",
     ),
-    "paymentReference": m17,
+    "paymentReference": m21,
     "paymentRetry": MessageLookupByLibrary.simpleMessage(
       "Réessayer le paiement",
     ),
@@ -691,8 +792,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Un passage à une formule inférieure prend effet au prochain cycle.",
     ),
     "plansPriceFree": MessageLookupByLibrary.simpleMessage("Gratuit"),
-    "plansPriceMonthly": m18,
-    "plansResidenceAllowance": m19,
+    "plansPriceMonthly": m22,
+    "plansResidenceAllowance": m23,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Formules"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("Prénom"),
@@ -713,11 +814,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Particulier",
     ),
     "profileTypePromoteur": MessageLookupByLibrary.simpleMessage("Promoteur"),
-    "publishBlockedLimitBody": m20,
+    "publishBlockedLimitBody": m24,
     "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
       "Limite atteinte",
     ),
-    "publishBlockedPhotosBody": m21,
+    "publishBlockedPhotosBody": m25,
     "publishBlockedPhotosTitle": MessageLookupByLibrary.simpleMessage(
       "Photos manquantes",
     ),
@@ -756,7 +857,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "La modification d’une unité arrivera prochainement.",
     ),
-    "residenceUnitsSearchEmpty": m22,
+    "residenceUnitsSearchEmpty": m26,
     "residenceUnitsSearchHint": MessageLookupByLibrary.simpleMessage(
       "Rechercher une unité",
     ),
@@ -788,7 +889,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Votre abonnement a expiré",
     ),
-    "subscriptionListingLimit": m23,
+    "subscriptionListingLimit": m27,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Annonces illimitées",
     ),
@@ -805,7 +906,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Les reçus sont liés à cet appareil pour le moment.",
     ),
-    "subscriptionRenewsOn": m24,
+    "subscriptionRenewsOn": m28,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
       "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",

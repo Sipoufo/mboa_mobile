@@ -3363,6 +3363,459 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mes visites`
+  String get agentNavVisits {
+    return Intl.message(
+      'Mes visites',
+      name: 'agentNavVisits',
+      desc: 'Agent shell tab (M16).',
+      args: [],
+    );
+  }
+
+  /// `Mes missions`
+  String get agentNavMissions {
+    return Intl.message(
+      'Mes missions',
+      name: 'agentNavMissions',
+      desc: 'Agent shell tab (M11 assignments).',
+      args: [],
+    );
+  }
+
+  /// `Mon profil`
+  String get agentNavProfile {
+    return Intl.message(
+      'Mon profil',
+      name: 'agentNavProfile',
+      desc: 'Agent shell tab (M15).',
+      args: [],
+    );
+  }
+
+  /// `Mon profil agent`
+  String get agentProfileTitle {
+    return Intl.message(
+      'Mon profil agent',
+      name: 'agentProfileTitle',
+      desc: 'Agent profile screen title (M15).',
+      args: [],
+    );
+  }
+
+  /// `En attente de validation`
+  String get agentStatusPending {
+    return Intl.message(
+      'En attente de validation',
+      name: 'agentStatusPending',
+      desc: 'AgentProfileResponse.status = PENDING.',
+      args: [],
+    );
+  }
+
+  /// `Actif`
+  String get agentStatusActive {
+    return Intl.message(
+      'Actif',
+      name: 'agentStatusActive',
+      desc: 'AgentProfileResponse.status = ACTIVE.',
+      args: [],
+    );
+  }
+
+  /// `Suspendu`
+  String get agentStatusSuspended {
+    return Intl.message(
+      'Suspendu',
+      name: 'agentStatusSuspended',
+      desc: 'AgentProfileResponse.status = SUSPENDED.',
+      args: [],
+    );
+  }
+
+  /// `Compte clôturé`
+  String get agentStatusDeleted {
+    return Intl.message(
+      'Compte clôturé',
+      name: 'agentStatusDeleted',
+      desc: 'AgentProfileResponse.status = DELETED.',
+      args: [],
+    );
+  }
+
+  /// `Statut inconnu`
+  String get agentStatusUnknown {
+    return Intl.message(
+      'Statut inconnu',
+      name: 'agentStatusUnknown',
+      desc: 'AgentProfileResponse.status absent or unrecognised.',
+      args: [],
+    );
+  }
+
+  /// `Visites réalisées`
+  String get agentStatsVisits {
+    return Intl.message(
+      'Visites réalisées',
+      name: 'agentStatsVisits',
+      desc: 'completedVisitCount on the agent profile.',
+      args: [],
+    );
+  }
+
+  /// `Note moyenne`
+  String get agentStatsRating {
+    return Intl.message(
+      'Note moyenne',
+      name: 'agentStatsRating',
+      desc: 'averageRating on the agent profile.',
+      args: [],
+    );
+  }
+
+  /// `{count} avis`
+  String agentStatsRatingCount(int count) {
+    return Intl.message(
+      '$count avis',
+      name: 'agentStatsRatingCount',
+      desc: 'How many ratings the average is based on.',
+      args: [count],
+    );
+  }
+
+  /// `Pas encore noté`
+  String get agentStatsNoRating {
+    return Intl.message(
+      'Pas encore noté',
+      name: 'agentStatsNoRating',
+      desc: 'Shown instead of an average when ratingCount is 0.',
+      args: [],
+    );
+  }
+
+  /// `Je reçois des missions`
+  String get agentAcceptingTitle {
+    return Intl.message(
+      'Je reçois des missions',
+      name: 'agentAcceptingTitle',
+      desc: 'RM-M15-05 toggle.',
+      args: [],
+    );
+  }
+
+  /// `Vous pouvez recevoir de nouvelles assignations.`
+  String get agentAcceptingOn {
+    return Intl.message(
+      'Vous pouvez recevoir de nouvelles assignations.',
+      name: 'agentAcceptingOn',
+      desc: 'RM-M15-05, accepting.',
+      args: [],
+    );
+  }
+
+  /// `Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.`
+  String get agentAcceptingOff {
+    return Intl.message(
+      'Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.',
+      name: 'agentAcceptingOff',
+      desc:
+          'RM-M15-05, inactive — Doc 10 is explicit that scheduled visits are still carried out.',
+      args: [],
+    );
+  }
+
+  /// `Profil incomplet`
+  String get agentIncompleteTitle {
+    return Intl.message(
+      'Profil incomplet',
+      name: 'agentIncompleteTitle',
+      desc: 'profileComplete == false.',
+      args: [],
+    );
+  }
+
+  /// `Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.`
+  String get agentIncompleteBody {
+    return Intl.message(
+      'Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.',
+      name: 'agentIncompleteBody',
+      desc:
+          'The server\'s completeness rule, spelled out: firstName + lastName + photoObjectKey + >=1 zone.',
+      args: [],
+    );
+  }
+
+  /// `Mes zones d'intervention`
+  String get agentZonesTitle {
+    return Intl.message(
+      'Mes zones d\'intervention',
+      name: 'agentZonesTitle',
+      desc: 'RM-M15-04 screen title.',
+      args: [],
+    );
+  }
+
+  /// `{count} zone(s)`
+  String agentZonesSubtitle(int count) {
+    return Intl.message(
+      '$count zone(s)',
+      name: 'agentZonesSubtitle',
+      desc: 'Zone count on the profile screen.',
+      args: [count],
+    );
+  }
+
+  /// `Aucune zone`
+  String get agentZonesNone {
+    return Intl.message(
+      'Aucune zone',
+      name: 'agentZonesNone',
+      desc: 'No zones selected yet.',
+      args: [],
+    );
+  }
+
+  /// `Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.`
+  String get agentZonesHelp {
+    return Intl.message(
+      'Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.',
+      name: 'agentZonesHelp',
+      desc: 'Doc 10 RM-M15-04.',
+      args: [],
+    );
+  }
+
+  /// `Choisissez au moins une ville ou un quartier.`
+  String get agentZonesEmptyError {
+    return Intl.message(
+      'Choisissez au moins une ville ou un quartier.',
+      name: 'agentZonesEmptyError',
+      desc: 'The backend rejects a zones update where both lists are empty.',
+      args: [],
+    );
+  }
+
+  /// `Toute la ville`
+  String get agentZonesWholeCity {
+    return Intl.message(
+      'Toute la ville',
+      name: 'agentZonesWholeCity',
+      desc: 'Option to cover a whole city rather than picking districts.',
+      args: [],
+    );
+  }
+
+  /// `Mes disponibilités`
+  String get agentAvailabilityTitle {
+    return Intl.message(
+      'Mes disponibilités',
+      name: 'agentAvailabilityTitle',
+      desc: 'RM-M15-01 screen title.',
+      args: [],
+    );
+  }
+
+  /// `{count} créneau(x) par semaine`
+  String agentAvailabilitySubtitle(int count) {
+    return Intl.message(
+      '$count créneau(x) par semaine',
+      name: 'agentAvailabilitySubtitle',
+      desc: 'Weekly rule count on the profile screen.',
+      args: [count],
+    );
+  }
+
+  /// `Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.`
+  String get agentAvailabilityHelp {
+    return Intl.message(
+      'Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.',
+      name: 'agentAvailabilityHelp',
+      desc: 'Doc 10 RM-M15-01.',
+      args: [],
+    );
+  }
+
+  /// `Durée d'une visite`
+  String get agentVisitDuration {
+    return Intl.message(
+      'Durée d\'une visite',
+      name: 'agentVisitDuration',
+      desc: 'visitDurationMinutes label.',
+      args: [],
+    );
+  }
+
+  /// `{minutes} min`
+  String agentVisitDurationValue(int minutes) {
+    return Intl.message(
+      '$minutes min',
+      name: 'agentVisitDurationValue',
+      desc: 'visitDurationMinutes value.',
+      args: [minutes],
+    );
+  }
+
+  /// `Ajouter un créneau`
+  String get agentAddSlot {
+    return Intl.message(
+      'Ajouter un créneau',
+      name: 'agentAddSlot',
+      desc: 'Add an availability window.',
+      args: [],
+    );
+  }
+
+  /// `Ce créneau en chevauche un autre.`
+  String get agentSlotOverlap {
+    return Intl.message(
+      'Ce créneau en chevauche un autre.',
+      name: 'agentSlotOverlap',
+      desc: 'Rejected: overlapping window on the same day.',
+      args: [],
+    );
+  }
+
+  /// `Jours bloqués`
+  String get agentDaysOffTitle {
+    return Intl.message(
+      'Jours bloqués',
+      name: 'agentDaysOffTitle',
+      desc: 'RM-M15-03 section.',
+      args: [],
+    );
+  }
+
+  /// `Un jour bloqué annule les visites déjà planifiées ce jour-là.`
+  String get agentDaysOffHelp {
+    return Intl.message(
+      'Un jour bloqué annule les visites déjà planifiées ce jour-là.',
+      name: 'agentDaysOffHelp',
+      desc:
+          'Doc 10 RM-M15-03 — the cancellation is why this saves immediately.',
+      args: [],
+    );
+  }
+
+  /// `Aucun jour bloqué`
+  String get agentDaysOffNone {
+    return Intl.message(
+      'Aucun jour bloqué',
+      name: 'agentDaysOffNone',
+      desc: 'Empty state for days off.',
+      args: [],
+    );
+  }
+
+  /// `Bloquer un jour`
+  String get agentBlockDay {
+    return Intl.message(
+      'Bloquer un jour',
+      name: 'agentBlockDay',
+      desc: 'Add a day off.',
+      args: [],
+    );
+  }
+
+  /// `Aucun créneau défini`
+  String get agentNoSlots {
+    return Intl.message(
+      'Aucun créneau défini',
+      name: 'agentNoSlots',
+      desc: 'Empty state for the weekly pattern.',
+      args: [],
+    );
+  }
+
+  /// `Modifications enregistrées`
+  String get agentSaved {
+    return Intl.message(
+      'Modifications enregistrées',
+      name: 'agentSaved',
+      desc: 'Confirmation toast.',
+      args: [],
+    );
+  }
+
+  /// `Enregistrement impossible. Réessayez.`
+  String get agentSaveFailed {
+    return Intl.message(
+      'Enregistrement impossible. Réessayez.',
+      name: 'agentSaveFailed',
+      desc: 'Generic failure toast on the agent screens.',
+      args: [],
+    );
+  }
+
+  /// `Lundi`
+  String get dayMonday {
+    return Intl.message(
+      'Lundi',
+      name: 'dayMonday',
+      desc: 'Day of week 1.',
+      args: [],
+    );
+  }
+
+  /// `Mardi`
+  String get dayTuesday {
+    return Intl.message(
+      'Mardi',
+      name: 'dayTuesday',
+      desc: 'Day of week 2.',
+      args: [],
+    );
+  }
+
+  /// `Mercredi`
+  String get dayWednesday {
+    return Intl.message(
+      'Mercredi',
+      name: 'dayWednesday',
+      desc: 'Day of week 3.',
+      args: [],
+    );
+  }
+
+  /// `Jeudi`
+  String get dayThursday {
+    return Intl.message(
+      'Jeudi',
+      name: 'dayThursday',
+      desc: 'Day of week 4.',
+      args: [],
+    );
+  }
+
+  /// `Vendredi`
+  String get dayFriday {
+    return Intl.message(
+      'Vendredi',
+      name: 'dayFriday',
+      desc: 'Day of week 5.',
+      args: [],
+    );
+  }
+
+  /// `Samedi`
+  String get daySaturday {
+    return Intl.message(
+      'Samedi',
+      name: 'daySaturday',
+      desc: 'Day of week 6.',
+      args: [],
+    );
+  }
+
+  /// `Dimanche`
+  String get daySunday {
+    return Intl.message(
+      'Dimanche',
+      name: 'daySunday',
+      desc: 'Day of week 7.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

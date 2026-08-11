@@ -266,3 +266,27 @@ the app cannot be the only thing checking.
 | **Subscription tier on `/me`** | `MeResponse` has no tier, so the app makes a second call to `GET /subscriptions/me` on every session start purely to know what to gate. |
 | **No `residenceUnitAllowance` docs** | `TierInfo.residenceUnitAllowance` exists and nothing in Doc 10 defines it. It is displayed on the plans screen as "N unités de résidence" — confirm that is right. |
 | **Doc 10 has no Bien Multiple section** | `ResidencesApi` is fully built and the Pro designs have a complete flow, but M10 in Doc 10 describes single listings only. The spec is ahead of the CDC. |
+
+
+---
+
+## 10. M15 findings — no action needed, but worth recording
+
+Answered by reading the Spring source rather than asking, so these are facts and
+not guesses. Recorded because the next person will hit the same questions.
+
+- **`AvailabilityRuleRequest.startTime` / `endTime` have no format in the spec** —
+  bare `type: string`, no pattern, no example. They are Java `LocalTime`, so
+  Jackson emits `"08:00"` when the seconds are zero and `"08:00:30"` otherwise,
+  and accepts any ISO local time. The app parses leniently and writes
+  `HH:mm:ss`. **Ask:** add `format` or an `example` to the spec — this is the
+  one field where a wrong guess means no agent can ever be booked.
+- **A zone is either a city or a district.** `AgentZone.ofCity` / `ofDistrict`
+  leave the other id null; `ZoneResponse` is not a pair. `updateMyZones` rejects
+  a request with both lists empty. Undocumented in the spec, which shows two
+  nullable uuids and no explanation.
+- **An agent's name and photo exist twice** — on `/users/me` and on `/agents/me`,
+  both writable. Only the agent record counts: `profileComplete` and
+  `AgentCandidate` read it. The app writes `/agents/me` for agents. **Ask:**
+  is the base profile meaningful for an agent at all? If not, saying so in the
+  spec would stop the next client writing the wrong one.
