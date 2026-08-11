@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**428 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 318 ·
+**436 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 326 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -65,6 +65,21 @@ listing detail).
 **Rule:** a screen reading a bloc it does not provide itself needs a widget test
 pumping it with *only* the blocs its route inherits. See
 `screens_provider_scope_test.dart`.
+
+### Two personas, one entry point
+`/app` opens on `RoleGateRoute`, **not** on a shell. The login response carries
+tokens and nothing else — only `/me` reports the role — so for a moment after
+signing in the app genuinely does not know who it is talking to. Opening on the
+prestataire shell and correcting a beat later showed an agent someone else's
+dashboard, which was reported from a device.
+
+`SessionSnapshot.role` is **nullable on purpose**: null means "not known yet",
+and defaulting it to `user` would route an agent wrongly rather than make the
+gate wait. On resume the role is already there (the startup check calls `/me`
+anyway) and the gate costs one frame; after a fresh sign-in it waits for the
+profile, showing the app's own loader.
+
+Pinned by `app_router_test.dart` — neither shell may be the landing route.
 
 ### Route reachability
 A route in the table is not proof it is reachable. The profile hub was orphaned

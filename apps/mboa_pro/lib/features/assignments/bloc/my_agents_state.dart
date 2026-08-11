@@ -12,6 +12,11 @@ class AgentRow extends Equatable {
   final String? agentName;
   final List<Assignment> assignments;
 
+  /// Avatar fallback. Assignment payloads carry no photo key at all (see
+  /// `docs/backend-requests.md` §12), so initials are all this row can show —
+  /// and showing nothing was the bug.
+  String get initials => initialsFromFullName(agentName);
+
   /// Live assignments only — an offer still awaiting an answer is not yet a
   /// property this agent works.
   List<Assignment> get live =>

@@ -1,3 +1,5 @@
+import '../features/profile/models/account_role.dart';
+
 /// Synchronous view of "is there a live session right now?", readable from a
 /// route guard.
 ///
@@ -11,11 +13,26 @@
 /// Tokens stay exclusively in `SecureTokenStorage`.
 class SessionSnapshot {
   bool _hasSession = false;
+  AccountRole? _role;
 
   /// Whether the app currently holds a session.
   bool get hasSession => _hasSession;
 
-  void markAuthenticated() => _hasSession = true;
+  /// The signed-in account's role, or **null when not yet known**.
+  ///
+  /// Known on resume, because the startup check calls `/me` anyway. Null after
+  /// a fresh sign-in — the login response carries tokens and nothing else — and
+  /// on an offline start. Nullable rather than defaulted so "unknown" cannot be
+  /// mistaken for "an ordinary user", which would route an agent wrongly.
+  AccountRole? get role => _role;
 
-  void markUnauthenticated() => _hasSession = false;
+  void markAuthenticated({AccountRole? role}) {
+    _hasSession = true;
+    _role = role;
+  }
+
+  void markUnauthenticated() {
+    _hasSession = false;
+    _role = null;
+  }
 }

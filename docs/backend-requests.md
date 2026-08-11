@@ -325,3 +325,23 @@ the gap so the screens are not read as a backlog.
 - **Agent contact details** (email, phone on the profile card). No agent payload
   carries them.
 - **Job titles** ("Concierge", "Gestionnaire des biens"). No such field.
+
+
+---
+
+## 12. Assignment payloads carry no agent photo
+
+`AssignmentResponse` and `ResidenceAssignmentSummary` return `agentAccountId`
+and `agentName` — **no photo key**. `AgentCandidate` and
+`ResidenceApplicationSummary` both carry `photoObjectKey`, so the *candidate
+picker* can show faces and the *assigned agent* list structurally cannot. There
+is also no public agent-profile endpoint (`/agents/me` is self-only), so the app
+cannot look it up by account id either.
+
+**Symptom:** reported from a device — "je ne vois pas la photo de profil de mon
+agent assigné". The app now shows initials, which is the best it can do.
+
+**Ask:** `agentPhotoObjectKey` on `AssignmentResponse` and
+`ResidenceAssignmentSummary`. With §11's `averageRating` / `ratingCount` on
+`AgentCandidate`, that is also what an agent detail screen needs to be worth
+opening — otherwise it can only ever show a name and a list of properties.

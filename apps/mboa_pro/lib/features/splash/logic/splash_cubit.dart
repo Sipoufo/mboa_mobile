@@ -31,7 +31,7 @@ class SplashCubit extends Cubit<SplashState> {
       Future<void>.delayed(_minimumDisplay),
     ).wait;
     emit(switch (result) {
-      SessionAuthenticated() => const SplashAuthenticated(),
+      SessionAuthenticated(:final role) => SplashAuthenticated(role: role),
       SessionUnauthenticated() => const SplashUnauthenticated(),
       SessionCheckError() => const SplashFailure(),
     });

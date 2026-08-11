@@ -2,6 +2,22 @@ import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+/// Two-letter avatar fallback for a name the API gives as one string.
+///
+/// Assignment payloads carry `agentName` whole, not first/last, so the split is
+/// here rather than reusing `BaseProfile.initials` — and every place that shows
+/// an assigned agent uses this one, so they cannot disagree.
+String initialsFromFullName(String? name) {
+  final parts = (name ?? '')
+      .trim()
+      .split(RegExp(r'\s+'))
+      .where((p) => p.isNotEmpty)
+      .toList();
+  if (parts.isEmpty) return '';
+  if (parts.length == 1) return parts.first[0].toUpperCase();
+  return (parts.first[0] + parts.last[0]).toUpperCase();
+}
+
 /// What an assignment is attached to (CDC M11 / RM-M10bis-05).
 ///
 /// Every action has a listing form and a residence form, on different endpoints

@@ -267,6 +267,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentsPickPropertyEmpty": MessageLookupByLibrary.simpleMessage(
       "Aucun bien disponible pour une assignation.",
     ),
+    "agentsPickPropertyNone": MessageLookupByLibrary.simpleMessage(
+      "Aucun bien publié",
+    ),
+    "agentsPickPropertyNoneBody": MessageLookupByLibrary.simpleMessage(
+      "Un agent ne peut être assigné qu\'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.",
+    ),
     "agentsPickPropertyTitle": MessageLookupByLibrary.simpleMessage(
       "Choisir un bien",
     ),

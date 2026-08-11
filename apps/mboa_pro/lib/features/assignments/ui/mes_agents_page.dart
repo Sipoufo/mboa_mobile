@@ -73,6 +73,7 @@ class MesAgentsPage extends StatelessWidget implements AutoRouteWrapper {
                         final row = rows[index];
                         return AgentRowTile(
                           name: row.agentName ?? '',
+                          initials: row.initials,
                           subtitle: row.isAwaitingResponse
                               ? l10n.agentsAwaitingResponse
                               : row.soleProperty ??

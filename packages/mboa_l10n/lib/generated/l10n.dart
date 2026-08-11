@@ -4258,6 +4258,27 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Aucun bien publié`
+  String get agentsPickPropertyNone {
+    return Intl.message(
+      'Aucun bien publié',
+      name: 'agentsPickPropertyNone',
+      desc: 'Picker empty state title.',
+      args: [],
+    );
+  }
+
+  /// `Un agent ne peut être assigné qu'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.`
+  String get agentsPickPropertyNoneBody {
+    return Intl.message(
+      'Un agent ne peut être assigné qu\'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.',
+      name: 'agentsPickPropertyNoneBody',
+      desc:
+          'The backend refuses a non-published listing (ANNONCE_NOT_PUBLISHED) and a residence with no published unit (NO_PUBLISHED_UNITS).',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

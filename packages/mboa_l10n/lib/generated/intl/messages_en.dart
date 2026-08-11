@@ -256,6 +256,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentsPickPropertyEmpty": MessageLookupByLibrary.simpleMessage(
       "No property available for assignment.",
     ),
+    "agentsPickPropertyNone": MessageLookupByLibrary.simpleMessage(
+      "No published property",
+    ),
+    "agentsPickPropertyNoneBody": MessageLookupByLibrary.simpleMessage(
+      "An agent can only be assigned to a published property. Publish a listing or a residence unit to continue.",
+    ),
     "agentsPickPropertyTitle": MessageLookupByLibrary.simpleMessage(
       "Choose a property",
     ),

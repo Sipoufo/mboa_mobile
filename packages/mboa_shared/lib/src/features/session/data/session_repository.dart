@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mboa_core/mboa_core.dart';
 
+import '../../profile/models/account_role.dart';
 import '../models/session_result.dart';
 
 /// Resolves the startup session status, shared by both apps' splash features.
@@ -51,8 +52,12 @@ class SessionRepository {
     }
 
     try {
-      await _dioClient.api.getCurrentUserApi().getMe();
-      return const SessionAuthenticated();
+      // The role rides along with the check that already had to happen —
+      // knowing it here is what stops the wrong shell being drawn first.
+      final me = await _dioClient.api.getCurrentUserApi().getMe();
+      return SessionAuthenticated(
+        role: AccountRole.fromResponse(me.data?.role),
+      );
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         return const SessionUnauthenticated();

@@ -1211,5 +1211,13 @@
   "missionsActionFailed": "That action isn't possible right now.",
   "@missionsActionFailed": {
     "description": "Generic failure on the missions screen."
+  },
+  "agentsPickPropertyNone": "No published property",
+  "@agentsPickPropertyNone": {
+    "description": "Picker empty state title."
+  },
+  "agentsPickPropertyNoneBody": "An agent can only be assigned to a published property. Publish a listing or a residence unit to continue.",
+  "@agentsPickPropertyNoneBody": {
+    "description": "The backend refuses a non-published listing (ANNONCE_NOT_PUBLISHED) and a residence with no published unit (NO_PUBLISHED_UNITS)."
   }
 }

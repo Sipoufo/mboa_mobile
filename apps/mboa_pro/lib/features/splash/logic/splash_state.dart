@@ -17,7 +17,14 @@ final class SplashLoading extends SplashState {
 }
 
 final class SplashAuthenticated extends SplashState {
-  const SplashAuthenticated();
+  const SplashAuthenticated({this.role});
+
+  /// Known from the startup `/me`, so the first authenticated route can be the
+  /// right shell rather than the prestataire one corrected a moment later.
+  final AccountRole? role;
+
+  @override
+  List<Object?> get props => [role];
 }
 
 final class SplashUnauthenticated extends SplashState {

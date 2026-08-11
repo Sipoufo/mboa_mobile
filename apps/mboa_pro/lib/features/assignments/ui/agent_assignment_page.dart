@@ -99,6 +99,7 @@ class _Body extends StatelessWidget {
           const SizedBox(height: Dimens.spacingSm),
           AgentRowTile(
             name: live.agentName ?? '',
+            initials: initialsFromFullName(live.agentName),
             subtitle: live.unitCount == null
                 ? null
                 : l10n.agentsUnitsCovered(live.unitCount!),
@@ -115,6 +116,7 @@ class _Body extends StatelessWidget {
         ] else if (state.awaitingAgent case final pending?) ...[
           AgentRowTile(
             name: pending.agentName ?? '',
+            initials: initialsFromFullName(pending.agentName),
             subtitle: l10n.agentsAwaitingResponse,
             isBusy: state.mutatingId == pending.agentAccountId,
             trailing: TextButton(
@@ -140,6 +142,7 @@ class _Body extends StatelessWidget {
           for (final application in state.applications)
             AgentRowTile(
               name: application.agentName ?? '',
+              initials: initialsFromFullName(application.agentName),
               subtitle:
                   l10n.agentsVisitCount(application.completedVisitCount),
               photoUrl: application.photoUrl,

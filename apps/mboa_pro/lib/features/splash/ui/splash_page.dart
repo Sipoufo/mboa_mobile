@@ -34,8 +34,8 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
         // The startup decision also seeds the snapshot the route guards read —
         // otherwise the very first navigation into /app would be denied.
         switch (state) {
-          case SplashAuthenticated():
-            getIt<SessionSnapshot>().markAuthenticated();
+          case SplashAuthenticated(:final role):
+            getIt<SessionSnapshot>().markAuthenticated(role: role);
             getIt<SessionExpiryWatcher>().start();
             startNotifications(
               router: context.router.root as AppRouter,

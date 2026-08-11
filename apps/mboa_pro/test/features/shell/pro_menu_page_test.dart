@@ -33,10 +33,13 @@ void main() {
   test('every authenticated route has a navigation source in lib/', () {
     // Routes reached by the router itself rather than by a `push` call.
     const entryPoints = {
-      ProShellRoute.name, // /app landing
+      RoleGateRoute.name, // /app landing
       HomeRoute.name, // shell tab
       ManagerRoute.name, // shell tab
       FinanceRoute.name, // shell tab
+      AgentVisitsRoute.name, // agent shell tab
+      AgentMissionsRoute.name, // agent shell tab
+      AgentProfileRoute.name, // agent shell tab
     };
 
     final unreachable = <String>[];

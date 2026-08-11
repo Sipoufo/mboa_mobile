@@ -100,14 +100,24 @@ void main() {
       expect(menu.path, 'menu');
     });
 
-    test('the shell is the landing route of /app', () {
-      final shell = routeNamed(
-        ProShellRoute.name,
-        within: appChildren(),
-      );
+    test('the role gate is the landing route of /app, not a shell', () {
+      final gate = routeNamed(RoleGateRoute.name, within: appChildren());
 
-      expect(shell.initial, isTrue);
-      expect(shell.path, '');
+      // App Mboa Pro serves two personas and the login response carries no
+      // role, so `/app` cannot open on either shell: an agent would see the
+      // prestataire dashboard until the profile arrived.
+      expect(gate.initial, isTrue);
+      expect(gate.path, '');
+    });
+
+    test('neither shell is the landing route', () {
+      for (final name in [ProShellRoute.name, AgentShellRoute.name]) {
+        expect(
+          routeNamed(name, within: appChildren()).initial,
+          isFalse,
+          reason: '$name must be reached through the gate',
+        );
+      }
     });
   });
 }

@@ -26,6 +26,7 @@ class AppRouter extends RootStackRouter {
 
   final SessionSnapshot _snapshot;
 
+
   /// Sends a signed-out visitor back to login.
   late final _sessionGuard = SessionGuard(
     snapshot: _snapshot,
@@ -48,11 +49,15 @@ class AppRouter extends RootStackRouter {
           path: '/app',
           guards: [_sessionGuard],
           children: [
-            // Tab shell.
+            // `/app` opens on a neutral gate, not on a persona's shell: the
+            // role is not in the login response, so it is genuinely unknown
+            // for a moment after signing in. Landing on the prestataire
+            // dashboard and replacing it a beat later showed an agent someone
+            // else's app.
+            AutoRoute(page: RoleGateRoute.page, path: '', initial: true),
             AutoRoute(
               page: ProShellRoute.page,
-              path: '',
-              initial: true,
+              path: 'home',
               children: [
                 AutoRoute(page: HomeRoute.page, path: 'home', initial: true),
                 AutoRoute(page: ManagerRoute.page, path: 'manager'),
