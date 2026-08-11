@@ -77,8 +77,14 @@ void main() {
       );
     });
 
-    test('settings and certifications are reachable', () {
-      for (final route in [SettingsMenuRoute.name, CertificationsRoute.name]) {
+    test('the account surfaces are reachable', () {
+      for (final route in [
+        SettingsMenuRoute.name,
+        CertificationsRoute.name,
+        // Notifications is a coming-soon stub for both personas, but it must
+        // still be *reachable* — the hub is the product's map.
+        AccessRestrictedRoute.name,
+      ]) {
         expect(
           reachedFromAgentUi(route),
           isTrue,

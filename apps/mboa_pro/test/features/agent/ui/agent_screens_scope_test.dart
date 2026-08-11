@@ -146,7 +146,7 @@ void main() {
     verify(() => auth.add(const AuthLogoutRequested())).called(1);
   });
 
-  testWidgets('settings and certifications are reachable from the profile',
+  testWidgets('the account surfaces are reachable from the profile',
       (tester) async {
     await tester.binding.setSurfaceSize(const Size(800, 2400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -155,6 +155,7 @@ void main() {
 
     expect(find.text('Paramètres'), findsOneWidget);
     expect(find.text('Certifications'), findsOneWidget);
+    expect(find.text('Notifications'), findsOneWidget);
   });
 
   testWidgets('the availability screen renders every day of the week',
