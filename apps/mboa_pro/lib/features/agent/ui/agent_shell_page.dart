@@ -4,9 +4,6 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import 'package:mboa_shared/mboa_shared.dart';
-
-import '../../shell/ui/access_restricted_page.dart';
 import '../../shell/ui/widgets/pro_bottom_nav.dart';
 
 /// The agent's home in App Mboa Pro.
@@ -17,9 +14,7 @@ import '../../shell/ui/widgets/pro_bottom_nav.dart';
 /// `if (isAgent)` in every screen and a dashboard about properties they do not
 /// own.
 ///
-/// Visites (M16) has endpoints but no screens yet, so it lands on the
-/// coming-soon page — the same treatment Attributions and Réservations get on
-/// the prestataire side, where the hub is the product's map. Missions is M11.
+/// All three tabs are real: Visites is M16, Missions is M11, Profil is M15.
 @RoutePage()
 class AgentShellPage extends StatelessWidget {
   const AgentShellPage({super.key});
@@ -61,15 +56,4 @@ class AgentShellPage extends StatelessWidget {
       },
     );
   }
-}
-
-/// M16 — endpoints exist (`/agents/me/visites`), screens do not yet.
-@RoutePage()
-class AgentVisitsPage extends StatelessWidget {
-  const AgentVisitsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => const AccessRestrictedPage(
-        restriction: AccessRestriction.comingSoon,
-      );
 }

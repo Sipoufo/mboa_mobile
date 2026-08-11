@@ -39,7 +39,7 @@
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail (public profile) |
-| M16 agent visits | ❌ endpoints exist, no screens |
+| M16 agent visits | ✅ list, detail, start with geofence, report |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -365,6 +365,26 @@ instead. Pinned by `agent_detail_page_test.dart`.
 `GET /search/agents/{id}` is public and carries **no phone or email** by design —
 an agent's number reaches the people who need it on the day of a visit, through
 the visit sheet, not everyone who has been offered their services.
+
+### M16 — what the server owns, and what the app must not re-derive
+- **`canStart`** is server-computed. The day-of rule lives there; the app only
+  renders the button state. Re-deriving it would be a second source of truth for
+  a decision that already has one.
+- **The 500 m geofence is a prompt, not a gate** (RM-M16-02). Beyond the radius
+  the agent writes a justification and the visit starts anyway — a GPS fix can
+  be wrong, and an agent standing at the gate must not be stranded by it. The
+  coordinates go to the server either way and it decides. A property with **no
+  coordinates never demands one**: refusing would punish the agent for an
+  incomplete listing.
+- **A filed report is locked** (RM-M16-03), so the detail says so rather than
+  offering an edit the server would refuse. The submit button waits for a
+  complete draft — three photos, condition and conformity — instead of failing
+  after three uploads.
+- **A visit earlier today stays under "Aujourd'hui"**, not "Passées": 08:00 is
+  still the agent's work at 09:00. A scheduled visit whose slot has passed *does*
+  fall to Passées — never carried out, never cancelled, and the one they most
+  need to see.
+- The exact address and both phone numbers appear **only here** (RM-M16-01).
 
 ## Open decisions (product, not code)
 

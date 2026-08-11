@@ -1269,5 +1269,191 @@
         "type": "int"
       }
     }
+  },
+  "visitsTabToday": "Today",
+  "@visitsTabToday": {
+    "description": "M16 list tab."
+  },
+  "visitsTabUpcoming": "Upcoming",
+  "@visitsTabUpcoming": {
+    "description": "M16 list tab."
+  },
+  "visitsTabPast": "Past",
+  "@visitsTabPast": {
+    "description": "M16 list tab — done, cancelled, and missed."
+  },
+  "visitsEmptyToday": "No visit today",
+  "@visitsEmptyToday": {
+    "description": "Empty today."
+  },
+  "visitsEmptyUpcoming": "No visit scheduled",
+  "@visitsEmptyUpcoming": {
+    "description": "Empty upcoming."
+  },
+  "visitsEmptyPast": "No past visit",
+  "@visitsEmptyPast": {
+    "description": "Empty past."
+  },
+  "visitsStatusScheduled": "Scheduled",
+  "@visitsStatusScheduled": {
+    "description": "VisiteResponse.status = SCHEDULED."
+  },
+  "visitsStatusCompleted": "Completed",
+  "@visitsStatusCompleted": {
+    "description": "VisiteResponse.status = COMPLETED."
+  },
+  "visitsStatusCancelled": "Cancelled",
+  "@visitsStatusCancelled": {
+    "description": "VisiteResponse.status = CANCELLED."
+  },
+  "visitsDetailTitle": "Visit details",
+  "@visitsDetailTitle": {
+    "description": "M16 detail screen."
+  },
+  "visitsAddress": "Exact address",
+  "@visitsAddress": {
+    "description": "RM-M16-01 — only the agent's view shows it."
+  },
+  "visitsAddressNote": "Visible only to you, for this visit.",
+  "@visitsAddressNote": {
+    "description": "RM-M16-01."
+  },
+  "visitsTenant": "Tenant",
+  "@visitsTenant": {
+    "description": "The user who booked."
+  },
+  "visitsOwner": "Owner",
+  "@visitsOwner": {
+    "description": "The property owner."
+  },
+  "visitsCall": "Call",
+  "@visitsCall": {
+    "description": "Dial a contact."
+  },
+  "visitsStart": "Start the visit",
+  "@visitsStart": {
+    "description": "RM-M16-02."
+  },
+  "visitsStartNotYet": "Available on the day of the visit",
+  "@visitsStartNotYet": {
+    "description": "canStart is false — the server decides."
+  },
+  "visitsStarted": "Visit started",
+  "@visitsStarted": {
+    "description": "startedAt is set."
+  },
+  "visitsLocating": "Locating…",
+  "@visitsLocating": {
+    "description": "Taking the GPS fix."
+  },
+  "visitsTooFarTitle": "You seem far from the property",
+  "@visitsTooFarTitle": {
+    "description": "RM-M16-02 — beyond 500 m."
+  },
+  "visitsTooFarBody": "You are about {distance} m away. Explain why you are starting the visit from here.",
+  "@visitsTooFarBody": {
+    "description": "The justification Doc 10 asks for.",
+    "placeholders": {
+      "distance": {
+        "type": "int"
+      }
+    }
+  },
+  "visitsTooFarHint": "e.g. GPS is off, I am at the gate",
+  "@visitsTooFarHint": {
+    "description": "Placeholder for the justification."
+  },
+  "visitsTooFarConfirm": "Start anyway",
+  "@visitsTooFarConfirm": {
+    "description": "Confirm with a justification."
+  },
+  "visitsLocationDenied": "Allow location access to start a visit.",
+  "@visitsLocationDenied": {
+    "description": "LocationFailure.denied."
+  },
+  "visitsLocationDeniedForever": "Location is blocked. Enable it in your phone settings.",
+  "@visitsLocationDeniedForever": {
+    "description": "LocationFailure.deniedForever."
+  },
+  "visitsLocationDisabled": "Turn on your phone's location.",
+  "@visitsLocationDisabled": {
+    "description": "LocationFailure.disabled."
+  },
+  "visitsLocationUnavailable": "Could not get a position. Try again in a moment.",
+  "@visitsLocationUnavailable": {
+    "description": "LocationFailure.unavailable."
+  },
+  "visitsCancel": "Cancel the visit",
+  "@visitsCancel": {
+    "description": "RM-M16-04."
+  },
+  "visitsCancelConfirm": "Possible up to 1 hour before the slot. The tenant will be notified.",
+  "@visitsCancelConfirm": {
+    "description": "RM-M16-04."
+  },
+  "visitsReportTitle": "Visit report",
+  "@visitsReportTitle": {
+    "description": "M16 report screen."
+  },
+  "visitsReportOpen": "Write the report",
+  "@visitsReportOpen": {
+    "description": "Open the report form."
+  },
+  "visitsReportDone": "Report sent",
+  "@visitsReportDone": {
+    "description": "reportSubmitted is true."
+  },
+  "visitsReportLocked": "A submitted report cannot be changed.",
+  "@visitsReportLocked": {
+    "description": "RM-M16-03."
+  },
+  "visitsReportCondition": "Overall condition",
+  "@visitsReportCondition": {
+    "description": "overallCondition 1-5."
+  },
+  "visitsReportConformity": "Matches the listing?",
+  "@visitsReportConformity": {
+    "description": "listingConformity."
+  },
+  "visitsConformityYes": "Yes",
+  "@visitsConformityYes": {
+    "description": "OUI."
+  },
+  "visitsConformityPartly": "Partly",
+  "@visitsConformityPartly": {
+    "description": "PARTIELLEMENT."
+  },
+  "visitsConformityNo": "No",
+  "@visitsConformityNo": {
+    "description": "NON."
+  },
+  "visitsReportComment": "Comment",
+  "@visitsReportComment": {
+    "description": "Free text, optional."
+  },
+  "visitsReportPhotos": "Photos",
+  "@visitsReportPhotos": {
+    "description": "Report photos — min 3."
+  },
+  "visitsReportPhotosNeeded": "Add {count} more photo(s)",
+  "@visitsReportPhotosNeeded": {
+    "description": "How many more are needed before the report can be filed.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visitsReportSubmit": "Send the report",
+  "@visitsReportSubmit": {
+    "description": "Submit — irreversible."
+  },
+  "visitsReportSubmitConfirm": "The report cannot be changed once sent.",
+  "@visitsReportSubmitConfirm": {
+    "description": "RM-M16-03."
+  },
+  "visitsActionFailed": "That action isn't possible right now.",
+  "@visitsActionFailed": {
+    "description": "Generic failure on the visits screens."
   }
 }

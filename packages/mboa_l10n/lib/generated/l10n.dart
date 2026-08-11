@@ -4379,6 +4379,446 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Aujourd'hui`
+  String get visitsTabToday {
+    return Intl.message(
+      'Aujourd\'hui',
+      name: 'visitsTabToday',
+      desc: 'M16 list tab.',
+      args: [],
+    );
+  }
+
+  /// `À venir`
+  String get visitsTabUpcoming {
+    return Intl.message(
+      'À venir',
+      name: 'visitsTabUpcoming',
+      desc: 'M16 list tab.',
+      args: [],
+    );
+  }
+
+  /// `Passées`
+  String get visitsTabPast {
+    return Intl.message(
+      'Passées',
+      name: 'visitsTabPast',
+      desc: 'M16 list tab — done, cancelled, and missed.',
+      args: [],
+    );
+  }
+
+  /// `Aucune visite aujourd'hui`
+  String get visitsEmptyToday {
+    return Intl.message(
+      'Aucune visite aujourd\'hui',
+      name: 'visitsEmptyToday',
+      desc: 'Empty today.',
+      args: [],
+    );
+  }
+
+  /// `Aucune visite prévue`
+  String get visitsEmptyUpcoming {
+    return Intl.message(
+      'Aucune visite prévue',
+      name: 'visitsEmptyUpcoming',
+      desc: 'Empty upcoming.',
+      args: [],
+    );
+  }
+
+  /// `Aucune visite passée`
+  String get visitsEmptyPast {
+    return Intl.message(
+      'Aucune visite passée',
+      name: 'visitsEmptyPast',
+      desc: 'Empty past.',
+      args: [],
+    );
+  }
+
+  /// `Prévue`
+  String get visitsStatusScheduled {
+    return Intl.message(
+      'Prévue',
+      name: 'visitsStatusScheduled',
+      desc: 'VisiteResponse.status = SCHEDULED.',
+      args: [],
+    );
+  }
+
+  /// `Effectuée`
+  String get visitsStatusCompleted {
+    return Intl.message(
+      'Effectuée',
+      name: 'visitsStatusCompleted',
+      desc: 'VisiteResponse.status = COMPLETED.',
+      args: [],
+    );
+  }
+
+  /// `Annulée`
+  String get visitsStatusCancelled {
+    return Intl.message(
+      'Annulée',
+      name: 'visitsStatusCancelled',
+      desc: 'VisiteResponse.status = CANCELLED.',
+      args: [],
+    );
+  }
+
+  /// `Détail de la visite`
+  String get visitsDetailTitle {
+    return Intl.message(
+      'Détail de la visite',
+      name: 'visitsDetailTitle',
+      desc: 'M16 detail screen.',
+      args: [],
+    );
+  }
+
+  /// `Adresse exacte`
+  String get visitsAddress {
+    return Intl.message(
+      'Adresse exacte',
+      name: 'visitsAddress',
+      desc: 'RM-M16-01 — only the agent\'s view shows it.',
+      args: [],
+    );
+  }
+
+  /// `Visible uniquement par vous, pour cette visite.`
+  String get visitsAddressNote {
+    return Intl.message(
+      'Visible uniquement par vous, pour cette visite.',
+      name: 'visitsAddressNote',
+      desc: 'RM-M16-01.',
+      args: [],
+    );
+  }
+
+  /// `Locataire`
+  String get visitsTenant {
+    return Intl.message(
+      'Locataire',
+      name: 'visitsTenant',
+      desc: 'The user who booked.',
+      args: [],
+    );
+  }
+
+  /// `Prestataire`
+  String get visitsOwner {
+    return Intl.message(
+      'Prestataire',
+      name: 'visitsOwner',
+      desc: 'The property owner.',
+      args: [],
+    );
+  }
+
+  /// `Appeler`
+  String get visitsCall {
+    return Intl.message(
+      'Appeler',
+      name: 'visitsCall',
+      desc: 'Dial a contact.',
+      args: [],
+    );
+  }
+
+  /// `Démarrer la visite`
+  String get visitsStart {
+    return Intl.message(
+      'Démarrer la visite',
+      name: 'visitsStart',
+      desc: 'RM-M16-02.',
+      args: [],
+    );
+  }
+
+  /// `Disponible le jour de la visite`
+  String get visitsStartNotYet {
+    return Intl.message(
+      'Disponible le jour de la visite',
+      name: 'visitsStartNotYet',
+      desc: 'canStart is false — the server decides.',
+      args: [],
+    );
+  }
+
+  /// `Visite démarrée`
+  String get visitsStarted {
+    return Intl.message(
+      'Visite démarrée',
+      name: 'visitsStarted',
+      desc: 'startedAt is set.',
+      args: [],
+    );
+  }
+
+  /// `Localisation en cours…`
+  String get visitsLocating {
+    return Intl.message(
+      'Localisation en cours…',
+      name: 'visitsLocating',
+      desc: 'Taking the GPS fix.',
+      args: [],
+    );
+  }
+
+  /// `Vous semblez loin du bien`
+  String get visitsTooFarTitle {
+    return Intl.message(
+      'Vous semblez loin du bien',
+      name: 'visitsTooFarTitle',
+      desc: 'RM-M16-02 — beyond 500 m.',
+      args: [],
+    );
+  }
+
+  /// `Vous êtes à environ {distance} m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.`
+  String visitsTooFarBody(int distance) {
+    return Intl.message(
+      'Vous êtes à environ $distance m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.',
+      name: 'visitsTooFarBody',
+      desc: 'The justification Doc 10 asks for.',
+      args: [distance],
+    );
+  }
+
+  /// `Ex. GPS imprécis, je suis au portail`
+  String get visitsTooFarHint {
+    return Intl.message(
+      'Ex. GPS imprécis, je suis au portail',
+      name: 'visitsTooFarHint',
+      desc: 'Placeholder for the justification.',
+      args: [],
+    );
+  }
+
+  /// `Démarrer quand même`
+  String get visitsTooFarConfirm {
+    return Intl.message(
+      'Démarrer quand même',
+      name: 'visitsTooFarConfirm',
+      desc: 'Confirm with a justification.',
+      args: [],
+    );
+  }
+
+  /// `Autorisez la localisation pour démarrer une visite.`
+  String get visitsLocationDenied {
+    return Intl.message(
+      'Autorisez la localisation pour démarrer une visite.',
+      name: 'visitsLocationDenied',
+      desc: 'LocationFailure.denied.',
+      args: [],
+    );
+  }
+
+  /// `La localisation est bloquée. Activez-la dans les réglages du téléphone.`
+  String get visitsLocationDeniedForever {
+    return Intl.message(
+      'La localisation est bloquée. Activez-la dans les réglages du téléphone.',
+      name: 'visitsLocationDeniedForever',
+      desc: 'LocationFailure.deniedForever.',
+      args: [],
+    );
+  }
+
+  /// `Activez la localisation de votre téléphone.`
+  String get visitsLocationDisabled {
+    return Intl.message(
+      'Activez la localisation de votre téléphone.',
+      name: 'visitsLocationDisabled',
+      desc: 'LocationFailure.disabled.',
+      args: [],
+    );
+  }
+
+  /// `Position introuvable. Réessayez dans un instant.`
+  String get visitsLocationUnavailable {
+    return Intl.message(
+      'Position introuvable. Réessayez dans un instant.',
+      name: 'visitsLocationUnavailable',
+      desc: 'LocationFailure.unavailable.',
+      args: [],
+    );
+  }
+
+  /// `Annuler la visite`
+  String get visitsCancel {
+    return Intl.message(
+      'Annuler la visite',
+      name: 'visitsCancel',
+      desc: 'RM-M16-04.',
+      args: [],
+    );
+  }
+
+  /// `Possible jusqu'à 1 heure avant le créneau. Le locataire sera prévenu.`
+  String get visitsCancelConfirm {
+    return Intl.message(
+      'Possible jusqu\'à 1 heure avant le créneau. Le locataire sera prévenu.',
+      name: 'visitsCancelConfirm',
+      desc: 'RM-M16-04.',
+      args: [],
+    );
+  }
+
+  /// `Rapport de visite`
+  String get visitsReportTitle {
+    return Intl.message(
+      'Rapport de visite',
+      name: 'visitsReportTitle',
+      desc: 'M16 report screen.',
+      args: [],
+    );
+  }
+
+  /// `Rédiger le rapport`
+  String get visitsReportOpen {
+    return Intl.message(
+      'Rédiger le rapport',
+      name: 'visitsReportOpen',
+      desc: 'Open the report form.',
+      args: [],
+    );
+  }
+
+  /// `Rapport envoyé`
+  String get visitsReportDone {
+    return Intl.message(
+      'Rapport envoyé',
+      name: 'visitsReportDone',
+      desc: 'reportSubmitted is true.',
+      args: [],
+    );
+  }
+
+  /// `Un rapport envoyé ne peut plus être modifié.`
+  String get visitsReportLocked {
+    return Intl.message(
+      'Un rapport envoyé ne peut plus être modifié.',
+      name: 'visitsReportLocked',
+      desc: 'RM-M16-03.',
+      args: [],
+    );
+  }
+
+  /// `État général`
+  String get visitsReportCondition {
+    return Intl.message(
+      'État général',
+      name: 'visitsReportCondition',
+      desc: 'overallCondition 1-5.',
+      args: [],
+    );
+  }
+
+  /// `Conforme à l'annonce ?`
+  String get visitsReportConformity {
+    return Intl.message(
+      'Conforme à l\'annonce ?',
+      name: 'visitsReportConformity',
+      desc: 'listingConformity.',
+      args: [],
+    );
+  }
+
+  /// `Oui`
+  String get visitsConformityYes {
+    return Intl.message(
+      'Oui',
+      name: 'visitsConformityYes',
+      desc: 'OUI.',
+      args: [],
+    );
+  }
+
+  /// `Partiellement`
+  String get visitsConformityPartly {
+    return Intl.message(
+      'Partiellement',
+      name: 'visitsConformityPartly',
+      desc: 'PARTIELLEMENT.',
+      args: [],
+    );
+  }
+
+  /// `Non`
+  String get visitsConformityNo {
+    return Intl.message(
+      'Non',
+      name: 'visitsConformityNo',
+      desc: 'NON.',
+      args: [],
+    );
+  }
+
+  /// `Commentaire`
+  String get visitsReportComment {
+    return Intl.message(
+      'Commentaire',
+      name: 'visitsReportComment',
+      desc: 'Free text, optional.',
+      args: [],
+    );
+  }
+
+  /// `Photos`
+  String get visitsReportPhotos {
+    return Intl.message(
+      'Photos',
+      name: 'visitsReportPhotos',
+      desc: 'Report photos — min 3.',
+      args: [],
+    );
+  }
+
+  /// `Ajoutez encore {count} photo(s)`
+  String visitsReportPhotosNeeded(int count) {
+    return Intl.message(
+      'Ajoutez encore $count photo(s)',
+      name: 'visitsReportPhotosNeeded',
+      desc: 'How many more are needed before the report can be filed.',
+      args: [count],
+    );
+  }
+
+  /// `Envoyer le rapport`
+  String get visitsReportSubmit {
+    return Intl.message(
+      'Envoyer le rapport',
+      name: 'visitsReportSubmit',
+      desc: 'Submit — irreversible.',
+      args: [],
+    );
+  }
+
+  /// `Le rapport ne pourra plus être modifié après l'envoi.`
+  String get visitsReportSubmitConfirm {
+    return Intl.message(
+      'Le rapport ne pourra plus être modifié après l\'envoi.',
+      name: 'visitsReportSubmitConfirm',
+      desc: 'RM-M16-03.',
+      args: [],
+    );
+  }
+
+  /// `Action impossible pour le moment.`
+  String get visitsActionFailed {
+    return Intl.message(
+      'Action impossible pour le moment.',
+      name: 'visitsActionFailed',
+      desc: 'Generic failure on the visits screens.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

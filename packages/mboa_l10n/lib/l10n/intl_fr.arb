@@ -1269,5 +1269,191 @@
         "type": "int"
       }
     }
+  },
+  "visitsTabToday": "Aujourd'hui",
+  "@visitsTabToday": {
+    "description": "M16 list tab."
+  },
+  "visitsTabUpcoming": "À venir",
+  "@visitsTabUpcoming": {
+    "description": "M16 list tab."
+  },
+  "visitsTabPast": "Passées",
+  "@visitsTabPast": {
+    "description": "M16 list tab — done, cancelled, and missed."
+  },
+  "visitsEmptyToday": "Aucune visite aujourd'hui",
+  "@visitsEmptyToday": {
+    "description": "Empty today."
+  },
+  "visitsEmptyUpcoming": "Aucune visite prévue",
+  "@visitsEmptyUpcoming": {
+    "description": "Empty upcoming."
+  },
+  "visitsEmptyPast": "Aucune visite passée",
+  "@visitsEmptyPast": {
+    "description": "Empty past."
+  },
+  "visitsStatusScheduled": "Prévue",
+  "@visitsStatusScheduled": {
+    "description": "VisiteResponse.status = SCHEDULED."
+  },
+  "visitsStatusCompleted": "Effectuée",
+  "@visitsStatusCompleted": {
+    "description": "VisiteResponse.status = COMPLETED."
+  },
+  "visitsStatusCancelled": "Annulée",
+  "@visitsStatusCancelled": {
+    "description": "VisiteResponse.status = CANCELLED."
+  },
+  "visitsDetailTitle": "Détail de la visite",
+  "@visitsDetailTitle": {
+    "description": "M16 detail screen."
+  },
+  "visitsAddress": "Adresse exacte",
+  "@visitsAddress": {
+    "description": "RM-M16-01 — only the agent's view shows it."
+  },
+  "visitsAddressNote": "Visible uniquement par vous, pour cette visite.",
+  "@visitsAddressNote": {
+    "description": "RM-M16-01."
+  },
+  "visitsTenant": "Locataire",
+  "@visitsTenant": {
+    "description": "The user who booked."
+  },
+  "visitsOwner": "Prestataire",
+  "@visitsOwner": {
+    "description": "The property owner."
+  },
+  "visitsCall": "Appeler",
+  "@visitsCall": {
+    "description": "Dial a contact."
+  },
+  "visitsStart": "Démarrer la visite",
+  "@visitsStart": {
+    "description": "RM-M16-02."
+  },
+  "visitsStartNotYet": "Disponible le jour de la visite",
+  "@visitsStartNotYet": {
+    "description": "canStart is false — the server decides."
+  },
+  "visitsStarted": "Visite démarrée",
+  "@visitsStarted": {
+    "description": "startedAt is set."
+  },
+  "visitsLocating": "Localisation en cours…",
+  "@visitsLocating": {
+    "description": "Taking the GPS fix."
+  },
+  "visitsTooFarTitle": "Vous semblez loin du bien",
+  "@visitsTooFarTitle": {
+    "description": "RM-M16-02 — beyond 500 m."
+  },
+  "visitsTooFarBody": "Vous êtes à environ {distance} m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.",
+  "@visitsTooFarBody": {
+    "description": "The justification Doc 10 asks for.",
+    "placeholders": {
+      "distance": {
+        "type": "int"
+      }
+    }
+  },
+  "visitsTooFarHint": "Ex. GPS imprécis, je suis au portail",
+  "@visitsTooFarHint": {
+    "description": "Placeholder for the justification."
+  },
+  "visitsTooFarConfirm": "Démarrer quand même",
+  "@visitsTooFarConfirm": {
+    "description": "Confirm with a justification."
+  },
+  "visitsLocationDenied": "Autorisez la localisation pour démarrer une visite.",
+  "@visitsLocationDenied": {
+    "description": "LocationFailure.denied."
+  },
+  "visitsLocationDeniedForever": "La localisation est bloquée. Activez-la dans les réglages du téléphone.",
+  "@visitsLocationDeniedForever": {
+    "description": "LocationFailure.deniedForever."
+  },
+  "visitsLocationDisabled": "Activez la localisation de votre téléphone.",
+  "@visitsLocationDisabled": {
+    "description": "LocationFailure.disabled."
+  },
+  "visitsLocationUnavailable": "Position introuvable. Réessayez dans un instant.",
+  "@visitsLocationUnavailable": {
+    "description": "LocationFailure.unavailable."
+  },
+  "visitsCancel": "Annuler la visite",
+  "@visitsCancel": {
+    "description": "RM-M16-04."
+  },
+  "visitsCancelConfirm": "Possible jusqu'à 1 heure avant le créneau. Le locataire sera prévenu.",
+  "@visitsCancelConfirm": {
+    "description": "RM-M16-04."
+  },
+  "visitsReportTitle": "Rapport de visite",
+  "@visitsReportTitle": {
+    "description": "M16 report screen."
+  },
+  "visitsReportOpen": "Rédiger le rapport",
+  "@visitsReportOpen": {
+    "description": "Open the report form."
+  },
+  "visitsReportDone": "Rapport envoyé",
+  "@visitsReportDone": {
+    "description": "reportSubmitted is true."
+  },
+  "visitsReportLocked": "Un rapport envoyé ne peut plus être modifié.",
+  "@visitsReportLocked": {
+    "description": "RM-M16-03."
+  },
+  "visitsReportCondition": "État général",
+  "@visitsReportCondition": {
+    "description": "overallCondition 1-5."
+  },
+  "visitsReportConformity": "Conforme à l'annonce ?",
+  "@visitsReportConformity": {
+    "description": "listingConformity."
+  },
+  "visitsConformityYes": "Oui",
+  "@visitsConformityYes": {
+    "description": "OUI."
+  },
+  "visitsConformityPartly": "Partiellement",
+  "@visitsConformityPartly": {
+    "description": "PARTIELLEMENT."
+  },
+  "visitsConformityNo": "Non",
+  "@visitsConformityNo": {
+    "description": "NON."
+  },
+  "visitsReportComment": "Commentaire",
+  "@visitsReportComment": {
+    "description": "Free text, optional."
+  },
+  "visitsReportPhotos": "Photos",
+  "@visitsReportPhotos": {
+    "description": "Report photos — min 3."
+  },
+  "visitsReportPhotosNeeded": "Ajoutez encore {count} photo(s)",
+  "@visitsReportPhotosNeeded": {
+    "description": "How many more are needed before the report can be filed.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visitsReportSubmit": "Envoyer le rapport",
+  "@visitsReportSubmit": {
+    "description": "Submit — irreversible."
+  },
+  "visitsReportSubmitConfirm": "Le rapport ne pourra plus être modifié après l'envoi.",
+  "@visitsReportSubmitConfirm": {
+    "description": "RM-M16-03."
+  },
+  "visitsActionFailed": "Action impossible pour le moment.",
+  "@visitsActionFailed": {
+    "description": "Generic failure on the visits screens."
   }
 }

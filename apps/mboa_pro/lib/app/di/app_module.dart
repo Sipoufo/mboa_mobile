@@ -8,6 +8,11 @@ import '../../features/assignments/bloc/my_agents_bloc.dart';
 import '../../features/assignments/bloc/property_agent_bloc.dart';
 import '../../features/assignments/data/agent_mission_repository.dart';
 import '../../features/assignments/data/assignment_repository.dart';
+import '../../features/annonces/data/location_capture.dart';
+import '../../features/visits/bloc/agent_visits_bloc.dart';
+import '../../features/visits/bloc/visit_detail_bloc.dart';
+import '../../features/visits/bloc/visit_report_bloc.dart';
+import '../../features/visits/data/agent_visit_repository.dart';
 import '../../features/agent/bloc/agent_profile_bloc.dart';
 import '../../features/agent/data/agent_repository.dart';
 import '../../features/annonces/bloc/annonce_form_bloc.dart';
@@ -198,6 +203,29 @@ void registerAppModule() {
   // it, and a bloc provided by one route is invisible to its siblings.
   getIt.registerLazySingleton<MyAgentsBloc>(
     () => MyAgentsBloc(repository: getIt<AssignmentRepository>()),
+  );
+
+  // --- Agent visits (M16) ---
+  // Registered so VisitDetailBloc can take it as a dependency and be tested
+  // without a device; the listing form still constructs its own inline.
+  getIt.registerLazySingleton<LocationCapture>(LocationCapture.new);
+  getIt.registerLazySingleton<AgentVisitRepository>(
+    () => AgentVisitRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<AgentVisitsBloc>(
+    () => AgentVisitsBloc(repository: getIt<AgentVisitRepository>()),
+  );
+  getIt.registerFactory<VisitDetailBloc>(
+    () => VisitDetailBloc(
+      repository: getIt<AgentVisitRepository>(),
+      location: getIt<LocationCapture>(),
+    ),
+  );
+  getIt.registerFactory<VisitReportBloc>(
+    () => VisitReportBloc(
+      repository: getIt<AgentVisitRepository>(),
+      uploader: getIt<MediaUploader>(),
+    ),
   );
 
   // --- Agent (M15) ---
