@@ -69,10 +69,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m21(min) => "Ajoute au moins ${min} photos pour publier.";
 
-  static String m22(count) =>
+  static String m22(query) => "Aucune unité ne correspond à « ${query} ».";
+
+  static String m23(count) =>
       "${Intl.plural(count, zero: 'Aucune annonce active', one: '1 annonce active', other: '${count} annonces actives')}";
 
-  static String m23(date) => "Valable jusqu’au ${date}";
+  static String m24(date) => "Valable jusqu’au ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -733,6 +735,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "La modification d’une unité arrivera prochainement.",
     ),
+    "residenceUnitsSearchEmpty": m22,
+    "residenceUnitsSearchHint": MessageLookupByLibrary.simpleMessage(
+      "Rechercher une unité",
+    ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
@@ -761,7 +767,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Votre abonnement a expiré",
     ),
-    "subscriptionListingLimit": m22,
+    "subscriptionListingLimit": m23,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Annonces illimitées",
     ),
@@ -778,7 +784,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Les reçus sont liés à cet appareil pour le moment.",
     ),
-    "subscriptionRenewsOn": m23,
+    "subscriptionRenewsOn": m24,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
       "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",

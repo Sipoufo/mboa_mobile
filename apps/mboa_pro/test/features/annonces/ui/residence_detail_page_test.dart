@@ -204,4 +204,196 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.byType(Loader), findsOneWidget);
   });
+
+  group('filtering the units', () {
+    const mixed = [
+      ResidenceUnit(
+        id: 'u1',
+        title: 'Chambre 1',
+        status: AnnonceStatus.published,
+        propertyType: PropertyType.room,
+        price: 45000,
+      ),
+      ResidenceUnit(
+        id: 'u2',
+        title: 'Chambre 2',
+        status: AnnonceStatus.rented,
+        propertyType: PropertyType.room,
+        price: 45000,
+      ),
+      ResidenceUnit(
+        id: 'u3',
+        title: 'Chambre 3',
+        status: AnnonceStatus.archived,
+        propertyType: PropertyType.room,
+        price: 45000,
+      ),
+    ];
+
+    setUp(() {
+      when(() => residences.state).thenReturn(
+        const ResidencesReady(
+          items: [
+            Residence(
+              id: 'r1',
+              name: 'Résidence Deido',
+              status: AnnonceStatus.published,
+              unitCount: 3,
+              units: mixed,
+            ),
+          ],
+        ),
+      );
+    });
+
+    testWidgets('opens on the available units', (tester) async {
+      await pump(tester);
+
+      expect(find.text('Chambre 1'), findsOneWidget);
+      // Occupied and archived units are real but not what you land on.
+      expect(find.text('Chambre 2'), findsNothing);
+      expect(find.text('Chambre 3'), findsNothing);
+    });
+
+    testWidgets('the occupied tab shows rented and reserved units',
+        (tester) async {
+      await pump(tester);
+      await tester.tap(find.text('Occupés'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Chambre 2'), findsOneWidget);
+      expect(find.text('Chambre 1'), findsNothing);
+    });
+
+    testWidgets('the archived tab shows archived units', (tester) async {
+      await pump(tester);
+      await tester.tap(find.text('Archivés'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Chambre 3'), findsOneWidget);
+      // Archived is where un-archiving starts, so the tab must not be a
+      // dead end — the row still opens.
+      expect(find.byType(InkWell), findsWidgets);
+    });
+
+    testWidgets('an empty tab names the tab, not the search', (tester) async {
+      when(() => residences.state).thenReturn(
+        const ResidencesReady(
+          items: [
+            Residence(
+              id: 'r1',
+              name: 'Résidence Deido',
+              status: AnnonceStatus.published,
+              unitCount: 1,
+              // Nothing occupied.
+              units: [
+                ResidenceUnit(
+                  id: 'u1',
+                  title: 'Chambre 1',
+                  status: AnnonceStatus.published,
+                  propertyType: PropertyType.room,
+                  price: 45000,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+      await pump(tester);
+
+      await tester.tap(find.text('Occupés'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Aucun bien occupé.'), findsOneWidget);
+      expect(find.text('Chambre 1'), findsNothing);
+    });
+
+    testWidgets('no search box for a handful of units', (tester) async {
+      // Below the threshold a search field is more chrome than help.
+      await pump(tester);
+
+      expect(find.byIcon(LucideIcons.search), findsNothing);
+    });
+  });
+
+  group('searching the units', () {
+    List<ResidenceUnit> many() => [
+          for (var i = 1; i <= 9; i++)
+            ResidenceUnit(
+              id: 'u$i',
+              title: i.isEven ? 'Studio $i' : 'Chambre $i',
+              status: AnnonceStatus.published,
+              propertyType: PropertyType.room,
+              price: 45000,
+            ),
+        ];
+
+    setUp(() {
+      when(() => residences.state).thenReturn(
+        ResidencesReady(
+          items: [
+            Residence(
+              id: 'r1',
+              name: 'Résidence Deido',
+              status: AnnonceStatus.published,
+              unitCount: 9,
+              units: many(),
+            ),
+          ],
+        ),
+      );
+    });
+
+    testWidgets('appears once there are enough units to sift through',
+        (tester) async {
+      await pump(tester);
+
+      expect(find.byIcon(LucideIcons.search), findsOneWidget);
+    });
+
+    testWidgets('narrows the list as you type', (tester) async {
+      await pump(tester);
+
+      await tester.enterText(find.byType(Input), 'studio');
+      await tester.pumpAndSettle();
+
+      expect(find.text('Studio 2'), findsOneWidget);
+      expect(find.text('Chambre 1'), findsNothing);
+    });
+
+    testWidgets('ignores case and accents', (tester) async {
+      await pump(tester);
+
+      // "Chambre" typed without care still finds it.
+      await tester.enterText(find.byType(Input), 'CHÂMBRE 3');
+      await tester.pumpAndSettle();
+
+      expect(find.text('Chambre 3'), findsOneWidget);
+      expect(find.text('Chambre 1'), findsNothing);
+    });
+
+    testWidgets('a search that finds nothing says so, quoting the query',
+        (tester) async {
+      await pump(tester);
+
+      await tester.enterText(find.byType(Input), 'penthouse');
+      await tester.pumpAndSettle();
+
+      // Distinct from an empty tab: the units exist, the query missed them.
+      expect(find.textContaining('penthouse'), findsWidgets);
+    });
+
+    testWidgets('search and tab compose', (tester) async {
+      await pump(tester);
+
+      await tester.enterText(find.byType(Input), 'chambre');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Archivés'));
+      await tester.pumpAndSettle();
+
+      // Every fixture is published, so an archived + "chambre" search is empty.
+      expect(find.text('Chambre 1'), findsNothing);
+    });
+  });
+
 }

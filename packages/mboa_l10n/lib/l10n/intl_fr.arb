@@ -743,5 +743,18 @@
   "annonceFormFieldPeriod": "Périodicité",
   "@annonceFormFieldPeriod": {
     "description": "Label of the rental-period selector on the listing form."
+  },
+  "residenceUnitsSearchHint": "Rechercher une unité",
+  "@residenceUnitsSearchHint": {
+    "description": "Placeholder of the unit search box on the residence detail (M10bis)."
+  },
+  "residenceUnitsSearchEmpty": "Aucune unité ne correspond à « {query} ».",
+  "@residenceUnitsSearchEmpty": {
+    "description": "Empty state when a unit search matches nothing.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
   }
 }

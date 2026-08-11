@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**325 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 218 ·
+**335 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 228 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -212,6 +212,15 @@ trip.
   field — an icon everywhere becomes wallpaper. The 44×44 tap target makes a
   helped label row ~24px taller, which is enough to push later fields out of a
   default 800×600 test viewport (see `screens_provider_scope_test.dart`).
+- **Residence detail filters units client-side.** `getMyResidence` takes no
+  status or search parameter, and `ResidenceResponse.units` already carries each
+  unit's status — so the tabs and the search box are pure view state in the page,
+  not bloc state and not a request. Deliberate: RM-M10bis-01 caps a residence at
+  200 units, small enough that filtering in the widget is correct and paging via
+  `GET /annonces?residenceId=` would be more requests for data already held.
+  Tabs reuse `AnnonceFilter` (available = published + draft · occupied =
+  reserved + rented · archived), so the residence and the Biens Uniques list
+  cannot drift apart. The search box only appears above 6 units.
 - **Location flow:** GPS fix → reverse geocode to a city → preselect it → load
   *that city's* districts → pick one. `matchCity` is deliberately loose (accents,
   casing, "Douala 5e") and **may return null**; the city is always confirmable by

@@ -3229,6 +3229,27 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Rechercher une unité`
+  String get residenceUnitsSearchHint {
+    return Intl.message(
+      'Rechercher une unité',
+      name: 'residenceUnitsSearchHint',
+      desc:
+          'Placeholder of the unit search box on the residence detail (M10bis).',
+      args: [],
+    );
+  }
+
+  /// `Aucune unité ne correspond à « {query} ».`
+  String residenceUnitsSearchEmpty(String query) {
+    return Intl.message(
+      'Aucune unité ne correspond à « $query ».',
+      name: 'residenceUnitsSearchEmpty',
+      desc: 'Empty state when a unit search matches nothing.',
+      args: [query],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

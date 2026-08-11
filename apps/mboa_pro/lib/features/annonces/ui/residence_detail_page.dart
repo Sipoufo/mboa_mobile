@@ -12,8 +12,12 @@ import '../models/annonce_draft.dart';
 import '../../../app/router/app_router.gr.dart';
 import '../models/rental_period.dart';
 import 'residences_list_page.dart';
+import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
+
+/// Below this a search box is more chrome than help.
+const int _searchThreshold = 6;
 
 /// Residence detail (CDC M10) — the property, its unit counts, and the units
 /// themselves.
@@ -32,6 +36,39 @@ class ResidenceDetailPage extends StatefulWidget {
 }
 
 class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
+  /// Which units to show. View state over units the bloc already holds — no
+  /// request is made and no API-sourced data is stored here.
+  AnnonceFilter _filter = AnnonceFilter.available;
+  String _query = '';
+
+  final _searchController = TextEditingController();
+
+  /// RM-M10bis-01 allows 200 units, which is more than anyone scrolls. Matching
+  /// is accent- and case-insensitive so "Chambre 3" finds "chambre 3".
+  List<ResidenceUnit> _visibleUnits(Residence residence) {
+    final query = _normalise(_query);
+    return residence.units
+        .where((u) => _filter.matches(u.status))
+        .where((u) => query.isEmpty || _normalise(u.title).contains(query))
+        .toList();
+  }
+
+  static String _normalise(String value) {
+    const accents = 'àâäáãåçéèêëíìîïñóòôöõúùûüýÿ';
+    const plain = 'aaaaaaceeeeiiiinooooouuuuyy';
+    var out = value.trim().toLowerCase();
+    for (var i = 0; i < accents.length; i++) {
+      out = out.replaceAll(accents[i], plain[i]);
+    }
+    return out;
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -104,13 +141,73 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                   ],
                 ),
                 const SizedBox(height: Dimens.spacingSm),
-                if (residence.units.isEmpty)
-                  Text(
-                    l10n.annoncesEmptyAvailable,
-                    style: context.mboaText.body.copyWith(color: context.mboaColors.textSecondary),
+                // Only worth the room once there is something to sift through.
+                if (residence.units.length > _searchThreshold) ...[
+                  Input(
+                    controller: _searchController,
+                    hintText: l10n.residenceUnitsSearchHint,
+                    prefixIcon: Icon(
+                      LucideIcons.search,
+                      size: Dimens.icon,
+                      color: context.mboaColors.textTertiary,
+                    ),
+                    suffixIcon: _query.isEmpty
+                        ? null
+                        : IconButton(
+                            icon: const Icon(LucideIcons.x, size: Dimens.iconSm),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _query = '');
+                            },
+                          ),
+                    onChanged: (value) => setState(() => _query = value),
+                  ),
+                  const SizedBox(height: Dimens.spacingSm),
+                ],
+                MboaSegmentedControl<AnnonceFilter>(
+                  value: _filter,
+                  segments: [
+                    MboaSegment(
+                      value: AnnonceFilter.available,
+                      label: l10n.annoncesTabAvailable,
+                    ),
+                    MboaSegment(
+                      value: AnnonceFilter.occupied,
+                      label: l10n.annoncesTabOccupied,
+                    ),
+                    MboaSegment(
+                      value: AnnonceFilter.archived,
+                      label: l10n.annoncesTabArchived,
+                    ),
+                  ],
+                  onChanged: (filter) => setState(() => _filter = filter),
+                ),
+                const SizedBox(height: Dimens.spacingSm),
+                if (_visibleUnits(residence) case final units when units.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Dimens.spacingLg,
+                    ),
+                    child: Text(
+                      // A search that finds nothing is a different situation
+                      // from a tab that is simply empty.
+                      _query.isEmpty
+                          ? switch (_filter) {
+                              AnnonceFilter.available =>
+                                l10n.annoncesEmptyAvailable,
+                              AnnonceFilter.occupied =>
+                                l10n.annoncesEmptyOccupied,
+                              AnnonceFilter.archived =>
+                                l10n.annoncesEmptyArchived,
+                            }
+                          : l10n.residenceUnitsSearchEmpty(_query),
+                      textAlign: TextAlign.center,
+                      style: context.mboaText.body
+                          .copyWith(color: context.mboaColors.textSecondary),
+                    ),
                   )
                 else
-                  for (final unit in residence.units)
+                  for (final unit in _visibleUnits(residence))
                     _UnitRow(
                       unit: unit,
                       onOpen: () => context.router.push(AnnonceDetailRoute(id: unit.id)),

@@ -68,10 +68,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m21(min) => "Add at least ${min} photos to publish.";
 
-  static String m22(count) =>
+  static String m22(query) => "No unit matches “${query}”.";
+
+  static String m23(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m23(date) => "Valid until ${date}";
+  static String m24(date) => "Valid until ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -682,6 +684,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "Editing a unit is coming soon.",
     ),
+    "residenceUnitsSearchEmpty": m22,
+    "residenceUnitsSearchHint": MessageLookupByLibrary.simpleMessage(
+      "Search for a unit",
+    ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
@@ -710,7 +716,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m22,
+    "subscriptionListingLimit": m23,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -725,7 +731,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m23,
+    "subscriptionRenewsOn": m24,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
