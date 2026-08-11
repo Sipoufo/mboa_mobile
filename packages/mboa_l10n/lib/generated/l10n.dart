@@ -3250,6 +3250,97 @@ class I18n {
       args: [query],
     );
   }
+
+  /// `Climatisation`
+  String get amenityAirConditioning {
+    return Intl.message(
+      'Climatisation',
+      name: 'amenityAirConditioning',
+      desc: 'Doc 10 §M10 — Équipements (checklist).',
+      args: [],
+    );
+  }
+
+  /// `Eau chaude`
+  String get amenityHotWater {
+    return Intl.message(
+      'Eau chaude',
+      name: 'amenityHotWater',
+      desc: 'Doc 10 §M10 — Équipements (checklist).',
+      args: [],
+    );
+  }
+
+  /// `Groupe électrogène`
+  String get amenityGenerator {
+    return Intl.message(
+      'Groupe électrogène',
+      name: 'amenityGenerator',
+      desc: 'Doc 10 §M10 — Équipements (checklist).',
+      args: [],
+    );
+  }
+
+  /// `Gardien`
+  String get amenitySecurityGuard {
+    return Intl.message(
+      'Gardien',
+      name: 'amenitySecurityGuard',
+      desc: 'Doc 10 §M10 — Équipements (checklist).',
+      args: [],
+    );
+  }
+
+  /// `Parking`
+  String get amenityParking {
+    return Intl.message(
+      'Parking',
+      name: 'amenityParking',
+      desc: 'Doc 10 §M10 — Équipements (checklist).',
+      args: [],
+    );
+  }
+
+  /// `Wi-Fi`
+  String get amenityWifi {
+    return Intl.message(
+      'Wi-Fi',
+      name: 'amenityWifi',
+      desc: 'Doc 10 §M10 — Équipements (checklist).',
+      args: [],
+    );
+  }
+
+  /// `Équipements`
+  String get annonceFormFieldAmenities {
+    return Intl.message(
+      'Équipements',
+      name: 'annonceFormFieldAmenities',
+      desc: 'Label of the amenities checklist on the listing form.',
+      args: [],
+    );
+  }
+
+  /// `Facultatif. Cochez ce que le bien propose — les locataires s'en servent pour comparer les annonces entre elles.`
+  String get annonceFormHelpAmenities {
+    return Intl.message(
+      'Facultatif. Cochez ce que le bien propose — les locataires s\'en servent pour comparer les annonces entre elles.',
+      name: 'annonceFormHelpAmenities',
+      desc:
+          'Doc 10 §M10 (Champs) — « Équipements (checklist) », facultatif, visible par les users.',
+      args: [],
+    );
+  }
+
+  /// `Équipements`
+  String get annonceDetailAmenities {
+    return Intl.message(
+      'Équipements',
+      name: 'annonceDetailAmenities',
+      desc: 'Section heading on the listing detail.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

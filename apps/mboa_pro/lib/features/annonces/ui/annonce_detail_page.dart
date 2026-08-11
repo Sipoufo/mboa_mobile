@@ -84,6 +84,19 @@ class _AnnonceDetailPageState extends State<AnnonceDetailPage> {
                   ],
                 ),
               ),
+              if (annonce.amenities.isNotEmpty) ...[
+                const SizedBox(height: Dimens.spacingLg),
+                Text(l10n.annonceDetailAmenities, style: context.mboaText.h3),
+                const SizedBox(height: Dimens.spacingSm),
+                Wrap(
+                  spacing: Dimens.spacingSm,
+                  runSpacing: Dimens.spacingXs,
+                  children: [
+                    for (final amenity in annonce.amenities)
+                      Chip(label: Text(amenity.label(l10n))),
+                  ],
+                ),
+              ],
               const SizedBox(height: Dimens.spacingLg),
               Text(l10n.annonceDetailHistory, style: context.mboaText.h3),
               const SizedBox(height: Dimens.spacingLg),

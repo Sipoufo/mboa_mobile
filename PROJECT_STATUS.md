@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**335 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 228 ·
+**346 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 239 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -32,7 +32,7 @@
 | M01bis KYC / certifications (pro) | ✅ |
 | Media upload (compress → R2 presigned PUT) | ✅ |
 | Locations (cities, districts, pickers) | ✅ |
-| M14 Pro home dashboard | ✅ shell real, **metrics mostly unavailable** |
+| M14 Pro home dashboard | ✅ shell real, **views now real, 5 metrics still unsourced** |
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports |
@@ -141,10 +141,14 @@ residence creation, so `PublishGate` gets a null limit for a unit.
 ## Module notes worth reading before touching
 
 ### M14 dashboard — mostly empty by necessity
-Only the total-listings count and per-status breakdown are real (derived from the
-listings page). Views, contacts, conversion, visits, contracts and ranking **have
-no source data** — the backend confirmed the events are not captured anywhere.
-They land with M05 (views/contacts), M08, M16, M04.
+Total listings, the per-status breakdown and **views** are real; views are summed
+from `AnnonceResponse.viewCount`, which the 2026-08-11 spec added. Like the
+status breakdown, the sum covers **one page** of listings, so a portfolio past
+100 undercounts. It stays **null — not 0 — when no listing carries the field**,
+so an older backend renders "Bientôt" rather than claiming nobody has looked.
+
+Contacts, conversion, visits, contracts and ranking still **have no source
+data**. They land with M12/M05, M08, M16, M04.
 
 `DashboardStats` models them nullable and the UI renders "Bientôt". The backend
 explicitly endorsed this over fabricating zeroes. Tier-gated metrics show the
@@ -212,6 +216,15 @@ trip.
   field — an icon everywhere becomes wallpaper. The 44×44 tap target makes a
   helped label row ~24px taller, which is enough to push later fields out of a
   default 800×600 test viewport (see `screens_provider_scope_test.dart`).
+- **Amenities are single-listing only.** `Amenity` is Doc 10's "Équipements"
+  checklist as a closed enum of six. `CreateResidenceRequest` and `UnitGroup`
+  have **no** amenities field, so the form hides the checklist for a Bien
+  Multiple — a residence cannot declare equipment at all. Worth raising: Doc 10
+  §M10bis says units share the residence's characteristics, so equipment is a
+  natural shared attribute. Unticking everything sends an **empty set**, not
+  null, or clearing the checklist would silently be a no-op.
+  **Search still cannot filter on amenities**, which was the whole reason for
+  making it a closed enum (`backend-requests.md` §8) — chase this.
 - **Residence detail filters units client-side.** `getMyResidence` takes no
   status or search parameter, and `ResidenceResponse.units` already carries each
   unit's status — so the tabs and the search box are pure view state in the page,

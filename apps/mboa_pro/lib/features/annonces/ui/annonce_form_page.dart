@@ -12,6 +12,7 @@ import '../bloc/annonce_form_bloc.dart';
 import '../bloc/annonces_bloc.dart';
 import '../bloc/residences_bloc.dart';
 import '../models/annonce.dart';
+import '../models/amenity.dart';
 import '../models/annonce_draft.dart';
 import '../models/rental_period.dart';
 import 'widgets/form_field_shell.dart';
@@ -337,6 +338,32 @@ class _Form extends StatelessWidget {
             ),
           ),
         ],
+        ],
+        if (!isResidence) ...[
+          const SizedBox(height: Dimens.spacing),
+          _HelpLabel(
+            label: l10n.annonceFormFieldAmenities,
+            helpText: l10n.annonceFormHelpAmenities,
+          ),
+          const SizedBox(height: Dimens.spacingXs),
+          // Chips rather than a column of checkboxes: six short labels wrap
+          // into two rows instead of pushing the rest of the form down a page.
+          Wrap(
+            spacing: Dimens.spacingSm,
+            runSpacing: Dimens.spacingXs,
+            children: [
+              for (final amenity in Amenity.values)
+                FilterChip(
+                  label: Text(amenity.label(l10n)),
+                  selected: draft.amenities.contains(amenity),
+                  onSelected: (selected) => _change(context, (d) {
+                    final next = [...d.amenities];
+                    selected ? next.add(amenity) : next.remove(amenity);
+                    return d.copyWith(amenities: next);
+                  }),
+                ),
+            ],
+          ),
         ],
         const SizedBox(height: Dimens.spacing),
         LocationField(location: draft.location),

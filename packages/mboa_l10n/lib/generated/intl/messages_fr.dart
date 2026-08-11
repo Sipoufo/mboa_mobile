@@ -113,6 +113,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Réservé aux abonnés",
     ),
     "accessUpgradeCta": m1,
+    "amenityAirConditioning": MessageLookupByLibrary.simpleMessage(
+      "Climatisation",
+    ),
+    "amenityGenerator": MessageLookupByLibrary.simpleMessage(
+      "Groupe électrogène",
+    ),
+    "amenityHotWater": MessageLookupByLibrary.simpleMessage("Eau chaude"),
+    "amenityParking": MessageLookupByLibrary.simpleMessage("Parking"),
+    "amenitySecurityGuard": MessageLookupByLibrary.simpleMessage("Gardien"),
+    "amenityWifi": MessageLookupByLibrary.simpleMessage("Wi-Fi"),
     "annonceActionArchive": MessageLookupByLibrary.simpleMessage("Archiver"),
     "annonceActionDelete": MessageLookupByLibrary.simpleMessage("Supprimer"),
     "annonceActionFailed": MessageLookupByLibrary.simpleMessage(
@@ -133,6 +143,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Supprimer ce bien ?",
+    ),
+    "annonceDetailAmenities": MessageLookupByLibrary.simpleMessage(
+      "Équipements",
     ),
     "annonceDetailHistory": MessageLookupByLibrary.simpleMessage("Historique"),
     "annonceDetailNoInfo": MessageLookupByLibrary.simpleMessage(
@@ -165,6 +178,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormErrorSave": MessageLookupByLibrary.simpleMessage(
       "Enregistrement impossible. Réessayez.",
+    ),
+    "annonceFormFieldAmenities": MessageLookupByLibrary.simpleMessage(
+      "Équipements",
     ),
     "annonceFormFieldAvailability": MessageLookupByLibrary.simpleMessage(
       "Disponibilté",
@@ -204,6 +220,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormFieldTitle": MessageLookupByLibrary.simpleMessage("Titre"),
     "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
+    "annonceFormHelpAmenities": MessageLookupByLibrary.simpleMessage(
+      "Facultatif. Cochez ce que le bien propose — les locataires s\'en servent pour comparer les annonces entre elles.",
+    ),
     "annonceFormHelpAvailability": MessageLookupByLibrary.simpleMessage(
       "Obligatoire. Les locataires peuvent filtrer sur la disponibilité immédiate.",
     ),

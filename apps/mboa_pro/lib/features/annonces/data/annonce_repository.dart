@@ -59,6 +59,9 @@ class AnnonceRepository {
         ..longitude = location.longitude
         ..price = draft.price ?? 0
         ..rentalPeriod = draft.rentalPeriod.asCreate
+        ..amenities = SetBuilder<CreateAnnonceRequestAmenitiesEnum>(
+          draft.amenities.map((a) => a.asCreate),
+        )
         ..chargesIncluded = draft.chargesIncluded
         ..chargesAmount = draft.chargesAmount
         ..surfaceArea = draft.surfaceArea
@@ -91,6 +94,9 @@ class AnnonceRepository {
         ..longitude = location?.longitude
         ..price = draft.price
         ..rentalPeriod = draft.rentalPeriod.asUpdate
+        ..amenities = SetBuilder<UpdateAnnonceRequestAmenitiesEnum>(
+          draft.amenities.map((a) => a.asUpdate),
+        )
         ..chargesIncluded = draft.chargesIncluded
         ..chargesAmount = draft.chargesAmount
         ..surfaceArea = draft.surfaceArea

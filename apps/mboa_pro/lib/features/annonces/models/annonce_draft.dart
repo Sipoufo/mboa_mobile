@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'annonce.dart';
+import 'amenity.dart';
 import 'rental_period.dart';
 
 /// Which of the two creation flows the form is running.
@@ -134,6 +135,7 @@ class AnnonceDraft extends Equatable {
     this.availableFrom,
     this.description,
     this.photoKeys = const [],
+    this.amenities = const [],
     this.location,
     this.units = const [],
   });
@@ -163,6 +165,10 @@ class AnnonceDraft extends Equatable {
   final DateTime? availableFrom;
   final String? description;
   final List<String> photoKeys;
+
+  /// Doc 10's "Équipements" checklist. Single listings only — the residence
+  /// endpoints have no such field.
+  final List<Amenity> amenities;
   final ListingLocation? location;
 
   /// Multi-unit only.
@@ -204,6 +210,7 @@ class AnnonceDraft extends Equatable {
     DateTime? availableFrom,
     String? description,
     List<String>? photoKeys,
+    List<Amenity>? amenities,
     ListingLocation? location,
     List<UnitGroupDraft>? units,
   }) =>
@@ -223,6 +230,7 @@ class AnnonceDraft extends Equatable {
         availableFrom: availableFrom ?? this.availableFrom,
         description: description ?? this.description,
         photoKeys: photoKeys ?? this.photoKeys,
+        amenities: amenities ?? this.amenities,
         location: location ?? this.location,
         units: units ?? this.units,
       );
@@ -236,6 +244,7 @@ class AnnonceDraft extends Equatable {
         id: annonce.id,
         title: annonce.title,
         propertyType: annonce.propertyType,
+        amenities: annonce.amenities,
         price: annonce.displayPrice,
         rentalPeriod: annonce.rentalPeriod,
         chargesIncluded: annonce.chargesIncluded,
@@ -283,6 +292,7 @@ class AnnonceDraft extends Equatable {
         availableFrom,
         description,
         photoKeys,
+        amenities,
         location,
         units,
       ];

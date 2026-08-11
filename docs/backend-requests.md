@@ -237,8 +237,12 @@ Types the apps can already route: `PAYMENT_CONFIRMED`, `MESSAGE`, `ANNONCE`,
 Full detail with YAML in [`openapi-proposal-m10-fields.md`](openapi-proposal-m10-fields.md).
 Summary:
 
-- **`amenities`** — Doc 10 mandates an "Équipements (checklist)" field and the
-  API omits it. Should be a closed enum so M04 can filter on it.
+- **`amenities`** ✅ — shipped in the 2026-08-11 export as a closed enum of six
+  (`AIR_CONDITIONING`, `HOT_WATER`, `GENERATOR`, `SECURITY_GUARD`, `PARKING`,
+  `WIFI`), wired into the listing form and detail. **Two gaps remain:**
+  `GET /search` does not accept an amenities filter, which was the entire
+  argument for the closed enum; and neither `CreateResidenceRequest` nor
+  `UnitGroup` carries the field, so a residence cannot declare equipment.
 - **`waterMetering` / `electricityMetering`** — not in Doc 10, but the Biens
   Uniques card in the designs displays "Compteur Prépayé", so it is real data.
 

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import 'amenity.dart';
 import 'annonce_status.dart';
 import 'rental_period.dart';
 
@@ -82,6 +83,7 @@ class Annonce extends Equatable {
     this.availableFrom,
     this.description,
     this.photoKeys = const [],
+    this.amenities = const [],
     this.publishedAt,
     this.createdAt,
     this.residenceId,
@@ -120,6 +122,9 @@ class Annonce extends Equatable {
   final DateTime? availableFrom;
   final String? description;
   final List<String> photoKeys;
+
+  /// Doc 10's "Équipements". Empty for a listing that declares none.
+  final List<Amenity> amenities;
   final DateTime? publishedAt;
   final DateTime? createdAt;
 
@@ -129,12 +134,12 @@ class Annonce extends Equatable {
   /// When a Free-tier listing auto-expires (RM-M10-04). Null on paid tiers.
   final DateTime? expiresAt;
 
-  /// Absolute URL of the cover photo, or null when the listing has none.
   /// What to show as the rent. Falls back to the derived monthly figure for
   /// listings created before RM-M10-09, which have no [price] — those really
   /// were monthly, so [rentalPeriod] defaulting to month reads correctly.
   int? get displayPrice => price ?? monthlyRent;
 
+  /// Absolute URL of the cover photo, or null when the listing has none.
   String? get coverUrl =>
       photoKeys.isEmpty ? null : BaseProfile.mediaUrl(photoKeys.first);
 
@@ -150,6 +155,11 @@ class Annonce extends Equatable {
         latitude: response.latitude,
         longitude: response.longitude,
         exactAddress: response.exactAddress,
+        amenities: response.amenities
+                ?.map(Amenity.fromResponse)
+                .nonNulls
+                .toList() ??
+            const [],
         price: response.price,
         rentalPeriod: RentalPeriod.fromResponse(response.rentalPeriod),
         monthlyRent: response.monthlyRent,
@@ -185,6 +195,7 @@ class Annonce extends Equatable {
         exactAddress,
         price,
         rentalPeriod,
+        amenities,
         monthlyRent,
         chargesIncluded,
         chargesAmount,

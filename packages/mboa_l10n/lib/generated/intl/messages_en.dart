@@ -112,6 +112,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Subscribers only",
     ),
     "accessUpgradeCta": m1,
+    "amenityAirConditioning": MessageLookupByLibrary.simpleMessage(
+      "Air conditioning",
+    ),
+    "amenityGenerator": MessageLookupByLibrary.simpleMessage("Generator"),
+    "amenityHotWater": MessageLookupByLibrary.simpleMessage("Hot water"),
+    "amenityParking": MessageLookupByLibrary.simpleMessage("Parking"),
+    "amenitySecurityGuard": MessageLookupByLibrary.simpleMessage(
+      "Security guard",
+    ),
+    "amenityWifi": MessageLookupByLibrary.simpleMessage("Wi-Fi"),
     "annonceActionArchive": MessageLookupByLibrary.simpleMessage("Archive"),
     "annonceActionDelete": MessageLookupByLibrary.simpleMessage("Delete"),
     "annonceActionFailed": MessageLookupByLibrary.simpleMessage(
@@ -131,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Delete this property?",
     ),
+    "annonceDetailAmenities": MessageLookupByLibrary.simpleMessage("Amenities"),
     "annonceDetailHistory": MessageLookupByLibrary.simpleMessage("History"),
     "annonceDetailNoInfo": MessageLookupByLibrary.simpleMessage(
       "No information\navailable right now",
@@ -160,6 +171,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormErrorSave": MessageLookupByLibrary.simpleMessage(
       "Couldn’t save. Try again.",
+    ),
+    "annonceFormFieldAmenities": MessageLookupByLibrary.simpleMessage(
+      "Amenities",
     ),
     "annonceFormFieldAvailability": MessageLookupByLibrary.simpleMessage(
       "Availability",
@@ -199,6 +213,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormFieldTitle": MessageLookupByLibrary.simpleMessage("Title"),
     "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
+    "annonceFormHelpAmenities": MessageLookupByLibrary.simpleMessage(
+      "Optional. Tick what the property offers — tenants use these to compare listings.",
+    ),
     "annonceFormHelpAvailability": MessageLookupByLibrary.simpleMessage(
       "Required. Tenants can filter on immediate availability.",
     ),

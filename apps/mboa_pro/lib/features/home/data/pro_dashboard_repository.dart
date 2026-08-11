@@ -46,15 +46,26 @@ class ProDashboardRepository {
     final content = page?.content ?? const <AnnonceResponse>[];
 
     final byStatus = <AnnonceStatus, int>{};
+    var views = 0;
+    var sawViewCount = false;
     for (final annonce in content) {
       final status = _mapStatus(annonce.status);
       byStatus[status] = (byStatus[status] ?? 0) + 1;
+      if (annonce.viewCount case final count?) {
+        views += count;
+        sawViewCount = true;
+      }
     }
 
     final stats = DashboardStats(
       // Prefer the server's total; it survives a portfolio bigger than a page.
       totalBiens: page?.totalElements ?? content.length,
       byStatus: byStatus,
+      // Summed from the page, like the status breakdown — so a portfolio past
+      // one page undercounts. Null, not 0, when the field is absent everywhere:
+      // an older backend must keep reading as "no data" and render "Bientôt",
+      // not claim nobody has looked at the listings.
+      views: sawViewCount ? views : null,
     );
 
     await _cache.put(StorageKeys.dashboardBox, _cacheKey, stats.toCache());

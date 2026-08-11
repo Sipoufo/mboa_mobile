@@ -5,12 +5,12 @@ enum AnnonceStatus { draft, published, reserved, rented, archived, unknown }
 
 /// The prestataire dashboard figures (CDC M14).
 ///
-/// **Only the counts derived from the listings endpoint are real.** The M14
-/// metrics table also calls for views, contacts, conversion, agent visits,
-/// signed contracts and average ranking — none of which exist in the API today
-/// (`AnnonceResponse` carries no view or contact field, and there is no stats
-/// endpoint). Those are modelled as nullable and render as unavailable rather
-/// than being invented; wire them up when the backend ships them.
+/// **Only what the listings endpoint can supply is real.** Total listings, the
+/// per-status breakdown and — since the 2026-08-11 spec — [views], summed from
+/// `AnnonceResponse.viewCount`. The M14 metrics table also calls for contacts,
+/// conversion, agent visits, signed contracts and average ranking; none has a
+/// source yet. Those stay nullable and render as unavailable rather than being
+/// invented; wire them up when the backend ships them.
 class DashboardStats extends Equatable {
   const DashboardStats({
     required this.totalBiens,
@@ -32,8 +32,11 @@ class DashboardStats extends Equatable {
   /// Listing count per lifecycle status.
   final Map<AnnonceStatus, int> byStatus;
 
-  // --- No backing endpoint yet. Null means "unknown", not "zero". ---
+  /// Total views across the listings on the page (`viewCount`). Null when the
+  /// backend does not send the field at all — "unknown", never "zero".
   final int? views;
+
+  // --- No backing endpoint yet. Null means "unknown", not "zero". ---
   final int? contacts;
   final double? conversionRate;
   final int? agentVisits;
@@ -48,6 +51,7 @@ class DashboardStats extends Equatable {
   Map<String, dynamic> toCache() => {
         'totalBiens': totalBiens,
         'byStatus': byStatus.map((k, v) => MapEntry(k.name, v)),
+        'views': views,
       };
 
   static DashboardStats fromCache(Map<String, dynamic> json) {
@@ -56,6 +60,7 @@ class DashboardStats extends Equatable {
     );
     return DashboardStats(
       totalBiens: (json['totalBiens'] as num?)?.toInt() ?? 0,
+      views: (json['views'] as num?)?.toInt(),
       byStatus: {
         for (final entry in raw.entries)
           AnnonceStatus.values.firstWhere(

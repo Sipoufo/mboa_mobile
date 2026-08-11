@@ -756,5 +756,41 @@
         "type": "String"
       }
     }
+  },
+  "amenityAirConditioning": "Climatisation",
+  "@amenityAirConditioning": {
+    "description": "Doc 10 §M10 — Équipements (checklist)."
+  },
+  "amenityHotWater": "Eau chaude",
+  "@amenityHotWater": {
+    "description": "Doc 10 §M10 — Équipements (checklist)."
+  },
+  "amenityGenerator": "Groupe électrogène",
+  "@amenityGenerator": {
+    "description": "Doc 10 §M10 — Équipements (checklist)."
+  },
+  "amenitySecurityGuard": "Gardien",
+  "@amenitySecurityGuard": {
+    "description": "Doc 10 §M10 — Équipements (checklist)."
+  },
+  "amenityParking": "Parking",
+  "@amenityParking": {
+    "description": "Doc 10 §M10 — Équipements (checklist)."
+  },
+  "amenityWifi": "Wi-Fi",
+  "@amenityWifi": {
+    "description": "Doc 10 §M10 — Équipements (checklist)."
+  },
+  "annonceFormFieldAmenities": "Équipements",
+  "@annonceFormFieldAmenities": {
+    "description": "Label of the amenities checklist on the listing form."
+  },
+  "annonceFormHelpAmenities": "Facultatif. Cochez ce que le bien propose — les locataires s'en servent pour comparer les annonces entre elles.",
+  "@annonceFormHelpAmenities": {
+    "description": "Doc 10 §M10 (Champs) — « Équipements (checklist) », facultatif, visible par les users."
+  },
+  "annonceDetailAmenities": "Équipements",
+  "@annonceDetailAmenities": {
+    "description": "Section heading on the listing detail."
   }
 }

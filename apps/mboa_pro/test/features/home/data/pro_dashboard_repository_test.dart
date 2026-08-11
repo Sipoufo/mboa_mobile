@@ -173,4 +173,53 @@ void main() {
       expect(stats?.countOf(AnnonceStatus.unknown), 2);
     });
   });
+
+  group('views (M14)', () {
+    AnnonceResponse viewed(String id, int? count) => AnnonceResponse((b) => b
+      ..id = id
+      ..status = AnnonceResponseStatusEnum.PUBLISHED
+      ..viewCount = count);
+
+    test('sums viewCount across the listings', () async {
+      // The 2026-08-11 spec put viewCount on AnnonceResponse, so the first of
+      // M14's six missing metrics finally has a source.
+      stubPage(content: [viewed('a', 12), viewed('b', 30), viewed('c', 0)]);
+
+      final stats = await repository.fetch();
+
+      expect(stats.views, 42);
+    });
+
+    test('stays null when no listing carries the field', () async {
+      // An older backend must keep reading as "unknown" so the dashboard shows
+      // "Bientôt" — claiming zero views would be a lie the prestataire acts on.
+      stubPage(content: [viewed('a', null), viewed('b', null)]);
+
+      final stats = await repository.fetch();
+
+      expect(stats.views, isNull);
+    });
+
+    test('counts the listings that do report, ignoring those that do not',
+        () async {
+      stubPage(content: [viewed('a', 7), viewed('b', null)]);
+
+      final stats = await repository.fetch();
+
+      expect(stats.views, 7);
+    });
+
+    test('survives the cache round trip', () {
+      const stats = DashboardStats(totalBiens: 3, views: 42);
+
+      expect(DashboardStats.fromCache(stats.toCache()).views, 42);
+      // Null must not come back as zero.
+      expect(
+        DashboardStats.fromCache(const DashboardStats(totalBiens: 3).toCache())
+            .views,
+        isNull,
+      );
+    });
+  });
+
 }

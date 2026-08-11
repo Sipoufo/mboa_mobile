@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_pro/features/annonces/data/annonce_repository.dart';
 import 'package:mboa_pro/features/annonces/data/residence_repository.dart';
+import 'package:mboa_pro/features/annonces/models/amenity.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_draft.dart';
 import 'package:mboa_pro/features/annonces/models/rental_period.dart';
 import 'package:mocktail/mocktail.dart';
@@ -165,4 +166,64 @@ void main() {
     expect(groups[1].rentalPeriod, UnitGroupRentalPeriodEnum.YEAR);
     expect(groups.every((g) => g.monthlyRent == null), isTrue);
   });
+  test('amenities go out as the closed enum, on create and on edit', () async {
+    const draft = AnnonceDraft(
+      kind: AnnonceKind.single,
+      title: 'Villa Bonapriso',
+      price: 250000,
+      amenities: [Amenity.wifi, Amenity.generator],
+      location: location,
+    );
+
+    final repository = AnnonceRepository(dioClient: dioClient);
+    await repository.create(draft.copyWith(availableFrom: availableFrom));
+    await repository.update(
+      draft.copyWith(id: 'a1', availableFrom: availableFrom),
+    );
+
+    final created = verify(() => annoncesApi.createAnnonce(
+              createAnnonceRequest: captureAny(named: 'createAnnonceRequest'),
+            )).captured.single as CreateAnnonceRequest;
+    final updated = verify(() => annoncesApi.updateAnnonce(
+              id: 'a1',
+              updateAnnonceRequest: captureAny(named: 'updateAnnonceRequest'),
+            )).captured.single as UpdateAnnonceRequest;
+
+    expect(
+      created.amenities,
+      containsAll([
+        CreateAnnonceRequestAmenitiesEnum.WIFI,
+        CreateAnnonceRequestAmenitiesEnum.GENERATOR,
+      ]),
+    );
+    expect(
+      updated.amenities,
+      containsAll([
+        UpdateAnnonceRequestAmenitiesEnum.WIFI,
+        UpdateAnnonceRequestAmenitiesEnum.GENERATOR,
+      ]),
+    );
+  });
+
+  test('a listing with no amenities sends an empty set, not null', () async {
+    // Clearing the checklist has to reach the server, or unticking is a no-op.
+    await AnnonceRepository(dioClient: dioClient).update(
+      AnnonceDraft(
+        kind: AnnonceKind.single,
+        id: 'a1',
+        title: 'Villa',
+        price: 1000,
+        location: location,
+        availableFrom: availableFrom,
+      ),
+    );
+
+    final sent = verify(() => annoncesApi.updateAnnonce(
+              id: 'a1',
+              updateAnnonceRequest: captureAny(named: 'updateAnnonceRequest'),
+            )).captured.single as UpdateAnnonceRequest;
+
+    expect(sent.amenities, isEmpty);
+  });
+
 }
