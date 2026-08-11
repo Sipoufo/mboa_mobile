@@ -57,7 +57,8 @@ class AnnonceRepository {
         ..exactAddress = location.exactAddress ?? location.label
         ..latitude = location.latitude
         ..longitude = location.longitude
-        ..monthlyRent = draft.monthlyRent ?? 0
+        ..price = draft.price ?? 0
+        ..rentalPeriod = draft.rentalPeriod.asCreate
         ..chargesIncluded = draft.chargesIncluded
         ..chargesAmount = draft.chargesAmount
         ..surfaceArea = draft.surfaceArea
@@ -88,7 +89,8 @@ class AnnonceRepository {
         ..exactAddress = location?.exactAddress
         ..latitude = location?.latitude
         ..longitude = location?.longitude
-        ..monthlyRent = draft.monthlyRent
+        ..price = draft.price
+        ..rentalPeriod = draft.rentalPeriod.asUpdate
         ..chargesIncluded = draft.chargesIncluded
         ..chargesAmount = draft.chargesAmount
         ..surfaceArea = draft.surfaceArea

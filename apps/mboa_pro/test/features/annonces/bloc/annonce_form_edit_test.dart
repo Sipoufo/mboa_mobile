@@ -83,7 +83,7 @@ void main() {
       expect(draft.isEditing, isTrue);
       expect(draft.title, 'Appartement à louer');
       expect(draft.propertyType, PropertyType.studio);
-      expect(draft.monthlyRent, 120000);
+      expect(draft.price, 120000);
       expect(draft.surfaceArea, 65);
       expect(draft.roomCount, 6);
       expect(draft.bathroomCount, 2);

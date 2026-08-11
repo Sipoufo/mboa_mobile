@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -12,6 +11,7 @@ import '../../subscription/bloc/subscription_bloc.dart';
 import '../bloc/annonces_bloc.dart';
 import '../models/annonce.dart';
 import '../models/annonce_status.dart';
+import '../models/rental_period.dart';
 import '../models/publish_gate.dart';
 import 'widgets/annonce_status_chip.dart';
 
@@ -152,11 +152,9 @@ class _Header extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (annonce.monthlyRent case final rent?)
+                if (annonce.displayPrice case final rent?)
                   Text(
-                    l10n.annoncesPerMonth(
-                      NumberFormat.decimalPattern().format(rent),
-                    ),
+                    annonce.rentalPeriod.priceLabel(l10n, rent),
                     style: context.mboaText.label
                         .copyWith(color: colors.onBrand),
                   ),

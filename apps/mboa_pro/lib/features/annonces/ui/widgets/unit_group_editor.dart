@@ -7,6 +7,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../bloc/annonce_form_bloc.dart';
 import '../../models/annonce_draft.dart';
 import '../../models/annonce.dart';
+import '../../models/rental_period.dart';
 import 'form_field_shell.dart';
 import 'form_text_field.dart';
 
@@ -136,12 +137,34 @@ class _UnitGroupRow extends StatelessWidget {
                   label: l10n.annonceFormFieldPrice,
                   suffixText: l10n.annonceFormCurrency,
                   keyboardType: TextInputType.number,
-                  initialValue: group.monthlyRent?.toString() ?? '',
+                  initialValue: group.price?.toString() ?? '',
                   onChanged: (value) =>
-                      onChanged(group.copyWith(monthlyRent: int.tryParse(value))),
+                      onChanged(group.copyWith(price: int.tryParse(value))),
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: Dimens.spacingSm),
+          // RM-M10-09 — each group carries its own period: a hotel room may be
+          // let monthly while a shop in the same building is let yearly.
+          FormFieldShell(
+            label: l10n.annonceFormFieldPeriod,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<RentalPeriod>(
+                value: group.rentalPeriod,
+                isExpanded: true,
+                items: [
+                  for (final period in RentalPeriod.values)
+                    DropdownMenuItem(
+                      value: period,
+                      child: Text(period.label(l10n)),
+                    ),
+                ],
+                onChanged: (period) => period == null
+                    ? null
+                    : onChanged(group.copyWith(rentalPeriod: period)),
+              ),
+            ),
           ),
           const SizedBox(height: Dimens.spacingSm),
           Row(

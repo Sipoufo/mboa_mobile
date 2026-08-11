@@ -4,6 +4,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import 'annonce.dart';
 import 'annonce_status.dart';
+import 'rental_period.dart';
 
 /// A multi-unit property ("Bien Multiple").
 ///
@@ -109,14 +110,17 @@ class ResidenceUnit extends Equatable {
     required this.title,
     required this.status,
     this.propertyType,
-    this.monthlyRent,
+    this.price,
+    this.rentalPeriod = RentalPeriod.fallback,
   });
 
   final String id;
   final String title;
   final AnnonceStatus status;
   final PropertyType? propertyType;
-  final int? monthlyRent;
+  /// The rent as entered, for [rentalPeriod] (RM-M10-09).
+  final int? price;
+  final RentalPeriod rentalPeriod;
 
   static ResidenceUnit fromSummary(UnitSummary summary) => ResidenceUnit(
         id: summary.id ?? '',
@@ -132,9 +136,11 @@ class ResidenceUnit extends Equatable {
           UnitSummaryPropertyTypeEnum.APARTMENT => PropertyType.apartment,
           _ => null,
         },
-        monthlyRent: summary.monthlyRent,
+        price: summary.price ?? summary.monthlyRent,
+        rentalPeriod: RentalPeriod.fromUnitSummary(summary.rentalPeriod),
       );
 
   @override
-  List<Object?> get props => [id, title, status, propertyType, monthlyRent];
+  List<Object?> get props =>
+      [id, title, status, propertyType, price, rentalPeriod];
 }

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'annonce.dart';
+import 'rental_period.dart';
 
 /// Which of the two creation flows the form is running.
 enum AnnonceKind { single, residence }
@@ -54,7 +55,8 @@ class UnitGroupDraft extends Equatable {
     this.propertyType = PropertyType.room,
     this.count = 1,
     this.namePrefix = '',
-    this.monthlyRent,
+    this.price,
+    this.rentalPeriod = RentalPeriod.fallback,
     this.surfaceArea,
     this.roomCount,
     this.bathroomCount,
@@ -67,7 +69,8 @@ class UnitGroupDraft extends Equatable {
   final PropertyType propertyType;
   final int count;
   final String namePrefix;
-  final int? monthlyRent;
+  final int? price;
+  final RentalPeriod rentalPeriod;
   final int? surfaceArea;
   final int? roomCount;
   final int? bathroomCount;
@@ -77,13 +80,14 @@ class UnitGroupDraft extends Equatable {
   final String? description;
 
   bool get isValid =>
-      count > 0 && namePrefix.trim().isNotEmpty && (monthlyRent ?? 0) > 0;
+      count > 0 && namePrefix.trim().isNotEmpty && (price ?? 0) > 0;
 
   UnitGroupDraft copyWith({
     PropertyType? propertyType,
     int? count,
     String? namePrefix,
-    int? monthlyRent,
+    int? price,
+    RentalPeriod? rentalPeriod,
     int? surfaceArea,
     int? roomCount,
     int? bathroomCount,
@@ -96,7 +100,8 @@ class UnitGroupDraft extends Equatable {
         propertyType: propertyType ?? this.propertyType,
         count: count ?? this.count,
         namePrefix: namePrefix ?? this.namePrefix,
-        monthlyRent: monthlyRent ?? this.monthlyRent,
+        price: price ?? this.price,
+        rentalPeriod: rentalPeriod ?? this.rentalPeriod,
         surfaceArea: surfaceArea ?? this.surfaceArea,
         roomCount: roomCount ?? this.roomCount,
         bathroomCount: bathroomCount ?? this.bathroomCount,
@@ -108,7 +113,7 @@ class UnitGroupDraft extends Equatable {
 
   @override
   List<Object?> get props =>
-      [propertyType, count, namePrefix, monthlyRent, surfaceArea, roomCount];
+      [propertyType, count, namePrefix, price, rentalPeriod, surfaceArea, roomCount];
 }
 
 /// The in-progress listing the form edits, for either kind.
@@ -118,7 +123,8 @@ class AnnonceDraft extends Equatable {
     this.id,
     this.title = '',
     this.propertyType = PropertyType.apartment,
-    this.monthlyRent,
+    this.price,
+    this.rentalPeriod = RentalPeriod.fallback,
     this.chargesIncluded,
     this.chargesAmount,
     this.surfaceArea,
@@ -143,7 +149,11 @@ class AnnonceDraft extends Equatable {
 
   final String title;
   final PropertyType propertyType;
-  final int? monthlyRent;
+
+  /// The rent as entered, for [rentalPeriod] (RM-M10-09). The monthly
+  /// equivalent is derived server-side; the app neither sends nor shows it.
+  final int? price;
+  final RentalPeriod rentalPeriod;
   final bool? chargesIncluded;
   final int? chargesAmount;
   final int? surfaceArea;
@@ -171,7 +181,7 @@ class AnnonceDraft extends Equatable {
       return false;
     }
     return switch (kind) {
-      AnnonceKind.single => (monthlyRent ?? 0) > 0,
+      AnnonceKind.single => (price ?? 0) > 0,
       AnnonceKind.residence => units.isNotEmpty && units.every((u) => u.isValid),
     };
   }
@@ -183,7 +193,8 @@ class AnnonceDraft extends Equatable {
     String? id,
     String? title,
     PropertyType? propertyType,
-    int? monthlyRent,
+    int? price,
+    RentalPeriod? rentalPeriod,
     bool? chargesIncluded,
     int? chargesAmount,
     int? surfaceArea,
@@ -201,7 +212,8 @@ class AnnonceDraft extends Equatable {
         id: id ?? this.id,
         title: title ?? this.title,
         propertyType: propertyType ?? this.propertyType,
-        monthlyRent: monthlyRent ?? this.monthlyRent,
+        price: price ?? this.price,
+        rentalPeriod: rentalPeriod ?? this.rentalPeriod,
         chargesIncluded: chargesIncluded ?? this.chargesIncluded,
         chargesAmount: chargesAmount ?? this.chargesAmount,
         surfaceArea: surfaceArea ?? this.surfaceArea,
@@ -224,7 +236,8 @@ class AnnonceDraft extends Equatable {
         id: annonce.id,
         title: annonce.title,
         propertyType: annonce.propertyType,
-        monthlyRent: annonce.monthlyRent,
+        price: annonce.displayPrice,
+        rentalPeriod: annonce.rentalPeriod,
         chargesIncluded: annonce.chargesIncluded,
         chargesAmount: annonce.chargesAmount,
         surfaceArea: annonce.surfaceArea,
@@ -259,7 +272,8 @@ class AnnonceDraft extends Equatable {
         id,
         title,
         propertyType,
-        monthlyRent,
+        price,
+        rentalPeriod,
         chargesIncluded,
         chargesAmount,
         surfaceArea,

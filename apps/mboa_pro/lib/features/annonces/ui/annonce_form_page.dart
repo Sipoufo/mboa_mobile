@@ -13,6 +13,7 @@ import '../bloc/annonces_bloc.dart';
 import '../bloc/residences_bloc.dart';
 import '../models/annonce.dart';
 import '../models/annonce_draft.dart';
+import '../models/rental_period.dart';
 import 'widgets/form_field_shell.dart';
 import 'widgets/form_text_field.dart';
 import 'widgets/location_field.dart';
@@ -239,11 +240,17 @@ class _Form extends StatelessWidget {
             helpText: l10n.annonceFormHelpPrice,
             suffixText: l10n.annonceFormCurrency,
             keyboardType: TextInputType.number,
-            initialValue: draft.monthlyRent?.toString() ?? '',
+            initialValue: draft.price?.toString() ?? '',
             onChanged: (value) => _change(
               context,
-              (d) => d.copyWith(monthlyRent: int.tryParse(value)),
+              (d) => d.copyWith(price: int.tryParse(value)),
             ),
+          ),
+          const SizedBox(height: Dimens.spacing),
+          _RentalPeriodField(
+            value: draft.rentalPeriod,
+            onChanged: (period) =>
+                _change(context, (d) => d.copyWith(rentalPeriod: period)),
           ),
         ],
         if (!isResidence) ...[
@@ -361,6 +368,35 @@ class _Form extends StatelessWidget {
     final bloc = context.read<AnnonceFormBloc>();
     final source = await showCaptureSourceSheet(context);
     if (source != null) bloc.add(AnnonceFormPhotoAdded(source));
+  }
+}
+
+/// RM-M10-09 — the rent's period. Month is the default because it is what every
+/// listing predating the rule was, and what most of them still are.
+class _RentalPeriodField extends StatelessWidget {
+  const _RentalPeriodField({required this.value, required this.onChanged});
+
+  final RentalPeriod value;
+  final ValueChanged<RentalPeriod> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    return FormFieldShell(
+      label: l10n.annonceFormFieldPeriod,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<RentalPeriod>(
+          value: value,
+          isExpanded: true,
+          items: [
+            for (final period in RentalPeriod.values)
+              DropdownMenuItem(value: period, child: Text(period.label(l10n))),
+          ],
+          onChanged: (period) => period == null ? null : onChanged(period),
+        ),
+      ),
+    );
   }
 }
 

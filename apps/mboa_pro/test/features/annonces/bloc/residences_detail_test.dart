@@ -41,14 +41,14 @@ void main() {
         title: 'Chambre 1',
         status: AnnonceStatus.published,
         propertyType: PropertyType.room,
-        monthlyRent: 45000,
+        price: 45000,
       ),
       ResidenceUnit(
         id: 'u2',
         title: 'Chambre 2',
         status: AnnonceStatus.draft,
         propertyType: PropertyType.room,
-        monthlyRent: 45000,
+        price: 45000,
       ),
     ],
   );

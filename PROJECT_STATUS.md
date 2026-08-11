@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**313 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 206 ·
+**325 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 218 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -243,14 +243,26 @@ trip.
 5. **French wording for residences** — English says "Residences", French keeps the
    design's "Biens Multiples".
 
-### RM-M10-09 — rent periodicity, specified and unbuilt
+### RM-M10-09 — rent and its period ✅
 
-Doc 10 now requires a listing to carry **a rent *and its periodicity*** (month,
-quarter, year), with a derived monthly equivalent used *only* to filter, sort and
-compare. Neither the app nor the API has it — `monthlyRent` is the only field in
-the spec. Note `docs/backend-requests.md` §8 currently argues **against** a price
-period on the grounds that it contradicts Doc 10; that reasoning is now stale.
-Waiting on the updated OpenAPI export before doing anything here.
+A listing carries a **`price`** and a **`rentalPeriod`** (`MONTH`/`QUARTER`/
+`YEAR`), both shipped in the 2026-08-11 spec and wired through the form, the
+models and the repositories.
+
+**`monthlyRent` is the server's derived comparison figure — never display it and
+never send it.** It exists so listings can be filtered and sorted against each
+other (900 000 F/year and 75 000 F/month fall in the same bracket); it is not
+what anyone pays and never reaches the Contrat Mboa. It stayed on the model only
+because listings created before the rule have nothing else, which is what
+`Annonce.displayPrice` (`price ?? monthlyRent`) is for — and those really were
+monthly, so `RentalPeriod.fallback` reads correctly for them.
+
+Sending `monthlyRent` on create still *compiles* — the field is still in the
+request DTO — it just records a figure nobody pays and leaves the real price
+null. Pinned by `annonce_price_test.dart`, which asserts what reaches the wire.
+
+Each residence unit **group** carries its own period: a hotel room may be let
+monthly while a shop in the same building is let yearly.
 
 Doc 10's RM-M10-01 still words the profile requirement as "photo + type + ville";
 the API models a prestataire's image as `logoObjectKey`, and the app treats those

@@ -680,9 +680,9 @@
   "@annonceFormHelpPropertyType": {
     "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
   },
-  "annonceFormHelpPrice": "Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.",
+  "annonceFormHelpPrice": "Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
   "@annonceFormHelpPrice": {
-    "description": "Doc 10 §M04 (filtres). Help text on the rent field. Revisit with RM-M10-09 (loyer + périodicité), not yet in the API."
+    "description": "Doc 10 RM-M10-09. Help text on the rent field."
   },
   "annonceFormHelpCharges": "Facultatif. Indiquez si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
   "@annonceFormHelpCharges": {
@@ -715,5 +715,33 @@
   "annonceFormPhotosLabel": "Photos",
   "@annonceFormPhotosLabel": {
     "description": "Label above the photo strip; also the title of its help sheet."
+  },
+  "annoncePricePerPeriod": "{price} XAF / {period}",
+  "@annoncePricePerPeriod": {
+    "description": "Rent as entered, with its period (RM-M10-09). {period} is one of annoncePeriodMonth/Quarter/Year.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "annoncePeriodMonth": "Mois",
+  "@annoncePeriodMonth": {
+    "description": "Doc 10 RM-M10-09 — rental period."
+  },
+  "annoncePeriodQuarter": "Trimestre",
+  "@annoncePeriodQuarter": {
+    "description": "Doc 10 RM-M10-09 — rental period."
+  },
+  "annoncePeriodYear": "An",
+  "@annoncePeriodYear": {
+    "description": "Doc 10 RM-M10-09 — rental period."
+  },
+  "annonceFormFieldPeriod": "Périodicité",
+  "@annonceFormFieldPeriod": {
+    "description": "Label of the rental-period selector on the listing form."
   }
 }

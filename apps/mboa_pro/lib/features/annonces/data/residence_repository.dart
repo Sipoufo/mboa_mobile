@@ -89,7 +89,8 @@ class ResidenceRepository {
     ..propertyType = draft.propertyType.asUnitGroup
     ..count = draft.count
     ..namePrefix = draft.namePrefix.trim()
-    ..monthlyRent = draft.monthlyRent ?? 0
+    ..price = draft.price ?? 0
+    ..rentalPeriod = draft.rentalPeriod.asUnitGroup
     ..chargesIncluded = draft.chargesIncluded
     ..chargesAmount = draft.chargesAmount
     ..surfaceArea = draft.surfaceArea

@@ -3085,13 +3085,12 @@ class I18n {
     );
   }
 
-  /// `Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.`
+  /// `Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.`
   String get annonceFormHelpPrice {
     return Intl.message(
-      'Le loyer mensuel en FCFA. Il sert de filtre de recherche, sur une tranche de 0 à 500 000 F.',
+      'Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.',
       name: 'annonceFormHelpPrice',
-      desc:
-          'Doc 10 §M04 (filtres). Help text on the rent field. Revisit with RM-M10-09 (loyer + périodicité), not yet in the API.',
+      desc: 'Doc 10 RM-M10-09. Help text on the rent field.',
       args: [],
     );
   }
@@ -3176,6 +3175,57 @@ class I18n {
       'Photos',
       name: 'annonceFormPhotosLabel',
       desc: 'Label above the photo strip; also the title of its help sheet.',
+      args: [],
+    );
+  }
+
+  /// `{price} XAF / {period}`
+  String annoncePricePerPeriod(String price, String period) {
+    return Intl.message(
+      '$price XAF / $period',
+      name: 'annoncePricePerPeriod',
+      desc:
+          'Rent as entered, with its period (RM-M10-09). {period} is one of annoncePeriodMonth/Quarter/Year.',
+      args: [price, period],
+    );
+  }
+
+  /// `Mois`
+  String get annoncePeriodMonth {
+    return Intl.message(
+      'Mois',
+      name: 'annoncePeriodMonth',
+      desc: 'Doc 10 RM-M10-09 — rental period.',
+      args: [],
+    );
+  }
+
+  /// `Trimestre`
+  String get annoncePeriodQuarter {
+    return Intl.message(
+      'Trimestre',
+      name: 'annoncePeriodQuarter',
+      desc: 'Doc 10 RM-M10-09 — rental period.',
+      args: [],
+    );
+  }
+
+  /// `An`
+  String get annoncePeriodYear {
+    return Intl.message(
+      'An',
+      name: 'annoncePeriodYear',
+      desc: 'Doc 10 RM-M10-09 — rental period.',
+      args: [],
+    );
+  }
+
+  /// `Périodicité`
+  String get annonceFormFieldPeriod {
+    return Intl.message(
+      'Périodicité',
+      name: 'annonceFormFieldPeriod',
+      desc: 'Label of the rental-period selector on the listing form.',
       args: [],
     );
   }

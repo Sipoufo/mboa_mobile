@@ -3,6 +3,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import 'annonce_status.dart';
+import 'rental_period.dart';
 
 /// Kind of property (CDC M10 "Type de bien").
 enum PropertyType {
@@ -69,6 +70,8 @@ class Annonce extends Equatable {
     this.latitude,
     this.longitude,
     this.exactAddress,
+    this.price,
+    this.rentalPeriod = RentalPeriod.fallback,
     this.monthlyRent,
     this.chargesIncluded,
     this.chargesAmount,
@@ -98,6 +101,15 @@ class Annonce extends Equatable {
   final double? latitude;
   final double? longitude;
   final String? exactAddress;
+
+  /// The rent as the prestataire entered it, for [rentalPeriod] (RM-M10-09).
+  /// This is what is displayed and what the Contrat Mboa carries.
+  final int? price;
+  final RentalPeriod rentalPeriod;
+
+  /// Server-derived monthly equivalent, used only to compare listings with each
+  /// other. **Never display it and never send it** — it is not what anyone pays.
+  /// Kept because listings created before RM-M10-09 have only this.
   final int? monthlyRent;
   final bool? chargesIncluded;
   final int? chargesAmount;
@@ -118,6 +130,11 @@ class Annonce extends Equatable {
   final DateTime? expiresAt;
 
   /// Absolute URL of the cover photo, or null when the listing has none.
+  /// What to show as the rent. Falls back to the derived monthly figure for
+  /// listings created before RM-M10-09, which have no [price] — those really
+  /// were monthly, so [rentalPeriod] defaulting to month reads correctly.
+  int? get displayPrice => price ?? monthlyRent;
+
   String? get coverUrl =>
       photoKeys.isEmpty ? null : BaseProfile.mediaUrl(photoKeys.first);
 
@@ -133,6 +150,8 @@ class Annonce extends Equatable {
         latitude: response.latitude,
         longitude: response.longitude,
         exactAddress: response.exactAddress,
+        price: response.price,
+        rentalPeriod: RentalPeriod.fromResponse(response.rentalPeriod),
         monthlyRent: response.monthlyRent,
         chargesIncluded: response.chargesIncluded,
         chargesAmount: response.chargesAmount,
@@ -164,6 +183,8 @@ class Annonce extends Equatable {
         latitude,
         longitude,
         exactAddress,
+        price,
+        rentalPeriod,
         monthlyRent,
         chargesIncluded,
         chargesAmount,

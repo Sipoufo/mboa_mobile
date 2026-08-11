@@ -28,7 +28,7 @@ const location = ListingLocation(
 AnnonceDraft completeSingle() => AnnonceDraft(
       kind: AnnonceKind.single,
       title: 'Appartement à louer',
-      monthlyRent: 120000,
+      price: 120000,
       availableFrom: DateTime(2026, 9, 1),
       location: location,
     );
@@ -197,7 +197,7 @@ void main() {
       expect(
         base.copyWith(
           units: const [
-            UnitGroupDraft(count: 4, namePrefix: 'Chambre', monthlyRent: 45000),
+            UnitGroupDraft(count: 4, namePrefix: 'Chambre', price: 45000),
           ],
         ).canSave,
         isTrue,
@@ -275,7 +275,7 @@ void main() {
           availableFrom: DateTime(2026, 9, 1),
           location: location,
           units: const [
-            UnitGroupDraft(count: 4, namePrefix: 'Chambre', monthlyRent: 45000),
+            UnitGroupDraft(count: 4, namePrefix: 'Chambre', price: 45000),
           ],
         ),
       ),
@@ -312,7 +312,7 @@ void main() {
         ..add(
           const AnnonceFormUnitGroupUpdated(
             0,
-            UnitGroupDraft(count: 6, namePrefix: 'Studio', monthlyRent: 60000),
+            UnitGroupDraft(count: 6, namePrefix: 'Studio', price: 60000),
           ),
         )
         ..add(const AnnonceFormUnitGroupRemoved(0)),
@@ -321,7 +321,7 @@ void main() {
         AnnonceFormEditing(
           base.copyWith(
             units: const [
-              UnitGroupDraft(count: 6, namePrefix: 'Studio', monthlyRent: 60000),
+              UnitGroupDraft(count: 6, namePrefix: 'Studio', price: 60000),
             ],
           ),
         ),

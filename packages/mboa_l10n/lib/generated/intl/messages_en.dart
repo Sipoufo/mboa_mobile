@@ -28,48 +28,50 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(min) => "Add images (${min} photos minimum)";
 
-  static String m4(price) => "${price} XAF / month";
+  static String m4(price, period) => "${price} XAF / ${period}";
 
-  static String m5(count) =>
+  static String m5(price) => "${price} XAF / month";
+
+  static String m6(count) =>
       "${Intl.plural(count, one: '1 room', other: '${count} rooms')}";
 
-  static String m6(value) => "${value} m²";
+  static String m7(value) => "${value} m²";
 
-  static String m7(count) => "${count} published";
+  static String m8(count) => "${count} published";
 
-  static String m8(count) =>
+  static String m9(count) =>
       "${Intl.plural(count, one: '1 unit', other: '${count} units')}";
 
-  static String m9(phone) => "Code sent to ${phone}";
+  static String m10(phone) => "Code sent to ${phone}";
 
-  static String m10(word) => "Type “${word}” to confirm";
+  static String m11(word) => "Type “${word}” to confirm";
 
-  static String m11(tier) => "Included in ${tier}";
+  static String m12(tier) => "Included in ${tier}";
 
-  static String m12(reason) => "Reason: ${reason}";
+  static String m13(reason) => "Reason: ${reason}";
 
-  static String m13(phone) => "Code sent to ${phone}";
+  static String m14(phone) => "Code sent to ${phone}";
 
-  static String m14(seconds) => "Resend in ${seconds}s";
+  static String m15(seconds) => "Resend in ${seconds}s";
 
-  static String m15(tier) => "Your ${tier} plan is active.";
+  static String m16(tier) => "Your ${tier} plan is active.";
 
-  static String m16(ref) => "Reference: ${ref}";
+  static String m17(ref) => "Reference: ${ref}";
 
-  static String m17(price) => "${price} FCFA / month";
+  static String m18(price) => "${price} FCFA / month";
 
-  static String m18(count) =>
+  static String m19(count) =>
       "${Intl.plural(count, one: '1 residence unit', other: '${count} residence units')}";
 
-  static String m19(tier) =>
+  static String m20(tier) =>
       "Limit reached. Upgrade to ${tier} to publish more listings.";
 
-  static String m20(min) => "Add at least ${min} photos to publish.";
+  static String m21(min) => "Add at least ${min} photos to publish.";
 
-  static String m21(count) =>
+  static String m22(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m22(date) => "Valid until ${date}";
+  static String m23(date) => "Valid until ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -185,6 +187,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Location",
     ),
     "annonceFormFieldName": MessageLookupByLibrary.simpleMessage("Name"),
+    "annonceFormFieldPeriod": MessageLookupByLibrary.simpleMessage(
+      "Rental period",
+    ),
     "annonceFormFieldPrice": MessageLookupByLibrary.simpleMessage("Price"),
     "annonceFormFieldRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
     "annonceFormFieldSurface": MessageLookupByLibrary.simpleMessage(
@@ -214,7 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "3 photos minimum, 15 maximum. They are compressed automatically before upload. Changing the photos on a published listing re-triggers validation of the “Verified photos” badge.",
     ),
     "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
-      "The monthly rent in FCFA. It is used as a search filter, over a 0 – 500,000 F range.",
+      "The rent as you collect it, and how often: monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
     ),
     "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
       "Apartment, studio, villa, room, office or commercial space. Tenants filter their search on this.",
@@ -267,6 +272,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Add a unit group",
     ),
     "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
+    "annoncePeriodMonth": MessageLookupByLibrary.simpleMessage("month"),
+    "annoncePeriodQuarter": MessageLookupByLibrary.simpleMessage("quarter"),
+    "annoncePeriodYear": MessageLookupByLibrary.simpleMessage("year"),
+    "annoncePricePerPeriod": m4,
     "annonceStatusArchived": MessageLookupByLibrary.simpleMessage("Archived"),
     "annonceStatusDraft": MessageLookupByLibrary.simpleMessage("Draft"),
     "annonceStatusPublished": MessageLookupByLibrary.simpleMessage("Available"),
@@ -285,17 +294,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "No occupied property.",
     ),
     "annoncesMultipleTitle": MessageLookupByLibrary.simpleMessage("Residences"),
-    "annoncesPerMonth": m4,
-    "annoncesRooms": m5,
+    "annoncesPerMonth": m5,
+    "annoncesRooms": m6,
     "annoncesSingleTitle": MessageLookupByLibrary.simpleMessage(
       "Single properties",
     ),
-    "annoncesSurface": m6,
+    "annoncesSurface": m7,
     "annoncesTabArchived": MessageLookupByLibrary.simpleMessage("Archived"),
     "annoncesTabAvailable": MessageLookupByLibrary.simpleMessage("Available"),
     "annoncesTabOccupied": MessageLookupByLibrary.simpleMessage("Occupied"),
-    "annoncesUnitsPublished": m7,
-    "annoncesUnitsSummary": m8,
+    "annoncesUnitsPublished": m8,
+    "annoncesUnitsSummary": m9,
     "appName": MessageLookupByLibrary.simpleMessage("Mboa"),
     "appNamePro": MessageLookupByLibrary.simpleMessage("Mboa Pro"),
     "authEmailHint": MessageLookupByLibrary.simpleMessage("name@example.com"),
@@ -334,7 +343,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm change",
     ),
-    "changePhoneNewCodeLabel": m9,
+    "changePhoneNewCodeLabel": m10,
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code sent to your old number",
     ),
@@ -357,7 +366,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAccountButton": MessageLookupByLibrary.simpleMessage(
       "Delete permanently",
     ),
-    "deleteAccountConfirmLabel": m10,
+    "deleteAccountConfirmLabel": m11,
     "deleteAccountConfirmWord": MessageLookupByLibrary.simpleMessage("DELETE"),
     "deleteAccountLink": MessageLookupByLibrary.simpleMessage(
       "Delete my account",
@@ -434,7 +443,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeStatsContacts": MessageLookupByLibrary.simpleMessage("Contacts"),
     "homeStatsContracts": MessageLookupByLibrary.simpleMessage("Contracts"),
     "homeStatsConversion": MessageLookupByLibrary.simpleMessage("Conversion"),
-    "homeStatsLockedHint": m11,
+    "homeStatsLockedHint": m12,
     "homeStatsPublished": MessageLookupByLibrary.simpleMessage("Published"),
     "homeStatsRank": MessageLookupByLibrary.simpleMessage("Ranking"),
     "homeStatsRented": MessageLookupByLibrary.simpleMessage("Rented"),
@@ -474,7 +483,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Front"),
-    "kycRejectionReason": m12,
+    "kycRejectionReason": m13,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Verified"),
     "kycStatusNotSubmitted": MessageLookupByLibrary.simpleMessage(
       "Information required",
@@ -560,7 +569,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "navManager": MessageLookupByLibrary.simpleMessage("Manager"),
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("6-digit code"),
-    "otpCodeSentTo": m13,
+    "otpCodeSentTo": m14,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Invalid code. Please try again.",
     ),
@@ -568,7 +577,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Didn’t receive the code?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Resend code"),
-    "otpResendIn": m14,
+    "otpResendIn": m15,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Verification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Confirm"),
     "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
@@ -577,7 +586,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
       "Finish on your phone",
     ),
-    "paymentConfirmedBody": m15,
+    "paymentConfirmedBody": m16,
     "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
       "Payment confirmed",
     ),
@@ -604,7 +613,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Payment pending",
     ),
-    "paymentReference": m16,
+    "paymentReference": m17,
     "paymentRetry": MessageLookupByLibrary.simpleMessage("Retry payment"),
     "plansChoose": MessageLookupByLibrary.simpleMessage("Choose"),
     "plansCurrent": MessageLookupByLibrary.simpleMessage("Current plan"),
@@ -612,8 +621,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Moving to a lower plan takes effect next cycle.",
     ),
     "plansPriceFree": MessageLookupByLibrary.simpleMessage("Free"),
-    "plansPriceMonthly": m17,
-    "plansResidenceAllowance": m18,
+    "plansPriceMonthly": m18,
+    "plansResidenceAllowance": m19,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Plans"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Display name"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("First name"),
@@ -634,11 +643,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Individual",
     ),
     "profileTypePromoteur": MessageLookupByLibrary.simpleMessage("Promoter"),
-    "publishBlockedLimitBody": m19,
+    "publishBlockedLimitBody": m20,
     "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
       "Limit reached",
     ),
-    "publishBlockedPhotosBody": m20,
+    "publishBlockedPhotosBody": m21,
     "publishBlockedPhotosTitle": MessageLookupByLibrary.simpleMessage(
       "Missing photos",
     ),
@@ -701,7 +710,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m21,
+    "subscriptionListingLimit": m22,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -716,7 +725,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m22,
+    "subscriptionRenewsOn": m23,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),

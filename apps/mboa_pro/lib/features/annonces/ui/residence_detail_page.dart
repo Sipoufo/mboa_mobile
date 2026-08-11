@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -11,6 +10,7 @@ import '../models/annonce.dart';
 import '../models/residence.dart';
 import '../models/annonce_draft.dart';
 import '../../../app/router/app_router.gr.dart';
+import '../models/rental_period.dart';
 import 'residences_list_page.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
@@ -307,12 +307,10 @@ class _UnitRow extends StatelessWidget {
                         style: context.mboaText.caption.copyWith(color: colors.textSecondary),
                       ),
                     ],
-                    if (unit.monthlyRent case final rent?) ...[
+                    if (unit.price case final rent?) ...[
                       const SizedBox(height: Dimens.spacingXs),
                       Text(
-                        l10n.annoncesPerMonth(
-                          NumberFormat.decimalPattern().format(rent),
-                        ),
+                        unit.rentalPeriod.priceLabel(l10n, rent),
                         style: context.mboaText.caption.copyWith(color: colors.primary),
                       ),
                     ],

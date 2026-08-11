@@ -680,9 +680,9 @@
   "@annonceFormHelpPropertyType": {
     "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
   },
-  "annonceFormHelpPrice": "The monthly rent in FCFA. It is used as a search filter, over a 0 – 500,000 F range.",
+  "annonceFormHelpPrice": "The rent as you collect it, and how often: monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
   "@annonceFormHelpPrice": {
-    "description": "Doc 10 §M04 (filtres). Help text on the rent field. Revisit with RM-M10-09 (loyer + périodicité), not yet in the API."
+    "description": "Doc 10 RM-M10-09. Help text on the rent field."
   },
   "annonceFormHelpCharges": "Optional. Say whether water and electricity are included in the rent, and how much they cost if they are not.",
   "@annonceFormHelpCharges": {
@@ -715,5 +715,33 @@
   "annonceFormPhotosLabel": "Photos",
   "@annonceFormPhotosLabel": {
     "description": "Label above the photo strip; also the title of its help sheet."
+  },
+  "annoncePricePerPeriod": "{price} XAF / {period}",
+  "@annoncePricePerPeriod": {
+    "description": "Rent as entered, with its period (RM-M10-09). {period} is one of annoncePeriodMonth/Quarter/Year.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "annoncePeriodMonth": "month",
+  "@annoncePeriodMonth": {
+    "description": "Doc 10 RM-M10-09 — rental period."
+  },
+  "annoncePeriodQuarter": "quarter",
+  "@annoncePeriodQuarter": {
+    "description": "Doc 10 RM-M10-09 — rental period."
+  },
+  "annoncePeriodYear": "year",
+  "@annoncePeriodYear": {
+    "description": "Doc 10 RM-M10-09 — rental period."
+  },
+  "annonceFormFieldPeriod": "Rental period",
+  "@annonceFormFieldPeriod": {
+    "description": "Label of the rental-period selector on the listing form."
   }
 }
