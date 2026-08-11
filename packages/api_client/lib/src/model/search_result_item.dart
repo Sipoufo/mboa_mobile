@@ -53,7 +53,7 @@ abstract class SearchResultItem implements Built<SearchResultItem, SearchResultI
 
   @BuiltValueField(wireName: r'rentalPeriod')
   SearchResultItemRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -443,6 +443,10 @@ class SearchResultItemPropertyTypeEnum extends EnumClass {
 
 class SearchResultItemRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const SearchResultItemRentalPeriodEnum DAY = _$searchResultItemRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const SearchResultItemRentalPeriodEnum WEEK = _$searchResultItemRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const SearchResultItemRentalPeriodEnum MONTH = _$searchResultItemRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

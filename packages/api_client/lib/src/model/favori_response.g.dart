@@ -6,6 +6,10 @@ part of 'favori_response.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const FavoriResponseRentalPeriodEnum _$favoriResponseRentalPeriodEnum_DAY =
+    const FavoriResponseRentalPeriodEnum._('DAY');
+const FavoriResponseRentalPeriodEnum _$favoriResponseRentalPeriodEnum_WEEK =
+    const FavoriResponseRentalPeriodEnum._('WEEK');
 const FavoriResponseRentalPeriodEnum _$favoriResponseRentalPeriodEnum_MONTH =
     const FavoriResponseRentalPeriodEnum._('MONTH');
 const FavoriResponseRentalPeriodEnum _$favoriResponseRentalPeriodEnum_QUARTER =
@@ -20,6 +24,10 @@ FavoriResponseRentalPeriodEnum _$favoriResponseRentalPeriodEnumValueOf(
   String name,
 ) {
   switch (name) {
+    case 'DAY':
+      return _$favoriResponseRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$favoriResponseRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$favoriResponseRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -37,6 +45,8 @@ final BuiltSet<FavoriResponseRentalPeriodEnum>
 _$favoriResponseRentalPeriodEnumValues =
     BuiltSet<FavoriResponseRentalPeriodEnum>(
       const <FavoriResponseRentalPeriodEnum>[
+        _$favoriResponseRentalPeriodEnum_DAY,
+        _$favoriResponseRentalPeriodEnum_WEEK,
         _$favoriResponseRentalPeriodEnum_MONTH,
         _$favoriResponseRentalPeriodEnum_QUARTER,
         _$favoriResponseRentalPeriodEnum_YEAR,
@@ -51,12 +61,16 @@ _$favoriResponseRentalPeriodEnumSerializer =
 class _$FavoriResponseRentalPeriodEnumSerializer
     implements PrimitiveSerializer<FavoriResponseRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

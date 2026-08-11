@@ -6,6 +6,10 @@ part of 'agent_opportunity.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const AgentOpportunityRentalPeriodEnum _$agentOpportunityRentalPeriodEnum_DAY =
+    const AgentOpportunityRentalPeriodEnum._('DAY');
+const AgentOpportunityRentalPeriodEnum _$agentOpportunityRentalPeriodEnum_WEEK =
+    const AgentOpportunityRentalPeriodEnum._('WEEK');
 const AgentOpportunityRentalPeriodEnum
 _$agentOpportunityRentalPeriodEnum_MONTH =
     const AgentOpportunityRentalPeriodEnum._('MONTH');
@@ -22,6 +26,10 @@ AgentOpportunityRentalPeriodEnum _$agentOpportunityRentalPeriodEnumValueOf(
   String name,
 ) {
   switch (name) {
+    case 'DAY':
+      return _$agentOpportunityRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$agentOpportunityRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$agentOpportunityRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -39,6 +47,8 @@ final BuiltSet<AgentOpportunityRentalPeriodEnum>
 _$agentOpportunityRentalPeriodEnumValues =
     BuiltSet<AgentOpportunityRentalPeriodEnum>(
       const <AgentOpportunityRentalPeriodEnum>[
+        _$agentOpportunityRentalPeriodEnum_DAY,
+        _$agentOpportunityRentalPeriodEnum_WEEK,
         _$agentOpportunityRentalPeriodEnum_MONTH,
         _$agentOpportunityRentalPeriodEnum_QUARTER,
         _$agentOpportunityRentalPeriodEnum_YEAR,
@@ -53,12 +63,16 @@ _$agentOpportunityRentalPeriodEnumSerializer =
 class _$AgentOpportunityRentalPeriodEnumSerializer
     implements PrimitiveSerializer<AgentOpportunityRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

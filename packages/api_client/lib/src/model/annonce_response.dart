@@ -85,7 +85,7 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
 
   @BuiltValueField(wireName: r'rentalPeriod')
   AnnonceResponseRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -710,6 +710,10 @@ class AnnonceResponsePropertyTypeEnum extends EnumClass {
 
 class AnnonceResponseRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const AnnonceResponseRentalPeriodEnum DAY = _$annonceResponseRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const AnnonceResponseRentalPeriodEnum WEEK = _$annonceResponseRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const AnnonceResponseRentalPeriodEnum MONTH = _$annonceResponseRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

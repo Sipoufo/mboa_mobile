@@ -61,6 +61,10 @@ _$annonceResponsePropertyTypeEnumValues =
       ],
     );
 
+const AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnum_DAY =
+    const AnnonceResponseRentalPeriodEnum._('DAY');
+const AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnum_WEEK =
+    const AnnonceResponseRentalPeriodEnum._('WEEK');
 const AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnum_MONTH =
     const AnnonceResponseRentalPeriodEnum._('MONTH');
 const AnnonceResponseRentalPeriodEnum
@@ -76,6 +80,10 @@ AnnonceResponseRentalPeriodEnum _$annonceResponseRentalPeriodEnumValueOf(
   String name,
 ) {
   switch (name) {
+    case 'DAY':
+      return _$annonceResponseRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$annonceResponseRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$annonceResponseRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -93,6 +101,8 @@ final BuiltSet<AnnonceResponseRentalPeriodEnum>
 _$annonceResponseRentalPeriodEnumValues =
     BuiltSet<AnnonceResponseRentalPeriodEnum>(
       const <AnnonceResponseRentalPeriodEnum>[
+        _$annonceResponseRentalPeriodEnum_DAY,
+        _$annonceResponseRentalPeriodEnum_WEEK,
         _$annonceResponseRentalPeriodEnum_MONTH,
         _$annonceResponseRentalPeriodEnum_QUARTER,
         _$annonceResponseRentalPeriodEnum_YEAR,
@@ -259,12 +269,16 @@ class _$AnnonceResponsePropertyTypeEnumSerializer
 class _$AnnonceResponseRentalPeriodEnumSerializer
     implements PrimitiveSerializer<AnnonceResponseRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

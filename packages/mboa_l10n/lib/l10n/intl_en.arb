@@ -680,7 +680,7 @@
   "@annonceFormHelpPropertyType": {
     "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
   },
-  "annonceFormHelpPrice": "The rent as you collect it, and how often: monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
+  "annonceFormHelpPrice": "The rent as you collect it, and how often: daily, weekly, monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
   "@annonceFormHelpPrice": {
     "description": "Doc 10 RM-M10-09. Help text on the rent field."
   },
@@ -792,5 +792,13 @@
   "annonceDetailAmenities": "Amenities",
   "@annonceDetailAmenities": {
     "description": "Section heading on the listing detail."
+  },
+  "annoncePeriodDay": "day",
+  "@annoncePeriodDay": {
+    "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
+  },
+  "annoncePeriodWeek": "week",
+  "@annoncePeriodWeek": {
+    "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
   }
 }

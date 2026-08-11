@@ -3085,10 +3085,10 @@ class I18n {
     );
   }
 
-  /// `Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.`
+  /// `Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.`
   String get annonceFormHelpPrice {
     return Intl.message(
-      'Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.',
+      'Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.',
       name: 'annonceFormHelpPrice',
       desc: 'Doc 10 RM-M10-09. Help text on the rent field.',
       args: [],
@@ -3338,6 +3338,28 @@ class I18n {
       'Équipements',
       name: 'annonceDetailAmenities',
       desc: 'Section heading on the listing detail.',
+      args: [],
+    );
+  }
+
+  /// `Jour`
+  String get annoncePeriodDay {
+    return Intl.message(
+      'Jour',
+      name: 'annoncePeriodDay',
+      desc:
+          'Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them.',
+      args: [],
+    );
+  }
+
+  /// `Semaine`
+  String get annoncePeriodWeek {
+    return Intl.message(
+      'Semaine',
+      name: 'annoncePeriodWeek',
+      desc:
+          'Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them.',
       args: [],
     );
   }

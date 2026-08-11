@@ -64,6 +64,10 @@ _$searchResultItemPropertyTypeEnumValues =
       ],
     );
 
+const SearchResultItemRentalPeriodEnum _$searchResultItemRentalPeriodEnum_DAY =
+    const SearchResultItemRentalPeriodEnum._('DAY');
+const SearchResultItemRentalPeriodEnum _$searchResultItemRentalPeriodEnum_WEEK =
+    const SearchResultItemRentalPeriodEnum._('WEEK');
 const SearchResultItemRentalPeriodEnum
 _$searchResultItemRentalPeriodEnum_MONTH =
     const SearchResultItemRentalPeriodEnum._('MONTH');
@@ -80,6 +84,10 @@ SearchResultItemRentalPeriodEnum _$searchResultItemRentalPeriodEnumValueOf(
   String name,
 ) {
   switch (name) {
+    case 'DAY':
+      return _$searchResultItemRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$searchResultItemRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$searchResultItemRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -97,6 +105,8 @@ final BuiltSet<SearchResultItemRentalPeriodEnum>
 _$searchResultItemRentalPeriodEnumValues =
     BuiltSet<SearchResultItemRentalPeriodEnum>(
       const <SearchResultItemRentalPeriodEnum>[
+        _$searchResultItemRentalPeriodEnum_DAY,
+        _$searchResultItemRentalPeriodEnum_WEEK,
         _$searchResultItemRentalPeriodEnum_MONTH,
         _$searchResultItemRentalPeriodEnum_QUARTER,
         _$searchResultItemRentalPeriodEnum_YEAR,
@@ -207,12 +217,16 @@ class _$SearchResultItemPropertyTypeEnumSerializer
 class _$SearchResultItemRentalPeriodEnumSerializer
     implements PrimitiveSerializer<SearchResultItemRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

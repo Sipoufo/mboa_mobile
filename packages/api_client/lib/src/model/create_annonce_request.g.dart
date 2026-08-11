@@ -65,6 +65,12 @@ _$createAnnonceRequestPropertyTypeEnumValues =
     );
 
 const CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnum_DAY =
+    const CreateAnnonceRequestRentalPeriodEnum._('DAY');
+const CreateAnnonceRequestRentalPeriodEnum
+_$createAnnonceRequestRentalPeriodEnum_WEEK =
+    const CreateAnnonceRequestRentalPeriodEnum._('WEEK');
+const CreateAnnonceRequestRentalPeriodEnum
 _$createAnnonceRequestRentalPeriodEnum_MONTH =
     const CreateAnnonceRequestRentalPeriodEnum._('MONTH');
 const CreateAnnonceRequestRentalPeriodEnum
@@ -80,6 +86,10 @@ _$createAnnonceRequestRentalPeriodEnum_unknownDefaultOpenApi =
 CreateAnnonceRequestRentalPeriodEnum
 _$createAnnonceRequestRentalPeriodEnumValueOf(String name) {
   switch (name) {
+    case 'DAY':
+      return _$createAnnonceRequestRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$createAnnonceRequestRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$createAnnonceRequestRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -97,6 +107,8 @@ final BuiltSet<CreateAnnonceRequestRentalPeriodEnum>
 _$createAnnonceRequestRentalPeriodEnumValues =
     BuiltSet<CreateAnnonceRequestRentalPeriodEnum>(
       const <CreateAnnonceRequestRentalPeriodEnum>[
+        _$createAnnonceRequestRentalPeriodEnum_DAY,
+        _$createAnnonceRequestRentalPeriodEnum_WEEK,
         _$createAnnonceRequestRentalPeriodEnum_MONTH,
         _$createAnnonceRequestRentalPeriodEnum_QUARTER,
         _$createAnnonceRequestRentalPeriodEnum_YEAR,
@@ -221,12 +233,16 @@ class _$CreateAnnonceRequestPropertyTypeEnumSerializer
 class _$CreateAnnonceRequestRentalPeriodEnumSerializer
     implements PrimitiveSerializer<CreateAnnonceRequestRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

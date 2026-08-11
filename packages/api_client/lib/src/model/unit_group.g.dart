@@ -54,6 +54,10 @@ final BuiltSet<UnitGroupPropertyTypeEnum> _$unitGroupPropertyTypeEnumValues =
       _$unitGroupPropertyTypeEnum_unknownDefaultOpenApi,
     ]);
 
+const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_DAY =
+    const UnitGroupRentalPeriodEnum._('DAY');
+const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_WEEK =
+    const UnitGroupRentalPeriodEnum._('WEEK');
 const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_MONTH =
     const UnitGroupRentalPeriodEnum._('MONTH');
 const UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnum_QUARTER =
@@ -66,6 +70,10 @@ _$unitGroupRentalPeriodEnum_unknownDefaultOpenApi =
 
 UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnumValueOf(String name) {
   switch (name) {
+    case 'DAY':
+      return _$unitGroupRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$unitGroupRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$unitGroupRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -81,6 +89,8 @@ UnitGroupRentalPeriodEnum _$unitGroupRentalPeriodEnumValueOf(String name) {
 
 final BuiltSet<UnitGroupRentalPeriodEnum> _$unitGroupRentalPeriodEnumValues =
     BuiltSet<UnitGroupRentalPeriodEnum>(const <UnitGroupRentalPeriodEnum>[
+      _$unitGroupRentalPeriodEnum_DAY,
+      _$unitGroupRentalPeriodEnum_WEEK,
       _$unitGroupRentalPeriodEnum_MONTH,
       _$unitGroupRentalPeriodEnum_QUARTER,
       _$unitGroupRentalPeriodEnum_YEAR,
@@ -138,12 +148,16 @@ class _$UnitGroupPropertyTypeEnumSerializer
 class _$UnitGroupRentalPeriodEnumSerializer
     implements PrimitiveSerializer<UnitGroupRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

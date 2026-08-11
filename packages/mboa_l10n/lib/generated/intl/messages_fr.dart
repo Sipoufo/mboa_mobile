@@ -245,7 +245,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "3 photos minimum et 15 maximum. Elles sont compressées automatiquement avant l\'envoi. Modifier les photos d\'une annonce publiée relance la validation du badge « Photos vérifiées ».",
     ),
     "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
-      "Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
+      "Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
     ),
     "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
       "Appartement, Studio, Villa, Chambre, Bureau ou Local commercial. Les locataires filtrent leur recherche sur ce critère.",
@@ -298,8 +298,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ajouter un groupe d’unités",
     ),
     "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
+    "annoncePeriodDay": MessageLookupByLibrary.simpleMessage("Jour"),
     "annoncePeriodMonth": MessageLookupByLibrary.simpleMessage("Mois"),
     "annoncePeriodQuarter": MessageLookupByLibrary.simpleMessage("Trimestre"),
+    "annoncePeriodWeek": MessageLookupByLibrary.simpleMessage("Semaine"),
     "annoncePeriodYear": MessageLookupByLibrary.simpleMessage("An"),
     "annoncePricePerPeriod": m4,
     "annonceStatusArchived": MessageLookupByLibrary.simpleMessage("Archivé"),

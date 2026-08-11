@@ -238,7 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "3 photos minimum, 15 maximum. They are compressed automatically before upload. Changing the photos on a published listing re-triggers validation of the “Verified photos” badge.",
     ),
     "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
-      "The rent as you collect it, and how often: monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
+      "The rent as you collect it, and how often: daily, weekly, monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
     ),
     "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
       "Apartment, studio, villa, room, office or commercial space. Tenants filter their search on this.",
@@ -291,8 +291,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Add a unit group",
     ),
     "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
+    "annoncePeriodDay": MessageLookupByLibrary.simpleMessage("day"),
     "annoncePeriodMonth": MessageLookupByLibrary.simpleMessage("month"),
     "annoncePeriodQuarter": MessageLookupByLibrary.simpleMessage("quarter"),
+    "annoncePeriodWeek": MessageLookupByLibrary.simpleMessage("week"),
     "annoncePeriodYear": MessageLookupByLibrary.simpleMessage("year"),
     "annoncePricePerPeriod": m4,
     "annonceStatusArchived": MessageLookupByLibrary.simpleMessage("Archived"),

@@ -680,7 +680,7 @@
   "@annonceFormHelpPropertyType": {
     "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
   },
-  "annonceFormHelpPrice": "Le loyer tel que vous le percevez, et sa périodicité : au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
+  "annonceFormHelpPrice": "Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
   "@annonceFormHelpPrice": {
     "description": "Doc 10 RM-M10-09. Help text on the rent field."
   },
@@ -792,5 +792,13 @@
   "annonceDetailAmenities": "Équipements",
   "@annonceDetailAmenities": {
     "description": "Section heading on the listing detail."
+  },
+  "annoncePeriodDay": "Jour",
+  "@annoncePeriodDay": {
+    "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
+  },
+  "annoncePeriodWeek": "Semaine",
+  "@annoncePeriodWeek": {
+    "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
   }
 }

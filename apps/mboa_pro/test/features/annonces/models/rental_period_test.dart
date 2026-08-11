@@ -50,13 +50,55 @@ void main() {
     });
   });
 
-  test('an absent or unknown period from the API reads as monthly', () {
+  test('an absent period from the API reads as monthly', () {
     expect(RentalPeriod.fromResponse(null), RentalPeriod.month);
-    expect(
-      RentalPeriod.fromResponse(AnnonceResponseRentalPeriodEnum.QUARTER),
-      RentalPeriod.quarter,
-    );
     expect(RentalPeriod.fromUnitSummary(null), RentalPeriod.month);
+  });
+
+  test('every value the API can send maps to its own period', () {
+    // The fallback is for a value this build predates — never for one the enum
+    // already has. Mapping DAY to month would show 5 000 F/day as 5 000 F/Mois.
+    const expected = {
+      AnnonceResponseRentalPeriodEnum.DAY: RentalPeriod.day,
+      AnnonceResponseRentalPeriodEnum.WEEK: RentalPeriod.week,
+      AnnonceResponseRentalPeriodEnum.MONTH: RentalPeriod.month,
+      AnnonceResponseRentalPeriodEnum.QUARTER: RentalPeriod.quarter,
+      AnnonceResponseRentalPeriodEnum.YEAR: RentalPeriod.year,
+    };
+    expected.forEach((wire, period) {
+      expect(RentalPeriod.fromResponse(wire), period, reason: '$wire');
+    });
+
+    const units = {
+      UnitSummaryRentalPeriodEnum.DAY: RentalPeriod.day,
+      UnitSummaryRentalPeriodEnum.WEEK: RentalPeriod.week,
+      UnitSummaryRentalPeriodEnum.MONTH: RentalPeriod.month,
+      UnitSummaryRentalPeriodEnum.QUARTER: RentalPeriod.quarter,
+      UnitSummaryRentalPeriodEnum.YEAR: RentalPeriod.year,
+    };
+    units.forEach((wire, period) {
+      expect(RentalPeriod.fromUnitSummary(wire), period, reason: '$wire');
+    });
+  });
+
+  test('every period can be sent back on all three request shapes', () {
+    // A period the app can read but not write would make an edit silently
+    // change the listing's terms.
+    for (final period in RentalPeriod.values) {
+      expect(period.asCreate.name, period.name.toUpperCase());
+      expect(period.asUpdate.name, period.name.toUpperCase());
+      expect(period.asUnitGroup.name, period.name.toUpperCase());
+    }
+  });
+
+  test('the selector reads shortest period first', () {
+    expect(RentalPeriod.values, [
+      RentalPeriod.day,
+      RentalPeriod.week,
+      RentalPeriod.month,
+      RentalPeriod.quarter,
+      RentalPeriod.year,
+    ]);
   });
 
   group('the form draft', () {

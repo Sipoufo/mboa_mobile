@@ -103,6 +103,10 @@ final BuiltSet<UnitSummaryStatusEnum> _$unitSummaryStatusEnumValues =
       _$unitSummaryStatusEnum_unknownDefaultOpenApi,
     ]);
 
+const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_DAY =
+    const UnitSummaryRentalPeriodEnum._('DAY');
+const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_WEEK =
+    const UnitSummaryRentalPeriodEnum._('WEEK');
 const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_MONTH =
     const UnitSummaryRentalPeriodEnum._('MONTH');
 const UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnum_QUARTER =
@@ -115,6 +119,10 @@ _$unitSummaryRentalPeriodEnum_unknownDefaultOpenApi =
 
 UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnumValueOf(String name) {
   switch (name) {
+    case 'DAY':
+      return _$unitSummaryRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$unitSummaryRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$unitSummaryRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -131,6 +139,8 @@ UnitSummaryRentalPeriodEnum _$unitSummaryRentalPeriodEnumValueOf(String name) {
 final BuiltSet<UnitSummaryRentalPeriodEnum>
 _$unitSummaryRentalPeriodEnumValues =
     BuiltSet<UnitSummaryRentalPeriodEnum>(const <UnitSummaryRentalPeriodEnum>[
+      _$unitSummaryRentalPeriodEnum_DAY,
+      _$unitSummaryRentalPeriodEnum_WEEK,
       _$unitSummaryRentalPeriodEnum_MONTH,
       _$unitSummaryRentalPeriodEnum_QUARTER,
       _$unitSummaryRentalPeriodEnum_YEAR,
@@ -235,12 +245,16 @@ class _$UnitSummaryStatusEnumSerializer
 class _$UnitSummaryRentalPeriodEnumSerializer
     implements PrimitiveSerializer<UnitSummaryRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

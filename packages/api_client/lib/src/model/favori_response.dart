@@ -38,7 +38,7 @@ abstract class FavoriResponse implements Built<FavoriResponse, FavoriResponseBui
 
   @BuiltValueField(wireName: r'rentalPeriod')
   FavoriResponseRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -282,6 +282,10 @@ class _$FavoriResponseSerializer implements PrimitiveSerializer<FavoriResponse> 
 
 class FavoriResponseRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const FavoriResponseRentalPeriodEnum DAY = _$favoriResponseRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const FavoriResponseRentalPeriodEnum WEEK = _$favoriResponseRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const FavoriResponseRentalPeriodEnum MONTH = _$favoriResponseRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

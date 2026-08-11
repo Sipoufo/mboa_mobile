@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**346 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 239 ·
+**349 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 242 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -267,9 +267,20 @@ trip.
 
 ### RM-M10-09 — rent and its period ✅
 
-A listing carries a **`price`** and a **`rentalPeriod`** (`MONTH`/`QUARTER`/
-`YEAR`), both shipped in the 2026-08-11 spec and wired through the form, the
-models and the repositories.
+A listing carries a **`price`** and a **`rentalPeriod`**, wired through the form,
+the models and the repositories.
+
+**The enum is `DAY`/`WEEK`/`MONTH`/`QUARTER`/`YEAR` — and Doc 10 says otherwise.**
+RM-M10-09 states in as many words that there is *no* weekly or nightly period
+because short-term letting is a distinct product. The API added `DAY` and `WEEK`
+regardless and the app supports both, but the CDC has not been updated: short-term
+letting has no rules of its own there — no contract terms, no tier treatment, no
+search brackets. **Product decision outstanding.**
+
+Every wire value is mapped explicitly and the fallback is reserved for a value a
+build predates. Mapping an unrecognised value onto month is not harmless: a
+listing at 5 000 F/day would read "5 000 XAF / Mois". Pinned by
+`rental_period_test.dart`.
 
 **`monthlyRent` is the server's derived comparison figure — never display it and
 never send it.** It exists so listings can be filtered and sorted against each

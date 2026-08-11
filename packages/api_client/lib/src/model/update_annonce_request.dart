@@ -58,7 +58,7 @@ abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, Updat
 
   @BuiltValueField(wireName: r'rentalPeriod')
   UpdateAnnonceRequestRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -481,6 +481,10 @@ class UpdateAnnonceRequestPropertyTypeEnum extends EnumClass {
 
 class UpdateAnnonceRequestRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const UpdateAnnonceRequestRentalPeriodEnum DAY = _$updateAnnonceRequestRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const UpdateAnnonceRequestRentalPeriodEnum WEEK = _$updateAnnonceRequestRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const UpdateAnnonceRequestRentalPeriodEnum MONTH = _$updateAnnonceRequestRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

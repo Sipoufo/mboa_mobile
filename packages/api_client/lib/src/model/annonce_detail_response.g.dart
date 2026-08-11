@@ -65,6 +65,12 @@ _$annonceDetailResponsePropertyTypeEnumValues =
     );
 
 const AnnonceDetailResponseRentalPeriodEnum
+_$annonceDetailResponseRentalPeriodEnum_DAY =
+    const AnnonceDetailResponseRentalPeriodEnum._('DAY');
+const AnnonceDetailResponseRentalPeriodEnum
+_$annonceDetailResponseRentalPeriodEnum_WEEK =
+    const AnnonceDetailResponseRentalPeriodEnum._('WEEK');
+const AnnonceDetailResponseRentalPeriodEnum
 _$annonceDetailResponseRentalPeriodEnum_MONTH =
     const AnnonceDetailResponseRentalPeriodEnum._('MONTH');
 const AnnonceDetailResponseRentalPeriodEnum
@@ -80,6 +86,10 @@ _$annonceDetailResponseRentalPeriodEnum_unknownDefaultOpenApi =
 AnnonceDetailResponseRentalPeriodEnum
 _$annonceDetailResponseRentalPeriodEnumValueOf(String name) {
   switch (name) {
+    case 'DAY':
+      return _$annonceDetailResponseRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$annonceDetailResponseRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$annonceDetailResponseRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -97,6 +107,8 @@ final BuiltSet<AnnonceDetailResponseRentalPeriodEnum>
 _$annonceDetailResponseRentalPeriodEnumValues =
     BuiltSet<AnnonceDetailResponseRentalPeriodEnum>(
       const <AnnonceDetailResponseRentalPeriodEnum>[
+        _$annonceDetailResponseRentalPeriodEnum_DAY,
+        _$annonceDetailResponseRentalPeriodEnum_WEEK,
         _$annonceDetailResponseRentalPeriodEnum_MONTH,
         _$annonceDetailResponseRentalPeriodEnum_QUARTER,
         _$annonceDetailResponseRentalPeriodEnum_YEAR,
@@ -281,12 +293,16 @@ class _$AnnonceDetailResponsePropertyTypeEnumSerializer
 class _$AnnonceDetailResponseRentalPeriodEnumSerializer
     implements PrimitiveSerializer<AnnonceDetailResponseRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

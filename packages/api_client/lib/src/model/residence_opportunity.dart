@@ -51,7 +51,7 @@ abstract class ResidenceOpportunity implements Built<ResidenceOpportunity, Resid
 
   @BuiltValueField(wireName: r'fromRentalPeriod')
   ResidenceOpportunityFromRentalPeriodEnum? get fromRentalPeriod;
-  // enum fromRentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum fromRentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'fromMonthlyRent')
   int? get fromMonthlyRent;
@@ -283,6 +283,10 @@ class _$ResidenceOpportunitySerializer implements PrimitiveSerializer<ResidenceO
 
 class ResidenceOpportunityFromRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const ResidenceOpportunityFromRentalPeriodEnum DAY = _$residenceOpportunityFromRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const ResidenceOpportunityFromRentalPeriodEnum WEEK = _$residenceOpportunityFromRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const ResidenceOpportunityFromRentalPeriodEnum MONTH = _$residenceOpportunityFromRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

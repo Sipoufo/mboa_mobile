@@ -42,7 +42,7 @@ abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
 
   @BuiltValueField(wireName: r'rentalPeriod')
   UnitGroupRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -356,6 +356,10 @@ class UnitGroupPropertyTypeEnum extends EnumClass {
 
 class UnitGroupRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const UnitGroupRentalPeriodEnum DAY = _$unitGroupRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const UnitGroupRentalPeriodEnum WEEK = _$unitGroupRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const UnitGroupRentalPeriodEnum MONTH = _$unitGroupRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

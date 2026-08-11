@@ -7,6 +7,12 @@ part of 'residence_opportunity.dart';
 // **************************************************************************
 
 const ResidenceOpportunityFromRentalPeriodEnum
+_$residenceOpportunityFromRentalPeriodEnum_DAY =
+    const ResidenceOpportunityFromRentalPeriodEnum._('DAY');
+const ResidenceOpportunityFromRentalPeriodEnum
+_$residenceOpportunityFromRentalPeriodEnum_WEEK =
+    const ResidenceOpportunityFromRentalPeriodEnum._('WEEK');
+const ResidenceOpportunityFromRentalPeriodEnum
 _$residenceOpportunityFromRentalPeriodEnum_MONTH =
     const ResidenceOpportunityFromRentalPeriodEnum._('MONTH');
 const ResidenceOpportunityFromRentalPeriodEnum
@@ -22,6 +28,10 @@ _$residenceOpportunityFromRentalPeriodEnum_unknownDefaultOpenApi =
 ResidenceOpportunityFromRentalPeriodEnum
 _$residenceOpportunityFromRentalPeriodEnumValueOf(String name) {
   switch (name) {
+    case 'DAY':
+      return _$residenceOpportunityFromRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$residenceOpportunityFromRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$residenceOpportunityFromRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -39,6 +49,8 @@ final BuiltSet<ResidenceOpportunityFromRentalPeriodEnum>
 _$residenceOpportunityFromRentalPeriodEnumValues =
     BuiltSet<ResidenceOpportunityFromRentalPeriodEnum>(
       const <ResidenceOpportunityFromRentalPeriodEnum>[
+        _$residenceOpportunityFromRentalPeriodEnum_DAY,
+        _$residenceOpportunityFromRentalPeriodEnum_WEEK,
         _$residenceOpportunityFromRentalPeriodEnum_MONTH,
         _$residenceOpportunityFromRentalPeriodEnum_QUARTER,
         _$residenceOpportunityFromRentalPeriodEnum_YEAR,
@@ -53,12 +65,16 @@ _$residenceOpportunityFromRentalPeriodEnumSerializer =
 class _$ResidenceOpportunityFromRentalPeriodEnumSerializer
     implements PrimitiveSerializer<ResidenceOpportunityFromRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',

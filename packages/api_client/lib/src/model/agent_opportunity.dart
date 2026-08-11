@@ -36,7 +36,7 @@ abstract class AgentOpportunity implements Built<AgentOpportunity, AgentOpportun
 
   @BuiltValueField(wireName: r'rentalPeriod')
   AgentOpportunityRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -244,6 +244,10 @@ class _$AgentOpportunitySerializer implements PrimitiveSerializer<AgentOpportuni
 
 class AgentOpportunityRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const AgentOpportunityRentalPeriodEnum DAY = _$agentOpportunityRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const AgentOpportunityRentalPeriodEnum WEEK = _$agentOpportunityRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const AgentOpportunityRentalPeriodEnum MONTH = _$agentOpportunityRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

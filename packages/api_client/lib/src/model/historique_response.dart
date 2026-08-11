@@ -37,7 +37,7 @@ abstract class HistoriqueResponse implements Built<HistoriqueResponse, Historiqu
 
   @BuiltValueField(wireName: r'rentalPeriod')
   HistoriqueResponseRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -263,6 +263,10 @@ class _$HistoriqueResponseSerializer implements PrimitiveSerializer<HistoriqueRe
 
 class HistoriqueResponseRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const HistoriqueResponseRentalPeriodEnum DAY = _$historiqueResponseRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const HistoriqueResponseRentalPeriodEnum WEEK = _$historiqueResponseRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const HistoriqueResponseRentalPeriodEnum MONTH = _$historiqueResponseRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

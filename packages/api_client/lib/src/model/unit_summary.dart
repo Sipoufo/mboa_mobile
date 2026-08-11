@@ -40,7 +40,7 @@ abstract class UnitSummary implements Built<UnitSummary, UnitSummaryBuilder> {
 
   @BuiltValueField(wireName: r'rentalPeriod')
   UnitSummaryRentalPeriodEnum? get rentalPeriod;
-  // enum rentalPeriodEnum {  MONTH,  QUARTER,  YEAR,  };
+  // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'monthlyRent')
   int? get monthlyRent;
@@ -277,6 +277,10 @@ class UnitSummaryStatusEnum extends EnumClass {
 
 class UnitSummaryRentalPeriodEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const UnitSummaryRentalPeriodEnum DAY = _$unitSummaryRentalPeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const UnitSummaryRentalPeriodEnum WEEK = _$unitSummaryRentalPeriodEnum_WEEK;
   @BuiltValueEnumConst(wireName: r'MONTH')
   static const UnitSummaryRentalPeriodEnum MONTH = _$unitSummaryRentalPeriodEnum_MONTH;
   @BuiltValueEnumConst(wireName: r'QUARTER')

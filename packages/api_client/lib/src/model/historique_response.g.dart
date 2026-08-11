@@ -7,6 +7,12 @@ part of 'historique_response.dart';
 // **************************************************************************
 
 const HistoriqueResponseRentalPeriodEnum
+_$historiqueResponseRentalPeriodEnum_DAY =
+    const HistoriqueResponseRentalPeriodEnum._('DAY');
+const HistoriqueResponseRentalPeriodEnum
+_$historiqueResponseRentalPeriodEnum_WEEK =
+    const HistoriqueResponseRentalPeriodEnum._('WEEK');
+const HistoriqueResponseRentalPeriodEnum
 _$historiqueResponseRentalPeriodEnum_MONTH =
     const HistoriqueResponseRentalPeriodEnum._('MONTH');
 const HistoriqueResponseRentalPeriodEnum
@@ -23,6 +29,10 @@ HistoriqueResponseRentalPeriodEnum _$historiqueResponseRentalPeriodEnumValueOf(
   String name,
 ) {
   switch (name) {
+    case 'DAY':
+      return _$historiqueResponseRentalPeriodEnum_DAY;
+    case 'WEEK':
+      return _$historiqueResponseRentalPeriodEnum_WEEK;
     case 'MONTH':
       return _$historiqueResponseRentalPeriodEnum_MONTH;
     case 'QUARTER':
@@ -40,6 +50,8 @@ final BuiltSet<HistoriqueResponseRentalPeriodEnum>
 _$historiqueResponseRentalPeriodEnumValues =
     BuiltSet<HistoriqueResponseRentalPeriodEnum>(
       const <HistoriqueResponseRentalPeriodEnum>[
+        _$historiqueResponseRentalPeriodEnum_DAY,
+        _$historiqueResponseRentalPeriodEnum_WEEK,
         _$historiqueResponseRentalPeriodEnum_MONTH,
         _$historiqueResponseRentalPeriodEnum_QUARTER,
         _$historiqueResponseRentalPeriodEnum_YEAR,
@@ -54,12 +66,16 @@ _$historiqueResponseRentalPeriodEnumSerializer =
 class _$HistoriqueResponseRentalPeriodEnumSerializer
     implements PrimitiveSerializer<HistoriqueResponseRentalPeriodEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
     'MONTH': 'MONTH',
     'QUARTER': 'QUARTER',
     'YEAR': 'YEAR',
