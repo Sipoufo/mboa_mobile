@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**391 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 284 ·
+**396 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 289 ·
 `mboa_core` 12 · `mboa_shared` 77.
 
 | Module | State |
@@ -70,6 +70,15 @@ A route in the table is not proof it is reachable. The profile hub was orphaned
 when the tab shell replaced it as the post-auth landing. Pinned by
 `pro_menu_page_test.dart`, which greps `lib/` for a navigation source for every
 `/app` child.
+
+**That check is role-blind, and a second persona broke it.** It passes as long as
+*some* file navigates to a route — the prestataire's slide menu reaches settings,
+certifications and logout, so all three looked reachable while an **agent**,
+whose shell has no slide menu, could sign in and never sign out. The same test
+now has a per-persona group that greps only `lib/features/agent`.
+
+**Rule:** a new shell needs its own reachability group, from its own entry
+point. Logout first — it is the only way out of the app.
 
 ### Native permissions
 A plugin needing a runtime permission fails **only on device**. `geolocator`

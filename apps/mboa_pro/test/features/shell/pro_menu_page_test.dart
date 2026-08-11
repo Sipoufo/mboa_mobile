@@ -51,6 +51,48 @@ void main() {
       reason: 'declared in the route table but never navigated to: $unreachable',
     );
   });
+
+  /// The check above is **role-blind**: it passes as long as *some* file
+  /// navigates to a route. The prestataire's slide menu reaches settings, KYC
+  /// and logout, so those all looked reachable — while an agent, whose shell has
+  /// no slide menu, could sign in and never sign out.
+  ///
+  /// A second persona needs its own reachability check, from its own entry
+  /// point. Add one here for every shell that is not the prestataire's.
+  group('the agent shell reaches the account surfaces from its own screens', () {
+    final agentSources = _dartSourcesUnder('lib/features/agent');
+
+    bool reachedFromAgentUi(String needle) {
+      final pattern = RegExp('\\b$needle\\s*\\(');
+      return agentSources.any((path) => pattern.hasMatch(_read(path)));
+    }
+
+    test('signing out is possible at all', () {
+      // The only way out of the app for an agent. Without it they are stuck in
+      // a session with no exit.
+      expect(
+        reachedFromAgentUi('AuthLogoutRequested'),
+        isTrue,
+        reason: 'no logout anywhere in the agent UI',
+      );
+    });
+
+    test('settings and certifications are reachable', () {
+      for (final route in [SettingsMenuRoute.name, CertificationsRoute.name]) {
+        expect(
+          reachedFromAgentUi(route),
+          isTrue,
+          reason: '$route is unreachable for an agent',
+        );
+      }
+    });
+
+    test('M15 own screens are reachable', () {
+      for (final route in [AgentZonesRoute.name, AgentAvailabilityRoute.name]) {
+        expect(reachedFromAgentUi(route), isTrue, reason: route);
+      }
+    });
+  });
 }
 
 /// Greps the app sources for a construction of [routeName], ignoring the

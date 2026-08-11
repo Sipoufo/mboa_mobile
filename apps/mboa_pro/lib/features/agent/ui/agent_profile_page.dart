@@ -7,6 +7,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../auth/bloc/auth_bloc.dart';
 import '../bloc/agent_profile_bloc.dart';
 import '../models/agent_profile.dart';
 
@@ -99,6 +100,29 @@ class _AgentProfilePageState extends State<AgentProfilePage> {
                     onTap: () =>
                         context.router.push(const AgentAvailabilityRoute()),
                   ),
+
+                  // The agent shell has no slide menu, so the account surfaces
+                  // the prestataire reaches from theirs live here. Without them
+                  // an agent could sign in and never sign out.
+                  const SizedBox(height: Dimens.spacingLg),
+                  Text(l10n.menuOther, style: context.mboaText.h3),
+                  const SizedBox(height: Dimens.spacingSm),
+                  MboaTileCard(
+                    icon: LucideIcons.badgeCheck,
+                    title: l10n.settingsCertificationsTitle,
+                    onTap: () =>
+                        context.router.push(CertificationsRoute()),
+                  ),
+                  const SizedBox(height: Dimens.spacingSm),
+                  MboaTileCard(
+                    icon: LucideIcons.settings,
+                    title: l10n.settingsMenuTitle,
+                    onTap: () =>
+                        context.router.push(const SettingsMenuRoute()),
+                  ),
+                  const SizedBox(height: Dimens.spacingLg),
+                  const _LogoutButton(),
+                  const SizedBox(height: Dimens.spacingLg),
                 ],
               ),
             ),
@@ -347,6 +371,29 @@ class _AcceptingCard extends StatelessWidget {
                 context.mboaText.caption.copyWith(color: colors.textSecondary),
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+/// Signing out. The agent shell has no slide menu, so this is the only way out
+/// of the app for an agent — it is not decoration.
+class _LogoutButton extends StatelessWidget {
+  const _LogoutButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return TextButton.icon(
+      onPressed: () =>
+          context.read<AuthBloc>().add(const AuthLogoutRequested()),
+      icon: Icon(LucideIcons.logOut, color: colors.error),
+      label: Text(
+        l10n.menuQuit,
+        style: context.mboaText.bodyLarge.copyWith(color: colors.error),
       ),
     );
   }

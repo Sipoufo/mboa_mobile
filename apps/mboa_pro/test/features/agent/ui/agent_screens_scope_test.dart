@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_pro/features/agent/bloc/agent_availability_bloc.dart';
+import 'package:mboa_pro/features/auth/bloc/auth_bloc.dart';
 import 'package:mboa_pro/features/agent/bloc/agent_profile_bloc.dart';
 import 'package:mboa_pro/features/agent/models/agent_profile.dart';
 import 'package:mboa_pro/features/agent/models/availability.dart';
@@ -15,6 +16,8 @@ import 'package:mocktail/mocktail.dart';
 class MockAgentProfileBloc
     extends MockBloc<AgentProfileEvent, AgentProfileState>
     implements AgentProfileBloc {}
+
+class MockAuthBloc extends MockBloc<AuthEvent, AuthState> implements AuthBloc {}
 
 class MockAgentAvailabilityBloc
     extends MockBloc<AgentAvailabilityEvent, AgentAvailabilityState>
@@ -28,6 +31,7 @@ class MockAgentAvailabilityBloc
 void main() {
   late MockAgentProfileBloc profile;
   late MockAgentAvailabilityBloc availability;
+  late MockAuthBloc auth;
 
   const ready = AgentProfile(
     accountId: 'a-1',
@@ -45,6 +49,7 @@ void main() {
   setUp(() {
     profile = MockAgentProfileBloc();
     availability = MockAgentAvailabilityBloc();
+    auth = MockAuthBloc();
     when(() => profile.state).thenReturn(const AgentProfileReady(ready));
     when(() => availability.state).thenReturn(
       const AvailabilityReady(saved: Availability(), draft: Availability()),
@@ -62,6 +67,7 @@ void main() {
           providers: [
             BlocProvider<AgentProfileBloc>.value(value: profile),
             BlocProvider<AgentAvailabilityBloc>.value(value: availability),
+            BlocProvider<AuthBloc>.value(value: auth),
           ],
           child: child,
         ),
@@ -124,6 +130,31 @@ void main() {
     // "0" would read as a bad average rather than as no reviews.
     expect(find.text('—'), findsOneWidget);
     expect(find.text('Pas encore noté'), findsOneWidget);
+  });
+
+  testWidgets('the agent can sign out from their profile', (tester) async {
+    // The agent shell has no slide menu, so this screen is the only exit. An
+    // agent without it is stuck in a session they cannot leave.
+    await tester.binding.setSurfaceSize(const Size(800, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await pump(tester, const AgentProfilePage());
+
+    await tester.tap(find.text('Quitter'));
+    await tester.pump();
+
+    verify(() => auth.add(const AuthLogoutRequested())).called(1);
+  });
+
+  testWidgets('settings and certifications are reachable from the profile',
+      (tester) async {
+    await tester.binding.setSurfaceSize(const Size(800, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await pump(tester, const AgentProfilePage());
+
+    expect(find.text('Paramètres'), findsOneWidget);
+    expect(find.text('Certifications'), findsOneWidget);
   });
 
   testWidgets('the availability screen renders every day of the week',
