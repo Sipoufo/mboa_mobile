@@ -1338,6 +1338,46 @@
   "@visitsStatusCancelled": {
     "description": "VisiteResponse.status = CANCELLED."
   },
+  "visitsTitle": "My visits",
+  "@visitsTitle": {
+    "description": "Agent agenda screen title."
+  },
+  "visitsMineTitle": "My visits",
+  "@visitsMineTitle": {
+    "description": "Prestataire agenda — the visits he carries out himself (RM-M11-10)."
+  },
+  "visitsRequestsTitle": "Times to confirm",
+  "@visitsRequestsTitle": {
+    "description": "RM-M15-06 — proposed times awaiting the owner's answer."
+  },
+  "visitsRequestsBody": "A tenant proposed a time. Confirm it or turn it down — they can propose another.",
+  "@visitsRequestsBody": {
+    "description": "RM-M15-06."
+  },
+  "visitsRequestConfirm": "Confirm the time",
+  "@visitsRequestConfirm": {
+    "description": "RM-M15-06."
+  },
+  "visitsRequestDecline": "Turn down",
+  "@visitsRequestDecline": {
+    "description": "RM-M15-06."
+  },
+  "visitsAgendaEmptyDay": "No visit that day.",
+  "@visitsAgendaEmptyDay": {
+    "description": "Empty day in the agenda."
+  },
+  "visitsAgendaToday": "Today",
+  "@visitsAgendaToday": {
+    "description": "Jumps the agenda back to the current week."
+  },
+  "visitsAgendaPreviousWeek": "Previous week",
+  "@visitsAgendaPreviousWeek": {
+    "description": "Strip arrow tooltip."
+  },
+  "visitsAgendaNextWeek": "Next week",
+  "@visitsAgendaNextWeek": {
+    "description": "Strip arrow tooltip."
+  },
   "visitsDetailTitle": "Visit details",
   "@visitsDetailTitle": {
     "description": "M16 detail screen."

@@ -4,7 +4,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import '../models/agent_visit.dart';
 
 /// The agent's visits (CDC M16).
-class AgentVisitRepository {
+class AgentVisitRepository implements VisitsSource {
   AgentVisitRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
   final DioClient _dioClient;
@@ -17,13 +17,18 @@ class AgentVisitRepository {
   /// of endpoints from the other app (RM-M07-05).
   VisitesPrsenceApi get _presenceApi => _dioClient.api.getVisitesPrsenceApi();
 
-  /// Every visit assigned to this agent, in any state.
+  /// Every visit assigned to this agent in `[from, to)`, in any state.
   ///
-  /// Unfiltered on purpose: the screen splits them into today / upcoming /
-  /// past itself, and one page covers any realistic workload. Filtering
-  /// server-side would mean three requests to fill three tabs.
-  Future<List<Visit>> list() async {
+  /// One week per request, which is what the agenda shows. Cancelled visits
+  /// come back too: a day that had one planned should not read as an empty day.
+  @override
+  Future<List<Visit>> range({
+    required DateTime from,
+    required DateTime to,
+  }) async {
     final response = await _api.listMyAgentVisites(
+      from: from,
+      to: to,
       pageable: Pageable((b) => b
         ..page = 0
         ..size = _pageSize),

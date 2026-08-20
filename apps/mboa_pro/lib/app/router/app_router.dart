@@ -60,7 +60,7 @@ class AppRouter extends RootStackRouter {
               path: 'home',
               children: [
                 AutoRoute(page: HomeRoute.page, path: 'home', initial: true),
-                AutoRoute(page: ManagerRoute.page, path: 'manager'),
+                AutoRoute(page: PrestataireVisitsRoute.page, path: 'visits'),
                 AutoRoute(page: FinanceRoute.page, path: 'finance'),
               ],
             ),

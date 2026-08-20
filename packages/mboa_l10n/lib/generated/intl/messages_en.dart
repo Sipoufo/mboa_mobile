@@ -1011,6 +1011,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsAddressNote": MessageLookupByLibrary.simpleMessage(
       "Visible only to you, for this visit.",
     ),
+    "visitsAgendaEmptyDay": MessageLookupByLibrary.simpleMessage(
+      "No visit that day.",
+    ),
+    "visitsAgendaNextWeek": MessageLookupByLibrary.simpleMessage("Next week"),
+    "visitsAgendaPreviousWeek": MessageLookupByLibrary.simpleMessage(
+      "Previous week",
+    ),
+    "visitsAgendaToday": MessageLookupByLibrary.simpleMessage("Today"),
     "visitsAwaitingClientBody": MessageLookupByLibrary.simpleMessage(
       "Waiting for the tenant to confirm. The visit is validated as soon as they do.",
     ),
@@ -1056,6 +1064,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsLocationUnavailable": MessageLookupByLibrary.simpleMessage(
       "Could not get a position. Try again in a moment.",
     ),
+    "visitsMineTitle": MessageLookupByLibrary.simpleMessage("My visits"),
     "visitsNotFulfilledBody": MessageLookupByLibrary.simpleMessage(
       "No presence was confirmed during the slot. This visit can no longer be started.",
     ),
@@ -1063,6 +1072,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Visit not fulfilled",
     ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Owner"),
+    "visitsRequestConfirm": MessageLookupByLibrary.simpleMessage(
+      "Confirm the time",
+    ),
+    "visitsRequestDecline": MessageLookupByLibrary.simpleMessage("Turn down"),
+    "visitsRequestsBody": MessageLookupByLibrary.simpleMessage(
+      "A tenant proposed a time. Confirm it or turn it down — they can propose another.",
+    ),
+    "visitsRequestsTitle": MessageLookupByLibrary.simpleMessage(
+      "Times to confirm",
+    ),
     "visitsStatusCancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
     "visitsStatusCompleted": MessageLookupByLibrary.simpleMessage("Completed"),
     "visitsStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1074,6 +1093,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabToday": MessageLookupByLibrary.simpleMessage("Today"),
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
+    "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
     "visitsTooFarBody": m38,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",

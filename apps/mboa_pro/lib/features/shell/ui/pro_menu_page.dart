@@ -75,9 +75,12 @@ class ProMenuPage extends StatelessWidget {
                     onTap: () => _go(context, const MesBiensRoute()),
                   ),
                   _MenuEntry(
-                    icon: LucideIcons.users,
-                    label: l10n.navManager,
-                    onTap: () => _comingSoon(context),
+                    icon: LucideIcons.calendarCheck,
+                    label: l10n.visitsMineTitle,
+                    // RM-M11-10 — reachable from the menu as well as from the
+                    // tab: a prestataire who shows his own properties looks for
+                    // his visits, not for a "Gestionnaire".
+                    onTap: () => _go(context, const PrestataireVisitsRoute()),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.search,

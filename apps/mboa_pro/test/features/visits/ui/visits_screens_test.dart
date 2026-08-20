@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_pro/features/visits/bloc/agent_visits_bloc.dart';
+import 'package:mboa_pro/features/visits/bloc/visits_agenda_blocs.dart';
 import 'package:mboa_pro/features/visits/bloc/visit_detail_bloc.dart';
 import 'package:mboa_pro/features/visits/models/agent_visit.dart';
 import 'package:mboa_pro/features/visits/ui/agent_visits_page.dart';
@@ -12,8 +12,9 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockAgentVisitsBloc extends MockBloc<AgentVisitsEvent, AgentVisitsState>
-    implements AgentVisitsBloc {}
+class MockAgentAgendaBloc
+    extends MockBloc<VisitsAgendaEvent, VisitsAgendaState>
+    implements AgentAgendaBloc {}
 
 class MockVisitDetailBloc extends MockBloc<VisitDetailEvent, VisitDetailState>
     implements VisitDetailBloc {}
@@ -25,12 +26,12 @@ class MockVisitDetailBloc extends MockBloc<VisitDetailEvent, VisitDetailState>
 /// it reads has to come from `AuthenticatedWrapper` or from its own
 /// `wrappedRoute`.
 ///
-/// **Each screen gets only its own bloc.** The detail shipped reaching for
-/// `AgentVisitsBloc` to cancel and threw on a device; this test provided it and
-/// so proved nothing. Cancelling now goes through the detail's own bloc, and
-/// the absence of `AgentVisitsBloc` below is the assertion.
+/// **Each screen gets only its own bloc.** The detail shipped reaching for the
+/// list's bloc to cancel and threw on a device; this test provided it and so
+/// proved nothing. Cancelling now goes through the detail's own bloc, and the
+/// absence of `AgentAgendaBloc` below is the assertion.
 void main() {
-  late MockAgentVisitsBloc visits;
+  late MockAgentAgendaBloc agenda;
   late MockVisitDetailBloc detail;
 
   final today = DateTime.now();
@@ -57,11 +58,14 @@ void main() {
       );
 
   setUp(() {
-    visits = MockAgentVisitsBloc();
+    agenda = MockAgentAgendaBloc();
     detail = MockVisitDetailBloc();
 
-    when(() => visits.state).thenReturn(
-      VisitsReady(
+    when(() => agenda.state).thenReturn(
+      VisitsAgendaReady(
+        weekStart: VisitsAgendaBloc.weekStartOf(today),
+        selectedDay: DateTime(today.year, today.month, today.day),
+        today: DateTime(today.year, today.month, today.day),
         visits: [
           Visit(
             id: 'v-1',
@@ -75,8 +79,8 @@ void main() {
     when(() => detail.state).thenReturn(VisitDetailReady(detailFor()));
   });
 
-  Widget withVisits(Widget child) =>
-      BlocProvider<AgentVisitsBloc>.value(value: visits, child: child);
+  Widget withAgenda(Widget child) =>
+      BlocProvider<AgentAgendaBloc>.value(value: agenda, child: child);
 
   Widget withDetail(Widget child) =>
       BlocProvider<VisitDetailBloc>.value(value: detail, child: child);
@@ -94,21 +98,43 @@ void main() {
     await tester.pump();
   }
 
-  group('the list', () {
-    testWidgets('opens on today', (tester) async {
-      await pump(tester, withVisits(const AgentVisitsPage()));
+  group('the agenda', () {
+    testWidgets('opens on today, with the day\'s visits under the strip',
+        (tester) async {
+      await pump(tester, withAgenda(const AgentVisitsPage()));
 
       expect(tester.takeException(), isNull);
-      expect(find.text("Aujourd'hui (1)"), findsOneWidget);
       expect(find.text('Studio Bonapriso'), findsOneWidget);
+      // Today is already selected, so the shortcut back to it is not drawn.
+      expect(find.text("Aujourd'hui"), findsNothing);
     });
 
-    testWidgets('no badge when there is nothing today', (tester) async {
-      when(() => visits.state).thenReturn(const VisitsReady());
-      await pump(tester, withVisits(const AgentVisitsPage()));
+    testWidgets('an empty day says so rather than showing nothing',
+        (tester) async {
+      when(() => agenda.state).thenReturn(
+        VisitsAgendaReady(
+          weekStart: VisitsAgendaBloc.weekStartOf(today),
+          selectedDay: DateTime(today.year, today.month, today.day),
+          today: DateTime(today.year, today.month, today.day),
+        ),
+      );
+      await pump(tester, withAgenda(const AgentVisitsPage()));
 
-      expect(find.text("Aujourd'hui"), findsOneWidget);
-      expect(find.text('Aucune visite aujourd\'hui'), findsOneWidget);
+      expect(find.text('Aucune visite ce jour-là.'), findsOneWidget);
+    });
+
+    testWidgets('another day of the week is one tap away', (tester) async {
+      await pump(tester, withAgenda(const AgentVisitsPage()));
+
+      // Any other cell of the same week: the day before, unless today opens
+      // the week.
+      final other = DateTime(today.year, today.month, today.day).add(
+        Duration(days: today.weekday == DateTime.monday ? 1 : -1),
+      );
+      await tester.tap(find.text('${other.day}').first);
+      await tester.pump();
+
+      verify(() => agenda.add(AgendaDaySelected(other))).called(1);
     });
   });
 

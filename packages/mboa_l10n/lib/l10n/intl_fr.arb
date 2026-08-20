@@ -1338,6 +1338,46 @@
   "@visitsStatusCancelled": {
     "description": "VisiteResponse.status = CANCELLED."
   },
+  "visitsTitle": "Mes visites",
+  "@visitsTitle": {
+    "description": "Agent agenda screen title."
+  },
+  "visitsMineTitle": "Mes visites",
+  "@visitsMineTitle": {
+    "description": "Prestataire agenda — the visits he carries out himself (RM-M11-10)."
+  },
+  "visitsRequestsTitle": "Demandes à confirmer",
+  "@visitsRequestsTitle": {
+    "description": "RM-M15-06 — proposed times awaiting the owner's answer."
+  },
+  "visitsRequestsBody": "Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.",
+  "@visitsRequestsBody": {
+    "description": "RM-M15-06."
+  },
+  "visitsRequestConfirm": "Confirmer le créneau",
+  "@visitsRequestConfirm": {
+    "description": "RM-M15-06."
+  },
+  "visitsRequestDecline": "Refuser",
+  "@visitsRequestDecline": {
+    "description": "RM-M15-06."
+  },
+  "visitsAgendaEmptyDay": "Aucune visite ce jour-là.",
+  "@visitsAgendaEmptyDay": {
+    "description": "Empty day in the agenda."
+  },
+  "visitsAgendaToday": "Aujourd'hui",
+  "@visitsAgendaToday": {
+    "description": "Jumps the agenda back to the current week."
+  },
+  "visitsAgendaPreviousWeek": "Semaine précédente",
+  "@visitsAgendaPreviousWeek": {
+    "description": "Strip arrow tooltip."
+  },
+  "visitsAgendaNextWeek": "Semaine suivante",
+  "@visitsAgendaNextWeek": {
+    "description": "Strip arrow tooltip."
+  },
   "visitsDetailTitle": "Détail de la visite",
   "@visitsDetailTitle": {
     "description": "M16 detail screen."

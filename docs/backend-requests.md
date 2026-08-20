@@ -398,3 +398,38 @@ residence one as "rival applications on those units are declined". RM-M11-07 was
 revised to the opposite. If the behaviour has changed and only the prose is
 stale, the app is already written for the new rule; if the auto-decline is still
 live, the prestataire cannot build a pool from applications at all.
+
+---
+
+## 14. A prestataire's own visits are a list and nothing else
+
+**Raised 2026-08-20**, building the prestataire's side of RM-M11-10 (he shows
+his own property) on top of `GET /prestataires/me/visites`.
+
+Two things the agent has and he does not:
+
+**No detail endpoint.** The agent gets `GET /agents/me/visites/{id}` —
+`AgentVisiteDetail` with the exact address, the client's name and phone, the
+prestataire's phone, and `canConfirm`. For a prestataire visiting his own
+property there is only the list, and `VisiteResponse` carries the listing title,
+the time, the status and the two confirmation timestamps. **No name and no phone
+for the person he is meeting.** He knows his own address, so that part does not
+matter; being unable to reach the visitor on the day does — it is the same
+argument that put both numbers on the agent's screen (RM-M16-01).
+
+**Ask:** `GET /prestataires/me/visites/{id}`, shaped like `AgentVisiteDetail`
+minus what he already knows.
+
+**No cancellation.** He can `decline` a proposed time, but once it is confirmed
+there is no `POST /prestataires/me/visites/{id}/cancel`. The agent has one
+(RM-M16-04, up to an hour before), the client has one (RM-M07-04, up to four
+hours). A prestataire whose day changes can only leave the client standing at a
+gate, which is exactly what CE-M07-02 exists to prevent.
+
+**Ask:** the prestataire equivalent of `/agents/me/visites/{id}/cancel`, with
+whatever cutoff the CDC decides — Doc 10 has no rule for an owner-visitor yet,
+which is itself worth a line in M07.
+
+**Workaround shipped:** the agenda shows what the list gives — hour, property,
+status, and his own presence confirmation. No contact affordance is drawn at
+all, rather than an empty one.

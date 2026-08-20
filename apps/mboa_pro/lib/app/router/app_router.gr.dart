@@ -22,7 +22,7 @@ import 'package:mboa_pro/features/annonces/models/annonce_draft.dart' as _i42;
 import 'package:mboa_pro/features/annonces/ui/annonce_detail_page.dart' as _i10;
 import 'package:mboa_pro/features/annonces/ui/annonce_form_page.dart' as _i11;
 import 'package:mboa_pro/features/annonces/ui/annonces_list_page.dart' as _i12;
-import 'package:mboa_pro/features/annonces/ui/mes_biens_page.dart' as _i25;
+import 'package:mboa_pro/features/annonces/ui/mes_biens_page.dart' as _i24;
 import 'package:mboa_pro/features/annonces/ui/residence_detail_page.dart'
     as _i30;
 import 'package:mboa_pro/features/annonces/ui/residences_list_page.dart'
@@ -33,7 +33,7 @@ import 'package:mboa_pro/features/assignments/ui/agent_assignment_page.dart'
 import 'package:mboa_pro/features/assignments/ui/agent_detail_page.dart' as _i4;
 import 'package:mboa_pro/features/assignments/ui/agent_missions_page.dart'
     as _i5;
-import 'package:mboa_pro/features/assignments/ui/mes_agents_page.dart' as _i24;
+import 'package:mboa_pro/features/assignments/ui/mes_agents_page.dart' as _i23;
 import 'package:mboa_pro/features/home/ui/home_page.dart' as _i20;
 import 'package:mboa_pro/features/kyc/ui/certifications_page.dart' as _i14;
 import 'package:mboa_pro/features/kyc/ui/id_document_page.dart' as _i21;
@@ -47,14 +47,15 @@ import 'package:mboa_pro/features/profile/ui/settings_page.dart' as _i34;
 import 'package:mboa_pro/features/register/ui/register_page.dart' as _i29;
 import 'package:mboa_pro/features/shell/ui/access_restricted_page.dart' as _i1;
 import 'package:mboa_pro/features/shell/ui/finance_page.dart' as _i19;
-import 'package:mboa_pro/features/shell/ui/manager_page.dart' as _i23;
 import 'package:mboa_pro/features/shell/ui/pro_menu_page.dart' as _i27;
 import 'package:mboa_pro/features/shell/ui/pro_shell_page.dart' as _i28;
 import 'package:mboa_pro/features/splash/ui/splash_page.dart' as _i35;
-import 'package:mboa_pro/features/subscription/ui/plans_page.dart' as _i26;
+import 'package:mboa_pro/features/subscription/ui/plans_page.dart' as _i25;
 import 'package:mboa_pro/features/subscription/ui/subscription_page.dart'
     as _i36;
 import 'package:mboa_pro/features/visits/ui/agent_visits_page.dart' as _i8;
+import 'package:mboa_pro/features/visits/ui/prestataire_visits_page.dart'
+    as _i26;
 import 'package:mboa_pro/features/visits/ui/visit_detail_page.dart' as _i37;
 import 'package:mboa_shared/mboa_shared.dart' as _i40;
 
@@ -578,23 +579,7 @@ class LoginRoute extends _i38.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i23.ManagerPage]
-class ManagerRoute extends _i38.PageRouteInfo<void> {
-  const ManagerRoute({List<_i38.PageRouteInfo>? children})
-    : super(ManagerRoute.name, initialChildren: children);
-
-  static const String name = 'ManagerRoute';
-
-  static _i38.PageInfo page = _i38.PageInfo(
-    name,
-    builder: (data) {
-      return const _i23.ManagerPage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i24.MesAgentsPage]
+/// [_i23.MesAgentsPage]
 class MesAgentsRoute extends _i38.PageRouteInfo<void> {
   const MesAgentsRoute({List<_i38.PageRouteInfo>? children})
     : super(MesAgentsRoute.name, initialChildren: children);
@@ -604,13 +589,13 @@ class MesAgentsRoute extends _i38.PageRouteInfo<void> {
   static _i38.PageInfo page = _i38.PageInfo(
     name,
     builder: (data) {
-      return const _i24.MesAgentsPage();
+      return const _i23.MesAgentsPage();
     },
   );
 }
 
 /// generated route for
-/// [_i25.MesBiensPage]
+/// [_i24.MesBiensPage]
 class MesBiensRoute extends _i38.PageRouteInfo<void> {
   const MesBiensRoute({List<_i38.PageRouteInfo>? children})
     : super(MesBiensRoute.name, initialChildren: children);
@@ -620,13 +605,13 @@ class MesBiensRoute extends _i38.PageRouteInfo<void> {
   static _i38.PageInfo page = _i38.PageInfo(
     name,
     builder: (data) {
-      return const _i25.MesBiensPage();
+      return const _i24.MesBiensPage();
     },
   );
 }
 
 /// generated route for
-/// [_i26.PlansPage]
+/// [_i25.PlansPage]
 class PlansRoute extends _i38.PageRouteInfo<void> {
   const PlansRoute({List<_i38.PageRouteInfo>? children})
     : super(PlansRoute.name, initialChildren: children);
@@ -636,7 +621,23 @@ class PlansRoute extends _i38.PageRouteInfo<void> {
   static _i38.PageInfo page = _i38.PageInfo(
     name,
     builder: (data) {
-      return const _i26.PlansPage();
+      return const _i25.PlansPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i26.PrestataireVisitsPage]
+class PrestataireVisitsRoute extends _i38.PageRouteInfo<void> {
+  const PrestataireVisitsRoute({List<_i38.PageRouteInfo>? children})
+    : super(PrestataireVisitsRoute.name, initialChildren: children);
+
+  static const String name = 'PrestataireVisitsRoute';
+
+  static _i38.PageInfo page = _i38.PageInfo(
+    name,
+    builder: (data) {
+      return _i38.WrappedRoute(child: const _i26.PrestataireVisitsPage());
     },
   );
 }

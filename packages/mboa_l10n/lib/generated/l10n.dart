@@ -4551,6 +4551,107 @@ class I18n {
     );
   }
 
+  /// `Mes visites`
+  String get visitsTitle {
+    return Intl.message(
+      'Mes visites',
+      name: 'visitsTitle',
+      desc: 'Agent agenda screen title.',
+      args: [],
+    );
+  }
+
+  /// `Mes visites`
+  String get visitsMineTitle {
+    return Intl.message(
+      'Mes visites',
+      name: 'visitsMineTitle',
+      desc:
+          'Prestataire agenda — the visits he carries out himself (RM-M11-10).',
+      args: [],
+    );
+  }
+
+  /// `Demandes à confirmer`
+  String get visitsRequestsTitle {
+    return Intl.message(
+      'Demandes à confirmer',
+      name: 'visitsRequestsTitle',
+      desc: 'RM-M15-06 — proposed times awaiting the owner\'s answer.',
+      args: [],
+    );
+  }
+
+  /// `Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.`
+  String get visitsRequestsBody {
+    return Intl.message(
+      'Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.',
+      name: 'visitsRequestsBody',
+      desc: 'RM-M15-06.',
+      args: [],
+    );
+  }
+
+  /// `Confirmer le créneau`
+  String get visitsRequestConfirm {
+    return Intl.message(
+      'Confirmer le créneau',
+      name: 'visitsRequestConfirm',
+      desc: 'RM-M15-06.',
+      args: [],
+    );
+  }
+
+  /// `Refuser`
+  String get visitsRequestDecline {
+    return Intl.message(
+      'Refuser',
+      name: 'visitsRequestDecline',
+      desc: 'RM-M15-06.',
+      args: [],
+    );
+  }
+
+  /// `Aucune visite ce jour-là.`
+  String get visitsAgendaEmptyDay {
+    return Intl.message(
+      'Aucune visite ce jour-là.',
+      name: 'visitsAgendaEmptyDay',
+      desc: 'Empty day in the agenda.',
+      args: [],
+    );
+  }
+
+  /// `Aujourd'hui`
+  String get visitsAgendaToday {
+    return Intl.message(
+      'Aujourd\'hui',
+      name: 'visitsAgendaToday',
+      desc: 'Jumps the agenda back to the current week.',
+      args: [],
+    );
+  }
+
+  /// `Semaine précédente`
+  String get visitsAgendaPreviousWeek {
+    return Intl.message(
+      'Semaine précédente',
+      name: 'visitsAgendaPreviousWeek',
+      desc: 'Strip arrow tooltip.',
+      args: [],
+    );
+  }
+
+  /// `Semaine suivante`
+  String get visitsAgendaNextWeek {
+    return Intl.message(
+      'Semaine suivante',
+      name: 'visitsAgendaNextWeek',
+      desc: 'Strip arrow tooltip.',
+      args: [],
+    );
+  }
+
   /// `Détail de la visite`
   String get visitsDetailTitle {
     return Intl.message(

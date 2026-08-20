@@ -17,6 +17,7 @@ dependencies:
     path: ../mboa_core
   mboa_ui:
     path: ../mboa_ui
+  intl: ^0.20.2
   mboa_l10n:
     path: ../mboa_l10n
 

@@ -1082,6 +1082,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsAddressNote": MessageLookupByLibrary.simpleMessage(
       "Visible uniquement par vous, pour cette visite.",
     ),
+    "visitsAgendaEmptyDay": MessageLookupByLibrary.simpleMessage(
+      "Aucune visite ce jour-là.",
+    ),
+    "visitsAgendaNextWeek": MessageLookupByLibrary.simpleMessage(
+      "Semaine suivante",
+    ),
+    "visitsAgendaPreviousWeek": MessageLookupByLibrary.simpleMessage(
+      "Semaine précédente",
+    ),
+    "visitsAgendaToday": MessageLookupByLibrary.simpleMessage("Aujourd\'hui"),
     "visitsAwaitingClientBody": MessageLookupByLibrary.simpleMessage(
       "En attente de la confirmation du locataire. La visite sera validée dès qu\'il aura confirmé de son côté.",
     ),
@@ -1135,6 +1145,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsLocationUnavailable": MessageLookupByLibrary.simpleMessage(
       "Position introuvable. Réessayez dans un instant.",
     ),
+    "visitsMineTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
     "visitsNotFulfilledBody": MessageLookupByLibrary.simpleMessage(
       "Aucune présence n\'a été confirmée pendant le créneau. Cette visite ne peut plus être démarrée.",
     ),
@@ -1142,6 +1153,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Visite non honorée",
     ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
+    "visitsRequestConfirm": MessageLookupByLibrary.simpleMessage(
+      "Confirmer le créneau",
+    ),
+    "visitsRequestDecline": MessageLookupByLibrary.simpleMessage("Refuser"),
+    "visitsRequestsBody": MessageLookupByLibrary.simpleMessage(
+      "Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.",
+    ),
+    "visitsRequestsTitle": MessageLookupByLibrary.simpleMessage(
+      "Demandes à confirmer",
+    ),
     "visitsStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulée"),
     "visitsStatusCompleted": MessageLookupByLibrary.simpleMessage("Effectuée"),
     "visitsStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1153,6 +1174,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabToday": MessageLookupByLibrary.simpleMessage("Aujourd\'hui"),
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
+    "visitsTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
     "visitsTooFarBody": m38,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer quand même",

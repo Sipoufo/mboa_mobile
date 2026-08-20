@@ -35,7 +35,7 @@ void main() {
     const entryPoints = {
       RoleGateRoute.name, // /app landing
       HomeRoute.name, // shell tab
-      ManagerRoute.name, // shell tab
+      PrestataireVisitsRoute.name, // shell tab
       FinanceRoute.name, // shell tab
       AgentVisitsRoute.name, // agent shell tab
       AgentMissionsRoute.name, // agent shell tab

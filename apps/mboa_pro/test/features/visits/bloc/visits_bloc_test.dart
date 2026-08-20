@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_pro/features/annonces/data/location_capture.dart';
-import 'package:mboa_pro/features/visits/bloc/agent_visits_bloc.dart';
 import 'package:mboa_pro/features/visits/bloc/visit_detail_bloc.dart';
 import 'package:mboa_pro/features/visits/data/agent_visit_repository.dart';
 import 'package:mboa_pro/features/visits/models/agent_visit.dart';
@@ -12,145 +11,19 @@ class MockAgentVisitRepository extends Mock implements AgentVisitRepository {}
 
 class MockLocationCapture extends Mock implements LocationCapture {}
 
-Visit visit({
-  String id = 'v-1',
-  VisitStatus status = VisitStatus.scheduled,
-  DateTime? at,
-}) =>
-    Visit(
-      id: id,
-      status: status,
-      annonceTitle: 'Studio Bonapriso',
-      scheduledAt: at,
-    );
-
-/// The agent's visits (CDC M16).
+/// The agent's visit detail (CDC M16).
+///
+/// The list moved to `VisitsAgendaBloc` in mboa_shared — the agent and the
+/// prestataire read the same weeks — so what is left here is the half that is
+/// the agent's alone.
 void main() {
   late MockAgentVisitRepository repository;
   late MockLocationCapture location;
 
-  final now = DateTime.now();
-  final earlierToday = DateTime(now.year, now.month, now.day, 8);
-  final laterToday = DateTime(now.year, now.month, now.day, 23, 59);
-  final tomorrow = now.add(const Duration(days: 1));
-  final lastWeek = now.subtract(const Duration(days: 7));
 
   setUp(() {
     repository = MockAgentVisitRepository();
     location = MockLocationCapture();
-  });
-
-  group('the list', () {
-    AgentVisitsBloc build() => AgentVisitsBloc(repository: repository);
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'opens on today — the agent wants to know where they are going now',
-      setUp: () => when(repository.list).thenAnswer((_) async => []),
-      build: build,
-      act: (bloc) => bloc.add(const VisitsLoadRequested()),
-      verify: (bloc) => expect(
-        (bloc.state as VisitsReady).filter,
-        VisitFilter.today,
-      ),
-    );
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'a visit earlier today is still today, not past',
-      setUp: () => when(repository.list)
-          .thenAnswer((_) async => [visit(at: earlierToday)]),
-      build: build,
-      act: (bloc) => bloc.add(const VisitsLoadRequested()),
-      verify: (bloc) {
-        final state = bloc.state as VisitsReady;
-        // 08:00 is still the agent's work at 09:00; treating "past" as "before
-        // now" would empty the tab they rely on during the day.
-        expect(state.today, hasLength(1));
-        expect(state.past, isEmpty);
-        expect(state.upcoming, isEmpty);
-      },
-    );
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'splits today, upcoming and past',
-      setUp: () => when(repository.list).thenAnswer(
-        (_) async => [
-          visit(id: 'today', at: laterToday),
-          visit(id: 'tomorrow', at: tomorrow),
-          visit(id: 'done', status: VisitStatus.completed, at: lastWeek),
-          visit(id: 'cancelled', status: VisitStatus.cancelled, at: tomorrow),
-        ],
-      ),
-      build: build,
-      act: (bloc) => bloc.add(const VisitsLoadRequested()),
-      verify: (bloc) {
-        final state = bloc.state as VisitsReady;
-        expect(state.today.map((v) => v.id), ['today']);
-        expect(state.upcoming.map((v) => v.id), ['tomorrow']);
-        // A cancelled visit is over whatever its date said.
-        expect(state.past.map((v) => v.id), containsAll(['done', 'cancelled']));
-      },
-    );
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'a scheduled visit whose slot has passed shows under past',
-      setUp: () => when(repository.list).thenAnswer(
-        (_) async => [visit(id: 'missed', at: lastWeek)],
-      ),
-      build: build,
-      act: (bloc) => bloc.add(const VisitsLoadRequested()),
-      verify: (bloc) {
-        // Never carried out and never cancelled — the one an agent most needs
-        // to see, so it must not vanish from every tab.
-        final state = bloc.state as VisitsReady;
-        expect(state.past.map((v) => v.id), ['missed']);
-      },
-    );
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'today is ordered by time',
-      setUp: () => when(repository.list).thenAnswer(
-        (_) async => [
-          visit(id: 'late', at: laterToday),
-          visit(id: 'early', at: earlierToday),
-        ],
-      ),
-      build: build,
-      act: (bloc) => bloc.add(const VisitsLoadRequested()),
-      verify: (bloc) => expect(
-        (bloc.state as VisitsReady).today.map((v) => v.id),
-        ['early', 'late'],
-      ),
-    );
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'cancelling reloads — the server owns the one-hour cutoff',
-      setUp: () {
-        when(repository.list).thenAnswer((_) async => []);
-        when(() => repository.cancel('v-1')).thenAnswer((_) async {});
-      },
-      build: build,
-      seed: () => VisitsReady(visits: [visit(at: tomorrow)]),
-      act: (bloc) => bloc.add(VisitCancelled(visit(at: tomorrow))),
-      verify: (bloc) {
-        // RM-M16-04 — the app does not re-derive the deadline.
-        verify(repository.list).called(1);
-        expect((bloc.state as VisitsReady).mutatingId, isNull);
-      },
-    );
-
-    blocTest<AgentVisitsBloc, AgentVisitsState>(
-      'a refused cancellation leaves the visit standing',
-      setUp: () =>
-          when(() => repository.cancel('v-1')).thenThrow(Exception('too late')),
-      build: build,
-      seed: () => VisitsReady(visits: [visit(at: tomorrow)]),
-      act: (bloc) => bloc.add(VisitCancelled(visit(at: tomorrow))),
-      verify: (bloc) {
-        final state = bloc.state as VisitsReady;
-        expect(state.lastActionFailed, isTrue);
-        expect(state.upcoming, hasLength(1));
-      },
-    );
   });
 
   group('confirming presence (RM-M07-05 / RM-M16-02)', () {

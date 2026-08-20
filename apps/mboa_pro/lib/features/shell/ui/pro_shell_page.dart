@@ -33,7 +33,7 @@ class _ProShellPageState extends State<ProShellPage> {
     final l10n = I18n.of(context);
 
     return AutoTabsRouter(
-      routes: const [HomeRoute(), ManagerRoute(), FinanceRoute()],
+      routes: const [HomeRoute(), PrestataireVisitsRoute(), FinanceRoute()],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
 
@@ -50,7 +50,10 @@ class _ProShellPageState extends State<ProShellPage> {
               onTap: (index) => _onSlotTapped(index, tabsRouter),
               items: [
                 ProBottomNavItem(icon: LucideIcons.mountain, label: l10n.navHome),
-                ProBottomNavItem(icon: LucideIcons.users, label: l10n.navManager),
+                ProBottomNavItem(
+                  icon: LucideIcons.calendarCheck,
+                  label: l10n.visitsMineTitle,
+                ),
                 ProBottomNavItem(icon: LucideIcons.wallet, label: l10n.navFinance),
                 ProBottomNavItem(icon: LucideIcons.layoutGrid, label: l10n.navMenu),
               ],

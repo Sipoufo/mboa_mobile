@@ -9,7 +9,9 @@ import '../../features/assignments/bloc/property_agent_bloc.dart';
 import '../../features/assignments/data/agent_mission_repository.dart';
 import '../../features/assignments/data/assignment_repository.dart';
 import '../../features/annonces/data/location_capture.dart';
-import '../../features/visits/bloc/agent_visits_bloc.dart';
+import '../../features/visits/bloc/prestataire_visits_bloc.dart';
+import '../../features/visits/bloc/visits_agenda_blocs.dart';
+import '../../features/visits/data/prestataire_visit_repository.dart';
 import '../../features/visits/bloc/visit_detail_bloc.dart';
 import '../../features/visits/data/agent_visit_repository.dart';
 import '../../features/agent/bloc/agent_profile_bloc.dart';
@@ -214,8 +216,21 @@ void registerAppModule() {
   getIt.registerLazySingleton<AgentVisitRepository>(
     () => AgentVisitRepository(dioClient: getIt<DioClient>()),
   );
-  getIt.registerFactory<AgentVisitsBloc>(
-    () => AgentVisitsBloc(repository: getIt<AgentVisitRepository>()),
+  getIt.registerFactory<AgentAgendaBloc>(
+    () => AgentAgendaBloc(source: getIt<AgentVisitRepository>()),
+  );
+  // RM-M11-10 — the prestataire's own visits, same agenda, other source.
+  getIt.registerLazySingleton<PrestataireVisitRepository>(
+    () => PrestataireVisitRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<PrestataireAgendaBloc>(
+    () => PrestataireAgendaBloc(source: getIt<PrestataireVisitRepository>()),
+  );
+  getIt.registerFactory<PrestataireVisitsBloc>(
+    () => PrestataireVisitsBloc(
+      repository: getIt<PrestataireVisitRepository>(),
+      location: getIt<LocationCapture>(),
+    ),
   );
   getIt.registerFactory<VisitDetailBloc>(
     () => VisitDetailBloc(

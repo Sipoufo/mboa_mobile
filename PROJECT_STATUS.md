@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**490 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 380 ·
-`mboa_core` 12 · `mboa_shared` 80.
+**504 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 385 ·
+`mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
 > *What the 2026-08-20 spec changed* below before planning anything. M16 has
@@ -43,7 +43,8 @@
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
-| M16 agent visits | ✅ list, detail, **mutual presence confirmation** (the report is gone — it is the client's now, → M07bis) |
+| M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
+| Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · pas de détail ni d'annulation côté API (§14) |
 | M07bis client review · M27 resident review · M08 contracts | ❌ not started (endpoints exist) |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
@@ -429,6 +430,29 @@ build down with them.
   notifications N-18/19/20, and the whole **M08 contract** surface (20
   endpoints, 6 statuses, `awaiting` and `canSign` server-computed).
 
+### The visits agenda is one screen, two personas
+A week at a time, Monday-first, opening on today: `VisitsAgendaBloc` +
+`VisitsAgendaView` in mboa_shared, over a `VisitsSource` each app implements.
+The agent's three tabs (Aujourd'hui / À venir / Passées) are **gone** — they
+could not say "next Tuesday", and two personas would have meant two of them.
+
+- **Subclass, don't name.** `AgentAgendaBloc` and `PrestataireAgendaBloc` are
+  empty subclasses so `get_it` and `BlocProvider` can tell the two instances
+  apart by type; a named registration would look identical in a provider tree.
+- **The agenda never acts on a visit.** Confirming, declining and cancelling
+  live in each persona's own bloc, because the rules differ by role — the agent
+  cancels and never answers a proposed time, the prestataire the reverse. After
+  an action the screen dispatches `AgendaRefreshed`; nothing is patched locally.
+- **A cancelled visit stays in its day but not on the strip's dot.** Dropping it
+  would answer "nothing that day" for a day something was planned; counting it
+  would send someone to an empty morning.
+- **The week loads while the previous one stays on screen** (`isLoadingWeek`),
+  or every arrow tap blinks the list empty.
+- The prestataire's `REQUESTED` slots sit **above** the day's list: they are
+  answered whenever he opens the app, not on the day they fall.
+- The Gestionnaire tab **is** his visits now (`PrestataireVisitsRoute`), and the
+  slide menu points there too.
+
 ### Visits live partly in `mboa_shared`
 `Visit` + `VisitStatus` + `VisitorKind`
 (`mboa_shared/src/features/visits/models/visit.dart`) model the **shared**
@@ -519,6 +543,9 @@ as the same thing.
 - **`expiresAt` countdown** — mapped onto `Annonce`, unused in the UI. Free-tier
   listings expire at J+30 (RM-M10-04); the field gives the countdown for free.
   Smallest useful next task.
+- **Prestataire visit detail + cancellation** — both missing server-side
+  (`backend-requests.md` §14). Until then he cannot reach the person coming to
+  his property, and cannot call a confirmed visit off.
 - **M12 messaging** — live on the backend, entirely unbuilt. Constraints from
   their handover: `ConversationResponse.readOnly` must disable the composer;
   phone numbers are masked server-side both directions (RM-M12-03) so **no call
