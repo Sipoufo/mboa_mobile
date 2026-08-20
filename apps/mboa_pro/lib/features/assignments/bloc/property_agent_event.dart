@@ -36,7 +36,17 @@ class AssignmentWithdrawn extends PropertyAgentEvent {
   List<Object?> get props => [assignment];
 }
 
-/// RM-M11-07 — accepting refuses the other applications automatically.
+/// RM-M11-10 — "je fais mes visites moi-même", on or off.
+class OwnerVisitsToggled extends PropertyAgentEvent {
+  const OwnerVisitsToggled({required this.enabled});
+
+  final bool enabled;
+
+  @override
+  List<Object?> get props => [enabled];
+}
+
+/// RM-M11-07 — several applications may be accepted; the pool is not exclusive.
 class ApplicationAccepted extends PropertyAgentEvent {
   const ApplicationAccepted(this.application);
 

@@ -105,12 +105,28 @@ class AnnonceRepository {
         ..furnished = draft.furnished
         ..availableFrom = draft.availableFrom?.toDate()
         ..description = draft.description
+        ..ownerVisitsEnabled = draft.ownerVisitsEnabled
         ..photoKeys = ListBuilder<String>(draft.photoKeys)),
     );
 
     final data = response.data;
     if (data == null) throw StateError('update returned no listing');
     return Annonce.fromResponse(data);
+  }
+
+  /// RM-M11-10 — the prestataire shows this property himself, or stops doing so.
+  ///
+  /// Reads the listing back before writing because `PUT /annonces/{id}`
+  /// replaces it whole: sending a request built from anything less than the
+  /// current state would quietly reset every field it omitted. The toggle is
+  /// only reachable on an existing listing — `CreateAnnonceRequest` has no such
+  /// field.
+  Future<Annonce> setOwnerVisits(String id, {required bool enabled}) async {
+    final current = await getOne(id);
+    return update(
+      AnnonceDraft.fromAnnonce(current)
+          .copyWith(ownerVisitsEnabled: enabled),
+    );
   }
 
   /// Applies a lifecycle transition and returns the updated listing.

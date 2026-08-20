@@ -1,21 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/property_agent_bloc.dart';
 import '../models/assignment.dart';
+import 'widgets/agent_candidate_sheet.dart';
 import 'widgets/agent_row_tile.dart';
 
-/// One property's agent (CDC M11): who holds it, who applied, and the
-/// alphabetical list of who could.
+/// One property's **pool of agents** (CDC M11, revised 2026-08-13): who is on
+/// it, who applied, and a button to add one more.
 ///
-/// The candidate list is the Annuaire design — the server has already filtered
-/// it to active agents whose zones cover this property (RM-M11-08), so the
-/// screen shows what it is given rather than re-deciding eligibility.
+/// A property may carry several active agents (RM-M11-01); the client chooses
+/// their visitor among them when booking (RM-M07-01). The candidate picker is
+/// therefore always available, and never lists somebody already in the pool.
+/// The server has already filtered candidates to active agents whose zones
+/// cover this property (RM-M11-08) — nothing here re-decides eligibility.
 @RoutePage()
 class AgentAssignmentPage extends StatelessWidget implements AutoRouteWrapper {
   const AgentAssignmentPage({super.key, required this.target});
@@ -94,41 +96,67 @@ class _Body extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(Dimens.spacing),
       children: [
-        if (state.live case final live?) ...[
-          Text(l10n.agentsCurrentTitle, style: context.mboaText.h3),
-          const SizedBox(height: Dimens.spacingSm),
-          AgentRowTile(
-            name: live.agentName ?? '',
-            initials: initialsFromFullName(live.agentName),
-            subtitle: live.unitCount == null
-                ? null
-                : l10n.agentsUnitsCovered(live.unitCount!),
-            isBusy: state.mutatingId == live.agentAccountId,
-            trailing: TextButton(
-              onPressed: () => _confirmWithdraw(context, live),
-              child: Text(
-                l10n.agentsWithdraw,
-                style: TextStyle(color: colors.error),
-              ),
-            ),
-          ),
-          const SizedBox(height: Dimens.spacingLg),
-        ] else if (state.awaitingAgent case final pending?) ...[
-          AgentRowTile(
-            name: pending.agentName ?? '',
-            initials: initialsFromFullName(pending.agentName),
-            subtitle: l10n.agentsAwaitingResponse,
-            isBusy: state.mutatingId == pending.agentAccountId,
-            trailing: TextButton(
-              onPressed: () => _confirmWithdraw(context, pending),
-              child: Text(
-                l10n.agentsWithdraw,
-                style: TextStyle(color: colors.error),
-              ),
-            ),
-          ),
+        // RM-M11-10 — the owner is a visitor too, so he belongs on the same
+        // screen as the agents rather than buried in the listing form.
+        if (state.ownerVisitsEnabled case final enabled?) ...[
+          _OwnerVisitsCard(enabled: enabled, isSaving: state.isSavingOwnerVisits),
           const SizedBox(height: Dimens.spacingLg),
         ],
+
+        Text(l10n.agentsPoolTitle, style: context.mboaText.h3),
+        const SizedBox(height: Dimens.spacingXs),
+        Text(
+          l10n.agentsPoolBody,
+          style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+        ),
+        const SizedBox(height: Dimens.spacingSm),
+
+        if (state.pool.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.spacingSm),
+            child: Text(
+              l10n.agentsPoolEmpty,
+              style:
+                  context.mboaText.body.copyWith(color: colors.textSecondary),
+            ),
+          )
+        else
+          for (final assignment in state.pool)
+            AgentRowTile(
+              name: assignment.agentName ?? '',
+              initials: initialsFromFullName(assignment.agentName),
+              photoUrl: assignment.agentPhotoUrl,
+              subtitle: _subtitleFor(context, assignment),
+              isBusy: state.mutatingId == assignment.agentAccountId,
+              trailing: state.canWithdraw
+                  ? TextButton(
+                      onPressed: () => _confirmWithdraw(context, assignment),
+                      child: Text(
+                        l10n.agentsWithdraw,
+                        style: TextStyle(color: colors.error),
+                      ),
+                    )
+                  : null,
+            ),
+
+        // RM-M11-06 — the removal endpoint names no agent, so with a pool of
+        // several the app cannot say which one would go. Saying so beats
+        // sending a request whose effect nobody can predict.
+        if (!state.canWithdraw) ...[
+          const SizedBox(height: Dimens.spacingXs),
+          Text(
+            l10n.agentsWithdrawUnavailable,
+            style:
+                context.mboaText.caption.copyWith(color: colors.textTertiary),
+          ),
+        ],
+
+        const SizedBox(height: Dimens.spacing),
+        Button.secondary(
+          title: l10n.agentsAddAgent,
+          onPressed: () => _pickCandidate(context),
+        ),
+        const SizedBox(height: Dimens.spacingLg),
 
         if (state.applications.isNotEmpty) ...[
           Text(l10n.agentsApplicationsTitle, style: context.mboaText.h3),
@@ -165,69 +193,40 @@ class _Body extends StatelessWidget {
                 ],
               ),
             ),
-          const SizedBox(height: Dimens.spacingLg),
         ],
-
-        // RM-M11-01 — one active agent per property, so the picker disappears
-        // while somebody holds it or is being waited on.
-        if (state.canOffer) ..._candidateSection(context),
       ],
     );
   }
 
-  List<Widget> _candidateSection(BuildContext context) {
+  /// What this row is: an agent at work, or an offer nobody has answered.
+  String? _subtitleFor(BuildContext context, Assignment assignment) {
     final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    if (state.candidates.isEmpty) {
-      return [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: Dimens.spacingLg),
-          child: Text(
-            l10n.agentsAssignEmpty,
-            textAlign: TextAlign.center,
-            style: context.mboaText.body.copyWith(color: colors.textSecondary),
-          ),
-        ),
-      ];
+    if (assignment.status == AssignmentStatus.pending) {
+      return l10n.agentsAwaitingResponse;
     }
+    final units = state.unitsCoveredBy(assignment);
+    // A standalone listing is one unit and says nothing; a residence says how
+    // much of itself this agent covers.
+    return units > 1 ? l10n.agentsUnitsCovered(units) : null;
+  }
 
-    final widgets = <Widget>[];
-    String? letter;
-    for (final candidate in state.candidates) {
-      final initial =
-          candidate.sortKey.isEmpty ? '#' : candidate.sortKey[0];
-      if (initial != letter) {
-        letter = initial;
-        widgets.add(AgentSectionHeader(letter: initial));
-      }
-      widgets.add(
-        AgentRowTile(
-          name: candidate.fullName,
-          // The rating shipped 2026-08-11; before it, a prestataire chose
-          // between candidates on a visit count alone. An unrated agent shows
-          // their visits rather than "0 ★" — rating is optional (RM-M07-07).
-          subtitle: candidate.hasRating
-              ? '${candidate.averageRating!.toStringAsFixed(1)} ★ · '
-                  '${l10n.agentsVisitCount(candidate.completedVisitCount)}'
-              : l10n.agentsVisitCount(candidate.completedVisitCount),
-          photoUrl: candidate.photoUrl,
-          initials: candidate.initials,
-          isBusy: state.mutatingId == candidate.accountId,
-          onTap: () => _confirmOffer(context, candidate),
-          trailing: Icon(LucideIcons.chevronRight, color: colors.textTertiary),
-        ),
-      );
-    }
-    return widgets;
+  Future<void> _pickCandidate(BuildContext context) async {
+    final bloc = context.read<PropertyAgentBloc>();
+
+    final candidate = await showAgentCandidateSheet(
+      context,
+      candidates: state.offerableCandidates,
+    );
+    if (candidate == null || !context.mounted) return;
+    await _confirmOffer(context, candidate, bloc: bloc);
   }
 
   Future<void> _confirmOffer(
     BuildContext context,
-    AgentCandidateView candidate,
-  ) async {
+    AgentCandidateView candidate, {
+    required PropertyAgentBloc bloc,
+  }) async {
     final l10n = I18n.of(context);
-    final bloc = context.read<PropertyAgentBloc>();
 
     final confirmed = await showDialog<bool>(
       context: context,
@@ -280,5 +279,67 @@ class _Body extends StatelessWidget {
     );
 
     if (confirmed ?? false) bloc.add(AssignmentWithdrawn(assignment));
+  }
+}
+
+/// "Je fais mes visites moi-même" (RM-M11-10).
+///
+/// The owner joins the property's pool of bookable visitors, **without** the
+/// agents' weekly availability: each request reaches him for manual
+/// confirmation of a slot (RM-M15-06), which is what the subtitle warns about.
+class _OwnerVisitsCard extends StatelessWidget {
+  const _OwnerVisitsCard({required this.enabled, required this.isSaving});
+
+  final bool enabled;
+  final bool isSaving;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Container(
+      padding: const EdgeInsets.all(Dimens.spacing),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(Dimens.radiusLg),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.agentsOwnerVisitsTitle,
+                  style: context.mboaText.label
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: Dimens.spacingXs),
+                Text(
+                  l10n.agentsOwnerVisitsBody,
+                  style: context.mboaText.caption
+                      .copyWith(color: colors.textSecondary),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: Dimens.spacingSm),
+          if (isSaving)
+            const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          else
+            Switch(
+              value: enabled,
+              onChanged: (value) => context
+                  .read<PropertyAgentBloc>()
+                  .add(OwnerVisitsToggled(enabled: value)),
+            ),
+        ],
+      ),
+    );
   }
 }

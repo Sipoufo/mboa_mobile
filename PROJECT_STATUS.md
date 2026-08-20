@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**478 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 368 ·
+**490 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 380 ·
 `mboa_core` 12 · `mboa_shared` 80.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -42,7 +42,7 @@
 | M10 listings + residences | ✅ complete for everything the API supports |
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
-| M11 assignments | ✅ both sides + agent detail (public profile) |
+| M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ list, detail, **mutual presence confirmation** (the report is gone — it is the client's now, → M07bis) |
 | M07bis client review · M27 resident review · M08 contracts | ❌ not started (endpoints exist) |
 
@@ -351,11 +351,25 @@ agent to one listing so a tenant can book a visit** (RM-M07-01). The app builds
 M11; the visual language is reused, the absent concepts are not invented. Logged
 in `docs/backend-requests.md` §11.
 
-- **One active agent per property** (RM-M11-01), so the candidate picker hides
-  while somebody holds the property *or* is being waited on — two people
-  believing they have it is the failure to avoid.
-- **Accepting an application auto-declines the others** server-side (RM-M11-07),
-  so every mutation reloads rather than patching state locally.
+- **A property carries a pool of agents** (RM-M11-01, revised 2026-08-13 and
+  live on the backend). The screen lists everyone assigned — accepted agents and
+  unanswered offers alike — with *Ajouter un agent* always reachable. The picker
+  drops anybody already in the pool, because offering the same agent twice is a
+  409.
+- **Accepting an application no longer declines the others** (RM-M11-07). Every
+  mutation still reloads: the server is the authority on what an acceptance did.
+- **Removing one agent among several has no endpoint.** `DELETE
+  /annonces/{id}/agent` names no agent, so *Retirer l'assignation* is offered
+  only while the pool holds one (`canWithdraw`); beyond that the screen says so.
+  Logged as `backend-requests.md` §13 — a wrong guess cancels a tenant's booked
+  visit.
+- **RM-M11-10 lives on the annonce**, not on the assignment: `ownerVisitsEnabled`
+  is a field on the listing, toggled from this same screen (the owner is a
+  visitor, so he belongs beside the agents). `PUT /annonces/{id}` **replaces the
+  listing whole**, so `setOwnerVisits` re-reads it first and `AnnonceDraft`
+  carries the flag — leaving it out of an ordinary edit would switch it off.
+  A residence has no such flag and shows no toggle; `CreateAnnonceRequest` has
+  none either, so it can only be enabled after the listing exists.
 - **A residence offer reports what it skipped** (RM-M10bis-06). Swallowing
   `skipped[]` would claim the whole residence was offered when part was not.
 - **Origin is recorded, never a filter** (RM-M11-09): an agent's accepted
@@ -402,11 +416,11 @@ build down with them.
   each with their own times, and `BookVisiteRequest` requires
   `visitorAccountId`.
 - **M11 became a pool** — several active agents per listing, accepting an
-  application no longer auto-declines the others (RM-M11-01/07, **confirmed
-  effective backend-side**). The spec is unchanged on those endpoints, so this
-  is invisible to `make gen-api`: the app still encodes the old exclusivity in
-  `property_agent_state.dart`, `agent_assignment_page.dart` and
-  `assignment_repository.dart`. **Next chantier.**
+  application no longer auto-declines the others (RM-M11-01/07, confirmed
+  effective backend-side). The spec is unchanged on those endpoints, so this was
+  invisible to `make gen-api`. **Done 2026-08-20**, along with RM-M11-10's
+  owner-visits toggle; the one gap left is removing a single agent from a pool
+  (`backend-requests.md` §13).
 - New elsewhere: `AnnonceDetailResponse.rating` (`PropertyRating`, weighted 3:1
   by RG-06, computed server-side — never recompute it), `ownerVisitsEnabled` on
   the annonce (**update only, absent from `CreateAnnonceRequest`**),
@@ -516,8 +530,6 @@ as the same thing.
 - **iOS push** — blocked only on the APNs key. Everything else is done.
 - Password reset (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
 - Settings extras: searchable toggle, per-type notification preferences.
-- **M11 pool cardinality** — the exclusivity the app enforces was repealed on
-  2026-08-13 and the backend has already switched. First thing after this.
 - **M08 contracts** — the largest new surface (both apps, 6 statuses, a
   negotiation round-trip). Needs `registrationNumber` on the pro profile first.
 - M07 booking + M07bis client review + M27 resident review — all need M05.

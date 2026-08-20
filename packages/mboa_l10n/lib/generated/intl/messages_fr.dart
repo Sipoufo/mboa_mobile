@@ -254,10 +254,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Toute la ville",
     ),
     "agentsAcceptWarning": MessageLookupByLibrary.simpleMessage(
-      "Accepter cette candidature refusera automatiquement les autres.",
+      "Plusieurs agents peuvent couvrir le même bien : accepter cette candidature n\'écarte pas les autres.",
     ),
     "agentsActionFailed": MessageLookupByLibrary.simpleMessage(
       "Action impossible pour le moment.",
+    ),
+    "agentsAddAgent": MessageLookupByLibrary.simpleMessage("Ajouter un agent"),
+    "agentsAddAgentBody": MessageLookupByLibrary.simpleMessage(
+      "Agents actifs dont la zone couvre ce bien.",
     ),
     "agentsApplicationAccept": MessageLookupByLibrary.simpleMessage("Accepter"),
     "agentsApplicationDecline": MessageLookupByLibrary.simpleMessage("Refuser"),
@@ -292,6 +296,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Assignation d\'agent",
     ),
     "agentsOfferSkipped": m10,
+    "agentsOwnerVisitsBody": MessageLookupByLibrary.simpleMessage(
+      "Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.",
+    ),
+    "agentsOwnerVisitsTitle": MessageLookupByLibrary.simpleMessage(
+      "Je fais les visites moi-même",
+    ),
     "agentsPickPropertyBody": MessageLookupByLibrary.simpleMessage(
       "Un agent est assigné à un bien précis.",
     ),
@@ -307,6 +317,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentsPickPropertyTitle": MessageLookupByLibrary.simpleMessage(
       "Choisir un bien",
     ),
+    "agentsPoolBody": MessageLookupByLibrary.simpleMessage(
+      "Plusieurs agents peuvent couvrir le même bien. Le locataire choisit ensuite avec qui il visite.",
+    ),
+    "agentsPoolEmpty": MessageLookupByLibrary.simpleMessage(
+      "Aucun agent assigné pour le moment.",
+    ),
+    "agentsPoolTitle": MessageLookupByLibrary.simpleMessage("Agents assignés"),
     "agentsPropertyCount": m11,
     "agentsUnitsCovered": m12,
     "agentsVisitCount": m13,
@@ -315,6 +332,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "agentsWithdrawConfirm": MessageLookupByLibrary.simpleMessage(
       "Les visites déjà planifiées seront annulées.",
+    ),
+    "agentsWithdrawUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Le retrait d\'un agent n\'est pas encore possible lorsque plusieurs agents sont assignés à ce bien.",
     ),
     "amenityAirConditioning": MessageLookupByLibrary.simpleMessage(
       "Climatisation",

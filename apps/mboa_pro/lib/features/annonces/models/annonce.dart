@@ -88,6 +88,7 @@ class Annonce extends Equatable {
     this.createdAt,
     this.residenceId,
     this.expiresAt,
+    this.ownerVisitsEnabled = false,
   });
 
   final String id;
@@ -134,6 +135,12 @@ class Annonce extends Equatable {
   /// When a Free-tier listing auto-expires (RM-M10-04). Null on paid tiers.
   final DateTime? expiresAt;
 
+  /// RM-M11-10 — the prestataire shows this property himself, and joins its
+  /// pool of bookable visitors alongside any assigned agents. Unlike an agent
+  /// he has no weekly availability: each request reaches him for manual
+  /// confirmation (RM-M15-06).
+  final bool ownerVisitsEnabled;
+
   /// What to show as the rent. Falls back to the derived monthly figure for
   /// listings created before RM-M10-09, which have no [price] — those really
   /// were monthly, so [rentalPeriod] defaulting to month reads correctly.
@@ -176,6 +183,7 @@ class Annonce extends Equatable {
         createdAt: response.createdAt,
         residenceId: response.residenceId,
         expiresAt: response.expiresAt,
+        ownerVisitsEnabled: response.ownerVisitsEnabled ?? false,
       );
 
   // Every field: a partial props list makes an edit that only touched, say, the
@@ -197,6 +205,7 @@ class Annonce extends Equatable {
         rentalPeriod,
         amenities,
         monthlyRent,
+        ownerVisitsEnabled,
         chargesIncluded,
         chargesAmount,
         surfaceArea,

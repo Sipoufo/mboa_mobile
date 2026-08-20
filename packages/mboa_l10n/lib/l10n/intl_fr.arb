@@ -1098,6 +1098,38 @@
       }
     }
   },
+  "agentsOwnerVisitsTitle": "Je fais les visites moi-même",
+  "@agentsOwnerVisitsTitle": {
+    "description": "RM-M11-10 — the owner joins the property's visitor pool."
+  },
+  "agentsOwnerVisitsBody": "Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.",
+  "@agentsOwnerVisitsBody": {
+    "description": "RM-M11-10 / RM-M15-06 — no weekly availability for an owner."
+  },
+  "agentsPoolTitle": "Agents assignés",
+  "@agentsPoolTitle": {
+    "description": "RM-M11-01 — a property carries a pool, not one agent."
+  },
+  "agentsPoolBody": "Plusieurs agents peuvent couvrir le même bien. Le locataire choisit ensuite avec qui il visite.",
+  "@agentsPoolBody": {
+    "description": "RM-M11-01 / RM-M07-01."
+  },
+  "agentsPoolEmpty": "Aucun agent assigné pour le moment.",
+  "@agentsPoolEmpty": {
+    "description": "Empty pool."
+  },
+  "agentsAddAgent": "Ajouter un agent",
+  "@agentsAddAgent": {
+    "description": "Opens the candidate picker."
+  },
+  "agentsAddAgentBody": "Agents actifs dont la zone couvre ce bien.",
+  "@agentsAddAgentBody": {
+    "description": "RM-M11-08 — the server filters the list."
+  },
+  "agentsWithdrawUnavailable": "Le retrait d'un agent n'est pas encore possible lorsque plusieurs agents sont assignés à ce bien.",
+  "@agentsWithdrawUnavailable": {
+    "description": "RM-M11-06 — the endpoint names no agent; see docs/backend-requests.md §12."
+  },
   "agentsApplicationsTitle": "Candidatures",
   "@agentsApplicationsTitle": {
     "description": "Agents who applied (RM-M11-07)."
@@ -1110,7 +1142,7 @@
   "@agentsApplicationDecline": {
     "description": "Decline an application."
   },
-  "agentsAcceptWarning": "Accepter cette candidature refusera automatiquement les autres.",
+  "agentsAcceptWarning": "Plusieurs agents peuvent couvrir le même bien : accepter cette candidature n'écarte pas les autres.",
   "@agentsAcceptWarning": {
     "description": "Doc 10 RM-M11-07."
   },

@@ -3999,6 +3999,87 @@ class I18n {
     );
   }
 
+  /// `Je fais les visites moi-même`
+  String get agentsOwnerVisitsTitle {
+    return Intl.message(
+      'Je fais les visites moi-même',
+      name: 'agentsOwnerVisitsTitle',
+      desc: 'RM-M11-10 — the owner joins the property\'s visitor pool.',
+      args: [],
+    );
+  }
+
+  /// `Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.`
+  String get agentsOwnerVisitsBody {
+    return Intl.message(
+      'Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.',
+      name: 'agentsOwnerVisitsBody',
+      desc: 'RM-M11-10 / RM-M15-06 — no weekly availability for an owner.',
+      args: [],
+    );
+  }
+
+  /// `Agents assignés`
+  String get agentsPoolTitle {
+    return Intl.message(
+      'Agents assignés',
+      name: 'agentsPoolTitle',
+      desc: 'RM-M11-01 — a property carries a pool, not one agent.',
+      args: [],
+    );
+  }
+
+  /// `Plusieurs agents peuvent couvrir le même bien. Le locataire choisit ensuite avec qui il visite.`
+  String get agentsPoolBody {
+    return Intl.message(
+      'Plusieurs agents peuvent couvrir le même bien. Le locataire choisit ensuite avec qui il visite.',
+      name: 'agentsPoolBody',
+      desc: 'RM-M11-01 / RM-M07-01.',
+      args: [],
+    );
+  }
+
+  /// `Aucun agent assigné pour le moment.`
+  String get agentsPoolEmpty {
+    return Intl.message(
+      'Aucun agent assigné pour le moment.',
+      name: 'agentsPoolEmpty',
+      desc: 'Empty pool.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un agent`
+  String get agentsAddAgent {
+    return Intl.message(
+      'Ajouter un agent',
+      name: 'agentsAddAgent',
+      desc: 'Opens the candidate picker.',
+      args: [],
+    );
+  }
+
+  /// `Agents actifs dont la zone couvre ce bien.`
+  String get agentsAddAgentBody {
+    return Intl.message(
+      'Agents actifs dont la zone couvre ce bien.',
+      name: 'agentsAddAgentBody',
+      desc: 'RM-M11-08 — the server filters the list.',
+      args: [],
+    );
+  }
+
+  /// `Le retrait d'un agent n'est pas encore possible lorsque plusieurs agents sont assignés à ce bien.`
+  String get agentsWithdrawUnavailable {
+    return Intl.message(
+      'Le retrait d\'un agent n\'est pas encore possible lorsque plusieurs agents sont assignés à ce bien.',
+      name: 'agentsWithdrawUnavailable',
+      desc:
+          'RM-M11-06 — the endpoint names no agent; see docs/backend-requests.md §12.',
+      args: [],
+    );
+  }
+
   /// `Candidatures`
   String get agentsApplicationsTitle {
     return Intl.message(
@@ -4029,10 +4110,10 @@ class I18n {
     );
   }
 
-  /// `Accepter cette candidature refusera automatiquement les autres.`
+  /// `Plusieurs agents peuvent couvrir le même bien : accepter cette candidature n'écarte pas les autres.`
   String get agentsAcceptWarning {
     return Intl.message(
-      'Accepter cette candidature refusera automatiquement les autres.',
+      'Plusieurs agents peuvent couvrir le même bien : accepter cette candidature n\'écarte pas les autres.',
       name: 'agentsAcceptWarning',
       desc: 'Doc 10 RM-M11-07.',
       args: [],

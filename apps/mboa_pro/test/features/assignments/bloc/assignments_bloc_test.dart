@@ -2,11 +2,24 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_pro/features/assignments/bloc/my_agents_bloc.dart';
 import 'package:mboa_pro/features/assignments/bloc/property_agent_bloc.dart';
+import 'package:mboa_pro/features/annonces/data/annonce_repository.dart';
+import 'package:mboa_pro/features/annonces/models/annonce.dart';
+import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
 import 'package:mboa_pro/features/assignments/data/assignment_repository.dart';
 import 'package:mboa_pro/features/assignments/models/assignment.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAssignmentRepository extends Mock implements AssignmentRepository {}
+
+class MockAnnonceRepository extends Mock implements AnnonceRepository {}
+
+Annonce listing({bool ownerVisitsEnabled = false}) => Annonce(
+      id: 'a-1',
+      title: 'Studio Bonapriso',
+      status: AnnonceStatus.published,
+      propertyType: PropertyType.studio,
+      ownerVisitsEnabled: ownerVisitsEnabled,
+    );
 
 Assignment assignment({
   String id = 'as-1',
@@ -29,6 +42,7 @@ Assignment assignment({
 
 void main() {
   late MockAssignmentRepository repository;
+  late MockAnnonceRepository annonces;
 
   const target = AnnonceTarget('a-1');
   const residence = ResidenceTarget('r-1');
@@ -60,13 +74,15 @@ void main() {
 
   setUp(() {
     repository = MockAssignmentRepository();
+    annonces = MockAnnonceRepository();
+    when(() => annonces.getOne(any())).thenAnswer((_) async => listing());
     when(() => repository.forTarget(any())).thenAnswer((_) async => []);
     when(() => repository.applications(any())).thenAnswer((_) async => []);
     when(() => repository.candidates(any())).thenAnswer((_) async => []);
   });
 
   PropertyAgentBloc buildProperty() =>
-      PropertyAgentBloc(repository: repository);
+      PropertyAgentBloc(repository: repository, annonces: annonces);
 
   group('a property\'s agent', () {
     blocTest<PropertyAgentBloc, PropertyAgentState>(
@@ -83,25 +99,53 @@ void main() {
         final state = bloc.state as PropertyAgentReady;
         expect(state.candidates, [candidate]);
         expect(state.applications, [application]);
-        expect(state.canOffer, isTrue);
+        expect(state.offerableCandidates, [candidate]);
       },
     );
 
     blocTest<PropertyAgentBloc, PropertyAgentState>(
-      'RM-M11-01 — nothing may be offered while an agent holds the property',
-      setUp: () => when(() => repository.forTarget(target))
-          .thenAnswer((_) async => [assignment()]),
+      'RM-M11-01 — a property carries several agents at once',
+      setUp: () {
+        when(() => repository.forTarget(target)).thenAnswer(
+          (_) async => [
+            assignment(),
+            assignment(id: 'as-2', agentId: 'ag-9', agentName: 'Awa Nkeng'),
+          ],
+        );
+        when(() => repository.candidates(target))
+            .thenAnswer((_) async => [candidate]);
+      },
       build: buildProperty,
       act: (bloc) => bloc.add(const PropertyAgentLoadRequested(target)),
       verify: (bloc) {
         final state = bloc.state as PropertyAgentReady;
-        expect(state.live, isNotNull);
-        expect(state.canOffer, isFalse);
+        // The exclusivity this screen used to enforce was repealed on
+        // 2026-08-13: the client picks a visitor from the pool at booking time.
+        expect(state.liveAgents, hasLength(2));
+        expect(state.offerableCandidates, [candidate]);
       },
     );
 
     blocTest<PropertyAgentBloc, PropertyAgentState>(
-      'an offer awaiting the agent also blocks a second offer',
+      'an agent already in the pool is not offered again',
+      setUp: () {
+        when(() => repository.forTarget(target))
+            .thenAnswer((_) async => [assignment(agentId: candidate.accountId)]);
+        when(() => repository.candidates(target))
+            .thenAnswer((_) async => [candidate]);
+      },
+      build: buildProperty,
+      act: (bloc) => bloc.add(const PropertyAgentLoadRequested(target)),
+      // Offering the same agent twice is a 409; a picker that lists somebody it
+      // cannot offer is a picker that lies.
+      verify: (bloc) => expect(
+        (bloc.state as PropertyAgentReady).offerableCandidates,
+        isEmpty,
+      ),
+    );
+
+    blocTest<PropertyAgentBloc, PropertyAgentState>(
+      'an offer awaiting an answer still counts in the pool',
       setUp: () => when(() => repository.forTarget(target)).thenAnswer(
         (_) async => [assignment(status: AssignmentStatus.pending)],
       ),
@@ -109,15 +153,83 @@ void main() {
       act: (bloc) => bloc.add(const PropertyAgentLoadRequested(target)),
       verify: (bloc) {
         final state = bloc.state as PropertyAgentReady;
-        // RM-M11-04: the agent has not answered yet. Offering to someone else
-        // would leave two people believing they have the property.
-        expect(state.awaitingAgent, isNotNull);
-        expect(state.canOffer, isFalse);
+        // RM-M11-04 — the agent has not answered; they are on the property's
+        // list all the same, so the prestataire is not asked twice.
+        expect(state.awaitingAgents, hasLength(1));
+        expect(state.pool, hasLength(1));
       },
     );
 
     blocTest<PropertyAgentBloc, PropertyAgentState>(
-      'a closed assignment does not block a new offer',
+      'RM-M11-06 — removal is offered only while it is unambiguous',
+      setUp: () => when(() => repository.forTarget(target)).thenAnswer(
+        (_) async => [
+          assignment(),
+          assignment(id: 'as-2', agentId: 'ag-9', agentName: 'Awa Nkeng'),
+        ],
+      ),
+      build: buildProperty,
+      act: (bloc) => bloc.add(const PropertyAgentLoadRequested(target)),
+      // DELETE /annonces/{id}/agent names no agent, so with two in the pool
+      // the app cannot say which one would go.
+      verify: (bloc) =>
+          expect((bloc.state as PropertyAgentReady).canWithdraw, isFalse),
+    );
+
+    blocTest<PropertyAgentBloc, PropertyAgentState>(
+      'a residence lists one row per agent, not one per unit',
+      setUp: () => when(() => repository.forTarget(residence)).thenAnswer(
+        (_) async => [
+          for (var i = 0; i < 12; i++)
+            assignment(id: 'as-$i', target: residence),
+        ],
+      ),
+      build: buildProperty,
+      act: (bloc) => bloc.add(const PropertyAgentLoadRequested(residence)),
+      verify: (bloc) {
+        final state = bloc.state as PropertyAgentReady;
+        // `GET /residences/{id}/agent` answers unit by unit — showing that raw
+        // would print the same person twelve times and make `canWithdraw`
+        // false for a pool of one.
+        expect(state.pool, hasLength(1));
+        expect(state.unitsCoveredBy(state.pool.single), 12);
+        expect(state.canWithdraw, isTrue);
+      },
+    );
+
+    blocTest<PropertyAgentBloc, PropertyAgentState>(
+      'RM-M11-10 — the owner puts himself in the pool',
+      setUp: () {
+        when(() => annonces.setOwnerVisits('a-1', enabled: true))
+            .thenAnswer((_) async => listing(ownerVisitsEnabled: true));
+      },
+      build: buildProperty,
+      seed: () => const PropertyAgentReady(
+        target: target,
+        ownerVisitsEnabled: false,
+      ),
+      act: (bloc) => bloc.add(const OwnerVisitsToggled(enabled: true)),
+      verify: (bloc) {
+        final state = bloc.state as PropertyAgentReady;
+        expect(state.ownerVisitsEnabled, isTrue);
+        expect(state.isSavingOwnerVisits, isFalse);
+      },
+    );
+
+    blocTest<PropertyAgentBloc, PropertyAgentState>(
+      'a residence has no owner-visits flag to show',
+      build: buildProperty,
+      act: (bloc) => bloc.add(const PropertyAgentLoadRequested(residence)),
+      verify: (bloc) {
+        // RM-M11-10 is a field on an annonce; reading it for a residence would
+        // mean electing one unit to speak for the rest.
+        expect((bloc.state as PropertyAgentReady).ownerVisitsEnabled, isNull);
+        verifyNever(() => annonces.getOne(any()));
+      },
+    );
+
+    blocTest<PropertyAgentBloc, PropertyAgentState>(
+      'a closed assignment leaves the pool empty',
       setUp: () => when(() => repository.forTarget(target)).thenAnswer(
         (_) async => [
           assignment(status: AssignmentStatus.declined),
@@ -128,8 +240,8 @@ void main() {
       build: buildProperty,
       act: (bloc) => bloc.add(const PropertyAgentLoadRequested(target)),
       verify: (bloc) => expect(
-        (bloc.state as PropertyAgentReady).canOffer,
-        isTrue,
+        (bloc.state as PropertyAgentReady).pool,
+        isEmpty,
       ),
     );
 

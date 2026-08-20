@@ -362,3 +362,39 @@ agent assigné". The app now shows initials, which is the best it can do.
 opening — otherwise it can only ever show a name and a list of properties.
 
 </details>
+
+---
+
+## 13. RM-M11-06 — removing one agent from a pool has no endpoint
+
+**Raised 2026-08-20**, after Doc 10's 2026-08-13 revision made a property carry
+several agents (RM-M11-01) and the backend switched to that behaviour.
+
+`DELETE /api/v1/annonces/{annonceId}/agent` takes **no agent**, and
+`DELETE /api/v1/residences/{residenceId}/agent` takes the whole residence back.
+Both were written when a listing had exactly one agent, and their summaries
+still say so ("Remove the listing's agent"). With a pool of three, the app has
+no way to express *which* of them the prestataire is removing — and no way to
+predict what the server would do with the request.
+
+**Symptom:** RM-M11-06 ("le prestataire peut retirer l'assignation d'un agent à
+tout moment… uniquement pour cet agent") is unimplementable past the first
+agent.
+
+**Workaround shipped:** `PropertyAgentReady.canWithdraw` offers *Retirer
+l'assignation* only while the pool holds one agent. Beyond that the screen says
+removal is not available yet, rather than sending a call that might revoke
+somebody else's assignment. Visits already booked are cancelled by a removal
+(RM-M11-06), so guessing here costs a tenant their appointment.
+
+**Ask:** `DELETE /api/v1/annonces/{annonceId}/agent/{agentAccountId}` (or the
+account id as a required query parameter), and the residence equivalent. The
+assignment id would do just as well — the app holds both.
+
+**Also worth correcting while you are there:**
+`POST /annonces/{id}/agent/applications/{applicationId}/accept` is still
+documented as "the other applicants are declined automatically", and the
+residence one as "rival applications on those units are declined". RM-M11-07 was
+revised to the opposite. If the behaviour has changed and only the prose is
+stale, the app is already written for the new rule; if the auto-decline is still
+live, the prestataire cannot build a pool from applications at all.

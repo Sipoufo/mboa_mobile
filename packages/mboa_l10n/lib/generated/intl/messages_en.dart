@@ -237,10 +237,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "The whole city",
     ),
     "agentsAcceptWarning": MessageLookupByLibrary.simpleMessage(
-      "Accepting this application will automatically decline the others.",
+      "Several agents can cover the same property: accepting this application does not turn the others down.",
     ),
     "agentsActionFailed": MessageLookupByLibrary.simpleMessage(
       "That action isn\'t possible right now.",
+    ),
+    "agentsAddAgent": MessageLookupByLibrary.simpleMessage("Add an agent"),
+    "agentsAddAgentBody": MessageLookupByLibrary.simpleMessage(
+      "Active agents whose area covers this property.",
     ),
     "agentsApplicationAccept": MessageLookupByLibrary.simpleMessage("Accept"),
     "agentsApplicationDecline": MessageLookupByLibrary.simpleMessage("Decline"),
@@ -277,6 +281,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Agent assignment",
     ),
     "agentsOfferSkipped": m10,
+    "agentsOwnerVisitsBody": MessageLookupByLibrary.simpleMessage(
+      "You will appear among the visitors offered for this property. Each request reaches you so you can confirm a time.",
+    ),
+    "agentsOwnerVisitsTitle": MessageLookupByLibrary.simpleMessage(
+      "I show this property myself",
+    ),
     "agentsPickPropertyBody": MessageLookupByLibrary.simpleMessage(
       "An agent is assigned to a specific property.",
     ),
@@ -292,12 +302,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentsPickPropertyTitle": MessageLookupByLibrary.simpleMessage(
       "Choose a property",
     ),
+    "agentsPoolBody": MessageLookupByLibrary.simpleMessage(
+      "Several agents can cover the same property. The tenant then chooses who shows them around.",
+    ),
+    "agentsPoolEmpty": MessageLookupByLibrary.simpleMessage(
+      "No agent assigned yet.",
+    ),
+    "agentsPoolTitle": MessageLookupByLibrary.simpleMessage("Assigned agents"),
     "agentsPropertyCount": m11,
     "agentsUnitsCovered": m12,
     "agentsVisitCount": m13,
     "agentsWithdraw": MessageLookupByLibrary.simpleMessage("Remove assignment"),
     "agentsWithdrawConfirm": MessageLookupByLibrary.simpleMessage(
       "Visits already scheduled will be cancelled.",
+    ),
+    "agentsWithdrawUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Removing one agent is not possible yet while several are assigned to this property.",
     ),
     "amenityAirConditioning": MessageLookupByLibrary.simpleMessage(
       "Air conditioning",

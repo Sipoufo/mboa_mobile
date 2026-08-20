@@ -100,8 +100,14 @@ class AssignmentRepository {
     }
   }
 
-  /// RM-M11-06 — removes the agent. Visits already planned are cancelled
-  /// server-side, so this is not a silent operation for the tenant either.
+  /// RM-M11-06 — removes the property's agent. Visits already planned are
+  /// cancelled server-side, so this is not a silent operation for the tenant
+  /// either.
+  ///
+  /// **Names no agent**, because the endpoint takes none. With a pool of
+  /// several (RM-M11-01) that is ambiguous, so `PropertyAgentReady.canWithdraw`
+  /// keeps the action off the screen until there is only one — see
+  /// `docs/backend-requests.md` §12.
   Future<void> withdraw(AssignmentTarget target) async {
     switch (target) {
       case AnnonceTarget():
@@ -113,8 +119,12 @@ class AssignmentRepository {
     }
   }
 
-  /// Accepting one application refuses the others automatically (RM-M11-07) —
-  /// the server does that, so the screen simply reloads.
+  /// Accepting an application adds that agent to the property's pool.
+  ///
+  /// **It no longer refuses the others** (RM-M11-07, revised 2026-08-13): the
+  /// prestataire may accept several, and the client picks their visitor at
+  /// booking time. The screen reloads because the server is the authority on
+  /// what the acceptance did.
   Future<ResidenceOfferOutcome> acceptApplication(
     AgentApplication application,
   ) async {

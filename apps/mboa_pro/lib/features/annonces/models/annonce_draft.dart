@@ -138,6 +138,7 @@ class AnnonceDraft extends Equatable {
     this.amenities = const [],
     this.location,
     this.units = const [],
+    this.ownerVisitsEnabled = false,
   });
 
   /// Minimum photos required to publish (Doc 10; CE-M10-03 gives the copy).
@@ -173,6 +174,13 @@ class AnnonceDraft extends Equatable {
 
   /// Multi-unit only.
   final List<UnitGroupDraft> units;
+
+  /// RM-M11-10 — carried so an edit never clears it. `UpdateAnnonceRequest`
+  /// replaces the listing wholesale, so a field left out of the draft is a
+  /// field switched off; the toggle itself lives on the agents screen.
+  /// **`CreateAnnonceRequest` has no such field** — it can only be turned on
+  /// after the listing exists.
+  final bool ownerVisitsEnabled;
 
   bool get isEditing => id != null;
 
@@ -213,6 +221,7 @@ class AnnonceDraft extends Equatable {
     List<Amenity>? amenities,
     ListingLocation? location,
     List<UnitGroupDraft>? units,
+    bool? ownerVisitsEnabled,
   }) =>
       AnnonceDraft(
         kind: kind,
@@ -233,6 +242,7 @@ class AnnonceDraft extends Equatable {
         amenities: amenities ?? this.amenities,
         location: location ?? this.location,
         units: units ?? this.units,
+        ownerVisitsEnabled: ownerVisitsEnabled ?? this.ownerVisitsEnabled,
       );
 
   /// Seeds the form from an existing listing.
@@ -256,6 +266,7 @@ class AnnonceDraft extends Equatable {
         availableFrom: annonce.availableFrom,
         description: annonce.description,
         photoKeys: annonce.photoKeys,
+        ownerVisitsEnabled: annonce.ownerVisitsEnabled,
         location: switch ((
           annonce.districtId,
           annonce.latitude,
@@ -295,5 +306,6 @@ class AnnonceDraft extends Equatable {
         amenities,
         location,
         units,
+        ownerVisitsEnabled,
       ];
 }
