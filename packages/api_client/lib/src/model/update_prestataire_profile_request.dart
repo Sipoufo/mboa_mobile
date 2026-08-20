@@ -16,6 +16,7 @@ part 'update_prestataire_profile_request.g.dart';
 /// * [logoObjectKey] 
 /// * [type] 
 /// * [mainCityId] 
+/// * [registrationNumber] 
 @BuiltValue()
 abstract class UpdatePrestataireProfileRequest implements Built<UpdatePrestataireProfileRequest, UpdatePrestataireProfileRequestBuilder> {
   @BuiltValueField(wireName: r'displayName')
@@ -30,6 +31,9 @@ abstract class UpdatePrestataireProfileRequest implements Built<UpdatePrestatair
 
   @BuiltValueField(wireName: r'mainCityId')
   String? get mainCityId;
+
+  @BuiltValueField(wireName: r'registrationNumber')
+  String? get registrationNumber;
 
   UpdatePrestataireProfileRequest._();
 
@@ -79,6 +83,13 @@ class _$UpdatePrestataireProfileRequestSerializer implements PrimitiveSerializer
       yield r'mainCityId';
       yield serializers.serialize(
         object.mainCityId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.registrationNumber != null) {
+      yield r'registrationNumber';
+      yield serializers.serialize(
+        object.registrationNumber,
         specifiedType: const FullType(String),
       );
     }
@@ -136,6 +147,14 @@ class _$UpdatePrestataireProfileRequestSerializer implements PrimitiveSerializer
           ) as String?;
           if (valueDes == null) continue;
           result.mainCityId = valueDes;
+          break;
+        case r'registrationNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.registrationNumber = valueDes;
           break;
         default:
           unhandled.add(key);

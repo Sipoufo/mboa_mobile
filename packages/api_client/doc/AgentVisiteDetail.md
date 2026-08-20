@@ -20,9 +20,9 @@ Name | Type | Description | Notes
 **userPhone** | **String** |  | [optional] 
 **prestataireName** | **String** |  | [optional] 
 **prestatairePhone** | **String** |  | [optional] 
-**startedAt** | [**DateTime**](DateTime.md) |  | [optional] 
-**canStart** | **bool** |  | [optional] 
-**reportSubmitted** | **bool** |  | [optional] 
+**visitorConfirmedAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**clientConfirmedAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**canConfirm** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

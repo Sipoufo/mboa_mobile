@@ -24,9 +24,9 @@ part 'agent_visite_detail.g.dart';
 /// * [userPhone] 
 /// * [prestataireName] 
 /// * [prestatairePhone] 
-/// * [startedAt] 
-/// * [canStart] 
-/// * [reportSubmitted] 
+/// * [visitorConfirmedAt] 
+/// * [clientConfirmedAt] 
+/// * [canConfirm] 
 @BuiltValue()
 abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisiteDetailBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -52,7 +52,7 @@ abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisite
 
   @BuiltValueField(wireName: r'status')
   AgentVisiteDetailStatusEnum? get status;
-  // enum statusEnum {  SCHEDULED,  CANCELLED,  COMPLETED,  };
+  // enum statusEnum {  REQUESTED,  SCHEDULED,  CANCELLED,  COMPLETED,  NOT_FULFILLED,  };
 
   @BuiltValueField(wireName: r'userName')
   String? get userName;
@@ -66,14 +66,14 @@ abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisite
   @BuiltValueField(wireName: r'prestatairePhone')
   String? get prestatairePhone;
 
-  @BuiltValueField(wireName: r'startedAt')
-  DateTime? get startedAt;
+  @BuiltValueField(wireName: r'visitorConfirmedAt')
+  DateTime? get visitorConfirmedAt;
 
-  @BuiltValueField(wireName: r'canStart')
-  bool? get canStart;
+  @BuiltValueField(wireName: r'clientConfirmedAt')
+  DateTime? get clientConfirmedAt;
 
-  @BuiltValueField(wireName: r'reportSubmitted')
-  bool? get reportSubmitted;
+  @BuiltValueField(wireName: r'canConfirm')
+  bool? get canConfirm;
 
   AgentVisiteDetail._();
 
@@ -182,24 +182,24 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
         specifiedType: const FullType(String),
       );
     }
-    if (object.startedAt != null) {
-      yield r'startedAt';
+    if (object.visitorConfirmedAt != null) {
+      yield r'visitorConfirmedAt';
       yield serializers.serialize(
-        object.startedAt,
+        object.visitorConfirmedAt,
         specifiedType: const FullType(DateTime),
       );
     }
-    if (object.canStart != null) {
-      yield r'canStart';
+    if (object.clientConfirmedAt != null) {
+      yield r'clientConfirmedAt';
       yield serializers.serialize(
-        object.canStart,
-        specifiedType: const FullType(bool),
+        object.clientConfirmedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
-    if (object.reportSubmitted != null) {
-      yield r'reportSubmitted';
+    if (object.canConfirm != null) {
+      yield r'canConfirm';
       yield serializers.serialize(
-        object.reportSubmitted,
+        object.canConfirm,
         specifiedType: const FullType(bool),
       );
     }
@@ -322,29 +322,29 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
           if (valueDes == null) continue;
           result.prestatairePhone = valueDes;
           break;
-        case r'startedAt':
+        case r'visitorConfirmedAt':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType.nullable(DateTime),
           ) as DateTime?;
           if (valueDes == null) continue;
-          result.startedAt = valueDes;
+          result.visitorConfirmedAt = valueDes;
           break;
-        case r'canStart':
+        case r'clientConfirmedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DateTime),
+          ) as DateTime?;
+          if (valueDes == null) continue;
+          result.clientConfirmedAt = valueDes;
+          break;
+        case r'canConfirm':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType.nullable(bool),
           ) as bool?;
           if (valueDes == null) continue;
-          result.canStart = valueDes;
-          break;
-        case r'reportSubmitted':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(bool),
-          ) as bool?;
-          if (valueDes == null) continue;
-          result.reportSubmitted = valueDes;
+          result.canConfirm = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -377,12 +377,16 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
 
 class AgentVisiteDetailStatusEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'REQUESTED')
+  static const AgentVisiteDetailStatusEnum REQUESTED = _$agentVisiteDetailStatusEnum_REQUESTED;
   @BuiltValueEnumConst(wireName: r'SCHEDULED')
   static const AgentVisiteDetailStatusEnum SCHEDULED = _$agentVisiteDetailStatusEnum_SCHEDULED;
   @BuiltValueEnumConst(wireName: r'CANCELLED')
   static const AgentVisiteDetailStatusEnum CANCELLED = _$agentVisiteDetailStatusEnum_CANCELLED;
   @BuiltValueEnumConst(wireName: r'COMPLETED')
   static const AgentVisiteDetailStatusEnum COMPLETED = _$agentVisiteDetailStatusEnum_COMPLETED;
+  @BuiltValueEnumConst(wireName: r'NOT_FULFILLED')
+  static const AgentVisiteDetailStatusEnum NOT_FULFILLED = _$agentVisiteDetailStatusEnum_NOT_FULFILLED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const AgentVisiteDetailStatusEnum unknownDefaultOpenApi = _$agentVisiteDetailStatusEnum_unknownDefaultOpenApi;
 

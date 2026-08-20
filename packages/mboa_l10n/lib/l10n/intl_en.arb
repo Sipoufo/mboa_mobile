@@ -1330,18 +1330,6 @@
   "@visitsCall": {
     "description": "Dial a contact."
   },
-  "visitsStart": "Start the visit",
-  "@visitsStart": {
-    "description": "RM-M16-02."
-  },
-  "visitsStartNotYet": "Available on the day of the visit",
-  "@visitsStartNotYet": {
-    "description": "canStart is false — the server decides."
-  },
-  "visitsStarted": "Visit started",
-  "@visitsStarted": {
-    "description": "startedAt is set."
-  },
   "visitsLocating": "Locating…",
   "@visitsLocating": {
     "description": "Taking the GPS fix."
@@ -1350,7 +1338,7 @@
   "@visitsTooFarTitle": {
     "description": "RM-M16-02 — beyond 500 m."
   },
-  "visitsTooFarBody": "You are about {distance} m away. Explain why you are starting the visit from here.",
+  "visitsTooFarBody": "You are about {distance} m away. Explain why you are confirming your presence from there.",
   "@visitsTooFarBody": {
     "description": "The justification Doc 10 asks for.",
     "placeholders": {
@@ -1363,11 +1351,11 @@
   "@visitsTooFarHint": {
     "description": "Placeholder for the justification."
   },
-  "visitsTooFarConfirm": "Start anyway",
+  "visitsTooFarConfirm": "Confirm anyway",
   "@visitsTooFarConfirm": {
     "description": "Confirm with a justification."
   },
-  "visitsLocationDenied": "Allow location access to start a visit.",
+  "visitsLocationDenied": "Allow location access to confirm your presence.",
   "@visitsLocationDenied": {
     "description": "LocationFailure.denied."
   },
@@ -1387,70 +1375,53 @@
   "@visitsCancel": {
     "description": "RM-M16-04."
   },
+  "visitsStatusRequested": "Requested",
+  "@visitsStatusRequested": {
+    "description": "VisiteResponse.status = REQUESTED — awaiting the owner's confirmation (RM-M15-06)."
+  },
+  "visitsStatusNotFulfilled": "Not fulfilled",
+  "@visitsStatusNotFulfilled": {
+    "description": "VisiteResponse.status = NOT_FULFILLED (RM-M16-05)."
+  },
+  "visitsConfirmPresence": "Confirm I'm here",
+  "@visitsConfirmPresence": {
+    "description": "RM-M07-05 / RM-M16-02 — the agent's half of the mutual confirmation."
+  },
+  "visitsConfirmPresenceHint": "The tenant must confirm on their side for the visit to be validated.",
+  "@visitsConfirmPresenceHint": {
+    "description": "RM-M07-05 — one confirmation is never enough."
+  },
+  "visitsConfirmNotYet": "Available on the day of the visit",
+  "@visitsConfirmNotYet": {
+    "description": "canConfirm is false — the server decides."
+  },
+  "visitsAwaitingClientTitle": "Presence confirmed",
+  "@visitsAwaitingClientTitle": {
+    "description": "visitorConfirmedAt is set, clientConfirmedAt is not."
+  },
+  "visitsAwaitingClientBody": "Waiting for the tenant to confirm. The visit is validated as soon as they do.",
+  "@visitsAwaitingClientBody": {
+    "description": "RM-M07-05."
+  },
+  "visitsCompletedTitle": "Visit completed",
+  "@visitsCompletedTitle": {
+    "description": "Both parties confirmed (RM-M16-03)."
+  },
+  "visitsCompletedBody": "Both presences were confirmed. The tenant can now publish their review of the property.",
+  "@visitsCompletedBody": {
+    "description": "RM-M07bis — the report is the client's to write."
+  },
+  "visitsNotFulfilledTitle": "Visit not fulfilled",
+  "@visitsNotFulfilledTitle": {
+    "description": "RM-M16-05."
+  },
+  "visitsNotFulfilledBody": "No presence was confirmed during the slot. This visit can no longer be started.",
+  "@visitsNotFulfilledBody": {
+    "description": "RM-M16-05 — no automatic penalty; the admin is alerted."
+  },
   "visitsCancelConfirm": "Possible up to 1 hour before the slot. The tenant will be notified.",
   "@visitsCancelConfirm": {
     "description": "RM-M16-04."
-  },
-  "visitsReportTitle": "Visit report",
-  "@visitsReportTitle": {
-    "description": "M16 report screen."
-  },
-  "visitsReportOpen": "Write the report",
-  "@visitsReportOpen": {
-    "description": "Open the report form."
-  },
-  "visitsReportDone": "Report sent",
-  "@visitsReportDone": {
-    "description": "reportSubmitted is true."
-  },
-  "visitsReportLocked": "A submitted report cannot be changed.",
-  "@visitsReportLocked": {
-    "description": "RM-M16-03."
-  },
-  "visitsReportCondition": "Overall condition",
-  "@visitsReportCondition": {
-    "description": "overallCondition 1-5."
-  },
-  "visitsReportConformity": "Matches the listing?",
-  "@visitsReportConformity": {
-    "description": "listingConformity."
-  },
-  "visitsConformityYes": "Yes",
-  "@visitsConformityYes": {
-    "description": "OUI."
-  },
-  "visitsConformityPartly": "Partly",
-  "@visitsConformityPartly": {
-    "description": "PARTIELLEMENT."
-  },
-  "visitsConformityNo": "No",
-  "@visitsConformityNo": {
-    "description": "NON."
-  },
-  "visitsReportComment": "Comment",
-  "@visitsReportComment": {
-    "description": "Free text, optional."
-  },
-  "visitsReportPhotos": "Photos",
-  "@visitsReportPhotos": {
-    "description": "Report photos — min 3."
-  },
-  "visitsReportPhotosNeeded": "Add {count} more photo(s)",
-  "@visitsReportPhotosNeeded": {
-    "description": "How many more are needed before the report can be filed.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "visitsReportSubmit": "Send the report",
-  "@visitsReportSubmit": {
-    "description": "Submit — irreversible."
-  },
-  "visitsReportSubmitConfirm": "The report cannot be changed once sent.",
-  "@visitsReportSubmitConfirm": {
-    "description": "RM-M16-03."
   },
   "visitsActionFailed": "That action isn't possible right now.",
   "@visitsActionFailed": {

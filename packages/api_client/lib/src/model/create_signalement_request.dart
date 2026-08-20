@@ -20,7 +20,7 @@ part 'create_signalement_request.g.dart';
 abstract class CreateSignalementRequest implements Built<CreateSignalementRequest, CreateSignalementRequestBuilder> {
   @BuiltValueField(wireName: r'targetType')
   CreateSignalementRequestTargetTypeEnum get targetType;
-  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  };
+  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  };
 
   @BuiltValueField(wireName: r'targetId')
   String get targetId;
@@ -164,6 +164,8 @@ class CreateSignalementRequestTargetTypeEnum extends EnumClass {
   static const CreateSignalementRequestTargetTypeEnum ANNONCE = _$createSignalementRequestTargetTypeEnum_ANNONCE;
   @BuiltValueEnumConst(wireName: r'MESSAGE')
   static const CreateSignalementRequestTargetTypeEnum MESSAGE = _$createSignalementRequestTargetTypeEnum_MESSAGE;
+  @BuiltValueEnumConst(wireName: r'REVIEW')
+  static const CreateSignalementRequestTargetTypeEnum REVIEW = _$createSignalementRequestTargetTypeEnum_REVIEW;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateSignalementRequestTargetTypeEnum unknownDefaultOpenApi = _$createSignalementRequestTargetTypeEnum_unknownDefaultOpenApi;
 

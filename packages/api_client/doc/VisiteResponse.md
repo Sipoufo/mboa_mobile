@@ -11,9 +11,12 @@ Name | Type | Description | Notes
 **id** | **String** |  | [optional] 
 **annonceId** | **String** |  | [optional] 
 **annonceTitle** | **String** |  | [optional] 
-**agentAccountId** | **String** |  | [optional] 
+**visitorAccountId** | **String** |  | [optional] 
+**visitorKind** | **String** |  | [optional] 
 **scheduledAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **status** | **String** |  | [optional] 
+**visitorConfirmedAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**clientConfirmedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **cancellationReason** | **String** |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
 

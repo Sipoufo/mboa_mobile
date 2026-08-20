@@ -22,8 +22,13 @@ void main() {
       // TODO
     });
 
-    // String agentAccountId
-    test('to test the property `agentAccountId`', () async {
+    // String visitorAccountId
+    test('to test the property `visitorAccountId`', () async {
+      // TODO
+    });
+
+    // String visitorKind
+    test('to test the property `visitorKind`', () async {
       // TODO
     });
 
@@ -34,6 +39,16 @@ void main() {
 
     // String status
     test('to test the property `status`', () async {
+      // TODO
+    });
+
+    // DateTime visitorConfirmedAt
+    test('to test the property `visitorConfirmedAt`', () async {
+      // TODO
+    });
+
+    // DateTime clientConfirmedAt
+    test('to test the property `clientConfirmedAt`', () async {
       // TODO
     });
 

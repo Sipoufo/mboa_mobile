@@ -142,6 +142,11 @@ void main() {
       // TODO
     });
 
+    // bool ownerVisitsEnabled
+    test('to test the property `ownerVisitsEnabled`', () async {
+      // TODO
+    });
+
     // int viewCount
     test('to test the property `viewCount`', () async {
       // TODO

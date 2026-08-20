@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **type** | **String** |  | [optional] 
 **mainCityId** | **String** |  | [optional] 
 **mainCity** | **String** |  | [optional] 
+**registrationNumber** | **String** |  | [optional] 
 **typeChangedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **profileComplete** | **bool** |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 

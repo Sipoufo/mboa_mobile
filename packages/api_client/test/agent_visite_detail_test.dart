@@ -67,18 +67,18 @@ void main() {
       // TODO
     });
 
-    // DateTime startedAt
-    test('to test the property `startedAt`', () async {
+    // DateTime visitorConfirmedAt
+    test('to test the property `visitorConfirmedAt`', () async {
       // TODO
     });
 
-    // bool canStart
-    test('to test the property `canStart`', () async {
+    // DateTime clientConfirmedAt
+    test('to test the property `clientConfirmedAt`', () async {
       // TODO
     });
 
-    // bool reportSubmitted
-    test('to test the property `reportSubmitted`', () async {
+    // bool canConfirm
+    test('to test the property `canConfirm`', () async {
       // TODO
     });
 

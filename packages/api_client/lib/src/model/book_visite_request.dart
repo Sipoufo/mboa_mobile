@@ -12,11 +12,15 @@ part 'book_visite_request.g.dart';
 ///
 /// Properties:
 /// * [annonceId] 
+/// * [visitorAccountId] 
 /// * [startsAt] 
 @BuiltValue()
 abstract class BookVisiteRequest implements Built<BookVisiteRequest, BookVisiteRequestBuilder> {
   @BuiltValueField(wireName: r'annonceId')
   String get annonceId;
+
+  @BuiltValueField(wireName: r'visitorAccountId')
+  String get visitorAccountId;
 
   @BuiltValueField(wireName: r'startsAt')
   DateTime get startsAt;
@@ -47,6 +51,11 @@ class _$BookVisiteRequestSerializer implements PrimitiveSerializer<BookVisiteReq
     yield r'annonceId';
     yield serializers.serialize(
       object.annonceId,
+      specifiedType: const FullType(String),
+    );
+    yield r'visitorAccountId';
+    yield serializers.serialize(
+      object.visitorAccountId,
       specifiedType: const FullType(String),
     );
     yield r'startsAt';
@@ -83,6 +92,13 @@ class _$BookVisiteRequestSerializer implements PrimitiveSerializer<BookVisiteReq
             specifiedType: const FullType(String),
           ) as String;
           result.annonceId = valueDes;
+          break;
+        case r'visitorAccountId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.visitorAccountId = valueDes;
           break;
         case r'startsAt':
           final valueDes = serializers.deserialize(

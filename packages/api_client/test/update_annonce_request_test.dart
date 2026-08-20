@@ -102,5 +102,10 @@ void main() {
       // TODO
     });
 
+    // bool ownerVisitsEnabled
+    test('to test the property `ownerVisitsEnabled`', () async {
+      // TODO
+    });
+
   });
 }

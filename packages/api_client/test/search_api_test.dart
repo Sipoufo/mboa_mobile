@@ -32,6 +32,15 @@ void main() {
       // TODO
     });
 
+    // A property's reviews — visits and tenancies in one feed (RM-M27-05)
+    //
+    // Public, like the fiche itself. Each item carries a `type` of VISIT or RESIDENT; a resident's review counts three times a visitor's in the note (RG-06). Filter with `?type=` to show one kind. An author who has deleted their account appears without a name; the review stays, because it describes the property.
+    //
+    //Future<PageResponsePropertyReview> listAnnonceReviews(String id, Pageable pageable, { String type }) async
+    test('test listAnnonceReviews', () async {
+      // TODO
+    });
+
     // Search listings and residences (city/district required; other filters cumulative)
     //
     //Future<PageResponseSearchResult> searchListings({ String cityId, BuiltList<String> districtIds, BuiltList<String> propertyTypes, BuiltList<String> rentalPeriods, int rentMin, int rentMax, int roomsMin, int surfaceMin, int surfaceMax, bool furnished, bool availableNow, int page, int size }) async

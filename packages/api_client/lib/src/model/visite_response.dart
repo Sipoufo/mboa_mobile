@@ -15,9 +15,12 @@ part 'visite_response.g.dart';
 /// * [id] 
 /// * [annonceId] 
 /// * [annonceTitle] 
-/// * [agentAccountId] 
+/// * [visitorAccountId] 
+/// * [visitorKind] 
 /// * [scheduledAt] 
 /// * [status] 
+/// * [visitorConfirmedAt] 
+/// * [clientConfirmedAt] 
 /// * [cancellationReason] 
 /// * [createdAt] 
 @BuiltValue()
@@ -31,15 +34,25 @@ abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBui
   @BuiltValueField(wireName: r'annonceTitle')
   String? get annonceTitle;
 
-  @BuiltValueField(wireName: r'agentAccountId')
-  String? get agentAccountId;
+  @BuiltValueField(wireName: r'visitorAccountId')
+  String? get visitorAccountId;
+
+  @BuiltValueField(wireName: r'visitorKind')
+  VisiteResponseVisitorKindEnum? get visitorKind;
+  // enum visitorKindEnum {  AGENT,  OWNER,  };
 
   @BuiltValueField(wireName: r'scheduledAt')
   DateTime? get scheduledAt;
 
   @BuiltValueField(wireName: r'status')
   VisiteResponseStatusEnum? get status;
-  // enum statusEnum {  SCHEDULED,  CANCELLED,  COMPLETED,  };
+  // enum statusEnum {  REQUESTED,  SCHEDULED,  CANCELLED,  COMPLETED,  NOT_FULFILLED,  };
+
+  @BuiltValueField(wireName: r'visitorConfirmedAt')
+  DateTime? get visitorConfirmedAt;
+
+  @BuiltValueField(wireName: r'clientConfirmedAt')
+  DateTime? get clientConfirmedAt;
 
   @BuiltValueField(wireName: r'cancellationReason')
   VisiteResponseCancellationReasonEnum? get cancellationReason;
@@ -92,11 +105,18 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
         specifiedType: const FullType(String),
       );
     }
-    if (object.agentAccountId != null) {
-      yield r'agentAccountId';
+    if (object.visitorAccountId != null) {
+      yield r'visitorAccountId';
       yield serializers.serialize(
-        object.agentAccountId,
+        object.visitorAccountId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.visitorKind != null) {
+      yield r'visitorKind';
+      yield serializers.serialize(
+        object.visitorKind,
+        specifiedType: const FullType(VisiteResponseVisitorKindEnum),
       );
     }
     if (object.scheduledAt != null) {
@@ -111,6 +131,20 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
       yield serializers.serialize(
         object.status,
         specifiedType: const FullType(VisiteResponseStatusEnum),
+      );
+    }
+    if (object.visitorConfirmedAt != null) {
+      yield r'visitorConfirmedAt';
+      yield serializers.serialize(
+        object.visitorConfirmedAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.clientConfirmedAt != null) {
+      yield r'clientConfirmedAt';
+      yield serializers.serialize(
+        object.clientConfirmedAt,
+        specifiedType: const FullType(DateTime),
       );
     }
     if (object.cancellationReason != null) {
@@ -174,13 +208,21 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
           if (valueDes == null) continue;
           result.annonceTitle = valueDes;
           break;
-        case r'agentAccountId':
+        case r'visitorAccountId':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType.nullable(String),
           ) as String?;
           if (valueDes == null) continue;
-          result.agentAccountId = valueDes;
+          result.visitorAccountId = valueDes;
+          break;
+        case r'visitorKind':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(VisiteResponseVisitorKindEnum),
+          ) as VisiteResponseVisitorKindEnum?;
+          if (valueDes == null) continue;
+          result.visitorKind = valueDes;
           break;
         case r'scheduledAt':
           final valueDes = serializers.deserialize(
@@ -197,6 +239,22 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
           ) as VisiteResponseStatusEnum?;
           if (valueDes == null) continue;
           result.status = valueDes;
+          break;
+        case r'visitorConfirmedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DateTime),
+          ) as DateTime?;
+          if (valueDes == null) continue;
+          result.visitorConfirmedAt = valueDes;
+          break;
+        case r'clientConfirmedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DateTime),
+          ) as DateTime?;
+          if (valueDes == null) continue;
+          result.clientConfirmedAt = valueDes;
           break;
         case r'cancellationReason':
           final valueDes = serializers.deserialize(
@@ -243,14 +301,35 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
   }
 }
 
+class VisiteResponseVisitorKindEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'AGENT')
+  static const VisiteResponseVisitorKindEnum AGENT = _$visiteResponseVisitorKindEnum_AGENT;
+  @BuiltValueEnumConst(wireName: r'OWNER')
+  static const VisiteResponseVisitorKindEnum OWNER = _$visiteResponseVisitorKindEnum_OWNER;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const VisiteResponseVisitorKindEnum unknownDefaultOpenApi = _$visiteResponseVisitorKindEnum_unknownDefaultOpenApi;
+
+  static Serializer<VisiteResponseVisitorKindEnum> get serializer => _$visiteResponseVisitorKindEnumSerializer;
+
+  const VisiteResponseVisitorKindEnum._(String name): super(name);
+
+  static BuiltSet<VisiteResponseVisitorKindEnum> get values => _$visiteResponseVisitorKindEnumValues;
+  static VisiteResponseVisitorKindEnum valueOf(String name) => _$visiteResponseVisitorKindEnumValueOf(name);
+}
+
 class VisiteResponseStatusEnum extends EnumClass {
 
+  @BuiltValueEnumConst(wireName: r'REQUESTED')
+  static const VisiteResponseStatusEnum REQUESTED = _$visiteResponseStatusEnum_REQUESTED;
   @BuiltValueEnumConst(wireName: r'SCHEDULED')
   static const VisiteResponseStatusEnum SCHEDULED = _$visiteResponseStatusEnum_SCHEDULED;
   @BuiltValueEnumConst(wireName: r'CANCELLED')
   static const VisiteResponseStatusEnum CANCELLED = _$visiteResponseStatusEnum_CANCELLED;
   @BuiltValueEnumConst(wireName: r'COMPLETED')
   static const VisiteResponseStatusEnum COMPLETED = _$visiteResponseStatusEnum_COMPLETED;
+  @BuiltValueEnumConst(wireName: r'NOT_FULFILLED')
+  static const VisiteResponseStatusEnum NOT_FULFILLED = _$visiteResponseStatusEnum_NOT_FULFILLED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const VisiteResponseStatusEnum unknownDefaultOpenApi = _$visiteResponseStatusEnum_unknownDefaultOpenApi;
 

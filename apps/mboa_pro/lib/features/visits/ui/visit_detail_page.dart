@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
-import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
 import '../bloc/visit_detail_bloc.dart';
 import '../models/agent_visit.dart';
@@ -89,8 +89,9 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  /// RM-M16-02 — beyond 500 m the visit is not blocked, it is questioned. A GPS
-  /// fix can be wrong, and an agent at the gate should not be stranded by it.
+  /// RM-M16-02 — beyond 500 m the confirmation is not blocked, it is
+  /// questioned. A GPS fix can be wrong, and an agent at the gate should not be
+  /// stranded by it.
   Future<void> _askForJustification(
     BuildContext context,
     VisitDetailReady state,
@@ -105,11 +106,11 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
     );
 
     if (reason == null || reason.isEmpty) {
-      // No justification, no start — the record has to say why.
+      // No justification, no confirmation — the record has to say why.
       bloc.add(const VisitOverrideDismissed());
       return;
     }
-    bloc.add(VisitStartOverridden(reason));
+    bloc.add(VisitPresenceOverridden(reason));
   }
 }
 
@@ -270,54 +271,60 @@ class _Actions extends StatelessWidget {
     final colors = context.mboaColors;
     final visit = state.visit;
 
-    if (visit.reportSubmitted) {
-      // RM-M16-03 — filed and locked. Offering an edit that would be refused
-      // is worse than saying so.
-      return Column(
-        children: [
-          Text(l10n.visitsReportDone, style: context.mboaText.h3),
-          const SizedBox(height: Dimens.spacingXs),
-          Text(
-            l10n.visitsReportLocked,
-            textAlign: TextAlign.center,
-            style: context.mboaText.caption
-                .copyWith(color: colors.textSecondary),
-          ),
-        ],
+    // RM-M16-03 — a completed visit cannot be restarted; RM-M16-05 marks one
+    // nobody confirmed as not fulfilled. Neither offers an action.
+    if (visit.status == VisitStatus.completed) {
+      return _Outcome(
+        title: l10n.visitsCompletedTitle,
+        body: l10n.visitsCompletedBody,
+        color: colors.success,
+      );
+    }
+    if (visit.status == VisitStatus.notFulfilled) {
+      return _Outcome(
+        title: l10n.visitsNotFulfilledTitle,
+        body: l10n.visitsNotFulfilledBody,
+        color: colors.error,
       );
     }
 
-    if (visit.hasStarted) {
-      return Button.primary(
-        title: l10n.visitsReportOpen,
-        onPressed: () =>
-            context.router.push(VisitReportRoute(visitId: visit.id)),
+    // RM-M07-05 — the agent's half is done and the client's is not. Offering
+    // the button again would suggest the agent can supply a confirmation that
+    // is not theirs to give.
+    if (visit.isAwaitingClient) {
+      return _Outcome(
+        title: l10n.visitsAwaitingClientTitle,
+        body: l10n.visitsAwaitingClientBody,
+        color: colors.primary,
       );
     }
 
     return Column(
       children: [
         Button.primary(
-          title: state.isStarting ? l10n.visitsLocating : l10n.visitsStart,
-          isLoading: state.isStarting,
-          // `canStart` is the server's answer to "is it the day yet" — the app
-          // does not re-derive that rule.
-          onPressed: visit.canStart
+          title: state.isConfirming
+              ? l10n.visitsLocating
+              : l10n.visitsConfirmPresence,
+          isLoading: state.isConfirming,
+          // `canConfirm` is the server's answer to "is it the day yet" — the
+          // app does not re-derive that rule.
+          onPressed: visit.canConfirm
               ? () => context.read<VisitDetailBloc>().add(
-                    const VisitStartRequested(),
+                    const VisitPresenceConfirmed(),
                   )
               : null,
         ),
-        if (!visit.canStart) ...[
-          const SizedBox(height: Dimens.spacingXs),
-          Text(
-            l10n.visitsStartNotYet,
-            style: context.mboaText.caption
-                .copyWith(color: colors.textSecondary),
-          ),
-        ],
+        const SizedBox(height: Dimens.spacingXs),
+        Text(
+          visit.canConfirm
+              ? l10n.visitsConfirmPresenceHint
+              : l10n.visitsConfirmNotYet,
+          textAlign: TextAlign.center,
+          style:
+              context.mboaText.caption.copyWith(color: colors.textSecondary),
+        ),
         const SizedBox(height: Dimens.spacing),
-        if (visit.status == VisitStatus.scheduled)
+        if (visit.status.isOpen)
           TextButton(
             onPressed: () => _confirmCancel(context, visit),
             style: TextButton.styleFrom(foregroundColor: colors.error),
@@ -361,4 +368,32 @@ class _Actions extends StatelessWidget {
     // ProviderNotFoundException on a device.
     if (confirmed ?? false) bloc.add(const VisitCancelRequested());
   }
+}
+
+/// A visit that has reached an end state, or is waiting on somebody else: a
+/// heading and the sentence that explains what happens next.
+class _Outcome extends StatelessWidget {
+  const _Outcome({
+    required this.title,
+    required this.body,
+    required this.color,
+  });
+
+  final String title;
+  final String body;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Column(
+        children: [
+          Text(title, style: context.mboaText.h3.copyWith(color: color)),
+          const SizedBox(height: Dimens.spacingXs),
+          Text(
+            body,
+            textAlign: TextAlign.center,
+            style: context.mboaText.caption
+                .copyWith(color: context.mboaColors.textSecondary),
+          ),
+        ],
+      );
 }

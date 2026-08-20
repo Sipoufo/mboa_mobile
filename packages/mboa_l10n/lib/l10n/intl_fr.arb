@@ -1330,18 +1330,6 @@
   "@visitsCall": {
     "description": "Dial a contact."
   },
-  "visitsStart": "Démarrer la visite",
-  "@visitsStart": {
-    "description": "RM-M16-02."
-  },
-  "visitsStartNotYet": "Disponible le jour de la visite",
-  "@visitsStartNotYet": {
-    "description": "canStart is false — the server decides."
-  },
-  "visitsStarted": "Visite démarrée",
-  "@visitsStarted": {
-    "description": "startedAt is set."
-  },
   "visitsLocating": "Localisation en cours…",
   "@visitsLocating": {
     "description": "Taking the GPS fix."
@@ -1350,7 +1338,7 @@
   "@visitsTooFarTitle": {
     "description": "RM-M16-02 — beyond 500 m."
   },
-  "visitsTooFarBody": "Vous êtes à environ {distance} m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.",
+  "visitsTooFarBody": "Vous êtes à environ {distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.",
   "@visitsTooFarBody": {
     "description": "The justification Doc 10 asks for.",
     "placeholders": {
@@ -1363,11 +1351,11 @@
   "@visitsTooFarHint": {
     "description": "Placeholder for the justification."
   },
-  "visitsTooFarConfirm": "Démarrer quand même",
+  "visitsTooFarConfirm": "Confirmer quand même",
   "@visitsTooFarConfirm": {
     "description": "Confirm with a justification."
   },
-  "visitsLocationDenied": "Autorisez la localisation pour démarrer une visite.",
+  "visitsLocationDenied": "Autorisez la localisation pour confirmer votre présence.",
   "@visitsLocationDenied": {
     "description": "LocationFailure.denied."
   },
@@ -1387,70 +1375,53 @@
   "@visitsCancel": {
     "description": "RM-M16-04."
   },
+  "visitsStatusRequested": "Demandée",
+  "@visitsStatusRequested": {
+    "description": "VisiteResponse.status = REQUESTED — awaiting the owner's confirmation (RM-M15-06)."
+  },
+  "visitsStatusNotFulfilled": "Non honorée",
+  "@visitsStatusNotFulfilled": {
+    "description": "VisiteResponse.status = NOT_FULFILLED (RM-M16-05)."
+  },
+  "visitsConfirmPresence": "Confirmer ma présence",
+  "@visitsConfirmPresence": {
+    "description": "RM-M07-05 / RM-M16-02 — the agent's half of the mutual confirmation."
+  },
+  "visitsConfirmPresenceHint": "Le locataire doit confirmer de son côté pour que la visite soit validée.",
+  "@visitsConfirmPresenceHint": {
+    "description": "RM-M07-05 — one confirmation is never enough."
+  },
+  "visitsConfirmNotYet": "Disponible le jour de la visite",
+  "@visitsConfirmNotYet": {
+    "description": "canConfirm is false — the server decides."
+  },
+  "visitsAwaitingClientTitle": "Présence confirmée",
+  "@visitsAwaitingClientTitle": {
+    "description": "visitorConfirmedAt is set, clientConfirmedAt is not."
+  },
+  "visitsAwaitingClientBody": "En attente de la confirmation du locataire. La visite sera validée dès qu'il aura confirmé de son côté.",
+  "@visitsAwaitingClientBody": {
+    "description": "RM-M07-05."
+  },
+  "visitsCompletedTitle": "Visite effectuée",
+  "@visitsCompletedTitle": {
+    "description": "Both parties confirmed (RM-M16-03)."
+  },
+  "visitsCompletedBody": "Les deux présences ont été confirmées. Le locataire peut désormais publier son avis sur le bien.",
+  "@visitsCompletedBody": {
+    "description": "RM-M07bis — the report is the client's to write."
+  },
+  "visitsNotFulfilledTitle": "Visite non honorée",
+  "@visitsNotFulfilledTitle": {
+    "description": "RM-M16-05."
+  },
+  "visitsNotFulfilledBody": "Aucune présence n'a été confirmée pendant le créneau. Cette visite ne peut plus être démarrée.",
+  "@visitsNotFulfilledBody": {
+    "description": "RM-M16-05 — no automatic penalty; the admin is alerted."
+  },
   "visitsCancelConfirm": "Possible jusqu'à 1 heure avant le créneau. Le locataire sera prévenu.",
   "@visitsCancelConfirm": {
     "description": "RM-M16-04."
-  },
-  "visitsReportTitle": "Rapport de visite",
-  "@visitsReportTitle": {
-    "description": "M16 report screen."
-  },
-  "visitsReportOpen": "Rédiger le rapport",
-  "@visitsReportOpen": {
-    "description": "Open the report form."
-  },
-  "visitsReportDone": "Rapport envoyé",
-  "@visitsReportDone": {
-    "description": "reportSubmitted is true."
-  },
-  "visitsReportLocked": "Un rapport envoyé ne peut plus être modifié.",
-  "@visitsReportLocked": {
-    "description": "RM-M16-03."
-  },
-  "visitsReportCondition": "État général",
-  "@visitsReportCondition": {
-    "description": "overallCondition 1-5."
-  },
-  "visitsReportConformity": "Conforme à l'annonce ?",
-  "@visitsReportConformity": {
-    "description": "listingConformity."
-  },
-  "visitsConformityYes": "Oui",
-  "@visitsConformityYes": {
-    "description": "OUI."
-  },
-  "visitsConformityPartly": "Partiellement",
-  "@visitsConformityPartly": {
-    "description": "PARTIELLEMENT."
-  },
-  "visitsConformityNo": "Non",
-  "@visitsConformityNo": {
-    "description": "NON."
-  },
-  "visitsReportComment": "Commentaire",
-  "@visitsReportComment": {
-    "description": "Free text, optional."
-  },
-  "visitsReportPhotos": "Photos",
-  "@visitsReportPhotos": {
-    "description": "Report photos — min 3."
-  },
-  "visitsReportPhotosNeeded": "Ajoutez encore {count} photo(s)",
-  "@visitsReportPhotosNeeded": {
-    "description": "How many more are needed before the report can be filed.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "visitsReportSubmit": "Envoyer le rapport",
-  "@visitsReportSubmit": {
-    "description": "Submit — irreversible."
-  },
-  "visitsReportSubmitConfirm": "Le rapport ne pourra plus être modifié après l'envoi.",
-  "@visitsReportSubmitConfirm": {
-    "description": "RM-M16-03."
   },
   "visitsActionFailed": "Action impossible pour le moment.",
   "@visitsActionFailed": {

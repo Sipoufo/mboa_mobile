@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-08-11.
+> Last updated: 2026-08-20.
 
 ## How to resume
 
@@ -22,8 +22,12 @@
 
 ## Where things stand
 
-**436 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 326 ·
-`mboa_core` 12 · `mboa_shared` 77.
+**478 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 368 ·
+`mboa_core` 12 · `mboa_shared` 80.
+
+> **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
+> *What the 2026-08-20 spec changed* below before planning anything. M16 has
+> already been refitted; M11 has not.
 
 | Module | State |
 |---|---|
@@ -39,7 +43,8 @@
 | M04 search · M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail (public profile) |
-| M16 agent visits | ✅ list, detail, start with geofence, report |
+| M16 agent visits | ✅ list, detail, **mutual presence confirmation** (the report is gone — it is the client's now, → M07bis) |
+| M07bis client review · M27 resident review · M08 contracts | ❌ not started (endpoints exist) |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -376,20 +381,63 @@ instead. Pinned by `agent_detail_page_test.dart`.
 an agent's number reaches the people who need it on the day of a visit, through
 the visit sheet, not everyone who has been offered their services.
 
+### What the 2026-08-20 spec changed
+
+Doc 10 was revised on 2026-08-13 and the spec re-exported on 2026-08-20. 32
+endpoints arrived, 3 left. The three that left were **M16's**, and they took the
+build down with them.
+
+- **The visit report changed author.** `POST /agents/me/visites/{id}/report` and
+  `/start` are gone. The evaluative report is written by the **client** now
+  (M07bis: `POST /visites/{id}/review`), published on the listing, and the
+  visitor may only *comment* on it. Everything the agent app had for filing a
+  report — form, bloc, model, route, ARB keys — has been deleted, not disabled.
+- **Starting a visit is now a mutual confirmation** (RM-M07-05): the agent posts
+  `/visites/{id}/visitor-confirmation` (same `StartVisiteRequest`, same 500 m
+  justification) and the client posts `/client-confirmation` from the other app.
+  Neither party can supply the other's. Statuses gained `REQUESTED` (a slot
+  proposed to an owner who confirms by hand) and `NOT_FULFILLED` (RM-M16-05).
+- **A visit's visitor may be the owner** (`visitorKind: AGENT | OWNER`,
+  RM-M11-10), `GET /visites/slots` now returns a **list of bookable visitors**
+  each with their own times, and `BookVisiteRequest` requires
+  `visitorAccountId`.
+- **M11 became a pool** — several active agents per listing, accepting an
+  application no longer auto-declines the others (RM-M11-01/07, **confirmed
+  effective backend-side**). The spec is unchanged on those endpoints, so this
+  is invisible to `make gen-api`: the app still encodes the old exclusivity in
+  `property_agent_state.dart`, `agent_assignment_page.dart` and
+  `assignment_repository.dart`. **Next chantier.**
+- New elsewhere: `AnnonceDetailResponse.rating` (`PropertyRating`, weighted 3:1
+  by RG-06, computed server-side — never recompute it), `ownerVisitsEnabled` on
+  the annonce (**update only, absent from `CreateAnnonceRequest`**),
+  `registrationNumber` on the prestataire profile (RCCM, needed by the
+  contract), upload category `CONTRACT`, signalement target `REVIEW`,
+  notifications N-18/19/20, and the whole **M08 contract** surface (20
+  endpoints, 6 statuses, `awaiting` and `canSign` server-computed).
+
+### Visits live partly in `mboa_shared`
+`Visit` + `VisitStatus` + `VisitorKind`
+(`mboa_shared/src/features/visits/models/visit.dart`) model the **shared**
+`VisiteResponse`: the client (`GET /visites`), the agent
+(`GET /agents/me/visites`) and the prestataire visiting his own property
+(`GET /prestataires/me/visites`) are all served the same DTO. Put anything that
+both apps read there; `AgentVisitDetail` and `VisitGeofence` stay in `mboa_pro`
+because `AgentVisiteDetail` is the agent's alone.
+
 ### M16 — what the server owns, and what the app must not re-derive
-- **`canStart`** is server-computed. The day-of rule lives there; the app only
-  renders the button state. Re-deriving it would be a second source of truth for
-  a decision that already has one.
+- **`canConfirm`** is server-computed (it replaced `canStart`). The day-of rule
+  lives there; the app only renders the button state. Re-deriving it would be a
+  second source of truth for a decision that already has one.
+- **Confirming is half a start.** `visitorConfirmedAt` set with
+  `clientConfirmedAt` null is an ordinary state, not an error: the screen says
+  who is being waited on instead of offering the button again. Pinned by
+  `visits_bloc_test.dart` and `visits_screens_test.dart`.
 - **The 500 m geofence is a prompt, not a gate** (RM-M16-02). Beyond the radius
-  the agent writes a justification and the visit starts anyway — a GPS fix can
+  the agent writes a justification and the confirmation goes through anyway — a GPS fix can
   be wrong, and an agent standing at the gate must not be stranded by it. The
   coordinates go to the server either way and it decides. A property with **no
   coordinates never demands one**: refusing would punish the agent for an
   incomplete listing.
-- **A filed report is locked** (RM-M16-03), so the detail says so rather than
-  offering an edit the server would refuse. The submit button waits for a
-  complete draft — three photos, condition and conformity — instead of failing
-  after three uploads.
 - **A visit earlier today stays under "Aujourd'hui"**, not "Passées": 08:00 is
   still the agent's work at 09:00. A scheduled visit whose slot has passed *does*
   fall to Passées — never carried out, never cancelled, and the one they most
@@ -468,8 +516,12 @@ as the same thing.
 - **iOS push** — blocked only on the APNs key. Everything else is done.
 - Password reset (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
 - Settings extras: searchable toggle, per-type notification preferences.
-- Agent side (M15/M16), favourites (M06), visits (M07), contract (M08),
-  Mboa Score (M09).
+- **M11 pool cardinality** — the exclusivity the app enforces was repealed on
+  2026-08-13 and the backend has already switched. First thing after this.
+- **M08 contracts** — the largest new surface (both apps, 6 statuses, a
+  negotiation round-trip). Needs `registrationNumber` on the pro profile first.
+- M07 booking + M07bis client review + M27 resident review — all need M05.
+- Favourites (M06), Mboa Score (M09).
 
 ---
 

@@ -12,6 +12,11 @@ void main() {
       // TODO
     });
 
+    // String visitorAccountId
+    test('to test the property `visitorAccountId`', () async {
+      // TODO
+    });
+
     // DateTime startsAt
     test('to test the property `startsAt`', () async {
       // TODO

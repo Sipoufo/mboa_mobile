@@ -13,8 +13,6 @@ Method | HTTP request | Description
 [**getMyAgentVisite**](AgentVisitesApi.md#getmyagentvisite) | **GET** /api/v1/agents/me/visites/{id} | One visit in full: exact address, both contacts, whether it can start (RM-M16-01)
 [**listMyAgentVisites**](AgentVisitesApi.md#listmyagentvisites) | **GET** /api/v1/agents/me/visites | Visits assigned to the authenticated agent
 [**listMyAgentVisitesToday**](AgentVisitesApi.md#listmyagentvisitestoday) | **GET** /api/v1/agents/me/visites/today | The agent&#39;s round for today, soonest first
-[**startMyAgentVisite**](AgentVisitesApi.md#startmyagentvisite) | **POST** /api/v1/agents/me/visites/{id}/start | Start the visit on site; beyond 500 m a justification is required (RM-M16-02)
-[**submitVisiteReport**](AgentVisitesApi.md#submitvisitereport) | **POST** /api/v1/agents/me/visites/{id}/report | File the visit report; locked once submitted (RM-M07-06, RM-M16-03)
 
 
 # **cancelAgentVisite**
@@ -178,92 +176,6 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **startMyAgentVisite**
-> VisiteResponse startMyAgentVisite(id, startVisiteRequest)
-
-Start the visit on site; beyond 500 m a justification is required (RM-M16-02)
-
-### Example
-```dart
-import 'package:api_client/api.dart';
-
-final api = ApiClient().getAgentVisitesApi();
-final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final StartVisiteRequest startVisiteRequest = ; // StartVisiteRequest | 
-
-try {
-    final response = api.startMyAgentVisite(id, startVisiteRequest);
-    print(response);
-} on DioException catch (e) {
-    print('Exception when calling AgentVisitesApi->startMyAgentVisite: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **startVisiteRequest** | [**StartVisiteRequest**](StartVisiteRequest.md)|  | 
-
-### Return type
-
-[**VisiteResponse**](VisiteResponse.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **submitVisiteReport**
-> VisiteReportResponse submitVisiteReport(id, submitVisiteReportRequest)
-
-File the visit report; locked once submitted (RM-M07-06, RM-M16-03)
-
-### Example
-```dart
-import 'package:api_client/api.dart';
-
-final api = ApiClient().getAgentVisitesApi();
-final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final SubmitVisiteReportRequest submitVisiteReportRequest = ; // SubmitVisiteReportRequest | 
-
-try {
-    final response = api.submitVisiteReport(id, submitVisiteReportRequest);
-    print(response);
-} on DioException catch (e) {
-    print('Exception when calling AgentVisitesApi->submitVisiteReport: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **String**|  | 
- **submitVisiteReportRequest** | [**SubmitVisiteReportRequest**](SubmitVisiteReportRequest.md)|  | 
-
-### Return type
-
-[**VisiteReportResponse**](VisiteReportResponse.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

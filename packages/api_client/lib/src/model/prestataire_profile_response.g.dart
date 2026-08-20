@@ -102,6 +102,8 @@ class _$PrestataireProfileResponse extends PrestataireProfileResponse {
   @override
   final String? mainCity;
   @override
+  final String? registrationNumber;
+  @override
   final DateTime? typeChangedAt;
   @override
   final bool? profileComplete;
@@ -119,6 +121,7 @@ class _$PrestataireProfileResponse extends PrestataireProfileResponse {
     this.type,
     this.mainCityId,
     this.mainCity,
+    this.registrationNumber,
     this.typeChangedAt,
     this.profileComplete,
     this.createdAt,
@@ -142,6 +145,7 @@ class _$PrestataireProfileResponse extends PrestataireProfileResponse {
         type == other.type &&
         mainCityId == other.mainCityId &&
         mainCity == other.mainCity &&
+        registrationNumber == other.registrationNumber &&
         typeChangedAt == other.typeChangedAt &&
         profileComplete == other.profileComplete &&
         createdAt == other.createdAt;
@@ -156,6 +160,7 @@ class _$PrestataireProfileResponse extends PrestataireProfileResponse {
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, mainCityId.hashCode);
     _$hash = $jc(_$hash, mainCity.hashCode);
+    _$hash = $jc(_$hash, registrationNumber.hashCode);
     _$hash = $jc(_$hash, typeChangedAt.hashCode);
     _$hash = $jc(_$hash, profileComplete.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -172,6 +177,7 @@ class _$PrestataireProfileResponse extends PrestataireProfileResponse {
           ..add('type', type)
           ..add('mainCityId', mainCityId)
           ..add('mainCity', mainCity)
+          ..add('registrationNumber', registrationNumber)
           ..add('typeChangedAt', typeChangedAt)
           ..add('profileComplete', profileComplete)
           ..add('createdAt', createdAt))
@@ -209,6 +215,11 @@ class PrestataireProfileResponseBuilder
   String? get mainCity => _$this._mainCity;
   set mainCity(String? mainCity) => _$this._mainCity = mainCity;
 
+  String? _registrationNumber;
+  String? get registrationNumber => _$this._registrationNumber;
+  set registrationNumber(String? registrationNumber) =>
+      _$this._registrationNumber = registrationNumber;
+
   DateTime? _typeChangedAt;
   DateTime? get typeChangedAt => _$this._typeChangedAt;
   set typeChangedAt(DateTime? typeChangedAt) =>
@@ -236,6 +247,7 @@ class PrestataireProfileResponseBuilder
       _type = $v.type;
       _mainCityId = $v.mainCityId;
       _mainCity = $v.mainCity;
+      _registrationNumber = $v.registrationNumber;
       _typeChangedAt = $v.typeChangedAt;
       _profileComplete = $v.profileComplete;
       _createdAt = $v.createdAt;
@@ -267,6 +279,7 @@ class PrestataireProfileResponseBuilder
           type: type,
           mainCityId: mainCityId,
           mainCity: mainCity,
+          registrationNumber: registrationNumber,
           typeChangedAt: typeChangedAt,
           profileComplete: profileComplete,
           createdAt: createdAt,

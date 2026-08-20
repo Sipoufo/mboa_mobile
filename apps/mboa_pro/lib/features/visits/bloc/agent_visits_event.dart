@@ -28,7 +28,7 @@ class VisitsFilterChanged extends AgentVisitsEvent {
 class VisitCancelled extends AgentVisitsEvent {
   const VisitCancelled(this.visit);
 
-  final AgentVisit visit;
+  final Visit visit;
 
   @override
   List<Object?> get props => [visit];

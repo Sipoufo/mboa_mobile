@@ -18,6 +18,7 @@ part 'prestataire_profile_response.g.dart';
 /// * [type] 
 /// * [mainCityId] 
 /// * [mainCity] 
+/// * [registrationNumber] 
 /// * [typeChangedAt] 
 /// * [profileComplete] 
 /// * [createdAt] 
@@ -41,6 +42,9 @@ abstract class PrestataireProfileResponse implements Built<PrestataireProfileRes
 
   @BuiltValueField(wireName: r'mainCity')
   String? get mainCity;
+
+  @BuiltValueField(wireName: r'registrationNumber')
+  String? get registrationNumber;
 
   @BuiltValueField(wireName: r'typeChangedAt')
   DateTime? get typeChangedAt;
@@ -113,6 +117,13 @@ class _$PrestataireProfileResponseSerializer implements PrimitiveSerializer<Pres
       yield r'mainCity';
       yield serializers.serialize(
         object.mainCity,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.registrationNumber != null) {
+      yield r'registrationNumber';
+      yield serializers.serialize(
+        object.registrationNumber,
         specifiedType: const FullType(String),
       );
     }
@@ -207,6 +218,14 @@ class _$PrestataireProfileResponseSerializer implements PrimitiveSerializer<Pres
           ) as String?;
           if (valueDes == null) continue;
           result.mainCity = valueDes;
+          break;
+        case r'registrationNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.registrationNumber = valueDes;
           break;
         case r'typeChangedAt':
           final valueDes = serializers.deserialize(

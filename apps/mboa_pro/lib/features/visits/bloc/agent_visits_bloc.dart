@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 import '../data/agent_visit_repository.dart';
-import '../models/agent_visit.dart';
 
 part 'agent_visits_event.dart';
 part 'agent_visits_state.dart';

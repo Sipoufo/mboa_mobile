@@ -40,6 +40,7 @@ part 'annonce_response.g.dart';
 /// * [tierRank] 
 /// * [photoKeys] 
 /// * [amenities] 
+/// * [ownerVisitsEnabled] 
 /// * [viewCount] 
 /// * [publishedAt] 
 /// * [expiresAt] 
@@ -130,6 +131,9 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
   @BuiltValueField(wireName: r'amenities')
   BuiltSet<AnnonceResponseAmenitiesEnum>? get amenities;
   // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
+
+  @BuiltValueField(wireName: r'ownerVisitsEnabled')
+  bool? get ownerVisitsEnabled;
 
   @BuiltValueField(wireName: r'viewCount')
   int? get viewCount;
@@ -353,6 +357,13 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
       yield serializers.serialize(
         object.amenities,
         specifiedType: const FullType(BuiltSet, [FullType(AnnonceResponseAmenitiesEnum)]),
+      );
+    }
+    if (object.ownerVisitsEnabled != null) {
+      yield r'ownerVisitsEnabled';
+      yield serializers.serialize(
+        object.ownerVisitsEnabled,
+        specifiedType: const FullType(bool),
       );
     }
     if (object.viewCount != null) {
@@ -621,6 +632,14 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           ) as BuiltSet<AnnonceResponseAmenitiesEnum>?;
           if (valueDes == null) continue;
           result.amenities.replace(valueDes);
+          break;
+        case r'ownerVisitsEnabled':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.ownerVisitsEnabled = valueDes;
           break;
         case r'viewCount':
           final valueDes = serializers.deserialize(

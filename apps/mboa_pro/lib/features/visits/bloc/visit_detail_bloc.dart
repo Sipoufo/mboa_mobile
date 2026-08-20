@@ -8,11 +8,15 @@ import '../models/agent_visit.dart';
 part 'visit_detail_event.dart';
 part 'visit_detail_state.dart';
 
-/// One visit, and starting it (CDC M16 / RM-M16-02).
+/// One visit, and confirming presence at it (CDC M16 / RM-M16-02).
 ///
 /// The geofence is checked here for the *prompt* only. The coordinates go to
 /// the server either way and it decides; the app asking first is what turns a
 /// silent rejection into a question the agent can answer.
+///
+/// Confirming is only the agent's half — the visit completes when the client
+/// confirms from the other app (RM-M07-05), so the reload after a confirmation
+/// may well come back still waiting.
 class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
   VisitDetailBloc({
     required AgentVisitRepository repository,
@@ -21,8 +25,8 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
         _location = location,
         super(const VisitDetailInitial()) {
     on<VisitDetailRequested>(_onRequested);
-    on<VisitStartRequested>(_onStart);
-    on<VisitStartOverridden>(_onOverride);
+    on<VisitPresenceConfirmed>(_onConfirm);
+    on<VisitPresenceOverridden>(_onOverride);
     on<VisitOverrideDismissed>(_onDismiss);
     on<VisitCancelRequested>(_onCancel);
   }
@@ -42,14 +46,14 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     }
   }
 
-  Future<void> _onStart(
-    VisitStartRequested event,
+  Future<void> _onConfirm(
+    VisitPresenceConfirmed event,
     Emitter<VisitDetailState> emit,
   ) async {
     final current = state;
     if (current is! VisitDetailReady) return;
 
-    emit(current.copyWith(isStarting: true));
+    emit(current.copyWith(isConfirming: true));
 
     final LocationFix fix;
     try {
@@ -57,12 +61,12 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     } on LocationCaptureException catch (e) {
       // RM-M16-02 needs a position; without one there is nothing to send and
       // nothing to justify, so say which permission is missing.
-      emit(current.copyWith(isStarting: false, locationFailure: e.failure));
+      emit(current.copyWith(isConfirming: false, locationFailure: e.failure));
       return;
     } catch (_) {
       emit(
         current.copyWith(
-          isStarting: false,
+          isConfirming: false,
           locationFailure: LocationFailure.unavailable,
         ),
       );
@@ -80,7 +84,7 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
       // gate should not be stranded by it (Doc 10 asks for a justification).
       emit(
         current.copyWith(
-          isStarting: false,
+          isConfirming: false,
           pendingFix: fix,
           distanceMetres: distance,
         ),
@@ -92,7 +96,7 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
   }
 
   Future<void> _onOverride(
-    VisitStartOverridden event,
+    VisitPresenceOverridden event,
     Emitter<VisitDetailState> emit,
   ) async {
     final current = state;
@@ -100,7 +104,7 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     final fix = current.pendingFix;
     if (fix == null) return;
 
-    emit(current.copyWith(isStarting: true, clearPendingFix: true));
+    emit(current.copyWith(isConfirming: true, clearPendingFix: true));
     await _send(
       current,
       emit,
@@ -145,17 +149,17 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     String? reason,
   }) async {
     try {
-      await _repository.start(
+      await _repository.confirmPresence(
         current.visit.id,
         latitude: fix.latitude,
         longitude: fix.longitude,
         overrideReason: reason,
       );
-      // Re-read: `canStart`, `startedAt` and the report lock are all the
-      // server's to report.
+      // Re-read: `canConfirm`, both confirmation timestamps and the status
+      // are all the server's to report.
       emit(VisitDetailReady(await _repository.detail(current.visit.id)));
     } catch (_) {
-      emit(current.copyWith(isStarting: false, lastActionFailed: true));
+      emit(current.copyWith(isConfirming: false, lastActionFailed: true));
     }
   }
 }

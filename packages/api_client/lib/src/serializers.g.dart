@@ -44,16 +44,25 @@ Serializers _$serializers =
           ..add(BlockDayRequest.serializer)
           ..add(BookVisiteRequest.serializer)
           ..add(BookableSlot.serializer)
-          ..add(BookableSlotsResponse.serializer)
-          ..add(BookableSlotsResponseReasonEnum.serializer)
           ..add(ChangePasswordRequest.serializer)
+          ..add(ChangeRequestResponse.serializer)
+          ..add(ChangeRequestResponseContestedTermsEnum.serializer)
+          ..add(Comment.serializer)
           ..add(ConfirmPhoneChangeRequest.serializer)
+          ..add(ContractPdfResponse.serializer)
+          ..add(ContractResponse.serializer)
+          ..add(ContractResponseAwaitingEnum.serializer)
+          ..add(ContractResponseRentalPeriodEnum.serializer)
+          ..add(ContractResponseStatusEnum.serializer)
+          ..add(ContractVerification.serializer)
           ..add(ConversationResponse.serializer)
           ..add(CountryResponse.serializer)
           ..add(CreateAnnonceRequest.serializer)
           ..add(CreateAnnonceRequestAmenitiesEnum.serializer)
           ..add(CreateAnnonceRequestPropertyTypeEnum.serializer)
           ..add(CreateAnnonceRequestRentalPeriodEnum.serializer)
+          ..add(CreateContractRequest.serializer)
+          ..add(CreateContractRequestRentalPeriodEnum.serializer)
           ..add(CreateResidenceRequest.serializer)
           ..add(CreateSignalementRequest.serializer)
           ..add(CreateSignalementRequestReasonEnum.serializer)
@@ -88,18 +97,21 @@ Serializers _$serializers =
           ..add(PageResponseAdminUserSummary.serializer)
           ..add(PageResponseAnnonceResponse.serializer)
           ..add(PageResponseAssignmentItem.serializer)
+          ..add(PageResponseContractResponse.serializer)
           ..add(PageResponseConversationResponse.serializer)
           ..add(PageResponseFavoriResponse.serializer)
           ..add(PageResponseHistoriqueResponse.serializer)
           ..add(PageResponseKycReviewItem.serializer)
           ..add(PageResponseMessageResponse.serializer)
           ..add(PageResponsePaymentSummary.serializer)
+          ..add(PageResponsePropertyReview.serializer)
           ..add(PageResponseResidenceResponse.serializer)
           ..add(PageResponseSearchResult.serializer)
           ..add(PageResponseSignalementResponse.serializer)
           ..add(PageResponseTypeChangeReviewItem.serializer)
           ..add(PageResponseVisiteResponse.serializer)
           ..add(Pageable.serializer)
+          ..add(ParticipantSummary.serializer)
           ..add(PaymentInitiatedResponse.serializer)
           ..add(PaymentInitiatedResponseStatusEnum.serializer)
           ..add(PaymentSummary.serializer)
@@ -112,6 +124,9 @@ Serializers _$serializers =
           ..add(PresignedUpload.serializer)
           ..add(PrestataireProfileResponse.serializer)
           ..add(PrestataireProfileResponseTypeEnum.serializer)
+          ..add(PropertyRating.serializer)
+          ..add(PropertyReview.serializer)
+          ..add(PropertyReviewTypeEnum.serializer)
           ..add(ProviderCard.serializer)
           ..add(ProviderCardTypeEnum.serializer)
           ..add(RateAgentRequest.serializer)
@@ -123,6 +138,10 @@ Serializers _$serializers =
           ..add(RegisterProfessionalRequestRoleEnum.serializer)
           ..add(RejectKycRequest.serializer)
           ..add(RejectTypeChangeRequest.serializer)
+          ..add(Reply.serializer)
+          ..add(ReplyRequest.serializer)
+          ..add(RequestChangesRequest.serializer)
+          ..add(RequestChangesRequestContestedTermsEnum.serializer)
           ..add(RequestPhoneChangeRequest.serializer)
           ..add(RequestTypeChangeRequest.serializer)
           ..add(RequestTypeChangeRequestNewTypeEnum.serializer)
@@ -138,6 +157,9 @@ Serializers _$serializers =
           ..add(ResidenceResponse.serializer)
           ..add(ResidenceResponseStatusEnum.serializer)
           ..add(ResidenceSearchCard.serializer)
+          ..add(RespondToChangeRequest.serializer)
+          ..add(ReviewCommentRequest.serializer)
+          ..add(ReviewResponse.serializer)
           ..add(ReviewSignalementRequest.serializer)
           ..add(SearchResult.serializer)
           ..add(SearchResultItem.serializer)
@@ -147,18 +169,20 @@ Serializers _$serializers =
           ..add(SearchResultTypeEnum.serializer)
           ..add(SendMessageRequest.serializer)
           ..add(SendOtpRequest.serializer)
+          ..add(SignContractRequest.serializer)
           ..add(SignalementResponse.serializer)
           ..add(SignalementResponseReasonEnum.serializer)
           ..add(SignalementResponseStatusEnum.serializer)
           ..add(SignalementResponseTargetTypeEnum.serializer)
+          ..add(SignatureResponse.serializer)
           ..add(SkippedUnit.serializer)
           ..add(SocialLoginRequest.serializer)
           ..add(SocialLoginRequestProviderEnum.serializer)
           ..add(StartConversationRequest.serializer)
           ..add(StartVisiteRequest.serializer)
           ..add(SubmitKycRequest.serializer)
-          ..add(SubmitVisiteReportRequest.serializer)
-          ..add(SubmitVisiteReportRequestListingConformityEnum.serializer)
+          ..add(SubmitResidentReviewRequest.serializer)
+          ..add(SubmitReviewRequest.serializer)
           ..add(SubscribeRequest.serializer)
           ..add(SubscribeRequestMethodEnum.serializer)
           ..add(SubscribeRequestTierEnum.serializer)
@@ -191,6 +215,8 @@ Serializers _$serializers =
           ..add(UpdateAnnonceRequestPropertyTypeEnum.serializer)
           ..add(UpdateAnnonceRequestRentalPeriodEnum.serializer)
           ..add(UpdateAvailabilityRequest.serializer)
+          ..add(UpdateContractRequest.serializer)
+          ..add(UpdateContractRequestRentalPeriodEnum.serializer)
           ..add(UpdatePlanRequest.serializer)
           ..add(UpdatePrestataireProfileRequest.serializer)
           ..add(UpdatePrestataireProfileRequestTypeEnum.serializer)
@@ -204,11 +230,14 @@ Serializers _$serializers =
           ..add(UserSettingsResponse.serializer)
           ..add(UserSettingsResponseLanguageEnum.serializer)
           ..add(VerifyOtpRequest.serializer)
-          ..add(VisiteReportResponse.serializer)
-          ..add(VisiteReportResponseListingConformityEnum.serializer)
           ..add(VisiteResponse.serializer)
           ..add(VisiteResponseCancellationReasonEnum.serializer)
           ..add(VisiteResponseStatusEnum.serializer)
+          ..add(VisiteResponseVisitorKindEnum.serializer)
+          ..add(VisitorSlots.serializer)
+          ..add(VisitorSlotsModeEnum.serializer)
+          ..add(VisitorSlotsReasonEnum.serializer)
+          ..add(VisitorSlotsVisitorKindEnum.serializer)
           ..add(Zone.serializer)
           ..add(ZoneResponse.serializer)
           ..addBuilderFactory(
@@ -242,6 +271,16 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(BookableSlot)]),
             () => ListBuilder<BookableSlot>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ChangeRequestResponseContestedTermsEnum),
+            ]),
+            () => ListBuilder<ChangeRequestResponseContestedTermsEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(ContractResponse)]),
+            () => ListBuilder<ContractResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
@@ -282,6 +321,16 @@ Serializers _$serializers =
             () => ListBuilder<PaymentSummary>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(PropertyReview)]),
+            () => ListBuilder<PropertyReview>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(RequestChangesRequestContestedTermsEnum),
+            ]),
+            () => ListBuilder<RequestChangesRequestContestedTermsEnum>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(ResidenceResponse),
             ]),
@@ -298,16 +347,20 @@ Serializers _$serializers =
             () => ListBuilder<SignalementResponse>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(SignatureResponse),
+            ]),
+            () => ListBuilder<SignatureResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ChangeRequestResponse),
+            ]),
+            () => ListBuilder<ChangeRequestResponse>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(SkippedUnit)]),
             () => ListBuilder<SkippedUnit>(),
-          )
-          ..addBuilderFactory(
-            const FullType(BuiltList, const [const FullType(String)]),
-            () => ListBuilder<String>(),
-          )
-          ..addBuilderFactory(
-            const FullType(BuiltList, const [const FullType(String)]),
-            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
@@ -348,6 +401,58 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
             () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(Comment)]),
+            () => ListBuilder<Comment>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(Reply)]),
+            () => ListBuilder<Reply>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),

@@ -6,24 +6,32 @@ part of 'agent_visite_detail.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnum_REQUESTED =
+    const AgentVisiteDetailStatusEnum._('REQUESTED');
 const AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnum_SCHEDULED =
     const AgentVisiteDetailStatusEnum._('SCHEDULED');
 const AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnum_CANCELLED =
     const AgentVisiteDetailStatusEnum._('CANCELLED');
 const AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnum_COMPLETED =
     const AgentVisiteDetailStatusEnum._('COMPLETED');
+const AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnum_NOT_FULFILLED =
+    const AgentVisiteDetailStatusEnum._('NOT_FULFILLED');
 const AgentVisiteDetailStatusEnum
 _$agentVisiteDetailStatusEnum_unknownDefaultOpenApi =
     const AgentVisiteDetailStatusEnum._('unknownDefaultOpenApi');
 
 AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnumValueOf(String name) {
   switch (name) {
+    case 'REQUESTED':
+      return _$agentVisiteDetailStatusEnum_REQUESTED;
     case 'SCHEDULED':
       return _$agentVisiteDetailStatusEnum_SCHEDULED;
     case 'CANCELLED':
       return _$agentVisiteDetailStatusEnum_CANCELLED;
     case 'COMPLETED':
       return _$agentVisiteDetailStatusEnum_COMPLETED;
+    case 'NOT_FULFILLED':
+      return _$agentVisiteDetailStatusEnum_NOT_FULFILLED;
     case 'unknownDefaultOpenApi':
       return _$agentVisiteDetailStatusEnum_unknownDefaultOpenApi;
     default:
@@ -34,9 +42,11 @@ AgentVisiteDetailStatusEnum _$agentVisiteDetailStatusEnumValueOf(String name) {
 final BuiltSet<AgentVisiteDetailStatusEnum>
 _$agentVisiteDetailStatusEnumValues =
     BuiltSet<AgentVisiteDetailStatusEnum>(const <AgentVisiteDetailStatusEnum>[
+      _$agentVisiteDetailStatusEnum_REQUESTED,
       _$agentVisiteDetailStatusEnum_SCHEDULED,
       _$agentVisiteDetailStatusEnum_CANCELLED,
       _$agentVisiteDetailStatusEnum_COMPLETED,
+      _$agentVisiteDetailStatusEnum_NOT_FULFILLED,
       _$agentVisiteDetailStatusEnum_unknownDefaultOpenApi,
     ]);
 
@@ -47,15 +57,19 @@ _$agentVisiteDetailStatusEnumSerializer =
 class _$AgentVisiteDetailStatusEnumSerializer
     implements PrimitiveSerializer<AgentVisiteDetailStatusEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
+    'REQUESTED': 'REQUESTED',
     'SCHEDULED': 'SCHEDULED',
     'CANCELLED': 'CANCELLED',
     'COMPLETED': 'COMPLETED',
+    'NOT_FULFILLED': 'NOT_FULFILLED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'REQUESTED': 'REQUESTED',
     'SCHEDULED': 'SCHEDULED',
     'CANCELLED': 'CANCELLED',
     'COMPLETED': 'COMPLETED',
+    'NOT_FULFILLED': 'NOT_FULFILLED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -107,11 +121,11 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
   @override
   final String? prestatairePhone;
   @override
-  final DateTime? startedAt;
+  final DateTime? visitorConfirmedAt;
   @override
-  final bool? canStart;
+  final DateTime? clientConfirmedAt;
   @override
-  final bool? reportSubmitted;
+  final bool? canConfirm;
 
   factory _$AgentVisiteDetail([
     void Function(AgentVisiteDetailBuilder)? updates,
@@ -130,9 +144,9 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
     this.userPhone,
     this.prestataireName,
     this.prestatairePhone,
-    this.startedAt,
-    this.canStart,
-    this.reportSubmitted,
+    this.visitorConfirmedAt,
+    this.clientConfirmedAt,
+    this.canConfirm,
   }) : super._();
   @override
   AgentVisiteDetail rebuild(void Function(AgentVisiteDetailBuilder) updates) =>
@@ -158,9 +172,9 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
         userPhone == other.userPhone &&
         prestataireName == other.prestataireName &&
         prestatairePhone == other.prestatairePhone &&
-        startedAt == other.startedAt &&
-        canStart == other.canStart &&
-        reportSubmitted == other.reportSubmitted;
+        visitorConfirmedAt == other.visitorConfirmedAt &&
+        clientConfirmedAt == other.clientConfirmedAt &&
+        canConfirm == other.canConfirm;
   }
 
   @override
@@ -178,9 +192,9 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
     _$hash = $jc(_$hash, userPhone.hashCode);
     _$hash = $jc(_$hash, prestataireName.hashCode);
     _$hash = $jc(_$hash, prestatairePhone.hashCode);
-    _$hash = $jc(_$hash, startedAt.hashCode);
-    _$hash = $jc(_$hash, canStart.hashCode);
-    _$hash = $jc(_$hash, reportSubmitted.hashCode);
+    _$hash = $jc(_$hash, visitorConfirmedAt.hashCode);
+    _$hash = $jc(_$hash, clientConfirmedAt.hashCode);
+    _$hash = $jc(_$hash, canConfirm.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -200,9 +214,9 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
           ..add('userPhone', userPhone)
           ..add('prestataireName', prestataireName)
           ..add('prestatairePhone', prestatairePhone)
-          ..add('startedAt', startedAt)
-          ..add('canStart', canStart)
-          ..add('reportSubmitted', reportSubmitted))
+          ..add('visitorConfirmedAt', visitorConfirmedAt)
+          ..add('clientConfirmedAt', clientConfirmedAt)
+          ..add('canConfirm', canConfirm))
         .toString();
   }
 }
@@ -261,18 +275,19 @@ class AgentVisiteDetailBuilder
   set prestatairePhone(String? prestatairePhone) =>
       _$this._prestatairePhone = prestatairePhone;
 
-  DateTime? _startedAt;
-  DateTime? get startedAt => _$this._startedAt;
-  set startedAt(DateTime? startedAt) => _$this._startedAt = startedAt;
+  DateTime? _visitorConfirmedAt;
+  DateTime? get visitorConfirmedAt => _$this._visitorConfirmedAt;
+  set visitorConfirmedAt(DateTime? visitorConfirmedAt) =>
+      _$this._visitorConfirmedAt = visitorConfirmedAt;
 
-  bool? _canStart;
-  bool? get canStart => _$this._canStart;
-  set canStart(bool? canStart) => _$this._canStart = canStart;
+  DateTime? _clientConfirmedAt;
+  DateTime? get clientConfirmedAt => _$this._clientConfirmedAt;
+  set clientConfirmedAt(DateTime? clientConfirmedAt) =>
+      _$this._clientConfirmedAt = clientConfirmedAt;
 
-  bool? _reportSubmitted;
-  bool? get reportSubmitted => _$this._reportSubmitted;
-  set reportSubmitted(bool? reportSubmitted) =>
-      _$this._reportSubmitted = reportSubmitted;
+  bool? _canConfirm;
+  bool? get canConfirm => _$this._canConfirm;
+  set canConfirm(bool? canConfirm) => _$this._canConfirm = canConfirm;
 
   AgentVisiteDetailBuilder() {
     AgentVisiteDetail._defaults(this);
@@ -293,9 +308,9 @@ class AgentVisiteDetailBuilder
       _userPhone = $v.userPhone;
       _prestataireName = $v.prestataireName;
       _prestatairePhone = $v.prestatairePhone;
-      _startedAt = $v.startedAt;
-      _canStart = $v.canStart;
-      _reportSubmitted = $v.reportSubmitted;
+      _visitorConfirmedAt = $v.visitorConfirmedAt;
+      _clientConfirmedAt = $v.clientConfirmedAt;
+      _canConfirm = $v.canConfirm;
       _$v = null;
     }
     return this;
@@ -330,9 +345,9 @@ class AgentVisiteDetailBuilder
           userPhone: userPhone,
           prestataireName: prestataireName,
           prestatairePhone: prestatairePhone,
-          startedAt: startedAt,
-          canStart: canStart,
-          reportSubmitted: reportSubmitted,
+          visitorConfirmedAt: visitorConfirmedAt,
+          clientConfirmedAt: clientConfirmedAt,
+          canConfirm: canConfirm,
         );
     replace(_$result);
     return _$result;

@@ -12,7 +12,9 @@ import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/agent_public_profile.dart';
 import 'package:api_client/src/model/annonce_detail_response.dart';
 import 'package:api_client/src/model/error_response.dart';
+import 'package:api_client/src/model/page_response_property_review.dart';
 import 'package:api_client/src/model/page_response_search_result.dart';
+import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/residence_detail_response.dart';
 import 'package:built_collection/built_collection.dart';
 
@@ -259,6 +261,97 @@ class SearchApi {
     }
 
     return Response<ResidenceDetailResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// A property&#39;s reviews — visits and tenancies in one feed (RM-M27-05)
+  /// Public, like the fiche itself. Each item carries a &#x60;type&#x60; of VISIT or RESIDENT; a resident&#39;s review counts three times a visitor&#39;s in the note (RG-06). Filter with &#x60;?type&#x3D;&#x60; to show one kind. An author who has deleted their account appears without a name; the review stays, because it describes the property.
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [pageable] 
+  /// * [type] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [PageResponsePropertyReview] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<PageResponsePropertyReview>> listAnnonceReviews({ 
+    required String id,
+    required Pageable pageable,
+    String? type,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/search/annonces/{id}/reviews'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+      r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    PageResponsePropertyReview? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(PageResponsePropertyReview),
+      ) as PageResponsePropertyReview;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<PageResponsePropertyReview>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

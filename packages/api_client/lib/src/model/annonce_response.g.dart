@@ -449,6 +449,8 @@ class _$AnnonceResponse extends AnnonceResponse {
   @override
   final BuiltSet<AnnonceResponseAmenitiesEnum>? amenities;
   @override
+  final bool? ownerVisitsEnabled;
+  @override
   final int? viewCount;
   @override
   final DateTime? publishedAt;
@@ -488,6 +490,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.tierRank,
     this.photoKeys,
     this.amenities,
+    this.ownerVisitsEnabled,
     this.viewCount,
     this.publishedAt,
     this.expiresAt,
@@ -531,6 +534,7 @@ class _$AnnonceResponse extends AnnonceResponse {
         tierRank == other.tierRank &&
         photoKeys == other.photoKeys &&
         amenities == other.amenities &&
+        ownerVisitsEnabled == other.ownerVisitsEnabled &&
         viewCount == other.viewCount &&
         publishedAt == other.publishedAt &&
         expiresAt == other.expiresAt &&
@@ -567,6 +571,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, tierRank.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jc(_$hash, amenities.hashCode);
+    _$hash = $jc(_$hash, ownerVisitsEnabled.hashCode);
     _$hash = $jc(_$hash, viewCount.hashCode);
     _$hash = $jc(_$hash, publishedAt.hashCode);
     _$hash = $jc(_$hash, expiresAt.hashCode);
@@ -605,6 +610,7 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('tierRank', tierRank)
           ..add('photoKeys', photoKeys)
           ..add('amenities', amenities)
+          ..add('ownerVisitsEnabled', ownerVisitsEnabled)
           ..add('viewCount', viewCount)
           ..add('publishedAt', publishedAt)
           ..add('expiresAt', expiresAt)
@@ -736,6 +742,11 @@ class AnnonceResponseBuilder
   set amenities(SetBuilder<AnnonceResponseAmenitiesEnum>? amenities) =>
       _$this._amenities = amenities;
 
+  bool? _ownerVisitsEnabled;
+  bool? get ownerVisitsEnabled => _$this._ownerVisitsEnabled;
+  set ownerVisitsEnabled(bool? ownerVisitsEnabled) =>
+      _$this._ownerVisitsEnabled = ownerVisitsEnabled;
+
   int? _viewCount;
   int? get viewCount => _$this._viewCount;
   set viewCount(int? viewCount) => _$this._viewCount = viewCount;
@@ -786,6 +797,7 @@ class AnnonceResponseBuilder
       _tierRank = $v.tierRank;
       _photoKeys = $v.photoKeys?.toBuilder();
       _amenities = $v.amenities?.toBuilder();
+      _ownerVisitsEnabled = $v.ownerVisitsEnabled;
       _viewCount = $v.viewCount;
       _publishedAt = $v.publishedAt;
       _expiresAt = $v.expiresAt;
@@ -841,6 +853,7 @@ class AnnonceResponseBuilder
             tierRank: tierRank,
             photoKeys: _photoKeys?.build(),
             amenities: _amenities?.build(),
+            ownerVisitsEnabled: ownerVisitsEnabled,
             viewCount: viewCount,
             publishedAt: publishedAt,
             expiresAt: expiresAt,

@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**getAgentPublicProfile**](SearchApi.md#getagentpublicprofile) | **GET** /api/v1/search/agents/{id} | Public profile of an Agent Mboa (M15)
 [**getAnnonceDetail**](SearchApi.md#getannoncedetail) | **GET** /api/v1/search/annonces/{id} | Public fiche of a listing (M05)
 [**getResidenceDetail**](SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
+[**listAnnonceReviews**](SearchApi.md#listannoncereviews) | **GET** /api/v1/search/annonces/{id}/reviews | A property&#39;s reviews — visits and tenancies in one feed (RM-M27-05)
 [**searchListings**](SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
 
 
@@ -132,6 +133,53 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ResidenceDetailResponse**](ResidenceDetailResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **listAnnonceReviews**
+> PageResponsePropertyReview listAnnonceReviews(id, pageable, type)
+
+A property's reviews — visits and tenancies in one feed (RM-M27-05)
+
+Public, like the fiche itself. Each item carries a `type` of VISIT or RESIDENT; a resident's review counts three times a visitor's in the note (RG-06). Filter with `?type=` to show one kind. An author who has deleted their account appears without a name; the review stays, because it describes the property.
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getSearchApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final Pageable pageable = ; // Pageable | 
+final String type = type_example; // String | 
+
+try {
+    final response = api.listAnnonceReviews(id, pageable, type);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling SearchApi->listAnnonceReviews: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+ **pageable** | [**Pageable**](.md)|  | 
+ **type** | **String**|  | [optional] 
+
+### Return type
+
+[**PageResponsePropertyReview**](PageResponsePropertyReview.md)
 
 ### Authorization
 

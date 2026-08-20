@@ -18,7 +18,7 @@ class VisitDetailLoadInProgress extends VisitDetailState {
 class VisitDetailReady extends VisitDetailState {
   const VisitDetailReady(
     this.visit, {
-    this.isStarting = false,
+    this.isConfirming = false,
     this.isCancelling = false,
     this.lastActionFailed = false,
     this.locationFailure,
@@ -27,7 +27,7 @@ class VisitDetailReady extends VisitDetailState {
   });
 
   final AgentVisitDetail visit;
-  final bool isStarting;
+  final bool isConfirming;
   final bool isCancelling;
   final bool lastActionFailed;
 
@@ -45,7 +45,7 @@ class VisitDetailReady extends VisitDetailState {
 
   VisitDetailReady copyWith({
     AgentVisitDetail? visit,
-    bool? isStarting,
+    bool? isConfirming,
     bool? isCancelling,
     bool lastActionFailed = false,
     LocationFailure? locationFailure,
@@ -55,7 +55,7 @@ class VisitDetailReady extends VisitDetailState {
   }) =>
       VisitDetailReady(
         visit ?? this.visit,
-        isStarting: isStarting ?? this.isStarting,
+        isConfirming: isConfirming ?? this.isConfirming,
         isCancelling: isCancelling ?? this.isCancelling,
         lastActionFailed: lastActionFailed,
         locationFailure: locationFailure,
@@ -66,7 +66,7 @@ class VisitDetailReady extends VisitDetailState {
   @override
   List<Object?> get props => [
         visit,
-        isStarting,
+        isConfirming,
         isCancelling,
         lastActionFailed,
         locationFailure,

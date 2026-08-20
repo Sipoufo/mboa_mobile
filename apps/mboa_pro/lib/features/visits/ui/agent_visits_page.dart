@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../bloc/agent_visits_bloc.dart';
-import '../models/agent_visit.dart';
 
 /// The agent's visits (CDC M16).
 ///
@@ -151,7 +151,7 @@ class _VisitCard extends StatelessWidget {
     this.isBusy = false,
   });
 
-  final AgentVisit visit;
+  final Visit visit;
   final VoidCallback onClosed;
   final bool isBusy;
 
@@ -206,9 +206,12 @@ class _StatusChip extends StatelessWidget {
     final colors = context.mboaColors;
 
     final (label, color) = switch (status) {
+      VisitStatus.requested => (l10n.visitsStatusRequested, colors.warning),
       VisitStatus.scheduled => (l10n.visitsStatusScheduled, colors.primary),
       VisitStatus.completed => (l10n.visitsStatusCompleted, colors.success),
       VisitStatus.cancelled => (l10n.visitsStatusCancelled, colors.error),
+      VisitStatus.notFulfilled =>
+        (l10n.visitsStatusNotFulfilled, colors.error),
       VisitStatus.unknown => ('', colors.textTertiary),
     };
 

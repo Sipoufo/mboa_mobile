@@ -103,10 +103,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m37(date) => "Valable jusqu’au ${date}";
 
-  static String m38(count) => "Ajoutez encore ${count} photo(s)";
-
-  static String m39(distance) =>
-      "Vous êtes à environ ${distance} m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.";
+  static String m38(distance) =>
+      "Vous êtes à environ ${distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1064,16 +1062,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsAddressNote": MessageLookupByLibrary.simpleMessage(
       "Visible uniquement par vous, pour cette visite.",
     ),
+    "visitsAwaitingClientBody": MessageLookupByLibrary.simpleMessage(
+      "En attente de la confirmation du locataire. La visite sera validée dès qu\'il aura confirmé de son côté.",
+    ),
+    "visitsAwaitingClientTitle": MessageLookupByLibrary.simpleMessage(
+      "Présence confirmée",
+    ),
     "visitsCall": MessageLookupByLibrary.simpleMessage("Appeler"),
     "visitsCancel": MessageLookupByLibrary.simpleMessage("Annuler la visite"),
     "visitsCancelConfirm": MessageLookupByLibrary.simpleMessage(
       "Possible jusqu\'à 1 heure avant le créneau. Le locataire sera prévenu.",
     ),
-    "visitsConformityNo": MessageLookupByLibrary.simpleMessage("Non"),
-    "visitsConformityPartly": MessageLookupByLibrary.simpleMessage(
-      "Partiellement",
+    "visitsCompletedBody": MessageLookupByLibrary.simpleMessage(
+      "Les deux présences ont été confirmées. Le locataire peut désormais publier son avis sur le bien.",
     ),
-    "visitsConformityYes": MessageLookupByLibrary.simpleMessage("Oui"),
+    "visitsCompletedTitle": MessageLookupByLibrary.simpleMessage(
+      "Visite effectuée",
+    ),
+    "visitsConfirmNotYet": MessageLookupByLibrary.simpleMessage(
+      "Disponible le jour de la visite",
+    ),
+    "visitsConfirmPresence": MessageLookupByLibrary.simpleMessage(
+      "Confirmer ma présence",
+    ),
+    "visitsConfirmPresenceHint": MessageLookupByLibrary.simpleMessage(
+      "Le locataire doit confirmer de son côté pour que la visite soit validée.",
+    ),
     "visitsDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Détail de la visite",
     ),
@@ -1090,7 +1104,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Localisation en cours…",
     ),
     "visitsLocationDenied": MessageLookupByLibrary.simpleMessage(
-      "Autorisez la localisation pour démarrer une visite.",
+      "Autorisez la localisation pour confirmer votre présence.",
     ),
     "visitsLocationDeniedForever": MessageLookupByLibrary.simpleMessage(
       "La localisation est bloquée. Activez-la dans les réglages du téléphone.",
@@ -1101,47 +1115,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsLocationUnavailable": MessageLookupByLibrary.simpleMessage(
       "Position introuvable. Réessayez dans un instant.",
     ),
+    "visitsNotFulfilledBody": MessageLookupByLibrary.simpleMessage(
+      "Aucune présence n\'a été confirmée pendant le créneau. Cette visite ne peut plus être démarrée.",
+    ),
+    "visitsNotFulfilledTitle": MessageLookupByLibrary.simpleMessage(
+      "Visite non honorée",
+    ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
-    "visitsReportComment": MessageLookupByLibrary.simpleMessage("Commentaire"),
-    "visitsReportCondition": MessageLookupByLibrary.simpleMessage(
-      "État général",
-    ),
-    "visitsReportConformity": MessageLookupByLibrary.simpleMessage(
-      "Conforme à l\'annonce ?",
-    ),
-    "visitsReportDone": MessageLookupByLibrary.simpleMessage("Rapport envoyé"),
-    "visitsReportLocked": MessageLookupByLibrary.simpleMessage(
-      "Un rapport envoyé ne peut plus être modifié.",
-    ),
-    "visitsReportOpen": MessageLookupByLibrary.simpleMessage(
-      "Rédiger le rapport",
-    ),
-    "visitsReportPhotos": MessageLookupByLibrary.simpleMessage("Photos"),
-    "visitsReportPhotosNeeded": m38,
-    "visitsReportSubmit": MessageLookupByLibrary.simpleMessage(
-      "Envoyer le rapport",
-    ),
-    "visitsReportSubmitConfirm": MessageLookupByLibrary.simpleMessage(
-      "Le rapport ne pourra plus être modifié après l\'envoi.",
-    ),
-    "visitsReportTitle": MessageLookupByLibrary.simpleMessage(
-      "Rapport de visite",
-    ),
-    "visitsStart": MessageLookupByLibrary.simpleMessage("Démarrer la visite"),
-    "visitsStartNotYet": MessageLookupByLibrary.simpleMessage(
-      "Disponible le jour de la visite",
-    ),
-    "visitsStarted": MessageLookupByLibrary.simpleMessage("Visite démarrée"),
     "visitsStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulée"),
     "visitsStatusCompleted": MessageLookupByLibrary.simpleMessage("Effectuée"),
+    "visitsStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
+      "Non honorée",
+    ),
+    "visitsStatusRequested": MessageLookupByLibrary.simpleMessage("Demandée"),
     "visitsStatusScheduled": MessageLookupByLibrary.simpleMessage("Prévue"),
     "visitsTabPast": MessageLookupByLibrary.simpleMessage("Passées"),
     "visitsTabToday": MessageLookupByLibrary.simpleMessage("Aujourd\'hui"),
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
-    "visitsTooFarBody": m39,
+    "visitsTooFarBody": m38,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
-      "Démarrer quand même",
+      "Confirmer quand même",
     ),
     "visitsTooFarHint": MessageLookupByLibrary.simpleMessage(
       "Ex. GPS imprécis, je suis au portail",

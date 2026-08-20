@@ -37,6 +37,11 @@ void main() {
       // TODO
     });
 
+    // String registrationNumber
+    test('to test the property `registrationNumber`', () async {
+      // TODO
+    });
+
     // DateTime typeChangedAt
     test('to test the property `typeChangedAt`', () async {
       // TODO

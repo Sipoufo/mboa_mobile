@@ -33,7 +33,7 @@ abstract class SignalementResponse implements Built<SignalementResponse, Signale
 
   @BuiltValueField(wireName: r'targetType')
   SignalementResponseTargetTypeEnum? get targetType;
-  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  };
+  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  };
 
   @BuiltValueField(wireName: r'targetId')
   String? get targetId;
@@ -364,6 +364,8 @@ class SignalementResponseTargetTypeEnum extends EnumClass {
   static const SignalementResponseTargetTypeEnum ANNONCE = _$signalementResponseTargetTypeEnum_ANNONCE;
   @BuiltValueEnumConst(wireName: r'MESSAGE')
   static const SignalementResponseTargetTypeEnum MESSAGE = _$signalementResponseTargetTypeEnum_MESSAGE;
+  @BuiltValueEnumConst(wireName: r'REVIEW')
+  static const SignalementResponseTargetTypeEnum REVIEW = _$signalementResponseTargetTypeEnum_REVIEW;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const SignalementResponseTargetTypeEnum unknownDefaultOpenApi = _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi;
 

@@ -11,6 +11,7 @@ import 'package:api_client/src/auth/bearer_auth.dart';
 import 'package:api_client/src/auth/oauth.dart';
 import 'package:api_client/src/api/account_api.dart';
 import 'package:api_client/src/api/admin_annonces_api.dart';
+import 'package:api_client/src/api/admin_contrats_api.dart';
 import 'package:api_client/src/api/admin_kyc_api.dart';
 import 'package:api_client/src/api/admin_modration_api.dart';
 import 'package:api_client/src/api/admin_subscriptions_api.dart';
@@ -24,6 +25,8 @@ import 'package:api_client/src/api/annonces_api.dart';
 import 'package:api_client/src/api/assignation_agent_api.dart';
 import 'package:api_client/src/api/assignation_agent_rsidence_api.dart';
 import 'package:api_client/src/api/authentication_api.dart';
+import 'package:api_client/src/api/avis_rsident_api.dart';
+import 'package:api_client/src/api/contrats_api.dart';
 import 'package:api_client/src/api/current_user_api.dart';
 import 'package:api_client/src/api/favoris_api.dart';
 import 'package:api_client/src/api/historique_api.dart';
@@ -35,6 +38,7 @@ import 'package:api_client/src/api/notification_devices_api.dart';
 import 'package:api_client/src/api/password_api.dart';
 import 'package:api_client/src/api/phone_change_api.dart';
 import 'package:api_client/src/api/prestataire_profile_api.dart';
+import 'package:api_client/src/api/prestataire_visites_api.dart';
 import 'package:api_client/src/api/residences_api.dart';
 import 'package:api_client/src/api/search_api.dart';
 import 'package:api_client/src/api/signalements_api.dart';
@@ -42,7 +46,8 @@ import 'package:api_client/src/api/subscriptions_api.dart';
 import 'package:api_client/src/api/user_profile_api.dart';
 import 'package:api_client/src/api/user_settings_api.dart';
 import 'package:api_client/src/api/visites_api.dart';
-import 'package:api_client/src/api/visites_rapport_api.dart';
+import 'package:api_client/src/api/visites_avis_api.dart';
+import 'package:api_client/src/api/visites_prsence_api.dart';
 
 class ApiClient {
   static const String basePath = r'https://api.mboa.cm/api/v1';
@@ -150,6 +155,12 @@ class ApiClient {
     return AdminAnnoncesApi(dio, serializers);
   }
 
+  /// Get AdminContratsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminContratsApi getAdminContratsApi() {
+    return AdminContratsApi(dio, serializers);
+  }
+
   /// Get AdminKYCApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AdminKYCApi getAdminKYCApi() {
@@ -228,6 +239,18 @@ class ApiClient {
     return AuthenticationApi(dio, serializers);
   }
 
+  /// Get AvisRsidentApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AvisRsidentApi getAvisRsidentApi() {
+    return AvisRsidentApi(dio, serializers);
+  }
+
+  /// Get ContratsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  ContratsApi getContratsApi() {
+    return ContratsApi(dio, serializers);
+  }
+
   /// Get CurrentUserApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   CurrentUserApi getCurrentUserApi() {
@@ -294,6 +317,12 @@ class ApiClient {
     return PrestataireProfileApi(dio, serializers);
   }
 
+  /// Get PrestataireVisitesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  PrestataireVisitesApi getPrestataireVisitesApi() {
+    return PrestataireVisitesApi(dio, serializers);
+  }
+
   /// Get ResidencesApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   ResidencesApi getResidencesApi() {
@@ -336,9 +365,15 @@ class ApiClient {
     return VisitesApi(dio, serializers);
   }
 
-  /// Get VisitesRapportApi instance, base route and serializer can be overridden by a given but be careful,
+  /// Get VisitesAvisApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
-  VisitesRapportApi getVisitesRapportApi() {
-    return VisitesRapportApi(dio, serializers);
+  VisitesAvisApi getVisitesAvisApi() {
+    return VisitesAvisApi(dio, serializers);
+  }
+
+  /// Get VisitesPrsenceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  VisitesPrsenceApi getVisitesPrsenceApi() {
+    return VisitesPrsenceApi(dio, serializers);
   }
 }

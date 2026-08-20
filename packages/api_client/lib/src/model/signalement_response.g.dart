@@ -13,6 +13,9 @@ const SignalementResponseTargetTypeEnum
 _$signalementResponseTargetTypeEnum_MESSAGE =
     const SignalementResponseTargetTypeEnum._('MESSAGE');
 const SignalementResponseTargetTypeEnum
+_$signalementResponseTargetTypeEnum_REVIEW =
+    const SignalementResponseTargetTypeEnum._('REVIEW');
+const SignalementResponseTargetTypeEnum
 _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi =
     const SignalementResponseTargetTypeEnum._('unknownDefaultOpenApi');
 
@@ -24,6 +27,8 @@ SignalementResponseTargetTypeEnum _$signalementResponseTargetTypeEnumValueOf(
       return _$signalementResponseTargetTypeEnum_ANNONCE;
     case 'MESSAGE':
       return _$signalementResponseTargetTypeEnum_MESSAGE;
+    case 'REVIEW':
+      return _$signalementResponseTargetTypeEnum_REVIEW;
     case 'unknownDefaultOpenApi':
       return _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi;
     default:
@@ -37,6 +42,7 @@ _$signalementResponseTargetTypeEnumValues =
       const <SignalementResponseTargetTypeEnum>[
         _$signalementResponseTargetTypeEnum_ANNONCE,
         _$signalementResponseTargetTypeEnum_MESSAGE,
+        _$signalementResponseTargetTypeEnum_REVIEW,
         _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi,
       ],
     );
@@ -138,11 +144,13 @@ class _$SignalementResponseTargetTypeEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
+    'REVIEW': 'REVIEW',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
+    'REVIEW': 'REVIEW',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

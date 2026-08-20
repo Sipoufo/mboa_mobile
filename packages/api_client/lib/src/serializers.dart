@@ -33,12 +33,17 @@ import 'package:api_client/src/model/batch_result.dart';
 import 'package:api_client/src/model/block_day_request.dart';
 import 'package:api_client/src/model/book_visite_request.dart';
 import 'package:api_client/src/model/bookable_slot.dart';
-import 'package:api_client/src/model/bookable_slots_response.dart';
 import 'package:api_client/src/model/change_password_request.dart';
+import 'package:api_client/src/model/change_request_response.dart';
+import 'package:api_client/src/model/comment.dart';
 import 'package:api_client/src/model/confirm_phone_change_request.dart';
+import 'package:api_client/src/model/contract_pdf_response.dart';
+import 'package:api_client/src/model/contract_response.dart';
+import 'package:api_client/src/model/contract_verification.dart';
 import 'package:api_client/src/model/conversation_response.dart';
 import 'package:api_client/src/model/country_response.dart';
 import 'package:api_client/src/model/create_annonce_request.dart';
+import 'package:api_client/src/model/create_contract_request.dart';
 import 'package:api_client/src/model/create_residence_request.dart';
 import 'package:api_client/src/model/create_signalement_request.dart';
 import 'package:api_client/src/model/create_upload_request.dart';
@@ -61,24 +66,29 @@ import 'package:api_client/src/model/opportunity_item.dart';
 import 'package:api_client/src/model/page_response_admin_user_summary.dart';
 import 'package:api_client/src/model/page_response_annonce_response.dart';
 import 'package:api_client/src/model/page_response_assignment_item.dart';
+import 'package:api_client/src/model/page_response_contract_response.dart';
 import 'package:api_client/src/model/page_response_conversation_response.dart';
 import 'package:api_client/src/model/page_response_favori_response.dart';
 import 'package:api_client/src/model/page_response_historique_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';
 import 'package:api_client/src/model/page_response_payment_summary.dart';
+import 'package:api_client/src/model/page_response_property_review.dart';
 import 'package:api_client/src/model/page_response_residence_response.dart';
 import 'package:api_client/src/model/page_response_search_result.dart';
 import 'package:api_client/src/model/page_response_signalement_response.dart';
 import 'package:api_client/src/model/page_response_type_change_review_item.dart';
 import 'package:api_client/src/model/page_response_visite_response.dart';
 import 'package:api_client/src/model/pageable.dart';
+import 'package:api_client/src/model/participant_summary.dart';
 import 'package:api_client/src/model/payment_initiated_response.dart';
 import 'package:api_client/src/model/payment_summary.dart';
 import 'package:api_client/src/model/payment_webhook_request.dart';
 import 'package:api_client/src/model/phone_change_response.dart';
 import 'package:api_client/src/model/presigned_upload.dart';
 import 'package:api_client/src/model/prestataire_profile_response.dart';
+import 'package:api_client/src/model/property_rating.dart';
+import 'package:api_client/src/model/property_review.dart';
 import 'package:api_client/src/model/provider_card.dart';
 import 'package:api_client/src/model/rate_agent_request.dart';
 import 'package:api_client/src/model/receipt_response.dart';
@@ -87,6 +97,9 @@ import 'package:api_client/src/model/register_device_request.dart';
 import 'package:api_client/src/model/register_professional_request.dart';
 import 'package:api_client/src/model/reject_kyc_request.dart';
 import 'package:api_client/src/model/reject_type_change_request.dart';
+import 'package:api_client/src/model/reply.dart';
+import 'package:api_client/src/model/reply_request.dart';
+import 'package:api_client/src/model/request_changes_request.dart';
 import 'package:api_client/src/model/request_phone_change_request.dart';
 import 'package:api_client/src/model/request_type_change_request.dart';
 import 'package:api_client/src/model/reset_password_request.dart';
@@ -97,18 +110,24 @@ import 'package:api_client/src/model/residence_detail_response.dart';
 import 'package:api_client/src/model/residence_opportunity.dart';
 import 'package:api_client/src/model/residence_response.dart';
 import 'package:api_client/src/model/residence_search_card.dart';
+import 'package:api_client/src/model/respond_to_change_request.dart';
+import 'package:api_client/src/model/review_comment_request.dart';
+import 'package:api_client/src/model/review_response.dart';
 import 'package:api_client/src/model/review_signalement_request.dart';
 import 'package:api_client/src/model/search_result.dart';
 import 'package:api_client/src/model/search_result_item.dart';
 import 'package:api_client/src/model/send_message_request.dart';
 import 'package:api_client/src/model/send_otp_request.dart';
+import 'package:api_client/src/model/sign_contract_request.dart';
 import 'package:api_client/src/model/signalement_response.dart';
+import 'package:api_client/src/model/signature_response.dart';
 import 'package:api_client/src/model/skipped_unit.dart';
 import 'package:api_client/src/model/social_login_request.dart';
 import 'package:api_client/src/model/start_conversation_request.dart';
 import 'package:api_client/src/model/start_visite_request.dart';
 import 'package:api_client/src/model/submit_kyc_request.dart';
-import 'package:api_client/src/model/submit_visite_report_request.dart';
+import 'package:api_client/src/model/submit_resident_review_request.dart';
+import 'package:api_client/src/model/submit_review_request.dart';
 import 'package:api_client/src/model/subscribe_request.dart';
 import 'package:api_client/src/model/subscription_response.dart';
 import 'package:api_client/src/model/suspend_account_request.dart';
@@ -123,6 +142,7 @@ import 'package:api_client/src/model/unit_summary.dart';
 import 'package:api_client/src/model/update_agent_profile_request.dart';
 import 'package:api_client/src/model/update_annonce_request.dart';
 import 'package:api_client/src/model/update_availability_request.dart';
+import 'package:api_client/src/model/update_contract_request.dart';
 import 'package:api_client/src/model/update_plan_request.dart';
 import 'package:api_client/src/model/update_prestataire_profile_request.dart';
 import 'package:api_client/src/model/update_residence_request.dart';
@@ -132,8 +152,8 @@ import 'package:api_client/src/model/update_zones_request.dart';
 import 'package:api_client/src/model/user_profile_response.dart';
 import 'package:api_client/src/model/user_settings_response.dart';
 import 'package:api_client/src/model/verify_otp_request.dart';
-import 'package:api_client/src/model/visite_report_response.dart';
 import 'package:api_client/src/model/visite_response.dart';
+import 'package:api_client/src/model/visitor_slots.dart';
 import 'package:api_client/src/model/zone.dart';
 import 'package:api_client/src/model/zone_response.dart';
 
@@ -159,12 +179,17 @@ part 'serializers.g.dart';
   BlockDayRequest,
   BookVisiteRequest,
   BookableSlot,
-  BookableSlotsResponse,
   ChangePasswordRequest,
+  ChangeRequestResponse,
+  Comment,
   ConfirmPhoneChangeRequest,
+  ContractPdfResponse,
+  ContractResponse,
+  ContractVerification,
   ConversationResponse,
   CountryResponse,
   CreateAnnonceRequest,
+  CreateContractRequest,
   CreateResidenceRequest,
   CreateSignalementRequest,
   CreateUploadRequest,
@@ -187,24 +212,29 @@ part 'serializers.g.dart';
   PageResponseAdminUserSummary,
   PageResponseAnnonceResponse,
   PageResponseAssignmentItem,
+  PageResponseContractResponse,
   PageResponseConversationResponse,
   PageResponseFavoriResponse,
   PageResponseHistoriqueResponse,
   PageResponseKycReviewItem,
   PageResponseMessageResponse,
   PageResponsePaymentSummary,
+  PageResponsePropertyReview,
   PageResponseResidenceResponse,
   PageResponseSearchResult,
   PageResponseSignalementResponse,
   PageResponseTypeChangeReviewItem,
   PageResponseVisiteResponse,
   Pageable,
+  ParticipantSummary,
   PaymentInitiatedResponse,
   PaymentSummary,
   PaymentWebhookRequest,
   PhoneChangeResponse,
   PresignedUpload,
   PrestataireProfileResponse,
+  PropertyRating,
+  PropertyReview,
   ProviderCard,
   RateAgentRequest,
   ReceiptResponse,
@@ -213,6 +243,9 @@ part 'serializers.g.dart';
   RegisterProfessionalRequest,
   RejectKycRequest,
   RejectTypeChangeRequest,
+  Reply,
+  ReplyRequest,
+  RequestChangesRequest,
   RequestPhoneChangeRequest,
   RequestTypeChangeRequest,
   ResetPasswordRequest,
@@ -223,18 +256,24 @@ part 'serializers.g.dart';
   ResidenceOpportunity,
   ResidenceResponse,
   ResidenceSearchCard,
+  RespondToChangeRequest,
+  ReviewCommentRequest,
+  ReviewResponse,
   ReviewSignalementRequest,
   SearchResult,
   SearchResultItem,
   SendMessageRequest,
   SendOtpRequest,
+  SignContractRequest,
   SignalementResponse,
+  SignatureResponse,
   SkippedUnit,
   SocialLoginRequest,
   StartConversationRequest,
   StartVisiteRequest,
   SubmitKycRequest,
-  SubmitVisiteReportRequest,
+  SubmitResidentReviewRequest,
+  SubmitReviewRequest,
   SubscribeRequest,
   SubscriptionResponse,
   SuspendAccountRequest,
@@ -249,6 +288,7 @@ part 'serializers.g.dart';
   UpdateAgentProfileRequest,
   UpdateAnnonceRequest,
   UpdateAvailabilityRequest,
+  UpdateContractRequest,
   UpdatePlanRequest,
   UpdatePrestataireProfileRequest,
   UpdateResidenceRequest,
@@ -258,8 +298,8 @@ part 'serializers.g.dart';
   UserProfileResponse,
   UserSettingsResponse,
   VerifyOtpRequest,
-  VisiteReportResponse,
   VisiteResponse,
+  VisitorSlots,
   Zone,
   ZoneResponse,
 ])
@@ -271,6 +311,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Zone)]),
         () => ListBuilder<Zone>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Comment)]),
+        () => ListBuilder<Comment>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AssignmentResponse)]),
@@ -313,12 +357,28 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<HistoriqueResponse>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(VisitorSlots)]),
+        () => ListBuilder<VisitorSlots>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Reply)]),
+        () => ListBuilder<Reply>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(LocationOption)]),
         () => ListBuilder<LocationOption>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(OpportunityItem)]),
         () => ListBuilder<OpportunityItem>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ContractResponse)]),
+        () => ListBuilder<ContractResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ChangeRequestResponse)]),
+        () => ListBuilder<ChangeRequestResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SearchResultItem)]),
@@ -377,6 +437,10 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<AnnonceResponse>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(SignatureResponse)]),
+        () => ListBuilder<SignatureResponse>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(TypeChangeReviewItem)]),
         () => ListBuilder<TypeChangeReviewItem>(),
       )
@@ -407,6 +471,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(String)]),
         () => ListBuilder<String>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(PropertyReview)]),
+        () => ListBuilder<PropertyReview>(),
       )
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())

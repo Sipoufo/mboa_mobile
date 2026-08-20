@@ -16,14 +16,15 @@ class VisitDetailRequested extends VisitDetailEvent {
   List<Object?> get props => [id];
 }
 
-/// Takes a GPS fix and starts, or asks for a justification when beyond 500 m.
-class VisitStartRequested extends VisitDetailEvent {
-  const VisitStartRequested();
+/// Takes a GPS fix and confirms the agent's presence, or asks for a
+/// justification when beyond 500 m (RM-M07-05 / RM-M16-02).
+class VisitPresenceConfirmed extends VisitDetailEvent {
+  const VisitPresenceConfirmed();
 }
 
 /// RM-M16-02 — the agent explained why they are outside the radius.
-class VisitStartOverridden extends VisitDetailEvent {
-  const VisitStartOverridden(this.reason);
+class VisitPresenceOverridden extends VisitDetailEvent {
+  const VisitPresenceOverridden(this.reason);
 
   final String reason;
 

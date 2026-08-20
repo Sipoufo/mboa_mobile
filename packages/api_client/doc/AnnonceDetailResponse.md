@@ -33,6 +33,7 @@ Name | Type | Description | Notes
 **provider** | [**ProviderCard**](ProviderCard.md) |  | [optional] 
 **canContact** | **bool** |  | [optional] 
 **canPlanVisit** | **bool** |  | [optional] 
+**rating** | [**PropertyRating**](PropertyRating.md) |  | [optional] 
 **viewCount** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

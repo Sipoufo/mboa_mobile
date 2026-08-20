@@ -35,19 +35,5 @@ void main() {
       // TODO
     });
 
-    // Start the visit on site; beyond 500 m a justification is required (RM-M16-02)
-    //
-    //Future<VisiteResponse> startMyAgentVisite(String id, StartVisiteRequest startVisiteRequest) async
-    test('test startMyAgentVisite', () async {
-      // TODO
-    });
-
-    // File the visit report; locked once submitted (RM-M07-06, RM-M16-03)
-    //
-    //Future<VisiteReportResponse> submitVisiteReport(String id, SubmitVisiteReportRequest submitVisiteReportRequest) async
-    test('test submitVisiteReport', () async {
-      // TODO
-    });
-
   });
 }

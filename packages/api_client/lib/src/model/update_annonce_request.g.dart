@@ -355,6 +355,8 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
   final BuiltList<String>? photoKeys;
   @override
   final BuiltSet<UpdateAnnonceRequestAmenitiesEnum>? amenities;
+  @override
+  final bool? ownerVisitsEnabled;
 
   factory _$UpdateAnnonceRequest([
     void Function(UpdateAnnonceRequestBuilder)? updates,
@@ -380,6 +382,7 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
     this.description,
     this.photoKeys,
     this.amenities,
+    this.ownerVisitsEnabled,
   }) : super._();
   @override
   UpdateAnnonceRequest rebuild(
@@ -412,7 +415,8 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
         availableFrom == other.availableFrom &&
         description == other.description &&
         photoKeys == other.photoKeys &&
-        amenities == other.amenities;
+        amenities == other.amenities &&
+        ownerVisitsEnabled == other.ownerVisitsEnabled;
   }
 
   @override
@@ -437,6 +441,7 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jc(_$hash, amenities.hashCode);
+    _$hash = $jc(_$hash, ownerVisitsEnabled.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -462,7 +467,8 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
           ..add('availableFrom', availableFrom)
           ..add('description', description)
           ..add('photoKeys', photoKeys)
-          ..add('amenities', amenities))
+          ..add('amenities', amenities)
+          ..add('ownerVisitsEnabled', ownerVisitsEnabled))
         .toString();
   }
 }
@@ -559,6 +565,11 @@ class UpdateAnnonceRequestBuilder
   set amenities(SetBuilder<UpdateAnnonceRequestAmenitiesEnum>? amenities) =>
       _$this._amenities = amenities;
 
+  bool? _ownerVisitsEnabled;
+  bool? get ownerVisitsEnabled => _$this._ownerVisitsEnabled;
+  set ownerVisitsEnabled(bool? ownerVisitsEnabled) =>
+      _$this._ownerVisitsEnabled = ownerVisitsEnabled;
+
   UpdateAnnonceRequestBuilder() {
     UpdateAnnonceRequest._defaults(this);
   }
@@ -585,6 +596,7 @@ class UpdateAnnonceRequestBuilder
       _description = $v.description;
       _photoKeys = $v.photoKeys?.toBuilder();
       _amenities = $v.amenities?.toBuilder();
+      _ownerVisitsEnabled = $v.ownerVisitsEnabled;
       _$v = null;
     }
     return this;
@@ -628,6 +640,7 @@ class UpdateAnnonceRequestBuilder
             description: description,
             photoKeys: _photoKeys?.build(),
             amenities: _amenities?.build(),
+            ownerVisitsEnabled: ownerVisitsEnabled,
           );
     } catch (_) {
       late String _$failedField;

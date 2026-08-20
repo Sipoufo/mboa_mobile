@@ -20,6 +20,10 @@ export 'src/features/notifications/data/notifications_repository.dart';
 export 'src/features/notifications/models/push_message.dart';
 export 'src/features/notifications/notifications_background.dart';
 
+// Visits (M07 / M16) — the list model both apps read; the client, the agent and
+// the prestataire visiting his own property are served the same DTO.
+export 'src/features/visits/models/visit.dart';
+
 // Session resolution — shared startup auth check used by each app's splash.
 export 'src/features/session/data/session_repository.dart';
 export 'src/features/session/models/session_result.dart';

@@ -26,18 +26,18 @@ class VisitsReady extends AgentVisitsState {
     this.lastActionFailed = false,
   });
 
-  final List<AgentVisit> visits;
+  final List<Visit> visits;
   final VisitFilter filter;
   final String? mutatingId;
   final bool lastActionFailed;
 
   /// Scheduled for today, whatever the hour — a visit at 08:00 is still today's
   /// work at 09:00, so this is a date comparison and not "still in the future".
-  List<AgentVisit> get today =>
+  List<Visit> get today =>
       (visits.where((v) => v.isToday()).toList())..sort(_byTime);
 
   /// Later than today, still to happen.
-  List<AgentVisit> get upcoming => (visits
+  List<Visit> get upcoming => (visits
       .where((v) =>
           v.status == VisitStatus.scheduled && !v.isToday() && v.isUpcoming)
       .toList())
@@ -46,7 +46,7 @@ class VisitsReady extends AgentVisitsState {
   /// Done, cancelled, or a scheduled visit whose slot has passed — the last of
   /// those is the one an agent needs to see, since it is the visit they may
   /// have missed.
-  List<AgentVisit> get past => (visits
+  List<Visit> get past => (visits
       .where((v) =>
           v.status == VisitStatus.completed ||
           v.status == VisitStatus.cancelled ||
@@ -54,7 +54,7 @@ class VisitsReady extends AgentVisitsState {
       .toList())
     ..sort((a, b) => _byTime(b, a));
 
-  List<AgentVisit> get visible => switch (filter) {
+  List<Visit> get visible => switch (filter) {
         VisitFilter.today => today,
         VisitFilter.upcoming => upcoming,
         VisitFilter.past => past,
@@ -63,7 +63,7 @@ class VisitsReady extends AgentVisitsState {
   /// Badge on the Visites tab — what the agent has left to do today.
   int get todayCount => today.length;
 
-  static int _byTime(AgentVisit a, AgentVisit b) {
+  static int _byTime(Visit a, Visit b) {
     final left = a.scheduledAt;
     final right = b.scheduledAt;
     if (left == null || right == null) return 0;
@@ -71,7 +71,7 @@ class VisitsReady extends AgentVisitsState {
   }
 
   VisitsReady copyWith({
-    List<AgentVisit>? visits,
+    List<Visit>? visits,
     VisitFilter? filter,
     String? mutatingId,
     bool clearMutating = false,

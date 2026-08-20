@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/property_rating.dart';
 import 'package:api_client/src/model/provider_card.dart';
 import 'package:api_client/src/model/date.dart';
 import 'package:built_value/built_value.dart';
@@ -39,6 +40,7 @@ part 'annonce_detail_response.g.dart';
 /// * [provider] 
 /// * [canContact] 
 /// * [canPlanVisit] 
+/// * [rating] 
 /// * [viewCount] 
 @BuiltValue()
 abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, AnnonceDetailResponseBuilder> {
@@ -120,6 +122,9 @@ abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, Ann
 
   @BuiltValueField(wireName: r'canPlanVisit')
   bool? get canPlanVisit;
+
+  @BuiltValueField(wireName: r'rating')
+  PropertyRating? get rating;
 
   @BuiltValueField(wireName: r'viewCount')
   int? get viewCount;
@@ -320,6 +325,13 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
       yield serializers.serialize(
         object.canPlanVisit,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.rating != null) {
+      yield r'rating';
+      yield serializers.serialize(
+        object.rating,
+        specifiedType: const FullType(PropertyRating),
       );
     }
     if (object.viewCount != null) {
@@ -551,6 +563,14 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
           ) as bool?;
           if (valueDes == null) continue;
           result.canPlanVisit = valueDes;
+          break;
+        case r'rating':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(PropertyRating),
+          ) as PropertyRating?;
+          if (valueDes == null) continue;
+          result.rating.replace(valueDes);
           break;
         case r'viewCount':
           final valueDes = serializers.deserialize(

@@ -27,5 +27,10 @@ void main() {
       // TODO
     });
 
+    // String registrationNumber
+    test('to test the property `registrationNumber`', () async {
+      // TODO
+    });
+
   });
 }

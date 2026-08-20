@@ -21,9 +21,16 @@ void main() {
       // TODO
     });
 
-    // The assigned agent's free slots over the next 7 days; an empty list carries a reason
+    // Confirm you are at the visit; with the visitor's, it completes it (RM-M07-05)
     //
-    //Future<BookableSlotsResponse> listBookableSlots(String annonceId) async
+    //Future<VisiteResponse> confirmClientPresence(String id) async
+    test('test confirmClientPresence', () async {
+      // TODO
+    });
+
+    // The bookable visitors for a listing, each with their own times (RM-M07-01)
+    //
+    //Future<BuiltList<VisitorSlots>> listBookableSlots(String annonceId) async
     test('test listBookableSlots', () async {
       // TODO
     });

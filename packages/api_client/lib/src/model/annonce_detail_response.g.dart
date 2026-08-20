@@ -471,6 +471,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
   @override
   final bool? canPlanVisit;
   @override
+  final PropertyRating? rating;
+  @override
   final int? viewCount;
 
   factory _$AnnonceDetailResponse([
@@ -503,6 +505,7 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     this.provider,
     this.canContact,
     this.canPlanVisit,
+    this.rating,
     this.viewCount,
   }) : super._();
   @override
@@ -543,6 +546,7 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
         provider == other.provider &&
         canContact == other.canContact &&
         canPlanVisit == other.canPlanVisit &&
+        rating == other.rating &&
         viewCount == other.viewCount;
   }
 
@@ -574,6 +578,7 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     _$hash = $jc(_$hash, provider.hashCode);
     _$hash = $jc(_$hash, canContact.hashCode);
     _$hash = $jc(_$hash, canPlanVisit.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
     _$hash = $jc(_$hash, viewCount.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -607,6 +612,7 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
           ..add('provider', provider)
           ..add('canContact', canContact)
           ..add('canPlanVisit', canPlanVisit)
+          ..add('rating', rating)
           ..add('viewCount', viewCount))
         .toString();
   }
@@ -730,6 +736,11 @@ class AnnonceDetailResponseBuilder
   bool? get canPlanVisit => _$this._canPlanVisit;
   set canPlanVisit(bool? canPlanVisit) => _$this._canPlanVisit = canPlanVisit;
 
+  PropertyRatingBuilder? _rating;
+  PropertyRatingBuilder get rating =>
+      _$this._rating ??= PropertyRatingBuilder();
+  set rating(PropertyRatingBuilder? rating) => _$this._rating = rating;
+
   int? _viewCount;
   int? get viewCount => _$this._viewCount;
   set viewCount(int? viewCount) => _$this._viewCount = viewCount;
@@ -766,6 +777,7 @@ class AnnonceDetailResponseBuilder
       _provider = $v.provider?.toBuilder();
       _canContact = $v.canContact;
       _canPlanVisit = $v.canPlanVisit;
+      _rating = $v.rating?.toBuilder();
       _viewCount = $v.viewCount;
       _$v = null;
     }
@@ -816,6 +828,7 @@ class AnnonceDetailResponseBuilder
             provider: _provider?.build(),
             canContact: canContact,
             canPlanVisit: canPlanVisit,
+            rating: _rating?.build(),
             viewCount: viewCount,
           );
     } catch (_) {
@@ -828,6 +841,9 @@ class AnnonceDetailResponseBuilder
 
         _$failedField = 'provider';
         _provider?.build();
+
+        _$failedField = 'rating';
+        _rating?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'AnnonceDetailResponse',

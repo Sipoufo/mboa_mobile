@@ -68,6 +68,10 @@ Class | Method | HTTP request | Description
 [*AdminAnnoncesApi*](doc/AdminAnnoncesApi.md) | [**listAdminAnnonces**](doc/AdminAnnoncesApi.md#listadminannonces) | **GET** /api/v1/admin/annonces | Search listings by title or owner phone/email, filtered by status
 [*AdminAnnoncesApi*](doc/AdminAnnoncesApi.md) | [**suspendAnnonce**](doc/AdminAnnoncesApi.md#suspendannonce) | **POST** /api/v1/admin/annonces/{id}/suspend | Suspend a listing with a reason; its owner is told (RM-M19-02, CA-M19-02)
 [*AdminAnnoncesApi*](doc/AdminAnnoncesApi.md) | [**updateAnnonceAsAdmin**](doc/AdminAnnoncesApi.md#updateannonceasadmin) | **PATCH** /api/v1/admin/annonces/{id} | Edit a listing&#39;s content directly; its owner is told what changed (RM-M19-05)
+[*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminGetContract**](doc/AdminContratsApi.md#admingetcontract) | **GET** /api/v1/admin/contracts/{id} | One archived contract, in full
+[*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminGetContractPdf**](doc/AdminContratsApi.md#admingetcontractpdf) | **GET** /api/v1/admin/contracts/{id}/pdf | A short-lived URL to download its PDF
+[*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminListContracts**](doc/AdminContratsApi.md#adminlistcontracts) | **GET** /api/v1/admin/contracts | The contract archive, filterable by status
+[*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminRegenerateContractPdf**](doc/AdminContratsApi.md#adminregeneratecontractpdf) | **POST** /api/v1/admin/contracts/{id}/pdf | Try again to produce a document that never arrived (CE-M08-02)
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**approveKycSubmission**](doc/AdminKYCApi.md#approvekycsubmission) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPendingKycSubmissions**](doc/AdminKYCApi.md#listpendingkycsubmissions) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**rejectKycSubmission**](doc/AdminKYCApi.md#rejectkycsubmission) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
@@ -109,8 +113,6 @@ Class | Method | HTTP request | Description
 [*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**getMyAgentVisite**](doc/AgentVisitesApi.md#getmyagentvisite) | **GET** /api/v1/agents/me/visites/{id} | One visit in full: exact address, both contacts, whether it can start (RM-M16-01)
 [*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**listMyAgentVisites**](doc/AgentVisitesApi.md#listmyagentvisites) | **GET** /api/v1/agents/me/visites | Visits assigned to the authenticated agent
 [*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**listMyAgentVisitesToday**](doc/AgentVisitesApi.md#listmyagentvisitestoday) | **GET** /api/v1/agents/me/visites/today | The agent&#39;s round for today, soonest first
-[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**startMyAgentVisite**](doc/AgentVisitesApi.md#startmyagentvisite) | **POST** /api/v1/agents/me/visites/{id}/start | Start the visit on site; beyond 500 m a justification is required (RM-M16-02)
-[*AgentVisitesApi*](doc/AgentVisitesApi.md) | [**submitVisiteReport**](doc/AgentVisitesApi.md#submitvisitereport) | **POST** /api/v1/agents/me/visites/{id}/report | File the visit report; locked once submitted (RM-M07-06, RM-M16-03)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**archiveAnnonce**](doc/AnnoncesApi.md#archiveannonce) | **POST** /api/v1/annonces/{id}/archive | Archive a listing
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**createAnnonce**](doc/AnnoncesApi.md#createannonce) | **POST** /api/v1/annonces | Create a listing (draft)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**deleteAnnonce**](doc/AnnoncesApi.md#deleteannonce) | **DELETE** /api/v1/annonces/{id} | Delete one of the authenticated prestataire&#39;s listings
@@ -146,6 +148,24 @@ Class | Method | HTTP request | Description
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**socialLogin**](doc/AuthenticationApi.md#sociallogin) | **POST** /api/v1/auth/social/login | Log in with a Google or Apple ID token
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyLoginOtp**](doc/AuthenticationApi.md#verifyloginotp) | **POST** /api/v1/auth/login/verify | Credential login step 2: verify the OTP and obtain access + refresh tokens
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyOtp**](doc/AuthenticationApi.md#verifyotp) | **POST** /api/v1/auth/otp/verify | Verify an OTP and obtain access + refresh tokens
+[*AvisRsidentApi*](doc/AvisRsidentApi.md) | [**getResidentReview**](doc/AvisRsidentApi.md#getresidentreview) | **GET** /api/v1/contracts/{contractId}/review | The review published for this tenancy
+[*AvisRsidentApi*](doc/AvisRsidentApi.md) | [**replyToResidentReview**](doc/AvisRsidentApi.md#replytoresidentreview) | **POST** /api/v1/contracts/{contractId}/review/reply | Answer it publicly, once — you cannot change or remove it (RM-M27-03)
+[*AvisRsidentApi*](doc/AvisRsidentApi.md) | [**submitResidentReview**](doc/AvisRsidentApi.md#submitresidentreview) | **POST** /api/v1/contracts/{contractId}/review | Review living in this property — needs a signed contract of at least a month
+[*AvisRsidentApi*](doc/AvisRsidentApi.md) | [**updateResidentReview**](doc/AvisRsidentApi.md#updateresidentreview) | **PUT** /api/v1/contracts/{contractId}/review | Revise it — open while the tenancy runs and 30 days after it ends (RM-M27-02)
+[*ContratsApi*](doc/ContratsApi.md) | [**acceptContract**](doc/ContratsApi.md#acceptcontract) | **POST** /api/v1/contracts/{id}/accept | Accept the terms; signing opens for both parties
+[*ContratsApi*](doc/ContratsApi.md) | [**cancelContract**](doc/ContratsApi.md#cancelcontract) | **DELETE** /api/v1/contracts/{id} | Call the contract off — either party, up to the second signature
+[*ContratsApi*](doc/ContratsApi.md) | [**createContract**](doc/ContratsApi.md#createcontract) | **POST** /api/v1/contracts | Draw up a contract on one of your listings (RM-M08-01)
+[*ContratsApi*](doc/ContratsApi.md) | [**getContract**](doc/ContratsApi.md#getcontract) | **GET** /api/v1/contracts/{id} | One contract; its exact address appears only once signed (CA-M08-02)
+[*ContratsApi*](doc/ContratsApi.md) | [**getContractPdf**](doc/ContratsApi.md#getcontractpdf) | **GET** /api/v1/contracts/{id}/pdf | A short-lived URL to download the signed contract&#39;s PDF (CA-M08-01)
+[*ContratsApi*](doc/ContratsApi.md) | [**listMyContracts**](doc/ContratsApi.md#listmycontracts) | **GET** /api/v1/contracts | Your contracts, as landlord or as tenant
+[*ContratsApi*](doc/ContratsApi.md) | [**requestContractChanges**](doc/ContratsApi.md#requestcontractchanges) | **POST** /api/v1/contracts/{id}/changes | Ask the landlord to change the terms, with a comment (CE-M08-03)
+[*ContratsApi*](doc/ContratsApi.md) | [**respondToContractChange**](doc/ContratsApi.md#respondtocontractchange) | **POST** /api/v1/contracts/{id}/changes/{changeId}/response | Answer one objection — whether or not you amend the terms (CE-M08-03)
+[*ContratsApi*](doc/ContratsApi.md) | [**sendContract**](doc/ContratsApi.md#sendcontract) | **POST** /api/v1/contracts/{id}/send | Send the draft to the tenant for signature (N-07)
+[*ContratsApi*](doc/ContratsApi.md) | [**signContract**](doc/ContratsApi.md#signcontract) | **POST** /api/v1/contracts/{id}/sign | Sign; the second signature locks the contract for good (RM-M08-03)
+[*ContratsApi*](doc/ContratsApi.md) | [**updateContract**](doc/ContratsApi.md#updatecontract) | **PATCH** /api/v1/contracts/{id} | Amend terms nobody has accepted or signed yet (RM-M08-03)
+[*ContratsApi*](doc/ContratsApi.md) | [**updateContractChange**](doc/ContratsApi.md#updatecontractchange) | **PUT** /api/v1/contracts/{id}/changes/{changeId} | Correct your own objection while it is still unanswered
+[*ContratsApi*](doc/ContratsApi.md) | [**verifyContract**](doc/ContratsApi.md#verifycontract) | **GET** /api/v1/contracts/verify/{id} | Check a printed contract is genuine — public, needs the code on the document (RM-M08-04)
+[*ContratsApi*](doc/ContratsApi.md) | [**withdrawContractChange**](doc/ContratsApi.md#withdrawcontractchange) | **DELETE** /api/v1/contracts/{id}/changes/{changeId} | Take your objection back; the last one returns the contract to you
 [*CurrentUserApi*](doc/CurrentUserApi.md) | [**getMe**](doc/CurrentUserApi.md#getme) | **GET** /api/v1/me | Get the currently authenticated account
 [*FavorisApi*](doc/FavorisApi.md) | [**addFavori**](doc/FavorisApi.md#addfavori) | **POST** /api/v1/favoris | Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
 [*FavorisApi*](doc/FavorisApi.md) | [**listMyFavoris**](doc/FavorisApi.md#listmyfavoris) | **GET** /api/v1/favoris | List saved listings; unavailable ones stay for 30 days flagged available&#x3D;false
@@ -172,6 +192,9 @@ Class | Method | HTTP request | Description
 [*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**getMyPrestataireProfile**](doc/PrestataireProfileApi.md#getmyprestataireprofile) | **GET** /api/v1/prestataires/me | Get the authenticated prestataire&#39;s profile
 [*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**requestPrestataireTypeChange**](doc/PrestataireProfileApi.md#requestprestatairetypechange) | **POST** /api/v1/prestataires/me/type-change | Change the provider type — applied directly if eligible, else opens an admin request
 [*PrestataireProfileApi*](doc/PrestataireProfileApi.md) | [**updateMyPrestataireProfile**](doc/PrestataireProfileApi.md#updatemyprestataireprofile) | **PATCH** /api/v1/prestataires/me | Partially update the authenticated prestataire&#39;s profile
+[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**confirmVisiteRequest**](doc/PrestataireVisitesApi.md#confirmvisiterequest) | **POST** /api/v1/prestataires/me/visites/{id}/confirm | Confirm a proposed time; the visit becomes scheduled (RM-M15-06)
+[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**declineVisiteRequest**](doc/PrestataireVisitesApi.md#declinevisiterequest) | **POST** /api/v1/prestataires/me/visites/{id}/decline | Turn a proposed time down; the client may propose another
+[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**listMyOwnerVisites**](doc/PrestataireVisitesApi.md#listmyownervisites) | **GET** /api/v1/prestataires/me/visites | Visits the prestataire carries out themselves, newest first
 [*ResidencesApi*](doc/ResidencesApi.md) | [**archiveResidenceUnits**](doc/ResidencesApi.md#archiveresidenceunits) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**createResidence**](doc/ResidencesApi.md#createresidence) | **POST** /api/v1/residences | Bulk-create a residence and its units (drafts)
 [*ResidencesApi*](doc/ResidencesApi.md) | [**deleteResidence**](doc/ResidencesApi.md#deleteresidence) | **DELETE** /api/v1/residences/{id} | Delete a residence and all its units
@@ -185,6 +208,7 @@ Class | Method | HTTP request | Description
 [*SearchApi*](doc/SearchApi.md) | [**getAgentPublicProfile**](doc/SearchApi.md#getagentpublicprofile) | **GET** /api/v1/search/agents/{id} | Public profile of an Agent Mboa (M15)
 [*SearchApi*](doc/SearchApi.md) | [**getAnnonceDetail**](doc/SearchApi.md#getannoncedetail) | **GET** /api/v1/search/annonces/{id} | Public fiche of a listing (M05)
 [*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
+[*SearchApi*](doc/SearchApi.md) | [**listAnnonceReviews**](doc/SearchApi.md#listannoncereviews) | **GET** /api/v1/search/annonces/{id}/reviews | A property&#39;s reviews — visits and tenancies in one feed (RM-M27-05)
 [*SearchApi*](doc/SearchApi.md) | [**searchListings**](doc/SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
 [*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing or a message
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getMySubscription**](doc/SubscriptionsApi.md#getmysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
@@ -200,10 +224,15 @@ Class | Method | HTTP request | Description
 [*UserSettingsApi*](doc/UserSettingsApi.md) | [**updateMyUserSettings**](doc/UserSettingsApi.md#updatemyusersettings) | **PATCH** /api/v1/users/me/settings | Partially update the authenticated account&#39;s settings
 [*VisitesApi*](doc/VisitesApi.md) | [**bookVisite**](doc/VisitesApi.md#bookvisite) | **POST** /api/v1/visites | Book a visit in one of the agent&#39;s free slots
 [*VisitesApi*](doc/VisitesApi.md) | [**cancelMyVisite**](doc/VisitesApi.md#cancelmyvisite) | **POST** /api/v1/visites/{id}/cancel | Cancel a visit — allowed up to 4 hours before the slot (RM-M07-04)
-[*VisitesApi*](doc/VisitesApi.md) | [**listBookableSlots**](doc/VisitesApi.md#listbookableslots) | **GET** /api/v1/visites/slots | The assigned agent&#39;s free slots over the next 7 days; an empty list carries a reason
+[*VisitesApi*](doc/VisitesApi.md) | [**confirmClientPresence**](doc/VisitesApi.md#confirmclientpresence) | **POST** /api/v1/visites/{id}/client-confirmation | Confirm you are at the visit; with the visitor&#39;s, it completes it (RM-M07-05)
+[*VisitesApi*](doc/VisitesApi.md) | [**listBookableSlots**](doc/VisitesApi.md#listbookableslots) | **GET** /api/v1/visites/slots | The bookable visitors for a listing, each with their own times (RM-M07-01)
 [*VisitesApi*](doc/VisitesApi.md) | [**listMyVisites**](doc/VisitesApi.md#listmyvisites) | **GET** /api/v1/visites | The authenticated user&#39;s visits
 [*VisitesApi*](doc/VisitesApi.md) | [**rateVisiteAgent**](doc/VisitesApi.md#ratevisiteagent) | **POST** /api/v1/visites/{id}/rating | Rate the agent 1–5 after the visit; optional, and only once (RM-M07-07)
-[*VisitesRapportApi*](doc/VisitesRapportApi.md) | [**getVisiteReport**](doc/VisitesRapportApi.md#getvisitereport) | **GET** /api/v1/visites/{id}/report | The agent&#39;s report on a visit — user, agent and prestataire only
+[*VisitesAvisApi*](doc/VisitesAvisApi.md) | [**commentVisiteReview**](doc/VisitesAvisApi.md#commentvisitereview) | **POST** /api/v1/visites/{visiteId}/review/comments | Answer a review; it adds beside the client&#39;s words, never into them (RM-M07bis-04)
+[*VisitesAvisApi*](doc/VisitesAvisApi.md) | [**exportVisiteReviewPdf**](doc/VisitesAvisApi.md#exportvisitereviewpdf) | **GET** /api/v1/visites/{visiteId}/review/pdf | The review as a printable PDF; no contractual value (RM-M07bis-06)
+[*VisitesAvisApi*](doc/VisitesAvisApi.md) | [**getVisiteReview**](doc/VisitesAvisApi.md#getvisitereview) | **GET** /api/v1/visites/{visiteId}/review | The review published for this visit
+[*VisitesAvisApi*](doc/VisitesAvisApi.md) | [**submitVisiteReview**](doc/VisitesAvisApi.md#submitvisitereview) | **POST** /api/v1/visites/{visiteId}/review | Publish your review of the property; needs a visit you both confirmed (RM-M07bis-01)
+[*VisitesPrsenceApi*](doc/VisitesPrsenceApi.md) | [**confirmVisitorPresence**](doc/VisitesPrsenceApi.md#confirmvisitorpresence) | **POST** /api/v1/visites/{id}/visitor-confirmation | Confirm you are at the property; beyond 500 m a justification is required
 
 
 ## Documentation For Models
@@ -227,12 +256,17 @@ Class | Method | HTTP request | Description
  - [BlockDayRequest](doc/BlockDayRequest.md)
  - [BookVisiteRequest](doc/BookVisiteRequest.md)
  - [BookableSlot](doc/BookableSlot.md)
- - [BookableSlotsResponse](doc/BookableSlotsResponse.md)
  - [ChangePasswordRequest](doc/ChangePasswordRequest.md)
+ - [ChangeRequestResponse](doc/ChangeRequestResponse.md)
+ - [Comment](doc/Comment.md)
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
+ - [ContractPdfResponse](doc/ContractPdfResponse.md)
+ - [ContractResponse](doc/ContractResponse.md)
+ - [ContractVerification](doc/ContractVerification.md)
  - [ConversationResponse](doc/ConversationResponse.md)
  - [CountryResponse](doc/CountryResponse.md)
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
+ - [CreateContractRequest](doc/CreateContractRequest.md)
  - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
  - [CreateSignalementRequest](doc/CreateSignalementRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
@@ -255,24 +289,29 @@ Class | Method | HTTP request | Description
  - [PageResponseAdminUserSummary](doc/PageResponseAdminUserSummary.md)
  - [PageResponseAnnonceResponse](doc/PageResponseAnnonceResponse.md)
  - [PageResponseAssignmentItem](doc/PageResponseAssignmentItem.md)
+ - [PageResponseContractResponse](doc/PageResponseContractResponse.md)
  - [PageResponseConversationResponse](doc/PageResponseConversationResponse.md)
  - [PageResponseFavoriResponse](doc/PageResponseFavoriResponse.md)
  - [PageResponseHistoriqueResponse](doc/PageResponseHistoriqueResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
  - [PageResponsePaymentSummary](doc/PageResponsePaymentSummary.md)
+ - [PageResponsePropertyReview](doc/PageResponsePropertyReview.md)
  - [PageResponseResidenceResponse](doc/PageResponseResidenceResponse.md)
  - [PageResponseSearchResult](doc/PageResponseSearchResult.md)
  - [PageResponseSignalementResponse](doc/PageResponseSignalementResponse.md)
  - [PageResponseTypeChangeReviewItem](doc/PageResponseTypeChangeReviewItem.md)
  - [PageResponseVisiteResponse](doc/PageResponseVisiteResponse.md)
  - [Pageable](doc/Pageable.md)
+ - [ParticipantSummary](doc/ParticipantSummary.md)
  - [PaymentInitiatedResponse](doc/PaymentInitiatedResponse.md)
  - [PaymentSummary](doc/PaymentSummary.md)
  - [PaymentWebhookRequest](doc/PaymentWebhookRequest.md)
  - [PhoneChangeResponse](doc/PhoneChangeResponse.md)
  - [PresignedUpload](doc/PresignedUpload.md)
  - [PrestataireProfileResponse](doc/PrestataireProfileResponse.md)
+ - [PropertyRating](doc/PropertyRating.md)
+ - [PropertyReview](doc/PropertyReview.md)
  - [ProviderCard](doc/ProviderCard.md)
  - [RateAgentRequest](doc/RateAgentRequest.md)
  - [ReceiptResponse](doc/ReceiptResponse.md)
@@ -281,6 +320,9 @@ Class | Method | HTTP request | Description
  - [RegisterProfessionalRequest](doc/RegisterProfessionalRequest.md)
  - [RejectKycRequest](doc/RejectKycRequest.md)
  - [RejectTypeChangeRequest](doc/RejectTypeChangeRequest.md)
+ - [Reply](doc/Reply.md)
+ - [ReplyRequest](doc/ReplyRequest.md)
+ - [RequestChangesRequest](doc/RequestChangesRequest.md)
  - [RequestPhoneChangeRequest](doc/RequestPhoneChangeRequest.md)
  - [RequestTypeChangeRequest](doc/RequestTypeChangeRequest.md)
  - [ResetPasswordRequest](doc/ResetPasswordRequest.md)
@@ -291,18 +333,24 @@ Class | Method | HTTP request | Description
  - [ResidenceOpportunity](doc/ResidenceOpportunity.md)
  - [ResidenceResponse](doc/ResidenceResponse.md)
  - [ResidenceSearchCard](doc/ResidenceSearchCard.md)
+ - [RespondToChangeRequest](doc/RespondToChangeRequest.md)
+ - [ReviewCommentRequest](doc/ReviewCommentRequest.md)
+ - [ReviewResponse](doc/ReviewResponse.md)
  - [ReviewSignalementRequest](doc/ReviewSignalementRequest.md)
  - [SearchResult](doc/SearchResult.md)
  - [SearchResultItem](doc/SearchResultItem.md)
  - [SendMessageRequest](doc/SendMessageRequest.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
+ - [SignContractRequest](doc/SignContractRequest.md)
  - [SignalementResponse](doc/SignalementResponse.md)
+ - [SignatureResponse](doc/SignatureResponse.md)
  - [SkippedUnit](doc/SkippedUnit.md)
  - [SocialLoginRequest](doc/SocialLoginRequest.md)
  - [StartConversationRequest](doc/StartConversationRequest.md)
  - [StartVisiteRequest](doc/StartVisiteRequest.md)
  - [SubmitKycRequest](doc/SubmitKycRequest.md)
- - [SubmitVisiteReportRequest](doc/SubmitVisiteReportRequest.md)
+ - [SubmitResidentReviewRequest](doc/SubmitResidentReviewRequest.md)
+ - [SubmitReviewRequest](doc/SubmitReviewRequest.md)
  - [SubscribeRequest](doc/SubscribeRequest.md)
  - [SubscriptionResponse](doc/SubscriptionResponse.md)
  - [SuspendAccountRequest](doc/SuspendAccountRequest.md)
@@ -317,6 +365,7 @@ Class | Method | HTTP request | Description
  - [UpdateAgentProfileRequest](doc/UpdateAgentProfileRequest.md)
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
  - [UpdateAvailabilityRequest](doc/UpdateAvailabilityRequest.md)
+ - [UpdateContractRequest](doc/UpdateContractRequest.md)
  - [UpdatePlanRequest](doc/UpdatePlanRequest.md)
  - [UpdatePrestataireProfileRequest](doc/UpdatePrestataireProfileRequest.md)
  - [UpdateResidenceRequest](doc/UpdateResidenceRequest.md)
@@ -326,8 +375,8 @@ Class | Method | HTTP request | Description
  - [UserProfileResponse](doc/UserProfileResponse.md)
  - [UserSettingsResponse](doc/UserSettingsResponse.md)
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
- - [VisiteReportResponse](doc/VisiteReportResponse.md)
  - [VisiteResponse](doc/VisiteResponse.md)
+ - [VisitorSlots](doc/VisitorSlots.md)
  - [Zone](doc/Zone.md)
  - [ZoneResponse](doc/ZoneResponse.md)
 

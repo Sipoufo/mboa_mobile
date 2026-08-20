@@ -11,7 +11,6 @@ import '../../features/assignments/data/assignment_repository.dart';
 import '../../features/annonces/data/location_capture.dart';
 import '../../features/visits/bloc/agent_visits_bloc.dart';
 import '../../features/visits/bloc/visit_detail_bloc.dart';
-import '../../features/visits/bloc/visit_report_bloc.dart';
 import '../../features/visits/data/agent_visit_repository.dart';
 import '../../features/agent/bloc/agent_profile_bloc.dart';
 import '../../features/agent/data/agent_repository.dart';
@@ -219,12 +218,6 @@ void registerAppModule() {
     () => VisitDetailBloc(
       repository: getIt<AgentVisitRepository>(),
       location: getIt<LocationCapture>(),
-    ),
-  );
-  getIt.registerFactory<VisitReportBloc>(
-    () => VisitReportBloc(
-      repository: getIt<AgentVisitRepository>(),
-      uploader: getIt<MediaUploader>(),
     ),
   );
 

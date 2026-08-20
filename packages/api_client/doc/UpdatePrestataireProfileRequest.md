@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **logoObjectKey** | **String** |  | [optional] 
 **type** | **String** |  | [optional] 
 **mainCityId** | **String** |  | [optional] 
+**registrationNumber** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

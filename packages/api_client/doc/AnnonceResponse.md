@@ -35,6 +35,7 @@ Name | Type | Description | Notes
 **tierRank** | **int** |  | [optional] 
 **photoKeys** | **BuiltList&lt;String&gt;** |  | [optional] 
 **amenities** | **BuiltSet&lt;String&gt;** |  | [optional] 
+**ownerVisitsEnabled** | **bool** |  | [optional] 
 **viewCount** | **int** |  | [optional] 
 **publishedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **expiresAt** | [**DateTime**](DateTime.md) |  | [optional] 

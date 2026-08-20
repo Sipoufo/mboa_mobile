@@ -4530,36 +4530,6 @@ class I18n {
     );
   }
 
-  /// `Démarrer la visite`
-  String get visitsStart {
-    return Intl.message(
-      'Démarrer la visite',
-      name: 'visitsStart',
-      desc: 'RM-M16-02.',
-      args: [],
-    );
-  }
-
-  /// `Disponible le jour de la visite`
-  String get visitsStartNotYet {
-    return Intl.message(
-      'Disponible le jour de la visite',
-      name: 'visitsStartNotYet',
-      desc: 'canStart is false — the server decides.',
-      args: [],
-    );
-  }
-
-  /// `Visite démarrée`
-  String get visitsStarted {
-    return Intl.message(
-      'Visite démarrée',
-      name: 'visitsStarted',
-      desc: 'startedAt is set.',
-      args: [],
-    );
-  }
-
   /// `Localisation en cours…`
   String get visitsLocating {
     return Intl.message(
@@ -4580,10 +4550,10 @@ class I18n {
     );
   }
 
-  /// `Vous êtes à environ {distance} m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.`
+  /// `Vous êtes à environ {distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.`
   String visitsTooFarBody(int distance) {
     return Intl.message(
-      'Vous êtes à environ $distance m. Expliquez pourquoi vous démarrez la visite depuis cet endroit.',
+      'Vous êtes à environ $distance m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.',
       name: 'visitsTooFarBody',
       desc: 'The justification Doc 10 asks for.',
       args: [distance],
@@ -4600,20 +4570,20 @@ class I18n {
     );
   }
 
-  /// `Démarrer quand même`
+  /// `Confirmer quand même`
   String get visitsTooFarConfirm {
     return Intl.message(
-      'Démarrer quand même',
+      'Confirmer quand même',
       name: 'visitsTooFarConfirm',
       desc: 'Confirm with a justification.',
       args: [],
     );
   }
 
-  /// `Autorisez la localisation pour démarrer une visite.`
+  /// `Autorisez la localisation pour confirmer votre présence.`
   String get visitsLocationDenied {
     return Intl.message(
-      'Autorisez la localisation pour démarrer une visite.',
+      'Autorisez la localisation pour confirmer votre présence.',
       name: 'visitsLocationDenied',
       desc: 'LocationFailure.denied.',
       args: [],
@@ -4660,152 +4630,124 @@ class I18n {
     );
   }
 
+  /// `Demandée`
+  String get visitsStatusRequested {
+    return Intl.message(
+      'Demandée',
+      name: 'visitsStatusRequested',
+      desc:
+          'VisiteResponse.status = REQUESTED — awaiting the owner\'s confirmation (RM-M15-06).',
+      args: [],
+    );
+  }
+
+  /// `Non honorée`
+  String get visitsStatusNotFulfilled {
+    return Intl.message(
+      'Non honorée',
+      name: 'visitsStatusNotFulfilled',
+      desc: 'VisiteResponse.status = NOT_FULFILLED (RM-M16-05).',
+      args: [],
+    );
+  }
+
+  /// `Confirmer ma présence`
+  String get visitsConfirmPresence {
+    return Intl.message(
+      'Confirmer ma présence',
+      name: 'visitsConfirmPresence',
+      desc:
+          'RM-M07-05 / RM-M16-02 — the agent\'s half of the mutual confirmation.',
+      args: [],
+    );
+  }
+
+  /// `Le locataire doit confirmer de son côté pour que la visite soit validée.`
+  String get visitsConfirmPresenceHint {
+    return Intl.message(
+      'Le locataire doit confirmer de son côté pour que la visite soit validée.',
+      name: 'visitsConfirmPresenceHint',
+      desc: 'RM-M07-05 — one confirmation is never enough.',
+      args: [],
+    );
+  }
+
+  /// `Disponible le jour de la visite`
+  String get visitsConfirmNotYet {
+    return Intl.message(
+      'Disponible le jour de la visite',
+      name: 'visitsConfirmNotYet',
+      desc: 'canConfirm is false — the server decides.',
+      args: [],
+    );
+  }
+
+  /// `Présence confirmée`
+  String get visitsAwaitingClientTitle {
+    return Intl.message(
+      'Présence confirmée',
+      name: 'visitsAwaitingClientTitle',
+      desc: 'visitorConfirmedAt is set, clientConfirmedAt is not.',
+      args: [],
+    );
+  }
+
+  /// `En attente de la confirmation du locataire. La visite sera validée dès qu'il aura confirmé de son côté.`
+  String get visitsAwaitingClientBody {
+    return Intl.message(
+      'En attente de la confirmation du locataire. La visite sera validée dès qu\'il aura confirmé de son côté.',
+      name: 'visitsAwaitingClientBody',
+      desc: 'RM-M07-05.',
+      args: [],
+    );
+  }
+
+  /// `Visite effectuée`
+  String get visitsCompletedTitle {
+    return Intl.message(
+      'Visite effectuée',
+      name: 'visitsCompletedTitle',
+      desc: 'Both parties confirmed (RM-M16-03).',
+      args: [],
+    );
+  }
+
+  /// `Les deux présences ont été confirmées. Le locataire peut désormais publier son avis sur le bien.`
+  String get visitsCompletedBody {
+    return Intl.message(
+      'Les deux présences ont été confirmées. Le locataire peut désormais publier son avis sur le bien.',
+      name: 'visitsCompletedBody',
+      desc: 'RM-M07bis — the report is the client\'s to write.',
+      args: [],
+    );
+  }
+
+  /// `Visite non honorée`
+  String get visitsNotFulfilledTitle {
+    return Intl.message(
+      'Visite non honorée',
+      name: 'visitsNotFulfilledTitle',
+      desc: 'RM-M16-05.',
+      args: [],
+    );
+  }
+
+  /// `Aucune présence n'a été confirmée pendant le créneau. Cette visite ne peut plus être démarrée.`
+  String get visitsNotFulfilledBody {
+    return Intl.message(
+      'Aucune présence n\'a été confirmée pendant le créneau. Cette visite ne peut plus être démarrée.',
+      name: 'visitsNotFulfilledBody',
+      desc: 'RM-M16-05 — no automatic penalty; the admin is alerted.',
+      args: [],
+    );
+  }
+
   /// `Possible jusqu'à 1 heure avant le créneau. Le locataire sera prévenu.`
   String get visitsCancelConfirm {
     return Intl.message(
       'Possible jusqu\'à 1 heure avant le créneau. Le locataire sera prévenu.',
       name: 'visitsCancelConfirm',
       desc: 'RM-M16-04.',
-      args: [],
-    );
-  }
-
-  /// `Rapport de visite`
-  String get visitsReportTitle {
-    return Intl.message(
-      'Rapport de visite',
-      name: 'visitsReportTitle',
-      desc: 'M16 report screen.',
-      args: [],
-    );
-  }
-
-  /// `Rédiger le rapport`
-  String get visitsReportOpen {
-    return Intl.message(
-      'Rédiger le rapport',
-      name: 'visitsReportOpen',
-      desc: 'Open the report form.',
-      args: [],
-    );
-  }
-
-  /// `Rapport envoyé`
-  String get visitsReportDone {
-    return Intl.message(
-      'Rapport envoyé',
-      name: 'visitsReportDone',
-      desc: 'reportSubmitted is true.',
-      args: [],
-    );
-  }
-
-  /// `Un rapport envoyé ne peut plus être modifié.`
-  String get visitsReportLocked {
-    return Intl.message(
-      'Un rapport envoyé ne peut plus être modifié.',
-      name: 'visitsReportLocked',
-      desc: 'RM-M16-03.',
-      args: [],
-    );
-  }
-
-  /// `État général`
-  String get visitsReportCondition {
-    return Intl.message(
-      'État général',
-      name: 'visitsReportCondition',
-      desc: 'overallCondition 1-5.',
-      args: [],
-    );
-  }
-
-  /// `Conforme à l'annonce ?`
-  String get visitsReportConformity {
-    return Intl.message(
-      'Conforme à l\'annonce ?',
-      name: 'visitsReportConformity',
-      desc: 'listingConformity.',
-      args: [],
-    );
-  }
-
-  /// `Oui`
-  String get visitsConformityYes {
-    return Intl.message(
-      'Oui',
-      name: 'visitsConformityYes',
-      desc: 'OUI.',
-      args: [],
-    );
-  }
-
-  /// `Partiellement`
-  String get visitsConformityPartly {
-    return Intl.message(
-      'Partiellement',
-      name: 'visitsConformityPartly',
-      desc: 'PARTIELLEMENT.',
-      args: [],
-    );
-  }
-
-  /// `Non`
-  String get visitsConformityNo {
-    return Intl.message(
-      'Non',
-      name: 'visitsConformityNo',
-      desc: 'NON.',
-      args: [],
-    );
-  }
-
-  /// `Commentaire`
-  String get visitsReportComment {
-    return Intl.message(
-      'Commentaire',
-      name: 'visitsReportComment',
-      desc: 'Free text, optional.',
-      args: [],
-    );
-  }
-
-  /// `Photos`
-  String get visitsReportPhotos {
-    return Intl.message(
-      'Photos',
-      name: 'visitsReportPhotos',
-      desc: 'Report photos — min 3.',
-      args: [],
-    );
-  }
-
-  /// `Ajoutez encore {count} photo(s)`
-  String visitsReportPhotosNeeded(int count) {
-    return Intl.message(
-      'Ajoutez encore $count photo(s)',
-      name: 'visitsReportPhotosNeeded',
-      desc: 'How many more are needed before the report can be filed.',
-      args: [count],
-    );
-  }
-
-  /// `Envoyer le rapport`
-  String get visitsReportSubmit {
-    return Intl.message(
-      'Envoyer le rapport',
-      name: 'visitsReportSubmit',
-      desc: 'Submit — irreversible.',
-      args: [],
-    );
-  }
-
-  /// `Le rapport ne pourra plus être modifié après l'envoi.`
-  String get visitsReportSubmitConfirm {
-    return Intl.message(
-      'Le rapport ne pourra plus être modifié après l\'envoi.',
-      name: 'visitsReportSubmitConfirm',
-      desc: 'RM-M16-03.',
       args: [],
     );
   }

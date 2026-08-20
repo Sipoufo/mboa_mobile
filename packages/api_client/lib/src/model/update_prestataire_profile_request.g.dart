@@ -99,6 +99,8 @@ class _$UpdatePrestataireProfileRequest
   final UpdatePrestataireProfileRequestTypeEnum? type;
   @override
   final String? mainCityId;
+  @override
+  final String? registrationNumber;
 
   factory _$UpdatePrestataireProfileRequest([
     void Function(UpdatePrestataireProfileRequestBuilder)? updates,
@@ -109,6 +111,7 @@ class _$UpdatePrestataireProfileRequest
     this.logoObjectKey,
     this.type,
     this.mainCityId,
+    this.registrationNumber,
   }) : super._();
   @override
   UpdatePrestataireProfileRequest rebuild(
@@ -126,7 +129,8 @@ class _$UpdatePrestataireProfileRequest
         displayName == other.displayName &&
         logoObjectKey == other.logoObjectKey &&
         type == other.type &&
-        mainCityId == other.mainCityId;
+        mainCityId == other.mainCityId &&
+        registrationNumber == other.registrationNumber;
   }
 
   @override
@@ -136,6 +140,7 @@ class _$UpdatePrestataireProfileRequest
     _$hash = $jc(_$hash, logoObjectKey.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, mainCityId.hashCode);
+    _$hash = $jc(_$hash, registrationNumber.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -146,7 +151,8 @@ class _$UpdatePrestataireProfileRequest
           ..add('displayName', displayName)
           ..add('logoObjectKey', logoObjectKey)
           ..add('type', type)
-          ..add('mainCityId', mainCityId))
+          ..add('mainCityId', mainCityId)
+          ..add('registrationNumber', registrationNumber))
         .toString();
   }
 }
@@ -177,6 +183,11 @@ class UpdatePrestataireProfileRequestBuilder
   String? get mainCityId => _$this._mainCityId;
   set mainCityId(String? mainCityId) => _$this._mainCityId = mainCityId;
 
+  String? _registrationNumber;
+  String? get registrationNumber => _$this._registrationNumber;
+  set registrationNumber(String? registrationNumber) =>
+      _$this._registrationNumber = registrationNumber;
+
   UpdatePrestataireProfileRequestBuilder() {
     UpdatePrestataireProfileRequest._defaults(this);
   }
@@ -188,6 +199,7 @@ class UpdatePrestataireProfileRequestBuilder
       _logoObjectKey = $v.logoObjectKey;
       _type = $v.type;
       _mainCityId = $v.mainCityId;
+      _registrationNumber = $v.registrationNumber;
       _$v = null;
     }
     return this;
@@ -214,6 +226,7 @@ class UpdatePrestataireProfileRequestBuilder
           logoObjectKey: logoObjectKey,
           type: type,
           mainCityId: mainCityId,
+          registrationNumber: registrationNumber,
         );
     replace(_$result);
     return _$result;

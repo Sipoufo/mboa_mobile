@@ -13,6 +13,9 @@ const CreateSignalementRequestTargetTypeEnum
 _$createSignalementRequestTargetTypeEnum_MESSAGE =
     const CreateSignalementRequestTargetTypeEnum._('MESSAGE');
 const CreateSignalementRequestTargetTypeEnum
+_$createSignalementRequestTargetTypeEnum_REVIEW =
+    const CreateSignalementRequestTargetTypeEnum._('REVIEW');
+const CreateSignalementRequestTargetTypeEnum
 _$createSignalementRequestTargetTypeEnum_unknownDefaultOpenApi =
     const CreateSignalementRequestTargetTypeEnum._('unknownDefaultOpenApi');
 
@@ -23,6 +26,8 @@ _$createSignalementRequestTargetTypeEnumValueOf(String name) {
       return _$createSignalementRequestTargetTypeEnum_ANNONCE;
     case 'MESSAGE':
       return _$createSignalementRequestTargetTypeEnum_MESSAGE;
+    case 'REVIEW':
+      return _$createSignalementRequestTargetTypeEnum_REVIEW;
     case 'unknownDefaultOpenApi':
       return _$createSignalementRequestTargetTypeEnum_unknownDefaultOpenApi;
     default:
@@ -36,6 +41,7 @@ _$createSignalementRequestTargetTypeEnumValues =
       const <CreateSignalementRequestTargetTypeEnum>[
         _$createSignalementRequestTargetTypeEnum_ANNONCE,
         _$createSignalementRequestTargetTypeEnum_MESSAGE,
+        _$createSignalementRequestTargetTypeEnum_REVIEW,
         _$createSignalementRequestTargetTypeEnum_unknownDefaultOpenApi,
       ],
     );
@@ -99,11 +105,13 @@ class _$CreateSignalementRequestTargetTypeEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
+    'REVIEW': 'REVIEW',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
+    'REVIEW': 'REVIEW',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

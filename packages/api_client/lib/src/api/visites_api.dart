@@ -10,12 +10,12 @@ import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/book_visite_request.dart';
-import 'package:api_client/src/model/bookable_slots_response.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/page_response_visite_response.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/rate_agent_request.dart';
 import 'package:api_client/src/model/visite_response.dart';
+import 'package:api_client/src/model/visitor_slots.dart';
 import 'package:built_collection/built_collection.dart';
 
 class VisitesApi {
@@ -180,7 +180,88 @@ class VisitesApi {
     return _response;
   }
 
-  /// The assigned agent&#39;s free slots over the next 7 days; an empty list carries a reason
+  /// Confirm you are at the visit; with the visitor&#39;s, it completes it (RM-M07-05)
+  /// 
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [VisiteResponse] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<VisiteResponse>> confirmClientPresence({ 
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/visites/{id}/client-confirmation'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    VisiteResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(VisiteResponse),
+      ) as VisiteResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<VisiteResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// The bookable visitors for a listing, each with their own times (RM-M07-01)
   /// 
   ///
   /// Parameters:
@@ -192,9 +273,9 @@ class VisitesApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [BookableSlotsResponse] as data
+  /// Returns a [Future] containing a [Response] with a [BuiltList<VisitorSlots>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BookableSlotsResponse>> listBookableSlots({ 
+  Future<Response<BuiltList<VisitorSlots>>> listBookableSlots({ 
     required String annonceId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -235,14 +316,14 @@ class VisitesApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BookableSlotsResponse? _responseData;
+    BuiltList<VisitorSlots>? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(BookableSlotsResponse),
-      ) as BookableSlotsResponse;
+        specifiedType: const FullType(BuiltList, [FullType(VisitorSlots)]),
+      ) as BuiltList<VisitorSlots>;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -254,7 +335,7 @@ class VisitesApi {
       );
     }
 
-    return Response<BookableSlotsResponse>(
+    return Response<BuiltList<VisitorSlots>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

@@ -132,6 +132,11 @@ void main() {
       // TODO
     });
 
+    // PropertyRating rating
+    test('to test the property `rating`', () async {
+      // TODO
+    });
+
     // int viewCount
     test('to test the property `viewCount`', () async {
       // TODO

@@ -6,24 +6,64 @@ part of 'visite_response.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const VisiteResponseVisitorKindEnum _$visiteResponseVisitorKindEnum_AGENT =
+    const VisiteResponseVisitorKindEnum._('AGENT');
+const VisiteResponseVisitorKindEnum _$visiteResponseVisitorKindEnum_OWNER =
+    const VisiteResponseVisitorKindEnum._('OWNER');
+const VisiteResponseVisitorKindEnum
+_$visiteResponseVisitorKindEnum_unknownDefaultOpenApi =
+    const VisiteResponseVisitorKindEnum._('unknownDefaultOpenApi');
+
+VisiteResponseVisitorKindEnum _$visiteResponseVisitorKindEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'AGENT':
+      return _$visiteResponseVisitorKindEnum_AGENT;
+    case 'OWNER':
+      return _$visiteResponseVisitorKindEnum_OWNER;
+    case 'unknownDefaultOpenApi':
+      return _$visiteResponseVisitorKindEnum_unknownDefaultOpenApi;
+    default:
+      return _$visiteResponseVisitorKindEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<VisiteResponseVisitorKindEnum>
+_$visiteResponseVisitorKindEnumValues = BuiltSet<VisiteResponseVisitorKindEnum>(
+  const <VisiteResponseVisitorKindEnum>[
+    _$visiteResponseVisitorKindEnum_AGENT,
+    _$visiteResponseVisitorKindEnum_OWNER,
+    _$visiteResponseVisitorKindEnum_unknownDefaultOpenApi,
+  ],
+);
+
+const VisiteResponseStatusEnum _$visiteResponseStatusEnum_REQUESTED =
+    const VisiteResponseStatusEnum._('REQUESTED');
 const VisiteResponseStatusEnum _$visiteResponseStatusEnum_SCHEDULED =
     const VisiteResponseStatusEnum._('SCHEDULED');
 const VisiteResponseStatusEnum _$visiteResponseStatusEnum_CANCELLED =
     const VisiteResponseStatusEnum._('CANCELLED');
 const VisiteResponseStatusEnum _$visiteResponseStatusEnum_COMPLETED =
     const VisiteResponseStatusEnum._('COMPLETED');
+const VisiteResponseStatusEnum _$visiteResponseStatusEnum_NOT_FULFILLED =
+    const VisiteResponseStatusEnum._('NOT_FULFILLED');
 const VisiteResponseStatusEnum
 _$visiteResponseStatusEnum_unknownDefaultOpenApi =
     const VisiteResponseStatusEnum._('unknownDefaultOpenApi');
 
 VisiteResponseStatusEnum _$visiteResponseStatusEnumValueOf(String name) {
   switch (name) {
+    case 'REQUESTED':
+      return _$visiteResponseStatusEnum_REQUESTED;
     case 'SCHEDULED':
       return _$visiteResponseStatusEnum_SCHEDULED;
     case 'CANCELLED':
       return _$visiteResponseStatusEnum_CANCELLED;
     case 'COMPLETED':
       return _$visiteResponseStatusEnum_COMPLETED;
+    case 'NOT_FULFILLED':
+      return _$visiteResponseStatusEnum_NOT_FULFILLED;
     case 'unknownDefaultOpenApi':
       return _$visiteResponseStatusEnum_unknownDefaultOpenApi;
     default:
@@ -33,9 +73,11 @@ VisiteResponseStatusEnum _$visiteResponseStatusEnumValueOf(String name) {
 
 final BuiltSet<VisiteResponseStatusEnum> _$visiteResponseStatusEnumValues =
     BuiltSet<VisiteResponseStatusEnum>(const <VisiteResponseStatusEnum>[
+      _$visiteResponseStatusEnum_REQUESTED,
       _$visiteResponseStatusEnum_SCHEDULED,
       _$visiteResponseStatusEnum_CANCELLED,
       _$visiteResponseStatusEnum_COMPLETED,
+      _$visiteResponseStatusEnum_NOT_FULFILLED,
       _$visiteResponseStatusEnum_unknownDefaultOpenApi,
     ]);
 
@@ -85,24 +127,66 @@ _$visiteResponseCancellationReasonEnumValues =
       ],
     );
 
+Serializer<VisiteResponseVisitorKindEnum>
+_$visiteResponseVisitorKindEnumSerializer =
+    _$VisiteResponseVisitorKindEnumSerializer();
 Serializer<VisiteResponseStatusEnum> _$visiteResponseStatusEnumSerializer =
     _$VisiteResponseStatusEnumSerializer();
 Serializer<VisiteResponseCancellationReasonEnum>
 _$visiteResponseCancellationReasonEnumSerializer =
     _$VisiteResponseCancellationReasonEnumSerializer();
 
-class _$VisiteResponseStatusEnumSerializer
-    implements PrimitiveSerializer<VisiteResponseStatusEnum> {
+class _$VisiteResponseVisitorKindEnumSerializer
+    implements PrimitiveSerializer<VisiteResponseVisitorKindEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
-    'SCHEDULED': 'SCHEDULED',
-    'CANCELLED': 'CANCELLED',
-    'COMPLETED': 'COMPLETED',
+    'AGENT': 'AGENT',
+    'OWNER': 'OWNER',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
+    'AGENT': 'AGENT',
+    'OWNER': 'OWNER',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[VisiteResponseVisitorKindEnum];
+  @override
+  final String wireName = 'VisiteResponseVisitorKindEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    VisiteResponseVisitorKindEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  VisiteResponseVisitorKindEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => VisiteResponseVisitorKindEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
+class _$VisiteResponseStatusEnumSerializer
+    implements PrimitiveSerializer<VisiteResponseStatusEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'REQUESTED': 'REQUESTED',
     'SCHEDULED': 'SCHEDULED',
     'CANCELLED': 'CANCELLED',
     'COMPLETED': 'COMPLETED',
+    'NOT_FULFILLED': 'NOT_FULFILLED',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'REQUESTED': 'REQUESTED',
+    'SCHEDULED': 'SCHEDULED',
+    'CANCELLED': 'CANCELLED',
+    'COMPLETED': 'COMPLETED',
+    'NOT_FULFILLED': 'NOT_FULFILLED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -177,11 +261,17 @@ class _$VisiteResponse extends VisiteResponse {
   @override
   final String? annonceTitle;
   @override
-  final String? agentAccountId;
+  final String? visitorAccountId;
+  @override
+  final VisiteResponseVisitorKindEnum? visitorKind;
   @override
   final DateTime? scheduledAt;
   @override
   final VisiteResponseStatusEnum? status;
+  @override
+  final DateTime? visitorConfirmedAt;
+  @override
+  final DateTime? clientConfirmedAt;
   @override
   final VisiteResponseCancellationReasonEnum? cancellationReason;
   @override
@@ -194,9 +284,12 @@ class _$VisiteResponse extends VisiteResponse {
     this.id,
     this.annonceId,
     this.annonceTitle,
-    this.agentAccountId,
+    this.visitorAccountId,
+    this.visitorKind,
     this.scheduledAt,
     this.status,
+    this.visitorConfirmedAt,
+    this.clientConfirmedAt,
     this.cancellationReason,
     this.createdAt,
   }) : super._();
@@ -214,9 +307,12 @@ class _$VisiteResponse extends VisiteResponse {
         id == other.id &&
         annonceId == other.annonceId &&
         annonceTitle == other.annonceTitle &&
-        agentAccountId == other.agentAccountId &&
+        visitorAccountId == other.visitorAccountId &&
+        visitorKind == other.visitorKind &&
         scheduledAt == other.scheduledAt &&
         status == other.status &&
+        visitorConfirmedAt == other.visitorConfirmedAt &&
+        clientConfirmedAt == other.clientConfirmedAt &&
         cancellationReason == other.cancellationReason &&
         createdAt == other.createdAt;
   }
@@ -227,9 +323,12 @@ class _$VisiteResponse extends VisiteResponse {
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, annonceId.hashCode);
     _$hash = $jc(_$hash, annonceTitle.hashCode);
-    _$hash = $jc(_$hash, agentAccountId.hashCode);
+    _$hash = $jc(_$hash, visitorAccountId.hashCode);
+    _$hash = $jc(_$hash, visitorKind.hashCode);
     _$hash = $jc(_$hash, scheduledAt.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, visitorConfirmedAt.hashCode);
+    _$hash = $jc(_$hash, clientConfirmedAt.hashCode);
     _$hash = $jc(_$hash, cancellationReason.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jf(_$hash);
@@ -242,9 +341,12 @@ class _$VisiteResponse extends VisiteResponse {
           ..add('id', id)
           ..add('annonceId', annonceId)
           ..add('annonceTitle', annonceTitle)
-          ..add('agentAccountId', agentAccountId)
+          ..add('visitorAccountId', visitorAccountId)
+          ..add('visitorKind', visitorKind)
           ..add('scheduledAt', scheduledAt)
           ..add('status', status)
+          ..add('visitorConfirmedAt', visitorConfirmedAt)
+          ..add('clientConfirmedAt', clientConfirmedAt)
           ..add('cancellationReason', cancellationReason)
           ..add('createdAt', createdAt))
         .toString();
@@ -267,10 +369,15 @@ class VisiteResponseBuilder
   String? get annonceTitle => _$this._annonceTitle;
   set annonceTitle(String? annonceTitle) => _$this._annonceTitle = annonceTitle;
 
-  String? _agentAccountId;
-  String? get agentAccountId => _$this._agentAccountId;
-  set agentAccountId(String? agentAccountId) =>
-      _$this._agentAccountId = agentAccountId;
+  String? _visitorAccountId;
+  String? get visitorAccountId => _$this._visitorAccountId;
+  set visitorAccountId(String? visitorAccountId) =>
+      _$this._visitorAccountId = visitorAccountId;
+
+  VisiteResponseVisitorKindEnum? _visitorKind;
+  VisiteResponseVisitorKindEnum? get visitorKind => _$this._visitorKind;
+  set visitorKind(VisiteResponseVisitorKindEnum? visitorKind) =>
+      _$this._visitorKind = visitorKind;
 
   DateTime? _scheduledAt;
   DateTime? get scheduledAt => _$this._scheduledAt;
@@ -279,6 +386,16 @@ class VisiteResponseBuilder
   VisiteResponseStatusEnum? _status;
   VisiteResponseStatusEnum? get status => _$this._status;
   set status(VisiteResponseStatusEnum? status) => _$this._status = status;
+
+  DateTime? _visitorConfirmedAt;
+  DateTime? get visitorConfirmedAt => _$this._visitorConfirmedAt;
+  set visitorConfirmedAt(DateTime? visitorConfirmedAt) =>
+      _$this._visitorConfirmedAt = visitorConfirmedAt;
+
+  DateTime? _clientConfirmedAt;
+  DateTime? get clientConfirmedAt => _$this._clientConfirmedAt;
+  set clientConfirmedAt(DateTime? clientConfirmedAt) =>
+      _$this._clientConfirmedAt = clientConfirmedAt;
 
   VisiteResponseCancellationReasonEnum? _cancellationReason;
   VisiteResponseCancellationReasonEnum? get cancellationReason =>
@@ -301,9 +418,12 @@ class VisiteResponseBuilder
       _id = $v.id;
       _annonceId = $v.annonceId;
       _annonceTitle = $v.annonceTitle;
-      _agentAccountId = $v.agentAccountId;
+      _visitorAccountId = $v.visitorAccountId;
+      _visitorKind = $v.visitorKind;
       _scheduledAt = $v.scheduledAt;
       _status = $v.status;
+      _visitorConfirmedAt = $v.visitorConfirmedAt;
+      _clientConfirmedAt = $v.clientConfirmedAt;
       _cancellationReason = $v.cancellationReason;
       _createdAt = $v.createdAt;
       _$v = null;
@@ -331,9 +451,12 @@ class VisiteResponseBuilder
           id: id,
           annonceId: annonceId,
           annonceTitle: annonceTitle,
-          agentAccountId: agentAccountId,
+          visitorAccountId: visitorAccountId,
+          visitorKind: visitorKind,
           scheduledAt: scheduledAt,
           status: status,
+          visitorConfirmedAt: visitorConfirmedAt,
+          clientConfirmedAt: clientConfirmedAt,
           cancellationReason: cancellationReason,
           createdAt: createdAt,
         );

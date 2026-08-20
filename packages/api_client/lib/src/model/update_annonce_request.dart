@@ -32,6 +32,7 @@ part 'update_annonce_request.g.dart';
 /// * [description] 
 /// * [photoKeys] 
 /// * [amenities] 
+/// * [ownerVisitsEnabled] 
 @BuiltValue()
 abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, UpdateAnnonceRequestBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -93,6 +94,9 @@ abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, Updat
   @BuiltValueField(wireName: r'amenities')
   BuiltSet<UpdateAnnonceRequestAmenitiesEnum>? get amenities;
   // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
+
+  @BuiltValueField(wireName: r'ownerVisitsEnabled')
+  bool? get ownerVisitsEnabled;
 
   UpdateAnnonceRequest._();
 
@@ -248,6 +252,13 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
       yield serializers.serialize(
         object.amenities,
         specifiedType: const FullType(BuiltSet, [FullType(UpdateAnnonceRequestAmenitiesEnum)]),
+      );
+    }
+    if (object.ownerVisitsEnabled != null) {
+      yield r'ownerVisitsEnabled';
+      yield serializers.serialize(
+        object.ownerVisitsEnabled,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -424,6 +435,14 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
           ) as BuiltSet<UpdateAnnonceRequestAmenitiesEnum>?;
           if (valueDes == null) continue;
           result.amenities.replace(valueDes);
+          break;
+        case r'ownerVisitsEnabled':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.ownerVisitsEnabled = valueDes;
           break;
         default:
           unhandled.add(key);

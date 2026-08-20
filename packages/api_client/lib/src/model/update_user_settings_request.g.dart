@@ -92,6 +92,15 @@ const UpdateUserSettingsRequestDisabledNotificationsEnum
 _$updateUserSettingsRequestDisabledNotificationsEnum_N17 =
     const UpdateUserSettingsRequestDisabledNotificationsEnum._('N17');
 const UpdateUserSettingsRequestDisabledNotificationsEnum
+_$updateUserSettingsRequestDisabledNotificationsEnum_N18 =
+    const UpdateUserSettingsRequestDisabledNotificationsEnum._('N18');
+const UpdateUserSettingsRequestDisabledNotificationsEnum
+_$updateUserSettingsRequestDisabledNotificationsEnum_N19 =
+    const UpdateUserSettingsRequestDisabledNotificationsEnum._('N19');
+const UpdateUserSettingsRequestDisabledNotificationsEnum
+_$updateUserSettingsRequestDisabledNotificationsEnum_N20 =
+    const UpdateUserSettingsRequestDisabledNotificationsEnum._('N20');
+const UpdateUserSettingsRequestDisabledNotificationsEnum
 _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi =
     const UpdateUserSettingsRequestDisabledNotificationsEnum._(
       'unknownDefaultOpenApi',
@@ -134,6 +143,12 @@ _$updateUserSettingsRequestDisabledNotificationsEnumValueOf(String name) {
       return _$updateUserSettingsRequestDisabledNotificationsEnum_N16;
     case 'N17':
       return _$updateUserSettingsRequestDisabledNotificationsEnum_N17;
+    case 'N18':
+      return _$updateUserSettingsRequestDisabledNotificationsEnum_N18;
+    case 'N19':
+      return _$updateUserSettingsRequestDisabledNotificationsEnum_N19;
+    case 'N20':
+      return _$updateUserSettingsRequestDisabledNotificationsEnum_N20;
     case 'unknownDefaultOpenApi':
       return _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi;
     default:
@@ -163,6 +178,9 @@ _$updateUserSettingsRequestDisabledNotificationsEnumValues =
       _$updateUserSettingsRequestDisabledNotificationsEnum_N15,
       _$updateUserSettingsRequestDisabledNotificationsEnum_N16,
       _$updateUserSettingsRequestDisabledNotificationsEnum_N17,
+      _$updateUserSettingsRequestDisabledNotificationsEnum_N18,
+      _$updateUserSettingsRequestDisabledNotificationsEnum_N19,
+      _$updateUserSettingsRequestDisabledNotificationsEnum_N20,
       _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi,
     ]);
 
@@ -233,6 +251,9 @@ class _$UpdateUserSettingsRequestDisabledNotificationsEnumSerializer
     'N15': 'N15',
     'N16': 'N16',
     'N17': 'N17',
+    'N18': 'N18',
+    'N19': 'N19',
+    'N20': 'N20',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -253,6 +274,9 @@ class _$UpdateUserSettingsRequestDisabledNotificationsEnumSerializer
     'N15': 'N15',
     'N16': 'N16',
     'N17': 'N17',
+    'N18': 'N18',
+    'N19': 'N19',
+    'N20': 'N20',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
