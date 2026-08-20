@@ -27,8 +27,13 @@ class AgentVisitRepository implements VisitsSource {
     required DateTime to,
   }) async {
     final response = await _api.listMyAgentVisites(
-      from: from,
-      to: to,
+      // **UTC or nothing**: built_value's DateTime serializer throws
+      // "Must be in utc for serialization" on a local one, and the agenda's
+      // week boundaries are local days. The throw happened inside the
+      // generated client, so it surfaced as a failed load — an empty calendar
+      // with a Réessayer button that could never succeed.
+      from: from.toUtc(),
+      to: to.toUtc(),
       pageable: Pageable((b) => b
         ..page = 0
         ..size = _pageSize),

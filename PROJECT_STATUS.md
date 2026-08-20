@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**504 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 385 ·
+**506 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 387 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -130,6 +130,22 @@ and `AndroidManifest.xml`.
 
 **Adding a plugin that touches camera, photos, location, notifications or
 background execution: add the declaration *and* a line in that test.**
+
+### A DateTime on the wire must be UTC
+built_value's `DateTime` serializer throws *"Must be in utc for
+serialization"* — from **inside the generated client**, so it surfaces as a
+failed request rather than as a type error. The visits agenda sent local
+Mondays and rendered its failure state: an empty calendar with a Réessayer
+button that could never succeed, reported from a device on the first build that
+had it.
+
+Week boundaries, day pickers and "since" filters are all local by nature, so the
+conversion belongs in the repository, at the call: `from.toUtc()`. A `Date`
+(built_value's calendar date, via `.toDate()`) has no such rule — the days-off
+endpoints are fine.
+
+Pinned by `visit_range_test.dart`, which serializes what the repository handed
+over instead of merely inspecting it.
 
 ### Design tokens
 `colors.background` = page canvas (#FBFBFB) · `colors.surface` = card (#FFFFFF) ·
