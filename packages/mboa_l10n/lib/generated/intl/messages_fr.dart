@@ -103,7 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m37(date) => "Valable jusqu’au ${date}";
 
-  static String m38(distance) =>
+  static String m38(time) => "Confirmé à ${time}";
+
+  static String m39(distance) =>
       "Vous êtes à environ ${distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1118,6 +1120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsConfirmPresenceHint": MessageLookupByLibrary.simpleMessage(
       "Le locataire doit confirmer de son côté pour que la visite soit validée.",
     ),
+    "visitsContactsTitle": MessageLookupByLibrary.simpleMessage("Contacts"),
     "visitsDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Détail de la visite",
     ),
@@ -1153,6 +1156,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "Visite non honorée",
     ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
+    "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Numéro copié"),
+    "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Locataire"),
+    "visitsPresenceConfirmedAt": m38,
+    "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
+      "La visite n\'est validée que lorsque les deux présences sont confirmées.",
+    ),
+    "visitsPresencePending": MessageLookupByLibrary.simpleMessage("En attente"),
+    "visitsPresenceTitle": MessageLookupByLibrary.simpleMessage(
+      "Confirmation de présence",
+    ),
+    "visitsPresenceYou": MessageLookupByLibrary.simpleMessage("Vous"),
     "visitsRequestConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer le créneau",
     ),
@@ -1175,7 +1189,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
-    "visitsTooFarBody": m38,
+    "visitsTooFarBody": m39,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer quand même",
     ),

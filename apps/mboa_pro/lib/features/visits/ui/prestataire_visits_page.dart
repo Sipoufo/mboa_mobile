@@ -28,17 +28,16 @@ class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper 
 
   @override
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider<PrestataireAgendaBloc>(
-            create: (_) =>
-                getIt<PrestataireAgendaBloc>()..add(const AgendaRequested()),
-          ),
-          BlocProvider<PrestataireVisitsBloc>(
-            create: (_) => getIt<PrestataireVisitsBloc>(),
-          ),
-        ],
-        child: this,
-      );
+    providers: [
+      BlocProvider<PrestataireAgendaBloc>(
+        create: (_) => getIt<PrestataireAgendaBloc>()..add(const AgendaRequested()),
+      ),
+      BlocProvider<PrestataireVisitsBloc>(
+        create: (_) => getIt<PrestataireVisitsBloc>(),
+      ),
+    ],
+    child: this,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +65,7 @@ class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper 
                 title: l10n.commonErrorTitle,
                 description: switch (failure) {
                   LocationFailure.denied => l10n.visitsLocationDenied,
-                  LocationFailure.deniedForever =>
-                    l10n.visitsLocationDeniedForever,
+                  LocationFailure.deniedForever => l10n.visitsLocationDeniedForever,
                   LocationFailure.disabled => l10n.visitsLocationDisabled,
                   LocationFailure.unavailable => l10n.visitsLocationUnavailable,
                 },
@@ -78,16 +76,13 @@ class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper 
         },
         child: BlocBuilder<PrestataireAgendaBloc, VisitsAgendaState>(
           builder: (context, state) => switch (state) {
-            VisitsAgendaInitial() || VisitsAgendaLoadInProgress() =>
-              const Center(child: Loader()),
+            VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),
             VisitsAgendaFailure() => Center(
-                child: TextButton(
-                  onPressed: () => context
-                      .read<PrestataireAgendaBloc>()
-                      .add(const AgendaRequested()),
-                  child: Text(l10n.commonRetry),
-                ),
+              child: TextButton(
+                onPressed: () => context.read<PrestataireAgendaBloc>().add(const AgendaRequested()),
+                child: Text(l10n.commonRetry),
               ),
+            ),
             final VisitsAgendaReady ready => _Agenda(state: ready),
           },
         ),
@@ -109,18 +104,10 @@ class _Agenda extends StatelessWidget {
 
         return VisitsAgendaView(
           state: state,
-          onDaySelected: (day) => context
-              .read<PrestataireAgendaBloc>()
-              .add(AgendaDaySelected(day)),
-          onWeekChanged: (day) => context
-              .read<PrestataireAgendaBloc>()
-              .add(AgendaWeekChanged(day, selectedDay: day)),
-          onRefresh: () => context
-              .read<PrestataireAgendaBloc>()
-              .add(const AgendaRefreshed()),
-          header: state.awaitingAnswer.isEmpty
-              ? null
-              : _Requests(visits: state.awaitingAnswer, busyId: busyId),
+          onDaySelected: (day) => context.read<PrestataireAgendaBloc>().add(AgendaDaySelected(day)),
+          onWeekChanged: (day) => context.read<PrestataireAgendaBloc>().add(AgendaWeekChanged(day, selectedDay: day)),
+          onRefresh: () => context.read<PrestataireAgendaBloc>().add(const AgendaRefreshed()),
+          header: state.awaitingAnswer.isEmpty ? null : _Requests(visits: state.awaitingAnswer, busyId: busyId),
           itemBuilder: (context, visit) => VisitRowTile(
             visit: visit,
             isBusy: busyId == visit.id,
@@ -144,11 +131,8 @@ class _Agenda extends StatelessWidget {
 
     if (visit.visitorConfirmedAt != null) {
       return Text(
-        visit.clientConfirmedAt == null
-            ? l10n.visitsAwaitingClientTitle
-            : l10n.visitsCompletedTitle,
-        style: context.mboaText.caption
-            .copyWith(color: context.mboaColors.textSecondary),
+        visit.clientConfirmedAt == null ? l10n.visitsAwaitingClientTitle : l10n.visitsCompletedTitle,
+        style: context.mboaText.caption.copyWith(color: context.mboaColors.textSecondary),
       );
     }
 
@@ -157,9 +141,7 @@ class _Agenda extends StatelessWidget {
       child: TextButton(
         onPressed: busyId != null
             ? null
-            : () => context
-                .read<PrestataireVisitsBloc>()
-                .add(OwnerPresenceConfirmed(visit.id)),
+            : () => context.read<PrestataireVisitsBloc>().add(OwnerPresenceConfirmed(visit.id)),
         child: Text(l10n.visitsConfirmPresence),
       ),
     );
@@ -197,18 +179,14 @@ class _Requests extends StatelessWidget {
                 TextButton(
                   onPressed: busyId != null
                       ? null
-                      : () => context
-                          .read<PrestataireVisitsBloc>()
-                          .add(VisitRequestDeclined(visit.id)),
+                      : () => context.read<PrestataireVisitsBloc>().add(VisitRequestDeclined(visit.id)),
                   style: TextButton.styleFrom(foregroundColor: colors.error),
                   child: Text(l10n.visitsRequestDecline),
                 ),
                 TextButton(
                   onPressed: busyId != null
                       ? null
-                      : () => context
-                          .read<PrestataireVisitsBloc>()
-                          .add(VisitRequestConfirmed(visit.id)),
+                      : () => context.read<PrestataireVisitsBloc>().add(VisitRequestConfirmed(visit.id)),
                   child: Text(l10n.visitsRequestConfirm),
                 ),
               ],

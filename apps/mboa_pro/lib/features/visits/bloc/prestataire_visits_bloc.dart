@@ -13,14 +13,13 @@ part 'prestataire_visits_state.dart';
 /// says which visit is mid-action. Splitting them is what lets the agenda be
 /// shared with the agent, whose rules for the same three buttons are not the
 /// same — he cancels, he never confirms a request.
-class PrestataireVisitsBloc
-    extends Bloc<PrestataireVisitsEvent, PrestataireVisitsState> {
+class PrestataireVisitsBloc extends Bloc<PrestataireVisitsEvent, PrestataireVisitsState> {
   PrestataireVisitsBloc({
     required PrestataireVisitRepository repository,
     required LocationCapture location,
-  })  : _repository = repository,
-        _location = location,
-        super(const PrestataireVisitsIdle()) {
+  }) : _repository = repository,
+       _location = location,
+       super(const PrestataireVisitsIdle()) {
     on<VisitRequestConfirmed>(_onConfirm);
     on<VisitRequestDeclined>(_onDecline);
     on<OwnerPresenceConfirmed>(_onPresence);
@@ -32,14 +31,12 @@ class PrestataireVisitsBloc
   Future<void> _onConfirm(
     VisitRequestConfirmed event,
     Emitter<PrestataireVisitsState> emit,
-  ) =>
-      _run(event.id, emit, () => _repository.confirm(event.id));
+  ) => _run(event.id, emit, () => _repository.confirm(event.id));
 
   Future<void> _onDecline(
     VisitRequestDeclined event,
     Emitter<PrestataireVisitsState> emit,
-  ) =>
-      _run(event.id, emit, () => _repository.decline(event.id));
+  ) => _run(event.id, emit, () => _repository.decline(event.id));
 
   /// RM-M07-05 — his half of the mutual confirmation.
   ///

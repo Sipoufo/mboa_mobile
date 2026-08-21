@@ -21,9 +21,9 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
   VisitDetailBloc({
     required AgentVisitRepository repository,
     required LocationCapture location,
-  })  : _repository = repository,
-        _location = location,
-        super(const VisitDetailInitial()) {
+  }) : _repository = repository,
+       _location = location,
+       super(const VisitDetailInitial()) {
     on<VisitDetailRequested>(_onRequested);
     on<VisitPresenceConfirmed>(_onConfirm);
     on<VisitPresenceOverridden>(_onOverride);

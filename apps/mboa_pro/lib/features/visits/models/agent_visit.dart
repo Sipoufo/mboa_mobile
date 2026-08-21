@@ -55,60 +55,55 @@ class AgentVisitDetail extends Equatable {
 
   /// The agent has done their half and the visit is not complete: the screen
   /// says who is being waited on rather than offering the button again.
-  bool get isAwaitingClient =>
-      hasConfirmed &&
-      clientConfirmedAt == null &&
-      status != VisitStatus.completed;
+  bool get isAwaitingClient => hasConfirmed && clientConfirmedAt == null && status != VisitStatus.completed;
 
   bool get hasPosition => latitude != null && longitude != null;
 
-  static VisitStatus _statusOf(AgentVisiteDetailStatusEnum? value) =>
-      switch (value) {
-        AgentVisiteDetailStatusEnum.REQUESTED => VisitStatus.requested,
-        AgentVisiteDetailStatusEnum.SCHEDULED => VisitStatus.scheduled,
-        AgentVisiteDetailStatusEnum.CANCELLED => VisitStatus.cancelled,
-        AgentVisiteDetailStatusEnum.COMPLETED => VisitStatus.completed,
-        AgentVisiteDetailStatusEnum.NOT_FULFILLED => VisitStatus.notFulfilled,
-        _ => VisitStatus.unknown,
-      };
+  static VisitStatus _statusOf(AgentVisiteDetailStatusEnum? value) => switch (value) {
+    AgentVisiteDetailStatusEnum.REQUESTED => VisitStatus.requested,
+    AgentVisiteDetailStatusEnum.SCHEDULED => VisitStatus.scheduled,
+    AgentVisiteDetailStatusEnum.CANCELLED => VisitStatus.cancelled,
+    AgentVisiteDetailStatusEnum.COMPLETED => VisitStatus.completed,
+    AgentVisiteDetailStatusEnum.NOT_FULFILLED => VisitStatus.notFulfilled,
+    _ => VisitStatus.unknown,
+  };
 
-  static AgentVisitDetail fromResponse(AgentVisiteDetail response) =>
-      AgentVisitDetail(
-        id: response.id ?? '',
-        status: _statusOf(response.status),
-        annonceId: response.annonceId,
-        annonceTitle: response.annonceTitle,
-        exactAddress: response.exactAddress,
-        latitude: response.latitude,
-        longitude: response.longitude,
-        scheduledAt: response.scheduledAt?.toLocal(),
-        userName: response.userName,
-        userPhone: response.userPhone,
-        prestataireName: response.prestataireName,
-        prestatairePhone: response.prestatairePhone,
-        visitorConfirmedAt: response.visitorConfirmedAt?.toLocal(),
-        clientConfirmedAt: response.clientConfirmedAt?.toLocal(),
-        canConfirm: response.canConfirm ?? false,
-      );
+  static AgentVisitDetail fromResponse(AgentVisiteDetail response) => AgentVisitDetail(
+    id: response.id ?? '',
+    status: _statusOf(response.status),
+    annonceId: response.annonceId,
+    annonceTitle: response.annonceTitle,
+    exactAddress: response.exactAddress,
+    latitude: response.latitude,
+    longitude: response.longitude,
+    scheduledAt: response.scheduledAt?.toLocal(),
+    userName: response.userName,
+    userPhone: response.userPhone,
+    prestataireName: response.prestataireName,
+    prestatairePhone: response.prestatairePhone,
+    visitorConfirmedAt: response.visitorConfirmedAt?.toLocal(),
+    clientConfirmedAt: response.clientConfirmedAt?.toLocal(),
+    canConfirm: response.canConfirm ?? false,
+  );
 
   @override
   List<Object?> get props => [
-        id,
-        status,
-        annonceId,
-        annonceTitle,
-        exactAddress,
-        latitude,
-        longitude,
-        scheduledAt,
-        userName,
-        userPhone,
-        prestataireName,
-        prestatairePhone,
-        visitorConfirmedAt,
-        clientConfirmedAt,
-        canConfirm,
-      ];
+    id,
+    status,
+    annonceId,
+    annonceTitle,
+    exactAddress,
+    latitude,
+    longitude,
+    scheduledAt,
+    userName,
+    userPhone,
+    prestataireName,
+    prestatairePhone,
+    visitorConfirmedAt,
+    clientConfirmedAt,
+    canConfirm,
+  ];
 }
 
 /// RM-M16-02 — the visitor must be within 500 m of the property to confirm.
@@ -139,6 +134,5 @@ abstract final class VisitGeofence {
   /// A property with no coordinates cannot be checked, so it never demands one
   /// — refusing to confirm a visit because the *listing* is incomplete would
   /// punish the agent for someone else's omission.
-  static bool needsOverride(double? distanceMetres) =>
-      distanceMetres != null && distanceMetres > radiusMetres;
+  static bool needsOverride(double? distanceMetres) => distanceMetres != null && distanceMetres > radiusMetres;
 }

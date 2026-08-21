@@ -52,27 +52,26 @@ class VisitDetailReady extends VisitDetailState {
     LocationFix? pendingFix,
     bool clearPendingFix = false,
     double? distanceMetres,
-  }) =>
-      VisitDetailReady(
-        visit ?? this.visit,
-        isConfirming: isConfirming ?? this.isConfirming,
-        isCancelling: isCancelling ?? this.isCancelling,
-        lastActionFailed: lastActionFailed,
-        locationFailure: locationFailure,
-        pendingFix: clearPendingFix ? null : (pendingFix ?? this.pendingFix),
-        distanceMetres: distanceMetres ?? this.distanceMetres,
-      );
+  }) => VisitDetailReady(
+    visit ?? this.visit,
+    isConfirming: isConfirming ?? this.isConfirming,
+    isCancelling: isCancelling ?? this.isCancelling,
+    lastActionFailed: lastActionFailed,
+    locationFailure: locationFailure,
+    pendingFix: clearPendingFix ? null : (pendingFix ?? this.pendingFix),
+    distanceMetres: distanceMetres ?? this.distanceMetres,
+  );
 
   @override
   List<Object?> get props => [
-        visit,
-        isConfirming,
-        isCancelling,
-        lastActionFailed,
-        locationFailure,
-        pendingFix,
-        distanceMetres,
-      ];
+    visit,
+    isConfirming,
+    isCancelling,
+    lastActionFailed,
+    locationFailure,
+    pendingFix,
+    distanceMetres,
+  ];
 }
 
 /// Cancelled. Terminal: the screen closes rather than showing a visit that no

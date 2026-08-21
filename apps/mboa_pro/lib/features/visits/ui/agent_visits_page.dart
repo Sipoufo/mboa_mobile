@@ -23,9 +23,9 @@ class AgentVisitsPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<AgentAgendaBloc>(
-        create: (_) => getIt<AgentAgendaBloc>()..add(const AgendaRequested()),
-        child: this,
-      );
+    create: (_) => getIt<AgentAgendaBloc>()..add(const AgendaRequested()),
+    child: this,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,37 +36,30 @@ class AgentVisitsPage extends StatelessWidget implements AutoRouteWrapper {
       appBar: AppBar(title: Text(l10n.visitsTitle)),
       body: BlocBuilder<AgentAgendaBloc, VisitsAgendaState>(
         builder: (context, state) => switch (state) {
-          VisitsAgendaInitial() || VisitsAgendaLoadInProgress() =>
-            const Center(child: Loader()),
+          VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),
           VisitsAgendaFailure() => Center(
-              child: TextButton(
-                onPressed: () => context
-                    .read<AgentAgendaBloc>()
-                    .add(const AgendaRequested()),
-                child: Text(l10n.commonRetry),
-              ),
+            child: TextButton(
+              onPressed: () => context.read<AgentAgendaBloc>().add(const AgendaRequested()),
+              child: Text(l10n.commonRetry),
             ),
+          ),
           final VisitsAgendaReady ready => VisitsAgendaView(
-              state: ready,
-              onDaySelected: (day) =>
-                  context.read<AgentAgendaBloc>().add(AgendaDaySelected(day)),
-              onWeekChanged: (day) => context
-                  .read<AgentAgendaBloc>()
-                  .add(AgendaWeekChanged(day, selectedDay: day)),
-              onRefresh: () =>
-                  context.read<AgentAgendaBloc>().add(const AgendaRefreshed()),
-              itemBuilder: (context, visit) => VisitRowTile(
-                visit: visit,
-                onTap: () async {
-                  await context.router.push(VisitDetailRoute(id: visit.id));
-                  // The detail can cancel or confirm; the week is re-read when
-                  // it closes rather than second-guessing what it did.
-                  if (context.mounted) {
-                    context.read<AgentAgendaBloc>().add(const AgendaRefreshed());
-                  }
-                },
-              ),
+            state: ready,
+            onDaySelected: (day) => context.read<AgentAgendaBloc>().add(AgendaDaySelected(day)),
+            onWeekChanged: (day) => context.read<AgentAgendaBloc>().add(AgendaWeekChanged(day, selectedDay: day)),
+            onRefresh: () => context.read<AgentAgendaBloc>().add(const AgendaRefreshed()),
+            itemBuilder: (context, visit) => VisitRowTile(
+              visit: visit,
+              onTap: () async {
+                await context.router.push(VisitDetailRoute(id: visit.id));
+                // The detail can cancel or confirm; the week is re-read when
+                // it closes rather than second-guessing what it did.
+                if (context.mounted) {
+                  context.read<AgentAgendaBloc>().add(const AgendaRefreshed());
+                }
+              },
             ),
+          ),
         },
       ),
     );

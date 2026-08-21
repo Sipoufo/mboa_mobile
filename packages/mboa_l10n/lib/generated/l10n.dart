@@ -4662,6 +4662,86 @@ class I18n {
     );
   }
 
+  /// `Confirmation de présence`
+  String get visitsPresenceTitle {
+    return Intl.message(
+      'Confirmation de présence',
+      name: 'visitsPresenceTitle',
+      desc: 'RM-M07-05 — the mutual confirmation section.',
+      args: [],
+    );
+  }
+
+  /// `Vous`
+  String get visitsPresenceYou {
+    return Intl.message(
+      'Vous',
+      name: 'visitsPresenceYou',
+      desc: 'The visitor\'s own half of the confirmation.',
+      args: [],
+    );
+  }
+
+  /// `Locataire`
+  String get visitsPresenceClient {
+    return Intl.message(
+      'Locataire',
+      name: 'visitsPresenceClient',
+      desc: 'The client\'s half.',
+      args: [],
+    );
+  }
+
+  /// `En attente`
+  String get visitsPresencePending {
+    return Intl.message(
+      'En attente',
+      name: 'visitsPresencePending',
+      desc: 'No timestamp yet on that half.',
+      args: [],
+    );
+  }
+
+  /// `Confirmé à {time}`
+  String visitsPresenceConfirmedAt(String time) {
+    return Intl.message(
+      'Confirmé à $time',
+      name: 'visitsPresenceConfirmedAt',
+      desc: 'One half is in, with the hour it was.',
+      args: [time],
+    );
+  }
+
+  /// `La visite n'est validée que lorsque les deux présences sont confirmées.`
+  String get visitsPresenceExplain {
+    return Intl.message(
+      'La visite n\'est validée que lorsque les deux présences sont confirmées.',
+      name: 'visitsPresenceExplain',
+      desc: 'RM-M07-05 — neither party can supply the other\'s.',
+      args: [],
+    );
+  }
+
+  /// `Contacts`
+  String get visitsContactsTitle {
+    return Intl.message(
+      'Contacts',
+      name: 'visitsContactsTitle',
+      desc: 'The visit\'s two contacts (RM-M16-01).',
+      args: [],
+    );
+  }
+
+  /// `Numéro copié`
+  String get visitsPhoneCopied {
+    return Intl.message(
+      'Numéro copié',
+      name: 'visitsPhoneCopied',
+      desc: 'Toast after tapping a contact row.',
+      args: [],
+    );
+  }
+
   /// `Adresse exacte`
   String get visitsAddress {
     return Intl.message(

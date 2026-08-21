@@ -11,22 +11,20 @@ import '../../../_helpers/mocks/mocks.dart';
 
 class MockAgentVisitesApi extends Mock implements AgentVisitesApi {}
 
-class MockPrestataireVisitesApi extends Mock
-    implements PrestataireVisitesApi {}
+class MockPrestataireVisitesApi extends Mock implements PrestataireVisitesApi {}
 
-Response<PageResponseVisiteResponse> emptyPage() =>
-    Response<PageResponseVisiteResponse>(
-      data: PageResponseVisiteResponse(
-        (b) => b
-          ..page = 0
-          ..size = 100
-          ..totalElements = 0
-          ..totalPages = 0
-          ..last = true,
-      ),
-      requestOptions: RequestOptions(path: '/api/v1/agents/me/visites'),
-      statusCode: 200,
-    );
+Response<PageResponseVisiteResponse> emptyPage() => Response<PageResponseVisiteResponse>(
+  data: PageResponseVisiteResponse(
+    (b) => b
+      ..page = 0
+      ..size = 100
+      ..totalElements = 0
+      ..totalPages = 0
+      ..last = true,
+  ),
+  requestOptions: RequestOptions(path: '/api/v1/agents/me/visites'),
+  statusCode: 200,
+);
 
 /// **The agenda's week goes out in UTC.**
 ///
@@ -48,9 +46,13 @@ void main() {
   final to = DateTime(2026, 8, 24);
 
   setUpAll(() {
-    registerFallbackValue(Pageable((b) => b
-      ..page = 0
-      ..size = 1));
+    registerFallbackValue(
+      Pageable(
+        (b) => b
+          ..page = 0
+          ..size = 1,
+      ),
+    );
   });
 
   setUp(() {
@@ -112,8 +114,7 @@ void main() {
       ),
     ).thenAnswer((_) async => emptyPage());
 
-    await PrestataireVisitRepository(dioClient: dioClient)
-        .range(from: from, to: to);
+    await PrestataireVisitRepository(dioClient: dioClient).range(from: from, to: to);
 
     final call = verify(
       () => prestataireApi.listMyOwnerVisites(

@@ -42,8 +42,7 @@ class VisitRowTile extends StatelessWidget {
               leading: Icon(LucideIcons.calendarCheck, color: colors.primary),
               title: Text(
                 visit.annonceTitle ?? '',
-                style: context.mboaText.label
-                    .copyWith(fontWeight: FontWeight.w600),
+                style: context.mboaText.label.copyWith(fontWeight: FontWeight.w600),
               ),
               subtitle: Text(at == null ? '' : DateFormat.Hm().format(at)),
               trailing: VisitStatusChip(status: visit.status),
@@ -68,9 +67,14 @@ class VisitRowTile extends StatelessWidget {
 
 /// The visit's state, in one word and one colour.
 class VisitStatusChip extends StatelessWidget {
-  const VisitStatusChip({super.key, required this.status});
+  const VisitStatusChip({super.key, required this.status, this.onTint = false});
 
   final VisitStatus status;
+
+  /// Set on a coloured card. The usual 12% wash is a tint over a tint there —
+  /// the label came out barely readable on the detail's mint header — so the
+  /// chip takes a solid surface behind it instead.
+  final bool onTint;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +86,7 @@ class VisitStatusChip extends StatelessWidget {
       VisitStatus.scheduled => (l10n.visitsStatusScheduled, colors.primary),
       VisitStatus.completed => (l10n.visitsStatusCompleted, colors.success),
       VisitStatus.cancelled => (l10n.visitsStatusCancelled, colors.error),
-      VisitStatus.notFulfilled =>
-        (l10n.visitsStatusNotFulfilled, colors.error),
+      VisitStatus.notFulfilled => (l10n.visitsStatusNotFulfilled, colors.error),
       VisitStatus.unknown => ('', colors.textTertiary),
     };
 
@@ -92,7 +95,7 @@ class VisitStatusChip extends StatelessWidget {
     return Chip(
       label: Text(label),
       labelStyle: context.mboaText.caption.copyWith(color: color),
-      backgroundColor: color.withValues(alpha: 0.12),
+      backgroundColor: onTint ? colors.surface : color.withValues(alpha: 0.12),
       side: BorderSide.none,
       visualDensity: VisualDensity.compact,
     );

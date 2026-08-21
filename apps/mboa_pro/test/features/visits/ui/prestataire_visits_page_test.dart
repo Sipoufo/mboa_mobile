@@ -10,12 +10,10 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockPrestataireAgendaBloc
-    extends MockBloc<VisitsAgendaEvent, VisitsAgendaState>
+class MockPrestataireAgendaBloc extends MockBloc<VisitsAgendaEvent, VisitsAgendaState>
     implements PrestataireAgendaBloc {}
 
-class MockPrestataireVisitsBloc
-    extends MockBloc<PrestataireVisitsEvent, PrestataireVisitsState>
+class MockPrestataireVisitsBloc extends MockBloc<PrestataireVisitsEvent, PrestataireVisitsState>
     implements PrestataireVisitsBloc {}
 
 /// The visits a prestataire carries out himself (RM-M11-10 / RM-M15-06).
@@ -34,24 +32,23 @@ void main() {
     String id = 'v-1',
     VisitStatus status = VisitStatus.scheduled,
     DateTime? confirmedAt,
-  }) =>
-      Visit(
-        id: id,
-        status: status,
-        annonceTitle: 'Studio Bonapriso',
-        scheduledAt: today,
-        visitorKind: VisitorKind.owner,
-        visitorConfirmedAt: confirmedAt,
-      );
+  }) => Visit(
+    id: id,
+    status: status,
+    annonceTitle: 'Studio Bonapriso',
+    scheduledAt: today,
+    visitorKind: VisitorKind.owner,
+    visitorConfirmedAt: confirmedAt,
+  );
 
   void agendaWith(List<Visit> visits) => when(() => agenda.state).thenReturn(
-        VisitsAgendaReady(
-          weekStart: DateTime(2026, 8, 17),
-          selectedDay: DateTime(2026, 8, 19),
-          today: DateTime(2026, 8, 19),
-          visits: visits,
-        ),
-      );
+    VisitsAgendaReady(
+      weekStart: DateTime(2026, 8, 17),
+      selectedDay: DateTime(2026, 8, 19),
+      today: DateTime(2026, 8, 19),
+      visits: visits,
+    ),
+  );
 
   setUp(() {
     agenda = MockPrestataireAgendaBloc();
@@ -61,20 +58,20 @@ void main() {
   });
 
   Future<void> pump(WidgetTester tester) => tester.pumpWidget(
-        MaterialApp(
-          locale: const Locale('fr'),
-          theme: MboaTheme.light(),
-          localizationsDelegates: MboaLocalizations.delegates,
-          supportedLocales: MboaLocalizations.supportedLocales,
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider<PrestataireAgendaBloc>.value(value: agenda),
-              BlocProvider<PrestataireVisitsBloc>.value(value: actions),
-            ],
-            child: const PrestataireVisitsPage(),
-          ),
-        ),
-      );
+    MaterialApp(
+      locale: const Locale('fr'),
+      theme: MboaTheme.light(),
+      localizationsDelegates: MboaLocalizations.delegates,
+      supportedLocales: MboaLocalizations.supportedLocales,
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<PrestataireAgendaBloc>.value(value: agenda),
+          BlocProvider<PrestataireVisitsBloc>.value(value: actions),
+        ],
+        child: const PrestataireVisitsPage(),
+      ),
+    ),
+  );
 
   testWidgets('shows the day he is expected somewhere', (tester) async {
     await pump(tester);
@@ -84,8 +81,7 @@ void main() {
     expect(find.text('Confirmer ma présence'), findsOneWidget);
   });
 
-  testWidgets('RM-M15-06 — a proposed time is answered, not just displayed',
-      (tester) async {
+  testWidgets('RM-M15-06 — a proposed time is answered, not just displayed', (tester) async {
     agendaWith([visit(id: 'ask', status: VisitStatus.requested)]);
     await pump(tester);
 
@@ -97,8 +93,7 @@ void main() {
     verify(() => actions.add(const VisitRequestConfirmed('ask'))).called(1);
   });
 
-  testWidgets('a request is not offered a presence button as well',
-      (tester) async {
+  testWidgets('a request is not offered a presence button as well', (tester) async {
     agendaWith([visit(id: 'ask', status: VisitStatus.requested)]);
     await pump(tester);
 
@@ -106,8 +101,7 @@ void main() {
     expect(find.text('Confirmer ma présence'), findsNothing);
   });
 
-  testWidgets('once he has confirmed, the row waits on the client',
-      (tester) async {
+  testWidgets('once he has confirmed, the row waits on the client', (tester) async {
     agendaWith([visit(confirmedAt: today)]);
     await pump(tester);
 
@@ -117,8 +111,7 @@ void main() {
     expect(find.text('Présence confirmée'), findsOneWidget);
   });
 
-  testWidgets('confirming his presence takes a position through the bloc',
-      (tester) async {
+  testWidgets('confirming his presence takes a position through the bloc', (tester) async {
     await pump(tester);
 
     await tester.tap(find.text('Confirmer ma présence'));
@@ -127,8 +120,7 @@ void main() {
     verify(() => actions.add(const OwnerPresenceConfirmed('v-1'))).called(1);
   });
 
-  testWidgets('an answered action reloads the week rather than patching it',
-      (tester) async {
+  testWidgets('an answered action reloads the week rather than patching it', (tester) async {
     whenListen(
       actions,
       Stream.fromIterable(const [PrestataireVisitsDone()]),

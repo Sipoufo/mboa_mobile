@@ -102,7 +102,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m37(date) => "Valid until ${date}";
 
-  static String m38(distance) =>
+  static String m38(time) => "Confirmed at ${time}";
+
+  static String m39(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1045,6 +1047,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsConfirmPresenceHint": MessageLookupByLibrary.simpleMessage(
       "The tenant must confirm on their side for the visit to be validated.",
     ),
+    "visitsContactsTitle": MessageLookupByLibrary.simpleMessage("Contacts"),
     "visitsDetailTitle": MessageLookupByLibrary.simpleMessage("Visit details"),
     "visitsEmptyPast": MessageLookupByLibrary.simpleMessage("No past visit"),
     "visitsEmptyToday": MessageLookupByLibrary.simpleMessage("No visit today"),
@@ -1072,6 +1075,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "Visit not fulfilled",
     ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Owner"),
+    "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
+    "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
+    "visitsPresenceConfirmedAt": m38,
+    "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
+      "The visit is only validated once both presences are confirmed.",
+    ),
+    "visitsPresencePending": MessageLookupByLibrary.simpleMessage("Pending"),
+    "visitsPresenceTitle": MessageLookupByLibrary.simpleMessage(
+      "Presence confirmation",
+    ),
+    "visitsPresenceYou": MessageLookupByLibrary.simpleMessage("You"),
     "visitsRequestConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm the time",
     ),
@@ -1094,7 +1108,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m38,
+    "visitsTooFarBody": m39,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

@@ -34,13 +34,13 @@ class AgentVisitRepository implements VisitsSource {
       // with a Réessayer button that could never succeed.
       from: from.toUtc(),
       to: to.toUtc(),
-      pageable: Pageable((b) => b
-        ..page = 0
-        ..size = _pageSize),
+      pageable: Pageable(
+        (b) => b
+          ..page = 0
+          ..size = _pageSize,
+      ),
     );
-    return (response.data?.content ?? const <VisiteResponse>[])
-        .map(Visit.fromResponse)
-        .toList();
+    return (response.data?.content ?? const <VisiteResponse>[]).map(Visit.fromResponse).toList();
   }
 
   Future<AgentVisitDetail> detail(String id) async {
@@ -62,14 +62,15 @@ class AgentVisitRepository implements VisitsSource {
     required double latitude,
     required double longitude,
     String? overrideReason,
-  }) =>
-      _presenceApi.confirmVisitorPresence(
-        id: id,
-        startVisiteRequest: StartVisiteRequest((b) => b
-          ..latitude = latitude
-          ..longitude = longitude
-          ..overrideReason = overrideReason),
-      );
+  }) => _presenceApi.confirmVisitorPresence(
+    id: id,
+    startVisiteRequest: StartVisiteRequest(
+      (b) => b
+        ..latitude = latitude
+        ..longitude = longitude
+        ..overrideReason = overrideReason,
+    ),
+  );
 
   /// RM-M16-04 — the server enforces the one-hour cutoff.
   Future<void> cancel(String id) => _api.cancelAgentVisite(id: id);

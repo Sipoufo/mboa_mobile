@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
@@ -12,12 +13,9 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockAgentAgendaBloc
-    extends MockBloc<VisitsAgendaEvent, VisitsAgendaState>
-    implements AgentAgendaBloc {}
+class MockAgentAgendaBloc extends MockBloc<VisitsAgendaEvent, VisitsAgendaState> implements AgentAgendaBloc {}
 
-class MockVisitDetailBloc extends MockBloc<VisitDetailEvent, VisitDetailState>
-    implements VisitDetailBloc {}
+class MockVisitDetailBloc extends MockBloc<VisitDetailEvent, VisitDetailState> implements VisitDetailBloc {}
 
 /// The M16 screens, each pumped with **only** the blocs its own route provides
 /// or inherits.
@@ -41,21 +39,20 @@ void main() {
     bool visitorConfirmed = false,
     bool clientConfirmed = false,
     VisitStatus status = VisitStatus.scheduled,
-  }) =>
-      AgentVisitDetail(
-        id: 'v-1',
-        status: status,
-        annonceTitle: 'Studio Bonapriso',
-        exactAddress: 'Rue 1.234, Bonapriso',
-        scheduledAt: today,
-        userName: 'Awa Nkeng',
-        userPhone: '+237690000000',
-        prestataireName: 'Agence Deido',
-        prestatairePhone: '+237691111111',
-        visitorConfirmedAt: visitorConfirmed ? today : null,
-        clientConfirmedAt: clientConfirmed ? today : null,
-        canConfirm: canConfirm,
-      );
+  }) => AgentVisitDetail(
+    id: 'v-1',
+    status: status,
+    annonceTitle: 'Studio Bonapriso',
+    exactAddress: 'Rue 1.234, Bonapriso',
+    scheduledAt: today,
+    userName: 'Awa Nkeng',
+    userPhone: '+237690000000',
+    prestataireName: 'Agence Deido',
+    prestatairePhone: '+237691111111',
+    visitorConfirmedAt: visitorConfirmed ? today : null,
+    clientConfirmedAt: clientConfirmed ? today : null,
+    canConfirm: canConfirm,
+  );
 
   setUp(() {
     agenda = MockAgentAgendaBloc();
@@ -79,11 +76,9 @@ void main() {
     when(() => detail.state).thenReturn(VisitDetailReady(detailFor()));
   });
 
-  Widget withAgenda(Widget child) =>
-      BlocProvider<AgentAgendaBloc>.value(value: agenda, child: child);
+  Widget withAgenda(Widget child) => BlocProvider<AgentAgendaBloc>.value(value: agenda, child: child);
 
-  Widget withDetail(Widget child) =>
-      BlocProvider<VisitDetailBloc>.value(value: detail, child: child);
+  Widget withDetail(Widget child) => BlocProvider<VisitDetailBloc>.value(value: detail, child: child);
 
   Future<void> pump(WidgetTester tester, Widget child) async {
     await tester.pumpWidget(
@@ -99,8 +94,7 @@ void main() {
   }
 
   group('the agenda', () {
-    testWidgets('opens on today, with the day\'s visits under the strip',
-        (tester) async {
+    testWidgets('opens on today, with the day\'s visits under the strip', (tester) async {
       await pump(tester, withAgenda(const AgentVisitsPage()));
 
       expect(tester.takeException(), isNull);
@@ -109,8 +103,7 @@ void main() {
       expect(find.text("Aujourd'hui"), findsNothing);
     });
 
-    testWidgets('an empty day says so rather than showing nothing',
-        (tester) async {
+    testWidgets('an empty day says so rather than showing nothing', (tester) async {
       when(() => agenda.state).thenReturn(
         VisitsAgendaReady(
           weekStart: VisitsAgendaBloc.weekStartOf(today),
@@ -139,9 +132,13 @@ void main() {
   });
 
   group('the detail', () {
-    testWidgets('shows the exact address, which exists nowhere else',
-        (tester) async {
+    /// The cards below the fold are built lazily, so the test travels the
+    /// screen the way the agent does.
+    Future<void> scrollTo(WidgetTester tester, Finder finder) => tester.scrollUntilVisible(finder, 200);
+
+    testWidgets('shows the exact address, which exists nowhere else', (tester) async {
       await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
+      await scrollTo(tester, find.text('Rue 1.234, Bonapriso'));
 
       // RM-M16-01 — the agent's view is the only place it appears.
       expect(find.text('Rue 1.234, Bonapriso'), findsOneWidget);
@@ -150,14 +147,47 @@ void main() {
 
     testWidgets('gives the agent both numbers', (tester) async {
       await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
+      await scrollTo(tester, find.text('+237691111111'));
 
       // They are going to a stranger's property to meet another stranger.
       expect(find.textContaining('+237690000000'), findsOneWidget);
       expect(find.textContaining('+237691111111'), findsOneWidget);
     });
 
-    testWidgets('cannot confirm before the day — the server decides',
-        (tester) async {
+    testWidgets('RM-M07-05 — the two halves of the confirmation are drawn', (tester) async {
+      when(() => detail.state).thenReturn(
+        VisitDetailReady(detailFor(visitorConfirmed: true)),
+      );
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
+
+      // The screen's subject on the day: who is in, and who is still owed.
+      expect(find.text('Vous'), findsOneWidget);
+      expect(find.text('Locataire'), findsOneWidget);
+      expect(find.text('En attente'), findsOneWidget);
+      expect(find.textContaining('Confirmé à'), findsOneWidget);
+    });
+
+    testWidgets('a phone number can be copied, since nothing dials it yet', (tester) async {
+      final copied = <MethodCall>[];
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (call) async {
+          if (call.method == 'Clipboard.setData') copied.add(call);
+          return null;
+        },
+      );
+
+      await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
+      await scrollTo(tester, find.text('Awa Nkeng'));
+      await tester.ensureVisible(find.text('Awa Nkeng'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Awa Nkeng'));
+      await tester.pump();
+
+      expect(copied.single.arguments['text'], '+237690000000');
+    });
+
+    testWidgets('cannot confirm before the day — the server decides', (tester) async {
       await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       final button = tester.widget<Button>(find.byType(Button));
@@ -166,8 +196,7 @@ void main() {
     });
 
     testWidgets('confirms presence when the server says it may', (tester) async {
-      when(() => detail.state)
-          .thenReturn(VisitDetailReady(detailFor(canConfirm: true)));
+      when(() => detail.state).thenReturn(VisitDetailReady(detailFor(canConfirm: true)));
       await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       await tester.tap(find.text('Confirmer ma présence'));
@@ -176,8 +205,7 @@ void main() {
       verify(() => detail.add(const VisitPresenceConfirmed())).called(1);
     });
 
-    testWidgets('says the client is being waited on, and offers nothing else',
-        (tester) async {
+    testWidgets('says the client is being waited on, and offers nothing else', (tester) async {
       when(() => detail.state).thenReturn(
         VisitDetailReady(detailFor(visitorConfirmed: true)),
       );
@@ -208,8 +236,7 @@ void main() {
       expect(find.textContaining('rapport'), findsNothing);
     });
 
-    testWidgets('a visit nobody confirmed is stated as not fulfilled',
-        (tester) async {
+    testWidgets('a visit nobody confirmed is stated as not fulfilled', (tester) async {
       when(() => detail.state).thenReturn(
         VisitDetailReady(detailFor(status: VisitStatus.notFulfilled)),
       );

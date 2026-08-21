@@ -1382,6 +1382,43 @@
   "@visitsDetailTitle": {
     "description": "M16 detail screen."
   },
+  "visitsPresenceTitle": "Presence confirmation",
+  "@visitsPresenceTitle": {
+    "description": "RM-M07-05 — the mutual confirmation section."
+  },
+  "visitsPresenceYou": "You",
+  "@visitsPresenceYou": {
+    "description": "The visitor's own half of the confirmation."
+  },
+  "visitsPresenceClient": "Tenant",
+  "@visitsPresenceClient": {
+    "description": "The client's half."
+  },
+  "visitsPresencePending": "Pending",
+  "@visitsPresencePending": {
+    "description": "No timestamp yet on that half."
+  },
+  "visitsPresenceConfirmedAt": "Confirmed at {time}",
+  "@visitsPresenceConfirmedAt": {
+    "description": "One half is in, with the hour it was.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "visitsPresenceExplain": "The visit is only validated once both presences are confirmed.",
+  "@visitsPresenceExplain": {
+    "description": "RM-M07-05 — neither party can supply the other's."
+  },
+  "visitsContactsTitle": "Contacts",
+  "@visitsContactsTitle": {
+    "description": "The visit's two contacts (RM-M16-01)."
+  },
+  "visitsPhoneCopied": "Number copied",
+  "@visitsPhoneCopied": {
+    "description": "Toast after tapping a contact row."
+  },
   "visitsAddress": "Exact address",
   "@visitsAddress": {
     "description": "RM-M16-01 — only the agent's view shows it."

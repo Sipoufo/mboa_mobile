@@ -9,8 +9,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 /// confirmation, which goes through the same endpoint the agent uses, because
 /// on that day he *is* the visitor.
 class PrestataireVisitRepository implements VisitsSource {
-  PrestataireVisitRepository({required DioClient dioClient})
-      : _dioClient = dioClient;
+  PrestataireVisitRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
   final DioClient _dioClient;
 
@@ -33,13 +32,13 @@ class PrestataireVisitRepository implements VisitsSource {
       // with a Réessayer button that could never succeed.
       from: from.toUtc(),
       to: to.toUtc(),
-      pageable: Pageable((b) => b
-        ..page = 0
-        ..size = _pageSize),
+      pageable: Pageable(
+        (b) => b
+          ..page = 0
+          ..size = _pageSize,
+      ),
     );
-    return (response.data?.content ?? const <VisiteResponse>[])
-        .map(Visit.fromResponse)
-        .toList();
+    return (response.data?.content ?? const <VisiteResponse>[]).map(Visit.fromResponse).toList();
   }
 
   /// RM-M15-06 — the proposed time suits him; the visit becomes scheduled.
@@ -58,11 +57,12 @@ class PrestataireVisitRepository implements VisitsSource {
     String id, {
     required double latitude,
     required double longitude,
-  }) =>
-      _presenceApi.confirmVisitorPresence(
-        id: id,
-        startVisiteRequest: StartVisiteRequest((b) => b
-          ..latitude = latitude
-          ..longitude = longitude),
-      );
+  }) => _presenceApi.confirmVisitorPresence(
+    id: id,
+    startVisiteRequest: StartVisiteRequest(
+      (b) => b
+        ..latitude = latitude
+        ..longitude = longitude,
+    ),
+  );
 }

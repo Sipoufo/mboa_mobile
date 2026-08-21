@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**506 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 387 ·
+**510 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 391 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -446,6 +446,23 @@ build down with them.
   notifications N-18/19/20, and the whole **M08 contract** surface (20
   endpoints, 6 statuses, `awaiting` and `canSign` server-computed).
 
+### The visit detail is built around the mutual confirmation
+The screen the agent opens at a gate leads with the hour, then draws RM-M07-05
+as the two halves it is — *Vous* / *Locataire*, each either a time or "en
+attente" — because that is the question he has on the spot. The exact address
+(RM-M16-01) and both numbers follow; **tapping a contact copies the number**,
+since `url_launcher` is unwired everywhere else and a half-wired dialler is
+worse than a number that can be pasted.
+
+- **The action lives in `bottomNavigationBar`**, so it is in reach whatever the
+  page's length. That slot offers the **whole screen's height**: a `Column`
+  left at its default `MainAxisSize.max` inside it swallowed all 600px and
+  pushed the body off-screen — the page rendered, the widgets existed, and
+  every finder came back empty. If a body ever goes blank here, measure the
+  bar first.
+- Goldens: `visit_detail.png` (about to confirm) and
+  `visit_detail_awaiting_client.png` (his half in, the client's owed).
+
 ### The visits agenda is one screen, two personas
 A week at a time, Monday-first, opening on today: `VisitsAgendaBloc` +
 `VisitsAgendaView` in mboa_shared, over a `VisitsSource` each app implements.
@@ -588,6 +605,10 @@ as the same thing.
   broken "Republier" button is exactly the class of bug this misses.
 - **Deep-link routing** handles `PAYMENT_CONFIRMED` and `KYC`;
   `MESSAGE`/`ANNONCE`/`VISIT` land on the shell until those modules exist.
+- **Goldens now load the icon font too** (`load_brand_fonts` reads
+  `lucide.ttf` out of the package config, which lives at the **workspace**
+  root). Before that every icon rendered as an empty box, so three goldens were
+  pinning screens with holes in them; all three were regenerated.
 - **Goldens are macOS-rendered** (`home/ui/goldens/`, `subscription/ui/goldens/`,
   `annonces/ui/goldens/`). They have caught real bugs — an overflowing metric
   grid, unformatted prices, a `1 annonces` plural — but a Linux CI will need them
