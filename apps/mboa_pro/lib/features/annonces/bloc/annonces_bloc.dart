@@ -14,14 +14,13 @@ part 'annonces_state.dart';
 /// two tabs are two views of the same data, so re-fetching per tab would be
 /// wasted round-trips.
 class AnnoncesBloc extends Bloc<AnnoncesEvent, AnnoncesState> {
-  AnnoncesBloc({required AnnonceRepository repository})
-      : _repository = repository,
-        super(const AnnoncesInitial()) {
+  AnnoncesBloc({required AnnonceRepository repository}) : _repository = repository, super(const AnnoncesInitial()) {
     on<AnnoncesLoadRequested>(_onLoad);
     on<AnnoncesRefreshRequested>(_onRefresh);
     on<AnnoncesFilterChanged>(_onFilterChanged);
     on<AnnonceDetailRequested>(_onDetailRequested);
     on<AnnonceStatusChangeRequested>(_onStatusChange);
+    on<AnnonceOwnerVisitsToggled>(_onOwnerVisits);
     on<AnnonceDeleteRequested>(_onDelete);
   }
 
@@ -74,8 +73,7 @@ class AnnoncesBloc extends Bloc<AnnoncesEvent, AnnoncesState> {
     try {
       final annonce = await _repository.getOne(event.id);
       final current = state;
-      final items =
-          current is AnnoncesReady ? [...current.items] : <Annonce>[];
+      final items = current is AnnoncesReady ? [...current.items] : <Annonce>[];
 
       final index = items.indexWhere((a) => a.id == annonce.id);
       if (index >= 0) {
@@ -104,6 +102,35 @@ class AnnoncesBloc extends Bloc<AnnoncesEvent, AnnoncesState> {
     emit(current.copyWith(mutatingId: event.id));
     try {
       final updated = await _repository.transition(event.id, event.transition);
+      emit(
+        current.copyWith(
+          items: [
+            for (final item in current.items)
+              if (item.id == updated.id) updated else item,
+          ],
+          clearMutating: true,
+        ),
+      );
+    } catch (_) {
+      emit(current.copyWith(clearMutating: true, lastActionFailed: true));
+    }
+  }
+
+  /// RM-M11-10 — he shows this property himself, or stops.
+  ///
+  /// The repository re-reads the listing before writing, because
+  /// `PUT /annonces/{id}` replaces it whole; what comes back is the listing as
+  /// the server now holds it, so it goes straight into the list.
+  Future<void> _onOwnerVisits(
+    AnnonceOwnerVisitsToggled event,
+    Emitter<AnnoncesState> emit,
+  ) async {
+    final current = state;
+    if (current is! AnnoncesReady) return;
+
+    emit(current.copyWith(mutatingId: event.id));
+    try {
+      final updated = await _repository.setOwnerVisits(event.id, enabled: event.enabled);
       emit(
         current.copyWith(
           items: [

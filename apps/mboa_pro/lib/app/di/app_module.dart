@@ -189,10 +189,7 @@ void registerAppModule() {
   );
   // Both route-scoped: one instance per property screen, one per hub visit.
   getIt.registerFactory<PropertyAgentBloc>(
-    () => PropertyAgentBloc(
-      repository: getIt<AssignmentRepository>(),
-      annonces: getIt<AnnonceRepository>(),
-    ),
+    () => PropertyAgentBloc(repository: getIt<AssignmentRepository>()),
   );
   getIt.registerLazySingleton<AgentMissionRepository>(
     () => AgentMissionRepository(dioClient: getIt<DioClient>()),

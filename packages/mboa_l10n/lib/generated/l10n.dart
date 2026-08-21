@@ -2613,6 +2613,171 @@ class I18n {
     );
   }
 
+  /// `Appartement`
+  String get propertyTypeApartment {
+    return Intl.message(
+      'Appartement',
+      name: 'propertyTypeApartment',
+      desc: 'PropertyType.apartment.',
+      args: [],
+    );
+  }
+
+  /// `Studio`
+  String get propertyTypeStudio {
+    return Intl.message(
+      'Studio',
+      name: 'propertyTypeStudio',
+      desc: 'PropertyType.studio.',
+      args: [],
+    );
+  }
+
+  /// `Villa`
+  String get propertyTypeVilla {
+    return Intl.message(
+      'Villa',
+      name: 'propertyTypeVilla',
+      desc: 'PropertyType.villa.',
+      args: [],
+    );
+  }
+
+  /// `Chambre`
+  String get propertyTypeRoom {
+    return Intl.message(
+      'Chambre',
+      name: 'propertyTypeRoom',
+      desc: 'PropertyType.room.',
+      args: [],
+    );
+  }
+
+  /// `Bureau`
+  String get propertyTypeOffice {
+    return Intl.message(
+      'Bureau',
+      name: 'propertyTypeOffice',
+      desc: 'PropertyType.office.',
+      args: [],
+    );
+  }
+
+  /// `Local commercial`
+  String get propertyTypeCommercialSpace {
+    return Intl.message(
+      'Local commercial',
+      name: 'propertyTypeCommercialSpace',
+      desc: 'PropertyType.commercialSpace.',
+      args: [],
+    );
+  }
+
+  /// `Oui`
+  String get commonYes {
+    return Intl.message(
+      'Oui',
+      name: 'commonYes',
+      desc: 'Generic yes.',
+      args: [],
+    );
+  }
+
+  /// `Non`
+  String get commonNo {
+    return Intl.message('Non', name: 'commonNo', desc: 'Generic no.', args: []);
+  }
+
+  /// `Caractéristiques`
+  String get annonceDetailFacts {
+    return Intl.message(
+      'Caractéristiques',
+      name: 'annonceDetailFacts',
+      desc: 'The listing\'s own fields, which the detail did not show at all.',
+      args: [],
+    );
+  }
+
+  /// `Visites`
+  String get annonceDetailVisits {
+    return Intl.message(
+      'Visites',
+      name: 'annonceDetailVisits',
+      desc: 'M11 — who may show this property.',
+      args: [],
+    );
+  }
+
+  /// `Agents assignés`
+  String get annonceDetailAgents {
+    return Intl.message(
+      'Agents assignés',
+      name: 'annonceDetailAgents',
+      desc: 'Opens the property\'s agent pool (RM-M11-01).',
+      args: [],
+    );
+  }
+
+  /// `Charges`
+  String get annonceDetailCharges {
+    return Intl.message(
+      'Charges',
+      name: 'annonceDetailCharges',
+      desc: 'chargesIncluded.',
+      args: [],
+    );
+  }
+
+  /// `Incluses`
+  String get annonceDetailChargesIncluded {
+    return Intl.message(
+      'Incluses',
+      name: 'annonceDetailChargesIncluded',
+      desc: 'chargesIncluded = true.',
+      args: [],
+    );
+  }
+
+  /// `En sus`
+  String get annonceDetailChargesExtra {
+    return Intl.message(
+      'En sus',
+      name: 'annonceDetailChargesExtra',
+      desc: 'chargesIncluded = false.',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get residenceDetailUnitsLabel {
+    return Intl.message(
+      'Total',
+      name: 'residenceDetailUnitsLabel',
+      desc: 'Residence count tile.',
+      args: [],
+    );
+  }
+
+  /// `Publiées`
+  String get residenceDetailPublishedLabel {
+    return Intl.message(
+      'Publiées',
+      name: 'residenceDetailPublishedLabel',
+      desc: 'Residence count tile.',
+      args: [],
+    );
+  }
+
+  /// `Occupées`
+  String get residenceDetailOccupiedLabel {
+    return Intl.message(
+      'Occupées',
+      name: 'residenceDetailOccupiedLabel',
+      desc: 'Residence count tile — reserved + rented.',
+      args: [],
+    );
+  }
+
   /// `Details du bien`
   String get annonceDetailTitle {
     return Intl.message(
@@ -4015,6 +4180,16 @@ class I18n {
       'Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.',
       name: 'agentsOwnerVisitsBody',
       desc: 'RM-M11-10 / RM-M15-06 — no weekly availability for an owner.',
+      args: [],
+    );
+  }
+
+  /// `Vos visites personnelles se règlent sur la fiche du bien.`
+  String get agentsOwnerVisitsElsewhere {
+    return Intl.message(
+      'Vos visites personnelles se règlent sur la fiche du bien.',
+      name: 'agentsOwnerVisitsElsewhere',
+      desc: 'RM-M11-10 — the switch lives on the listing; this points to it.',
       args: [],
     );
   }

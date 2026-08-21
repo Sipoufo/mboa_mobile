@@ -130,43 +130,4 @@ void main() {
     expect(find.text("Retirer l'assignation"), findsOneWidget);
   });
 
-  group('RM-M11-10 — the owner as a visitor', () {
-    testWidgets('the toggle flips the flag on the listing', (tester) async {
-      when(() => bloc.state).thenReturn(
-        const PropertyAgentReady(
-          target: AnnonceTarget('a-1'),
-          ownerVisitsEnabled: false,
-        ),
-      );
-      await pump(tester);
-
-      expect(find.text('Je fais les visites moi-même'), findsOneWidget);
-      await tester.tap(find.byType(Switch));
-      await tester.pump();
-
-      verify(() => bloc.add(const OwnerVisitsToggled(enabled: true))).called(1);
-    });
-
-    testWidgets('a residence shows no such toggle', (tester) async {
-      when(() => bloc.state).thenReturn(
-        const PropertyAgentReady(target: ResidenceTarget('r-1')),
-      );
-      await tester.pumpWidget(
-        MaterialApp(
-          locale: const Locale('fr'),
-          theme: MboaTheme.light(),
-          localizationsDelegates: MboaLocalizations.delegates,
-          supportedLocales: MboaLocalizations.supportedLocales,
-          home: BlocProvider<PropertyAgentBloc>.value(
-            value: bloc,
-            child: const AgentAssignmentPage(target: ResidenceTarget('r-1')),
-          ),
-        ),
-      );
-
-      // Null means "no such flag here" — drawing it off would claim the owner
-      // had declined something nobody asked him.
-      expect(find.byType(Switch), findsNothing);
-    });
-  });
 }

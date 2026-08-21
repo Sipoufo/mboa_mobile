@@ -37,8 +37,7 @@ class UnitGroupEditor extends StatelessWidget {
             key: ValueKey(index),
             index: index,
             group: units[index],
-            onChanged: (group) =>
-                bloc.add(AnnonceFormUnitGroupUpdated(index, group)),
+            onChanged: (group) => bloc.add(AnnonceFormUnitGroupUpdated(index, group)),
             onRemove: () => bloc.add(AnnonceFormUnitGroupRemoved(index)),
           ),
         const SizedBox(height: Dimens.spacingSm),
@@ -88,8 +87,7 @@ class _UnitGroupRow extends StatelessWidget {
                 child: FormTextField(
                   label: l10n.annonceFormUnitPrefix,
                   initialValue: group.namePrefix,
-                  onChanged: (value) =>
-                      onChanged(group.copyWith(namePrefix: value)),
+                  onChanged: (value) => onChanged(group.copyWith(namePrefix: value)),
                 ),
               ),
               IconButton(
@@ -106,15 +104,11 @@ class _UnitGroupRow extends StatelessWidget {
                 value: group.propertyType,
                 isExpanded: true,
                 isDense: true,
-                style:
-                    context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
+                style: context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
                 items: [
-                  for (final type in PropertyType.values)
-                    DropdownMenuItem(value: type, child: Text(_typeLabel(type))),
+                  for (final type in PropertyType.values) DropdownMenuItem(value: type, child: Text(type.label(l10n))),
                 ],
-                onChanged: (type) => type == null
-                    ? null
-                    : onChanged(group.copyWith(propertyType: type)),
+                onChanged: (type) => type == null ? null : onChanged(group.copyWith(propertyType: type)),
               ),
             ),
           ),
@@ -138,8 +132,7 @@ class _UnitGroupRow extends StatelessWidget {
                   suffixText: l10n.annonceFormCurrency,
                   keyboardType: TextInputType.number,
                   initialValue: group.price?.toString() ?? '',
-                  onChanged: (value) =>
-                      onChanged(group.copyWith(price: int.tryParse(value))),
+                  onChanged: (value) => onChanged(group.copyWith(price: int.tryParse(value))),
                 ),
               ),
             ],
@@ -160,9 +153,7 @@ class _UnitGroupRow extends StatelessWidget {
                       child: Text(period.label(l10n)),
                     ),
                 ],
-                onChanged: (period) => period == null
-                    ? null
-                    : onChanged(group.copyWith(rentalPeriod: period)),
+                onChanged: (period) => period == null ? null : onChanged(group.copyWith(rentalPeriod: period)),
               ),
             ),
           ),
@@ -175,8 +166,7 @@ class _UnitGroupRow extends StatelessWidget {
                   suffixText: l10n.annonceFormUnitSquareMetres,
                   keyboardType: TextInputType.number,
                   initialValue: group.surfaceArea?.toString() ?? '',
-                  onChanged: (value) =>
-                      onChanged(group.copyWith(surfaceArea: int.tryParse(value))),
+                  onChanged: (value) => onChanged(group.copyWith(surfaceArea: int.tryParse(value))),
                 ),
               ),
               const SizedBox(width: Dimens.spacingMd),
@@ -185,8 +175,7 @@ class _UnitGroupRow extends StatelessWidget {
                   label: l10n.annonceFormFieldRooms,
                   keyboardType: TextInputType.number,
                   initialValue: group.roomCount?.toString() ?? '',
-                  onChanged: (value) =>
-                      onChanged(group.copyWith(roomCount: int.tryParse(value))),
+                  onChanged: (value) => onChanged(group.copyWith(roomCount: int.tryParse(value))),
                 ),
               ),
             ],
@@ -210,8 +199,7 @@ class _UnitGroupRow extends StatelessWidget {
                   label: l10n.annonceFormFieldFurnished,
                   trailing: Switch(
                     value: group.furnished ?? false,
-                    onChanged: (value) =>
-                        onChanged(group.copyWith(furnished: value)),
+                    onChanged: (value) => onChanged(group.copyWith(furnished: value)),
                   ),
                   child: const SizedBox.shrink(),
                 ),
@@ -223,8 +211,7 @@ class _UnitGroupRow extends StatelessWidget {
             label: l10n.annonceFormFieldCharges,
             trailing: Switch(
               value: group.chargesIncluded ?? false,
-              onChanged: (value) =>
-                  onChanged(group.copyWith(chargesIncluded: value)),
+              onChanged: (value) => onChanged(group.copyWith(chargesIncluded: value)),
             ),
             child: const SizedBox.shrink(),
           ),
@@ -235,21 +222,11 @@ class _UnitGroupRow extends StatelessWidget {
               suffixText: l10n.annonceFormCurrency,
               keyboardType: TextInputType.number,
               initialValue: group.chargesAmount?.toString() ?? '',
-              onChanged: (value) =>
-                  onChanged(group.copyWith(chargesAmount: int.tryParse(value))),
+              onChanged: (value) => onChanged(group.copyWith(chargesAmount: int.tryParse(value))),
             ),
           ],
         ],
       ),
     );
   }
-
-  String _typeLabel(PropertyType type) => switch (type) {
-        PropertyType.apartment => 'Appartement',
-        PropertyType.studio => 'Studio',
-        PropertyType.villa => 'Villa',
-        PropertyType.room => 'Chambre',
-        PropertyType.office => 'Bureau',
-        PropertyType.commercialSpace => 'Local commercial',
-      };
 }

@@ -9,11 +9,11 @@ import 'package:mocktail/mocktail.dart';
 class MockAnnonceRepository extends Mock implements AnnonceRepository {}
 
 Annonce annonce(String id, AnnonceStatus status) => Annonce(
-      id: id,
-      title: 'Bien $id',
-      status: status,
-      propertyType: PropertyType.apartment,
-    );
+  id: id,
+  title: 'Bien $id',
+  status: status,
+  propertyType: PropertyType.apartment,
+);
 
 void main() {
   late MockAnnonceRepository repository;
@@ -82,8 +82,7 @@ void main() {
         expect(state.visible.map((a) => a.id), isNot(contains('e')));
       }
 
-      final archived =
-          AnnoncesReady(items: all, filter: AnnonceFilter.archived);
+      final archived = AnnoncesReady(items: all, filter: AnnonceFilter.archived);
       expect(archived.visible.map((a) => a.id), ['e']);
     });
 
@@ -91,8 +90,7 @@ void main() {
       'switching tab does not refetch',
       build: build,
       seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.available),
-      act: (bloc) =>
-          bloc.add(const AnnoncesFilterChanged(AnnonceFilter.occupied)),
+      act: (bloc) => bloc.add(const AnnoncesFilterChanged(AnnonceFilter.occupied)),
       expect: () => [AnnoncesReady(items: all, filter: AnnonceFilter.occupied)],
       verify: (_) => verifyNever(repository.list),
     );
@@ -108,8 +106,8 @@ void main() {
   group('transitions', () {
     blocTest<AnnoncesBloc, AnnoncesState>(
       'marks the card busy, then swaps in the updated listing',
-      setUp: () => when(() => repository.transition(any(), any()))
-          .thenAnswer((_) async => annonce('a', AnnonceStatus.rented)),
+      setUp: () =>
+          when(() => repository.transition(any(), any())).thenAnswer((_) async => annonce('a', AnnonceStatus.rented)),
       build: build,
       seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.available),
       act: (bloc) => bloc.add(
@@ -130,8 +128,7 @@ void main() {
 
     blocTest<AnnoncesBloc, AnnoncesState>(
       'clears the busy flag and reports a failed transition',
-      setUp: () => when(() => repository.transition(any(), any()))
-          .thenThrow(Exception('boom')),
+      setUp: () => when(() => repository.transition(any(), any())).thenThrow(Exception('boom')),
       build: build,
       seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.available),
       act: (bloc) => bloc.add(
@@ -166,8 +163,7 @@ void main() {
 
     blocTest<AnnoncesBloc, AnnoncesState>(
       'keeps the listing when the backend refuses (active contract)',
-      setUp: () =>
-          when(() => repository.delete(any())).thenThrow(Exception('409')),
+      setUp: () => when(() => repository.delete(any())).thenThrow(Exception('409')),
       build: build,
       seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.available),
       act: (bloc) => bloc.add(const AnnonceDeleteRequested('a')),
@@ -179,6 +175,52 @@ void main() {
           lastActionFailed: true,
         ),
       ],
+    );
+  });
+
+  group('RM-M11-10 — the owner as a visitor', () {
+    blocTest<AnnoncesBloc, AnnoncesState>(
+      'putting himself in the pool writes the listing and keeps the answer',
+      setUp: () => when(() => repository.setOwnerVisits('a', enabled: true)).thenAnswer(
+        (_) async => const Annonce(
+          id: 'a',
+          title: 'Bien a',
+          status: AnnonceStatus.published,
+          propertyType: PropertyType.apartment,
+          ownerVisitsEnabled: true,
+        ),
+      ),
+      build: build,
+      seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.available),
+      act: (bloc) => bloc.add(const AnnonceOwnerVisitsToggled('a', enabled: true)),
+      skip: 1,
+      verify: (bloc) {
+        final state = bloc.state as AnnoncesReady;
+        // What comes back is the listing as the server now holds it — the
+        // repository re-reads it before writing, because PUT replaces it whole.
+        expect(
+          state.items.firstWhere((a) => a.id == 'a').ownerVisitsEnabled,
+          isTrue,
+        );
+        expect(state.mutatingId, isNull);
+      },
+    );
+
+    blocTest<AnnoncesBloc, AnnoncesState>(
+      'a refused write leaves the switch where it was',
+      setUp: () => when(() => repository.setOwnerVisits('a', enabled: true)).thenThrow(Exception('500')),
+      build: build,
+      seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.available),
+      act: (bloc) => bloc.add(const AnnonceOwnerVisitsToggled('a', enabled: true)),
+      skip: 1,
+      verify: (bloc) {
+        final state = bloc.state as AnnoncesReady;
+        expect(state.lastActionFailed, isTrue);
+        expect(
+          state.items.firstWhere((a) => a.id == 'a').ownerVisitsEnabled,
+          isFalse,
+        );
+      },
     );
   });
 }

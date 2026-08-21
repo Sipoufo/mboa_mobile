@@ -21,8 +21,6 @@ class PropertyAgentReady extends PropertyAgentState {
     this.assignments = const [],
     this.applications = const [],
     this.candidates = const [],
-    this.ownerVisitsEnabled,
-    this.isSavingOwnerVisits = false,
     this.mutatingId,
     this.lastActionFailed = false,
     this.lastOutcome,
@@ -33,14 +31,6 @@ class PropertyAgentReady extends PropertyAgentState {
   final List<AgentApplication> applications;
   final List<AgentCandidateView> candidates;
 
-  /// RM-M11-10 — whether the prestataire shows this property himself.
-  ///
-  /// **Null means "no such flag here"**: a residence has none, and a listing
-  /// whose read failed has none either. The toggle is drawn only when it is
-  /// non-null, so it never claims "off" for something nobody checked.
-  final bool? ownerVisitsEnabled;
-
-  final bool isSavingOwnerVisits;
 
   /// The agent whose row is mid-action, so one row spins instead of the screen.
   final String? mutatingId;
@@ -112,8 +102,6 @@ class PropertyAgentReady extends PropertyAgentState {
     List<Assignment>? assignments,
     List<AgentApplication>? applications,
     List<AgentCandidateView>? candidates,
-    bool? ownerVisitsEnabled,
-    bool? isSavingOwnerVisits,
     String? mutatingId,
     bool clearMutating = false,
     bool lastActionFailed = false,
@@ -124,9 +112,6 @@ class PropertyAgentReady extends PropertyAgentState {
         assignments: assignments ?? this.assignments,
         applications: applications ?? this.applications,
         candidates: candidates ?? this.candidates,
-        ownerVisitsEnabled: ownerVisitsEnabled ?? this.ownerVisitsEnabled,
-        isSavingOwnerVisits:
-            isSavingOwnerVisits ?? this.isSavingOwnerVisits,
         mutatingId: clearMutating ? null : (mutatingId ?? this.mutatingId),
         lastActionFailed: lastActionFailed,
         lastOutcome: lastOutcome,
@@ -138,8 +123,6 @@ class PropertyAgentReady extends PropertyAgentState {
         assignments,
         applications,
         candidates,
-        ownerVisitsEnabled,
-        isSavingOwnerVisits,
         mutatingId,
         lastActionFailed,
         lastOutcome,

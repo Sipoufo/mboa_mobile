@@ -301,6 +301,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentsOwnerVisitsBody": MessageLookupByLibrary.simpleMessage(
       "Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.",
     ),
+    "agentsOwnerVisitsElsewhere": MessageLookupByLibrary.simpleMessage(
+      "Vos visites personnelles se règlent sur la fiche du bien.",
+    ),
     "agentsOwnerVisitsTitle": MessageLookupByLibrary.simpleMessage(
       "Je fais les visites moi-même",
     ),
@@ -369,8 +372,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Supprimer ce bien ?",
     ),
+    "annonceDetailAgents": MessageLookupByLibrary.simpleMessage(
+      "Agents assignés",
+    ),
     "annonceDetailAmenities": MessageLookupByLibrary.simpleMessage(
       "Équipements",
+    ),
+    "annonceDetailCharges": MessageLookupByLibrary.simpleMessage("Charges"),
+    "annonceDetailChargesExtra": MessageLookupByLibrary.simpleMessage("En sus"),
+    "annonceDetailChargesIncluded": MessageLookupByLibrary.simpleMessage(
+      "Incluses",
+    ),
+    "annonceDetailFacts": MessageLookupByLibrary.simpleMessage(
+      "Caractéristiques",
     ),
     "annonceDetailHistory": MessageLookupByLibrary.simpleMessage("Historique"),
     "annonceDetailNoInfo": MessageLookupByLibrary.simpleMessage(
@@ -384,6 +398,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceDetailUnitOfResidence": MessageLookupByLibrary.simpleMessage(
       "Unité d’une résidence",
     ),
+    "annonceDetailVisits": MessageLookupByLibrary.simpleMessage("Visites"),
     "annonceFormAddress": MessageLookupByLibrary.simpleMessage(
       "Adresse exacte",
     ),
@@ -630,8 +645,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Une erreur est survenue. Réessayez.",
     ),
     "commonErrorTitle": MessageLookupByLibrary.simpleMessage("Oups"),
+    "commonNo": MessageLookupByLibrary.simpleMessage("Non"),
     "commonOr": MessageLookupByLibrary.simpleMessage("Ou"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Réessayer"),
+    "commonYes": MessageLookupByLibrary.simpleMessage("Oui"),
     "dayFriday": MessageLookupByLibrary.simpleMessage("Vendredi"),
     "dayMonday": MessageLookupByLibrary.simpleMessage("Lundi"),
     "daySaturday": MessageLookupByLibrary.simpleMessage("Samedi"),
@@ -980,6 +997,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Particulier",
     ),
     "profileTypePromoteur": MessageLookupByLibrary.simpleMessage("Promoteur"),
+    "propertyTypeApartment": MessageLookupByLibrary.simpleMessage(
+      "Appartement",
+    ),
+    "propertyTypeCommercialSpace": MessageLookupByLibrary.simpleMessage(
+      "Local commercial",
+    ),
+    "propertyTypeOffice": MessageLookupByLibrary.simpleMessage("Bureau"),
+    "propertyTypeRoom": MessageLookupByLibrary.simpleMessage("Chambre"),
+    "propertyTypeStudio": MessageLookupByLibrary.simpleMessage("Studio"),
+    "propertyTypeVilla": MessageLookupByLibrary.simpleMessage("Villa"),
     "publishBlockedLimitBody": m33,
     "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
       "Limite atteinte",
@@ -1016,9 +1043,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "residenceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Supprimer cette résidence ?",
     ),
+    "residenceDetailOccupiedLabel": MessageLookupByLibrary.simpleMessage(
+      "Occupées",
+    ),
+    "residenceDetailPublishedLabel": MessageLookupByLibrary.simpleMessage(
+      "Publiées",
+    ),
     "residenceDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Détails de la résidence",
     ),
+    "residenceDetailUnitsLabel": MessageLookupByLibrary.simpleMessage("Total"),
     "residenceUnitStatus": MessageLookupByLibrary.simpleMessage("Statut"),
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "La modification d’une unité arrivera prochainement.",

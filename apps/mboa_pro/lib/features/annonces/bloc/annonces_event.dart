@@ -47,6 +47,18 @@ final class AnnonceStatusChangeRequested extends AnnoncesEvent {
   List<Object?> get props => [id, transition];
 }
 
+/// RM-M11-10 — the prestataire puts himself in this listing's pool of
+/// bookable visitors, or takes himself out.
+final class AnnonceOwnerVisitsToggled extends AnnoncesEvent {
+  const AnnonceOwnerVisitsToggled(this.id, {required this.enabled});
+
+  final String id;
+  final bool enabled;
+
+  @override
+  List<Object?> get props => [id, enabled];
+}
+
 /// RM-M10-07 — the UI must confirm in two steps before dispatching this.
 final class AnnonceDeleteRequested extends AnnoncesEvent {
   const AnnonceDeleteRequested(this.id);

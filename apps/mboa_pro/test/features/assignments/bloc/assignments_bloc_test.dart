@@ -2,24 +2,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_pro/features/assignments/bloc/my_agents_bloc.dart';
 import 'package:mboa_pro/features/assignments/bloc/property_agent_bloc.dart';
-import 'package:mboa_pro/features/annonces/data/annonce_repository.dart';
-import 'package:mboa_pro/features/annonces/models/annonce.dart';
-import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
 import 'package:mboa_pro/features/assignments/data/assignment_repository.dart';
 import 'package:mboa_pro/features/assignments/models/assignment.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAssignmentRepository extends Mock implements AssignmentRepository {}
 
-class MockAnnonceRepository extends Mock implements AnnonceRepository {}
-
-Annonce listing({bool ownerVisitsEnabled = false}) => Annonce(
-      id: 'a-1',
-      title: 'Studio Bonapriso',
-      status: AnnonceStatus.published,
-      propertyType: PropertyType.studio,
-      ownerVisitsEnabled: ownerVisitsEnabled,
-    );
 
 Assignment assignment({
   String id = 'as-1',
@@ -42,7 +30,6 @@ Assignment assignment({
 
 void main() {
   late MockAssignmentRepository repository;
-  late MockAnnonceRepository annonces;
 
   const target = AnnonceTarget('a-1');
   const residence = ResidenceTarget('r-1');
@@ -74,15 +61,13 @@ void main() {
 
   setUp(() {
     repository = MockAssignmentRepository();
-    annonces = MockAnnonceRepository();
-    when(() => annonces.getOne(any())).thenAnswer((_) async => listing());
     when(() => repository.forTarget(any())).thenAnswer((_) async => []);
     when(() => repository.applications(any())).thenAnswer((_) async => []);
     when(() => repository.candidates(any())).thenAnswer((_) async => []);
   });
 
   PropertyAgentBloc buildProperty() =>
-      PropertyAgentBloc(repository: repository, annonces: annonces);
+      PropertyAgentBloc(repository: repository);
 
   group('a property\'s agent', () {
     blocTest<PropertyAgentBloc, PropertyAgentState>(
@@ -197,36 +182,7 @@ void main() {
       },
     );
 
-    blocTest<PropertyAgentBloc, PropertyAgentState>(
-      'RM-M11-10 — the owner puts himself in the pool',
-      setUp: () {
-        when(() => annonces.setOwnerVisits('a-1', enabled: true))
-            .thenAnswer((_) async => listing(ownerVisitsEnabled: true));
-      },
-      build: buildProperty,
-      seed: () => const PropertyAgentReady(
-        target: target,
-        ownerVisitsEnabled: false,
-      ),
-      act: (bloc) => bloc.add(const OwnerVisitsToggled(enabled: true)),
-      verify: (bloc) {
-        final state = bloc.state as PropertyAgentReady;
-        expect(state.ownerVisitsEnabled, isTrue);
-        expect(state.isSavingOwnerVisits, isFalse);
-      },
-    );
 
-    blocTest<PropertyAgentBloc, PropertyAgentState>(
-      'a residence has no owner-visits flag to show',
-      build: buildProperty,
-      act: (bloc) => bloc.add(const PropertyAgentLoadRequested(residence)),
-      verify: (bloc) {
-        // RM-M11-10 is a field on an annonce; reading it for a residence would
-        // mean electing one unit to speak for the rest.
-        expect((bloc.state as PropertyAgentReady).ownerVisitsEnabled, isNull);
-        verifyNever(() => annonces.getOne(any()));
-      },
-    );
 
     blocTest<PropertyAgentBloc, PropertyAgentState>(
       'a closed assignment leaves the pool empty',

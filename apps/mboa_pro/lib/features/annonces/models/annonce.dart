@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import 'amenity.dart';
@@ -13,48 +14,59 @@ enum PropertyType {
   villa,
   room,
   office,
-  commercialSpace;
+  commercialSpace
+  ;
 
-  static PropertyType fromResponse(AnnonceResponsePropertyTypeEnum? value) =>
-      switch (value) {
-        AnnonceResponsePropertyTypeEnum.STUDIO => PropertyType.studio,
-        AnnonceResponsePropertyTypeEnum.VILLA => PropertyType.villa,
-        AnnonceResponsePropertyTypeEnum.ROOM => PropertyType.room,
-        AnnonceResponsePropertyTypeEnum.OFFICE => PropertyType.office,
-        AnnonceResponsePropertyTypeEnum.COMMERCIAL_SPACE =>
-          PropertyType.commercialSpace,
-        _ => PropertyType.apartment,
-      };
+  static PropertyType fromResponse(AnnonceResponsePropertyTypeEnum? value) => switch (value) {
+    AnnonceResponsePropertyTypeEnum.STUDIO => PropertyType.studio,
+    AnnonceResponsePropertyTypeEnum.VILLA => PropertyType.villa,
+    AnnonceResponsePropertyTypeEnum.ROOM => PropertyType.room,
+    AnnonceResponsePropertyTypeEnum.OFFICE => PropertyType.office,
+    AnnonceResponsePropertyTypeEnum.COMMERCIAL_SPACE => PropertyType.commercialSpace,
+    _ => PropertyType.apartment,
+  };
 
   CreateAnnonceRequestPropertyTypeEnum get asCreate => switch (this) {
-        PropertyType.apartment => CreateAnnonceRequestPropertyTypeEnum.APARTMENT,
-        PropertyType.studio => CreateAnnonceRequestPropertyTypeEnum.STUDIO,
-        PropertyType.villa => CreateAnnonceRequestPropertyTypeEnum.VILLA,
-        PropertyType.room => CreateAnnonceRequestPropertyTypeEnum.ROOM,
-        PropertyType.office => CreateAnnonceRequestPropertyTypeEnum.OFFICE,
-        PropertyType.commercialSpace =>
-          CreateAnnonceRequestPropertyTypeEnum.COMMERCIAL_SPACE,
-      };
+    PropertyType.apartment => CreateAnnonceRequestPropertyTypeEnum.APARTMENT,
+    PropertyType.studio => CreateAnnonceRequestPropertyTypeEnum.STUDIO,
+    PropertyType.villa => CreateAnnonceRequestPropertyTypeEnum.VILLA,
+    PropertyType.room => CreateAnnonceRequestPropertyTypeEnum.ROOM,
+    PropertyType.office => CreateAnnonceRequestPropertyTypeEnum.OFFICE,
+    PropertyType.commercialSpace => CreateAnnonceRequestPropertyTypeEnum.COMMERCIAL_SPACE,
+  };
 
   UpdateAnnonceRequestPropertyTypeEnum get asUpdate => switch (this) {
-        PropertyType.apartment => UpdateAnnonceRequestPropertyTypeEnum.APARTMENT,
-        PropertyType.studio => UpdateAnnonceRequestPropertyTypeEnum.STUDIO,
-        PropertyType.villa => UpdateAnnonceRequestPropertyTypeEnum.VILLA,
-        PropertyType.room => UpdateAnnonceRequestPropertyTypeEnum.ROOM,
-        PropertyType.office => UpdateAnnonceRequestPropertyTypeEnum.OFFICE,
-        PropertyType.commercialSpace =>
-          UpdateAnnonceRequestPropertyTypeEnum.COMMERCIAL_SPACE,
-      };
+    PropertyType.apartment => UpdateAnnonceRequestPropertyTypeEnum.APARTMENT,
+    PropertyType.studio => UpdateAnnonceRequestPropertyTypeEnum.STUDIO,
+    PropertyType.villa => UpdateAnnonceRequestPropertyTypeEnum.VILLA,
+    PropertyType.room => UpdateAnnonceRequestPropertyTypeEnum.ROOM,
+    PropertyType.office => UpdateAnnonceRequestPropertyTypeEnum.OFFICE,
+    PropertyType.commercialSpace => UpdateAnnonceRequestPropertyTypeEnum.COMMERCIAL_SPACE,
+  };
 
   UnitGroupPropertyTypeEnum get asUnitGroup => switch (this) {
-        PropertyType.apartment => UnitGroupPropertyTypeEnum.APARTMENT,
-        PropertyType.studio => UnitGroupPropertyTypeEnum.STUDIO,
-        PropertyType.villa => UnitGroupPropertyTypeEnum.VILLA,
-        PropertyType.room => UnitGroupPropertyTypeEnum.ROOM,
-        PropertyType.office => UnitGroupPropertyTypeEnum.OFFICE,
-        PropertyType.commercialSpace =>
-          UnitGroupPropertyTypeEnum.COMMERCIAL_SPACE,
-      };
+    PropertyType.apartment => UnitGroupPropertyTypeEnum.APARTMENT,
+    PropertyType.studio => UnitGroupPropertyTypeEnum.STUDIO,
+    PropertyType.villa => UnitGroupPropertyTypeEnum.VILLA,
+    PropertyType.room => UnitGroupPropertyTypeEnum.ROOM,
+    PropertyType.office => UnitGroupPropertyTypeEnum.OFFICE,
+    PropertyType.commercialSpace => UnitGroupPropertyTypeEnum.COMMERCIAL_SPACE,
+  };
+}
+
+/// The type's name, from the shared catalogue rather than a French literal.
+///
+/// It was written out three times — the form, the unit editor and the residence
+/// detail — which is three chances to disagree and none to translate.
+extension PropertyTypeLabel on PropertyType {
+  String label(I18n l10n) => switch (this) {
+    PropertyType.apartment => l10n.propertyTypeApartment,
+    PropertyType.studio => l10n.propertyTypeStudio,
+    PropertyType.villa => l10n.propertyTypeVilla,
+    PropertyType.room => l10n.propertyTypeRoom,
+    PropertyType.office => l10n.propertyTypeOffice,
+    PropertyType.commercialSpace => l10n.propertyTypeCommercialSpace,
+  };
 }
 
 /// A single listing ("Bien Unique").
@@ -147,77 +159,72 @@ class Annonce extends Equatable {
   int? get displayPrice => price ?? monthlyRent;
 
   /// Absolute URL of the cover photo, or null when the listing has none.
-  String? get coverUrl =>
-      photoKeys.isEmpty ? null : BaseProfile.mediaUrl(photoKeys.first);
+  String? get coverUrl => photoKeys.isEmpty ? null : BaseProfile.mediaUrl(photoKeys.first);
 
   static Annonce fromResponse(AnnonceResponse response) => Annonce(
-        id: response.id ?? '',
-        title: response.title ?? '',
-        status: AnnonceStatus.fromResponse(response.status),
-        propertyType: PropertyType.fromResponse(response.propertyType),
-        city: response.city,
-        cityId: response.cityId,
-        district: response.district,
-        districtId: response.districtId,
-        latitude: response.latitude,
-        longitude: response.longitude,
-        exactAddress: response.exactAddress,
-        amenities: response.amenities
-                ?.map(Amenity.fromResponse)
-                .nonNulls
-                .toList() ??
-            const [],
-        price: response.price,
-        rentalPeriod: RentalPeriod.fromResponse(response.rentalPeriod),
-        monthlyRent: response.monthlyRent,
-        chargesIncluded: response.chargesIncluded,
-        chargesAmount: response.chargesAmount,
-        surfaceArea: response.surfaceArea,
-        roomCount: response.roomCount,
-        bathroomCount: response.bathroomCount,
-        furnished: response.furnished,
-        availableFrom: response.availableFrom?.toDateTime(),
-        description: response.description,
-        photoKeys: response.photoKeys?.toList() ?? const [],
-        publishedAt: response.publishedAt,
-        createdAt: response.createdAt,
-        residenceId: response.residenceId,
-        expiresAt: response.expiresAt,
-        ownerVisitsEnabled: response.ownerVisitsEnabled ?? false,
-      );
+    id: response.id ?? '',
+    title: response.title ?? '',
+    status: AnnonceStatus.fromResponse(response.status),
+    propertyType: PropertyType.fromResponse(response.propertyType),
+    city: response.city,
+    cityId: response.cityId,
+    district: response.district,
+    districtId: response.districtId,
+    latitude: response.latitude,
+    longitude: response.longitude,
+    exactAddress: response.exactAddress,
+    amenities: response.amenities?.map(Amenity.fromResponse).nonNulls.toList() ?? const [],
+    price: response.price,
+    rentalPeriod: RentalPeriod.fromResponse(response.rentalPeriod),
+    monthlyRent: response.monthlyRent,
+    chargesIncluded: response.chargesIncluded,
+    chargesAmount: response.chargesAmount,
+    surfaceArea: response.surfaceArea,
+    roomCount: response.roomCount,
+    bathroomCount: response.bathroomCount,
+    furnished: response.furnished,
+    availableFrom: response.availableFrom?.toDateTime(),
+    description: response.description,
+    photoKeys: response.photoKeys?.toList() ?? const [],
+    publishedAt: response.publishedAt,
+    createdAt: response.createdAt,
+    residenceId: response.residenceId,
+    expiresAt: response.expiresAt,
+    ownerVisitsEnabled: response.ownerVisitsEnabled ?? false,
+  );
 
   // Every field: a partial props list makes an edit that only touched, say, the
   // description compare equal to the old value, and the screen never redraws.
   @override
   List<Object?> get props => [
-        id,
-        title,
-        status,
-        propertyType,
-        city,
-        cityId,
-        district,
-        districtId,
-        latitude,
-        longitude,
-        exactAddress,
-        price,
-        rentalPeriod,
-        amenities,
-        monthlyRent,
-        ownerVisitsEnabled,
-        chargesIncluded,
-        chargesAmount,
-        surfaceArea,
-        roomCount,
-        bathroomCount,
-        furnished,
-        availableFrom,
-        description,
-        photoKeys,
-        publishedAt,
-        createdAt,
-        residenceId,
-        expiresAt,
-      ];
+    id,
+    title,
+    status,
+    propertyType,
+    city,
+    cityId,
+    district,
+    districtId,
+    latitude,
+    longitude,
+    exactAddress,
+    price,
+    rentalPeriod,
+    amenities,
+    monthlyRent,
+    ownerVisitsEnabled,
+    chargesIncluded,
+    chargesAmount,
+    surfaceArea,
+    roomCount,
+    bathroomCount,
+    furnished,
+    availableFrom,
+    description,
+    photoKeys,
+    publishedAt,
+    createdAt,
+    residenceId,
+    expiresAt,
+  ];
 }

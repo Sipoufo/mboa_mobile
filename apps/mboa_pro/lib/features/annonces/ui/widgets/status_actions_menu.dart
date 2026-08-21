@@ -20,8 +20,7 @@ class _MenuAction {
   bool get isDelete => transition == null;
 
   @override
-  bool operator ==(Object other) =>
-      other is _MenuAction && other.transition == transition;
+  bool operator ==(Object other) => other is _MenuAction && other.transition == transition;
 
   @override
   int get hashCode => transition.hashCode;
@@ -42,6 +41,7 @@ class StatusActionsMenu extends StatelessWidget {
     required this.onSelected,
     this.onDelete,
     this.enabled = true,
+    this.isResidenceUnit = false,
   });
 
   final AnnonceStatus status;
@@ -56,27 +56,31 @@ class StatusActionsMenu extends StatelessWidget {
   final VoidCallback? onDelete;
   final bool enabled;
 
-  static List<AnnonceTransition> transitionsFor(AnnonceStatus status) =>
-      switch (status) {
-        AnnonceStatus.draft => [
-            AnnonceTransition.publish,
-            AnnonceTransition.archive,
-          ],
-        AnnonceStatus.published => [
-            AnnonceTransition.reserve,
-            AnnonceTransition.markRented,
-            AnnonceTransition.archive,
-          ],
-        AnnonceStatus.reserved => [
-            AnnonceTransition.markRented,
-            AnnonceTransition.archive,
-          ],
-        AnnonceStatus.rented => [AnnonceTransition.archive],
-        // Un-archiving returns the listing to DRAFT — publishing it again is a
-        // second, separate step that re-checks the quota and the photo rule.
-        AnnonceStatus.archived => [AnnonceTransition.unarchive],
-        AnnonceStatus.unknown => const [],
-      };
+  /// A unit does not consume the active-listing quota: a residence's allowance
+  /// is enforced when the residence is created (`RESIDENCE_UNIT_LIMIT`), so the
+  /// tier limit must not be applied a second time here.
+  final bool isResidenceUnit;
+
+  static List<AnnonceTransition> transitionsFor(AnnonceStatus status) => switch (status) {
+    AnnonceStatus.draft => [
+      AnnonceTransition.publish,
+      AnnonceTransition.archive,
+    ],
+    AnnonceStatus.published => [
+      AnnonceTransition.reserve,
+      AnnonceTransition.markRented,
+      AnnonceTransition.archive,
+    ],
+    AnnonceStatus.reserved => [
+      AnnonceTransition.markRented,
+      AnnonceTransition.archive,
+    ],
+    AnnonceStatus.rented => [AnnonceTransition.archive],
+    // Un-archiving returns the listing to DRAFT — publishing it again is a
+    // second, separate step that re-checks the quota and the photo rule.
+    AnnonceStatus.archived => [AnnonceTransition.unarchive],
+    AnnonceStatus.unknown => const [],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -143,26 +147,26 @@ class StatusActionsMenu extends StatelessWidget {
       profileComplete: profile?.isProfileComplete ?? false,
       photoCount: photoCount,
       activeCount: activeCount,
-      activeListingLimit: plan?.activeListingLimit,
+      activeListingLimit: isResidenceUnit ? null : plan?.activeListingLimit,
     );
 
     if (decision.isAllowed) return true;
 
     final (title, body) = switch (decision.blocker!) {
       PublishBlocker.incompleteProfile => (
-          l10n.publishBlockedProfileTitle,
-          l10n.publishBlockedProfileBody,
-        ),
+        l10n.publishBlockedProfileTitle,
+        l10n.publishBlockedProfileBody,
+      ),
       PublishBlocker.notEnoughPhotos => (
-          l10n.publishBlockedPhotosTitle,
-          l10n.publishBlockedPhotosBody(3),
-        ),
+        l10n.publishBlockedPhotosTitle,
+        l10n.publishBlockedPhotosBody(3),
+      ),
       PublishBlocker.listingLimitReached => (
-          l10n.publishBlockedLimitTitle,
-          l10n.publishBlockedLimitBody(
-            (gate.nextTier(subscription.tier) ?? SubscriptionTier.proPlus).label,
-          ),
+        l10n.publishBlockedLimitTitle,
+        l10n.publishBlockedLimitBody(
+          (gate.nextTier(subscription.tier) ?? SubscriptionTier.proPlus).label,
         ),
+      ),
     };
 
     MboaToast.warning(context: context, title: title, description: body);

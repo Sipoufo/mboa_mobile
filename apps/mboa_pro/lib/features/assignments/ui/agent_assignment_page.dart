@@ -96,18 +96,18 @@ class _Body extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(Dimens.spacing),
       children: [
-        // RM-M11-10 — the owner is a visitor too, so he belongs on the same
-        // screen as the agents rather than buried in the listing form.
-        if (state.ownerVisitsEnabled case final enabled?) ...[
-          _OwnerVisitsCard(enabled: enabled, isSaving: state.isSavingOwnerVisits),
-          const SizedBox(height: Dimens.spacingLg),
-        ],
-
         Text(l10n.agentsPoolTitle, style: context.mboaText.h3),
         const SizedBox(height: Dimens.spacingXs),
         Text(
           l10n.agentsPoolBody,
           style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+        ),
+        const SizedBox(height: Dimens.spacingXs),
+        // RM-M11-10 is a flag on the listing, and the switch lives there —
+        // one screen owns it, so the two cannot disagree.
+        Text(
+          l10n.agentsOwnerVisitsElsewhere,
+          style: context.mboaText.caption.copyWith(color: colors.textTertiary),
         ),
         const SizedBox(height: Dimens.spacingSm),
 
@@ -282,64 +282,3 @@ class _Body extends StatelessWidget {
   }
 }
 
-/// "Je fais mes visites moi-même" (RM-M11-10).
-///
-/// The owner joins the property's pool of bookable visitors, **without** the
-/// agents' weekly availability: each request reaches him for manual
-/// confirmation of a slot (RM-M15-06), which is what the subtitle warns about.
-class _OwnerVisitsCard extends StatelessWidget {
-  const _OwnerVisitsCard({required this.enabled, required this.isSaving});
-
-  final bool enabled;
-  final bool isSaving;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    return Container(
-      padding: const EdgeInsets.all(Dimens.spacing),
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(Dimens.radiusLg),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.agentsOwnerVisitsTitle,
-                  style: context.mboaText.label
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: Dimens.spacingXs),
-                Text(
-                  l10n.agentsOwnerVisitsBody,
-                  style: context.mboaText.caption
-                      .copyWith(color: colors.textSecondary),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: Dimens.spacingSm),
-          if (isSaving)
-            const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(strokeWidth: 2),
-            )
-          else
-            Switch(
-              value: enabled,
-              onChanged: (value) => context
-                  .read<PropertyAgentBloc>()
-                  .add(OwnerVisitsToggled(enabled: value)),
-            ),
-        ],
-      ),
-    );
-  }
-}

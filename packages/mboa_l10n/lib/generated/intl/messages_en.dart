@@ -286,6 +286,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentsOwnerVisitsBody": MessageLookupByLibrary.simpleMessage(
       "You will appear among the visitors offered for this property. Each request reaches you so you can confirm a time.",
     ),
+    "agentsOwnerVisitsElsewhere": MessageLookupByLibrary.simpleMessage(
+      "Your own visits are set on the property\'s page.",
+    ),
     "agentsOwnerVisitsTitle": MessageLookupByLibrary.simpleMessage(
       "I show this property myself",
     ),
@@ -350,7 +353,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Delete this property?",
     ),
+    "annonceDetailAgents": MessageLookupByLibrary.simpleMessage(
+      "Assigned agents",
+    ),
     "annonceDetailAmenities": MessageLookupByLibrary.simpleMessage("Amenities"),
+    "annonceDetailCharges": MessageLookupByLibrary.simpleMessage("Charges"),
+    "annonceDetailChargesExtra": MessageLookupByLibrary.simpleMessage("On top"),
+    "annonceDetailChargesIncluded": MessageLookupByLibrary.simpleMessage(
+      "Included",
+    ),
+    "annonceDetailFacts": MessageLookupByLibrary.simpleMessage(
+      "Characteristics",
+    ),
     "annonceDetailHistory": MessageLookupByLibrary.simpleMessage("History"),
     "annonceDetailNoInfo": MessageLookupByLibrary.simpleMessage(
       "No information\navailable right now",
@@ -363,6 +377,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceDetailUnitOfResidence": MessageLookupByLibrary.simpleMessage(
       "Unit of a residence",
     ),
+    "annonceDetailVisits": MessageLookupByLibrary.simpleMessage("Visits"),
     "annonceFormAddress": MessageLookupByLibrary.simpleMessage("Exact address"),
     "annonceFormCityDetected": m14,
     "annonceFormCityNotDetected": MessageLookupByLibrary.simpleMessage(
@@ -591,8 +606,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Something went wrong. Please try again.",
     ),
     "commonErrorTitle": MessageLookupByLibrary.simpleMessage("Oops"),
+    "commonNo": MessageLookupByLibrary.simpleMessage("No"),
     "commonOr": MessageLookupByLibrary.simpleMessage("Or"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "commonYes": MessageLookupByLibrary.simpleMessage("Yes"),
     "dayFriday": MessageLookupByLibrary.simpleMessage("Friday"),
     "dayMonday": MessageLookupByLibrary.simpleMessage("Monday"),
     "daySaturday": MessageLookupByLibrary.simpleMessage("Saturday"),
@@ -913,6 +930,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Individual",
     ),
     "profileTypePromoteur": MessageLookupByLibrary.simpleMessage("Promoter"),
+    "propertyTypeApartment": MessageLookupByLibrary.simpleMessage("Apartment"),
+    "propertyTypeCommercialSpace": MessageLookupByLibrary.simpleMessage(
+      "Commercial space",
+    ),
+    "propertyTypeOffice": MessageLookupByLibrary.simpleMessage("Office"),
+    "propertyTypeRoom": MessageLookupByLibrary.simpleMessage("Room"),
+    "propertyTypeStudio": MessageLookupByLibrary.simpleMessage("Studio"),
+    "propertyTypeVilla": MessageLookupByLibrary.simpleMessage("Villa"),
     "publishBlockedLimitBody": m33,
     "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
       "Limit reached",
@@ -945,9 +970,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "residenceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Delete this residence?",
     ),
+    "residenceDetailOccupiedLabel": MessageLookupByLibrary.simpleMessage(
+      "Occupied",
+    ),
+    "residenceDetailPublishedLabel": MessageLookupByLibrary.simpleMessage(
+      "Published",
+    ),
     "residenceDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Residence details",
     ),
+    "residenceDetailUnitsLabel": MessageLookupByLibrary.simpleMessage("Total"),
     "residenceUnitStatus": MessageLookupByLibrary.simpleMessage("Status"),
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "Editing a unit is coming soon.",

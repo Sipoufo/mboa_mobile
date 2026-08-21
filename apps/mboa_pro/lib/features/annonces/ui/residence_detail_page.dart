@@ -193,17 +193,13 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                       // from a tab that is simply empty.
                       _query.isEmpty
                           ? switch (_filter) {
-                              AnnonceFilter.available =>
-                                l10n.annoncesEmptyAvailable,
-                              AnnonceFilter.occupied =>
-                                l10n.annoncesEmptyOccupied,
-                              AnnonceFilter.archived =>
-                                l10n.annoncesEmptyArchived,
+                              AnnonceFilter.available => l10n.annoncesEmptyAvailable,
+                              AnnonceFilter.occupied => l10n.annoncesEmptyOccupied,
+                              AnnonceFilter.archived => l10n.annoncesEmptyArchived,
                             }
                           : l10n.residenceUnitsSearchEmpty(_query),
                       textAlign: TextAlign.center,
-                      style: context.mboaText.body
-                          .copyWith(color: context.mboaColors.textSecondary),
+                      style: context.mboaText.body.copyWith(color: context.mboaColors.textSecondary),
                     ),
                   )
                 else
@@ -238,17 +234,28 @@ class _Header extends StatelessWidget {
           SizedBox(
             height: 180,
             width: double.infinity,
+            // Same reason as the listing header: white text needs a dark bed.
             child: residence.coverUrl == null
                 ? ColoredBox(
-                    color: colors.primaryPale,
-                    child: Icon(LucideIcons.layers, color: colors.primary),
+                    color: colors.primaryDark,
+                    child: Align(
+                      alignment: const Alignment(0, -0.45),
+                      child: Icon(
+                        LucideIcons.layers,
+                        color: colors.onBrand.withValues(alpha: 0.4),
+                        size: Dimens.iconLg,
+                      ),
+                    ),
                   )
                 : Image.network(
                     residence.coverUrl!,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stack) => ColoredBox(
-                      color: colors.primaryPale,
-                      child: Icon(LucideIcons.layers, color: colors.primary),
+                      color: colors.primaryDark,
+                      child: Icon(
+                        LucideIcons.layers,
+                        color: colors.onBrand.withValues(alpha: 0.4),
+                      ),
                     ),
                   ),
           ),
@@ -267,30 +274,38 @@ class _Header extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: Dimens.spacing,
+            right: Dimens.spacing,
+            child: AnnonceStatusChip(status: residence.status),
+          ),
+          Positioned(
             left: Dimens.spacing,
             right: Dimens.spacing,
             bottom: Dimens.spacing,
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Text(
+                  residence.name,
+                  style: context.mboaText.h2.copyWith(color: colors.onBrand),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (residence.district case final district?)
+                  Row(
                     children: [
-                      Text(
-                        residence.name,
-                        style: context.mboaText.h2.copyWith(color: colors.onBrand),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Icon(
+                        LucideIcons.mapPin,
+                        size: Dimens.iconSm,
+                        color: colors.onBrand,
                       ),
-                      if (residence.district case final district?)
-                        Text(
-                          district,
-                          style: context.mboaText.caption.copyWith(color: colors.onBrand),
-                        ),
+                      const SizedBox(width: Dimens.spacingXs),
+                      Text(
+                        district,
+                        style: context.mboaText.label.copyWith(color: colors.onBrand),
+                      ),
                     ],
                   ),
-                ),
-                AnnonceStatusChip(status: residence.status),
               ],
             ),
           ),
@@ -300,6 +315,12 @@ class _Header extends StatelessWidget {
   }
 }
 
+/// How the residence is doing, in three numbers.
+///
+/// The counts come from the residence payload where the server sends them and
+/// from the units it carries otherwise — `unitCount` is absent on the list
+/// shape but the detail always has the units themselves (RM-M10bis-01 caps
+/// them at 200, so counting is free).
 class _Counts extends StatelessWidget {
   const _Counts({required this.residence});
 
@@ -309,22 +330,42 @@ class _Counts extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
 
-    return Wrap(
-      spacing: Dimens.spacingSm,
-      runSpacing: Dimens.spacingSm,
+    final units = residence.units;
+    final total = residence.unitCount ?? units.length;
+    final published = residence.publishedUnitCount ?? units.where((u) => u.status == AnnonceStatus.published).length;
+    final occupied = units.where((u) => u.status == AnnonceStatus.reserved || u.status == AnnonceStatus.rented).length;
+
+    return Row(
       children: [
-        _Pill(label: l10n.annoncesUnitsSummary(residence.unitCount ?? 0)),
-        _Pill(
-          label: l10n.annoncesUnitsPublished(residence.publishedUnitCount ?? 0),
+        Expanded(
+          child: _CountTile(
+            value: total,
+            label: l10n.residenceDetailUnitsLabel,
+          ),
+        ),
+        const SizedBox(width: Dimens.spacingMd),
+        Expanded(
+          child: _CountTile(
+            value: published,
+            label: l10n.residenceDetailPublishedLabel,
+          ),
+        ),
+        const SizedBox(width: Dimens.spacingMd),
+        Expanded(
+          child: _CountTile(
+            value: occupied,
+            label: l10n.residenceDetailOccupiedLabel,
+          ),
         ),
       ],
     );
   }
 }
 
-class _Pill extends StatelessWidget {
-  const _Pill({required this.label});
+class _CountTile extends StatelessWidget {
+  const _CountTile({required this.value, required this.label});
 
+  final int value;
   final String label;
 
   @override
@@ -333,29 +374,29 @@ class _Pill extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.spacingMd,
-        vertical: Dimens.spacingXs,
+        horizontal: Dimens.spacing,
+        vertical: Dimens.spacingMd,
       ),
       decoration: BoxDecoration(
-        color: colors.primaryPale,
-        borderRadius: BorderRadius.circular(Dimens.radiusFull),
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(Dimens.radiusLg),
       ),
-      child: Text(
-        label,
-        style: context.mboaText.caption.copyWith(color: colors.primary),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$value',
+            style: context.mboaText.h2.copyWith(color: colors.primaryDark),
+          ),
+          Text(
+            label,
+            style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+          ),
+        ],
       ),
     );
   }
 }
-
-String _typeLabel(PropertyType type) => switch (type) {
-  PropertyType.apartment => 'Appartement',
-  PropertyType.studio => 'Studio',
-  PropertyType.villa => 'Villa',
-  PropertyType.room => 'Chambre',
-  PropertyType.office => 'Bureau',
-  PropertyType.commercialSpace => 'Local commercial',
-};
 
 class _UnitRow extends StatelessWidget {
   const _UnitRow({
@@ -377,16 +418,29 @@ class _UnitRow extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: Dimens.spacingSm),
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.circular(Dimens.radius),
-        border: Border.all(color: colors.border),
+        borderRadius: BorderRadius.circular(Dimens.radiusLg),
       ),
       child: InkWell(
         onTap: onOpen,
-        borderRadius: BorderRadius.circular(Dimens.radius),
+        borderRadius: BorderRadius.circular(Dimens.radiusLg),
         child: Padding(
           padding: const EdgeInsets.all(Dimens.spacingMd),
           child: Row(
             children: [
+              Container(
+                width: Dimens.avatar,
+                height: Dimens.avatar,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colors.primaryLight.withValues(alpha: 0.35),
+                ),
+                child: Icon(
+                  LucideIcons.doorOpen,
+                  size: Dimens.icon,
+                  color: colors.primaryDark,
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,7 +454,7 @@ class _UnitRow extends StatelessWidget {
                     if (unit.propertyType case final type?) ...[
                       const SizedBox(height: Dimens.spacingXs),
                       Text(
-                        _typeLabel(type),
+                        type.label(l10n),
                         style: context.mboaText.caption.copyWith(color: colors.textSecondary),
                       ),
                     ],

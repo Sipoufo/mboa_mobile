@@ -36,19 +36,16 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<AnnonceFormBloc>(
-        create: (_) => getIt<AnnonceFormBloc>()
-          ..add(AnnonceFormStarted(kind: kind, annonceId: annonceId)),
-        child: this,
-      );
+    create: (_) => getIt<AnnonceFormBloc>()..add(AnnonceFormStarted(kind: kind, annonceId: annonceId)),
+    child: this,
+  );
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
 
     return BlocConsumer<AnnonceFormBloc, AnnonceFormState>(
-      listenWhen: (prev, curr) =>
-          curr is AnnonceFormSaved ||
-          (curr is AnnonceFormEditing && curr.error != null),
+      listenWhen: (prev, curr) => curr is AnnonceFormSaved || (curr is AnnonceFormEditing && curr.error != null),
       listener: (context, state) {
         switch (state) {
           case AnnonceFormSaved(:final kind):
@@ -56,13 +53,9 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
             // listing is there when the user lands back on it.
             switch (kind) {
               case AnnonceKind.single:
-                context
-                    .read<AnnoncesBloc>()
-                    .add(const AnnoncesRefreshRequested());
+                context.read<AnnoncesBloc>().add(const AnnoncesRefreshRequested());
               case AnnonceKind.residence:
-                context
-                    .read<ResidencesBloc>()
-                    .add(const ResidencesRefreshRequested());
+                context.read<ResidencesBloc>().add(const ResidencesRefreshRequested());
             }
             MboaToast.success(
               context: context,
@@ -95,9 +88,7 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
           backgroundColor: context.mboaColors.background,
           appBar: AppBar(
             title: Text(
-              annonceId == null
-                  ? l10n.annonceFormTitleNew
-                  : l10n.annonceFormTitleEdit,
+              annonceId == null ? l10n.annonceFormTitleNew : l10n.annonceFormTitleEdit,
             ),
           ),
           body: switch ((editing, failedToLoad)) {
@@ -114,9 +105,7 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
                       title: l10n.annonceFormSave,
                       isLoading: state is AnnonceFormSubmitting,
                       onPressed: editing.canSubmit
-                          ? () => context
-                              .read<AnnonceFormBloc>()
-                              .add(const AnnonceFormSubmitted())
+                          ? () => context.read<AnnonceFormBloc>().add(const AnnonceFormSubmitted())
                           : null,
                     ),
                   ),
@@ -170,8 +159,7 @@ class _Form extends StatelessWidget {
   void _change(
     BuildContext context,
     AnnonceDraft Function(AnnonceDraft) apply,
-  ) =>
-      context.read<AnnonceFormBloc>().add(AnnonceFormChanged(apply));
+  ) => context.read<AnnonceFormBloc>().add(AnnonceFormChanged(apply));
 
   @override
   Widget build(BuildContext context) {
@@ -200,9 +188,7 @@ class _Form extends StatelessWidget {
                 label: l10n.annonceFormKindMultiple,
               ),
             ],
-            onChanged: (kind) => context
-                .read<AnnonceFormBloc>()
-                .add(AnnonceFormStarted(kind: kind)),
+            onChanged: (kind) => context.read<AnnonceFormBloc>().add(AnnonceFormStarted(kind: kind)),
           ),
         ],
         const SizedBox(height: Dimens.spacing),
@@ -214,17 +200,13 @@ class _Form extends StatelessWidget {
           photoKeys: draft.photoKeys,
           isUploading: state.uploadingPhoto,
           onAdd: () => _addPhoto(context),
-          onRemove: (key) => context
-              .read<AnnonceFormBloc>()
-              .add(AnnonceFormPhotoRemoved(key)),
+          onRemove: (key) => context.read<AnnonceFormBloc>().add(AnnonceFormPhotoRemoved(key)),
         ),
         const SizedBox(height: Dimens.spacingLg),
         FormTextField(
           // Doc 10 makes "Titre" obligatoire; the mockup omits it, and reusing
           // the "Type" label here collided with the property-type dropdown.
-          label: isResidence
-              ? l10n.annonceFormFieldName
-              : l10n.annonceFormFieldTitle,
+          label: isResidence ? l10n.annonceFormFieldName : l10n.annonceFormFieldTitle,
           initialValue: draft.title,
           onChanged: (value) => _change(context, (d) => d.copyWith(title: value)),
         ),
@@ -232,8 +214,7 @@ class _Form extends StatelessWidget {
           const SizedBox(height: Dimens.spacing),
           _PropertyTypeField(
             value: draft.propertyType,
-            onChanged: (type) =>
-                _change(context, (d) => d.copyWith(propertyType: type)),
+            onChanged: (type) => _change(context, (d) => d.copyWith(propertyType: type)),
           ),
           const SizedBox(height: Dimens.spacing),
           FormTextField(
@@ -250,94 +231,91 @@ class _Form extends StatelessWidget {
           const SizedBox(height: Dimens.spacing),
           _RentalPeriodField(
             value: draft.rentalPeriod,
-            onChanged: (period) =>
-                _change(context, (d) => d.copyWith(rentalPeriod: period)),
+            onChanged: (period) => _change(context, (d) => d.copyWith(rentalPeriod: period)),
           ),
         ],
         if (!isResidence) ...[
-        const SizedBox(height: Dimens.spacing),
-        Row(
-          children: [
-            Expanded(
-              child: FormTextField(
-                label: l10n.annonceFormFieldSurface,
-                helpText: l10n.annonceFormHelpOptionalFilters,
-                suffixText: l10n.annonceFormUnitSquareMetres,
-                keyboardType: TextInputType.number,
-                initialValue: draft.surfaceArea?.toString() ?? '',
-                onChanged: (value) => _change(
-                  context,
-                  (d) => d.copyWith(surfaceArea: int.tryParse(value)),
-                ),
-              ),
-            ),
-            const SizedBox(width: Dimens.spacingMd),
-            Expanded(
-              child: FormTextField(
-                label: l10n.annonceFormFieldRooms,
-                keyboardType: TextInputType.number,
-                initialValue: draft.roomCount?.toString() ?? '',
-                onChanged: (value) => _change(
-                  context,
-                  (d) => d.copyWith(roomCount: int.tryParse(value)),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: Dimens.spacing),
-        Row(
-          children: [
-            Expanded(
-              child: FormTextField(
-                label: l10n.annonceFormFieldBathrooms,
-                keyboardType: TextInputType.number,
-                initialValue: draft.bathroomCount?.toString() ?? '',
-                onChanged: (value) => _change(
-                  context,
-                  (d) => d.copyWith(bathroomCount: int.tryParse(value)),
-                ),
-              ),
-            ),
-            const SizedBox(width: Dimens.spacingMd),
-            Expanded(
-              child: FormFieldShell(
-                label: l10n.annonceFormFieldFurnished,
-                trailing: Switch(
-                  value: draft.furnished ?? false,
-                  onChanged: (value) =>
-                      _change(context, (d) => d.copyWith(furnished: value)),
-                ),
-                child: const SizedBox.shrink(),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: Dimens.spacing),
-        FormFieldShell(
-          label: l10n.annonceFormFieldCharges,
-          helpText: l10n.annonceFormHelpCharges,
-          trailing: Switch(
-            value: draft.chargesIncluded ?? false,
-            onChanged: (value) =>
-                _change(context, (d) => d.copyWith(chargesIncluded: value)),
-          ),
-          child: const SizedBox.shrink(),
-        ),
-        // Only meaningful when charges are separate from the rent.
-        if (draft.chargesIncluded != true) ...[
           const SizedBox(height: Dimens.spacing),
-          FormTextField(
-            label: l10n.annonceFormFieldChargesAmount,
-            suffixText: l10n.annonceFormCurrency,
-            keyboardType: TextInputType.number,
-            initialValue: draft.chargesAmount?.toString() ?? '',
-            onChanged: (value) => _change(
-              context,
-              (d) => d.copyWith(chargesAmount: int.tryParse(value)),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: FormTextField(
+                  label: l10n.annonceFormFieldSurface,
+                  helpText: l10n.annonceFormHelpOptionalFilters,
+                  suffixText: l10n.annonceFormUnitSquareMetres,
+                  keyboardType: TextInputType.number,
+                  initialValue: draft.surfaceArea?.toString() ?? '',
+                  onChanged: (value) => _change(
+                    context,
+                    (d) => d.copyWith(surfaceArea: int.tryParse(value)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: FormTextField(
+                  label: l10n.annonceFormFieldRooms,
+                  keyboardType: TextInputType.number,
+                  initialValue: draft.roomCount?.toString() ?? '',
+                  onChanged: (value) => _change(
+                    context,
+                    (d) => d.copyWith(roomCount: int.tryParse(value)),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+          const SizedBox(height: Dimens.spacing),
+          Row(
+            children: [
+              Expanded(
+                child: FormTextField(
+                  label: l10n.annonceFormFieldBathrooms,
+                  keyboardType: TextInputType.number,
+                  initialValue: draft.bathroomCount?.toString() ?? '',
+                  onChanged: (value) => _change(
+                    context,
+                    (d) => d.copyWith(bathroomCount: int.tryParse(value)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: FormFieldShell(
+                  label: l10n.annonceFormFieldFurnished,
+                  trailing: Switch(
+                    value: draft.furnished ?? false,
+                    onChanged: (value) => _change(context, (d) => d.copyWith(furnished: value)),
+                  ),
+                  child: const SizedBox.shrink(),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Dimens.spacing),
+          FormFieldShell(
+            label: l10n.annonceFormFieldCharges,
+            helpText: l10n.annonceFormHelpCharges,
+            trailing: Switch(
+              value: draft.chargesIncluded ?? false,
+              onChanged: (value) => _change(context, (d) => d.copyWith(chargesIncluded: value)),
+            ),
+            child: const SizedBox.shrink(),
+          ),
+          // Only meaningful when charges are separate from the rent.
+          if (draft.chargesIncluded != true) ...[
+            const SizedBox(height: Dimens.spacing),
+            FormTextField(
+              label: l10n.annonceFormFieldChargesAmount,
+              suffixText: l10n.annonceFormCurrency,
+              keyboardType: TextInputType.number,
+              initialValue: draft.chargesAmount?.toString() ?? '',
+              onChanged: (value) => _change(
+                context,
+                (d) => d.copyWith(chargesAmount: int.tryParse(value)),
+              ),
+            ),
+          ],
         ],
         if (!isResidence) ...[
           const SizedBox(height: Dimens.spacing),
@@ -370,8 +348,7 @@ class _Form extends StatelessWidget {
         const SizedBox(height: Dimens.spacing),
         _AvailabilityField(
           value: draft.availableFrom,
-          onChanged: (date) =>
-              _change(context, (d) => d.copyWith(availableFrom: date)),
+          onChanged: (date) => _change(context, (d) => d.copyWith(availableFrom: date)),
         ),
         if (isResidence) ...[
           const SizedBox(height: Dimens.spacingLg),
@@ -384,8 +361,7 @@ class _Form extends StatelessWidget {
           minLines: 4,
           maxLines: 8,
           initialValue: draft.description ?? '',
-          onChanged: (value) =>
-              _change(context, (d) => d.copyWith(description: value)),
+          onChanged: (value) => _change(context, (d) => d.copyWith(description: value)),
         ),
       ],
     );
@@ -417,8 +393,7 @@ class _RentalPeriodField extends StatelessWidget {
           value: value,
           isExpanded: true,
           items: [
-            for (final period in RentalPeriod.values)
-              DropdownMenuItem(value: period, child: Text(period.label(l10n))),
+            for (final period in RentalPeriod.values) DropdownMenuItem(value: period, child: Text(period.label(l10n))),
           ],
           onChanged: (period) => period == null ? null : onChanged(period),
         ),
@@ -438,19 +413,19 @@ class _HelpLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        children: [
-          Flexible(
-            child: Text(
-              label,
-              style: context.mboaText.label.copyWith(
-                fontWeight: FontWeight.w400,
-                color: context.mboaColors.textSecondary,
-              ),
-            ),
+    children: [
+      Flexible(
+        child: Text(
+          label,
+          style: context.mboaText.label.copyWith(
+            fontWeight: FontWeight.w400,
+            color: context.mboaColors.textSecondary,
           ),
-          FieldHelp(label: label, text: helpText),
-        ],
-      );
+        ),
+      ),
+      FieldHelp(label: label, text: helpText),
+    ],
+  );
 }
 
 class _PropertyTypeField extends StatelessWidget {
@@ -473,8 +448,7 @@ class _PropertyTypeField extends StatelessWidget {
           isDense: true,
           style: context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
           items: [
-            for (final type in PropertyType.values)
-              DropdownMenuItem(value: type, child: Text(_label(type))),
+            for (final type in PropertyType.values) DropdownMenuItem(value: type, child: Text(_label(type))),
           ],
           onChanged: (type) => type == null ? null : onChanged(type),
         ),
@@ -485,13 +459,13 @@ class _PropertyTypeField extends StatelessWidget {
   // Property types have no CDC-defined French labels yet; these mirror the
   // designs' vocabulary.
   String _label(PropertyType type) => switch (type) {
-        PropertyType.apartment => 'Appartement',
-        PropertyType.studio => 'Studio',
-        PropertyType.villa => 'Villa',
-        PropertyType.room => 'Chambre',
-        PropertyType.office => 'Bureau',
-        PropertyType.commercialSpace => 'Local commercial',
-      };
+    PropertyType.apartment => 'Appartement',
+    PropertyType.studio => 'Studio',
+    PropertyType.villa => 'Villa',
+    PropertyType.room => 'Chambre',
+    PropertyType.office => 'Bureau',
+    PropertyType.commercialSpace => 'Local commercial',
+  };
 }
 
 class _AvailabilityField extends StatelessWidget {

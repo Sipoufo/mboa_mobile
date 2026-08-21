@@ -18,15 +18,11 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockResidencesBloc extends MockBloc<ResidencesEvent, ResidencesState>
-    implements ResidencesBloc {}
+class MockResidencesBloc extends MockBloc<ResidencesEvent, ResidencesState> implements ResidencesBloc {}
 
-class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
-    implements ProProfileBloc {}
+class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState> implements ProProfileBloc {}
 
-class MockSubscriptionBloc
-    extends MockBloc<SubscriptionEvent, SubscriptionState>
-    implements SubscriptionBloc {}
+class MockSubscriptionBloc extends MockBloc<SubscriptionEvent, SubscriptionState> implements SubscriptionBloc {}
 
 void main() {
   late MockResidencesBloc residences;
@@ -65,8 +61,7 @@ void main() {
     profile = MockProProfileBloc();
     subscription = MockSubscriptionBloc();
 
-    when(() => residences.state)
-        .thenReturn(const ResidencesReady(items: [residence]));
+    when(() => residences.state).thenReturn(const ResidencesReady(items: [residence]));
     when(() => profile.state).thenReturn(
       const ProProfileReady(
         ProfileData(
@@ -138,11 +133,15 @@ void main() {
     expect(find.text('Brouillon'), findsOneWidget);
   });
 
-  testWidgets('shows the unit counts', (tester) async {
+  testWidgets('shows the unit counts, occupancy included', (tester) async {
     await pump(tester);
 
-    expect(find.textContaining('2 unités'), findsOneWidget);
-    expect(find.textContaining('1 publiées'), findsOneWidget);
+    // Three tiles: total, published, occupied. The last is counted from the
+    // units themselves — the payload has no field for it.
+    expect(find.text('Unités'), findsOneWidget);
+    expect(find.text('Publiées'), findsOneWidget);
+    expect(find.text('Occupées'), findsOneWidget);
+    expect(find.text('2'), findsOneWidget);
   });
 
   testWidgets('every unit row is tappable and offers an edit', (tester) async {
@@ -255,8 +254,7 @@ void main() {
       expect(find.text('Chambre 3'), findsNothing);
     });
 
-    testWidgets('the occupied tab shows rented and reserved units',
-        (tester) async {
+    testWidgets('the occupied tab shows rented and reserved units', (tester) async {
       await pump(tester);
       await tester.tap(find.text('Occupés'));
       await tester.pumpAndSettle();
@@ -318,15 +316,15 @@ void main() {
 
   group('searching the units', () {
     List<ResidenceUnit> many() => [
-          for (var i = 1; i <= 9; i++)
-            ResidenceUnit(
-              id: 'u$i',
-              title: i.isEven ? 'Studio $i' : 'Chambre $i',
-              status: AnnonceStatus.published,
-              propertyType: PropertyType.room,
-              price: 45000,
-            ),
-        ];
+      for (var i = 1; i <= 9; i++)
+        ResidenceUnit(
+          id: 'u$i',
+          title: i.isEven ? 'Studio $i' : 'Chambre $i',
+          status: AnnonceStatus.published,
+          propertyType: PropertyType.room,
+          price: 45000,
+        ),
+    ];
 
     setUp(() {
       when(() => residences.state).thenReturn(
@@ -344,8 +342,7 @@ void main() {
       );
     });
 
-    testWidgets('appears once there are enough units to sift through',
-        (tester) async {
+    testWidgets('appears once there are enough units to sift through', (tester) async {
       await pump(tester);
 
       expect(find.byIcon(LucideIcons.search), findsOneWidget);
@@ -372,8 +369,7 @@ void main() {
       expect(find.text('Chambre 1'), findsNothing);
     });
 
-    testWidgets('a search that finds nothing says so, quoting the query',
-        (tester) async {
+    testWidgets('a search that finds nothing says so, quoting the query', (tester) async {
       await pump(tester);
 
       await tester.enterText(find.byType(Input), 'penthouse');
@@ -395,5 +391,4 @@ void main() {
       expect(find.text('Chambre 1'), findsNothing);
     });
   });
-
 }

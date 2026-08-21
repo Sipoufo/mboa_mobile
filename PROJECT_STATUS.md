@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**510 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 391 ·
+**512 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 393 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -380,13 +380,15 @@ in `docs/backend-requests.md` §11.
   only while the pool holds one (`canWithdraw`); beyond that the screen says so.
   Logged as `backend-requests.md` §13 — a wrong guess cancels a tenant's booked
   visit.
-- **RM-M11-10 lives on the annonce**, not on the assignment: `ownerVisitsEnabled`
-  is a field on the listing, toggled from this same screen (the owner is a
-  visitor, so he belongs beside the agents). `PUT /annonces/{id}` **replaces the
-  listing whole**, so `setOwnerVisits` re-reads it first and `AnnonceDraft`
-  carries the flag — leaving it out of an ordinary edit would switch it off.
-  A residence has no such flag and shows no toggle; `CreateAnnonceRequest` has
-  none either, so it can only be enabled after the listing exists.
+- **RM-M11-10 lives on the annonce**, and so does its switch: *Je fais les
+  visites moi-même* is on **Détails du bien**, in the Visites card that also
+  links to this pool. It was briefly on both screens; two switches over two
+  blocs can disagree after a round trip, so the pool screen now only points at
+  it. `PUT /annonces/{id}` **replaces the listing whole**, so `setOwnerVisits`
+  re-reads it first and `AnnonceDraft` carries the flag — leaving it out of an
+  ordinary edit would switch it off. A residence has no such flag and shows no
+  toggle; `CreateAnnonceRequest` has none either, so it can only be enabled
+  after the listing exists.
 - **A residence offer reports what it skipped** (RM-M10bis-06). Swallowing
   `skipped[]` would claim the whole residence was offered when part was not.
 - **Origin is recorded, never a filter** (RM-M11-09): an agent's accepted
@@ -445,6 +447,29 @@ build down with them.
   contract), upload category `CONTRACT`, signalement target `REVIEW`,
   notifications N-18/19/20, and the whole **M08 contract** surface (20
   endpoints, 6 statuses, `awaiting` and `canSign` server-computed).
+
+### The two M10 detail screens
+Both follow the design's shape: a photo header carrying the essentials, then
+white cards with dark-green headings.
+
+- **Détails du bien** — header (rent, title, `30 m² · 6 pièces`, quartier,
+  status), then **Visites** (the RM-M11-10 switch + a row into the agent pool),
+  **Caractéristiques** (type, dimensions, pièces, salles de bain, meublé,
+  charges, disponibilité, description — the model carried all of it and the
+  screen showed none of it), the design's two empty cards, Équipements, and
+  Historique.
+- **Détails de la résidence** — same header, then three count tiles (total /
+  publiées / occupées, the last counted from the units since no field carries
+  it), the units filter and rows with an icon chip.
+- **A header with no photo is dark, not mint.** The overlaid text is white by
+  design and was unreadable over the pale placeholder.
+- Lifecycle actions moved into the app bar's `StatusActionsMenu` — the same
+  widget the lists and the residence use, so the publish gate has **one**
+  implementation. It gained `isResidenceUnit`, which was the one thing the
+  detail's own copy did differently.
+- `PropertyType.label(l10n)` replaced three hardcoded French `switch`es (form,
+  unit editor, residence detail).
+- Goldens: `annonce_detail.png`, `residence_detail.png`.
 
 ### The visit detail is built around the mutual confirmation
 The screen the agent opens at a gate leads with the hour, then draws RM-M07-05

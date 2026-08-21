@@ -11,6 +11,7 @@ import 'package:mboa_pro/features/annonces/models/annonce.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_draft.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
 import 'package:mboa_pro/features/annonces/ui/annonce_detail_page.dart';
+import 'package:mboa_pro/features/annonces/ui/widgets/status_actions_menu.dart';
 import 'package:mboa_pro/features/annonces/ui/annonce_form_page.dart';
 import 'package:mboa_pro/features/annonces/ui/annonces_list_page.dart';
 import 'package:mboa_pro/features/annonces/ui/residences_list_page.dart';
@@ -25,24 +26,17 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockAnnoncesBloc extends MockBloc<AnnoncesEvent, AnnoncesState>
-    implements AnnoncesBloc {}
+class MockAnnoncesBloc extends MockBloc<AnnoncesEvent, AnnoncesState> implements AnnoncesBloc {}
 
-class MockResidencesBloc extends MockBloc<ResidencesEvent, ResidencesState>
-    implements ResidencesBloc {}
+class MockResidencesBloc extends MockBloc<ResidencesEvent, ResidencesState> implements ResidencesBloc {}
 
-class MockAnnonceFormBloc
-    extends MockBloc<AnnonceFormEvent, AnnonceFormState>
-    implements AnnonceFormBloc {}
+class MockAnnonceFormBloc extends MockBloc<AnnonceFormEvent, AnnonceFormState> implements AnnonceFormBloc {}
 
-class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
-    implements ProProfileBloc {}
+class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState> implements ProProfileBloc {}
 
 class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
 
-class MockSubscriptionBloc
-    extends MockBloc<SubscriptionEvent, SubscriptionState>
-    implements SubscriptionBloc {}
+class MockSubscriptionBloc extends MockBloc<SubscriptionEvent, SubscriptionState> implements SubscriptionBloc {}
 
 /// Every M10 screen, pumped with exactly the blocs its route inherits.
 ///
@@ -147,11 +141,15 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.text('Appartement à louer'), findsOneWidget);
-    expect(find.textContaining('Aucune information'), findsWidgets);
   });
 
   testWidgets('AnnonceDetailPage offers the transitions for the status', (tester) async {
     await pump(tester, const AnnonceDetailPage(id: 'a'));
+
+    // They live in the app bar's menu now — the same one the lists use, so the
+    // publish gate has one implementation rather than a second one here.
+    await tester.tap(find.byType(StatusActionsMenu));
+    await tester.pumpAndSettle();
 
     // Published: reserve / rent / archive — but not publish.
     expect(find.text('Marquer réservé'), findsOneWidget);
@@ -166,8 +164,29 @@ void main() {
     await pump(tester, const AnnonceDetailPage(id: 'missing'), settle: false);
 
     expect(tester.takeException(), isNull);
-    verify(() => annonces.add(const AnnonceDetailRequested('missing')))
-        .called(1);
+    verify(() => annonces.add(const AnnonceDetailRequested('missing'))).called(1);
+  });
+
+  testWidgets('RM-M11-10 — the listing carries the owner-visits switch', (tester) async {
+    await pump(tester, const AnnonceDetailPage(id: 'a'));
+
+    // The pool belongs to a property, so the switch lives on the property —
+    // not buried in the portfolio's settings.
+    expect(find.text('Je fais les visites moi-même'), findsOneWidget);
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+
+    verify(
+      () => annonces.add(const AnnonceOwnerVisitsToggled('a', enabled: true)),
+    ).called(1);
+  });
+
+  testWidgets('the listing detail reaches its agent pool', (tester) async {
+    await pump(tester, const AnnonceDetailPage(id: 'a'));
+
+    // RM-M11-01 — several agents may cover it, and the tenant picks among them
+    // and the owner at booking time.
+    expect(find.text('Agents assignés'), findsOneWidget);
   });
 
   testWidgets('AnnonceDetailPage opens a residence unit', (tester) async {
@@ -231,8 +250,7 @@ void main() {
     await pump(
       tester,
       Builder(
-        builder: (context) =>
-            const AnnonceFormPage(kind: AnnonceKind.single).wrappedRoute(context),
+        builder: (context) => const AnnonceFormPage(kind: AnnonceKind.single).wrappedRoute(context),
       ),
     );
 

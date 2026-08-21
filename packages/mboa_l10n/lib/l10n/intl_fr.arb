@@ -562,6 +562,74 @@
   "@annonceFormErrorIncomplete": {},
   "annonceFormErrorSave": "Enregistrement impossible. Réessayez.",
   "@annonceFormErrorSave": {},
+  "propertyTypeApartment": "Appartement",
+  "@propertyTypeApartment": {
+    "description": "PropertyType.apartment."
+  },
+  "propertyTypeStudio": "Studio",
+  "@propertyTypeStudio": {
+    "description": "PropertyType.studio."
+  },
+  "propertyTypeVilla": "Villa",
+  "@propertyTypeVilla": {
+    "description": "PropertyType.villa."
+  },
+  "propertyTypeRoom": "Chambre",
+  "@propertyTypeRoom": {
+    "description": "PropertyType.room."
+  },
+  "propertyTypeOffice": "Bureau",
+  "@propertyTypeOffice": {
+    "description": "PropertyType.office."
+  },
+  "propertyTypeCommercialSpace": "Local commercial",
+  "@propertyTypeCommercialSpace": {
+    "description": "PropertyType.commercialSpace."
+  },
+  "commonYes": "Oui",
+  "@commonYes": {
+    "description": "Generic yes."
+  },
+  "commonNo": "Non",
+  "@commonNo": {
+    "description": "Generic no."
+  },
+  "annonceDetailFacts": "Caractéristiques",
+  "@annonceDetailFacts": {
+    "description": "The listing's own fields, which the detail did not show at all."
+  },
+  "annonceDetailVisits": "Visites",
+  "@annonceDetailVisits": {
+    "description": "M11 — who may show this property."
+  },
+  "annonceDetailAgents": "Agents assignés",
+  "@annonceDetailAgents": {
+    "description": "Opens the property's agent pool (RM-M11-01)."
+  },
+  "annonceDetailCharges": "Charges",
+  "@annonceDetailCharges": {
+    "description": "chargesIncluded."
+  },
+  "annonceDetailChargesIncluded": "Incluses",
+  "@annonceDetailChargesIncluded": {
+    "description": "chargesIncluded = true."
+  },
+  "annonceDetailChargesExtra": "En sus",
+  "@annonceDetailChargesExtra": {
+    "description": "chargesIncluded = false."
+  },
+  "residenceDetailUnitsLabel": "Total",
+  "@residenceDetailUnitsLabel": {
+    "description": "Residence count tile."
+  },
+  "residenceDetailPublishedLabel": "Publiées",
+  "@residenceDetailPublishedLabel": {
+    "description": "Residence count tile."
+  },
+  "residenceDetailOccupiedLabel": "Occupées",
+  "@residenceDetailOccupiedLabel": {
+    "description": "Residence count tile — reserved + rented."
+  },
   "annonceDetailTitle": "Details du bien",
   "@annonceDetailTitle": {},
   "annonceDetailStats": "Statistiques",
@@ -1105,6 +1173,10 @@
   "agentsOwnerVisitsBody": "Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.",
   "@agentsOwnerVisitsBody": {
     "description": "RM-M11-10 / RM-M15-06 — no weekly availability for an owner."
+  },
+  "agentsOwnerVisitsElsewhere": "Vos visites personnelles se règlent sur la fiche du bien.",
+  "@agentsOwnerVisitsElsewhere": {
+    "description": "RM-M11-10 — the switch lives on the listing; this points to it."
   },
   "agentsPoolTitle": "Agents assignés",
   "@agentsPoolTitle": {
