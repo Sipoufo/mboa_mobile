@@ -61,7 +61,7 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(page: HomeRoute.page, path: 'home', initial: true),
                 AutoRoute(page: PrestataireVisitsRoute.page, path: 'visits'),
-                AutoRoute(page: FinanceRoute.page, path: 'finance'),
+                AutoRoute(page: ContractsListRoute.page, path: 'contracts'),
               ],
             ),
 
@@ -83,6 +83,11 @@ class AppRouter extends RootStackRouter {
             // M07bis — one review screen for both personas; the agent opens it
             // from his visit detail, the prestataire from his own agenda.
             AutoRoute(page: VisitReviewRoute.page, path: 'visits/:id/review'),
+
+            // Contrat Mboa (M08). The list is a shell tab — the menu entry
+            // points at that tab rather than pushing a second copy of it.
+            AutoRoute(page: ContractFormRoute.page, path: 'contracts/form'),
+            AutoRoute(page: ContractDetailRoute.page, path: 'contracts/:id'),
             AutoRoute(page: AgentAvailabilityRoute.page, path: 'agent/availability'),
 
             // Agent assignment (M11).

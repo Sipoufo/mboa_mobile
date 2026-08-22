@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**533 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 414 ·
+**553 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 434 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -46,7 +46,8 @@
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
 | Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · pas de détail ni d'annulation côté API (§14) |
 | M07bis — visitor side (read, comment, PDF) | ✅ agent + prestataire · **writing is the client's, in mboa_user** |
-| M27 resident review · M08 contracts | ❌ not started (endpoints exist) |
+| M08 Contrat Mboa | ✅ **prestataire side** — draw up, send, answer objections, amend, sign, PDF, cancel · the tenant's half is in `mboa_user` |
+| M27 resident review | ❌ not started (endpoints exist) |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -492,6 +493,45 @@ white cards with dark-green headings.
 - `PropertyType.label(l10n)` replaced three hardcoded French `switch`es (form,
   unit editor, residence detail).
 - Goldens: `annonce_detail.png`, `residence_detail.png`.
+
+### M08 — the contract, and the two verdicts the app must not re-derive
+`awaiting` (RM-M08-09, whose move it is) and `canSign` (RM-M08-02 plus the
+acceptance) are **server-computed**, and every action answers with the contract
+as the server now holds it — so nothing is patched locally and no screen works
+out a status for itself. The list's first filter is *À vous de jouer*, which is
+a filter on `awaiting`, not on status: it is the landlord's actual question.
+
+- **A contract starts from a bien** (RM-M08-01/05: it *copies* the property, so
+  it survives either account's deletion). The form is seeded from the listing's
+  rent and period; the contracts list has **no "+"** and its empty state points
+  at Mes biens instead.
+- **Signing is typing the word.** `SignContractRequest` carries only a
+  `sessionId`, so Doc 10's "PIN ou biométrie" is entirely local; the sheet
+  restates the figures and needs *SIGNER* typed. RM-M08-03 makes it final —
+  not even an admin can undo it — which is not a single-tap decision.
+- **RM-M08-08** — amending is offered only while the status is amendable, and
+  an amendment counts as an answer to a contested contract: no second send.
+- **CE-M08-03** — every objection is shown with its answer, and the composer
+  says a reasoned refusal *is* an answer, or a landlord reads the screen as
+  "concede or stay stuck".
+- **CA-M08-02** — the exact address is withheld by the server until both
+  signatures are in; until then the header shows the quartier. Pinned.
+- **The PDF link is copied, not opened**: `url_launcher` is unwired everywhere
+  else, and a short-lived URL half-opened is worse than one on the clipboard.
+- **CE-M08-01 is a guess for now**: a tenant with no account must produce an
+  invitation and no contract, but the error code is undocumented, so the app
+  reads a 404 as that case. Logged as `backend-requests.md` §15.
+- **The tenant's half does not exist yet.** `accept`, `requestChanges` and the
+  second signature live in `mboa_user`, which has no M04/M05 — so no contract
+  can reach a PDF until that app grows. The models and `ContractRepository` are
+  in `mboa_shared` precisely for that.
+- `RentalPeriod` moved to `mboa_shared`: the listing sets it, the contract is
+  expressed in it (RM-M08-08), and the client app's search will bracket on it.
+- The **Finance tab is now the contracts list** (per product decision). Doc 10
+  reserves that surface for the owner's wallet (M24–M26); when that arrives it
+  needs its own home.
+
+Goldens: `contract_detail.png`.
 
 ### M07bis — the visitor reads the review, and may only add beside it
 One screen for both personas (`VisitReviewRoute`): the agent opens it from his

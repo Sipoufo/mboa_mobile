@@ -14,7 +14,6 @@ import '../bloc/residences_bloc.dart';
 import '../models/annonce.dart';
 import '../models/amenity.dart';
 import '../models/annonce_draft.dart';
-import '../models/rental_period.dart';
 import 'widgets/form_field_shell.dart';
 import 'widgets/form_text_field.dart';
 import 'widgets/location_field.dart';

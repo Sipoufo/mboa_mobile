@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../bloc/annonce_form_bloc.dart';
 import '../../models/annonce_draft.dart';
 import '../../models/annonce.dart';
-import '../../models/rental_period.dart';
 import 'form_field_shell.dart';
 import 'form_text_field.dart';
 

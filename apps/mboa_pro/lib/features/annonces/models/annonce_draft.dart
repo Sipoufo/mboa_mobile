@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 import 'annonce.dart';
 import 'amenity.dart';
-import 'rental_period.dart';
 
 /// Which of the two creation flows the form is running.
 enum AnnonceKind { single, residence }

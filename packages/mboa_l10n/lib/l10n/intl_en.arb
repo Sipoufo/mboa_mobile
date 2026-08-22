@@ -2,6 +2,279 @@
   "@@locale": "en",
   "appName": "Mboa",
   "appNamePro": "Mboa Pro",
+  "contractDetailTitle": "Mboa contract",
+  "@contractDetailTitle": {
+    "description": "M08 detail."
+  },
+  "contractTermsTitle": "Terms",
+  "@contractTermsTitle": {
+    "description": "The financial terms."
+  },
+  "contractPartiesTitle": "Parties",
+  "@contractPartiesTitle": {
+    "description": "Landlord, tenant, agent."
+  },
+  "contractChangesTitle": "Requested changes",
+  "@contractChangesTitle": {
+    "description": "CE-M08-03."
+  },
+  "contractSignaturesTitle": "Signatures",
+  "@contractSignaturesTitle": {
+    "description": "RM-M08-03."
+  },
+  "contractTermPrice": "Rent",
+  "@contractTermPrice": {
+    "description": "price + rentalPeriod."
+  },
+  "contractTermPeriod": "Period",
+  "@contractTermPeriod": {
+    "description": "rentalPeriod."
+  },
+  "contractTermDeposit": "Deposit",
+  "@contractTermDeposit": {
+    "description": "depositAmount."
+  },
+  "contractTermCharges": "Charges",
+  "@contractTermCharges": {
+    "description": "chargesIncluded."
+  },
+  "contractTermStart": "Start date",
+  "@contractTermStart": {
+    "description": "startDate."
+  },
+  "contractTermDuration": "Duration",
+  "@contractTermDuration": {
+    "description": "durationUnits."
+  },
+  "contractTermEnd": "End of tenancy",
+  "@contractTermEnd": {
+    "description": "endDate, derived."
+  },
+  "contractTermTacit": "Tacit renewal",
+  "@contractTermTacit": {
+    "description": "tacitRenewal."
+  },
+  "contractPartyPrestataire": "Landlord",
+  "@contractPartyPrestataire": {
+    "description": "Participant role."
+  },
+  "contractPartyTenant": "Tenant",
+  "@contractPartyTenant": {
+    "description": "Participant role."
+  },
+  "contractPartyAgent": "Agent who ran the visit",
+  "@contractPartyAgent": {
+    "description": "RM-M08-07."
+  },
+  "contractLocked": "Locked: no change is possible, not even by an administrator.",
+  "@contractLocked": {
+    "description": "RM-M08-03 / CA-M08-03."
+  },
+  "contractChangePending": "Objection awaiting your answer",
+  "@contractChangePending": {
+    "description": "CE-M08-03 — pending."
+  },
+  "contractChangeAnswered": "Objection answered",
+  "@contractChangeAnswered": {
+    "description": "CE-M08-03 — answered."
+  },
+  "contractChangeWithdrawn": "Objection withdrawn",
+  "@contractChangeWithdrawn": {
+    "description": "withdrawnAt is set."
+  },
+  "contractChangeAnswer": "Answer",
+  "@contractChangeAnswer": {
+    "description": "Answer one objection."
+  },
+  "contractChangeAnswerHelp": "Answer even if you change nothing: a reasoned refusal is an answer and stays in the file.",
+  "@contractChangeAnswerHelp": {
+    "description": "CE-M08-03."
+  },
+  "contractChangeAnswerSend": "Send the answer",
+  "@contractChangeAnswerSend": {
+    "description": "Submit."
+  },
+  "contractSend": "Send to the tenant",
+  "@contractSend": {
+    "description": "N-07."
+  },
+  "contractSign": "Sign",
+  "@contractSign": {
+    "description": "RM-M08-03."
+  },
+  "contractSignedByYou": "You have signed",
+  "@contractSignedByYou": {
+    "description": "Already signed by me."
+  },
+  "contractSignWord": "SIGN",
+  "@contractSignWord": {
+    "description": "The word to type; keep it upper-case."
+  },
+  "contractSignPrompt": "Type {word} to confirm",
+  "@contractSignPrompt": {
+    "description": "Signature confirmation.",
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "contractSignWarning": "Once both signatures are in, the contract is final: no change is possible.",
+  "@contractSignWarning": {
+    "description": "RM-M08-03."
+  },
+  "contractPdf": "Download the PDF",
+  "@contractPdf": {
+    "description": "CA-M08-01."
+  },
+  "contractPdfCopied": "PDF link copied",
+  "@contractPdfCopied": {
+    "description": "The URL is short-lived; url_launcher is unwired."
+  },
+  "contractAmend": "Amend the terms",
+  "@contractAmend": {
+    "description": "RM-M08-08."
+  },
+  "contractCancel": "Cancel the contract",
+  "@contractCancel": {
+    "description": "Either party, up to the second signature."
+  },
+  "contractCancelConfirm": "The contract will be cancelled for both parties. This cannot be undone.",
+  "@contractCancelConfirm": {
+    "description": "Cancel confirmation."
+  },
+  "contractActionFailed": "Action not possible right now.",
+  "@contractActionFailed": {
+    "description": "Generic failure."
+  },
+  "contractActionDone": "Contract updated",
+  "@contractActionDone": {
+    "description": "Generic success."
+  },
+  "contractSignatureMine": "Your signature",
+  "@contractSignatureMine": {
+    "description": "SignatureResponse.current."
+  },
+  "contractSignatureOther": "The tenant's signature",
+  "@contractSignatureOther": {
+    "description": "The other party's."
+  },
+  "contractFormTitleNew": "Draw up an Mboa contract",
+  "@contractFormTitleNew": {
+    "description": "RM-M08-01."
+  },
+  "contractFormTitleAmend": "Amend the terms",
+  "@contractFormTitleAmend": {
+    "description": "RM-M08-08."
+  },
+  "contractFormTenantTitle": "Tenant",
+  "@contractFormTenantTitle": {
+    "description": "Who the contract is with."
+  },
+  "contractFormTenantPhone": "Tenant's number",
+  "@contractFormTenantPhone": {
+    "description": "tenantPhone."
+  },
+  "contractFormTenantHelp": "If they have no Mboa account yet, an SMS invitation is sent and the contract is drawn up once they have joined.",
+  "@contractFormTenantHelp": {
+    "description": "CE-M08-01."
+  },
+  "contractFormSave": "Create the contract",
+  "@contractFormSave": {
+    "description": "Submit a new contract."
+  },
+  "contractSaved": "Contract saved",
+  "@contractSaved": {
+    "description": "Toast."
+  },
+  "contractTenantInvited": "This tenant has no Mboa account yet. An invitation has been sent; draw the contract up again once they have joined.",
+  "@contractTenantInvited": {
+    "description": "CE-M08-01."
+  },
+  "contractCreate": "Draw up an Mboa contract",
+  "@contractCreate": {
+    "description": "Entry point on a listing."
+  },
+  "contractsTitle": "Mboa contracts",
+  "@contractsTitle": {
+    "description": "M08 list."
+  },
+  "contractsFilterMine": "Your move",
+  "@contractsFilterMine": {
+    "description": "RM-M08-09 — awaiting = PRESTATAIRE or BOTH."
+  },
+  "contractsFilterAll": "All",
+  "@contractsFilterAll": {
+    "description": "No filter."
+  },
+  "contractsEmptyTitle": "No contract",
+  "@contractsEmptyTitle": {
+    "description": "Empty list."
+  },
+  "contractsEmptyBody": "A Contrat Mboa always starts from a property. Open the listing to draw one up.",
+  "@contractsEmptyBody": {
+    "description": "RM-M08-01."
+  },
+  "contractsEmptyFiltered": "No contract in this view.",
+  "@contractsEmptyFiltered": {
+    "description": "Filtered empty."
+  },
+  "contractTenantPending": "Tenant to be confirmed",
+  "@contractTenantPending": {
+    "description": "No tenant name yet."
+  },
+  "contractStatusDraft": "Draft",
+  "@contractStatusDraft": {
+    "description": "ContractStatus.draft."
+  },
+  "contractStatusSent": "Sent",
+  "@contractStatusSent": {
+    "description": "ContractStatus.sent."
+  },
+  "contractStatusChangesRequested": "Changes requested",
+  "@contractStatusChangesRequested": {
+    "description": "ContractStatus.changesRequested."
+  },
+  "contractStatusAccepted": "Accepted",
+  "@contractStatusAccepted": {
+    "description": "ContractStatus.accepted."
+  },
+  "contractStatusSigned": "Signed",
+  "@contractStatusSigned": {
+    "description": "ContractStatus.signed."
+  },
+  "contractStatusCancelled": "Cancelled",
+  "@contractStatusCancelled": {
+    "description": "ContractStatus.cancelled."
+  },
+  "contractAwaitingYou": "Waiting on you",
+  "@contractAwaitingYou": {
+    "description": "RM-M08-09 — awaiting = PRESTATAIRE."
+  },
+  "contractAwaitingTenant": "Waiting on the tenant",
+  "@contractAwaitingTenant": {
+    "description": "awaiting = TENANT."
+  },
+  "contractAwaitingBoth": "Waiting on both signatures",
+  "@contractAwaitingBoth": {
+    "description": "awaiting = BOTH."
+  },
+  "contractAwaitingNobody": "Nothing to do",
+  "@contractAwaitingNobody": {
+    "description": "awaiting = NOBODY."
+  },
+  "contractDurationValue": "{count} {period}",
+  "@contractDurationValue": {
+    "description": "RM-M08-08 — duration in the contract's own periodicity.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
   "commonErrorTitle": "Oops",

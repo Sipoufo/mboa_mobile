@@ -4,7 +4,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import 'annonce.dart';
 import 'annonce_status.dart';
-import 'rental_period.dart';
 
 /// A multi-unit property ("Bien Multiple").
 ///

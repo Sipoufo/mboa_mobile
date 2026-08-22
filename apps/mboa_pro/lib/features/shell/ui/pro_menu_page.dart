@@ -93,9 +93,9 @@ class ProMenuPage extends StatelessWidget {
                     onTap: () => _comingSoon(context),
                   ),
                   _MenuEntry(
-                    icon: LucideIcons.wallet,
-                    label: l10n.navFinance,
-                    onTap: () => _comingSoon(context),
+                    icon: LucideIcons.fileText,
+                    label: l10n.contractsTitle,
+                    onTap: () => _go(context, const ContractsListRoute()),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.bookmark,

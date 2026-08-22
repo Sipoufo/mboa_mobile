@@ -64,6 +64,656 @@ class I18n {
     return Intl.message('Mboa Pro', name: 'appNamePro', desc: '', args: []);
   }
 
+  /// `Contrat Mboa`
+  String get contractDetailTitle {
+    return Intl.message(
+      'Contrat Mboa',
+      name: 'contractDetailTitle',
+      desc: 'M08 detail.',
+      args: [],
+    );
+  }
+
+  /// `Termes`
+  String get contractTermsTitle {
+    return Intl.message(
+      'Termes',
+      name: 'contractTermsTitle',
+      desc: 'The financial terms.',
+      args: [],
+    );
+  }
+
+  /// `Parties`
+  String get contractPartiesTitle {
+    return Intl.message(
+      'Parties',
+      name: 'contractPartiesTitle',
+      desc: 'Landlord, tenant, agent.',
+      args: [],
+    );
+  }
+
+  /// `Modifications demandées`
+  String get contractChangesTitle {
+    return Intl.message(
+      'Modifications demandées',
+      name: 'contractChangesTitle',
+      desc: 'CE-M08-03.',
+      args: [],
+    );
+  }
+
+  /// `Signatures`
+  String get contractSignaturesTitle {
+    return Intl.message(
+      'Signatures',
+      name: 'contractSignaturesTitle',
+      desc: 'RM-M08-03.',
+      args: [],
+    );
+  }
+
+  /// `Loyer`
+  String get contractTermPrice {
+    return Intl.message(
+      'Loyer',
+      name: 'contractTermPrice',
+      desc: 'price + rentalPeriod.',
+      args: [],
+    );
+  }
+
+  /// `Périodicité`
+  String get contractTermPeriod {
+    return Intl.message(
+      'Périodicité',
+      name: 'contractTermPeriod',
+      desc: 'rentalPeriod.',
+      args: [],
+    );
+  }
+
+  /// `Caution`
+  String get contractTermDeposit {
+    return Intl.message(
+      'Caution',
+      name: 'contractTermDeposit',
+      desc: 'depositAmount (RM-M08-06 — a declaration in MVP).',
+      args: [],
+    );
+  }
+
+  /// `Charges`
+  String get contractTermCharges {
+    return Intl.message(
+      'Charges',
+      name: 'contractTermCharges',
+      desc: 'chargesIncluded.',
+      args: [],
+    );
+  }
+
+  /// `Date d'entrée`
+  String get contractTermStart {
+    return Intl.message(
+      'Date d\'entrée',
+      name: 'contractTermStart',
+      desc: 'startDate.',
+      args: [],
+    );
+  }
+
+  /// `Durée`
+  String get contractTermDuration {
+    return Intl.message(
+      'Durée',
+      name: 'contractTermDuration',
+      desc: 'durationUnits, in the contract\'s periodicity (RM-M08-08).',
+      args: [],
+    );
+  }
+
+  /// `Fin du bail`
+  String get contractTermEnd {
+    return Intl.message(
+      'Fin du bail',
+      name: 'contractTermEnd',
+      desc: 'endDate, derived.',
+      args: [],
+    );
+  }
+
+  /// `Reconduction tacite`
+  String get contractTermTacit {
+    return Intl.message(
+      'Reconduction tacite',
+      name: 'contractTermTacit',
+      desc: 'tacitRenewal.',
+      args: [],
+    );
+  }
+
+  /// `Bailleur`
+  String get contractPartyPrestataire {
+    return Intl.message(
+      'Bailleur',
+      name: 'contractPartyPrestataire',
+      desc: 'Participant role.',
+      args: [],
+    );
+  }
+
+  /// `Locataire`
+  String get contractPartyTenant {
+    return Intl.message(
+      'Locataire',
+      name: 'contractPartyTenant',
+      desc: 'Participant role.',
+      args: [],
+    );
+  }
+
+  /// `Agent ayant conduit la visite`
+  String get contractPartyAgent {
+    return Intl.message(
+      'Agent ayant conduit la visite',
+      name: 'contractPartyAgent',
+      desc: 'RM-M08-07.',
+      args: [],
+    );
+  }
+
+  /// `Contrat verrouillé : aucune modification n'est possible, même par un administrateur.`
+  String get contractLocked {
+    return Intl.message(
+      'Contrat verrouillé : aucune modification n\'est possible, même par un administrateur.',
+      name: 'contractLocked',
+      desc: 'RM-M08-03 / CA-M08-03.',
+      args: [],
+    );
+  }
+
+  /// `Objection en attente de votre réponse`
+  String get contractChangePending {
+    return Intl.message(
+      'Objection en attente de votre réponse',
+      name: 'contractChangePending',
+      desc: 'CE-M08-03 — pending.',
+      args: [],
+    );
+  }
+
+  /// `Objection traitée`
+  String get contractChangeAnswered {
+    return Intl.message(
+      'Objection traitée',
+      name: 'contractChangeAnswered',
+      desc: 'CE-M08-03 — answered.',
+      args: [],
+    );
+  }
+
+  /// `Objection retirée`
+  String get contractChangeWithdrawn {
+    return Intl.message(
+      'Objection retirée',
+      name: 'contractChangeWithdrawn',
+      desc: 'withdrawnAt is set.',
+      args: [],
+    );
+  }
+
+  /// `Répondre`
+  String get contractChangeAnswer {
+    return Intl.message(
+      'Répondre',
+      name: 'contractChangeAnswer',
+      desc: 'Answer one objection.',
+      args: [],
+    );
+  }
+
+  /// `Répondez même si vous ne modifiez rien : un refus motivé est une réponse et reste au dossier.`
+  String get contractChangeAnswerHelp {
+    return Intl.message(
+      'Répondez même si vous ne modifiez rien : un refus motivé est une réponse et reste au dossier.',
+      name: 'contractChangeAnswerHelp',
+      desc: 'CE-M08-03.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer la réponse`
+  String get contractChangeAnswerSend {
+    return Intl.message(
+      'Envoyer la réponse',
+      name: 'contractChangeAnswerSend',
+      desc: 'Submit.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer au locataire`
+  String get contractSend {
+    return Intl.message(
+      'Envoyer au locataire',
+      name: 'contractSend',
+      desc: 'N-07.',
+      args: [],
+    );
+  }
+
+  /// `Signer`
+  String get contractSign {
+    return Intl.message(
+      'Signer',
+      name: 'contractSign',
+      desc: 'RM-M08-03.',
+      args: [],
+    );
+  }
+
+  /// `Vous avez signé`
+  String get contractSignedByYou {
+    return Intl.message(
+      'Vous avez signé',
+      name: 'contractSignedByYou',
+      desc: 'Already signed by me.',
+      args: [],
+    );
+  }
+
+  /// `SIGNER`
+  String get contractSignWord {
+    return Intl.message(
+      'SIGNER',
+      name: 'contractSignWord',
+      desc: 'The word to type; keep it upper-case.',
+      args: [],
+    );
+  }
+
+  /// `Tapez {word} pour confirmer`
+  String contractSignPrompt(String word) {
+    return Intl.message(
+      'Tapez $word pour confirmer',
+      name: 'contractSignPrompt',
+      desc: 'Signature confirmation.',
+      args: [word],
+    );
+  }
+
+  /// `Une fois les deux signatures apposées, le contrat est définitif : plus aucune modification n'est possible.`
+  String get contractSignWarning {
+    return Intl.message(
+      'Une fois les deux signatures apposées, le contrat est définitif : plus aucune modification n\'est possible.',
+      name: 'contractSignWarning',
+      desc: 'RM-M08-03.',
+      args: [],
+    );
+  }
+
+  /// `Télécharger le PDF`
+  String get contractPdf {
+    return Intl.message(
+      'Télécharger le PDF',
+      name: 'contractPdf',
+      desc: 'CA-M08-01.',
+      args: [],
+    );
+  }
+
+  /// `Lien du PDF copié`
+  String get contractPdfCopied {
+    return Intl.message(
+      'Lien du PDF copié',
+      name: 'contractPdfCopied',
+      desc: 'The URL is short-lived; url_launcher is unwired.',
+      args: [],
+    );
+  }
+
+  /// `Modifier les termes`
+  String get contractAmend {
+    return Intl.message(
+      'Modifier les termes',
+      name: 'contractAmend',
+      desc: 'RM-M08-08.',
+      args: [],
+    );
+  }
+
+  /// `Annuler le contrat`
+  String get contractCancel {
+    return Intl.message(
+      'Annuler le contrat',
+      name: 'contractCancel',
+      desc: 'Either party, up to the second signature.',
+      args: [],
+    );
+  }
+
+  /// `Le contrat sera annulé pour les deux parties. Cette action est définitive.`
+  String get contractCancelConfirm {
+    return Intl.message(
+      'Le contrat sera annulé pour les deux parties. Cette action est définitive.',
+      name: 'contractCancelConfirm',
+      desc: 'Cancel confirmation.',
+      args: [],
+    );
+  }
+
+  /// `Action impossible pour le moment.`
+  String get contractActionFailed {
+    return Intl.message(
+      'Action impossible pour le moment.',
+      name: 'contractActionFailed',
+      desc: 'Generic failure.',
+      args: [],
+    );
+  }
+
+  /// `Contrat mis à jour`
+  String get contractActionDone {
+    return Intl.message(
+      'Contrat mis à jour',
+      name: 'contractActionDone',
+      desc: 'Generic success.',
+      args: [],
+    );
+  }
+
+  /// `Votre signature`
+  String get contractSignatureMine {
+    return Intl.message(
+      'Votre signature',
+      name: 'contractSignatureMine',
+      desc: 'SignatureResponse.current.',
+      args: [],
+    );
+  }
+
+  /// `Signature du locataire`
+  String get contractSignatureOther {
+    return Intl.message(
+      'Signature du locataire',
+      name: 'contractSignatureOther',
+      desc: 'The other party\'s.',
+      args: [],
+    );
+  }
+
+  /// `Créer un Contrat Mboa`
+  String get contractFormTitleNew {
+    return Intl.message(
+      'Créer un Contrat Mboa',
+      name: 'contractFormTitleNew',
+      desc: 'RM-M08-01.',
+      args: [],
+    );
+  }
+
+  /// `Modifier les termes`
+  String get contractFormTitleAmend {
+    return Intl.message(
+      'Modifier les termes',
+      name: 'contractFormTitleAmend',
+      desc: 'RM-M08-08.',
+      args: [],
+    );
+  }
+
+  /// `Locataire`
+  String get contractFormTenantTitle {
+    return Intl.message(
+      'Locataire',
+      name: 'contractFormTenantTitle',
+      desc: 'Who the contract is with.',
+      args: [],
+    );
+  }
+
+  /// `Numéro du locataire`
+  String get contractFormTenantPhone {
+    return Intl.message(
+      'Numéro du locataire',
+      name: 'contractFormTenantPhone',
+      desc: 'tenantPhone.',
+      args: [],
+    );
+  }
+
+  /// `S'il n'a pas encore de compte Mboa, une invitation lui sera envoyée par SMS et le contrat sera à établir une fois qu'il l'aura acceptée.`
+  String get contractFormTenantHelp {
+    return Intl.message(
+      'S\'il n\'a pas encore de compte Mboa, une invitation lui sera envoyée par SMS et le contrat sera à établir une fois qu\'il l\'aura acceptée.',
+      name: 'contractFormTenantHelp',
+      desc: 'CE-M08-01.',
+      args: [],
+    );
+  }
+
+  /// `Créer le contrat`
+  String get contractFormSave {
+    return Intl.message(
+      'Créer le contrat',
+      name: 'contractFormSave',
+      desc: 'Submit a new contract.',
+      args: [],
+    );
+  }
+
+  /// `Contrat enregistré`
+  String get contractSaved {
+    return Intl.message(
+      'Contrat enregistré',
+      name: 'contractSaved',
+      desc: 'Toast.',
+      args: [],
+    );
+  }
+
+  /// `Ce locataire n'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprenez le contrat une fois qu'il aura rejoint.`
+  String get contractTenantInvited {
+    return Intl.message(
+      'Ce locataire n\'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprenez le contrat une fois qu\'il aura rejoint.',
+      name: 'contractTenantInvited',
+      desc: 'CE-M08-01.',
+      args: [],
+    );
+  }
+
+  /// `Créer un Contrat Mboa`
+  String get contractCreate {
+    return Intl.message(
+      'Créer un Contrat Mboa',
+      name: 'contractCreate',
+      desc: 'Entry point on a listing.',
+      args: [],
+    );
+  }
+
+  /// `Contrats Mboa`
+  String get contractsTitle {
+    return Intl.message(
+      'Contrats Mboa',
+      name: 'contractsTitle',
+      desc: 'M08 list.',
+      args: [],
+    );
+  }
+
+  /// `À vous de jouer`
+  String get contractsFilterMine {
+    return Intl.message(
+      'À vous de jouer',
+      name: 'contractsFilterMine',
+      desc: 'RM-M08-09 — awaiting = PRESTATAIRE or BOTH.',
+      args: [],
+    );
+  }
+
+  /// `Tous`
+  String get contractsFilterAll {
+    return Intl.message(
+      'Tous',
+      name: 'contractsFilterAll',
+      desc: 'No filter.',
+      args: [],
+    );
+  }
+
+  /// `Aucun contrat`
+  String get contractsEmptyTitle {
+    return Intl.message(
+      'Aucun contrat',
+      name: 'contractsEmptyTitle',
+      desc: 'Empty list.',
+      args: [],
+    );
+  }
+
+  /// `Un Contrat Mboa part toujours d'un bien. Ouvrez la fiche du bien concerné pour en rédiger un.`
+  String get contractsEmptyBody {
+    return Intl.message(
+      'Un Contrat Mboa part toujours d\'un bien. Ouvrez la fiche du bien concerné pour en rédiger un.',
+      name: 'contractsEmptyBody',
+      desc: 'RM-M08-01.',
+      args: [],
+    );
+  }
+
+  /// `Aucun contrat dans cette vue.`
+  String get contractsEmptyFiltered {
+    return Intl.message(
+      'Aucun contrat dans cette vue.',
+      name: 'contractsEmptyFiltered',
+      desc: 'Filtered empty.',
+      args: [],
+    );
+  }
+
+  /// `Locataire à confirmer`
+  String get contractTenantPending {
+    return Intl.message(
+      'Locataire à confirmer',
+      name: 'contractTenantPending',
+      desc: 'No tenant name yet.',
+      args: [],
+    );
+  }
+
+  /// `Brouillon`
+  String get contractStatusDraft {
+    return Intl.message(
+      'Brouillon',
+      name: 'contractStatusDraft',
+      desc: 'ContractStatus.draft.',
+      args: [],
+    );
+  }
+
+  /// `Envoyé`
+  String get contractStatusSent {
+    return Intl.message(
+      'Envoyé',
+      name: 'contractStatusSent',
+      desc: 'ContractStatus.sent.',
+      args: [],
+    );
+  }
+
+  /// `Modifications demandées`
+  String get contractStatusChangesRequested {
+    return Intl.message(
+      'Modifications demandées',
+      name: 'contractStatusChangesRequested',
+      desc: 'ContractStatus.changesRequested.',
+      args: [],
+    );
+  }
+
+  /// `Accepté`
+  String get contractStatusAccepted {
+    return Intl.message(
+      'Accepté',
+      name: 'contractStatusAccepted',
+      desc: 'ContractStatus.accepted.',
+      args: [],
+    );
+  }
+
+  /// `Signé`
+  String get contractStatusSigned {
+    return Intl.message(
+      'Signé',
+      name: 'contractStatusSigned',
+      desc: 'ContractStatus.signed.',
+      args: [],
+    );
+  }
+
+  /// `Annulé`
+  String get contractStatusCancelled {
+    return Intl.message(
+      'Annulé',
+      name: 'contractStatusCancelled',
+      desc: 'ContractStatus.cancelled.',
+      args: [],
+    );
+  }
+
+  /// `En attente de votre action`
+  String get contractAwaitingYou {
+    return Intl.message(
+      'En attente de votre action',
+      name: 'contractAwaitingYou',
+      desc: 'RM-M08-09 — awaiting = PRESTATAIRE.',
+      args: [],
+    );
+  }
+
+  /// `En attente du locataire`
+  String get contractAwaitingTenant {
+    return Intl.message(
+      'En attente du locataire',
+      name: 'contractAwaitingTenant',
+      desc: 'awaiting = TENANT.',
+      args: [],
+    );
+  }
+
+  /// `En attente des deux signatures`
+  String get contractAwaitingBoth {
+    return Intl.message(
+      'En attente des deux signatures',
+      name: 'contractAwaitingBoth',
+      desc: 'awaiting = BOTH.',
+      args: [],
+    );
+  }
+
+  /// `Rien à faire`
+  String get contractAwaitingNobody {
+    return Intl.message(
+      'Rien à faire',
+      name: 'contractAwaitingNobody',
+      desc: 'awaiting = NOBODY.',
+      args: [],
+    );
+  }
+
+  /// `{count} {period}`
+  String contractDurationValue(int count, String period) {
+    return Intl.message(
+      '$count $period',
+      name: 'contractDurationValue',
+      desc: 'RM-M08-08 — duration in the contract\'s own periodicity.',
+      args: [count, period],
+    );
+  }
+
   /// `Réessayer`
   String get commonRetry {
     return Intl.message('Réessayer', name: 'commonRetry', desc: '', args: []);

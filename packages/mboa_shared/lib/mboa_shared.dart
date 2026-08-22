@@ -20,6 +20,15 @@ export 'src/features/notifications/data/notifications_repository.dart';
 export 'src/features/notifications/models/push_message.dart';
 export 'src/features/notifications/notifications_background.dart';
 
+// Contracts (M08) — the same endpoints serve both parties, so the model and
+// the repository are shared; each app builds its own screens on top.
+export 'src/features/contracts/data/contract_repository.dart';
+export 'src/features/contracts/models/contract.dart';
+
+// Listings — the rent's period (RM-M10-09), read by the listing form, the
+// contract (RM-M08-08) and, later, the client app's search brackets.
+export 'src/features/listings/models/rental_period.dart';
+
 // Visits (M07 / M16) — the list model both apps read; the client, the agent and
 // the prestataire visiting his own property are served the same DTO.
 export 'src/features/visits/bloc/visits_agenda_bloc.dart';

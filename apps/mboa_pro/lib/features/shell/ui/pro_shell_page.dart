@@ -33,7 +33,7 @@ class _ProShellPageState extends State<ProShellPage> {
     final l10n = I18n.of(context);
 
     return AutoTabsRouter(
-      routes: const [HomeRoute(), PrestataireVisitsRoute(), FinanceRoute()],
+      routes: const [HomeRoute(), PrestataireVisitsRoute(), ContractsListRoute()],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
 
@@ -54,7 +54,10 @@ class _ProShellPageState extends State<ProShellPage> {
                   icon: LucideIcons.calendarCheck,
                   label: l10n.visitsMineTitle,
                 ),
-                ProBottomNavItem(icon: LucideIcons.wallet, label: l10n.navFinance),
+                ProBottomNavItem(
+                  icon: LucideIcons.fileText,
+                  label: l10n.contractsTitle,
+                ),
                 ProBottomNavItem(icon: LucideIcons.layoutGrid, label: l10n.navMenu),
               ],
             ),

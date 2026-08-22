@@ -83,7 +83,7 @@ void main() {
 
       expect(
         tabs.map((r) => r.name),
-        [HomeRoute.name, PrestataireVisitsRoute.name, FinanceRoute.name],
+        [HomeRoute.name, PrestataireVisitsRoute.name, ContractsListRoute.name],
       );
       expect(tabs.first.initial, isTrue);
     });

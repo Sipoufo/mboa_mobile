@@ -433,3 +433,27 @@ which is itself worth a line in M07.
 **Workaround shipped:** the agenda shows what the list gives — hour, property,
 status, and his own presence confirmation. No contact affordance is drawn at
 all, rather than an empty one.
+
+---
+
+## 15. M08 — the error code for a tenant with no Mboa account
+
+**Raised 2026-08-22**, building the prestataire's side of the Contrat Mboa.
+
+CE-M08-01 says a contract for a tenant who has no account must **not** be
+created: the server sends an SMS invitation and the prestataire draws it up
+again once the invitation is accepted. That is a wait, not a mistake, and the
+screen has to say so in those words — "invitation envoyée", not "action
+impossible".
+
+`POST /api/v1/contracts` documents `400`, `404` and `409` without naming the
+codes behind them, and `api/docs/api-error-codes.md` has nothing for M08 yet.
+The app currently reads a **404 as the invitation case** and everything else as
+a refusal, which is a guess: a 404 on a deleted listing would produce the wrong
+sentence.
+
+**Ask:** the `error` code for this case (`TENANT_NOT_FOUND`, or whatever it is),
+and the codes for the other M08 refusals — amending an accepted contract
+(RM-M08-08), signing before both accounts are verified (RM-M08-02), a second
+signature on a locked contract (RM-M08-03). Each needs different words, and the
+app must not branch on `message`.

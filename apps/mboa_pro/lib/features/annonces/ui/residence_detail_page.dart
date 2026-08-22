@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/residences_bloc.dart';
@@ -10,7 +11,6 @@ import '../models/annonce.dart';
 import '../models/residence.dart';
 import '../models/annonce_draft.dart';
 import '../../../app/router/app_router.gr.dart';
-import '../models/rental_period.dart';
 import 'residences_list_page.dart';
 import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';

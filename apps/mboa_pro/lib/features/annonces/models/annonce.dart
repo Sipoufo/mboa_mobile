@@ -5,7 +5,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import 'amenity.dart';
 import 'annonce_status.dart';
-import 'rental_period.dart';
 
 /// Kind of property (CDC M10 "Type de bien").
 enum PropertyType {

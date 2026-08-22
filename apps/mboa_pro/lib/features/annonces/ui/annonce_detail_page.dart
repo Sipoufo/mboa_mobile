@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../../assignments/models/assignment.dart';
 import '../bloc/annonces_bloc.dart';
 import '../models/annonce.dart';
-import '../models/rental_period.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/status_actions_menu.dart';
 
@@ -113,6 +113,12 @@ class _Body extends StatelessWidget {
         const SizedBox(height: Dimens.spacing),
 
         _FactsCard(annonce: annonce),
+        const SizedBox(height: Dimens.spacing),
+
+        // RM-M08-01 — only a prestataire initiates, and always from a bien:
+        // the contract copies the property it carries (RM-M08-05), so this is
+        // where one starts.
+        _ContractCard(annonce: annonce),
         const SizedBox(height: Dimens.spacing),
 
         IntrinsicHeight(
@@ -424,6 +430,50 @@ class _FactsCard extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// The way into a Contrat Mboa for this property (M08).
+class _ContractCard extends StatelessWidget {
+  const _ContractCard({required this.annonce});
+
+  final Annonce annonce;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return _SectionCard(
+      title: l10n.contractsTitle,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.radius),
+        onTap: () => context.router.push(
+          ContractFormRoute(annonceId: annonce.id),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              LucideIcons.fileSignature,
+              size: Dimens.icon,
+              color: colors.primary,
+            ),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: Text(
+                l10n.contractCreate,
+                style: context.mboaText.label.copyWith(color: colors.ink),
+              ),
+            ),
+            Icon(
+              LucideIcons.chevronRight,
+              size: Dimens.icon,
+              color: colors.textTertiary,
+            ),
+          ],
+        ),
       ),
     );
   }

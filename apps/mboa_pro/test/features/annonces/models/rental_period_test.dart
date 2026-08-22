@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_pro/features/annonces/models/annonce.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_draft.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
-import 'package:mboa_pro/features/annonces/models/rental_period.dart';
 
 /// RM-M10-09 — a listing carries a price *and its period*.
 ///

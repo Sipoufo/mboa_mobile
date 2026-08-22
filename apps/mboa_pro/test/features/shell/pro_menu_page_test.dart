@@ -36,7 +36,7 @@ void main() {
       RoleGateRoute.name, // /app landing
       HomeRoute.name, // shell tab
       PrestataireVisitsRoute.name, // shell tab
-      FinanceRoute.name, // shell tab
+      ContractsListRoute.name, // shell tab
       AgentVisitsRoute.name, // agent shell tab
       AgentMissionsRoute.name, // agent shell tab
       AgentProfileRoute.name, // agent shell tab

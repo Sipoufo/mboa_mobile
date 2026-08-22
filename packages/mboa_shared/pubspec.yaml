@@ -30,6 +30,8 @@ dependencies:
   # SessionRepository inspects DioException types for offline-aware validation;
   # MediaUploader also uses a bare Dio for direct PUTs to R2 presigned URLs.
   dio: ^5.7.0
+  # Builders for the generated request DTOs (M08's contested terms).
+  built_collection: '>=5.1.1 <6.0.0'
   # Media capture + compression for the shared MediaUploader (KYC docs, photos).
   image_picker: ^1.1.2
   flutter_image_compress: ^2.3.0
@@ -48,4 +50,3 @@ dev_dependencies:
   # Test-only: build DTOs (hidden from the mboa_core barrel) to stub responses.
   api_client:
     path: ../api_client
-  built_collection: '>=5.1.1 <6.0.0'

@@ -9,6 +9,9 @@ import '../../features/assignments/bloc/property_agent_bloc.dart';
 import '../../features/assignments/data/agent_mission_repository.dart';
 import '../../features/assignments/data/assignment_repository.dart';
 import '../../features/annonces/data/location_capture.dart';
+import '../../features/contracts/bloc/contract_detail_bloc.dart';
+import '../../features/contracts/bloc/contract_form_bloc.dart';
+import '../../features/contracts/bloc/contracts_bloc.dart';
 import '../../features/visits/bloc/prestataire_visits_bloc.dart';
 import '../../features/visits/bloc/visit_review_bloc.dart';
 import '../../features/visits/bloc/visits_agenda_blocs.dart';
@@ -224,6 +227,20 @@ void registerAppModule() {
   getIt.registerFactory<PrestataireAgendaBloc>(
     () => PrestataireAgendaBloc(source: getIt<PrestataireVisitRepository>()),
   );
+  // --- Contracts (M08) ---
+  getIt.registerLazySingleton<ContractRepository>(
+    () => ContractRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<ContractsBloc>(
+    () => ContractsBloc(repository: getIt<ContractRepository>()),
+  );
+  getIt.registerFactory<ContractDetailBloc>(
+    () => ContractDetailBloc(repository: getIt<ContractRepository>()),
+  );
+  getIt.registerFactory<ContractFormBloc>(
+    () => ContractFormBloc(repository: getIt<ContractRepository>()),
+  );
+
   // M07bis — the client's review, read by whoever carried the visit out.
   getIt.registerLazySingleton<VisitReviewRepository>(
     () => VisitReviewRepository(dioClient: getIt<DioClient>()),

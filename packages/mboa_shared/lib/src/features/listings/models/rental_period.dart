@@ -66,6 +66,35 @@ enum RentalPeriod {
         RentalPeriod.year => UpdateAnnonceRequestRentalPeriodEnum.YEAR,
       };
 
+  /// The same period as a contract's (M08). A bail is expressed in the
+  /// property's own periodicity — RM-M08-08 — so this is the listing's value,
+  /// not a second scale.
+  static RentalPeriod fromContract(ContractResponseRentalPeriodEnum? value) =>
+      switch (value) {
+        ContractResponseRentalPeriodEnum.DAY => RentalPeriod.day,
+        ContractResponseRentalPeriodEnum.WEEK => RentalPeriod.week,
+        ContractResponseRentalPeriodEnum.MONTH => RentalPeriod.month,
+        ContractResponseRentalPeriodEnum.QUARTER => RentalPeriod.quarter,
+        ContractResponseRentalPeriodEnum.YEAR => RentalPeriod.year,
+        _ => fallback,
+      };
+
+  CreateContractRequestRentalPeriodEnum get asContractCreate => switch (this) {
+        RentalPeriod.day => CreateContractRequestRentalPeriodEnum.DAY,
+        RentalPeriod.week => CreateContractRequestRentalPeriodEnum.WEEK,
+        RentalPeriod.month => CreateContractRequestRentalPeriodEnum.MONTH,
+        RentalPeriod.quarter => CreateContractRequestRentalPeriodEnum.QUARTER,
+        RentalPeriod.year => CreateContractRequestRentalPeriodEnum.YEAR,
+      };
+
+  UpdateContractRequestRentalPeriodEnum get asContractUpdate => switch (this) {
+        RentalPeriod.day => UpdateContractRequestRentalPeriodEnum.DAY,
+        RentalPeriod.week => UpdateContractRequestRentalPeriodEnum.WEEK,
+        RentalPeriod.month => UpdateContractRequestRentalPeriodEnum.MONTH,
+        RentalPeriod.quarter => UpdateContractRequestRentalPeriodEnum.QUARTER,
+        RentalPeriod.year => UpdateContractRequestRentalPeriodEnum.YEAR,
+      };
+
   UnitGroupRentalPeriodEnum get asUnitGroup => switch (this) {
         RentalPeriod.day => UnitGroupRentalPeriodEnum.DAY,
         RentalPeriod.week => UnitGroupRentalPeriodEnum.WEEK,

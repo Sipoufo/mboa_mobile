@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../models/annonce.dart';
 import '../../models/annonce_status.dart';
-import '../../models/rental_period.dart';
 import 'annonce_status_chip.dart';
 import 'status_actions_menu.dart';
 
