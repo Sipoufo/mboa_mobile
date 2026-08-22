@@ -98,6 +98,46 @@
   "profileTypeAgence": "Agence",
   "profileTypePromoteur": "Promoteur",
   "profileMainCity": "Ville principale",
+  "profileSectionIdentity": "Identité",
+  "@profileSectionIdentity": {
+    "description": "Edit form — the person."
+  },
+  "profileSectionBusiness": "Activité",
+  "@profileSectionBusiness": {
+    "description": "Edit form — the business (prestataire only)."
+  },
+  "profileRegistrationNumber": "N° CNI ou RCCM",
+  "@profileRegistrationNumber": {
+    "description": "PrestataireProfileResponse.registrationNumber."
+  },
+  "profileRegistrationNumberHint": "Ex. RC/DLA/2024/B/1234",
+  "@profileRegistrationNumberHint": {
+    "description": "Placeholder."
+  },
+  "profileRegistrationNumberHelp": "Figure sur le Contrat Mboa, à côté de la pièce d'identité du locataire.",
+  "@profileRegistrationNumberHelp": {
+    "description": "M08 — why it is asked."
+  },
+  "profileIncompleteTitle": "Profil incomplet",
+  "@profileIncompleteTitle": {
+    "description": "RM-M10-01 — publishing is blocked until it is complete."
+  },
+  "profileIncompleteBody": "Complétez votre profil pour pouvoir publier vos biens.",
+  "@profileIncompleteBody": {
+    "description": "RM-M10-01."
+  },
+  "profileIncompleteAction": "Compléter",
+  "@profileIncompleteAction": {
+    "description": "CTA to the edit form."
+  },
+  "profileBusinessTitle": "Mon activité",
+  "@profileBusinessTitle": {
+    "description": "Hub card — the business identity."
+  },
+  "profileBusinessMissing": "À renseigner",
+  "@profileBusinessMissing": {
+    "description": "A business field the profile does not carry yet."
+  },
   "profileSave": "Enregistrer",
   "profileSaved": "Profil mis à jour",
   "profileLoadError": "Impossible de charger le profil.",

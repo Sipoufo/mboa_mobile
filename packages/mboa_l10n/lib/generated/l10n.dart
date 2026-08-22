@@ -814,6 +814,106 @@ class I18n {
     );
   }
 
+  /// `Identité`
+  String get profileSectionIdentity {
+    return Intl.message(
+      'Identité',
+      name: 'profileSectionIdentity',
+      desc: 'Edit form — the person.',
+      args: [],
+    );
+  }
+
+  /// `Activité`
+  String get profileSectionBusiness {
+    return Intl.message(
+      'Activité',
+      name: 'profileSectionBusiness',
+      desc: 'Edit form — the business (prestataire only).',
+      args: [],
+    );
+  }
+
+  /// `N° CNI ou RCCM`
+  String get profileRegistrationNumber {
+    return Intl.message(
+      'N° CNI ou RCCM',
+      name: 'profileRegistrationNumber',
+      desc: 'PrestataireProfileResponse.registrationNumber.',
+      args: [],
+    );
+  }
+
+  /// `Ex. RC/DLA/2024/B/1234`
+  String get profileRegistrationNumberHint {
+    return Intl.message(
+      'Ex. RC/DLA/2024/B/1234',
+      name: 'profileRegistrationNumberHint',
+      desc: 'Placeholder.',
+      args: [],
+    );
+  }
+
+  /// `Figure sur le Contrat Mboa, à côté de la pièce d'identité du locataire.`
+  String get profileRegistrationNumberHelp {
+    return Intl.message(
+      'Figure sur le Contrat Mboa, à côté de la pièce d\'identité du locataire.',
+      name: 'profileRegistrationNumberHelp',
+      desc: 'M08 — why it is asked.',
+      args: [],
+    );
+  }
+
+  /// `Profil incomplet`
+  String get profileIncompleteTitle {
+    return Intl.message(
+      'Profil incomplet',
+      name: 'profileIncompleteTitle',
+      desc: 'RM-M10-01 — publishing is blocked until it is complete.',
+      args: [],
+    );
+  }
+
+  /// `Complétez votre profil pour pouvoir publier vos biens.`
+  String get profileIncompleteBody {
+    return Intl.message(
+      'Complétez votre profil pour pouvoir publier vos biens.',
+      name: 'profileIncompleteBody',
+      desc: 'RM-M10-01.',
+      args: [],
+    );
+  }
+
+  /// `Compléter`
+  String get profileIncompleteAction {
+    return Intl.message(
+      'Compléter',
+      name: 'profileIncompleteAction',
+      desc: 'CTA to the edit form.',
+      args: [],
+    );
+  }
+
+  /// `Mon activité`
+  String get profileBusinessTitle {
+    return Intl.message(
+      'Mon activité',
+      name: 'profileBusinessTitle',
+      desc: 'Hub card — the business identity.',
+      args: [],
+    );
+  }
+
+  /// `À renseigner`
+  String get profileBusinessMissing {
+    return Intl.message(
+      'À renseigner',
+      name: 'profileBusinessMissing',
+      desc: 'A business field the profile does not carry yet.',
+      args: [],
+    );
+  }
+
   /// `Enregistrer`
   String get profileSave {
     return Intl.message('Enregistrer', name: 'profileSave', desc: '', args: []);

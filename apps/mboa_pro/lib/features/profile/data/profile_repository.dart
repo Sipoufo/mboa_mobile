@@ -48,6 +48,7 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
         mainCityId: prestataire?.mainCityId,
         type: PrestataireType.fromResponse(prestataire?.type),
         logoObjectKey: prestataire?.logoObjectKey,
+        registrationNumber: prestataire?.registrationNumber,
         profileComplete: prestataire?.profileComplete,
       );
     }
@@ -84,6 +85,7 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
             updatePrestataireProfileRequest: UpdatePrestataireProfileRequest((b) => b
               ..displayName = edit.displayName
               ..mainCityId = edit.mainCityId
+              ..registrationNumber = edit.registrationNumber
               ..type = edit.type?.updateValue),
           );
     } else if (edit.isAgent) {
@@ -116,6 +118,10 @@ class ProProfileRepository implements ProfileRepository<ProfileData, ProfileEdit
               ..logoObjectKey = objectKey
               ..displayName = current?.displayName
               ..mainCityId = current?.mainCityId
+              // Re-sent like the rest: partial-update semantics are an
+              // assumption here, and omitting a field would wipe it to set an
+              // avatar. The contract's identity line is not worth that risk.
+              ..registrationNumber = current?.registrationNumber
               ..type = PrestataireType.fromResponse(current?.type)?.updateValue),
           );
       return load();

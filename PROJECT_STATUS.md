@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**512 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 393 ·
+**518 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 399 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -220,6 +220,27 @@ data**. They land with M12/M05, M08, M16, M04.
 `DashboardStats` models them nullable and the UI renders "Bientôt". The backend
 explicitly endorsed this over fabricating zeroes. Tier-gated metrics show the
 RM-M14-02 blur + upgrade CTA, which *is* real behaviour.
+
+### The Profil hub shows the business, and says when it is incomplete
+Two things the screen held and never displayed: **which business the account
+speaks for** (displayName + type under the avatar, ville principale and
+registration in a *Mon activité* card) and **RM-M10-01's verdict**. The
+completeness rule was enforced only at publish time, so the first a prestataire
+heard of an incomplete profile was a refusal on a listing he had just written;
+the hub now carries a banner into the edit form while `isProfileComplete` is
+false. A missing business field reads "À renseigner", not blank.
+
+The design's lapped white sheet is real now — rounded corners drawn **over** the
+green band, the avatar astride the seam.
+
+**`registrationNumber` (CNI/RCCM) is wired** — model, edit form (under an
+*Activité* heading, with a line saying the Contrat Mboa prints it) and both
+prestataire writes. `updatePhoto` re-sends it like the other business fields:
+partial-update semantics are an assumption here, and losing it to an avatar
+change would only surface when a contract is drawn up. Pinned by
+`pro_profile_photo_test.dart`.
+
+Goldens: `profile_hub.png`, `profile_hub_incomplete.png`, `profile_edit.png`.
 
 ### M02 profile — one identity record per role
 **Whose record is authoritative depends on the role, and writing the wrong one
@@ -615,7 +636,8 @@ as the same thing.
 - **iOS push** — blocked only on the APNs key. Everything else is done.
 - Password reset (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
 - Settings extras: searchable toggle, per-type notification preferences.
-- **M08 contracts** — the largest new surface (both apps, 6 statuses, a
+- **M08 contracts** — `registrationNumber` is now collected, so the identity
+  line is no longer a blocker. The largest new surface (both apps, 6 statuses, a
   negotiation round-trip). Needs `registrationNumber` on the pro profile first.
 - M07 booking + M07bis client review + M27 resident review — all need M05.
 - Favourites (M06), Mboa Score (M09).

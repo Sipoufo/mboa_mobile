@@ -27,6 +27,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final _searchCity = TextEditingController();
   final _displayName = TextEditingController();
   final _mainCity = TextEditingController();
+  final _registrationNumber = TextEditingController();
   PrestataireType _type = PrestataireType.particulier;
   String? _searchCityId;
   String? _mainCityId;
@@ -50,6 +51,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _displayName.text = data.displayName ?? '';
     _mainCity.text = data.mainCity ?? '';
     _mainCityId = data.mainCityId;
+    _registrationNumber.text = data.registrationNumber ?? '';
     _type = data.type ?? PrestataireType.agence;
     _isPrestataire = data.isPrestataire;
     _isAgent = data.isAgent;
@@ -83,6 +85,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _searchCity.dispose();
     _displayName.dispose();
     _mainCity.dispose();
+    _registrationNumber.dispose();
     super.dispose();
   }
 
@@ -100,6 +103,12 @@ class _EditProfileViewState extends State<EditProfileView> {
               displayName: _isPrestataire ? _displayName.text.trim() : null,
               mainCityId: _isPrestataire ? _mainCityId : null,
               type: _isPrestataire ? _type : null,
+              // Empty means "not given" rather than an empty string on the
+              // contract's identity line.
+              registrationNumber: _isPrestataire &&
+                      _registrationNumber.text.trim().isNotEmpty
+                  ? _registrationNumber.text.trim()
+                  : null,
             ),
           ),
         );
@@ -144,6 +153,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            _SectionLabel(l10n.profileSectionIdentity),
+                            const SizedBox(height: Dimens.spacing),
                             Input(
                               controller: _firstName,
                               enabled: !saving,
@@ -190,7 +201,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                               ),
                             ],
                             if (_isPrestataire) ...[
-                              const SizedBox(height: Dimens.spacingLg),
+                              const SizedBox(height: Dimens.spacingXl),
+                              _SectionLabel(l10n.profileSectionBusiness),
+                              const SizedBox(height: Dimens.spacing),
                               Input(
                                 controller: _displayName,
                                 enabled: !saving,
@@ -209,6 +222,25 @@ class _EditProfileViewState extends State<EditProfileView> {
                                 hintText: l10n.cityPickerSearchHint,
                                 variant: InputVariant.underline,
                                 suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
+                              ),
+                              const SizedBox(height: Dimens.spacingLg),
+                              Input(
+                                controller: _registrationNumber,
+                                enabled: !saving,
+                                labelText: l10n.profileRegistrationNumber,
+                                hintText: l10n.profileRegistrationNumberHint,
+                                variant: InputVariant.underline,
+                                textInputAction: TextInputAction.next,
+                              ),
+                              const SizedBox(height: Dimens.spacingXs),
+                              // M08 prints it on the contract next to the
+                              // tenant's CNI; without it no Contrat Mboa is
+                              // compliant, which is worth saying here rather
+                              // than failing later.
+                              Text(
+                                l10n.profileRegistrationNumberHelp,
+                                style: context.mboaText.caption
+                                    .copyWith(color: colors.textTertiary),
                               ),
                               const SizedBox(height: Dimens.spacingLg),
                               Text(
@@ -284,4 +316,22 @@ class _TopBar extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A group heading in the form — a prestataire fills two distinct things here,
+/// himself and his business, and the list ran on without saying so.
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel(this.title);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) => Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title,
+          style: context.mboaText.h3
+              .copyWith(color: context.mboaColors.primaryDark),
+        ),
+      );
 }

@@ -911,8 +911,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "plansPriceMonthly": m31,
     "plansResidenceAllowance": m32,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Plans"),
+    "profileBusinessMissing": MessageLookupByLibrary.simpleMessage(
+      "To be filled in",
+    ),
+    "profileBusinessTitle": MessageLookupByLibrary.simpleMessage("My business"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Display name"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("First name"),
+    "profileIncompleteAction": MessageLookupByLibrary.simpleMessage("Complete"),
+    "profileIncompleteBody": MessageLookupByLibrary.simpleMessage(
+      "Complete your profile to publish your properties.",
+    ),
+    "profileIncompleteTitle": MessageLookupByLibrary.simpleMessage(
+      "Profile incomplete",
+    ),
     "profileLastName": MessageLookupByLibrary.simpleMessage("Last name"),
     "profileLoadError": MessageLookupByLibrary.simpleMessage(
       "Couldn’t load your profile.",
@@ -922,8 +933,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "profilePhotoUpdated": MessageLookupByLibrary.simpleMessage(
       "Photo updated",
     ),
+    "profileRegistrationNumber": MessageLookupByLibrary.simpleMessage(
+      "ID or trade register no.",
+    ),
+    "profileRegistrationNumberHelp": MessageLookupByLibrary.simpleMessage(
+      "Printed on the Contrat Mboa, next to the tenant\'s ID.",
+    ),
+    "profileRegistrationNumberHint": MessageLookupByLibrary.simpleMessage(
+      "e.g. RC/DLA/2024/B/1234",
+    ),
     "profileSave": MessageLookupByLibrary.simpleMessage("Save"),
     "profileSaved": MessageLookupByLibrary.simpleMessage("Profile updated"),
+    "profileSectionBusiness": MessageLookupByLibrary.simpleMessage("Business"),
+    "profileSectionIdentity": MessageLookupByLibrary.simpleMessage("Identity"),
     "profileType": MessageLookupByLibrary.simpleMessage("Type"),
     "profileTypeAgence": MessageLookupByLibrary.simpleMessage("Agency"),
     "profileTypeParticulier": MessageLookupByLibrary.simpleMessage(

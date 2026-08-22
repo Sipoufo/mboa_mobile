@@ -52,6 +52,7 @@ void main() {
     ..displayName = 'Agence Deido'
     ..type = PrestataireProfileResponseTypeEnum.AGENCE
     ..mainCityId = 'c-1'
+    ..registrationNumber = 'RC/DLA/2024/B/1234'
     ..profileComplete = true);
 
   final existingAgent = AgentProfileResponse((b) => b
@@ -154,6 +155,10 @@ void main() {
     expect(sent.displayName, 'Agence Deido');
     expect(sent.mainCityId, 'c-1');
     expect(sent.type, UpdatePrestataireProfileRequestTypeEnum.AGENCE);
+    // Added 2026-08-20 with the field itself: the Contrat Mboa prints it
+    // (M08), and losing it to an avatar change would only surface when a
+    // contract is drawn up.
+    expect(sent.registrationNumber, 'RC/DLA/2024/B/1234');
   });
 
   group('agent', () {

@@ -24,6 +24,7 @@ class ProfileData extends BaseProfile {
     this.mainCityId,
     this.type,
     this.logoObjectKey,
+    this.registrationNumber,
     this.profileComplete,
   });
 
@@ -35,6 +36,7 @@ class ProfileData extends BaseProfile {
     String? mainCityId,
     PrestataireType? type,
     String? logoObjectKey,
+    String? registrationNumber,
     bool? profileComplete,
   }) {
     return ProfileData(
@@ -51,6 +53,7 @@ class ProfileData extends BaseProfile {
       mainCityId: mainCityId,
       type: type,
       logoObjectKey: logoObjectKey,
+      registrationNumber: registrationNumber,
       profileComplete: profileComplete,
     );
   }
@@ -60,6 +63,11 @@ class ProfileData extends BaseProfile {
   final String? mainCityId;
   final PrestataireType? type;
   final String? logoObjectKey;
+
+  /// CNI or RCCM (2026-08-20 spec). The Contrat Mboa prints the prestataire's
+  /// registration alongside the tenant's CNI (M08 "Identité prestataire"), so a
+  /// profile without it cannot produce a compliant contract.
+  final String? registrationNumber;
 
   /// Server-computed (`PrestataireProfileResponse.profileComplete`) — the
   /// authority for RM-M10-01, since it is what `publish` enforces.
@@ -110,6 +118,7 @@ class ProfileData extends BaseProfile {
         mainCityId,
         type,
         logoObjectKey,
+        registrationNumber,
         profileComplete,
       ];
 }
@@ -126,6 +135,7 @@ class ProfileEdit extends Equatable {
     this.displayName,
     this.mainCityId,
     this.type,
+    this.registrationNumber,
   });
 
   final String firstName;
@@ -140,6 +150,9 @@ class ProfileEdit extends Equatable {
   final String? mainCityId;
   final PrestataireType? type;
 
+  /// CNI / RCCM — required by the Contrat Mboa (M08).
+  final String? registrationNumber;
+
   @override
   List<Object?> get props => [
         firstName,
@@ -150,5 +163,6 @@ class ProfileEdit extends Equatable {
         displayName,
         mainCityId,
         type,
+        registrationNumber,
       ];
 }

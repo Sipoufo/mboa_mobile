@@ -978,8 +978,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "plansPriceMonthly": m31,
     "plansResidenceAllowance": m32,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Formules"),
+    "profileBusinessMissing": MessageLookupByLibrary.simpleMessage(
+      "À renseigner",
+    ),
+    "profileBusinessTitle": MessageLookupByLibrary.simpleMessage(
+      "Mon activité",
+    ),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("Prénom"),
+    "profileIncompleteAction": MessageLookupByLibrary.simpleMessage(
+      "Compléter",
+    ),
+    "profileIncompleteBody": MessageLookupByLibrary.simpleMessage(
+      "Complétez votre profil pour pouvoir publier vos biens.",
+    ),
+    "profileIncompleteTitle": MessageLookupByLibrary.simpleMessage(
+      "Profil incomplet",
+    ),
     "profileLastName": MessageLookupByLibrary.simpleMessage("Nom"),
     "profileLoadError": MessageLookupByLibrary.simpleMessage(
       "Impossible de charger le profil.",
@@ -989,8 +1004,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "profilePhotoUpdated": MessageLookupByLibrary.simpleMessage(
       "Photo mise à jour",
     ),
+    "profileRegistrationNumber": MessageLookupByLibrary.simpleMessage(
+      "N° CNI ou RCCM",
+    ),
+    "profileRegistrationNumberHelp": MessageLookupByLibrary.simpleMessage(
+      "Figure sur le Contrat Mboa, à côté de la pièce d\'identité du locataire.",
+    ),
+    "profileRegistrationNumberHint": MessageLookupByLibrary.simpleMessage(
+      "Ex. RC/DLA/2024/B/1234",
+    ),
     "profileSave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
     "profileSaved": MessageLookupByLibrary.simpleMessage("Profil mis à jour"),
+    "profileSectionBusiness": MessageLookupByLibrary.simpleMessage("Activité"),
+    "profileSectionIdentity": MessageLookupByLibrary.simpleMessage("Identité"),
     "profileType": MessageLookupByLibrary.simpleMessage("Type"),
     "profileTypeAgence": MessageLookupByLibrary.simpleMessage("Agence"),
     "profileTypeParticulier": MessageLookupByLibrary.simpleMessage(
