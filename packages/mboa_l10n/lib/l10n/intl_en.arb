@@ -1474,6 +1474,79 @@
   "@visitsRequestDecline": {
     "description": "RM-M15-06."
   },
+  "reviewTitle": "Visit review",
+  "@reviewTitle": {
+    "description": "M07bis — the client's report on the visit."
+  },
+  "reviewNoneTitle": "No review yet",
+  "@reviewNoneTitle": {
+    "description": "RM-M07bis-02 — writing is optional and undated."
+  },
+  "reviewNoneBody": "The tenant can publish their review whenever they like. You'll be notified as soon as they do.",
+  "@reviewNoneBody": {
+    "description": "RM-M07bis-02 / N-18."
+  },
+  "reviewWhatTheySaw": "What the tenant saw",
+  "@reviewWhatTheySaw": {
+    "description": "The evaluative body of the review."
+  },
+  "reviewPros": "Positives",
+  "@reviewPros": {
+    "description": "RM-M07bis content."
+  },
+  "reviewCons": "Negatives",
+  "@reviewCons": {
+    "description": "RM-M07bis content."
+  },
+  "reviewCondition": "Perceived condition: {value}/5",
+  "@reviewCondition": {
+    "description": "perceivedCondition.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewDeletedAuthor": "Deleted user",
+  "@reviewDeletedAuthor": {
+    "description": "RM-M07bis-08 — the review outlives its author."
+  },
+  "reviewCommentsTitle": "Your replies",
+  "@reviewCommentsTitle": {
+    "description": "RM-M07bis-04 — the visitor's comments."
+  },
+  "reviewCommentsEmpty": "You have not replied to this review yet.",
+  "@reviewCommentsEmpty": {
+    "description": "No comments yet."
+  },
+  "reviewCommentHint": "Reply to this review…",
+  "@reviewCommentHint": {
+    "description": "Composer placeholder."
+  },
+  "reviewCommentRule": "Your reply is added to the review: it changes neither the tenant's rating nor their text.",
+  "@reviewCommentRule": {
+    "description": "RM-M07bis-04 — the asymmetry, said plainly."
+  },
+  "reviewCommentSend": "Publish my reply",
+  "@reviewCommentSend": {
+    "description": "Submit a comment."
+  },
+  "reviewCommentSent": "Reply published",
+  "@reviewCommentSent": {
+    "description": "Toast after commenting."
+  },
+  "reviewExport": "Export as PDF",
+  "@reviewExport": {
+    "description": "RM-M07bis-06."
+  },
+  "visitsReviewOpen": "See the tenant's review",
+  "@visitsReviewOpen": {
+    "description": "Entry point from a visit."
+  },
+  "visitsReviewCta": "Visit review",
+  "@visitsReviewCta": {
+    "description": "Card title on the visit detail."
+  },
   "visitsAgendaEmptyDay": "No visit that day.",
   "@visitsAgendaEmptyDay": {
     "description": "Empty day in the agenda."

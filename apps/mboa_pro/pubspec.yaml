@@ -43,6 +43,11 @@ dependencies:
   # Reverse-geocodes the GPS fix to a city name, so the district list can be
   # narrowed automatically instead of making the user find their city.
   geocoding: ^3.0.0
+  # RM-M07bis-06 — the visit review's PDF is bytes, not a URL: it is written to
+  # a cache file and handed to the OS, which is where printing and saving live
+  # on a phone. Neither package needs a runtime permission.
+  path_provider: ^2.1.4
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:

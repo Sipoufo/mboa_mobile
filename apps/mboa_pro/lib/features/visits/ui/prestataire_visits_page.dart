@@ -6,6 +6,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
 import '../bloc/prestataire_visits_bloc.dart';
 import '../bloc/visits_agenda_blocs.dart';
@@ -127,6 +128,21 @@ class _Agenda extends StatelessWidget {
     required String? busyId,
   }) {
     final l10n = I18n.of(context);
+
+    // M07bis — once it is over, what is left to do with a visit is to read
+    // what the client wrote about it, and answer.
+    if (visit.status == VisitStatus.completed) {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: TextButton(
+          onPressed: () => context.router.push(
+            VisitReviewRoute(id: visit.id, propertyTitle: visit.annonceTitle),
+          ),
+          child: Text(l10n.visitsReviewOpen),
+        ),
+      );
+    }
+
     if (visit.status != VisitStatus.scheduled) return null;
 
     if (visit.visitorConfirmedAt != null) {

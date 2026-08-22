@@ -9,6 +9,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
 import '../bloc/visit_detail_bloc.dart';
 import '../models/agent_visit.dart';
@@ -196,6 +197,13 @@ class _Body extends StatelessWidget {
         if (visit.userName != null || visit.prestataireName != null) ...[
           const SizedBox(height: Dimens.spacing),
           _ContactsCard(visit: visit),
+        ],
+        // M07bis — the report is the client's to write; the agent reads it and
+        // may answer beside it. Only once the visit is over: there is nothing
+        // to read before that, and RM-M07bis-01 needs both confirmations.
+        if (visit.status == VisitStatus.completed) ...[
+          const SizedBox(height: Dimens.spacing),
+          _ReviewCard(visit: visit),
         ],
       ],
     );
@@ -497,6 +505,46 @@ class _ContactRow extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// The way into the client's review (M07bis).
+class _ReviewCard extends StatelessWidget {
+  const _ReviewCard({required this.visit});
+
+  final AgentVisitDetail visit;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return _Card(
+      title: l10n.visitsReviewCta,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.radius),
+        onTap: () => context.router.push(
+          VisitReviewRoute(id: visit.id, propertyTitle: visit.annonceTitle),
+        ),
+        child: Row(
+          children: [
+            const _IconChip(icon: LucideIcons.messageSquareQuote),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: Text(
+                l10n.visitsReviewOpen,
+                style: context.mboaText.label.copyWith(color: colors.ink),
+              ),
+            ),
+            Icon(
+              LucideIcons.chevronRight,
+              size: Dimens.icon,
+              color: colors.textTertiary,
+            ),
+          ],
+        ),
       ),
     );
   }

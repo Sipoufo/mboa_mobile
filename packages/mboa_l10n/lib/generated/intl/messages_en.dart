@@ -97,14 +97,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m35(query) => "No unit matches “${query}”.";
 
-  static String m36(count) =>
+  static String m36(value) => "Perceived condition: ${value}/5";
+
+  static String m37(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m37(date) => "Valid until ${date}";
+  static String m38(date) => "Valid until ${date}";
 
-  static String m38(time) => "Confirmed at ${time}";
+  static String m39(time) => "Confirmed at ${time}";
 
-  static String m39(distance) =>
+  static String m40(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1012,6 +1014,35 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
+    "reviewCommentHint": MessageLookupByLibrary.simpleMessage(
+      "Reply to this review…",
+    ),
+    "reviewCommentRule": MessageLookupByLibrary.simpleMessage(
+      "Your reply is added to the review: it changes neither the tenant\'s rating nor their text.",
+    ),
+    "reviewCommentSend": MessageLookupByLibrary.simpleMessage(
+      "Publish my reply",
+    ),
+    "reviewCommentSent": MessageLookupByLibrary.simpleMessage(
+      "Reply published",
+    ),
+    "reviewCommentsEmpty": MessageLookupByLibrary.simpleMessage(
+      "You have not replied to this review yet.",
+    ),
+    "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Your replies"),
+    "reviewCondition": m36,
+    "reviewCons": MessageLookupByLibrary.simpleMessage("Negatives"),
+    "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage("Deleted user"),
+    "reviewExport": MessageLookupByLibrary.simpleMessage("Export as PDF"),
+    "reviewNoneBody": MessageLookupByLibrary.simpleMessage(
+      "The tenant can publish their review whenever they like. You\'ll be notified as soon as they do.",
+    ),
+    "reviewNoneTitle": MessageLookupByLibrary.simpleMessage("No review yet"),
+    "reviewPros": MessageLookupByLibrary.simpleMessage("Positives"),
+    "reviewTitle": MessageLookupByLibrary.simpleMessage("Visit review"),
+    "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
+      "What the tenant saw",
+    ),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Identity documents and any other required verifications",
     ),
@@ -1038,7 +1069,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m36,
+    "subscriptionListingLimit": m37,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -1053,7 +1084,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m37,
+    "subscriptionRenewsOn": m38,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
@@ -1131,7 +1162,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Owner"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m38,
+    "visitsPresenceConfirmedAt": m39,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -1150,6 +1181,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsRequestsTitle": MessageLookupByLibrary.simpleMessage(
       "Times to confirm",
     ),
+    "visitsReviewCta": MessageLookupByLibrary.simpleMessage("Visit review"),
+    "visitsReviewOpen": MessageLookupByLibrary.simpleMessage(
+      "See the tenant\'s review",
+    ),
     "visitsStatusCancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
     "visitsStatusCompleted": MessageLookupByLibrary.simpleMessage("Completed"),
     "visitsStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1162,7 +1197,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m39,
+    "visitsTooFarBody": m40,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

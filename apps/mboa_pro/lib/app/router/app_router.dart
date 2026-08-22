@@ -80,6 +80,9 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: AgentZonesRoute.page, path: 'agent/zones'),
             // M16 — the visit and its report are pushed over the agent shell.
             AutoRoute(page: VisitDetailRoute.page, path: 'agent/visits/:id'),
+            // M07bis — one review screen for both personas; the agent opens it
+            // from his visit detail, the prestataire from his own agenda.
+            AutoRoute(page: VisitReviewRoute.page, path: 'visits/:id/review'),
             AutoRoute(page: AgentAvailabilityRoute.page, path: 'agent/availability'),
 
             // Agent assignment (M11).

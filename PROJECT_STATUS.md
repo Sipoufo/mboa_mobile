@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**518 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 399 ·
+**533 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 414 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -45,7 +45,8 @@
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
 | Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · pas de détail ni d'annulation côté API (§14) |
-| M07bis client review · M27 resident review · M08 contracts | ❌ not started (endpoints exist) |
+| M07bis — visitor side (read, comment, PDF) | ✅ agent + prestataire · **writing is the client's, in mboa_user** |
+| M27 resident review · M08 contracts | ❌ not started (endpoints exist) |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -491,6 +492,33 @@ white cards with dark-green headings.
 - `PropertyType.label(l10n)` replaced three hardcoded French `switch`es (form,
   unit editor, residence detail).
 - Goldens: `annonce_detail.png`, `residence_detail.png`.
+
+### M07bis — the visitor reads the review, and may only add beside it
+One screen for both personas (`VisitReviewRoute`): the agent opens it from his
+visit detail, the prestataire from his agenda, in both cases only once the visit
+is **completed** — RM-M07bis-01 needs both confirmations before anything exists
+to read. The model and repository sit in `mboa_shared`, since the client's app
+will read the same shape back when it writes one.
+
+- **Null is an answer.** `GET …/review` 404s until the client writes one, and
+  writing is optional and undated (RM-M07bis-02) — so "no review yet" is the
+  ordinary state, distinct from a failed read. The two render differently.
+- **A comment returns the whole review**, so the thread is never assembled
+  locally, and the note and text come back untouched — which is RM-M07bis-04's
+  whole point. The screen states the asymmetry in words under the composer.
+- **The PDF is bytes, not a URL** (unlike the contract's `ContractPdfResponse`).
+  The generated `exportVisiteReviewPdf` types the body as `String` with dio's
+  default JSON response type, which corrupts it — the repository uses
+  `DioClient.dio` with `ResponseType.bytes` instead, keeping the interceptors.
+  `ReviewPdfExporter` writes it to the cache and hands it to the share sheet,
+  where printing and saving live on a phone; it is split out of the bloc so the
+  bloc stays testable without a device.
+- **`path_provider` and `share_plus` were added** for that hand-off. Neither
+  needs a runtime permission; both apps' builds were re-run (APK debug + iOS
+  simulator, mboa_pro).
+- A deleted author still shows their review, anonymised (RM-M07bis-08).
+
+Golden: `visit_review.png`.
 
 ### The visit detail is built around the mutual confirmation
 The screen the agent opens at a gate leads with the hour, then draws RM-M07-05

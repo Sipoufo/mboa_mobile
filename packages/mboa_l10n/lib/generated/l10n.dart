@@ -4887,6 +4887,176 @@ class I18n {
     );
   }
 
+  /// `Avis de visite`
+  String get reviewTitle {
+    return Intl.message(
+      'Avis de visite',
+      name: 'reviewTitle',
+      desc: 'M07bis — the client\'s report on the visit.',
+      args: [],
+    );
+  }
+
+  /// `Aucun avis pour le moment`
+  String get reviewNoneTitle {
+    return Intl.message(
+      'Aucun avis pour le moment',
+      name: 'reviewNoneTitle',
+      desc: 'RM-M07bis-02 — writing is optional and undated.',
+      args: [],
+    );
+  }
+
+  /// `Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu'il l'aura fait.`
+  String get reviewNoneBody {
+    return Intl.message(
+      'Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu\'il l\'aura fait.',
+      name: 'reviewNoneBody',
+      desc: 'RM-M07bis-02 / N-18.',
+      args: [],
+    );
+  }
+
+  /// `Ce que le locataire a vu`
+  String get reviewWhatTheySaw {
+    return Intl.message(
+      'Ce que le locataire a vu',
+      name: 'reviewWhatTheySaw',
+      desc: 'The evaluative body of the review.',
+      args: [],
+    );
+  }
+
+  /// `Points positifs`
+  String get reviewPros {
+    return Intl.message(
+      'Points positifs',
+      name: 'reviewPros',
+      desc: 'RM-M07bis content.',
+      args: [],
+    );
+  }
+
+  /// `Points négatifs`
+  String get reviewCons {
+    return Intl.message(
+      'Points négatifs',
+      name: 'reviewCons',
+      desc: 'RM-M07bis content.',
+      args: [],
+    );
+  }
+
+  /// `État général perçu : {value}/5`
+  String reviewCondition(int value) {
+    return Intl.message(
+      'État général perçu : $value/5',
+      name: 'reviewCondition',
+      desc: 'perceivedCondition.',
+      args: [value],
+    );
+  }
+
+  /// `Utilisateur supprimé`
+  String get reviewDeletedAuthor {
+    return Intl.message(
+      'Utilisateur supprimé',
+      name: 'reviewDeletedAuthor',
+      desc: 'RM-M07bis-08 — the review outlives its author.',
+      args: [],
+    );
+  }
+
+  /// `Vos réponses`
+  String get reviewCommentsTitle {
+    return Intl.message(
+      'Vos réponses',
+      name: 'reviewCommentsTitle',
+      desc: 'RM-M07bis-04 — the visitor\'s comments.',
+      args: [],
+    );
+  }
+
+  /// `Vous n'avez pas encore répondu à cet avis.`
+  String get reviewCommentsEmpty {
+    return Intl.message(
+      'Vous n\'avez pas encore répondu à cet avis.',
+      name: 'reviewCommentsEmpty',
+      desc: 'No comments yet.',
+      args: [],
+    );
+  }
+
+  /// `Répondre à cet avis…`
+  String get reviewCommentHint {
+    return Intl.message(
+      'Répondre à cet avis…',
+      name: 'reviewCommentHint',
+      desc: 'Composer placeholder.',
+      args: [],
+    );
+  }
+
+  /// `Votre réponse s'ajoute à l'avis : elle ne modifie ni la note ni le texte du locataire.`
+  String get reviewCommentRule {
+    return Intl.message(
+      'Votre réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.',
+      name: 'reviewCommentRule',
+      desc: 'RM-M07bis-04 — the asymmetry, said plainly.',
+      args: [],
+    );
+  }
+
+  /// `Publier ma réponse`
+  String get reviewCommentSend {
+    return Intl.message(
+      'Publier ma réponse',
+      name: 'reviewCommentSend',
+      desc: 'Submit a comment.',
+      args: [],
+    );
+  }
+
+  /// `Réponse publiée`
+  String get reviewCommentSent {
+    return Intl.message(
+      'Réponse publiée',
+      name: 'reviewCommentSent',
+      desc: 'Toast after commenting.',
+      args: [],
+    );
+  }
+
+  /// `Exporter en PDF`
+  String get reviewExport {
+    return Intl.message(
+      'Exporter en PDF',
+      name: 'reviewExport',
+      desc: 'RM-M07bis-06.',
+      args: [],
+    );
+  }
+
+  /// `Voir l'avis du locataire`
+  String get visitsReviewOpen {
+    return Intl.message(
+      'Voir l\'avis du locataire',
+      name: 'visitsReviewOpen',
+      desc: 'Entry point from a visit.',
+      args: [],
+    );
+  }
+
+  /// `Avis de visite`
+  String get visitsReviewCta {
+    return Intl.message(
+      'Avis de visite',
+      name: 'visitsReviewCta',
+      desc: 'Card title on the visit detail.',
+      args: [],
+    );
+  }
+
   /// `Aucune visite ce jour-là.`
   String get visitsAgendaEmptyDay {
     return Intl.message(

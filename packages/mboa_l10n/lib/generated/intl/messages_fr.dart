@@ -98,14 +98,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m35(query) => "Aucune unité ne correspond à « ${query} ».";
 
-  static String m36(count) =>
+  static String m36(value) => "État général perçu : ${value}/5";
+
+  static String m37(count) =>
       "${Intl.plural(count, zero: 'Aucune annonce active', one: '1 annonce active', other: '${count} annonces actives')}";
 
-  static String m37(date) => "Valable jusqu’au ${date}";
+  static String m38(date) => "Valable jusqu’au ${date}";
 
-  static String m38(time) => "Confirmé à ${time}";
+  static String m39(time) => "Confirmé à ${time}";
 
-  static String m39(distance) =>
+  static String m40(distance) =>
       "Vous êtes à environ ${distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1089,6 +1091,39 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
+    "reviewCommentHint": MessageLookupByLibrary.simpleMessage(
+      "Répondre à cet avis…",
+    ),
+    "reviewCommentRule": MessageLookupByLibrary.simpleMessage(
+      "Votre réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.",
+    ),
+    "reviewCommentSend": MessageLookupByLibrary.simpleMessage(
+      "Publier ma réponse",
+    ),
+    "reviewCommentSent": MessageLookupByLibrary.simpleMessage(
+      "Réponse publiée",
+    ),
+    "reviewCommentsEmpty": MessageLookupByLibrary.simpleMessage(
+      "Vous n\'avez pas encore répondu à cet avis.",
+    ),
+    "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Vos réponses"),
+    "reviewCondition": m36,
+    "reviewCons": MessageLookupByLibrary.simpleMessage("Points négatifs"),
+    "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage(
+      "Utilisateur supprimé",
+    ),
+    "reviewExport": MessageLookupByLibrary.simpleMessage("Exporter en PDF"),
+    "reviewNoneBody": MessageLookupByLibrary.simpleMessage(
+      "Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu\'il l\'aura fait.",
+    ),
+    "reviewNoneTitle": MessageLookupByLibrary.simpleMessage(
+      "Aucun avis pour le moment",
+    ),
+    "reviewPros": MessageLookupByLibrary.simpleMessage("Points positifs"),
+    "reviewTitle": MessageLookupByLibrary.simpleMessage("Avis de visite"),
+    "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
+      "Ce que le locataire a vu",
+    ),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Pièces d’identifications et tout autres vérifications requises",
     ),
@@ -1115,7 +1150,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Votre abonnement a expiré",
     ),
-    "subscriptionListingLimit": m36,
+    "subscriptionListingLimit": m37,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Annonces illimitées",
     ),
@@ -1132,7 +1167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Les reçus sont liés à cet appareil pour le moment.",
     ),
-    "subscriptionRenewsOn": m37,
+    "subscriptionRenewsOn": m38,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
       "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
@@ -1218,7 +1253,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Numéro copié"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Locataire"),
-    "visitsPresenceConfirmedAt": m38,
+    "visitsPresenceConfirmedAt": m39,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "La visite n\'est validée que lorsque les deux présences sont confirmées.",
     ),
@@ -1237,6 +1272,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsRequestsTitle": MessageLookupByLibrary.simpleMessage(
       "Demandes à confirmer",
     ),
+    "visitsReviewCta": MessageLookupByLibrary.simpleMessage("Avis de visite"),
+    "visitsReviewOpen": MessageLookupByLibrary.simpleMessage(
+      "Voir l\'avis du locataire",
+    ),
     "visitsStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulée"),
     "visitsStatusCompleted": MessageLookupByLibrary.simpleMessage("Effectuée"),
     "visitsStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1249,7 +1288,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
-    "visitsTooFarBody": m39,
+    "visitsTooFarBody": m40,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer quand même",
     ),

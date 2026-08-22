@@ -10,6 +10,7 @@ import '../../features/assignments/data/agent_mission_repository.dart';
 import '../../features/assignments/data/assignment_repository.dart';
 import '../../features/annonces/data/location_capture.dart';
 import '../../features/visits/bloc/prestataire_visits_bloc.dart';
+import '../../features/visits/bloc/visit_review_bloc.dart';
 import '../../features/visits/bloc/visits_agenda_blocs.dart';
 import '../../features/visits/data/prestataire_visit_repository.dart';
 import '../../features/visits/bloc/visit_detail_bloc.dart';
@@ -222,6 +223,13 @@ void registerAppModule() {
   );
   getIt.registerFactory<PrestataireAgendaBloc>(
     () => PrestataireAgendaBloc(source: getIt<PrestataireVisitRepository>()),
+  );
+  // M07bis — the client's review, read by whoever carried the visit out.
+  getIt.registerLazySingleton<VisitReviewRepository>(
+    () => VisitReviewRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<VisitReviewBloc>(
+    () => VisitReviewBloc(repository: getIt<VisitReviewRepository>()),
   );
   getIt.registerFactory<PrestataireVisitsBloc>(
     () => PrestataireVisitsBloc(

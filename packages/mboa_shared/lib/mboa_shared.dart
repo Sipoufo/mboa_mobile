@@ -23,8 +23,10 @@ export 'src/features/notifications/notifications_background.dart';
 // Visits (M07 / M16) — the list model both apps read; the client, the agent and
 // the prestataire visiting his own property are served the same DTO.
 export 'src/features/visits/bloc/visits_agenda_bloc.dart';
+export 'src/features/visits/data/visit_review_repository.dart';
 export 'src/features/visits/data/visits_source.dart';
 export 'src/features/visits/models/visit.dart';
+export 'src/features/visits/models/visit_review.dart';
 export 'src/features/visits/ui/visits_agenda_view.dart';
 
 // Session resolution — shared startup auth check used by each app's splash.
