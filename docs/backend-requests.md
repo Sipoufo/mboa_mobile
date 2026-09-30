@@ -486,3 +486,26 @@ alphabetically.
 **Also noted, no action needed:** `cityId` is optional on `GET /search` while
 RM-M04-01 makes the city mandatory. The app enforces it — a search across every
 city is not a product decision we want to make by accident.
+
+---
+
+## §17 — The dev seed's photo keys point at nothing
+
+**Raised 2026-09-30**, chasing "the photos on the fiche don't work".
+
+Every seeded listing carries `primaryPhotoKey: "p/1.jpg"`, and the fiche's
+`photoKeys` are the same shape. The app builds the public R2 URL from
+`Environment.r2PublicBaseUrl`, and that object is not in the bucket:
+
+```
+GET https://pub-f76049c2b3fc47e79f2c9a437a81c89f.r2.dev/p/1.jpg → 404
+```
+
+So the app is behaving correctly — CE-M05-02 says a missing photo is a
+placeholder, never a broken frame, and that is what shows. But it means **no
+photo has ever been seen in dev**, on either app, so nothing about real images
+has been exercised: aspect ratios, portrait shots, the 3-photo carousel,
+loading behaviour on a slow line.
+
+Either upload a handful of real objects under the seeded keys, or seed keys
+that exist. A couple of files is enough; they only have to be there.

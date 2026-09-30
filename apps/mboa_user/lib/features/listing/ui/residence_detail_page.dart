@@ -157,13 +157,7 @@ class _Photo extends StatelessWidget {
       child: SizedBox(
         height: 220,
         width: double.infinity,
-        child: url == null
-            ? placeholder()
-            : Image.network(
-                url,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stack) => placeholder(),
-              ),
+        child: MboaNetworkImage(url: url, placeholder: placeholder()),
       ),
     );
   }

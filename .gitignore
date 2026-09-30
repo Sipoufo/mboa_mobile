@@ -33,3 +33,6 @@ coverage/
 
 # Kotlin incremental-compilation sessions (Gradle build artifact)
 .kotlin/
+
+# Golden-test diffs, written next to the goldens on a mismatch.
+failures/

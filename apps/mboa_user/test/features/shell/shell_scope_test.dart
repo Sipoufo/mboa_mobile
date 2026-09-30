@@ -16,13 +16,16 @@ import '../../_helpers/load_brand_fonts.dart';
 class MockFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
     implements FavoritesBloc {}
 
-/// `FavoritesBloc` is held **by the shell**, above every tab and above the
-/// fiches pushed over them.
+/// `FavoritesBloc` is held **by the shell**, above every tab.
 ///
 /// The heart appears in three places — a search card, a fiche, the Favoris tab
 /// — and a bloc per screen would let two of them disagree about the same
 /// listing. This pins the consequence: each screen is pumped with only that
 /// one bloc, the way the shell hands it down.
+///
+/// The shell covers its tabs and nothing else. A fiche is a **root** route
+/// beside it and provides the same singleton itself — see the last test in
+/// `listing/ui/listing_detail_page_test.dart`, which is where that went wrong.
 void main() {
   late MockFavoritesBloc favorites;
 

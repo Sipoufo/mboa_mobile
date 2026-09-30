@@ -24,6 +24,7 @@ export 'src/ui/controls/segmented_control.dart';
 
 // Media
 export 'src/ui/media/mboa_avatar.dart';
+export 'src/ui/media/mboa_network_image.dart';
 
 // Inputs
 export 'src/ui/inputs/field_help.dart';

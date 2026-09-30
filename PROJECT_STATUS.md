@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**628 tests green, analyze clean.** `mboa_user` 74 · `mboa_pro` 432 ·
+**629 tests green, analyze clean.** `mboa_user` 75 · `mboa_pro` 432 ·
 `mboa_core` 12 · `mboa_shared` 110.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -69,6 +69,17 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### A route provides the blocs it needs
+The tab shell provides `FavoritesBloc` and `ConversationsBloc`, and it covers
+its four tabs — **nothing else**. A fiche is a root route beside the shell, not
+a screen inside a tab, so it provides the singleton itself.
+
+That gap shipped, and it did not look like a scoping bug: the heart sits inside
+the carousel's `Stack`, so the missing provider threw while building and took
+the gallery down with it. It was reported as "the photos don't work".
+
+A screen pushed at root that reads a shell bloc is the shape to watch for.
 
 ### A duplicate DI registration is a startup crash, and only that
 `get_it` refuses a second `registerLazySingleton` for a type. Every

@@ -9,6 +9,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../favorites/bloc/favorites_bloc.dart';
 import '../../favorites/ui/widgets/favorite_heart.dart';
 import '../../messaging/ui/contact_sheet.dart';
 import '../bloc/listing_detail_bloc.dart';
@@ -26,9 +27,20 @@ class ListingDetailPage extends StatelessWidget implements AutoRouteWrapper {
   final String id;
 
   @override
-  Widget wrappedRoute(BuildContext context) =>
-      BlocProvider<ListingDetailBloc>(
-        create: (_) => getIt<ListingDetailBloc>()..add(ListingRequested(id)),
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<ListingDetailBloc>(
+            create: (_) =>
+                getIt<ListingDetailBloc>()..add(ListingRequested(id)),
+          ),
+          // The fiche is a **root** route, a sibling of the tab shell — not a
+          // screen inside a tab (see `AppRouter`). Nothing above it provides
+          // the shell's `FavoritesBloc`, so the heart in the carousel threw
+          // and took the whole gallery down with it. `.value` on the getIt
+          // singleton: the same instance the tabs read, and this route must
+          // not close it on pop.
+          BlocProvider<FavoritesBloc>.value(value: getIt<FavoritesBloc>()),
+        ],
         child: this,
       );
 
@@ -240,10 +252,10 @@ class _GalleryState extends State<_Gallery> {
                       onPageChanged: (page) => setState(() => _page = page),
                       itemCount: shown.length,
                       // CE-M05-02 — a placeholder, never a broken frame.
-                      itemBuilder: (context, index) => Image.network(
-                        shown[index],
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stack) => placeholder(),
+                      // Cached: swiping back and forth must not re-download.
+                      itemBuilder: (context, index) => MboaNetworkImage(
+                        url: shown[index],
+                        placeholder: placeholder(),
                       ),
                     ),
             ),

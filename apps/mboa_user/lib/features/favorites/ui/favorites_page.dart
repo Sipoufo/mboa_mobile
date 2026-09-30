@@ -213,20 +213,10 @@ class _FavoriteCard extends StatelessWidget {
                 child: SizedBox(
                   width: 72,
                   height: 72,
-                  child: favorite.photoUrl == null
-                      ? ColoredBox(
-                          color: colors.primaryPale,
-                          child: Icon(LucideIcons.image, color: colors.primary),
-                        )
-                      : Image.network(
-                          favorite.photoUrl!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stack) => ColoredBox(
-                            color: colors.primaryPale,
-                            child:
-                                Icon(LucideIcons.image, color: colors.primary),
-                          ),
-                        ),
+                  child: MboaNetworkImage(
+                    url: favorite.photoUrl,
+                    placeholder: const MboaImagePlaceholder(size: 72),
+                  ),
                 ),
               ),
               const SizedBox(width: Dimens.spacingMd),

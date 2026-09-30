@@ -8,6 +8,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mboa_user/features/favorites/bloc/favorites_bloc.dart';
 import 'package:mboa_user/features/listing/bloc/listing_detail_bloc.dart';
+import 'package:mboa_user/features/favorites/ui/widgets/favorite_heart.dart';
 import 'package:mboa_user/features/listing/ui/listing_detail_page.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -215,5 +216,40 @@ void main() {
       find.byType(ListingDetailPage),
       matchesGoldenFile('goldens/listing_detail.png'),
     );
+  });
+
+  /// **The route carries its own scope.**
+  ///
+  /// `/listings/:id` is a root route, a sibling of the tab shell, so nothing
+  /// above it provides the shell's `FavoritesBloc`. The heart sits inside the
+  /// carousel's `Stack`, so the missing provider did not just hide a heart —
+  /// it threw while building and took the whole gallery with it, which is how
+  /// it was reported ("the photos don't work").
+  ///
+  /// Every other test here hands both blocs down from above, the way the shell
+  /// would. This one pumps what auto_route actually pumps: `wrappedRoute`,
+  /// with an empty tree above it.
+  testWidgets('the fiche opens outside the shell, heart and all',
+      (tester) async {
+    getIt.registerFactory<ListingDetailBloc>(() => bloc);
+    getIt.registerLazySingleton<FavoritesBloc>(() => favorites);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('fr'),
+        theme: MboaTheme.light(),
+        localizationsDelegates: MboaLocalizations.delegates,
+        supportedLocales: MboaLocalizations.supportedLocales,
+        home: Builder(
+          builder: (context) =>
+              const ListingDetailPage(id: 'a-1').wrappedRoute(context),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.byType(FavoriteHeart), findsOneWidget);
+    expect(find.byType(PageView), findsOneWidget);
   });
 }
