@@ -86,14 +86,9 @@ void registerAppModule() {
   getIt.registerFactory<ThreadBloc>(
     () => ThreadBloc(repository: getIt<MessagingRepository>()),
   );
-  getIt.registerLazySingleton<MediaUploader>(
-    () => MediaUploader(dioClient: getIt<DioClient>()),
-  );
-
-  // Locations — the city picker the search bar opens.
-  getIt.registerLazySingleton<LocationRepository>(
-    () => LocationRepository(dioClient: getIt<DioClient>()),
-  );
+  // `MediaUploader` (message attachments) and `LocationRepository` (the city
+  // picker the search bar opens) are registered once, with the profile module
+  // below — they were here too, and get_it throws on the second registration.
 
   // Shared session check + startup splash controller.
   registerSessionModule(getIt);

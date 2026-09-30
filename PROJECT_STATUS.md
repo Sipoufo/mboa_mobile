@@ -22,8 +22,13 @@
 
 ## Where things stand
 
-**624 tests green, analyze clean.** `mboa_user` 72 · `mboa_pro` 430 ·
+**628 tests green, analyze clean.** `mboa_user` 74 · `mboa_pro` 432 ·
 `mboa_core` 12 · `mboa_shared` 110.
+
+> **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
+> it boots on the public search, the four tabs respond, the visitor states are
+> right and the city picker degrades cleanly with the backend down. The pro app
+> still has not been launched.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
 > *What the 2026-08-20 spec changed* below before planning anything. M16 has
@@ -64,6 +69,20 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### A duplicate DI registration is a startup crash, and only that
+`get_it` refuses a second `registerLazySingleton` for a type. Every
+registration is lazy, so the throw lands in `main()` — **before any screen**.
+No widget test sees it, and `flutter analyze` cannot: two calls in different
+sections of the same file are both valid Dart.
+
+It shipped. `LocationRepository` and `MediaUploader` were registered by a
+feature *and* by the profile module in `mboa_user`, and the app would not boot
+— found by running it, not by the 624 tests that were green at the time.
+
+`app_module_test.dart` now walks the real module the way `main()` does, in both
+apps. **A new feature that needs a shared repository looks for an existing
+registration first.**
 
 ### Bloc scoping
 `AuthenticatedWrapper` provides the **session-scoped** blocs: `ProProfileBloc`,
