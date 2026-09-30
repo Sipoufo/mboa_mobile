@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**578 tests green, analyze clean.** `mboa_user` 47 · `mboa_pro` 430 ·
-`mboa_core` 12 · `mboa_shared` 89.
+**606 tests green, analyze clean.** `mboa_user` 71 · `mboa_pro` 430 ·
+`mboa_core` 12 · `mboa_shared` 93.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
 > *What the 2026-08-20 spec changed* below before planning anything. M16 has
@@ -40,8 +40,10 @@
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports |
-| M04 search | 🚧 **lot 1 done** — public shell, filters, list, offline cache · map (lot 3) pending |
-| M05 detail · M12 messaging | ❌ not started |
+| M04 search | 🚧 **lots 1–2 done** — public shell, filters, list, offline cache · map (lot 3) pending |
+| M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
+| M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
+| M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
@@ -494,6 +496,34 @@ white cards with dark-green headings.
 - `PropertyType.label(l10n)` replaced three hardcoded French `switch`es (form,
   unit editor, residence detail).
 - Goldens: `annonce_detail.png`, `residence_detail.png`.
+
+### M05 / M06 — the fiche, and the heart that follows it
+- **Nothing to hide, because nothing is sent.** RM-M05-02 / CA-M05-03: the API
+  never returns the exact address and fuzzes the coordinates by ~200 m, so the
+  fiche states the rule instead of censoring a field it never had.
+- **`canContact` and `canPlanVisit` are the server's** (RM-M04-05, RM-M05-07).
+  A bookable visitor must exist or the booking button would open an empty
+  screen; the app renders the verdict and never derives it. The offline copy
+  therefore ships them **false**: a stale "yes" opens a screen that fails.
+- **The fiche and its reviews are two reads.** A property whose feed is
+  unreachable is still worth showing, so the second failure never takes the
+  first down.
+- **RM-M05-08** — no review, no rating block. A "0/5" reads as a bad property
+  rather than an unrated one.
+- **RM-M05-03 badge order is ours.** `ProviderCard.badges` is an untyped
+  `string[]` with no documented values (§16): unknown values are dropped rather
+  than drawn blank, and the prestige order comes from the enum's declaration,
+  not from the wire. Pinned in `listings_badges_test.dart`.
+- **`FavoritesBloc` is held by the shell**, above every tab *and* above the
+  fiches pushed over them — the heart appears in three places and a bloc per
+  screen would let two of them disagree about the same listing. The search
+  screen's test pumps it explicitly for that reason.
+- **The heart flips first and rolls back on refusal.** RM-M06-02's cap of 50 is
+  the server's; the app says "retirez-en un" instead of failing a call. A
+  rented listing keeps its row for 30 days, flagged — dropping it silently
+  would look like the app lost it.
+
+Goldens: `listing_detail.png`, `favorites.png`.
 
 ### M04 — the tenant app has a public zone now
 **The shell sits at `/`, unguarded.** CA-M04-04 and RM-M04-05 let a visitor

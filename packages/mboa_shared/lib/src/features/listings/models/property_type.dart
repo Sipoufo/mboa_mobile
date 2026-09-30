@@ -37,6 +37,17 @@ enum PropertyType {
         _ => PropertyType.apartment,
       };
 
+  static PropertyType fromDetail(AnnonceDetailResponsePropertyTypeEnum? value) =>
+      switch (value) {
+        AnnonceDetailResponsePropertyTypeEnum.STUDIO => PropertyType.studio,
+        AnnonceDetailResponsePropertyTypeEnum.VILLA => PropertyType.villa,
+        AnnonceDetailResponsePropertyTypeEnum.ROOM => PropertyType.room,
+        AnnonceDetailResponsePropertyTypeEnum.OFFICE => PropertyType.office,
+        AnnonceDetailResponsePropertyTypeEnum.COMMERCIAL_SPACE =>
+          PropertyType.commercialSpace,
+        _ => PropertyType.apartment,
+      };
+
   static PropertyType fromTypeCount(TypeCountPropertyTypeEnum? value) =>
       switch (value) {
         TypeCountPropertyTypeEnum.STUDIO => PropertyType.studio,

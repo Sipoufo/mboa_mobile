@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_ui/mboa_ui.dart';
+import 'package:mboa_user/features/favorites/bloc/favorites_bloc.dart';
 import 'package:mboa_user/features/search/bloc/search_bloc.dart';
 import 'package:mboa_user/features/search/ui/search_page.dart';
 import 'package:mocktail/mocktail.dart';
@@ -14,10 +16,18 @@ import '../../../_helpers/load_brand_fonts.dart';
 class MockSearchBloc extends MockBloc<SearchEvent, SearchState>
     implements SearchBloc {}
 
+class MockFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
+    implements FavoritesBloc {}
+
 /// The search screen (CDC M04) — the one screen that must work without an
 /// account (CA-M04-04).
+/// The heart on a result card reads `FavoritesBloc`, which the **shell**
+/// provides — the search screen is a tab under it. Pumping it here is what
+/// says so; a test that provided nothing would pass while the real screen
+/// threw, and a test that provided everything would hide the dependency.
 void main() {
   late MockSearchBloc bloc;
+  late MockFavoritesBloc favorites;
 
   const douala = SearchQuery(cityId: 'c-1', cityName: 'Douala');
 
@@ -45,10 +55,17 @@ void main() {
 
   setUp(() {
     bloc = MockSearchBloc();
+    favorites = MockFavoritesBloc();
+    when(() => favorites.state).thenReturn(const FavoritesInitial());
+    if (!getIt.isRegistered<SessionSnapshot>()) {
+      getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
+    }
     when(() => bloc.state).thenReturn(
       SearchReady(query: douala, hits: [listing('a'), residence]),
     );
   });
+
+  tearDown(getIt.reset);
 
   Future<void> pump(WidgetTester tester) async {
     tester.view.physicalSize = const Size(390 * 3, 844 * 3);
@@ -62,8 +79,11 @@ void main() {
         theme: MboaTheme.light(),
         localizationsDelegates: MboaLocalizations.delegates,
         supportedLocales: MboaLocalizations.supportedLocales,
-        home: BlocProvider<SearchBloc>.value(
-          value: bloc,
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<SearchBloc>.value(value: bloc),
+            BlocProvider<FavoritesBloc>.value(value: favorites),
+          ],
           child: const SearchPage(),
         ),
       ),

@@ -32,6 +32,9 @@ dependencies:
   intl: ^0.20.2
   # Builders for the generated query parameters (M04's multi-select filters).
   built_collection: '>=5.1.1 <6.0.0'
+  # CE-M05-01 reads the status code off a DioException: a deleted listing is a
+  # different screen from an unreachable server.
+  dio: ^5.7.0
   cached_network_image: ^3.4.1
   lucide_icons_flutter: ^3.1.10
   sentry_flutter: ^9.0.0
@@ -47,7 +50,6 @@ dev_dependencies:
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
   flutter_native_splash: ^2.4.4
-  dio: ^5.7.0 # test-only: construct Dio Response fakes in repository tests
 
 flutter:
   uses-material-design: true

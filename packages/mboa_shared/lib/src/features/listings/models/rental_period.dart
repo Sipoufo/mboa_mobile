@@ -60,6 +60,27 @@ enum RentalPeriod {
         _ => fallback,
       };
 
+  static RentalPeriod fromDetail(AnnonceDetailResponseRentalPeriodEnum? v) =>
+      switch (v) {
+        AnnonceDetailResponseRentalPeriodEnum.DAY => RentalPeriod.day,
+        AnnonceDetailResponseRentalPeriodEnum.WEEK => RentalPeriod.week,
+        AnnonceDetailResponseRentalPeriodEnum.MONTH => RentalPeriod.month,
+        AnnonceDetailResponseRentalPeriodEnum.QUARTER => RentalPeriod.quarter,
+        AnnonceDetailResponseRentalPeriodEnum.YEAR => RentalPeriod.year,
+        _ => fallback,
+      };
+
+  /// M06 — a saved listing carries the same period as the fiche it points to.
+  static RentalPeriod fromFavorite(FavoriResponseRentalPeriodEnum? value) =>
+      switch (value) {
+        FavoriResponseRentalPeriodEnum.DAY => RentalPeriod.day,
+        FavoriResponseRentalPeriodEnum.WEEK => RentalPeriod.week,
+        FavoriResponseRentalPeriodEnum.MONTH => RentalPeriod.month,
+        FavoriResponseRentalPeriodEnum.QUARTER => RentalPeriod.quarter,
+        FavoriResponseRentalPeriodEnum.YEAR => RentalPeriod.year,
+        _ => fallback,
+      };
+
   /// What `GET /search` expects for `rentalPeriods`.
   String get asSearchParam => switch (this) {
         RentalPeriod.day => 'DAY',

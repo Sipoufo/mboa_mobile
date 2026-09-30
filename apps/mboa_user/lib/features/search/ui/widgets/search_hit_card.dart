@@ -4,6 +4,8 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../favorites/ui/widgets/favorite_heart.dart';
+
 /// One result (CDC M04 "Vue liste").
 ///
 /// A listing and a residence are **not the same offer** — one is a place to
@@ -31,7 +33,31 @@ class SearchHitCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Photo(hit: hit),
+            Stack(
+              children: [
+                _Photo(hit: hit),
+                // A residence is not saved: favourites are listings (M06), and
+                // its units each have their own fiche.
+                if (hit case final ListingHit listing)
+                  Positioned(
+                    top: Dimens.spacingSm,
+                    right: Dimens.spacingSm,
+                    child: FavoriteHeart(
+                      annonceId: listing.id,
+                      background: true,
+                      optimistic: optimisticFavorite(
+                        annonceId: listing.id,
+                        title: listing.title,
+                        photoKey: listing.primaryPhotoKey,
+                        price: listing.displayPrice,
+                        rentalPeriod: listing.rentalPeriod,
+                        city: listing.city,
+                        district: listing.district,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(Dimens.spacing),
               child: switch (hit) {

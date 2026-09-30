@@ -28,6 +28,8 @@ export 'src/features/contracts/models/contract.dart';
 // Listings — the rent's period (RM-M10-09), read by the listing form, the
 // contract (RM-M08-08) and, later, the client app's search brackets.
 export 'src/features/listings/models/amenity.dart';
+export 'src/features/listings/models/listing_detail.dart';
+export 'src/features/listings/models/property_review.dart';
 export 'src/features/listings/models/property_type.dart';
 export 'src/features/listings/models/rental_period.dart';
 export 'src/features/listings/models/search_hit.dart';

@@ -7,6 +7,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../bloc/search_bloc.dart';
 import 'widgets/search_filters_sheet.dart';
 import 'widgets/search_hit_card.dart';
@@ -266,7 +267,18 @@ class _Results extends StatelessWidget {
             child: Center(child: Loader()),
           );
         }
-        return SearchHitCard(hit: state.hits[index]);
+        final hit = state.hits[index];
+        return SearchHitCard(
+          hit: hit,
+          // A residence opens its own screen: what the tenant picks there is
+          // which unit (RM-M10bis-11).
+          onTap: () => switch (hit) {
+            ListingHit() =>
+              context.router.push(ListingDetailRoute(id: hit.id)),
+            ResidenceHit() =>
+              context.router.push(ResidenceDetailRoute(id: hit.id)),
+          },
+        );
       },
     );
   }

@@ -4,18 +4,6 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
-/// Favoris (M06) — arrives with the fiche, in the next lot.
-@RoutePage()
-class FavoritesPage extends StatelessWidget {
-  const FavoritesPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _Soon(
-        icon: LucideIcons.heart,
-        title: I18n.of(context).navFavorites,
-      );
-}
-
 /// Messagerie (M12) — the module exists on the backend and is unbuilt in both
 /// apps; the tab is here so the product's map is visible, not to promise a
 /// date.

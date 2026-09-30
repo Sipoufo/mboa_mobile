@@ -4,6 +4,10 @@ import 'package:mboa_shared/mboa_shared.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/profile/profile_types.dart';
+import '../../features/favorites/bloc/favorites_bloc.dart';
+import '../../features/favorites/data/favorites_repository.dart';
+import '../../features/listing/bloc/listing_detail_bloc.dart';
+import '../../features/listing/data/listing_repository.dart';
 import '../../features/search/bloc/search_bloc.dart';
 import '../../features/search/data/search_repository.dart';
 import '../../features/splash/logic/splash_cubit.dart';
@@ -46,6 +50,26 @@ void registerAppModule() {
   );
   getIt.registerFactory<SearchBloc>(
     () => SearchBloc(repository: getIt<SearchRepository>()),
+  );
+
+  // Fiche bien (M05) — public, like the search.
+  getIt.registerLazySingleton<ListingRepository>(
+    () => ListingRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerFactory<ListingDetailBloc>(
+    () => ListingDetailBloc(repository: getIt<ListingRepository>()),
+  );
+
+  // Favoris (M06) — session-scoped and read from three screens, so a single
+  // instance: two hearts on the same listing must not disagree.
+  getIt.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerLazySingleton<FavoritesBloc>(
+    () => FavoritesBloc(repository: getIt<FavoritesRepository>()),
   );
 
   // Locations — the city picker the search bar opens.

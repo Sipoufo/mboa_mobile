@@ -31,6 +31,20 @@ enum Amenity {
         _ => null,
       };
 
+  /// M05 — the same checklist, arriving on a public fiche.
+  static Amenity? fromDetail(AnnonceDetailResponseAmenitiesEnum? value) =>
+      switch (value) {
+        AnnonceDetailResponseAmenitiesEnum.AIR_CONDITIONING =>
+          Amenity.airConditioning,
+        AnnonceDetailResponseAmenitiesEnum.HOT_WATER => Amenity.hotWater,
+        AnnonceDetailResponseAmenitiesEnum.GENERATOR => Amenity.generator,
+        AnnonceDetailResponseAmenitiesEnum.SECURITY_GUARD =>
+          Amenity.securityGuard,
+        AnnonceDetailResponseAmenitiesEnum.PARKING => Amenity.parking,
+        AnnonceDetailResponseAmenitiesEnum.WIFI => Amenity.wifi,
+        _ => null,
+      };
+
   CreateAnnonceRequestAmenitiesEnum get asCreate => switch (this) {
         Amenity.airConditioning =>
           CreateAnnonceRequestAmenitiesEnum.AIR_CONDITIONING,

@@ -398,6 +398,190 @@
       }
     }
   },
+  "favoritesAdd": "Save",
+  "@favoritesAdd": {
+      "description": "M06 — save a listing."
+  },
+  "favoritesRemove": "Remove from favourites",
+  "@favoritesRemove": {
+      "description": "M06 — unsave."
+  },
+  "favoritesSignInTitle": "Create an account to save",
+  "@favoritesSignInTitle": {
+      "description": "RM-M04-05."
+  },
+  "favoritesSignInBody": "Your favourites follow you from one device to the next.",
+  "@favoritesSignInBody": {
+      "description": "Why an account."
+  },
+  "favoritesEmptyTitle": "No favourites",
+  "@favoritesEmptyTitle": {
+      "description": "Empty tab."
+  },
+  "favoritesEmptyBody": "Tap the heart on a property to find it here.",
+  "@favoritesEmptyBody": {
+      "description": "Empty tab."
+  },
+  "favoritesLimitReached": "You have reached 50 favourites. Remove one to add another.",
+  "@favoritesLimitReached": {
+      "description": "RM-M06-02."
+  },
+  "favoritesUnavailable": "This property is no longer available",
+  "@favoritesUnavailable": {
+      "description": "available = false."
+  },
+  "favoritesUnavailableNote": "It stays here for 30 days, then disappears.",
+  "@favoritesUnavailableNote": {
+      "description": "The 30-day grace."
+  },
+  "listingTitle": "Property details",
+  "@listingTitle": {
+      "description": "M05 screen title."
+  },
+  "listingGoneTitle": "This property is no longer available",
+  "@listingGoneTitle": {
+      "description": "CE-M05-01."
+  },
+  "listingGoneBody": "The listing was withdrawn or has expired. Try a new search.",
+  "@listingGoneBody": {
+      "description": "CE-M05-01."
+  },
+  "listingOfflineBanner": "Offline fiche — some actions are unavailable.",
+  "@listingOfflineBanner": {
+      "description": "Cached fiche."
+  },
+  "listingCharacteristics": "Characteristics",
+  "@listingCharacteristics": {
+      "description": "Fiche section."
+  },
+  "listingAmenities": "Amenities",
+  "@listingAmenities": {
+      "description": "Fiche section."
+  },
+  "listingDescription": "Description",
+  "@listingDescription": {
+      "description": "Fiche section."
+  },
+  "listingProvider": "The provider",
+  "@listingProvider": {
+      "description": "Fiche section."
+  },
+  "listingLocationNote": "Approximate location: the exact address is only given on a signed contract.",
+  "@listingLocationNote": {
+      "description": "RM-M05-02."
+  },
+  "listingPhotosCount": "{count} photos",
+  "@listingPhotosCount": {
+      "description": "Gallery entry.",
+      "placeholders": {
+          "count": {
+              "type": "int"
+          }
+      }
+  },
+  "listingContact": "Contact",
+  "@listingContact": {
+      "description": "Fiche action."
+  },
+  "listingPlanVisit": "Book a visit",
+  "@listingPlanVisit": {
+      "description": "RM-M05-07."
+  },
+  "listingReport": "Report",
+  "@listingReport": {
+      "description": "RM-M05-05."
+  },
+  "listingActionsSignIn": "Sign in to contact the provider or book a visit.",
+  "@listingActionsSignIn": {
+      "description": "RM-M04-05."
+  },
+  "listingNoVisitor": "This property does not accept visits yet.",
+  "@listingNoVisitor": {
+      "description": "RM-M05-07."
+  },
+  "listingReviewsTitle": "Reviews",
+  "@listingReviewsTitle": {
+      "description": "RM-M05-08."
+  },
+  "listingRatingSummary": "{average} · {count} reviews",
+  "@listingRatingSummary": {
+      "description": "Rating block.",
+      "placeholders": {
+          "count": {
+              "type": "int"
+          },
+          "average": {
+              "type": "String"
+          }
+      }
+  },
+  "listingReviewVisit": "Visit",
+  "@listingReviewVisit": {
+      "description": "ReviewKind.visit."
+  },
+  "listingReviewResident": "Tenant",
+  "@listingReviewResident": {
+      "description": "ReviewKind.resident."
+  },
+  "listingReviewMonths": "{count} months living there",
+  "@listingReviewMonths": {
+      "description": "residenceMonths.",
+      "placeholders": {
+          "count": {
+              "type": "int"
+          }
+      }
+  },
+  "listingReviewEdited": "Edited on {date}",
+  "@listingReviewEdited": {
+      "description": "RM-M27-02.",
+      "placeholders": {
+          "date": {
+              "type": "String"
+          }
+      }
+  },
+  "badgeTrustedProvider": "Trusted provider",
+  "@badgeTrustedProvider": {
+      "description": "🏆"
+  },
+  "badgeRecertified": "Recertified",
+  "@badgeRecertified": {
+      "description": "🔄"
+  },
+  "badgeVerifiedIdentity": "Verified identity",
+  "@badgeVerifiedIdentity": {
+      "description": "✅"
+  },
+  "badgeVerifiedPhotos": "Verified photos",
+  "@badgeVerifiedPhotos": {
+      "description": "📸"
+  },
+  "residenceTitle": "Residence details",
+  "@residenceTitle": {
+      "description": "Residence fiche."
+  },
+  "residenceUnitsAvailable": "{count, plural, one{1 unit available} other{{count} units available}}",
+  "@residenceUnitsAvailable": {
+      "description": "Residence units.",
+      "placeholders": {
+          "count": {
+              "type": "int"
+          }
+      }
+  },
+  "prestataireKindParticulier": "Individual",
+  "@prestataireKindParticulier": {
+      "description": "ProviderCard.type."
+  },
+  "prestataireKindAgence": "Agency",
+  "@prestataireKindAgence": {
+      "description": "ProviderCard.type."
+  },
+  "prestataireKindPromoteur": "Developer",
+  "@prestataireKindPromoteur": {
+      "description": "ProviderCard.type."
+  },
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
   "commonErrorTitle": "Oops",

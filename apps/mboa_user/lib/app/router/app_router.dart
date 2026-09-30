@@ -36,6 +36,12 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
 
+        // Public: searching and reading a fiche need no account (CA-M04-04,
+        // CA-M05-04). The fiches are pushed over the shell rather than living
+        // in a tab — they are a destination, not a section.
+        AutoRoute(page: ListingDetailRoute.page, path: '/listings/:id'),
+        AutoRoute(page: ResidenceDetailRoute.page, path: '/residences/:id'),
+
         // Public: searching needs no account (CA-M04-04).
         AutoRoute(
           page: UserShellRoute.page,

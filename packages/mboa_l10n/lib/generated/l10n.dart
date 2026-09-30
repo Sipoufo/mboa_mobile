@@ -986,6 +986,398 @@ class I18n {
     );
   }
 
+  /// `Enregistrer`
+  String get favoritesAdd {
+    return Intl.message(
+      'Enregistrer',
+      name: 'favoritesAdd',
+      desc: 'M06 — save a listing.',
+      args: [],
+    );
+  }
+
+  /// `Retirer des favoris`
+  String get favoritesRemove {
+    return Intl.message(
+      'Retirer des favoris',
+      name: 'favoritesRemove',
+      desc: 'M06 — unsave.',
+      args: [],
+    );
+  }
+
+  /// `Créez un compte pour enregistrer`
+  String get favoritesSignInTitle {
+    return Intl.message(
+      'Créez un compte pour enregistrer',
+      name: 'favoritesSignInTitle',
+      desc: 'RM-M04-05 — the wall is on the action.',
+      args: [],
+    );
+  }
+
+  /// `Vos favoris vous suivent d'un appareil à l'autre.`
+  String get favoritesSignInBody {
+    return Intl.message(
+      'Vos favoris vous suivent d\'un appareil à l\'autre.',
+      name: 'favoritesSignInBody',
+      desc: 'Why an account.',
+      args: [],
+    );
+  }
+
+  /// `Aucun favori`
+  String get favoritesEmptyTitle {
+    return Intl.message(
+      'Aucun favori',
+      name: 'favoritesEmptyTitle',
+      desc: 'Empty tab.',
+      args: [],
+    );
+  }
+
+  /// `Touchez le cœur sur un bien pour le retrouver ici.`
+  String get favoritesEmptyBody {
+    return Intl.message(
+      'Touchez le cœur sur un bien pour le retrouver ici.',
+      name: 'favoritesEmptyBody',
+      desc: 'Empty tab.',
+      args: [],
+    );
+  }
+
+  /// `Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.`
+  String get favoritesLimitReached {
+    return Intl.message(
+      'Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.',
+      name: 'favoritesLimitReached',
+      desc: 'RM-M06-02.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien n'est plus disponible`
+  String get favoritesUnavailable {
+    return Intl.message(
+      'Ce bien n\'est plus disponible',
+      name: 'favoritesUnavailable',
+      desc: 'FavoriResponse.available = false.',
+      args: [],
+    );
+  }
+
+  /// `Il restera ici 30 jours, puis disparaîtra.`
+  String get favoritesUnavailableNote {
+    return Intl.message(
+      'Il restera ici 30 jours, puis disparaîtra.',
+      name: 'favoritesUnavailableNote',
+      desc: 'The 30-day grace.',
+      args: [],
+    );
+  }
+
+  /// `Détail du bien`
+  String get listingTitle {
+    return Intl.message(
+      'Détail du bien',
+      name: 'listingTitle',
+      desc: 'M05 screen title.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien n'est plus disponible`
+  String get listingGoneTitle {
+    return Intl.message(
+      'Ce bien n\'est plus disponible',
+      name: 'listingGoneTitle',
+      desc: 'CE-M05-01.',
+      args: [],
+    );
+  }
+
+  /// `L'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.`
+  String get listingGoneBody {
+    return Intl.message(
+      'L\'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.',
+      name: 'listingGoneBody',
+      desc: 'CE-M05-01.',
+      args: [],
+    );
+  }
+
+  /// `Fiche hors ligne — certaines actions sont indisponibles.`
+  String get listingOfflineBanner {
+    return Intl.message(
+      'Fiche hors ligne — certaines actions sont indisponibles.',
+      name: 'listingOfflineBanner',
+      desc: 'Cached fiche: the verdicts are stale, so the actions stay off.',
+      args: [],
+    );
+  }
+
+  /// `Caractéristiques`
+  String get listingCharacteristics {
+    return Intl.message(
+      'Caractéristiques',
+      name: 'listingCharacteristics',
+      desc: 'Fiche section.',
+      args: [],
+    );
+  }
+
+  /// `Équipements`
+  String get listingAmenities {
+    return Intl.message(
+      'Équipements',
+      name: 'listingAmenities',
+      desc: 'Fiche section.',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get listingDescription {
+    return Intl.message(
+      'Description',
+      name: 'listingDescription',
+      desc: 'Fiche section.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire`
+  String get listingProvider {
+    return Intl.message(
+      'Le prestataire',
+      name: 'listingProvider',
+      desc: 'Fiche section.',
+      args: [],
+    );
+  }
+
+  /// `Localisation approximative : l'adresse exacte n'est communiquée qu'au contrat signé.`
+  String get listingLocationNote {
+    return Intl.message(
+      'Localisation approximative : l\'adresse exacte n\'est communiquée qu\'au contrat signé.',
+      name: 'listingLocationNote',
+      desc: 'RM-M05-02 / RM-M04-06.',
+      args: [],
+    );
+  }
+
+  /// `{count} photos`
+  String listingPhotosCount(int count) {
+    return Intl.message(
+      '$count photos',
+      name: 'listingPhotosCount',
+      desc: 'Gallery entry.',
+      args: [count],
+    );
+  }
+
+  /// `Contacter`
+  String get listingContact {
+    return Intl.message(
+      'Contacter',
+      name: 'listingContact',
+      desc: 'Fiche action.',
+      args: [],
+    );
+  }
+
+  /// `Planifier une visite`
+  String get listingPlanVisit {
+    return Intl.message(
+      'Planifier une visite',
+      name: 'listingPlanVisit',
+      desc: 'RM-M05-07.',
+      args: [],
+    );
+  }
+
+  /// `Signaler`
+  String get listingReport {
+    return Intl.message(
+      'Signaler',
+      name: 'listingReport',
+      desc: 'RM-M05-05.',
+      args: [],
+    );
+  }
+
+  /// `Connectez-vous pour contacter le prestataire ou planifier une visite.`
+  String get listingActionsSignIn {
+    return Intl.message(
+      'Connectez-vous pour contacter le prestataire ou planifier une visite.',
+      name: 'listingActionsSignIn',
+      desc: 'RM-M04-05 / CA-M05-04.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien n'accepte pas encore de visites.`
+  String get listingNoVisitor {
+    return Intl.message(
+      'Ce bien n\'accepte pas encore de visites.',
+      name: 'listingNoVisitor',
+      desc: 'RM-M05-07 — no bookable visitor.',
+      args: [],
+    );
+  }
+
+  /// `Avis sur le bien`
+  String get listingReviewsTitle {
+    return Intl.message(
+      'Avis sur le bien',
+      name: 'listingReviewsTitle',
+      desc: 'RM-M05-08.',
+      args: [],
+    );
+  }
+
+  /// `{average} · {count} avis`
+  String listingRatingSummary(int count, String average) {
+    return Intl.message(
+      '$average · $count avis',
+      name: 'listingRatingSummary',
+      desc: 'Rating block.',
+      args: [count, average],
+    );
+  }
+
+  /// `Visite`
+  String get listingReviewVisit {
+    return Intl.message(
+      'Visite',
+      name: 'listingReviewVisit',
+      desc: 'ReviewKind.visit.',
+      args: [],
+    );
+  }
+
+  /// `Locataire`
+  String get listingReviewResident {
+    return Intl.message(
+      'Locataire',
+      name: 'listingReviewResident',
+      desc: 'ReviewKind.resident.',
+      args: [],
+    );
+  }
+
+  /// `{count} mois sur place`
+  String listingReviewMonths(int count) {
+    return Intl.message(
+      '$count mois sur place',
+      name: 'listingReviewMonths',
+      desc: 'residenceMonths.',
+      args: [count],
+    );
+  }
+
+  /// `Corrigé le {date}`
+  String listingReviewEdited(String date) {
+    return Intl.message(
+      'Corrigé le $date',
+      name: 'listingReviewEdited',
+      desc: 'RM-M27-02.',
+      args: [date],
+    );
+  }
+
+  /// `Prestataire de confiance`
+  String get badgeTrustedProvider {
+    return Intl.message(
+      'Prestataire de confiance',
+      name: 'badgeTrustedProvider',
+      desc: '🏆',
+      args: [],
+    );
+  }
+
+  /// `Recertifié`
+  String get badgeRecertified {
+    return Intl.message(
+      'Recertifié',
+      name: 'badgeRecertified',
+      desc: '🔄',
+      args: [],
+    );
+  }
+
+  /// `Identité vérifiée`
+  String get badgeVerifiedIdentity {
+    return Intl.message(
+      'Identité vérifiée',
+      name: 'badgeVerifiedIdentity',
+      desc: '✅',
+      args: [],
+    );
+  }
+
+  /// `Photos vérifiées`
+  String get badgeVerifiedPhotos {
+    return Intl.message(
+      'Photos vérifiées',
+      name: 'badgeVerifiedPhotos',
+      desc: '📸',
+      args: [],
+    );
+  }
+
+  /// `Détail de la résidence`
+  String get residenceTitle {
+    return Intl.message(
+      'Détail de la résidence',
+      name: 'residenceTitle',
+      desc: 'Residence fiche.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one{1 unité disponible} other{{count} unités disponibles}}`
+  String residenceUnitsAvailable(int count) {
+    return Intl.plural(
+      count,
+      one: '1 unité disponible',
+      other: '$count unités disponibles',
+      name: 'residenceUnitsAvailable',
+      desc: 'Residence units.',
+      args: [count],
+    );
+  }
+
+  /// `Particulier`
+  String get prestataireKindParticulier {
+    return Intl.message(
+      'Particulier',
+      name: 'prestataireKindParticulier',
+      desc: 'ProviderCard.type.',
+      args: [],
+    );
+  }
+
+  /// `Agence`
+  String get prestataireKindAgence {
+    return Intl.message(
+      'Agence',
+      name: 'prestataireKindAgence',
+      desc: 'ProviderCard.type.',
+      args: [],
+    );
+  }
+
+  /// `Promoteur`
+  String get prestataireKindPromoteur {
+    return Intl.message(
+      'Promoteur',
+      name: 'prestataireKindPromoteur',
+      desc: 'ProviderCard.type.',
+      args: [],
+    );
+  }
+
   /// `Réessayer`
   String get commonRetry {
     return Intl.message('Réessayer', name: 'commonRetry', desc: '', args: []);

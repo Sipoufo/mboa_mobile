@@ -80,45 +80,56 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m27(reason) => "Motif : ${reason}";
 
-  static String m28(count) => "${count} unité(s)";
+  static String m28(count) => "${count} photos";
 
-  static String m29(phone) => "Code envoyé au ${phone}";
+  static String m29(count, average) => "${average} · ${count} avis";
 
-  static String m30(seconds) => "Renvoyer dans ${seconds}s";
+  static String m30(date) => "Corrigé le ${date}";
 
-  static String m31(tier) => "Votre formule ${tier} est active.";
+  static String m31(count) => "${count} mois sur place";
 
-  static String m32(ref) => "Référence : ${ref}";
+  static String m32(count) => "${count} unité(s)";
 
-  static String m33(price) => "${price} FCFA / mois";
+  static String m33(phone) => "Code envoyé au ${phone}";
 
-  static String m34(count) =>
+  static String m34(seconds) => "Renvoyer dans ${seconds}s";
+
+  static String m35(tier) => "Votre formule ${tier} est active.";
+
+  static String m36(ref) => "Référence : ${ref}";
+
+  static String m37(price) => "${price} FCFA / mois";
+
+  static String m38(count) =>
       "${Intl.plural(count, one: '1 unité de résidence', other: '${count} unités de résidence')}";
 
-  static String m35(tier) =>
+  static String m39(tier) =>
       "Limite atteinte. Passe à ${tier} pour publier plus d’annonces.";
 
-  static String m36(min) => "Ajoute au moins ${min} photos pour publier.";
+  static String m40(min) => "Ajoute au moins ${min} photos pour publier.";
 
-  static String m37(query) => "Aucune unité ne correspond à « ${query} ».";
-
-  static String m38(value) => "État général perçu : ${value}/5";
-
-  static String m39(price) => "À partir de ${price}";
-
-  static String m40(count) =>
+  static String m41(count) =>
       "${Intl.plural(count, one: '1 unité disponible', other: '${count} unités disponibles')}";
 
-  static String m41(count) => "${count}+";
+  static String m42(query) => "Aucune unité ne correspond à « ${query} ».";
 
-  static String m42(count) =>
+  static String m43(value) => "État général perçu : ${value}/5";
+
+  static String m44(price) => "À partir de ${price}";
+
+  static String m45(count) =>
+      "${Intl.plural(count, one: '1 unité disponible', other: '${count} unités disponibles')}";
+
+  static String m46(count) => "${count}+";
+
+  static String m47(count) =>
       "${Intl.plural(count, zero: 'Aucune annonce active', one: '1 annonce active', other: '${count} annonces actives')}";
 
-  static String m43(date) => "Valable jusqu’au ${date}";
+  static String m48(date) => "Valable jusqu’au ${date}";
 
-  static String m44(time) => "Confirmé à ${time}";
+  static String m49(time) => "Confirmé à ${time}";
 
-  static String m45(distance) =>
+  static String m50(distance) =>
       "Vous êtes à environ ${distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -617,6 +628,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "authPasswordRequired": MessageLookupByLibrary.simpleMessage(
       "Mot de passe requis",
     ),
+    "badgeRecertified": MessageLookupByLibrary.simpleMessage("Recertifié"),
+    "badgeTrustedProvider": MessageLookupByLibrary.simpleMessage(
+      "Prestataire de confiance",
+    ),
+    "badgeVerifiedIdentity": MessageLookupByLibrary.simpleMessage(
+      "Identité vérifiée",
+    ),
+    "badgeVerifiedPhotos": MessageLookupByLibrary.simpleMessage(
+      "Photos vérifiées",
+    ),
     "changePasswordButton": MessageLookupByLibrary.simpleMessage(
       "Mettre à jour",
     ),
@@ -873,6 +894,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "exitAppTitle": MessageLookupByLibrary.simpleMessage(
       "Quitter l’application ?",
     ),
+    "favoritesAdd": MessageLookupByLibrary.simpleMessage("Enregistrer"),
+    "favoritesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Touchez le cœur sur un bien pour le retrouver ici.",
+    ),
+    "favoritesEmptyTitle": MessageLookupByLibrary.simpleMessage("Aucun favori"),
+    "favoritesLimitReached": MessageLookupByLibrary.simpleMessage(
+      "Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.",
+    ),
+    "favoritesRemove": MessageLookupByLibrary.simpleMessage(
+      "Retirer des favoris",
+    ),
+    "favoritesSignInBody": MessageLookupByLibrary.simpleMessage(
+      "Vos favoris vous suivent d\'un appareil à l\'autre.",
+    ),
+    "favoritesSignInTitle": MessageLookupByLibrary.simpleMessage(
+      "Créez un compte pour enregistrer",
+    ),
+    "favoritesUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Ce bien n\'est plus disponible",
+    ),
+    "favoritesUnavailableNote": MessageLookupByLibrary.simpleMessage(
+      "Il restera ici 30 jours, puis disparaîtra.",
+    ),
     "homeCtaAgentsAction": MessageLookupByLibrary.simpleMessage(
       "Gérer mes agents",
     ),
@@ -977,6 +1021,45 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycVerso": MessageLookupByLibrary.simpleMessage("Verso"),
     "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
     "languageFrench": MessageLookupByLibrary.simpleMessage("Français"),
+    "listingActionsSignIn": MessageLookupByLibrary.simpleMessage(
+      "Connectez-vous pour contacter le prestataire ou planifier une visite.",
+    ),
+    "listingAmenities": MessageLookupByLibrary.simpleMessage("Équipements"),
+    "listingCharacteristics": MessageLookupByLibrary.simpleMessage(
+      "Caractéristiques",
+    ),
+    "listingContact": MessageLookupByLibrary.simpleMessage("Contacter"),
+    "listingDescription": MessageLookupByLibrary.simpleMessage("Description"),
+    "listingGoneBody": MessageLookupByLibrary.simpleMessage(
+      "L\'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.",
+    ),
+    "listingGoneTitle": MessageLookupByLibrary.simpleMessage(
+      "Ce bien n\'est plus disponible",
+    ),
+    "listingLocationNote": MessageLookupByLibrary.simpleMessage(
+      "Localisation approximative : l\'adresse exacte n\'est communiquée qu\'au contrat signé.",
+    ),
+    "listingNoVisitor": MessageLookupByLibrary.simpleMessage(
+      "Ce bien n\'accepte pas encore de visites.",
+    ),
+    "listingOfflineBanner": MessageLookupByLibrary.simpleMessage(
+      "Fiche hors ligne — certaines actions sont indisponibles.",
+    ),
+    "listingPhotosCount": m28,
+    "listingPlanVisit": MessageLookupByLibrary.simpleMessage(
+      "Planifier une visite",
+    ),
+    "listingProvider": MessageLookupByLibrary.simpleMessage("Le prestataire"),
+    "listingRatingSummary": m29,
+    "listingReport": MessageLookupByLibrary.simpleMessage("Signaler"),
+    "listingReviewEdited": m30,
+    "listingReviewMonths": m31,
+    "listingReviewResident": MessageLookupByLibrary.simpleMessage("Locataire"),
+    "listingReviewVisit": MessageLookupByLibrary.simpleMessage("Visite"),
+    "listingReviewsTitle": MessageLookupByLibrary.simpleMessage(
+      "Avis sur le bien",
+    ),
+    "listingTitle": MessageLookupByLibrary.simpleMessage("Détail du bien"),
     "loadingDialog_content": MessageLookupByLibrary.simpleMessage(
       "Veuillez patienter...",
     ),
@@ -1079,7 +1162,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "missionsTabOpportunities": MessageLookupByLibrary.simpleMessage(
       "Opportunités",
     ),
-    "missionsUnits": m28,
+    "missionsUnits": m32,
     "missionsWithdraw": MessageLookupByLibrary.simpleMessage("Retirer"),
     "navAccount": MessageLookupByLibrary.simpleMessage("Compte"),
     "navFavorites": MessageLookupByLibrary.simpleMessage("Favoris"),
@@ -1090,7 +1173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "navMessages": MessageLookupByLibrary.simpleMessage("Messages"),
     "navSearch": MessageLookupByLibrary.simpleMessage("Recherche"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
-    "otpCodeSentTo": m29,
+    "otpCodeSentTo": m33,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
       "Code invalide. Réessayez.",
     ),
@@ -1098,7 +1181,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous n’avez pas reçu le code ?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Renvoyer le code"),
-    "otpResendIn": m30,
+    "otpResendIn": m34,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
     "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
@@ -1107,7 +1190,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
       "Finalisez sur votre téléphone",
     ),
-    "paymentConfirmedBody": m31,
+    "paymentConfirmedBody": m35,
     "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement confirmé",
     ),
@@ -1134,7 +1217,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement en attente",
     ),
-    "paymentReference": m32,
+    "paymentReference": m36,
     "paymentRetry": MessageLookupByLibrary.simpleMessage(
       "Réessayer le paiement",
     ),
@@ -1144,9 +1227,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Un passage à une formule inférieure prend effet au prochain cycle.",
     ),
     "plansPriceFree": MessageLookupByLibrary.simpleMessage("Gratuit"),
-    "plansPriceMonthly": m33,
-    "plansResidenceAllowance": m34,
+    "plansPriceMonthly": m37,
+    "plansResidenceAllowance": m38,
     "plansTitle": MessageLookupByLibrary.simpleMessage("Formules"),
+    "prestataireKindAgence": MessageLookupByLibrary.simpleMessage("Agence"),
+    "prestataireKindParticulier": MessageLookupByLibrary.simpleMessage(
+      "Particulier",
+    ),
+    "prestataireKindPromoteur": MessageLookupByLibrary.simpleMessage(
+      "Promoteur",
+    ),
     "profileBusinessMissing": MessageLookupByLibrary.simpleMessage(
       "À renseigner",
     ),
@@ -1202,11 +1292,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "propertyTypeRoom": MessageLookupByLibrary.simpleMessage("Chambre"),
     "propertyTypeStudio": MessageLookupByLibrary.simpleMessage("Studio"),
     "propertyTypeVilla": MessageLookupByLibrary.simpleMessage("Villa"),
-    "publishBlockedLimitBody": m35,
+    "publishBlockedLimitBody": m39,
     "publishBlockedLimitTitle": MessageLookupByLibrary.simpleMessage(
       "Limite atteinte",
     ),
-    "publishBlockedPhotosBody": m36,
+    "publishBlockedPhotosBody": m40,
     "publishBlockedPhotosTitle": MessageLookupByLibrary.simpleMessage(
       "Photos manquantes",
     ),
@@ -1248,11 +1338,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Détails de la résidence",
     ),
     "residenceDetailUnitsLabel": MessageLookupByLibrary.simpleMessage("Total"),
+    "residenceTitle": MessageLookupByLibrary.simpleMessage(
+      "Détail de la résidence",
+    ),
     "residenceUnitStatus": MessageLookupByLibrary.simpleMessage("Statut"),
+    "residenceUnitsAvailable": m41,
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "La modification d’une unité arrivera prochainement.",
     ),
-    "residenceUnitsSearchEmpty": m37,
+    "residenceUnitsSearchEmpty": m42,
     "residenceUnitsSearchHint": MessageLookupByLibrary.simpleMessage(
       "Rechercher une unité",
     ),
@@ -1274,7 +1368,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous n\'avez pas encore répondu à cet avis.",
     ),
     "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Vos réponses"),
-    "reviewCondition": m38,
+    "reviewCondition": m43,
     "reviewCons": MessageLookupByLibrary.simpleMessage("Points négatifs"),
     "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage(
       "Utilisateur supprimé",
@@ -1314,12 +1408,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "searchRentRange": MessageLookupByLibrary.simpleMessage("Loyer (XAF)"),
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Résidence"),
-    "searchResidenceFrom": m39,
-    "searchResidenceUnits": m40,
+    "searchResidenceFrom": m44,
+    "searchResidenceUnits": m45,
     "searchRoomsMin": MessageLookupByLibrary.simpleMessage(
       "Nombre de pièces minimum",
     ),
-    "searchRoomsPlus": m41,
+    "searchRoomsPlus": m46,
     "searchStartBody": MessageLookupByLibrary.simpleMessage(
       "Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
     ),
@@ -1355,7 +1449,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Votre abonnement a expiré",
     ),
-    "subscriptionListingLimit": m42,
+    "subscriptionListingLimit": m47,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Annonces illimitées",
     ),
@@ -1372,7 +1466,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Les reçus sont liés à cet appareil pour le moment.",
     ),
-    "subscriptionRenewsOn": m43,
+    "subscriptionRenewsOn": m48,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
       "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
@@ -1458,7 +1552,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Numéro copié"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Locataire"),
-    "visitsPresenceConfirmedAt": m44,
+    "visitsPresenceConfirmedAt": m49,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "La visite n\'est validée que lorsque les deux présences sont confirmées.",
     ),
@@ -1493,7 +1587,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
-    "visitsTooFarBody": m45,
+    "visitsTooFarBody": m50,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer quand même",
     ),

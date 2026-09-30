@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../favorites/bloc/favorites_bloc.dart';
 
 /// App Mboa's home for everyone, signed in or not.
 ///
@@ -14,8 +17,17 @@ import '../../../app/router/app_router.gr.dart';
 /// account say so rather than being hidden, because a product's map should be
 /// legible before you sign up.
 @RoutePage()
-class UserShellPage extends StatelessWidget {
+class UserShellPage extends StatelessWidget implements AutoRouteWrapper {
   const UserShellPage({super.key});
+
+  /// One `FavoritesBloc` above every tab **and** above the fiches pushed over
+  /// them: the heart on a search card and the heart on that listing's fiche
+  /// read the same state, or they end up disagreeing about the same property.
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider<FavoritesBloc>.value(
+        value: getIt<FavoritesBloc>(),
+        child: this,
+      );
 
   @override
   Widget build(BuildContext context) {
