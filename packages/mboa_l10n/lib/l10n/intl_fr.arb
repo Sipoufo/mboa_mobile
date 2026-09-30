@@ -582,6 +582,58 @@
   "@prestataireKindPromoteur": {
       "description": "ProviderCard.type."
   },
+  "messagingTitle": "Messages",
+  "@messagingTitle": {
+      "description": "M12 screen title."
+  },
+  "messagingEmptyTitle": "Aucune conversation",
+  "@messagingEmptyTitle": {
+      "description": "Empty list."
+  },
+  "messagingEmptyTenant": "Contactez un prestataire depuis la fiche d'un bien pour démarrer une conversation.",
+  "@messagingEmptyTenant": {
+      "description": "RM-M12-01 — the tenant has the first word."
+  },
+  "messagingEmptyProvider": "Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.",
+  "@messagingEmptyProvider": {
+      "description": "RM-M12-01 — the provider cannot write first."
+  },
+  "messagingHint": "Écrire un message…",
+  "@messagingHint": {
+      "description": "Composer placeholder."
+  },
+  "messagingSend": "Envoyer",
+  "@messagingSend": {
+      "description": "Composer action."
+  },
+  "messagingAttach": "Joindre une image",
+  "@messagingAttach": {
+      "description": "RM-M12-04."
+  },
+  "messagingAttachment": "Image",
+  "@messagingAttachment": {
+      "description": "An attached image chip."
+  },
+  "messagingAttachmentsMax": "3 images maximum par message.",
+  "@messagingAttachmentsMax": {
+      "description": "RM-M12-04."
+  },
+  "messagingPending": "En attente de réseau",
+  "@messagingPending": {
+      "description": "CE-M12-01 — queued, not lost."
+  },
+  "messagingFailed": "Non envoyé",
+  "@messagingFailed": {
+      "description": "A queued message that keeps failing."
+  },
+  "messagingReadOnly": "Cette annonce n'est plus disponible. La conversation reste consultable.",
+  "@messagingReadOnly": {
+      "description": "CE-M12-02."
+  },
+  "messagingContactSent": "Message envoyé au prestataire",
+  "@messagingContactSent": {
+      "description": "Toast after starting a thread from a fiche."
+  },
   "commonRetry": "Réessayer",
   "commonError": "Une erreur est survenue. Réessayez.",
   "commonErrorTitle": "Oups",

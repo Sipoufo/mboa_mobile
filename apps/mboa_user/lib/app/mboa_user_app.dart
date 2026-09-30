@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
@@ -7,6 +8,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/auth/bloc/auth_bloc.dart';
 import 'notifications_bootstrap.dart';
+import 'di/app_module.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
 
@@ -37,15 +39,23 @@ class _MboaUserAppState extends State<MboaUserApp> {
           // then drive the transition. The guards cover deep links and back
           // navigation; this covers login/logout while the app is running.
           switch (state) {
+            // Both outcomes land on the **public shell**: the tenant app's home
+            // is the search, signed in or not (CA-M04-04). What a session
+            // changes is what the Compte tab, the hearts and the threads can
+            // do — not which screen exists.
             case AuthAuthenticated():
               getIt<SessionSnapshot>().markAuthenticated();
               getIt<SessionExpiryWatcher>().start();
               startNotifications(router: _router, context: () => context);
-              _router.replaceAll([const AuthenticatedRouter()]);
+              _router.replaceAll([const UserShellRoute()]);
             case AuthUnauthenticated():
               getIt<SessionSnapshot>().markUnauthenticated();
               getIt<SessionExpiryWatcher>().stop();
-              _router.replaceAll([const WelcomeRoute()]);
+              _router.replaceAll([const UserShellRoute()]);
+              // After navigating away, so the widgets holding them are gone:
+              // favourites and threads belong to an account, and the next
+              // person to open the app must not see the last one's.
+              unawaited(resetSessionScopedBlocs());
             default:
               break;
           }

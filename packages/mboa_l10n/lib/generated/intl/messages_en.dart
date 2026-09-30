@@ -1056,6 +1056,33 @@ class MessageLookup extends MessageLookupByLibrary {
       "Single\nproperties",
     ),
     "mesBiensTitle": MessageLookupByLibrary.simpleMessage("My properties"),
+    "messagingAttach": MessageLookupByLibrary.simpleMessage("Attach an image"),
+    "messagingAttachment": MessageLookupByLibrary.simpleMessage("Image"),
+    "messagingAttachmentsMax": MessageLookupByLibrary.simpleMessage(
+      "3 images maximum per message.",
+    ),
+    "messagingContactSent": MessageLookupByLibrary.simpleMessage(
+      "Message sent to the provider",
+    ),
+    "messagingEmptyProvider": MessageLookupByLibrary.simpleMessage(
+      "Tenants will write to you from your listings. You cannot start a conversation.",
+    ),
+    "messagingEmptyTenant": MessageLookupByLibrary.simpleMessage(
+      "Contact a provider from a property\'s page to start a conversation.",
+    ),
+    "messagingEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No conversation",
+    ),
+    "messagingFailed": MessageLookupByLibrary.simpleMessage("Not sent"),
+    "messagingHint": MessageLookupByLibrary.simpleMessage("Write a message…"),
+    "messagingPending": MessageLookupByLibrary.simpleMessage(
+      "Waiting for a connection",
+    ),
+    "messagingReadOnly": MessageLookupByLibrary.simpleMessage(
+      "This listing is no longer available. The conversation stays readable.",
+    ),
+    "messagingSend": MessageLookupByLibrary.simpleMessage("Send"),
+    "messagingTitle": MessageLookupByLibrary.simpleMessage("Messages"),
     "missionsAccept": MessageLookupByLibrary.simpleMessage("Accept"),
     "missionsActionFailed": MessageLookupByLibrary.simpleMessage(
       "That action isn\'t possible right now.",

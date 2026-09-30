@@ -67,7 +67,7 @@ class ProMenuPage extends StatelessWidget {
                   _MenuEntry(
                     icon: LucideIcons.messageSquare,
                     label: l10n.menuMessages,
-                    onTap: () => _comingSoon(context),
+                    onTap: () => _go(context, const MessagesRoute()),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.house,

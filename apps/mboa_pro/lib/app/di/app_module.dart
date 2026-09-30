@@ -227,6 +227,22 @@ void registerAppModule() {
   getIt.registerFactory<PrestataireAgendaBloc>(
     () => PrestataireAgendaBloc(source: getIt<PrestataireVisitRepository>()),
   );
+  // --- Messagerie (M12) ---
+  // Repository, list and thread are shared with the tenant app; the pro side
+  // can only answer (RM-M12-01).
+  getIt.registerLazySingleton<MessagingRepository>(
+    () => MessagingRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerLazySingleton<ConversationsBloc>(
+    () => ConversationsBloc(repository: getIt<MessagingRepository>()),
+  );
+  getIt.registerFactory<ThreadBloc>(
+    () => ThreadBloc(repository: getIt<MessagingRepository>()),
+  );
+
   // --- Contracts (M08) ---
   getIt.registerLazySingleton<ContractRepository>(
     () => ContractRepository(dioClient: getIt<DioClient>()),

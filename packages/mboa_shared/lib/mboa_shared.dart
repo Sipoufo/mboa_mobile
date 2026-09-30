@@ -25,6 +25,15 @@ export 'src/features/notifications/notifications_background.dart';
 export 'src/features/contracts/data/contract_repository.dart';
 export 'src/features/contracts/models/contract.dart';
 
+// Messaging (M12) — both apps call the same endpoints; only the entry points
+// differ, since the tenant has the first word (RM-M12-01).
+export 'src/features/messaging/bloc/conversations_bloc.dart';
+export 'src/features/messaging/bloc/thread_bloc.dart';
+export 'src/features/messaging/data/messaging_repository.dart';
+export 'src/features/messaging/models/conversation.dart';
+export 'src/features/messaging/ui/conversations_view.dart';
+export 'src/features/messaging/ui/thread_view.dart';
+
 // Listings — the rent's period (RM-M10-09), read by the listing form, the
 // contract (RM-M08-08) and, later, the client app's search brackets.
 export 'src/features/listings/models/amenity.dart';

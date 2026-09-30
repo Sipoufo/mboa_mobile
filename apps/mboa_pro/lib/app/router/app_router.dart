@@ -84,6 +84,11 @@ class AppRouter extends RootStackRouter {
             // from his visit detail, the prestataire from his own agenda.
             AutoRoute(page: VisitReviewRoute.page, path: 'visits/:id/review'),
 
+            // Messagerie (M12) — reached from the slide menu; a prestataire
+            // cannot start a thread, only answer one.
+            AutoRoute(page: MessagesRoute.page, path: 'messages'),
+            AutoRoute(page: ThreadRoute.page, path: 'messages/:id'),
+
             // Contrat Mboa (M08). The list is a shell tab — the menu entry
             // points at that tab rather than pushing a second copy of it.
             AutoRoute(page: ContractFormRoute.page, path: 'contracts/form'),

@@ -21,6 +21,7 @@ import 'package:mboa_user/features/home/ui/home_page.dart' as _i7;
 import 'package:mboa_user/features/listing/ui/listing_detail_page.dart' as _i8;
 import 'package:mboa_user/features/listing/ui/residence_detail_page.dart'
     as _i12;
+import 'package:mboa_user/features/messaging/ui/messages_page.dart' as _i10;
 import 'package:mboa_user/features/profile/ui/change_phone_page.dart' as _i3;
 import 'package:mboa_user/features/profile/ui/delete_account_page.dart' as _i4;
 import 'package:mboa_user/features/profile/ui/edit_profile_page.dart' as _i5;
@@ -28,7 +29,6 @@ import 'package:mboa_user/features/profile/ui/settings_menu_page.dart' as _i14;
 import 'package:mboa_user/features/profile/ui/settings_page.dart' as _i15;
 import 'package:mboa_user/features/search/ui/search_page.dart' as _i13;
 import 'package:mboa_user/features/shell/ui/account_page.dart' as _i1;
-import 'package:mboa_user/features/shell/ui/tab_soon_page.dart' as _i10;
 import 'package:mboa_user/features/shell/ui/user_shell_page.dart' as _i17;
 import 'package:mboa_user/features/splash/ui/splash_page.dart' as _i16;
 import 'package:mboa_user/features/welcome/ui/welcome_page.dart' as _i18;
@@ -376,6 +376,45 @@ class SplashRoute extends _i19.PageRouteInfo<void> {
       return _i19.WrappedRoute(child: const _i16.SplashPage());
     },
   );
+}
+
+/// generated route for
+/// [_i10.ThreadPage]
+class ThreadRoute extends _i19.PageRouteInfo<ThreadRouteArgs> {
+  ThreadRoute({
+    _i20.Key? key,
+    required _i21.Conversation conversation,
+    List<_i19.PageRouteInfo>? children,
+  }) : super(
+         ThreadRoute.name,
+         args: ThreadRouteArgs(key: key, conversation: conversation),
+         initialChildren: children,
+       );
+
+  static const String name = 'ThreadRoute';
+
+  static _i19.PageInfo page = _i19.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ThreadRouteArgs>();
+      return _i19.WrappedRoute(
+        child: _i10.ThreadPage(key: args.key, conversation: args.conversation),
+      );
+    },
+  );
+}
+
+class ThreadRouteArgs {
+  const ThreadRouteArgs({this.key, required this.conversation});
+
+  final _i20.Key? key;
+
+  final _i21.Conversation conversation;
+
+  @override
+  String toString() {
+    return 'ThreadRouteArgs{key: $key, conversation: $conversation}';
+  }
 }
 
 /// generated route for

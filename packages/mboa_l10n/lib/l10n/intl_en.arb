@@ -582,6 +582,58 @@
   "@prestataireKindPromoteur": {
       "description": "ProviderCard.type."
   },
+  "messagingTitle": "Messages",
+  "@messagingTitle": {
+      "description": "M12 screen title."
+  },
+  "messagingEmptyTitle": "No conversation",
+  "@messagingEmptyTitle": {
+      "description": "Empty list."
+  },
+  "messagingEmptyTenant": "Contact a provider from a property's page to start a conversation.",
+  "@messagingEmptyTenant": {
+      "description": "RM-M12-01."
+  },
+  "messagingEmptyProvider": "Tenants will write to you from your listings. You cannot start a conversation.",
+  "@messagingEmptyProvider": {
+      "description": "RM-M12-01."
+  },
+  "messagingHint": "Write a message…",
+  "@messagingHint": {
+      "description": "Composer placeholder."
+  },
+  "messagingSend": "Send",
+  "@messagingSend": {
+      "description": "Composer action."
+  },
+  "messagingAttach": "Attach an image",
+  "@messagingAttach": {
+      "description": "RM-M12-04."
+  },
+  "messagingAttachment": "Image",
+  "@messagingAttachment": {
+      "description": "An attached image chip."
+  },
+  "messagingAttachmentsMax": "3 images maximum per message.",
+  "@messagingAttachmentsMax": {
+      "description": "RM-M12-04."
+  },
+  "messagingPending": "Waiting for a connection",
+  "@messagingPending": {
+      "description": "CE-M12-01."
+  },
+  "messagingFailed": "Not sent",
+  "@messagingFailed": {
+      "description": "A queued message that keeps failing."
+  },
+  "messagingReadOnly": "This listing is no longer available. The conversation stays readable.",
+  "@messagingReadOnly": {
+      "description": "CE-M12-02."
+  },
+  "messagingContactSent": "Message sent to the provider",
+  "@messagingContactSent": {
+      "description": "Toast after starting a thread from a fiche."
+  },
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
   "commonErrorTitle": "Oops",

@@ -1129,6 +1129,35 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "mesBiensSingle": MessageLookupByLibrary.simpleMessage("Biens\nUniques"),
     "mesBiensTitle": MessageLookupByLibrary.simpleMessage("Mes biens"),
+    "messagingAttach": MessageLookupByLibrary.simpleMessage(
+      "Joindre une image",
+    ),
+    "messagingAttachment": MessageLookupByLibrary.simpleMessage("Image"),
+    "messagingAttachmentsMax": MessageLookupByLibrary.simpleMessage(
+      "3 images maximum par message.",
+    ),
+    "messagingContactSent": MessageLookupByLibrary.simpleMessage(
+      "Message envoyé au prestataire",
+    ),
+    "messagingEmptyProvider": MessageLookupByLibrary.simpleMessage(
+      "Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.",
+    ),
+    "messagingEmptyTenant": MessageLookupByLibrary.simpleMessage(
+      "Contactez un prestataire depuis la fiche d\'un bien pour démarrer une conversation.",
+    ),
+    "messagingEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Aucune conversation",
+    ),
+    "messagingFailed": MessageLookupByLibrary.simpleMessage("Non envoyé"),
+    "messagingHint": MessageLookupByLibrary.simpleMessage("Écrire un message…"),
+    "messagingPending": MessageLookupByLibrary.simpleMessage(
+      "En attente de réseau",
+    ),
+    "messagingReadOnly": MessageLookupByLibrary.simpleMessage(
+      "Cette annonce n\'est plus disponible. La conversation reste consultable.",
+    ),
+    "messagingSend": MessageLookupByLibrary.simpleMessage("Envoyer"),
+    "messagingTitle": MessageLookupByLibrary.simpleMessage("Messages"),
     "missionsAccept": MessageLookupByLibrary.simpleMessage("Accepter"),
     "missionsActionFailed": MessageLookupByLibrary.simpleMessage(
       "Action impossible pour le moment.",

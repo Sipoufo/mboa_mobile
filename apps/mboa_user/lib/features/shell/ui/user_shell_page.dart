@@ -7,6 +7,8 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import 'package:mboa_shared/mboa_shared.dart';
+
 import '../../favorites/bloc/favorites_bloc.dart';
 
 /// App Mboa's home for everyone, signed in or not.
@@ -24,8 +26,14 @@ class UserShellPage extends StatelessWidget implements AutoRouteWrapper {
   /// them: the heart on a search card and the heart on that listing's fiche
   /// read the same state, or they end up disagreeing about the same property.
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<FavoritesBloc>.value(
-        value: getIt<FavoritesBloc>(),
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<FavoritesBloc>.value(value: getIt<FavoritesBloc>()),
+          // The unread badge on the tab and the list itself read one instance.
+          BlocProvider<ConversationsBloc>.value(
+            value: getIt<ConversationsBloc>(),
+          ),
+        ],
         child: this,
       );
 

@@ -1378,6 +1378,136 @@ class I18n {
     );
   }
 
+  /// `Messages`
+  String get messagingTitle {
+    return Intl.message(
+      'Messages',
+      name: 'messagingTitle',
+      desc: 'M12 screen title.',
+      args: [],
+    );
+  }
+
+  /// `Aucune conversation`
+  String get messagingEmptyTitle {
+    return Intl.message(
+      'Aucune conversation',
+      name: 'messagingEmptyTitle',
+      desc: 'Empty list.',
+      args: [],
+    );
+  }
+
+  /// `Contactez un prestataire depuis la fiche d'un bien pour démarrer une conversation.`
+  String get messagingEmptyTenant {
+    return Intl.message(
+      'Contactez un prestataire depuis la fiche d\'un bien pour démarrer une conversation.',
+      name: 'messagingEmptyTenant',
+      desc: 'RM-M12-01 — the tenant has the first word.',
+      args: [],
+    );
+  }
+
+  /// `Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.`
+  String get messagingEmptyProvider {
+    return Intl.message(
+      'Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.',
+      name: 'messagingEmptyProvider',
+      desc: 'RM-M12-01 — the provider cannot write first.',
+      args: [],
+    );
+  }
+
+  /// `Écrire un message…`
+  String get messagingHint {
+    return Intl.message(
+      'Écrire un message…',
+      name: 'messagingHint',
+      desc: 'Composer placeholder.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer`
+  String get messagingSend {
+    return Intl.message(
+      'Envoyer',
+      name: 'messagingSend',
+      desc: 'Composer action.',
+      args: [],
+    );
+  }
+
+  /// `Joindre une image`
+  String get messagingAttach {
+    return Intl.message(
+      'Joindre une image',
+      name: 'messagingAttach',
+      desc: 'RM-M12-04.',
+      args: [],
+    );
+  }
+
+  /// `Image`
+  String get messagingAttachment {
+    return Intl.message(
+      'Image',
+      name: 'messagingAttachment',
+      desc: 'An attached image chip.',
+      args: [],
+    );
+  }
+
+  /// `3 images maximum par message.`
+  String get messagingAttachmentsMax {
+    return Intl.message(
+      '3 images maximum par message.',
+      name: 'messagingAttachmentsMax',
+      desc: 'RM-M12-04.',
+      args: [],
+    );
+  }
+
+  /// `En attente de réseau`
+  String get messagingPending {
+    return Intl.message(
+      'En attente de réseau',
+      name: 'messagingPending',
+      desc: 'CE-M12-01 — queued, not lost.',
+      args: [],
+    );
+  }
+
+  /// `Non envoyé`
+  String get messagingFailed {
+    return Intl.message(
+      'Non envoyé',
+      name: 'messagingFailed',
+      desc: 'A queued message that keeps failing.',
+      args: [],
+    );
+  }
+
+  /// `Cette annonce n'est plus disponible. La conversation reste consultable.`
+  String get messagingReadOnly {
+    return Intl.message(
+      'Cette annonce n\'est plus disponible. La conversation reste consultable.',
+      name: 'messagingReadOnly',
+      desc: 'CE-M12-02.',
+      args: [],
+    );
+  }
+
+  /// `Message envoyé au prestataire`
+  String get messagingContactSent {
+    return Intl.message(
+      'Message envoyé au prestataire',
+      name: 'messagingContactSent',
+      desc: 'Toast after starting a thread from a fiche.',
+      args: [],
+    );
+  }
+
   /// `Réessayer`
   String get commonRetry {
     return Intl.message('Réessayer', name: 'commonRetry', desc: '', args: []);

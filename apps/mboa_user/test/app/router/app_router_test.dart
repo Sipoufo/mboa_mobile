@@ -58,6 +58,12 @@ void main() {
     );
   });
 
+  test('M12 — a thread is a destination, not a tab', () {
+    // Pushed over the shell from the list *and* straight after a first
+    // contact, so it lives at the root rather than inside a tab.
+    expect(routeNamed(ThreadRoute.name).guards, isEmpty);
+  });
+
   test('sign-in screens stay behind GuestGuard', () {
     for (final name in [LoginRoute.name, WelcomeRoute.name]) {
       expect(

@@ -8,7 +8,9 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../../favorites/ui/widgets/favorite_heart.dart';
+import '../../messaging/ui/contact_sheet.dart';
 import '../bloc/listing_detail_bloc.dart';
 import 'widgets/listing_bits.dart';
 
@@ -658,6 +660,23 @@ class _Actions extends StatelessWidget {
 
   final ListingDetail detail;
 
+  /// Opens the thread the first message created — or the one that already
+  /// existed, since a second tap is a 409 and not a failure.
+  Future<void> _contact(BuildContext context, ListingDetail detail) async {
+    final l10n = I18n.of(context);
+    final router = context.router;
+
+    final conversation = await showContactSheet(
+      context,
+      annonceId: detail.id,
+      annonceTitle: detail.title,
+    );
+    if (conversation == null || !context.mounted) return;
+
+    MboaToast.success(context: context, title: l10n.messagingContactSent);
+    await router.push(ThreadRoute(conversation: conversation));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
@@ -679,13 +698,10 @@ class _Actions extends StatelessWidget {
                 Expanded(
                   child: Button.primary(
                     title: l10n.listingContact,
-                    // M12 is not built yet; the button exists because the fiche
-                    // is where contact happens, and the gate is the server's.
+                    // RM-M12-01 — the tenant's first word, on this listing. The
+                    // gate is the server's (`canContact`).
                     onPressed: detail.canContact
-                        ? () => MboaToast.info(
-                              context: context,
-                              title: l10n.commonComingSoon,
-                            )
+                        ? () => _contact(context, detail)
                         : null,
                   ),
                 ),

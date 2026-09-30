@@ -72,6 +72,24 @@ void registerAppModule() {
     () => FavoritesBloc(repository: getIt<FavoritesRepository>()),
   );
 
+  // Messagerie (M12) — repository, list and thread are shared with the pro
+  // app; only the entry points differ (RM-M12-01).
+  getIt.registerLazySingleton<MessagingRepository>(
+    () => MessagingRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerLazySingleton<ConversationsBloc>(
+    () => ConversationsBloc(repository: getIt<MessagingRepository>()),
+  );
+  getIt.registerFactory<ThreadBloc>(
+    () => ThreadBloc(repository: getIt<MessagingRepository>()),
+  );
+  getIt.registerLazySingleton<MediaUploader>(
+    () => MediaUploader(dioClient: getIt<DioClient>()),
+  );
+
   // Locations — the city picker the search bar opens.
   getIt.registerLazySingleton<LocationRepository>(
     () => LocationRepository(dioClient: getIt<DioClient>()),
@@ -126,5 +144,20 @@ void registerAppModule() {
       repository: getIt<BaseProfileRepository>(),
       uploader: getIt<MediaUploader>(),
     ),
+  );
+}
+
+/// Drops the blocs that belong to a signed-in account.
+///
+/// Favourites and conversations are lazy singletons so every heart and every
+/// unread badge reads one instance; that also means they survive a sign-out
+/// unless they are dropped here. Called **after** navigating away, so the
+/// widgets holding them are already gone.
+Future<void> resetSessionScopedBlocs() async {
+  await getIt.resetLazySingleton<FavoritesBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<ConversationsBloc>(
+    disposingFunction: (bloc) => bloc.close(),
   );
 }

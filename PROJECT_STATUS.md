@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**606 tests green, analyze clean.** `mboa_user` 71 · `mboa_pro` 430 ·
-`mboa_core` 12 · `mboa_shared` 93.
+**624 tests green, analyze clean.** `mboa_user` 72 · `mboa_pro` 430 ·
+`mboa_core` 12 · `mboa_shared` 110.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
 > *What the 2026-08-20 spec changed* below before planning anything. M16 has
@@ -43,7 +43,7 @@
 | M04 search | 🚧 **lots 1–2 done** — public shell, filters, list, offline cache · map (lot 3) pending |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
-| M12 messaging | ❌ not started |
+| M12 messagerie | ✅ **both apps** — list, thread, attachments, offline queue · shared views |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
@@ -496,6 +496,37 @@ white cards with dark-green headings.
 - `PropertyType.label(l10n)` replaced three hardcoded French `switch`es (form,
   unit editor, residence detail).
 - Goldens: `annonce_detail.png`, `residence_detail.png`.
+
+### M12 — one module, two apps, and only the doors differ
+The models, the repository, **both blocs and both screens** live in
+`mboa_shared`: a tenant and a prestataire read the same threads and write the
+same messages. What differs is the way in — and that asymmetry is the rule
+itself (RM-M12-01): the tenant starts a thread from a fiche, the prestataire
+has **no "new message" affordance at all**, because `POST /conversations` is
+refused to him and a button that 403s is worse than none.
+
+- **CA-M12-02 is a design constraint, not a filter.** No phone number is shown
+  and nothing dials: the whole module exists so a first contact costs nobody
+  their number. Pinned by a test that asserts the *absence* of a call
+  affordance.
+- **CE-M12-01 is the first real use of `pendingMessagesBox`.** A message
+  written offline appears in the thread marked *En attente de réseau* — not
+  "échec", which reads as lost — is queued, and goes out oldest-first on
+  reconnection. Sequential on purpose: two messages typed in a tunnel must
+  arrive in the order they were written.
+- **CE-M12-02** — an archived listing locks the thread: the history stays, the
+  composer goes, and the screen says why.
+- **A second tap on "Contacter" is a 409, not a failure**: the repository
+  re-reads the list and returns the thread that already exists.
+- **RM-M12-02** — a thread belongs to an annonce, so the title is on the row,
+  in the app bar and in the contact sheet: the same two people about two
+  properties are two conversations.
+
+**Two defects this module surfaced in the tenant app**, both from lot 1's
+public shell: signing in still routed to the old placeholder home instead of
+the shell, and nothing dropped the session-scoped blocs on sign-out — the next
+account would have seen the previous one's favourites and threads.
+`resetSessionScopedBlocs()` now exists on the tenant side too.
 
 ### M05 / M06 — the fiche, and the heart that follows it
 - **Nothing to hide, because nothing is sent.** RM-M05-02 / CA-M05-03: the API
