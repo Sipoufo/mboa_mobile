@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-08-20.
+> Last updated: 2026-09-30.
 
 ## How to resume
 
@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**553 tests green, analyze clean.** `mboa_user` 18 · `mboa_pro` 434 ·
+**578 tests green, analyze clean.** `mboa_user` 47 · `mboa_pro` 430 ·
 `mboa_core` 12 · `mboa_shared` 89.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
@@ -40,7 +40,8 @@
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports |
-| M04 search · M05 detail · M12 messaging | ❌ not started |
+| M04 search | 🚧 **lot 1 done** — public shell, filters, list, offline cache · map (lot 3) pending |
+| M05 detail · M12 messaging | ❌ not started |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
@@ -493,6 +494,35 @@ white cards with dark-green headings.
 - `PropertyType.label(l10n)` replaced three hardcoded French `switch`es (form,
   unit editor, residence detail).
 - Goldens: `annonce_detail.png`, `residence_detail.png`.
+
+### M04 — the tenant app has a public zone now
+**The shell sits at `/`, unguarded.** CA-M04-04 and RM-M04-05 let a visitor
+search and read fiches without an account; the wall belongs on contacting and
+booking. The splash sends *both* outcomes to the shell — signed in or not — and
+only the Compte tab and (in lot 2) the fiche's actions change shape. Putting the
+shell behind `SessionGuard` would show a login screen before anyone ever saw a
+property. Pinned by `app_router_test.dart`.
+
+- **Results are never re-sorted.** `tierRank` arrives in the server's order
+  (CA-M04-02); sorting again here would be a second implementation of the
+  visibility algorithm. Asked for confirmation in `backend-requests.md` §16.
+- **A hit is a sealed union**: `ListingHit` | `ResidenceHit`. A residence is not
+  a listing — it announces "à partir de X, N unités" and will open a different
+  screen — so no widget can flatten the two.
+- **Three empty states, three meanings**: no city yet, nothing matched
+  (CE-M04-01, offers to widen), cached results (CE-M04-02, banner), server error
+  (CE-M04-03, retry). An empty list and an unreachable server look identical if
+  you let them.
+- **The first real use of the Hive cache** (`CLAUDE.md` §3): `searchBox` keeps
+  the last query (RM-M04-02, restored and re-run at launch) and the first page
+  for an hour. A query written by an older build degrades field by field rather
+  than failing the launch.
+- An empty multi-select is **left out of the request**, not sent empty:
+  `?districtIds=` is not the same question as "no district filter".
+- `RentalPeriod`, `PropertyType` and `Amenity` now live in `mboa_shared`, and
+  the bottom nav moved into `mboa_ui` as `MboaBottomNav` — both apps carry one.
+
+Golden: `apps/mboa_user/.../goldens/search.png`.
 
 ### M08 — the contract, and the two verdicts the app must not re-derive
 `awaiting` (RM-M08-09, whose move it is) and `canSign` (RM-M08-02 plus the

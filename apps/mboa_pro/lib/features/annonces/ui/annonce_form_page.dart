@@ -11,8 +11,6 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../bloc/annonce_form_bloc.dart';
 import '../bloc/annonces_bloc.dart';
 import '../bloc/residences_bloc.dart';
-import '../models/annonce.dart';
-import '../models/amenity.dart';
 import '../models/annonce_draft.dart';
 import 'widgets/form_field_shell.dart';
 import 'widgets/form_text_field.dart';

@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import '../../shell/ui/widgets/pro_bottom_nav.dart';
 
 /// The agent's home in App Mboa Pro.
 ///
@@ -34,19 +34,19 @@ class AgentShellPage extends StatelessWidget {
 
         return Scaffold(
           body: child,
-          bottomNavigationBar: ProBottomNav(
+          bottomNavigationBar: MboaBottomNav(
             selectedIndex: tabsRouter.activeIndex,
             onTap: tabsRouter.setActiveIndex,
             items: [
-              ProBottomNavItem(
+              MboaBottomNavItem(
                 icon: LucideIcons.calendarCheck,
                 label: l10n.agentNavVisits,
               ),
-              ProBottomNavItem(
+              MboaBottomNavItem(
                 icon: LucideIcons.briefcase,
                 label: l10n.agentNavMissions,
               ),
-              ProBottomNavItem(
+              MboaBottomNavItem(
                 icon: LucideIcons.userRound,
                 label: l10n.agentNavProfile,
               ),

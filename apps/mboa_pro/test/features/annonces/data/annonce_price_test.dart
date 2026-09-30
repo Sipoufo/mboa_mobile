@@ -4,7 +4,6 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_pro/features/annonces/data/annonce_repository.dart';
 import 'package:mboa_pro/features/annonces/data/residence_repository.dart';
-import 'package:mboa_pro/features/annonces/models/amenity.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_draft.dart';
 import 'package:mocktail/mocktail.dart';
 

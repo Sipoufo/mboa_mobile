@@ -275,6 +275,129 @@
       }
     }
   },
+  "navSearch": "Search",
+  "@navSearch": {
+    "description": "Tenant shell tab."
+  },
+  "navFavorites": "Favourites",
+  "@navFavorites": {
+    "description": "Tenant shell tab (M06)."
+  },
+  "navMessages": "Messages",
+  "@navMessages": {
+    "description": "Tenant shell tab (M12)."
+  },
+  "navAccount": "Account",
+  "@navAccount": {
+    "description": "Tenant shell tab."
+  },
+  "accountGuestTitle": "Create your Mboa account",
+  "@accountGuestTitle": {
+    "description": "Account tab, signed out."
+  },
+  "accountGuestBody": "Searching is free. An account is for contacting a provider, booking a visit and saving favourites.",
+  "@accountGuestBody": {
+    "description": "RM-M04-05."
+  },
+  "accountSignIn": "Sign in",
+  "@accountSignIn": {
+    "description": "CTA to /login."
+  },
+  "searchCityPrompt": "Choose a city",
+  "@searchCityPrompt": {
+    "description": "RM-M04-01."
+  },
+  "searchFilters": "Filters",
+  "@searchFilters": {
+    "description": "Opens the optional criteria."
+  },
+  "searchClearFilters": "Reset",
+  "@searchClearFilters": {
+    "description": "Keeps the city, drops the rest."
+  },
+  "searchApply": "See results",
+  "@searchApply": {
+    "description": "Applies the filters sheet."
+  },
+  "searchStartTitle": "Where are you looking?",
+  "@searchStartTitle": {
+    "description": "No city chosen yet."
+  },
+  "searchStartBody": "Pick a city to start. Every other filter is optional.",
+  "@searchStartBody": {
+    "description": "RM-M04-01."
+  },
+  "searchEmptyTitle": "No property found",
+  "@searchEmptyTitle": {
+    "description": "CE-M04-01."
+  },
+  "searchEmptyBody": "Try widening your filters: a higher rent, fewer districts, or another property type.",
+  "@searchEmptyBody": {
+    "description": "CE-M04-01."
+  },
+  "searchOfflineBanner": "Offline results — from your last search.",
+  "@searchOfflineBanner": {
+    "description": "CE-M04-02."
+  },
+  "searchRentRange": "Rent (XAF)",
+  "@searchRentRange": {
+    "description": "Rent filter."
+  },
+  "searchSurfaceRange": "Surface (m²)",
+  "@searchSurfaceRange": {
+    "description": "Surface filter."
+  },
+  "searchRoomsMin": "Minimum rooms",
+  "@searchRoomsMin": {
+    "description": "roomsMin."
+  },
+  "searchRoomsPlus": "{count}+",
+  "@searchRoomsPlus": {
+    "description": "4+ rooms.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchMin": "Min",
+  "@searchMin": {
+    "description": "Range field."
+  },
+  "searchMax": "Max",
+  "@searchMax": {
+    "description": "Range field."
+  },
+  "searchAny": "Any",
+  "@searchAny": {
+    "description": "The third state of a tri-state toggle."
+  },
+  "searchAvailableNow": "Available now",
+  "@searchAvailableNow": {
+    "description": "availableNow."
+  },
+  "searchResidenceBadge": "Residence",
+  "@searchResidenceBadge": {
+    "description": "A residence card, not a listing."
+  },
+  "searchResidenceFrom": "From {price}",
+  "@searchResidenceFrom": {
+    "description": "fromMonthlyRent.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "searchResidenceUnits": "{count, plural, one{1 unit available} other{{count} units available}}",
+  "@searchResidenceUnits": {
+    "description": "availableUnitCount.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",
   "commonErrorTitle": "Oops",

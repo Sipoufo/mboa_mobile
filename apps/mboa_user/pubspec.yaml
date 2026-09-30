@@ -30,6 +30,8 @@ dependencies:
   get_it: ^8.0.0
   auto_route: ^9.2.2
   intl: ^0.20.2
+  # Builders for the generated query parameters (M04's multi-select filters).
+  built_collection: '>=5.1.1 <6.0.0'
   cached_network_image: ^3.4.1
   lucide_icons_flutter: ^3.1.10
   sentry_flutter: ^9.0.0

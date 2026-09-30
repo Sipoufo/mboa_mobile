@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
-import 'package:mboa_pro/features/annonces/models/amenity.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_pro/features/annonces/models/annonce.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_draft.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_status.dart';

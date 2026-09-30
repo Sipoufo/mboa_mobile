@@ -457,3 +457,32 @@ and the codes for the other M08 refusals — amending an accepted contract
 (RM-M08-08), signing before both accounts are verified (RM-M08-02), a second
 signature on a locked contract (RM-M08-03). Each needs different words, and the
 app must not branch on `message`.
+
+---
+
+## 16. M04 — three questions on the search
+
+**Raised 2026-09-30**, building the tenant's search.
+
+**1. Is the tier order applied server-side?** CA-M04-02 requires Pro+ → Pro →
+Basic+ → Gratuit in 100% of searches, and `SearchResultItem` carries
+`tierRank`. The app takes the results **in the order they arrive** and never
+re-sorts — a second implementation of the visibility algorithm would drift from
+the first. Please confirm `GET /search` orders by tier then by recency; if it
+does not, the app cannot honour CA-M04-02 by itself (page 2 would need the whole
+set).
+
+**2. The "Badges requis" filter does not exist.** Doc 10's M04 criteria table
+lists it (📸 Photos vérifiées / ✅ Identité vérifiée / 🏆 Prestataire de
+confiance) and `GET /search` has no parameter for it. It is left out of the MVP
+screen; tell us if it is coming, or the CDC should drop it.
+
+**3. `ProviderCard.badges` is an untyped `string[]`.** The fiche has to render
+them in the prestige order of RM-M05-03 (🏆 → 🔄 → ✅ → 📸), which needs the
+exact values. The app will parse defensively and ignore what it does not know,
+but a documented enum would let it order them correctly rather than
+alphabetically.
+
+**Also noted, no action needed:** `cityId` is optional on `GET /search` while
+RM-M04-01 makes the city mandatory. The app enforces it — a search across every
+city is not a product decision we want to make by accident.

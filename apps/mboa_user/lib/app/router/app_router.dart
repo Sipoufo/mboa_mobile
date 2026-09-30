@@ -7,10 +7,11 @@ import 'app_router.gr.dart';
 /// Declarative route table for App Mboa. Routes are generated into
 /// `app_router.gr.dart` by `build_runner` (run `make gen-code`).
 ///
-/// Same shape as App Mboa Pro: guest routes up top behind `GuestGuard`,
-/// everything authenticated under `/app` behind `SessionGuard` and the
-/// `AuthenticatedRouter` wrapper. There is no tab shell here yet — when one
-/// lands it slots in as `/app`'s initial child without moving the rest.
+/// **The tab shell is public** (`/`), unlike App Mboa Pro's: CA-M04-04 and
+/// RM-M04-05 let a visitor search and read fiches without an account, and the
+/// wall goes up on the actions — contacting, booking — not at the door. Sign-in
+/// screens stay behind `GuestGuard`, and everything that genuinely needs a
+/// session stays under `/app` behind `SessionGuard`.
 ///
 /// The login screens (`LoginRoute`, `OtpRoute`) come from the shared
 /// `mboa_shared` package; auto_route resolves them across the package boundary.
@@ -34,6 +35,18 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
+
+        // Public: searching needs no account (CA-M04-04).
+        AutoRoute(
+          page: UserShellRoute.page,
+          path: '/',
+          children: [
+            AutoRoute(page: SearchRoute.page, path: '', initial: true),
+            AutoRoute(page: FavoritesRoute.page, path: 'favorites'),
+            AutoRoute(page: MessagesRoute.page, path: 'messages'),
+            AutoRoute(page: AccountRoute.page, path: 'account'),
+          ],
+        ),
         AutoRoute(page: WelcomeRoute.page, path: '/welcome', guards: [_guestGuard]),
         AutoRoute(page: LoginRoute.page, path: '/login', guards: [_guestGuard]),
         AutoRoute(page: OtpRoute.page, path: '/login/otp', guards: [_guestGuard]),

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_pro/features/annonces/bloc/residences_bloc.dart';
-import 'package:mboa_pro/features/annonces/models/annonce.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
 import 'package:mboa_pro/features/annonces/models/residence.dart';
 import 'package:mboa_pro/features/annonces/ui/residence_detail_page.dart';

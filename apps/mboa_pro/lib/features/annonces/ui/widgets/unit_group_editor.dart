@@ -7,7 +7,6 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../bloc/annonce_form_bloc.dart';
 import '../../models/annonce_draft.dart';
-import '../../models/annonce.dart';
 import 'form_field_shell.dart';
 import 'form_text_field.dart';
 

@@ -43,10 +43,13 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
               router: context.router.root as AppRouter,
               context: () => context,
             );
-            context.router.replaceAll([const AuthenticatedRouter()]);
+            context.router.replaceAll([const UserShellRoute()]);
           case SplashUnauthenticated():
             getIt<SessionSnapshot>().markUnauthenticated();
-            context.router.replaceAll([const WelcomeRoute()]);
+            // Not /welcome: a visitor lands on the search, which is what the
+            // app is for (RM-M04-05). Signing in is offered by the Compte tab
+            // and by the actions that need it.
+            context.router.replaceAll([const UserShellRoute()]);
           default:
             break;
         }

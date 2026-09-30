@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_pro/features/annonces/bloc/annonce_form_bloc.dart';
 import 'package:mboa_pro/features/annonces/data/annonce_repository.dart';
 import 'package:mboa_pro/features/annonces/data/residence_repository.dart';

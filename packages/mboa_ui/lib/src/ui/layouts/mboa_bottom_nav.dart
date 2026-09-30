@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
-/// One slot in [ProBottomNav].
-class ProBottomNavItem {
-  const ProBottomNavItem({required this.icon, required this.label});
+/// One slot in [MboaBottomNav].
+class MboaBottomNavItem {
+  const MboaBottomNavItem({required this.icon, required this.label});
 
   final IconData icon;
   final String label;
 }
 
-/// Pro bottom navigation: the selected slot lifts into a filled brand disc with
-/// its label underneath, the others stay as flat outline icons.
-class ProBottomNav extends StatelessWidget {
-  const ProBottomNav({
+/// Bottom navigation: the selected slot lifts into a filled brand disc with its
+/// label underneath, the others stay as flat outline icons.
+///
+/// Lives in the design system because both apps carry one — the prestataire's
+/// three tabs and the tenant's four — and two copies would drift apart on the
+/// first restyle.
+class MboaBottomNav extends StatelessWidget {
+  const MboaBottomNav({
     super.key,
     required this.items,
     required this.selectedIndex,
     required this.onTap,
   });
 
-  final List<ProBottomNavItem> items;
+  final List<MboaBottomNavItem> items;
   final int selectedIndex;
   final ValueChanged<int> onTap;
 
@@ -62,7 +66,7 @@ class _NavSlot extends StatelessWidget {
     required this.onTap,
   });
 
-  final ProBottomNavItem item;
+  final MboaBottomNavItem item;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -83,8 +87,8 @@ class _NavSlot extends StatelessWidget {
             AnimatedContainer(
               duration: const Duration(milliseconds: 180),
               curve: Curves.easeOut,
-              width: ProBottomNav._discSize,
-              height: ProBottomNav._discSize,
+              width: MboaBottomNav._discSize,
+              height: MboaBottomNav._discSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected ? colors.primaryDark : Colors.transparent,

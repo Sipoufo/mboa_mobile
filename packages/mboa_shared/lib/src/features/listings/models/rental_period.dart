@@ -50,6 +50,25 @@ enum RentalPeriod {
         _ => fallback,
       };
 
+  static RentalPeriod fromSearch(SearchResultItemRentalPeriodEnum? value) =>
+      switch (value) {
+        SearchResultItemRentalPeriodEnum.DAY => RentalPeriod.day,
+        SearchResultItemRentalPeriodEnum.WEEK => RentalPeriod.week,
+        SearchResultItemRentalPeriodEnum.MONTH => RentalPeriod.month,
+        SearchResultItemRentalPeriodEnum.QUARTER => RentalPeriod.quarter,
+        SearchResultItemRentalPeriodEnum.YEAR => RentalPeriod.year,
+        _ => fallback,
+      };
+
+  /// What `GET /search` expects for `rentalPeriods`.
+  String get asSearchParam => switch (this) {
+        RentalPeriod.day => 'DAY',
+        RentalPeriod.week => 'WEEK',
+        RentalPeriod.month => 'MONTH',
+        RentalPeriod.quarter => 'QUARTER',
+        RentalPeriod.year => 'YEAR',
+      };
+
   CreateAnnonceRequestRentalPeriodEnum get asCreate => switch (this) {
         RentalPeriod.day => CreateAnnonceRequestRentalPeriodEnum.DAY,
         RentalPeriod.week => CreateAnnonceRequestRentalPeriodEnum.WEEK,

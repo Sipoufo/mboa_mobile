@@ -275,6 +275,129 @@
       }
     }
   },
+  "navSearch": "Recherche",
+  "@navSearch": {
+    "description": "Tenant shell tab."
+  },
+  "navFavorites": "Favoris",
+  "@navFavorites": {
+    "description": "Tenant shell tab (M06)."
+  },
+  "navMessages": "Messages",
+  "@navMessages": {
+    "description": "Tenant shell tab (M12)."
+  },
+  "navAccount": "Compte",
+  "@navAccount": {
+    "description": "Tenant shell tab."
+  },
+  "accountGuestTitle": "Créez votre compte Mboa",
+  "@accountGuestTitle": {
+    "description": "Account tab, signed out."
+  },
+  "accountGuestBody": "La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.",
+  "@accountGuestBody": {
+    "description": "RM-M04-05 — the wall is on the actions, not on the search."
+  },
+  "accountSignIn": "Se connecter",
+  "@accountSignIn": {
+    "description": "CTA to /login."
+  },
+  "searchCityPrompt": "Choisir une ville",
+  "@searchCityPrompt": {
+    "description": "RM-M04-01 — the only mandatory criterion."
+  },
+  "searchFilters": "Filtres",
+  "@searchFilters": {
+    "description": "Opens the optional criteria."
+  },
+  "searchClearFilters": "Réinitialiser",
+  "@searchClearFilters": {
+    "description": "Keeps the city, drops the rest."
+  },
+  "searchApply": "Voir les résultats",
+  "@searchApply": {
+    "description": "Applies the filters sheet."
+  },
+  "searchStartTitle": "Où cherchez-vous ?",
+  "@searchStartTitle": {
+    "description": "No city chosen yet."
+  },
+  "searchStartBody": "Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
+  "@searchStartBody": {
+    "description": "RM-M04-01."
+  },
+  "searchEmptyTitle": "Aucun bien trouvé",
+  "@searchEmptyTitle": {
+    "description": "CE-M04-01."
+  },
+  "searchEmptyBody": "Essayez d'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.",
+  "@searchEmptyBody": {
+    "description": "CE-M04-01 — suggests widening."
+  },
+  "searchOfflineBanner": "Résultats hors ligne — ils datent de votre dernière recherche.",
+  "@searchOfflineBanner": {
+    "description": "CE-M04-02."
+  },
+  "searchRentRange": "Loyer (XAF)",
+  "@searchRentRange": {
+    "description": "Rent filter."
+  },
+  "searchSurfaceRange": "Superficie (m²)",
+  "@searchSurfaceRange": {
+    "description": "Surface filter."
+  },
+  "searchRoomsMin": "Nombre de pièces minimum",
+  "@searchRoomsMin": {
+    "description": "roomsMin."
+  },
+  "searchRoomsPlus": "{count}+",
+  "@searchRoomsPlus": {
+    "description": "4+ rooms.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchMin": "Min",
+  "@searchMin": {
+    "description": "Range field."
+  },
+  "searchMax": "Max",
+  "@searchMax": {
+    "description": "Range field."
+  },
+  "searchAny": "Peu importe",
+  "@searchAny": {
+    "description": "The third state of a tri-state toggle."
+  },
+  "searchAvailableNow": "Disponible immédiatement",
+  "@searchAvailableNow": {
+    "description": "availableNow."
+  },
+  "searchResidenceBadge": "Résidence",
+  "@searchResidenceBadge": {
+    "description": "A residence card, not a listing."
+  },
+  "searchResidenceFrom": "À partir de {price}",
+  "@searchResidenceFrom": {
+    "description": "fromMonthlyRent.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "searchResidenceUnits": "{count, plural, one{1 unité disponible} other{{count} unités disponibles}}",
+  "@searchResidenceUnits": {
+    "description": "availableUnitCount.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "commonRetry": "Réessayer",
   "commonError": "Une erreur est survenue. Réessayez.",
   "commonErrorTitle": "Oups",

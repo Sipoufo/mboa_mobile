@@ -6,7 +6,6 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import 'widgets/pro_bottom_nav.dart';
 
 /// Tab shell for the authenticated Pro app: Accueil / Gestionnaire / Finance,
 /// plus a Menu slot that opens the slide menu as a modal over the active tab
@@ -45,20 +44,20 @@ class _ProShellPageState extends State<ProShellPage> {
           },
           child: Scaffold(
             body: child,
-            bottomNavigationBar: ProBottomNav(
+            bottomNavigationBar: MboaBottomNav(
               selectedIndex: tabsRouter.activeIndex,
               onTap: (index) => _onSlotTapped(index, tabsRouter),
               items: [
-                ProBottomNavItem(icon: LucideIcons.mountain, label: l10n.navHome),
-                ProBottomNavItem(
+                MboaBottomNavItem(icon: LucideIcons.mountain, label: l10n.navHome),
+                MboaBottomNavItem(
                   icon: LucideIcons.calendarCheck,
                   label: l10n.visitsMineTitle,
                 ),
-                ProBottomNavItem(
+                MboaBottomNavItem(
                   icon: LucideIcons.fileText,
                   label: l10n.contractsTitle,
                 ),
-                ProBottomNavItem(icon: LucideIcons.layoutGrid, label: l10n.navMenu),
+                MboaBottomNavItem(icon: LucideIcons.layoutGrid, label: l10n.navMenu),
               ],
             ),
           ),

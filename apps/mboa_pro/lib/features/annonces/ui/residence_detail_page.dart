@@ -7,7 +7,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/residences_bloc.dart';
-import '../models/annonce.dart';
 import '../models/residence.dart';
 import '../models/annonce_draft.dart';
 import '../../../app/router/app_router.gr.dart';

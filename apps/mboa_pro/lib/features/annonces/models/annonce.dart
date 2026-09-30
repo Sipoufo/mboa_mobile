@@ -1,72 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
-import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
-import 'amenity.dart';
 import 'annonce_status.dart';
-
-/// Kind of property (CDC M10 "Type de bien").
-enum PropertyType {
-  apartment,
-  studio,
-  villa,
-  room,
-  office,
-  commercialSpace
-  ;
-
-  static PropertyType fromResponse(AnnonceResponsePropertyTypeEnum? value) => switch (value) {
-    AnnonceResponsePropertyTypeEnum.STUDIO => PropertyType.studio,
-    AnnonceResponsePropertyTypeEnum.VILLA => PropertyType.villa,
-    AnnonceResponsePropertyTypeEnum.ROOM => PropertyType.room,
-    AnnonceResponsePropertyTypeEnum.OFFICE => PropertyType.office,
-    AnnonceResponsePropertyTypeEnum.COMMERCIAL_SPACE => PropertyType.commercialSpace,
-    _ => PropertyType.apartment,
-  };
-
-  CreateAnnonceRequestPropertyTypeEnum get asCreate => switch (this) {
-    PropertyType.apartment => CreateAnnonceRequestPropertyTypeEnum.APARTMENT,
-    PropertyType.studio => CreateAnnonceRequestPropertyTypeEnum.STUDIO,
-    PropertyType.villa => CreateAnnonceRequestPropertyTypeEnum.VILLA,
-    PropertyType.room => CreateAnnonceRequestPropertyTypeEnum.ROOM,
-    PropertyType.office => CreateAnnonceRequestPropertyTypeEnum.OFFICE,
-    PropertyType.commercialSpace => CreateAnnonceRequestPropertyTypeEnum.COMMERCIAL_SPACE,
-  };
-
-  UpdateAnnonceRequestPropertyTypeEnum get asUpdate => switch (this) {
-    PropertyType.apartment => UpdateAnnonceRequestPropertyTypeEnum.APARTMENT,
-    PropertyType.studio => UpdateAnnonceRequestPropertyTypeEnum.STUDIO,
-    PropertyType.villa => UpdateAnnonceRequestPropertyTypeEnum.VILLA,
-    PropertyType.room => UpdateAnnonceRequestPropertyTypeEnum.ROOM,
-    PropertyType.office => UpdateAnnonceRequestPropertyTypeEnum.OFFICE,
-    PropertyType.commercialSpace => UpdateAnnonceRequestPropertyTypeEnum.COMMERCIAL_SPACE,
-  };
-
-  UnitGroupPropertyTypeEnum get asUnitGroup => switch (this) {
-    PropertyType.apartment => UnitGroupPropertyTypeEnum.APARTMENT,
-    PropertyType.studio => UnitGroupPropertyTypeEnum.STUDIO,
-    PropertyType.villa => UnitGroupPropertyTypeEnum.VILLA,
-    PropertyType.room => UnitGroupPropertyTypeEnum.ROOM,
-    PropertyType.office => UnitGroupPropertyTypeEnum.OFFICE,
-    PropertyType.commercialSpace => UnitGroupPropertyTypeEnum.COMMERCIAL_SPACE,
-  };
-}
-
-/// The type's name, from the shared catalogue rather than a French literal.
-///
-/// It was written out three times — the form, the unit editor and the residence
-/// detail — which is three chances to disagree and none to translate.
-extension PropertyTypeLabel on PropertyType {
-  String label(I18n l10n) => switch (this) {
-    PropertyType.apartment => l10n.propertyTypeApartment,
-    PropertyType.studio => l10n.propertyTypeStudio,
-    PropertyType.villa => l10n.propertyTypeVilla,
-    PropertyType.room => l10n.propertyTypeRoom,
-    PropertyType.office => l10n.propertyTypeOffice,
-    PropertyType.commercialSpace => l10n.propertyTypeCommercialSpace,
-  };
-}
 
 /// A single listing ("Bien Unique").
 class Annonce extends Equatable {

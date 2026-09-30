@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_pro/features/annonces/bloc/annonces_bloc.dart';
 import 'package:mboa_pro/features/annonces/data/annonce_repository.dart';
 import 'package:mboa_pro/features/annonces/models/annonce.dart';

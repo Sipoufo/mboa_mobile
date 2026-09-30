@@ -714,6 +714,278 @@ class I18n {
     );
   }
 
+  /// `Recherche`
+  String get navSearch {
+    return Intl.message(
+      'Recherche',
+      name: 'navSearch',
+      desc: 'Tenant shell tab.',
+      args: [],
+    );
+  }
+
+  /// `Favoris`
+  String get navFavorites {
+    return Intl.message(
+      'Favoris',
+      name: 'navFavorites',
+      desc: 'Tenant shell tab (M06).',
+      args: [],
+    );
+  }
+
+  /// `Messages`
+  String get navMessages {
+    return Intl.message(
+      'Messages',
+      name: 'navMessages',
+      desc: 'Tenant shell tab (M12).',
+      args: [],
+    );
+  }
+
+  /// `Compte`
+  String get navAccount {
+    return Intl.message(
+      'Compte',
+      name: 'navAccount',
+      desc: 'Tenant shell tab.',
+      args: [],
+    );
+  }
+
+  /// `Créez votre compte Mboa`
+  String get accountGuestTitle {
+    return Intl.message(
+      'Créez votre compte Mboa',
+      name: 'accountGuestTitle',
+      desc: 'Account tab, signed out.',
+      args: [],
+    );
+  }
+
+  /// `La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.`
+  String get accountGuestBody {
+    return Intl.message(
+      'La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.',
+      name: 'accountGuestBody',
+      desc: 'RM-M04-05 — the wall is on the actions, not on the search.',
+      args: [],
+    );
+  }
+
+  /// `Se connecter`
+  String get accountSignIn {
+    return Intl.message(
+      'Se connecter',
+      name: 'accountSignIn',
+      desc: 'CTA to /login.',
+      args: [],
+    );
+  }
+
+  /// `Choisir une ville`
+  String get searchCityPrompt {
+    return Intl.message(
+      'Choisir une ville',
+      name: 'searchCityPrompt',
+      desc: 'RM-M04-01 — the only mandatory criterion.',
+      args: [],
+    );
+  }
+
+  /// `Filtres`
+  String get searchFilters {
+    return Intl.message(
+      'Filtres',
+      name: 'searchFilters',
+      desc: 'Opens the optional criteria.',
+      args: [],
+    );
+  }
+
+  /// `Réinitialiser`
+  String get searchClearFilters {
+    return Intl.message(
+      'Réinitialiser',
+      name: 'searchClearFilters',
+      desc: 'Keeps the city, drops the rest.',
+      args: [],
+    );
+  }
+
+  /// `Voir les résultats`
+  String get searchApply {
+    return Intl.message(
+      'Voir les résultats',
+      name: 'searchApply',
+      desc: 'Applies the filters sheet.',
+      args: [],
+    );
+  }
+
+  /// `Où cherchez-vous ?`
+  String get searchStartTitle {
+    return Intl.message(
+      'Où cherchez-vous ?',
+      name: 'searchStartTitle',
+      desc: 'No city chosen yet.',
+      args: [],
+    );
+  }
+
+  /// `Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.`
+  String get searchStartBody {
+    return Intl.message(
+      'Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.',
+      name: 'searchStartBody',
+      desc: 'RM-M04-01.',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien trouvé`
+  String get searchEmptyTitle {
+    return Intl.message(
+      'Aucun bien trouvé',
+      name: 'searchEmptyTitle',
+      desc: 'CE-M04-01.',
+      args: [],
+    );
+  }
+
+  /// `Essayez d'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.`
+  String get searchEmptyBody {
+    return Intl.message(
+      'Essayez d\'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.',
+      name: 'searchEmptyBody',
+      desc: 'CE-M04-01 — suggests widening.',
+      args: [],
+    );
+  }
+
+  /// `Résultats hors ligne — ils datent de votre dernière recherche.`
+  String get searchOfflineBanner {
+    return Intl.message(
+      'Résultats hors ligne — ils datent de votre dernière recherche.',
+      name: 'searchOfflineBanner',
+      desc: 'CE-M04-02.',
+      args: [],
+    );
+  }
+
+  /// `Loyer (XAF)`
+  String get searchRentRange {
+    return Intl.message(
+      'Loyer (XAF)',
+      name: 'searchRentRange',
+      desc: 'Rent filter.',
+      args: [],
+    );
+  }
+
+  /// `Superficie (m²)`
+  String get searchSurfaceRange {
+    return Intl.message(
+      'Superficie (m²)',
+      name: 'searchSurfaceRange',
+      desc: 'Surface filter.',
+      args: [],
+    );
+  }
+
+  /// `Nombre de pièces minimum`
+  String get searchRoomsMin {
+    return Intl.message(
+      'Nombre de pièces minimum',
+      name: 'searchRoomsMin',
+      desc: 'roomsMin.',
+      args: [],
+    );
+  }
+
+  /// `{count}+`
+  String searchRoomsPlus(int count) {
+    return Intl.message(
+      '$count+',
+      name: 'searchRoomsPlus',
+      desc: '4+ rooms.',
+      args: [count],
+    );
+  }
+
+  /// `Min`
+  String get searchMin {
+    return Intl.message(
+      'Min',
+      name: 'searchMin',
+      desc: 'Range field.',
+      args: [],
+    );
+  }
+
+  /// `Max`
+  String get searchMax {
+    return Intl.message(
+      'Max',
+      name: 'searchMax',
+      desc: 'Range field.',
+      args: [],
+    );
+  }
+
+  /// `Peu importe`
+  String get searchAny {
+    return Intl.message(
+      'Peu importe',
+      name: 'searchAny',
+      desc: 'The third state of a tri-state toggle.',
+      args: [],
+    );
+  }
+
+  /// `Disponible immédiatement`
+  String get searchAvailableNow {
+    return Intl.message(
+      'Disponible immédiatement',
+      name: 'searchAvailableNow',
+      desc: 'availableNow.',
+      args: [],
+    );
+  }
+
+  /// `Résidence`
+  String get searchResidenceBadge {
+    return Intl.message(
+      'Résidence',
+      name: 'searchResidenceBadge',
+      desc: 'A residence card, not a listing.',
+      args: [],
+    );
+  }
+
+  /// `À partir de {price}`
+  String searchResidenceFrom(String price) {
+    return Intl.message(
+      'À partir de $price',
+      name: 'searchResidenceFrom',
+      desc: 'fromMonthlyRent.',
+      args: [price],
+    );
+  }
+
+  /// `{count, plural, one{1 unité disponible} other{{count} unités disponibles}}`
+  String searchResidenceUnits(int count) {
+    return Intl.plural(
+      count,
+      one: '1 unité disponible',
+      other: '$count unités disponibles',
+      name: 'searchResidenceUnits',
+      desc: 'availableUnitCount.',
+      args: [count],
+    );
+  }
+
   /// `Réessayer`
   String get commonRetry {
     return Intl.message('Réessayer', name: 'commonRetry', desc: '', args: []);

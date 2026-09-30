@@ -4,6 +4,8 @@ import 'package:mboa_shared/mboa_shared.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/profile/profile_types.dart';
+import '../../features/search/bloc/search_bloc.dart';
+import '../../features/search/data/search_repository.dart';
 import '../../features/splash/logic/splash_cubit.dart';
 import '../login_flow_controller_impl.dart';
 
@@ -33,6 +35,22 @@ void registerAppModule() {
   // The global AuthBloc is a singleton — the one BLoC shared app-wide.
   getIt.registerLazySingleton<AuthBloc>(
     () => AuthBloc(repository: getIt<AuthRepository>()),
+  );
+
+  // Search (M04) — public: no session required.
+  getIt.registerLazySingleton<SearchRepository>(
+    () => SearchRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerFactory<SearchBloc>(
+    () => SearchBloc(repository: getIt<SearchRepository>()),
+  );
+
+  // Locations — the city picker the search bar opens.
+  getIt.registerLazySingleton<LocationRepository>(
+    () => LocationRepository(dioClient: getIt<DioClient>()),
   );
 
   // Shared session check + startup splash controller.

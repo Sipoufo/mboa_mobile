@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:mboa_pro/features/shell/ui/widgets/pro_bottom_nav.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 void main() {
   const items = [
-    ProBottomNavItem(icon: LucideIcons.mountain, label: 'Accueil'),
-    ProBottomNavItem(icon: LucideIcons.users, label: 'Gestionnaire'),
-    ProBottomNavItem(icon: LucideIcons.wallet, label: 'Finance'),
-    ProBottomNavItem(icon: LucideIcons.layoutGrid, label: 'Menu'),
+    MboaBottomNavItem(icon: LucideIcons.mountain, label: 'Accueil'),
+    MboaBottomNavItem(icon: LucideIcons.users, label: 'Gestionnaire'),
+    MboaBottomNavItem(icon: LucideIcons.wallet, label: 'Finance'),
+    MboaBottomNavItem(icon: LucideIcons.layoutGrid, label: 'Menu'),
   ];
 
   Future<List<int>> pump(WidgetTester tester, {required int selected}) async {
@@ -18,7 +17,7 @@ void main() {
       MaterialApp(
         theme: MboaTheme.light(),
         home: Scaffold(
-          bottomNavigationBar: ProBottomNav(
+          bottomNavigationBar: MboaBottomNav(
             items: items,
             selectedIndex: selected,
             onTap: taps.add,

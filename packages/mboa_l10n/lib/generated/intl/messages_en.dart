@@ -103,14 +103,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m38(value) => "Perceived condition: ${value}/5";
 
-  static String m39(count) =>
+  static String m39(price) => "From ${price}";
+
+  static String m40(count) =>
+      "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
+
+  static String m41(count) => "${count}+";
+
+  static String m42(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m40(date) => "Valid until ${date}";
+  static String m43(date) => "Valid until ${date}";
 
-  static String m41(time) => "Confirmed at ${time}";
+  static String m44(time) => "Confirmed at ${time}";
 
-  static String m42(distance) =>
+  static String m45(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -150,6 +157,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Subscribers only",
     ),
     "accessUpgradeCta": m1,
+    "accountGuestBody": MessageLookupByLibrary.simpleMessage(
+      "Searching is free. An account is for contacting a provider, booking a visit and saving favourites.",
+    ),
+    "accountGuestTitle": MessageLookupByLibrary.simpleMessage(
+      "Create your Mboa account",
+    ),
+    "accountSignIn": MessageLookupByLibrary.simpleMessage("Sign in"),
     "agentAcceptingOff": MessageLookupByLibrary.simpleMessage(
       "You will not receive new assignments. Visits already scheduled still stand.",
     ),
@@ -994,10 +1008,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "missionsUnits": m28,
     "missionsWithdraw": MessageLookupByLibrary.simpleMessage("Withdraw"),
+    "navAccount": MessageLookupByLibrary.simpleMessage("Account"),
+    "navFavorites": MessageLookupByLibrary.simpleMessage("Favourites"),
     "navFinance": MessageLookupByLibrary.simpleMessage("Finance"),
     "navHome": MessageLookupByLibrary.simpleMessage("Home"),
     "navManager": MessageLookupByLibrary.simpleMessage("Manager"),
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
+    "navMessages": MessageLookupByLibrary.simpleMessage("Messages"),
+    "navSearch": MessageLookupByLibrary.simpleMessage("Search"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("6-digit code"),
     "otpCodeSentTo": m29,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
@@ -1184,6 +1202,36 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
       "What the tenant saw",
     ),
+    "searchAny": MessageLookupByLibrary.simpleMessage("Any"),
+    "searchApply": MessageLookupByLibrary.simpleMessage("See results"),
+    "searchAvailableNow": MessageLookupByLibrary.simpleMessage("Available now"),
+    "searchCityPrompt": MessageLookupByLibrary.simpleMessage("Choose a city"),
+    "searchClearFilters": MessageLookupByLibrary.simpleMessage("Reset"),
+    "searchEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Try widening your filters: a higher rent, fewer districts, or another property type.",
+    ),
+    "searchEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No property found",
+    ),
+    "searchFilters": MessageLookupByLibrary.simpleMessage("Filters"),
+    "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
+    "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
+    "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
+      "Offline results — from your last search.",
+    ),
+    "searchRentRange": MessageLookupByLibrary.simpleMessage("Rent (XAF)"),
+    "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Residence"),
+    "searchResidenceFrom": m39,
+    "searchResidenceUnits": m40,
+    "searchRoomsMin": MessageLookupByLibrary.simpleMessage("Minimum rooms"),
+    "searchRoomsPlus": m41,
+    "searchStartBody": MessageLookupByLibrary.simpleMessage(
+      "Pick a city to start. Every other filter is optional.",
+    ),
+    "searchStartTitle": MessageLookupByLibrary.simpleMessage(
+      "Where are you looking?",
+    ),
+    "searchSurfaceRange": MessageLookupByLibrary.simpleMessage("Surface (m²)"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Identity documents and any other required verifications",
     ),
@@ -1210,7 +1258,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m39,
+    "subscriptionListingLimit": m42,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -1225,7 +1273,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m40,
+    "subscriptionRenewsOn": m43,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
@@ -1303,7 +1351,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Owner"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m41,
+    "visitsPresenceConfirmedAt": m44,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -1338,7 +1386,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m42,
+    "visitsTooFarBody": m45,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

@@ -36,6 +36,7 @@ export 'src/ui/inputs/phone_field.dart';
 export 'src/ui/feedback/loader.dart';
 
 // Layouts
+export 'src/ui/layouts/mboa_bottom_nav.dart';
 export 'src/ui/layouts/views/auth_scaffold.dart';
 export 'src/ui/layouts/views/stacked_loader_view.dart';
 
