@@ -94,9 +94,32 @@ class Environment {
 
   /// The style the map loads. MapTiler's `streets-v2` reads well at the zoom
   /// levels a city search uses, and labels Douala and Yaoundé in French.
-  static String get mapStyleUrl => mapStyleOverride.isNotEmpty
-      ? mapStyleOverride
-      : 'https://api.maptiler.com/maps/streets-v2/style.json?key=$mapTilerKey';
+  static String get mapStyleUrl =>
+      resolveStyleUrl(override: mapStyleOverride, key: mapTilerKey);
+
+  /// Resolves the two settings into the one URL the map loads.
+  ///
+  /// A MapTiler style URL **without** `key=` is answered with 403 and the map
+  /// stays blank, so an override that points at MapTiler and carries no key
+  /// gets the configured one appended. Copying a style URL out of MapTiler's
+  /// own catalogue, which is how anyone would find `streets-v4`, gives exactly
+  /// that URL — the key is on a different page.
+  ///
+  /// An override pointing anywhere else is used untouched: a self-hosted
+  /// PMTiles style (Doc 13 §8) has no MapTiler key to add.
+  static String resolveStyleUrl({
+    required String override,
+    required String key,
+  }) {
+    if (override.isEmpty) {
+      return 'https://api.maptiler.com/maps/streets-v2/style.json?key=$key';
+    }
+    final needsKey = override.contains('api.maptiler.com') &&
+        !override.contains('key=') &&
+        key.isNotEmpty;
+    if (!needsKey) return override;
+    return '$override${override.contains('?') ? '&' : '?'}key=$key';
+  }
 
   static bool get isProduction => current == MboaEnv.production;
 }

@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**643 tests green, analyze clean.** `mboa_user` 89 · `mboa_pro` 432 ·
-`mboa_core` 12 · `mboa_shared` 110.
+**648 tests green, analyze clean.** `mboa_user` 89 · `mboa_pro` 432 ·
+`mboa_core` 17 · `mboa_shared` 110.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are

@@ -160,10 +160,37 @@ class _SearchMapViewState extends State<SearchMapView> {
   MapLibreMapController? _controller;
   SearchHit? _selected;
 
+  /// Set once the style has loaded, and watched by [_styleWatchdog].
+  bool _styleLoaded = false;
+  bool _styleFailed = false;
+  Timer? _styleWatchdog;
+
+  /// How long a style gets before the screen says it is not coming.
+  ///
+  /// The plugin has no "style failed" callback: a 403 — a missing or wrong
+  /// MapTiler key, a style that does not exist — simply never calls
+  /// `onStyleLoadedCallback`, and the map stays a white rectangle for ever.
+  /// Generous enough for a slow line, short enough that nobody sits in front
+  /// of a blank screen wondering.
+  static const _styleTimeout = Duration(seconds: 12);
+
   /// Only the hits that can be drawn. A listing with no coordinates is not an
   /// error — it is simply not on the map, and the list still has it.
   List<SearchHit> get _placeable =>
       widget.state.hits.where((hit) => hit.hasPosition).toList();
+
+  @override
+  void dispose() {
+    _styleWatchdog?.cancel();
+    super.dispose();
+  }
+
+  void _watchStyle() {
+    _styleWatchdog?.cancel();
+    _styleWatchdog = Timer(_styleTimeout, () {
+      if (mounted && !_styleLoaded) setState(() => _styleFailed = true);
+    });
+  }
 
   @override
   void didUpdateWidget(SearchMapView oldWidget) {
@@ -181,6 +208,8 @@ class _SearchMapViewState extends State<SearchMapView> {
   Future<void> _onStyleLoaded() async {
     final controller = _controller;
     if (controller == null) return;
+    _styleWatchdog?.cancel();
+    _styleLoaded = true;
     // Read before the first await: the layers are styled from the theme, and
     // the context must not be touched once the platform calls begin.
     final colors = context.mboaColors;
@@ -286,6 +315,13 @@ class _SearchMapViewState extends State<SearchMapView> {
         body: l10n.searchMapNoPositionBody,
       );
     }
+    if (_styleFailed) {
+      return _MapNotice(
+        icon: LucideIcons.triangleAlert,
+        title: l10n.searchMapStyleFailedTitle,
+        body: l10n.searchMapStyleFailedBody,
+      );
+    }
 
     final selected = _selected;
 
@@ -303,7 +339,10 @@ class _SearchMapViewState extends State<SearchMapView> {
                   : SearchMapView.fallbackCentre,
               zoom: 12,
             ),
-            onMapCreated: (controller) => _controller = controller,
+            onMapCreated: (controller) {
+              _controller = controller;
+              _watchStyle();
+            },
             onStyleLoadedCallback: _onStyleLoaded,
             onMapClick: (_, _) {
               if (_selected != null) setState(() => _selected = null);

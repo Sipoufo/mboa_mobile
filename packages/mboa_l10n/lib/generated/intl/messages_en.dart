@@ -1352,6 +1352,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchMapOfflineTitle": MessageLookupByLibrary.simpleMessage(
       "The map needs a connection",
     ),
+    "searchMapStyleFailedBody": MessageLookupByLibrary.simpleMessage(
+      "Check this build\'s map key. The results are still there in the list.",
+    ),
+    "searchMapStyleFailedTitle": MessageLookupByLibrary.simpleMessage(
+      "The map could not load",
+    ),
     "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
     "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(

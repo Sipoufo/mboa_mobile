@@ -964,6 +964,27 @@ class I18n {
     );
   }
 
+  /// `Le fond de carte n'a pas pu être chargé`
+  String get searchMapStyleFailedTitle {
+    return Intl.message(
+      'Le fond de carte n\'a pas pu être chargé',
+      name: 'searchMapStyleFailedTitle',
+      desc:
+          'The style URL never loaded — usually a bad or missing MapTiler key.',
+      args: [],
+    );
+  }
+
+  /// `Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.`
+  String get searchMapStyleFailedBody {
+    return Intl.message(
+      'Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.',
+      name: 'searchMapStyleFailedBody',
+      desc: 'The style URL never loaded.',
+      args: [],
+    );
+  }
+
   /// `Loyer (XAF)`
   String get searchRentRange {
     return Intl.message(

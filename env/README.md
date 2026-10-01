@@ -13,7 +13,12 @@ make run-user                          # picks up env/dev.json when it exists
 | Key | Where it comes from | Without it |
 |-----|--------------------|-----------|
 | `MAPTILER_KEY` | MapTiler Cloud → **Keys** → the default key, or a new one | The map view says the key is missing and offers the list |
-| `MAP_STYLE_URL` | A whole style URL that replaces the MapTiler one — the route to self-hosted PMTiles (Doc 13 §8). Leave empty unless you mean it. | MapTiler's `streets-v2` is used |
+| `MAP_STYLE_URL` | A whole style URL that replaces the MapTiler one — the route to self-hosted PMTiles (Doc 13 §8). **Leave it empty unless you mean it**; the key alone is enough. | MapTiler's `streets-v2` is used |
+
+A style URL copied from MapTiler's catalogue carries no `key=` (the key is on
+another page) and is answered with 403, so `MAPTILER_KEY` is appended to a
+MapTiler override that has none. A style served from anywhere else is used
+exactly as written — a self-hosted one has no MapTiler key to add.
 | `SENTRY_DSN` | Sentry project settings → Client Keys (DSN) | Crash reporting stays off |
 
 To see the map without a key at all, MapLibre's public demo style works — a

@@ -375,6 +375,14 @@
   "@searchMapNoPositionBody": {
     "description": "No hit carries coordinates."
   },
+  "searchMapStyleFailedTitle": "Le fond de carte n'a pas pu être chargé",
+  "@searchMapStyleFailedTitle": {
+    "description": "The style URL never loaded — usually a bad or missing MapTiler key."
+  },
+  "searchMapStyleFailedBody": "Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.",
+  "@searchMapStyleFailedBody": {
+    "description": "The style URL never loaded."
+  },
   "searchRentRange": "Loyer (XAF)",
   "@searchRentRange": {
     "description": "Rent filter."

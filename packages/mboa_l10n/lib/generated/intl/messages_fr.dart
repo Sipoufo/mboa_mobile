@@ -1451,6 +1451,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchMapOfflineTitle": MessageLookupByLibrary.simpleMessage(
       "Carte indisponible hors ligne",
     ),
+    "searchMapStyleFailedBody": MessageLookupByLibrary.simpleMessage(
+      "Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.",
+    ),
+    "searchMapStyleFailedTitle": MessageLookupByLibrary.simpleMessage(
+      "Le fond de carte n\'a pas pu être chargé",
+    ),
     "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
     "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
