@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**648 tests green, analyze clean.** `mboa_user` 89 · `mboa_pro` 432 ·
+**651 tests green, analyze clean.** `mboa_user` 92 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -69,6 +69,19 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### "Offline" is a diagnosis, not a catch block
+A search that fails falls back to the Hive cache (CE-M04-02). It used to
+label every one of those failures "offline" — including a server answering
+badly, which is CE-M04-03 and a different screen. Seen on a simulator: the
+banner said the connection was down while `curl` got 200 from the same
+backend, which sends someone to fix a connection that works.
+
+`CacheReason` now says which it was, asked of `NetworkMonitor` **after** the
+request failed — asking first would be a second source of truth about whether
+the network works, and the request is the first. Only the reachable-but-failed
+case offers a retry; without a line the retry would fail the same way, and a
+dead button is worse than no button.
 
 ### The map frames the city, not the data
 A camera fitted to every result opens wherever the worst record says. Three of

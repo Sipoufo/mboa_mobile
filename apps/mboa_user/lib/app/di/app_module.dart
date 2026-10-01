@@ -46,6 +46,7 @@ void registerAppModule() {
     () => SearchRepository(
       dioClient: getIt<DioClient>(),
       cache: getIt<HiveCache>(),
+      network: getIt<NetworkMonitor>(),
     ),
   );
   getIt.registerFactory<SearchBloc>(

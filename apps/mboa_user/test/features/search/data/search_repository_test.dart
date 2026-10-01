@@ -12,6 +12,8 @@ class MockSearchApi extends Mock implements SearchApi {}
 
 class MockHiveCache extends Mock implements HiveCache {}
 
+class MockNetworkMonitor extends Mock implements NetworkMonitor {}
+
 Response<PageResponseSearchResult> page(List<SearchResult> items) =>
     Response<PageResponseSearchResult>(
       data: PageResponseSearchResult(
@@ -45,6 +47,7 @@ void main() {
   late MockApiClient apiClient;
   late MockSearchApi api;
   late MockHiveCache cache;
+  late MockNetworkMonitor network;
   late SearchRepository repository;
 
   setUp(() {
@@ -58,7 +61,14 @@ void main() {
     when(() => cache.put(any(), any(), any())).thenAnswer((_) async {});
     when(() => cache.get(any(), any(), ttl: any(named: 'ttl'))).thenReturn(null);
 
-    repository = SearchRepository(dioClient: dioClient, cache: cache);
+    network = MockNetworkMonitor();
+    when(() => network.isOnline).thenAnswer((_) async => true);
+
+    repository = SearchRepository(
+      dioClient: dioClient,
+      cache: cache,
+      network: network,
+    );
   });
 
   test('RM-M04-03 — asks for 20 per page, and maps the filters', () async {

@@ -31,6 +31,9 @@ void main() {
     repository = MockSearchRepository();
     when(() => repository.lastQuery()).thenReturn(null);
     when(() => repository.cachedFirstPage()).thenReturn(null);
+    // Asked only once a search has failed; each test that cares says which
+    // failure it is simulating.
+    when(repository.isOffline).thenAnswer((_) async => true);
   });
 
   SearchBloc build() => SearchBloc(repository: repository);
@@ -154,6 +157,50 @@ void main() {
         verifyNever(() => repository.search(any(), page: any(named: 'page'))),
   );
 
+  group('CE-M04-02 vs CE-M04-03 — why the cache is on screen', () {
+    blocTest<SearchBloc, SearchState>(
+      'no connection — the results are offline',
+      setUp: () {
+        when(() => repository.search(any(), page: any(named: 'page')))
+            .thenThrow(Exception('down'));
+        when(repository.cachedFirstPage).thenReturn(
+          SearchPage(hits: [hit('cached')], page: 0, isLast: true,
+              fromCache: true),
+        );
+        when(repository.isOffline).thenAnswer((_) async => true);
+      },
+      build: build,
+      seed: () => const SearchReady(query: douala),
+      act: (bloc) => bloc.add(const SearchSubmitted()),
+      verify: (bloc) => expect(
+        (bloc.state as SearchReady).cachedBecause,
+        CacheReason.offline,
+      ),
+    );
+
+    blocTest<SearchBloc, SearchState>(
+      'a line, but the server failed — not "offline"',
+      setUp: () {
+        when(() => repository.search(any(), page: any(named: 'page')))
+            .thenThrow(Exception('500'));
+        when(repository.cachedFirstPage).thenReturn(
+          SearchPage(hits: [hit('cached')], page: 0, isLast: true,
+              fromCache: true),
+        );
+        when(repository.isOffline).thenAnswer((_) async => false);
+      },
+      build: build,
+      seed: () => const SearchReady(query: douala),
+      act: (bloc) => bloc.add(const SearchSubmitted()),
+      // Reported as offline, this sent people to check a connection that was
+      // working — seen on a simulator with the backend answering 200.
+      verify: (bloc) => expect(
+        (bloc.state as SearchReady).cachedBecause,
+        CacheReason.unreachable,
+      ),
+    );
+  });
+
   blocTest<SearchBloc, SearchState>(
     'cached results have no page 2',
     build: build,
@@ -161,7 +208,7 @@ void main() {
       query: douala,
       hits: [hit('cached')],
       isLast: false,
-      isOffline: true,
+      cachedBecause: CacheReason.offline,
     ),
     act: (bloc) => bloc.add(const SearchNextPageRequested()),
     verify: (_) =>

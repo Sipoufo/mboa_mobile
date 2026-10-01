@@ -874,6 +874,16 @@ class I18n {
     );
   }
 
+  /// `Résultats non actualisés — le serveur n'a pas répondu.`
+  String get searchStaleBanner {
+    return Intl.message(
+      'Résultats non actualisés — le serveur n\'a pas répondu.',
+      name: 'searchStaleBanner',
+      desc: 'CE-M04-03 with a warm cache: online, but the search failed.',
+      args: [],
+    );
+  }
+
   /// `{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}`
   String searchResultCount(int count) {
     return Intl.plural(

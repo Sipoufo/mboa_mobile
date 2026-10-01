@@ -78,7 +78,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     if (current is! SearchReady) return;
     // Nothing more to fetch, already fetching, or looking at cached results —
     // an offline page 2 does not exist.
-    if (current.isLast || current.isLoadingMore || current.isOffline) return;
+    if (current.isLast || current.isLoadingMore || current.isFromCache) return;
 
     emit(current.copyWith(isLoadingMore: true));
     try {
@@ -125,7 +125,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             hits: cached.hits,
             page: 0,
             isLast: true,
-            isOffline: true,
+            cachedBecause: await _repository.isOffline()
+                ? CacheReason.offline
+                : CacheReason.unreachable,
           ),
         );
         return;

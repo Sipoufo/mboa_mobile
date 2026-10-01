@@ -1474,6 +1474,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Nombre de pièces minimum",
     ),
     "searchRoomsPlus": m47,
+    "searchStaleBanner": MessageLookupByLibrary.simpleMessage(
+      "Résultats non actualisés — le serveur n\'a pas répondu.",
+    ),
     "searchStartBody": MessageLookupByLibrary.simpleMessage(
       "Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
     ),

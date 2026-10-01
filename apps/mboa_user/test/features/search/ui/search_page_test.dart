@@ -123,12 +123,36 @@ void main() {
 
   testWidgets('CE-M04-02 — cached results are named as such', (tester) async {
     when(() => bloc.state).thenReturn(
-      SearchReady(query: douala, hits: [listing('a')], isOffline: true),
+      SearchReady(
+        query: douala,
+        hits: [listing('a')],
+        cachedBecause: CacheReason.offline,
+      ),
     );
     await pump(tester);
 
     // Showing stale results silently would be worse than showing none.
     expect(find.textContaining('hors ligne'), findsOneWidget);
+    // Nothing to retry without a line — the request would fail the same way.
+    expect(find.text('Réessayer'), findsNothing);
+  });
+
+  testWidgets('CE-M04-03 — a server that answered badly is not "offline"',
+      (tester) async {
+    when(() => bloc.state).thenReturn(
+      SearchReady(
+        query: douala,
+        hits: [listing('a')],
+        cachedBecause: CacheReason.unreachable,
+      ),
+    );
+    await pump(tester);
+
+    // Telling someone their connection is down while it plainly is not sends
+    // them to fix the wrong thing. This one is worth retrying.
+    expect(find.textContaining('hors ligne'), findsNothing);
+    expect(find.textContaining('non actualisés'), findsOneWidget);
+    expect(find.text('Réessayer'), findsOneWidget);
   });
 
   testWidgets('CE-M04-03 — a server error is a retry, not an empty list',

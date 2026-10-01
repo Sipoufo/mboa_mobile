@@ -49,7 +49,7 @@ void main() {
       SearchReady(
         query: const SearchQuery(cityId: 'c-1', cityName: 'Douala'),
         hits: hits,
-        isOffline: isOffline,
+        cachedBecause: isOffline ? CacheReason.offline : null,
       );
 
   setUpAll(loadBrandFonts);

@@ -123,7 +123,13 @@ class _SearchPageState extends State<SearchPage> {
                   onPickCity: _pickCity,
                   onOpenFilters: _openFilters,
                 ),
-                if (ready.isOffline) const _OfflineBanner(),
+                if (ready.cachedBecause case final reason?)
+                  _CacheBanner(
+                    reason: reason,
+                    onRetry: () => context
+                        .read<SearchBloc>()
+                        .add(const SearchSubmitted()),
+                  ),
                 // Nothing to switch between until a city is chosen
                 // (RM-M04-01), and an empty map is not a second empty state.
                 if (ready.query.isValid && !ready.isEmpty && !ready.isLoading)
@@ -385,32 +391,54 @@ class _SearchBar extends StatelessWidget {
   }
 }
 
-/// CE-M04-02 — cached results are shown, and named as such.
-class _OfflineBanner extends StatelessWidget {
-  const _OfflineBanner();
+/// Cached results are shown, and named as such — saying **why**.
+///
+/// CE-M04-02 (no line) and CE-M04-03 (the server answered badly) look the same
+/// from here — old results on screen — but only one of them is worth a retry,
+/// and telling someone their connection is down while it is not sends them to
+/// fix the wrong thing.
+class _CacheBanner extends StatelessWidget {
+  const _CacheBanner({required this.reason, required this.onRetry});
+
+  final CacheReason reason;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
+    final offline = reason == CacheReason.offline;
 
     return Container(
       width: double.infinity,
       color: colors.warning.withValues(alpha: 0.12),
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.spacing,
-        vertical: Dimens.spacingSm,
+      padding: const EdgeInsets.fromLTRB(
+        Dimens.screenMargin,
+        Dimens.spacingSm,
+        Dimens.spacingSm,
+        Dimens.spacingSm,
       ),
       child: Row(
         children: [
-          Icon(LucideIcons.wifiOff, size: Dimens.iconSm, color: colors.warning),
+          Icon(
+            offline ? LucideIcons.wifiOff : LucideIcons.cloudAlert,
+            size: Dimens.iconSm,
+            color: colors.warning,
+          ),
           const SizedBox(width: Dimens.spacingSm),
           Expanded(
             child: Text(
-              l10n.searchOfflineBanner,
+              offline ? l10n.searchOfflineBanner : l10n.searchStaleBanner,
               style: context.mboaText.caption.copyWith(color: colors.warning),
             ),
           ),
+          // Nothing to retry without a line: the request would fail the same
+          // way, and a dead button is worse than no button.
+          if (!offline)
+            TextButton(
+              onPressed: onRetry,
+              child: Text(l10n.commonRetry),
+            ),
         ],
       ),
     );

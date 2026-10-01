@@ -11,6 +11,20 @@ class SearchInitial extends SearchState {
   const SearchInitial();
 }
 
+/// Why results older than the request are on screen.
+///
+/// The two are not the same failure and must not share a message: a lost line
+/// is nothing the reader can act on (CE-M04-02), while a server that answered
+/// badly is worth retrying (CE-M04-03). Collapsing both into "offline" told
+/// people their connection was down while it plainly was not.
+enum CacheReason {
+  /// The device has no connection.
+  offline,
+
+  /// There is a connection; the search itself failed.
+  unreachable,
+}
+
 class SearchReady extends SearchState {
   const SearchReady({
     required this.query,
@@ -20,7 +34,7 @@ class SearchReady extends SearchState {
     this.isLoading = false,
     this.isLoadingMore = false,
     this.isEmpty = false,
-    this.isOffline = false,
+    this.cachedBecause,
     this.loadMoreFailed = false,
   });
 
@@ -39,7 +53,13 @@ class SearchReady extends SearchState {
   final bool isEmpty;
 
   /// CE-M04-02 — these results come from the cache; the banner says so.
-  final bool isOffline;
+  /// Null when the hits came from the network — the ordinary case.
+  final CacheReason? cachedBecause;
+
+  bool get isFromCache => cachedBecause != null;
+
+  /// CE-M04-02 — no connection, so the map has no tiles either.
+  bool get isOffline => cachedBecause == CacheReason.offline;
 
   final bool loadMoreFailed;
 
@@ -53,7 +73,7 @@ class SearchReady extends SearchState {
     bool? isLast,
     bool? isLoading,
     bool? isLoadingMore,
-    bool? isOffline,
+    CacheReason? cachedBecause,
     bool loadMoreFailed = false,
     bool clearOutcome = false,
   }) =>
@@ -65,7 +85,8 @@ class SearchReady extends SearchState {
         isLoading: isLoading ?? this.isLoading,
         isLoadingMore: isLoadingMore ?? this.isLoadingMore,
         isEmpty: clearOutcome ? false : isEmpty,
-        isOffline: isOffline ?? (clearOutcome ? false : this.isOffline),
+        cachedBecause:
+            cachedBecause ?? (clearOutcome ? null : this.cachedBecause),
         loadMoreFailed: loadMoreFailed,
       );
 
@@ -78,7 +99,7 @@ class SearchReady extends SearchState {
         isLoading,
         isLoadingMore,
         isEmpty,
-        isOffline,
+        cachedBecause,
         loadMoreFailed,
       ];
 }

@@ -1373,6 +1373,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchResultCount": m46,
     "searchRoomsMin": MessageLookupByLibrary.simpleMessage("Minimum rooms"),
     "searchRoomsPlus": m47,
+    "searchStaleBanner": MessageLookupByLibrary.simpleMessage(
+      "Results not refreshed — the server did not answer.",
+    ),
     "searchStartBody": MessageLookupByLibrary.simpleMessage(
       "Pick a city to start. Every other filter is optional.",
     ),

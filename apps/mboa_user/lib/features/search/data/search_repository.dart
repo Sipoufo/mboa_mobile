@@ -25,12 +25,25 @@ class SearchPage {
 /// Public: `GET /search` needs no account (CA-M04-04), and the interceptor adds
 /// a token only when there is one.
 class SearchRepository {
-  SearchRepository({required DioClient dioClient, required HiveCache cache})
-      : _dioClient = dioClient,
-        _cache = cache;
+  SearchRepository({
+    required DioClient dioClient,
+    required HiveCache cache,
+    required NetworkMonitor network,
+  })  : _dioClient = dioClient,
+        _cache = cache,
+        _network = network;
 
   final DioClient _dioClient;
   final HiveCache _cache;
+  final NetworkMonitor _network;
+
+  /// Whether the device has a connection at all.
+  ///
+  /// Asked only once a search has already failed, to tell the two failures
+  /// apart: no line (CE-M04-02) or a server that answered badly (CE-M04-03).
+  /// Checking it up front would be a second source of truth about whether the
+  /// network works — the request itself is the first.
+  Future<bool> isOffline() async => !await _network.isOnline;
 
   static const int _pageSize = 20; // RM-M04-03
   static const String _lastQueryKey = 'lastQuery';

@@ -339,6 +339,10 @@
   "@searchOfflineBanner": {
     "description": "CE-M04-02."
   },
+  "searchStaleBanner": "Résultats non actualisés — le serveur n'a pas répondu.",
+  "@searchStaleBanner": {
+    "description": "CE-M04-03 with a warm cache: online, but the search failed."
+  },
   "searchResultCount": "{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}",
   "@searchResultCount": {
     "description": "How many results are on screen, above the list.",
