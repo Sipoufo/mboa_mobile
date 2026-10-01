@@ -874,6 +874,96 @@ class I18n {
     );
   }
 
+  /// `Liste`
+  String get searchViewList {
+    return Intl.message(
+      'Liste',
+      name: 'searchViewList',
+      desc: 'Toggle back to the result list (M04).',
+      args: [],
+    );
+  }
+
+  /// `Carte`
+  String get searchViewMap {
+    return Intl.message(
+      'Carte',
+      name: 'searchViewMap',
+      desc: 'Toggle to the map view (M04).',
+      args: [],
+    );
+  }
+
+  /// `Positions approximatives à 200 m près.`
+  String get searchMapApprox {
+    return Intl.message(
+      'Positions approximatives à 200 m près.',
+      name: 'searchMapApprox',
+      desc: 'RM-M04-06 — the map never shows an exact address.',
+      args: [],
+    );
+  }
+
+  /// `Carte indisponible`
+  String get searchMapNoKeyTitle {
+    return Intl.message(
+      'Carte indisponible',
+      name: 'searchMapNoKeyTitle',
+      desc: 'No MapTiler key was provided at build time.',
+      args: [],
+    );
+  }
+
+  /// `Cette version a été compilée sans clé de cartographie. Les résultats restent consultables en liste.`
+  String get searchMapNoKeyBody {
+    return Intl.message(
+      'Cette version a été compilée sans clé de cartographie. Les résultats restent consultables en liste.',
+      name: 'searchMapNoKeyBody',
+      desc: 'No MapTiler key — the list still works.',
+      args: [],
+    );
+  }
+
+  /// `Carte indisponible hors ligne`
+  String get searchMapOfflineTitle {
+    return Intl.message(
+      'Carte indisponible hors ligne',
+      name: 'searchMapOfflineTitle',
+      desc: 'CE-M04-02 on the map — tiles are not cached.',
+      args: [],
+    );
+  }
+
+  /// `Le fond de carte a besoin d'une connexion. Vos derniers résultats restent consultables en liste.`
+  String get searchMapOfflineBody {
+    return Intl.message(
+      'Le fond de carte a besoin d\'une connexion. Vos derniers résultats restent consultables en liste.',
+      name: 'searchMapOfflineBody',
+      desc: 'CE-M04-02 on the map.',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien à placer`
+  String get searchMapNoPositionTitle {
+    return Intl.message(
+      'Aucun bien à placer',
+      name: 'searchMapNoPositionTitle',
+      desc: 'No hit carries coordinates.',
+      args: [],
+    );
+  }
+
+  /// `Ces résultats n'ont pas de position renseignée. Ils restent consultables en liste.`
+  String get searchMapNoPositionBody {
+    return Intl.message(
+      'Ces résultats n\'ont pas de position renseignée. Ils restent consultables en liste.',
+      name: 'searchMapNoPositionBody',
+      desc: 'No hit carries coordinates.',
+      args: [],
+    );
+  }
+
   /// `Loyer (XAF)`
   String get searchRentRange {
     return Intl.message(

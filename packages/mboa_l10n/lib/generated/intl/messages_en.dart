@@ -1331,6 +1331,27 @@ class MessageLookup extends MessageLookupByLibrary {
       "No property found",
     ),
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filters"),
+    "searchMapApprox": MessageLookupByLibrary.simpleMessage(
+      "Positions are approximate to within 200 m.",
+    ),
+    "searchMapNoKeyBody": MessageLookupByLibrary.simpleMessage(
+      "This build has no map key. The results are still there in the list.",
+    ),
+    "searchMapNoKeyTitle": MessageLookupByLibrary.simpleMessage(
+      "Map unavailable",
+    ),
+    "searchMapNoPositionBody": MessageLookupByLibrary.simpleMessage(
+      "These results carry no position. They are still there in the list.",
+    ),
+    "searchMapNoPositionTitle": MessageLookupByLibrary.simpleMessage(
+      "Nothing to place",
+    ),
+    "searchMapOfflineBody": MessageLookupByLibrary.simpleMessage(
+      "Map tiles are not cached. Your last results are still there in the list.",
+    ),
+    "searchMapOfflineTitle": MessageLookupByLibrary.simpleMessage(
+      "The map needs a connection",
+    ),
     "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
     "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
@@ -1349,6 +1370,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Where are you looking?",
     ),
     "searchSurfaceRange": MessageLookupByLibrary.simpleMessage("Surface (m²)"),
+    "searchViewList": MessageLookupByLibrary.simpleMessage("List"),
+    "searchViewMap": MessageLookupByLibrary.simpleMessage("Map"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Identity documents and any other required verifications",
     ),

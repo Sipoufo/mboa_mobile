@@ -1,0 +1,6 @@
+{
+  "ENV": "dev",
+  "MAPTILER_KEY": "",
+  "MAP_STYLE_URL": "",
+  "SENTRY_DSN": ""
+}

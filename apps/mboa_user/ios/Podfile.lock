@@ -83,6 +83,10 @@ PODS:
   - libwebp/sharpyuv (1.6.0)
   - libwebp/webp (1.6.0):
     - libwebp/sharpyuv
+  - MapLibre (6.28.0)
+  - maplibre_gl (0.27.0):
+    - Flutter
+    - MapLibre (= 6.28.0)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
     - nanopb/encode (= 3.30910.0)
@@ -115,6 +119,7 @@ DEPENDENCIES:
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - maplibre_gl (from `.symlinks/plugins/maplibre_gl/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
@@ -129,6 +134,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - libwebp
+    - MapLibre
     - nanopb
     - PromisesObjC
     - SDWebImage
@@ -152,6 +158,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  maplibre_gl:
+    :path: ".symlinks/plugins/maplibre_gl/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   sentry_flutter:
@@ -176,6 +184,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 766ace00c6b10d8148408f329d10c4f051931850
   image_picker_ios: e0ece4aa2a75771a7de3fa735d26d90817041326
   libwebp: af5937a13536ef73f3784d69cc342b98961acf33
+  MapLibre: 502506f9abd57330f11c19328217be3b121c3f13
+  maplibre_gl: ad68f3f1213b4dd48a9961adc6607681eea7c456
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   PromisesObjC: 752c3227f599e3467650e47ea36f433eeb10c273

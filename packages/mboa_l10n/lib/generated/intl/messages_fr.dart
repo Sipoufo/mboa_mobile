@@ -1430,6 +1430,27 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun bien trouvé",
     ),
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filtres"),
+    "searchMapApprox": MessageLookupByLibrary.simpleMessage(
+      "Positions approximatives à 200 m près.",
+    ),
+    "searchMapNoKeyBody": MessageLookupByLibrary.simpleMessage(
+      "Cette version a été compilée sans clé de cartographie. Les résultats restent consultables en liste.",
+    ),
+    "searchMapNoKeyTitle": MessageLookupByLibrary.simpleMessage(
+      "Carte indisponible",
+    ),
+    "searchMapNoPositionBody": MessageLookupByLibrary.simpleMessage(
+      "Ces résultats n\'ont pas de position renseignée. Ils restent consultables en liste.",
+    ),
+    "searchMapNoPositionTitle": MessageLookupByLibrary.simpleMessage(
+      "Aucun bien à placer",
+    ),
+    "searchMapOfflineBody": MessageLookupByLibrary.simpleMessage(
+      "Le fond de carte a besoin d\'une connexion. Vos derniers résultats restent consultables en liste.",
+    ),
+    "searchMapOfflineTitle": MessageLookupByLibrary.simpleMessage(
+      "Carte indisponible hors ligne",
+    ),
     "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
     "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
@@ -1452,6 +1473,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchSurfaceRange": MessageLookupByLibrary.simpleMessage(
       "Superficie (m²)",
     ),
+    "searchViewList": MessageLookupByLibrary.simpleMessage("Liste"),
+    "searchViewMap": MessageLookupByLibrary.simpleMessage("Carte"),
     "settingsCertificationsBody": MessageLookupByLibrary.simpleMessage(
       "Pièces d’identifications et tout autres vérifications requises",
     ),

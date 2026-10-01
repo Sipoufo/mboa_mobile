@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**629 tests green, analyze clean.** `mboa_user` 75 · `mboa_pro` 432 ·
+**643 tests green, analyze clean.** `mboa_user` 89 · `mboa_pro` 432 ·
 `mboa_core` 12 · `mboa_shared` 110.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -45,7 +45,7 @@
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports |
-| M04 search | 🚧 **lots 1–2 done** — public shell, filters, list, offline cache · map (lot 3) pending |
+| M04 search | ✅ public shell, filters, list, offline cache, **map (MapLibre + MapTiler)** |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
 | M12 messagerie | ✅ **both apps** — list, thread, attachments, offline queue · shared views |
@@ -69,6 +69,21 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### The map frames the city, not the data
+A camera fitted to every result opens wherever the worst record says. Three of
+the dev seed's twelve Douala listings carry San Francisco's coordinates — a
+simulator's default position, captured through a location flow — and the first
+run of the map opened on the open Atlantic.
+
+`SearchMapView.cameraFor` builds the view from the hits within ~55 km of the
+**median** one (a mean is dragged across the world by three bad points) and
+falls back to a point and a zoom when the span is too small to be a box, which
+is also arbitrary to MapLibre. Outliers are still drawn; they just do not
+decide where the map opens.
+
+The map draws **what the list already loaded** — `GET /search` has no bounding
+box, so a map with its own query would be inventing a contract.
 
 ### A route provides the blocs it needs
 The tab shell provides `FavoritesBloc` and `ConversationsBloc`, and it covers

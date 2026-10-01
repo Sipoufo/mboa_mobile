@@ -11,6 +11,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../bloc/search_bloc.dart';
 import 'widgets/search_filters_sheet.dart';
 import 'widgets/search_hit_card.dart';
+import 'widgets/search_map_view.dart';
 
 /// Recherche (CDC M04) — the entry point of 90% of sessions, and the one screen
 /// that must work without an account (CA-M04-04).
@@ -28,8 +29,16 @@ class SearchPage extends StatefulWidget implements AutoRouteWrapper {
   State<SearchPage> createState() => _SearchPageState();
 }
 
+/// List or map — CDC M04 offers both over the same results.
+enum _View { list, map }
+
 class _SearchPageState extends State<SearchPage> {
   final _scroll = ScrollController();
+
+  /// Which half is on screen. `setState` is right here and only here: this is
+  /// a preference about the current screen, not data from the API — the hits
+  /// it switches between both come from `SearchBloc`.
+  _View _view = _View.list;
 
   @override
   void initState() {
@@ -115,10 +124,73 @@ class _SearchPageState extends State<SearchPage> {
                   onOpenFilters: _openFilters,
                 ),
                 if (ready.isOffline) const _OfflineBanner(),
-                Expanded(child: _Results(state: ready, controller: _scroll)),
+                // Nothing to switch between until a city is chosen
+                // (RM-M04-01), and an empty map is not a second empty state.
+                if (ready.query.isValid && !ready.isEmpty && !ready.isLoading)
+                  _ViewToggle(
+                    view: _view,
+                    onChanged: (view) => setState(() => _view = view),
+                  ),
+                Expanded(
+                  child: switch (_view) {
+                    _View.list =>
+                      _Results(state: ready, controller: _scroll),
+                    _View.map => SearchMapView(
+                        state: ready,
+                        onOpen: (hit) => _open(context, hit),
+                      ),
+                  },
+                ),
               ],
             ),
         },
+      ),
+    );
+  }
+}
+
+/// A residence opens its own screen: what the tenant picks there is which unit
+/// (RM-M10bis-11). The list and the map both land here, so a marker and a row
+/// cannot drift apart.
+void _open(BuildContext context, SearchHit hit) => switch (hit) {
+      ListingHit() => context.router.push(ListingDetailRoute(id: hit.id)),
+      ResidenceHit() => context.router.push(ResidenceDetailRoute(id: hit.id)),
+    };
+
+/// Liste / Carte, over one set of results.
+class _ViewToggle extends StatelessWidget {
+  const _ViewToggle({required this.view, required this.onChanged});
+
+  final _View view;
+  final ValueChanged<_View> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        Dimens.spacing,
+        0,
+        Dimens.spacing,
+        Dimens.spacingSm,
+      ),
+      child: SegmentedButton<_View>(
+        showSelectedIcon: false,
+        segments: [
+          ButtonSegment(
+            value: _View.list,
+            label: Text(l10n.searchViewList),
+            icon: const Icon(LucideIcons.list, size: Dimens.iconSm),
+          ),
+          ButtonSegment(
+            value: _View.map,
+            label: Text(l10n.searchViewMap),
+            icon: const Icon(LucideIcons.map, size: Dimens.iconSm),
+          ),
+        ],
+        selected: {view},
+        onSelectionChanged: (selection) => onChanged(selection.first),
       ),
     );
   }
@@ -268,17 +340,7 @@ class _Results extends StatelessWidget {
           );
         }
         final hit = state.hits[index];
-        return SearchHitCard(
-          hit: hit,
-          // A residence opens its own screen: what the tenant picks there is
-          // which unit (RM-M10bis-11).
-          onTap: () => switch (hit) {
-            ListingHit() =>
-              context.router.push(ListingDetailRoute(id: hit.id)),
-            ResidenceHit() =>
-              context.router.push(ResidenceDetailRoute(id: hit.id)),
-          },
-        );
+        return SearchHitCard(hit: hit, onTap: () => _open(context, hit));
       },
     );
   }

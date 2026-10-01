@@ -509,3 +509,43 @@ loading behaviour on a slow line.
 
 Either upload a handful of real objects under the seeded keys, or seed keys
 that exist. A couple of files is enough; they only have to be there.
+
+---
+
+## §18 — The map (M04 lot 3)
+
+**Raised 2026-10-01**, building the map view.
+
+**1. Does `GET /search` fuzz the coordinates, or are they exact?** RM-M04-06
+hides a listing's position within about 200 m until contact is established,
+and `SearchHit` has carried a comment since lot 1 saying the API does it. The
+app cannot check, and the distinction is the whole rule: if the exact point is
+in the response, it is already on the device and blurring it on screen protects
+nothing. Please confirm — and if it is not done yet, it belongs on the server
+before the map ships to real listings. The app draws a 200 m disc and says so
+in words either way, which is right for a fuzzed point and misleading for an
+exact one.
+
+**2. Three of the dev seed's Douala listings are in San Francisco.** Exactly
+`37.785…, -122.406…` — the iOS simulator's default position, so these were
+almost certainly created through a "use my location" capture while testing. A
+fourth sits in Yaoundé with a Douala city id:
+
+| Listing | Latitude | Longitude | Where that is |
+|---------|----------|-----------|---------------|
+| Maison bloc c | 37.785257 | -122.406955 | San Francisco |
+| Appartement Blanc | 37.785264 | -122.406892 | San Francisco |
+| *(untitled)* | 37.785842 | -122.406393 | San Francisco |
+| *(untitled)* | 3.910248 | 11.500119 | Yaoundé |
+
+A camera fitted to all twelve results spans a third of the planet and opens on
+the open Atlantic, which is what the map did on the first run. The app now
+frames the median cluster and leaves outliers off screen, so it survives this —
+but a listing in the wrong city is wrong in the list too, and `ville` and the
+coordinates disagreeing is worth a server-side check on write.
+
+**3. No bounding box on `GET /search`.** There is no `bbox`, no radius and no
+"search this area", so the map draws the pages the list has already loaded.
+That is the behaviour we want for the MVP — one source of truth, one set of
+filters — but if a map-first search is planned, the parameter has to come from
+here rather than from a second query the app invents.

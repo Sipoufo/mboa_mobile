@@ -339,6 +339,42 @@
   "@searchOfflineBanner": {
     "description": "CE-M04-02."
   },
+  "searchViewList": "List",
+  "@searchViewList": {
+    "description": "Toggle back to the result list (M04)."
+  },
+  "searchViewMap": "Map",
+  "@searchViewMap": {
+    "description": "Toggle to the map view (M04)."
+  },
+  "searchMapApprox": "Positions are approximate to within 200 m.",
+  "@searchMapApprox": {
+    "description": "RM-M04-06 — the map never shows an exact address."
+  },
+  "searchMapNoKeyTitle": "Map unavailable",
+  "@searchMapNoKeyTitle": {
+    "description": "No MapTiler key was provided at build time."
+  },
+  "searchMapNoKeyBody": "This build has no map key. The results are still there in the list.",
+  "@searchMapNoKeyBody": {
+    "description": "No MapTiler key — the list still works."
+  },
+  "searchMapOfflineTitle": "The map needs a connection",
+  "@searchMapOfflineTitle": {
+    "description": "CE-M04-02 on the map — tiles are not cached."
+  },
+  "searchMapOfflineBody": "Map tiles are not cached. Your last results are still there in the list.",
+  "@searchMapOfflineBody": {
+    "description": "CE-M04-02 on the map."
+  },
+  "searchMapNoPositionTitle": "Nothing to place",
+  "@searchMapNoPositionTitle": {
+    "description": "No hit carries coordinates."
+  },
+  "searchMapNoPositionBody": "These results carry no position. They are still there in the list.",
+  "@searchMapNoPositionBody": {
+    "description": "No hit carries coordinates."
+  },
   "searchRentRange": "Rent (XAF)",
   "@searchRentRange": {
     "description": "Rent filter."
@@ -400,239 +436,239 @@
   },
   "favoritesAdd": "Save",
   "@favoritesAdd": {
-      "description": "M06 — save a listing."
+    "description": "M06 — save a listing."
   },
   "favoritesRemove": "Remove from favourites",
   "@favoritesRemove": {
-      "description": "M06 — unsave."
+    "description": "M06 — unsave."
   },
   "favoritesSignInTitle": "Create an account to save",
   "@favoritesSignInTitle": {
-      "description": "RM-M04-05."
+    "description": "RM-M04-05."
   },
   "favoritesSignInBody": "Your favourites follow you from one device to the next.",
   "@favoritesSignInBody": {
-      "description": "Why an account."
+    "description": "Why an account."
   },
   "favoritesEmptyTitle": "No favourites",
   "@favoritesEmptyTitle": {
-      "description": "Empty tab."
+    "description": "Empty tab."
   },
   "favoritesEmptyBody": "Tap the heart on a property to find it here.",
   "@favoritesEmptyBody": {
-      "description": "Empty tab."
+    "description": "Empty tab."
   },
   "favoritesLimitReached": "You have reached 50 favourites. Remove one to add another.",
   "@favoritesLimitReached": {
-      "description": "RM-M06-02."
+    "description": "RM-M06-02."
   },
   "favoritesUnavailable": "This property is no longer available",
   "@favoritesUnavailable": {
-      "description": "available = false."
+    "description": "available = false."
   },
   "favoritesUnavailableNote": "It stays here for 30 days, then disappears.",
   "@favoritesUnavailableNote": {
-      "description": "The 30-day grace."
+    "description": "The 30-day grace."
   },
   "listingTitle": "Property details",
   "@listingTitle": {
-      "description": "M05 screen title."
+    "description": "M05 screen title."
   },
   "listingGoneTitle": "This property is no longer available",
   "@listingGoneTitle": {
-      "description": "CE-M05-01."
+    "description": "CE-M05-01."
   },
   "listingGoneBody": "The listing was withdrawn or has expired. Try a new search.",
   "@listingGoneBody": {
-      "description": "CE-M05-01."
+    "description": "CE-M05-01."
   },
   "listingOfflineBanner": "Offline fiche — some actions are unavailable.",
   "@listingOfflineBanner": {
-      "description": "Cached fiche."
+    "description": "Cached fiche."
   },
   "listingCharacteristics": "Characteristics",
   "@listingCharacteristics": {
-      "description": "Fiche section."
+    "description": "Fiche section."
   },
   "listingAmenities": "Amenities",
   "@listingAmenities": {
-      "description": "Fiche section."
+    "description": "Fiche section."
   },
   "listingDescription": "Description",
   "@listingDescription": {
-      "description": "Fiche section."
+    "description": "Fiche section."
   },
   "listingProvider": "The provider",
   "@listingProvider": {
-      "description": "Fiche section."
+    "description": "Fiche section."
   },
   "listingLocationNote": "Approximate location: the exact address is only given on a signed contract.",
   "@listingLocationNote": {
-      "description": "RM-M05-02."
+    "description": "RM-M05-02."
   },
   "listingPhotosCount": "{count} photos",
   "@listingPhotosCount": {
-      "description": "Gallery entry.",
-      "placeholders": {
-          "count": {
-              "type": "int"
-          }
+    "description": "Gallery entry.",
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
+    }
   },
   "listingContact": "Contact",
   "@listingContact": {
-      "description": "Fiche action."
+    "description": "Fiche action."
   },
   "listingPlanVisit": "Book a visit",
   "@listingPlanVisit": {
-      "description": "RM-M05-07."
+    "description": "RM-M05-07."
   },
   "listingReport": "Report",
   "@listingReport": {
-      "description": "RM-M05-05."
+    "description": "RM-M05-05."
   },
   "listingActionsSignIn": "Sign in to contact the provider or book a visit.",
   "@listingActionsSignIn": {
-      "description": "RM-M04-05."
+    "description": "RM-M04-05."
   },
   "listingNoVisitor": "This property does not accept visits yet.",
   "@listingNoVisitor": {
-      "description": "RM-M05-07."
+    "description": "RM-M05-07."
   },
   "listingReviewsTitle": "Reviews",
   "@listingReviewsTitle": {
-      "description": "RM-M05-08."
+    "description": "RM-M05-08."
   },
   "listingRatingSummary": "{average} · {count} reviews",
   "@listingRatingSummary": {
-      "description": "Rating block.",
-      "placeholders": {
-          "count": {
-              "type": "int"
-          },
-          "average": {
-              "type": "String"
-          }
+    "description": "Rating block.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "average": {
+        "type": "String"
       }
+    }
   },
   "listingReviewVisit": "Visit",
   "@listingReviewVisit": {
-      "description": "ReviewKind.visit."
+    "description": "ReviewKind.visit."
   },
   "listingReviewResident": "Tenant",
   "@listingReviewResident": {
-      "description": "ReviewKind.resident."
+    "description": "ReviewKind.resident."
   },
   "listingReviewMonths": "{count} months living there",
   "@listingReviewMonths": {
-      "description": "residenceMonths.",
-      "placeholders": {
-          "count": {
-              "type": "int"
-          }
+    "description": "residenceMonths.",
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
+    }
   },
   "listingReviewEdited": "Edited on {date}",
   "@listingReviewEdited": {
-      "description": "RM-M27-02.",
-      "placeholders": {
-          "date": {
-              "type": "String"
-          }
+    "description": "RM-M27-02.",
+    "placeholders": {
+      "date": {
+        "type": "String"
       }
+    }
   },
   "badgeTrustedProvider": "Trusted provider",
   "@badgeTrustedProvider": {
-      "description": "🏆"
+    "description": "🏆"
   },
   "badgeRecertified": "Recertified",
   "@badgeRecertified": {
-      "description": "🔄"
+    "description": "🔄"
   },
   "badgeVerifiedIdentity": "Verified identity",
   "@badgeVerifiedIdentity": {
-      "description": "✅"
+    "description": "✅"
   },
   "badgeVerifiedPhotos": "Verified photos",
   "@badgeVerifiedPhotos": {
-      "description": "📸"
+    "description": "📸"
   },
   "residenceTitle": "Residence details",
   "@residenceTitle": {
-      "description": "Residence fiche."
+    "description": "Residence fiche."
   },
   "residenceUnitsAvailable": "{count, plural, one{1 unit available} other{{count} units available}}",
   "@residenceUnitsAvailable": {
-      "description": "Residence units.",
-      "placeholders": {
-          "count": {
-              "type": "int"
-          }
+    "description": "Residence units.",
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
+    }
   },
   "prestataireKindParticulier": "Individual",
   "@prestataireKindParticulier": {
-      "description": "ProviderCard.type."
+    "description": "ProviderCard.type."
   },
   "prestataireKindAgence": "Agency",
   "@prestataireKindAgence": {
-      "description": "ProviderCard.type."
+    "description": "ProviderCard.type."
   },
   "prestataireKindPromoteur": "Developer",
   "@prestataireKindPromoteur": {
-      "description": "ProviderCard.type."
+    "description": "ProviderCard.type."
   },
   "messagingTitle": "Messages",
   "@messagingTitle": {
-      "description": "M12 screen title."
+    "description": "M12 screen title."
   },
   "messagingEmptyTitle": "No conversation",
   "@messagingEmptyTitle": {
-      "description": "Empty list."
+    "description": "Empty list."
   },
   "messagingEmptyTenant": "Contact a provider from a property's page to start a conversation.",
   "@messagingEmptyTenant": {
-      "description": "RM-M12-01."
+    "description": "RM-M12-01."
   },
   "messagingEmptyProvider": "Tenants will write to you from your listings. You cannot start a conversation.",
   "@messagingEmptyProvider": {
-      "description": "RM-M12-01."
+    "description": "RM-M12-01."
   },
   "messagingHint": "Write a message…",
   "@messagingHint": {
-      "description": "Composer placeholder."
+    "description": "Composer placeholder."
   },
   "messagingSend": "Send",
   "@messagingSend": {
-      "description": "Composer action."
+    "description": "Composer action."
   },
   "messagingAttach": "Attach an image",
   "@messagingAttach": {
-      "description": "RM-M12-04."
+    "description": "RM-M12-04."
   },
   "messagingAttachment": "Image",
   "@messagingAttachment": {
-      "description": "An attached image chip."
+    "description": "An attached image chip."
   },
   "messagingAttachmentsMax": "3 images maximum per message.",
   "@messagingAttachmentsMax": {
-      "description": "RM-M12-04."
+    "description": "RM-M12-04."
   },
   "messagingPending": "Waiting for a connection",
   "@messagingPending": {
-      "description": "CE-M12-01."
+    "description": "CE-M12-01."
   },
   "messagingFailed": "Not sent",
   "@messagingFailed": {
-      "description": "A queued message that keeps failing."
+    "description": "A queued message that keeps failing."
   },
   "messagingReadOnly": "This listing is no longer available. The conversation stays readable.",
   "@messagingReadOnly": {
-      "description": "CE-M12-02."
+    "description": "CE-M12-02."
   },
   "messagingContactSent": "Message sent to the provider",
   "@messagingContactSent": {
-      "description": "Toast after starting a thread from a fiche."
+    "description": "Toast after starting a thread from a fiche."
   },
   "commonRetry": "Retry",
   "commonError": "Something went wrong. Please try again.",

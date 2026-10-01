@@ -36,3 +36,7 @@ coverage/
 
 # Golden-test diffs, written next to the goldens on a mismatch.
 failures/
+
+# Build-time secrets: the example file is the only one committed.
+env/*.json
+!env/*.example.json

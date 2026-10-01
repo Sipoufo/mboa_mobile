@@ -12,14 +12,34 @@ import '../../../favorites/ui/widgets/favorite_heart.dart';
 /// rent, the other a building with several — so the card switches on the
 /// sealed hit rather than flattening both into a lowest common denominator.
 class SearchHitCard extends StatelessWidget {
-  const SearchHitCard({super.key, required this.hit, this.onTap});
+  const SearchHitCard({
+    super.key,
+    required this.hit,
+    this.onTap,
+    this.compact = false,
+  });
+
+  /// One result, laid out for a map: a thumbnail beside the text instead of a
+  /// photo above it.
+  ///
+  /// The full card is two thirds of a phone screen. Over a map that is most of
+  /// the map, and the reader loses the one thing they switched views for —
+  /// where this place is in relation to the others.
+  const SearchHitCard.compact({
+    super.key,
+    required this.hit,
+    this.onTap,
+  }) : compact = true;
 
   final SearchHit hit;
   final VoidCallback? onTap;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.mboaColors;
+
+    if (compact) return _CompactCard(hit: hit, onTap: onTap);
 
     return Container(
       margin: const EdgeInsets.only(bottom: Dimens.spacing),
@@ -232,6 +252,105 @@ class _Place extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The map's card: thumbnail, price, title, where — and the heart, which is
+/// the one action worth having without opening the fiche.
+class _CompactCard extends StatelessWidget {
+  const _CompactCard({required this.hit, this.onTap});
+
+  final SearchHit hit;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+    final l10n = I18n.of(context);
+
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(Dimens.radiusLg),
+      clipBehavior: Clip.antiAlias,
+      elevation: 3,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.spacingSm),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(Dimens.radius),
+                child: SizedBox(
+                  width: 64,
+                  height: 64,
+                  child: MboaNetworkImage(
+                    url: hit.photoUrl,
+                    placeholder: const MboaImagePlaceholder(size: 64),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // The same words as the full card, through the same
+                    // helpers: a price that reads differently in two places is
+                    // two prices to the reader.
+                    Text(
+                      switch (hit) {
+                        final ListingHit listing
+                            when listing.displayPrice != null =>
+                          listing.rentalPeriod
+                              .priceLabel(l10n, listing.displayPrice!),
+                        final ResidenceHit residence
+                            when residence.fromMonthlyRent != null =>
+                          l10n.searchResidenceFrom(
+                            residence.rentFromLabel(residence.fromMonthlyRent!),
+                          ),
+                        _ => '',
+                      },
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.label
+                          .copyWith(color: colors.primaryDark),
+                    ),
+                    Text(
+                      hit.title ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.body.copyWith(color: colors.ink),
+                    ),
+                    Text(
+                      [hit.district, hit.city].nonNulls.join(', '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.caption
+                          .copyWith(color: colors.textSecondary),
+                    ),
+                  ],
+                ),
+              ),
+              if (hit case final ListingHit listing)
+                FavoriteHeart(
+                  annonceId: listing.id,
+                  optimistic: optimisticFavorite(
+                    annonceId: listing.id,
+                    title: listing.title,
+                    photoKey: listing.primaryPhotoKey,
+                    price: listing.displayPrice,
+                    rentalPeriod: listing.rentalPeriod,
+                    city: listing.city,
+                    district: listing.district,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

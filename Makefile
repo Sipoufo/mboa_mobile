@@ -44,8 +44,17 @@ coverage: ## Run tests with coverage + HTML report
 clean: ## Remove build artifacts
 	@for app in $(APPS); do (cd apps/$$app && flutter clean); done
 
+# Build-time secrets (MapTiler, Sentry). Copy env/dev.example.json to
+# env/dev.json and fill it in; the file is git-ignored and optional, so a
+# checkout with no secrets still runs — the features that need one say so.
+ENV_FILE ?= $(CURDIR)/env/dev.json
+DEFINES := --dart-define=ENV=dev
+ifneq ($(wildcard $(ENV_FILE)),)
+DEFINES += --dart-define-from-file=$(ENV_FILE)
+endif
+
 run-user: ## Run App Mboa (public) in dev
-	cd apps/mboa_user && flutter run --dart-define=ENV=dev
+	cd apps/mboa_user && flutter run $(DEFINES)
 
 run-pro: ## Run App Mboa Pro in dev
-	cd apps/mboa_pro && flutter run --dart-define=ENV=dev
+	cd apps/mboa_pro && flutter run $(DEFINES)

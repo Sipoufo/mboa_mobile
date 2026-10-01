@@ -70,5 +70,33 @@ class Environment {
   static String get sentryDsn =>
       const String.fromEnvironment('SENTRY_DSN', defaultValue: '');
 
+  /// MapTiler Cloud key for the vector tiles the map view loads (Doc 13 §8).
+  ///
+  /// Injected at build time like every other secret — see `env/README.md`.
+  /// Empty is a supported state, not a bug: a checkout without the key still
+  /// runs, and the map view says what is missing instead of showing a blank
+  /// grey square.
+  static String get mapTilerKey =>
+      const String.fromEnvironment('MAPTILER_KEY', defaultValue: '');
+
+  /// A whole style URL, which takes the place of the MapTiler one when set.
+  ///
+  /// Doc 13 §8 plans the move to self-hosted PMTiles once MapTiler's free
+  /// 100k tiles/month is passed, and calls it transparent for the client —
+  /// this is what makes it transparent. It also lets a developer with no key
+  /// point at MapLibre's public demo style to check the map renders at all.
+  static String get mapStyleOverride =>
+      const String.fromEnvironment('MAP_STYLE_URL', defaultValue: '');
+
+  /// Whether the map has tiles to load — a key, or a style of its own.
+  static bool get hasMapTilerKey =>
+      mapTilerKey.isNotEmpty || mapStyleOverride.isNotEmpty;
+
+  /// The style the map loads. MapTiler's `streets-v2` reads well at the zoom
+  /// levels a city search uses, and labels Douala and Yaoundé in French.
+  static String get mapStyleUrl => mapStyleOverride.isNotEmpty
+      ? mapStyleOverride
+      : 'https://api.maptiler.com/maps/streets-v2/style.json?key=$mapTilerKey';
+
   static bool get isProduction => current == MboaEnv.production;
 }

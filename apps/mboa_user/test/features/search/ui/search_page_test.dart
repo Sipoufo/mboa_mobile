@@ -151,6 +151,47 @@ void main() {
     expect(find.text('3'), findsOneWidget);
   });
 
+  group('the list/map toggle (CA-M04-03)', () {
+    testWidgets('appears once there is something to show on a map',
+        (tester) async {
+      await pump(tester);
+
+      expect(find.text('Carte'), findsOneWidget);
+      expect(find.text('Liste'), findsOneWidget);
+    });
+
+    testWidgets('stays away until a city is chosen', (tester) async {
+      when(() => bloc.state)
+          .thenReturn(const SearchReady(query: SearchQuery()));
+      await pump(tester);
+
+      // RM-M04-01 — nothing has been searched yet, so an empty map would be a
+      // second way of saying "choose a city", in a worse place.
+      expect(find.text('Carte'), findsNothing);
+    });
+
+    testWidgets('switches the half on screen, and comes back', (tester) async {
+      await pump(tester);
+      expect(find.text('Studio meublé — Bonapriso'), findsOneWidget);
+
+      await tester.tap(find.text('Carte'));
+      await tester.pumpAndSettle();
+
+      // A test build has no MapTiler key, so the map half is its own
+      // "no key" screen rather than a map — which is the point: the toggle
+      // swapped the halves, and neither of them is a blank square.
+      // (`SearchMapView` takes `hasMapKey` so the other states can be reached;
+      // here the real screen's default is what is being checked.)
+      expect(find.text('Carte indisponible'), findsOneWidget);
+      expect(find.text('Studio meublé — Bonapriso'), findsNothing);
+
+      await tester.tap(find.text('Liste'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Studio meublé — Bonapriso'), findsOneWidget);
+    });
+  });
+
   testWidgets('the search screen', (tester) async {
     await pump(tester);
 
