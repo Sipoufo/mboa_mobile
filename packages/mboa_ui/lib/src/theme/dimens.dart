@@ -10,6 +10,11 @@ abstract final class Dimens {
   static const double spacingXxl = 48;
   static const double spacing3Xl = 64;
 
+  /// Horizontal margin of a screen's content (Doc 05 §7.1) — the one value in
+  /// the scale that is not a multiple of 8, because the grid it defines is
+  /// 350px of content on a 390px screen.
+  static const double screenMargin = 20;
+
   // Back-compat aliases (earlier widgets used these names).
   static const double xs = spacingXs;
   static const double sm = spacingSm;

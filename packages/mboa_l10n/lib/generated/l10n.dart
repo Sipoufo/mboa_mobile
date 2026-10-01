@@ -874,6 +874,19 @@ class I18n {
     );
   }
 
+  /// `{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}`
+  String searchResultCount(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucun bien',
+      one: '1 bien',
+      other: '$count biens',
+      name: 'searchResultCount',
+      desc: 'How many results are on screen, above the list.',
+      args: [count],
+    );
+  }
+
   /// `Liste`
   String get searchViewList {
     return Intl.message(

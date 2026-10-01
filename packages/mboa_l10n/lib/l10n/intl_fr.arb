@@ -339,6 +339,15 @@
   "@searchOfflineBanner": {
     "description": "CE-M04-02."
   },
+  "searchResultCount": "{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}",
+  "@searchResultCount": {
+    "description": "How many results are on screen, above the list.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "searchViewList": "Liste",
   "@searchViewList": {
     "description": "Toggle back to the result list (M04)."

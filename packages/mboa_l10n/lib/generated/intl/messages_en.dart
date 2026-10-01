@@ -119,16 +119,19 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m45(count) =>
       "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
 
-  static String m46(count) => "${count}+";
+  static String m46(count) =>
+      "${Intl.plural(count, zero: 'No property', one: '1 property', other: '${count} properties')}";
 
-  static String m47(count) =>
+  static String m47(count) => "${count}+";
+
+  static String m48(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m48(date) => "Valid until ${date}";
+  static String m49(date) => "Valid until ${date}";
 
-  static String m49(time) => "Confirmed at ${time}";
+  static String m50(time) => "Confirmed at ${time}";
 
-  static String m50(distance) =>
+  static String m51(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1367,8 +1370,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Residence"),
     "searchResidenceFrom": m44,
     "searchResidenceUnits": m45,
+    "searchResultCount": m46,
     "searchRoomsMin": MessageLookupByLibrary.simpleMessage("Minimum rooms"),
-    "searchRoomsPlus": m46,
+    "searchRoomsPlus": m47,
     "searchStartBody": MessageLookupByLibrary.simpleMessage(
       "Pick a city to start. Every other filter is optional.",
     ),
@@ -1404,7 +1408,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m47,
+    "subscriptionListingLimit": m48,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -1419,7 +1423,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m48,
+    "subscriptionRenewsOn": m49,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
@@ -1497,7 +1501,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Owner"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m49,
+    "visitsPresenceConfirmedAt": m50,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -1532,7 +1536,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m50,
+    "visitsTooFarBody": m51,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

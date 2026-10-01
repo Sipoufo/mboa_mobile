@@ -42,10 +42,11 @@ class SearchHitCard extends StatelessWidget {
     if (compact) return _CompactCard(hit: hit, onTap: onTap);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: Dimens.spacing),
+      margin: const EdgeInsets.only(bottom: Dimens.spacingMd),
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.circular(Dimens.radiusLg),
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
+        boxShadow: MboaShadows.card,
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -56,6 +57,11 @@ class SearchHitCard extends StatelessWidget {
             Stack(
               children: [
                 _Photo(hit: hit),
+                Positioned(
+                  top: Dimens.spacingMd,
+                  left: Dimens.spacingMd,
+                  child: _TypeBadge(hit: hit),
+                ),
                 // A residence is not saved: favourites are listings (M06), and
                 // its units each have their own fiche.
                 if (hit case final ListingHit listing)
@@ -100,23 +106,66 @@ class _Photo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.mboaColors;
-    final url = hit.photoUrl;
 
-    // CE-M05-02 — a placeholder rather than a broken frame.
-    Widget placeholder() => ColoredBox(
+    // 4:3 (Doc 05 §6.2) rather than a fixed height: the card then holds its
+    // proportions on a small phone and a tablet alike.
+    return AspectRatio(
+      aspectRatio: 4 / 3,
+      child: MboaNetworkImage(
+        url: hit.photoUrl,
+        placeholder: ColoredBox(
           color: colors.primaryPale,
           child: Center(
             child: Icon(
               hit is ResidenceHit ? LucideIcons.layers : LucideIcons.image,
               color: colors.primary,
+              size: Dimens.iconLg,
             ),
           ),
-        );
+        ),
+      ),
+    );
+  }
+}
 
-    return SizedBox(
-      height: 170,
-      width: double.infinity,
-      child: MboaNetworkImage(url: url, placeholder: placeholder()),
+/// The pill over the photo: what kind of place this is, or that it is a whole
+/// residence (Doc 05 §6.4).
+class _TypeBadge extends StatelessWidget {
+  const _TypeBadge({required this.hit});
+
+  final SearchHit hit;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final isResidence = hit is ResidenceHit;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Dimens.spacingMd,
+        vertical: Dimens.spacingXs,
+      ),
+      decoration: BoxDecoration(
+        color: colors.surface.withValues(alpha: 0.92),
+        borderRadius: BorderRadius.circular(Dimens.radiusFull),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isResidence) ...[
+            Icon(LucideIcons.layers, size: 14, color: colors.primary),
+            const SizedBox(width: Dimens.spacingXs),
+          ],
+          Text(
+            switch (hit) {
+              final ListingHit listing => listing.propertyType.label(l10n),
+              ResidenceHit() => l10n.searchResidenceBadge,
+            },
+            style: context.mboaText.caption.copyWith(color: colors.primaryDark),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -129,36 +178,34 @@ class _ListingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
-    final colors = context.mboaColors;
 
-    final facts = [
-      hit.propertyType.label(l10n),
-      if (hit.roomCount case final rooms?) l10n.annoncesRooms(rooms),
-      if (hit.surfaceArea case final surface?) l10n.annoncesSurface('$surface'),
-    ].join(' · ');
+    // The numbers someone scans a list for, as icons: a row of glyphs is read
+    // faster than "Studio · 2 pièces · 45 m²", and reads the same in French
+    // and in English. Often empty — plenty of listings carry neither a room
+    // count nor a surface — so the row and its spacing go together, or the
+    // card keeps a blank band where the facts would have been.
+    final facts = <(IconData, String)>[
+      if (hit.roomCount case final rooms?) (LucideIcons.bedDouble, '$rooms'),
+      if (hit.surfaceArea case final surface?)
+        (LucideIcons.ruler, l10n.annoncesSurface('$surface')),
+      if (hit.furnished ?? false)
+        (LucideIcons.armchair, l10n.annonceFormFieldFurnished),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (hit.displayPrice case final price?)
-          Text(
-            hit.rentalPeriod.priceLabel(l10n, price),
-            style: context.mboaText.h3.copyWith(color: colors.primaryDark),
-          ),
-        const SizedBox(height: Dimens.spacingXs),
-        Text(
-          hit.title ?? '',
-          style: context.mboaText.label.copyWith(color: colors.ink),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(height: Dimens.spacingXs),
-        Text(
-          facts,
-          style: context.mboaText.caption.copyWith(color: colors.textSecondary),
-        ),
+        _Title(hit.title),
         const SizedBox(height: Dimens.spacingXs),
         _Place(city: hit.city, district: hit.district),
+        if (facts.isNotEmpty) ...[
+          const SizedBox(height: Dimens.spacingMd),
+          _Facts(facts: facts),
+        ],
+        if (hit.displayPrice case final price?) ...[
+          const SizedBox(height: Dimens.spacingMd),
+          _PriceRow(label: hit.rentalPeriod.priceLabel(l10n, price)),
+        ],
       ],
     );
   }
@@ -172,56 +219,109 @@ class _ResidenceBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
-    final colors = context.mboaColors;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            if (hit.fromMonthlyRent case final from?)
-              Expanded(
-                child: Text(
-                  l10n.searchResidenceFrom(
-                    hit.rentFromLabel(from),
-                  ),
-                  style:
-                      context.mboaText.h3.copyWith(color: colors.primaryDark),
-                ),
-              )
-            else
-              const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Dimens.spacingSm,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: colors.primaryPale,
-                borderRadius: BorderRadius.circular(Dimens.radiusFull),
-              ),
-              child: Text(
-                l10n.searchResidenceBadge,
-                style:
-                    context.mboaText.caption.copyWith(color: colors.primaryDark),
-              ),
+        _Title(hit.title),
+        const SizedBox(height: Dimens.spacingXs),
+        _Place(city: hit.city, district: hit.district),
+        const SizedBox(height: Dimens.spacingMd),
+        _Facts(
+          facts: [
+            (
+              LucideIcons.doorOpen,
+              l10n.searchResidenceUnits(hit.availableUnitCount ?? 0),
             ),
           ],
         ),
-        const SizedBox(height: Dimens.spacingXs),
-        Text(
-          hit.title ?? '',
-          style: context.mboaText.label.copyWith(color: colors.ink),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+
+        if (hit.fromMonthlyRent case final from?) ...[
+          const SizedBox(height: Dimens.spacingMd),
+          _PriceRow(
+            label: l10n.searchResidenceFrom(hit.rentFromLabel(from)),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title(this.title);
+
+  final String? title;
+
+  @override
+  Widget build(BuildContext context) => Text(
+        title ?? '',
+        style: context.mboaText.h3.copyWith(color: context.mboaColors.ink),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      );
+}
+
+/// Icon + value, repeated — bedrooms, surface, furnished.
+class _Facts extends StatelessWidget {
+  const _Facts({required this.facts});
+
+  final List<(IconData, String)> facts;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+    if (facts.isEmpty) return const SizedBox.shrink();
+
+    return Row(
+      children: [
+        for (final (index, (icon, value)) in facts.indexed) ...[
+          if (index > 0) const SizedBox(width: Dimens.spacing),
+          Icon(icon, size: Dimens.iconSm, color: colors.textSecondary),
+          const SizedBox(width: Dimens.spacingXs),
+          Text(
+            value,
+            style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// The last line of the card: the price in coral, and the arrow that says the
+/// whole card opens (Doc 05 §6.2).
+class _PriceRow extends StatelessWidget {
+  const _PriceRow({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: context.mboaText.h3.copyWith(color: colors.action),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        const SizedBox(height: Dimens.spacingXs),
-        Text(
-          l10n.searchResidenceUnits(hit.availableUnitCount ?? 0),
-          style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+        Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+            color: colors.primaryPale,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            LucideIcons.arrowRight,
+            size: Dimens.iconSm,
+            color: colors.primary,
+          ),
         ),
-        const SizedBox(height: Dimens.spacingXs),
-        _Place(city: hit.city, district: hit.district),
       ],
     );
   }
@@ -241,7 +341,7 @@ class _Place extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(LucideIcons.mapPin, size: Dimens.iconSm, color: colors.primary),
+        Icon(LucideIcons.mapPin, size: 14, color: colors.textTertiary),
         const SizedBox(width: Dimens.spacingXs),
         Expanded(
           child: Text(

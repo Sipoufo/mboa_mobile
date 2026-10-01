@@ -127,7 +127,8 @@ class _SearchPageState extends State<SearchPage> {
                 // Nothing to switch between until a city is chosen
                 // (RM-M04-01), and an empty map is not a second empty state.
                 if (ready.query.isValid && !ready.isEmpty && !ready.isLoading)
-                  _ViewToggle(
+                  _ResultsHeader(
+                    count: ready.hits.length,
                     view: _view,
                     onChanged: (view) => setState(() => _view = view),
                   ),
@@ -157,7 +158,54 @@ void _open(BuildContext context, SearchHit hit) => switch (hit) {
       ResidenceHit() => context.router.push(ResidenceDetailRoute(id: hit.id)),
     };
 
+/// How many results, and which half is showing them.
+///
+/// The count earns its line: "12 biens" tells a reader whether to refine
+/// before they start scrolling, and it is the only honest place to say that
+/// the map draws the same results as the list.
+class _ResultsHeader extends StatelessWidget {
+  const _ResultsHeader({
+    required this.count,
+    required this.view,
+    required this.onChanged,
+  });
+
+  final int count;
+  final _View view;
+  final ValueChanged<_View> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        Dimens.screenMargin,
+        0,
+        Dimens.screenMargin,
+        Dimens.spacingMd,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              l10n.searchResultCount(count),
+              style: context.mboaText.label.copyWith(color: colors.ink),
+            ),
+          ),
+          _ViewToggle(view: view, onChanged: onChanged),
+        ],
+      ),
+    );
+  }
+}
+
 /// Liste / Carte, over one set of results.
+///
+/// Hand-built rather than a `SegmentedButton`: Material's version brings its
+/// own outline, its own selected tint and a check mark, none of which belong
+/// to this design system (Doc 05 §1.2 — "pas chargé").
 class _ViewToggle extends StatelessWidget {
   const _ViewToggle({required this.view, required this.onChanged});
 
@@ -166,31 +214,86 @@ class _ViewToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        Dimens.spacing,
-        0,
-        Dimens.spacing,
-        Dimens.spacingSm,
+    return Container(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: colors.surfaceWarm,
+        borderRadius: BorderRadius.circular(Dimens.radiusFull),
       ),
-      child: SegmentedButton<_View>(
-        showSelectedIcon: false,
-        segments: [
-          ButtonSegment(
-            value: _View.list,
-            label: Text(l10n.searchViewList),
-            icon: const Icon(LucideIcons.list, size: Dimens.iconSm),
-          ),
-          ButtonSegment(
-            value: _View.map,
-            label: Text(l10n.searchViewMap),
-            icon: const Icon(LucideIcons.map, size: Dimens.iconSm),
-          ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (final value in _View.values)
+            _ToggleSegment(
+              value: value,
+              selected: value == view,
+              onTap: () => onChanged(value),
+            ),
         ],
-        selected: {view},
-        onSelectionChanged: (selection) => onChanged(selection.first),
+      ),
+    );
+  }
+}
+
+class _ToggleSegment extends StatelessWidget {
+  const _ToggleSegment({
+    required this.value,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final _View value;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimens.spacingMd,
+            vertical: Dimens.spacingSm,
+          ),
+          decoration: BoxDecoration(
+            color: selected ? colors.primary : Colors.transparent,
+            borderRadius: BorderRadius.circular(Dimens.radiusFull),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                switch (value) {
+                  _View.list => LucideIcons.list,
+                  _View.map => LucideIcons.map,
+                },
+                size: Dimens.iconSm,
+                color: selected ? colors.onBrand : colors.textSecondary,
+              ),
+              const SizedBox(width: Dimens.spacingXs),
+              Text(
+                switch (value) {
+                  _View.list => l10n.searchViewList,
+                  _View.map => l10n.searchViewMap,
+                },
+                style: context.mboaText.caption.copyWith(
+                  color: selected ? colors.onBrand : colors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -216,7 +319,12 @@ class _SearchBar extends StatelessWidget {
     final count = state.query.activeFilterCount;
 
     return Padding(
-      padding: const EdgeInsets.all(Dimens.spacing),
+      padding: const EdgeInsets.fromLTRB(
+        Dimens.screenMargin,
+        Dimens.spacingMd,
+        Dimens.screenMargin,
+        Dimens.spacing,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -228,9 +336,9 @@ class _SearchBar extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: Dimens.spacing),
                 decoration: BoxDecoration(
-                  color: colors.surface,
+                  color: colors.surfaceWarm,
                   borderRadius: BorderRadius.circular(Dimens.radius),
-                  border: Border.all(color: colors.border),
+                  border: Border.all(color: colors.border, width: 1.5),
                 ),
                 child: Row(
                   children: [
@@ -243,11 +351,10 @@ class _SearchBar extends StatelessWidget {
                     Expanded(
                       child: Text(
                         state.query.cityName ?? l10n.searchCityPrompt,
-                        style: context.mboaText.body.copyWith(
-                          color: state.query.cityName == null
-                              ? colors.textTertiary
-                              : colors.ink,
-                        ),
+                        style: state.query.cityName == null
+                            ? context.mboaText.body
+                                .copyWith(color: colors.textTertiary)
+                            : context.mboaText.label.copyWith(color: colors.ink),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -325,9 +432,9 @@ class _Results extends StatelessWidget {
     return ListView.builder(
       controller: controller,
       padding: const EdgeInsets.fromLTRB(
-        Dimens.spacing,
+        Dimens.screenMargin,
         0,
-        Dimens.spacing,
+        Dimens.screenMargin,
         Dimens.spacingXl,
       ),
       // One extra row for the loader that pulls the next page in.
