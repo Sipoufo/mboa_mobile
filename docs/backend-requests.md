@@ -583,3 +583,35 @@ the app and it offers a rating the server will refuse. A boolean on
 so the whole of M07 is covered by tests and has never run against the API:
 not the slots endpoint, not a booking, not a confirmation. A listing with an
 assigned agent who has declared availability would make this testable.
+
+---
+
+## §20 — A visit's property becomes unreadable to the person visiting it
+
+**Raised 2026-10-02**, from a real booking on a dev device.
+
+A tenant has a visit confirmed for today at 12:30 on `Studio Bependa`
+(`80c67b6e-1f34-4564-be73-348e16d72b8e`). Opening that property from the visit
+gives:
+
+```
+GET /api/v1/search/annonces/80c67b6e-… → 404 ANNONCE_UNAVAILABLE
+```
+
+and it is gone from `GET /search` as well. The listing left `PUBLISHED` after
+the visit was booked — reserved, rented or archived — and the public endpoint
+is the only one the tenant app has.
+
+So someone due to visit a property in an hour cannot re-read its address hints,
+its amenities, or the floor it is on. The app is right to say the listing is no
+longer available; it is the only thing it can know.
+
+**What we think is needed:** a party to an open visit should keep read access
+to that visit's property, whatever its publication status. Either
+`GET /search/annonces/{id}` serves an unpublished listing to a caller who has a
+visit on it, or `GET /visites/{id}` returns the property snapshot alongside the
+visit — the way `RM-M08-05` already has a contract copy the property it carries,
+for the same reason: the record has to survive the listing.
+
+Until then the app sends the tenant to a dead end two taps from a visit that is
+about to happen, and there is nothing it can do about it from here.
