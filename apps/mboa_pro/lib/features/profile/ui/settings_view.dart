@@ -196,13 +196,7 @@ class _Header extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: Dimens.spacingSm),
                   child: Row(
                     children: [
-                      if (Navigator.of(context).canPop())
-                        IconButton(
-                          onPressed: () => Navigator.of(context).maybePop(),
-                          icon: Icon(LucideIcons.arrowLeft, color: colors.onBrand),
-                        )
-                      else
-                        const SizedBox(width: Dimens.iconLg),
+                      MboaHeaderBackButton(color: colors.onBrand),
                       Expanded(
                         child: Text(
                           l10n.settingsTitle,

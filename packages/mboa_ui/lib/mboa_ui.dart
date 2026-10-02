@@ -24,6 +24,7 @@ export 'src/ui/cards/tile_card.dart';
 export 'src/ui/controls/segmented_control.dart';
 
 // Media
+export 'src/ui/navigation/header_back_button.dart';
 export 'src/ui/media/mboa_avatar.dart';
 export 'src/ui/media/mboa_network_image.dart';
 

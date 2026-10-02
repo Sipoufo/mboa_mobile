@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**690 tests green, analyze clean.** `mboa_user` 131 · `mboa_pro` 432 ·
-`mboa_core` 17 · `mboa_shared` 110.
+**703 tests green, analyze clean.** `mboa_user` 131 · `mboa_pro` 432 ·
+`mboa_core` 17 · `mboa_shared` 110 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -69,6 +69,19 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### A screen in a nested router has nothing to pop
+Everything under `/app` is pushed into a nested router and sits alone in its
+stack, so `Navigator.of(context).canPop()` is false there and a back arrow
+guarded by it never appears — the Settings hub had no way out, and neither did
+Mes visites.
+
+An `AppBar` uses auto_route's `AutoLeadingButton`; a screen painting its own
+header uses `MboaHeaderBackButton`, which asks the **root** navigator and holds
+the space when there is nothing to pop, so a centred title stays centred.
+
+`packages/mboa_ui` is now in `make test` — its 13 tests existed and had never
+run.
 
 ### Signing in does not rebuild the shell
 `replaceAll([UserShellRoute()])` lands on the route that is already there, so
