@@ -3,24 +3,29 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
-ProviderCard card(List<String> badges) => ProviderCard(
+ProviderCard card(List<ProviderCardBadgesEnum> badges) => ProviderCard(
       (b) => b
         ..displayName = 'Agence Deido'
-        ..badges = ListBuilder<String>(badges),
+        ..badges = ListBuilder<ProviderCardBadgesEnum>(badges),
     );
 
 /// Trust badges (CDC M05).
 ///
-/// `ProviderCard.badges` is an untyped `string[]` — the wire values are not
-/// documented (`docs/backend-requests.md` §16) — so this pins both halves of
-/// the defence: what we accept, and the order we draw it in.
+/// The wire values are the backend's `BadgeCode`, typed since 2026-09-30. This
+/// app had guessed them — `TRUSTED_PROVIDER`, `VERIFIED_IDENTITY` — and every
+/// badge was silently dropped on the fiche, which is what a wrong wire value
+/// looks like: an empty list, never an error.
 void main() {
   test('RM-M05-03 — badges come out in prestige order, not wire order', () {
     final provider = ProviderSummary.fromResponse(
-      card(['VERIFIED_PHOTOS', 'TRUSTED_PROVIDER', 'VERIFIED_IDENTITY']),
+      card([
+        ProviderCardBadgesEnum.PHOTOS_VERIFIED,
+        ProviderCardBadgesEnum.TRUSTED,
+        ProviderCardBadgesEnum.IDENTITY_VERIFIED,
+      ]),
     );
 
-    // The server has never promised an order; the fiche's rule is ours.
+    // The server sorts them too; the fiche's rule stays where it is applied.
     expect(provider.badges, [
       TrustBadge.trustedProvider,
       TrustBadge.verifiedIdentity,
@@ -28,17 +33,25 @@ void main() {
     ]);
   });
 
-  test('an unknown badge is dropped, not drawn blank', () {
-    final provider =
-        ProviderSummary.fromResponse(card(['SUPER_HOST', 'RECERTIFIED']));
+  test('a code this build does not know is dropped, not drawn blank', () {
+    final provider = ProviderSummary.fromResponse(
+      card([
+        ProviderCardBadgesEnum.unknownDefaultOpenApi,
+        ProviderCardBadgesEnum.RECERTIFIED,
+      ]),
+    );
 
-    // A value a later backend adds must not render as an empty chip.
+    // `enumUnknownDefaultCase` turns a code added after this build into the
+    // fallback constant; it must not render as an empty chip.
     expect(provider.badges, [TrustBadge.recertified]);
   });
 
   test('the same badge twice counts once', () {
     final provider = ProviderSummary.fromResponse(
-      card(['RECERTIFIED', 'recertified']),
+      card([
+        ProviderCardBadgesEnum.RECERTIFIED,
+        ProviderCardBadgesEnum.RECERTIFIED,
+      ]),
     );
 
     expect(provider.badges, hasLength(1));

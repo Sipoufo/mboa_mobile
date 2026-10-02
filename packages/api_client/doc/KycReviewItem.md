@@ -15,6 +15,10 @@ Name | Type | Description | Notes
 **idDocumentFrontUrl** | **String** |  | [optional] 
 **idDocumentBackUrl** | **String** |  | [optional] 
 **selfieUrl** | **String** |  | [optional] 
+**role** | **String** |  | [optional] 
+**displayName** | **String** |  | [optional] 
+**dueAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**overdue** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

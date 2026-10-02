@@ -37,7 +37,8 @@ abstract class ProviderCard implements Built<ProviderCard, ProviderCardBuilder> 
   int? get tierRank;
 
   @BuiltValueField(wireName: r'badges')
-  BuiltList<String>? get badges;
+  BuiltList<ProviderCardBadgesEnum>? get badges;
+  // enum badgesEnum {  TRUSTED,  RECERTIFIED,  IDENTITY_VERIFIED,  PHOTOS_VERIFIED,  };
 
   ProviderCard._();
 
@@ -101,7 +102,7 @@ class _$ProviderCardSerializer implements PrimitiveSerializer<ProviderCard> {
       yield r'badges';
       yield serializers.serialize(
         object.badges,
-        specifiedType: const FullType(BuiltList, [FullType(String)]),
+        specifiedType: const FullType(BuiltList, [FullType(ProviderCardBadgesEnum)]),
       );
     }
   }
@@ -170,8 +171,8 @@ class _$ProviderCardSerializer implements PrimitiveSerializer<ProviderCard> {
         case r'badges':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType.nullable(BuiltList, [FullType(String)]),
-          ) as BuiltList<String>?;
+            specifiedType: const FullType.nullable(BuiltList, [FullType(ProviderCardBadgesEnum)]),
+          ) as BuiltList<ProviderCardBadgesEnum>?;
           if (valueDes == null) continue;
           result.badges.replace(valueDes);
           break;
@@ -221,5 +222,26 @@ class ProviderCardTypeEnum extends EnumClass {
 
   static BuiltSet<ProviderCardTypeEnum> get values => _$providerCardTypeEnumValues;
   static ProviderCardTypeEnum valueOf(String name) => _$providerCardTypeEnumValueOf(name);
+}
+
+class ProviderCardBadgesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'TRUSTED')
+  static const ProviderCardBadgesEnum TRUSTED = _$providerCardBadgesEnum_TRUSTED;
+  @BuiltValueEnumConst(wireName: r'RECERTIFIED')
+  static const ProviderCardBadgesEnum RECERTIFIED = _$providerCardBadgesEnum_RECERTIFIED;
+  @BuiltValueEnumConst(wireName: r'IDENTITY_VERIFIED')
+  static const ProviderCardBadgesEnum IDENTITY_VERIFIED = _$providerCardBadgesEnum_IDENTITY_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'PHOTOS_VERIFIED')
+  static const ProviderCardBadgesEnum PHOTOS_VERIFIED = _$providerCardBadgesEnum_PHOTOS_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const ProviderCardBadgesEnum unknownDefaultOpenApi = _$providerCardBadgesEnum_unknownDefaultOpenApi;
+
+  static Serializer<ProviderCardBadgesEnum> get serializer => _$providerCardBadgesEnumSerializer;
+
+  const ProviderCardBadgesEnum._(String name): super(name);
+
+  static BuiltSet<ProviderCardBadgesEnum> get values => _$providerCardBadgesEnumValues;
+  static ProviderCardBadgesEnum valueOf(String name) => _$providerCardBadgesEnumValueOf(name);
 }
 

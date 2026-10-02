@@ -1420,11 +1420,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
       "Ce que le locataire a vu",
     ),
+    "searchAmenities": MessageLookupByLibrary.simpleMessage("Équipements"),
     "searchAny": MessageLookupByLibrary.simpleMessage("Peu importe"),
     "searchApply": MessageLookupByLibrary.simpleMessage("Voir les résultats"),
     "searchAvailableNow": MessageLookupByLibrary.simpleMessage(
       "Disponible immédiatement",
     ),
+    "searchBadges": MessageLookupByLibrary.simpleMessage("Badges requis"),
     "searchCityPrompt": MessageLookupByLibrary.simpleMessage(
       "Choisir une ville",
     ),

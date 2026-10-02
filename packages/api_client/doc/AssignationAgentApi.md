@@ -9,19 +9,20 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**acceptAnnonceApplication**](AssignationAgentApi.md#acceptannonceapplication) | **POST** /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/accept | Accept an application; the other applicants are declined automatically
+[**acceptAnnonceApplication**](AssignationAgentApi.md#acceptannonceapplication) | **POST** /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/accept | Accept an application; the other applicants stay open — the listing holds a pool (RM-M11-07)
 [**assignAgent**](AssignationAgentApi.md#assignagent) | **POST** /api/v1/annonces/{annonceId}/agent | Offer the listing to an agent (RM-M11-04)
 [**declineAnnonceApplication**](AssignationAgentApi.md#declineannonceapplication) | **POST** /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/decline | Turn an application down
 [**listAgentCandidates**](AssignationAgentApi.md#listagentcandidates) | **GET** /api/v1/annonces/{annonceId}/agent/candidates | Agents who cover this listing&#39;s area; query matches a name or phone (RM-M11-03)
 [**listAnnonceApplications**](AssignationAgentApi.md#listannonceapplications) | **GET** /api/v1/annonces/{annonceId}/agent/applications | Agents who applied to this listing, oldest first
 [**listMyAnnonceAssignments**](AssignationAgentApi.md#listmyannonceassignments) | **GET** /api/v1/annonces/agent/assignments | Every assignment across the prestataire&#39;s listings, newest first
-[**withdrawAgentAssignment**](AssignationAgentApi.md#withdrawagentassignment) | **DELETE** /api/v1/annonces/{annonceId}/agent | Remove the listing&#39;s agent; visits already planned are cancelled (RM-M11-06)
+[**withdrawAgentAssignment**](AssignationAgentApi.md#withdrawagentassignment) | **DELETE** /api/v1/annonces/{annonceId}/agent | Remove the listing&#39;s only agent; 409 AGENT_REQUIRED when the pool holds several — use withdrawAgentFromAnnonce
+[**withdrawAgentFromAnnonce**](AssignationAgentApi.md#withdrawagentfromannonce) | **DELETE** /api/v1/annonces/{annonceId}/agent/{agentAccountId} | Remove one agent from the listing&#39;s pool; their planned visits are cancelled (RM-M11-06)
 
 
 # **acceptAnnonceApplication**
 > AssignmentResponse acceptAnnonceApplication(annonceId, applicationId)
 
-Accept an application; the other applicants are declined automatically
+Accept an application; the other applicants stay open — the listing holds a pool (RM-M11-07)
 
 ### Example
 ```dart
@@ -277,7 +278,7 @@ Name | Type | Description  | Notes
 # **withdrawAgentAssignment**
 > withdrawAgentAssignment(annonceId)
 
-Remove the listing's agent; visits already planned are cancelled (RM-M11-06)
+Remove the listing's only agent; 409 AGENT_REQUIRED when the pool holds several — use withdrawAgentFromAnnonce
 
 ### Example
 ```dart
@@ -298,6 +299,48 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **annonceId** | **String**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **withdrawAgentFromAnnonce**
+> withdrawAgentFromAnnonce(annonceId, agentAccountId)
+
+Remove one agent from the listing's pool; their planned visits are cancelled (RM-M11-06)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAssignationAgentApi();
+final String annonceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final String agentAccountId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    api.withdrawAgentFromAnnonce(annonceId, agentAccountId);
+} on DioException catch (e) {
+    print('Exception when calling AssignationAgentApi->withdrawAgentFromAnnonce: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **annonceId** | **String**|  | 
+ **agentAccountId** | **String**|  | 
 
 ### Return type
 

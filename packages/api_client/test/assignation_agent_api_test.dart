@@ -7,7 +7,7 @@ void main() {
   final instance = ApiClient().getAssignationAgentApi();
 
   group(AssignationAgentApi, () {
-    // Accept an application; the other applicants are declined automatically
+    // Accept an application; the other applicants stay open — the listing holds a pool (RM-M11-07)
     //
     //Future<AssignmentResponse> acceptAnnonceApplication(String annonceId, String applicationId) async
     test('test acceptAnnonceApplication', () async {
@@ -49,10 +49,17 @@ void main() {
       // TODO
     });
 
-    // Remove the listing's agent; visits already planned are cancelled (RM-M11-06)
+    // Remove the listing's only agent; 409 AGENT_REQUIRED when the pool holds several — use withdrawAgentFromAnnonce
     //
     //Future withdrawAgentAssignment(String annonceId) async
     test('test withdrawAgentAssignment', () async {
+      // TODO
+    });
+
+    // Remove one agent from the listing's pool; their planned visits are cancelled (RM-M11-06)
+    //
+    //Future withdrawAgentFromAnnonce(String annonceId, String agentAccountId) async
+    test('test withdrawAgentFromAnnonce', () async {
       // TODO
     });
 

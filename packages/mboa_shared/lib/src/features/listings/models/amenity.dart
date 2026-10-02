@@ -67,6 +67,19 @@ enum Amenity {
         Amenity.wifi => UpdateAnnonceRequestAmenitiesEnum.WIFI,
       };
 
+  /// The `BadgeCode`-style wire value, for the `amenities` query parameter.
+  ///
+  /// Written out rather than derived from [name]: the enum's Dart names are
+  /// ours and renaming one must not silently change what is sent.
+  String get asSearchParam => switch (this) {
+        Amenity.airConditioning => 'AIR_CONDITIONING',
+        Amenity.hotWater => 'HOT_WATER',
+        Amenity.generator => 'GENERATOR',
+        Amenity.securityGuard => 'SECURITY_GUARD',
+        Amenity.parking => 'PARKING',
+        Amenity.wifi => 'WIFI',
+      };
+
   String label(I18n l10n) => switch (this) {
         Amenity.airConditioning => l10n.amenityAirConditioning,
         Amenity.hotWater => l10n.amenityHotWater,

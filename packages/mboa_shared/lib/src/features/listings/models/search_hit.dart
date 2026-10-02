@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
 
 import '../../profile/models/base_profile.dart';
+import 'listing_detail.dart';
 import 'property_type.dart';
 import 'rental_period.dart';
 
@@ -21,6 +22,7 @@ sealed class SearchHit extends Equatable {
     this.tierRank,
     this.latitude,
     this.longitude,
+    this.badges = const [],
   });
 
   final String id;
@@ -36,10 +38,16 @@ sealed class SearchHit extends Equatable {
   /// ranking rule, and the two would drift.
   final int? tierRank;
 
-  /// RM-M04-06 — the API already fuzzes these by ~200 m for the map; the app
-  /// never receives an exact position for a listing it has no contact with.
+  /// RM-M04-06 — the API fuzzes these before sending them: an HMAC offset of
+  /// 100–200 m under a server secret, stable per listing (confirmed
+  /// 2026-10-01). The app never receives an exact position for a listing it
+  /// has no contact with, which is what makes the 200 m disc honest.
   final double? latitude;
   final double? longitude;
+
+  /// RM-M20 — the trust badges carried by the listing, in prestige order.
+  /// Shown on the card since the backend started sending them (2026-10-02).
+  final List<TrustBadge> badges;
 
   String? get photoUrl => BaseProfile.mediaUrl(primaryPhotoKey);
 
@@ -68,6 +76,7 @@ final class ListingHit extends SearchHit {
     super.tierRank,
     super.latitude,
     super.longitude,
+    super.badges,
     this.propertyType = PropertyType.apartment,
     this.price,
     this.rentalPeriod = RentalPeriod.fallback,
@@ -104,6 +113,10 @@ final class ListingHit extends SearchHit {
         tierRank: item.tierRank,
         latitude: item.latitude,
         longitude: item.longitude,
+        badges: TrustBadge.sorted(
+          item.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
+              const <TrustBadge>[],
+        ),
         propertyType: PropertyType.fromSearch(item.propertyType),
         price: item.price,
         rentalPeriod: RentalPeriod.fromSearch(item.rentalPeriod),
@@ -124,6 +137,7 @@ final class ListingHit extends SearchHit {
         tierRank,
         latitude,
         longitude,
+        badges,
         propertyType,
         price,
         rentalPeriod,
@@ -157,6 +171,7 @@ final class ResidenceHit extends SearchHit {
     super.tierRank,
     super.latitude,
     super.longitude,
+    super.badges,
     this.availableUnitCount,
     this.reservedUnitCount,
     this.breakdown = const [],
@@ -185,6 +200,11 @@ final class ResidenceHit extends SearchHit {
         tierRank: card.tierRank,
         latitude: card.latitude,
         longitude: card.longitude,
+        // A residence card is badged on its shared photos (M20b).
+        badges: TrustBadge.sorted(
+          card.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
+              const <TrustBadge>[],
+        ),
         availableUnitCount: card.availableUnitCount,
         reservedUnitCount: card.reservedUnitCount,
         breakdown: card.breakdown

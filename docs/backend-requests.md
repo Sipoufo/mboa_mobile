@@ -642,3 +642,27 @@ Two ways out, and they are not exclusive:
 Until one of them exists, the sheet says the window is seven days and offers to
 message the provider — who can open a slot. That is a workaround, not an answer:
 the tenant is asking a human to do what the calendar should do.
+
+
+---
+
+## Answered — 2026-10-01 / 2026-10-02
+
+The backend's replies are in `docs/backend/backend-response.md`. What changed
+here, and what is still open:
+
+| § | Verdict |
+|---|---------|
+| §16.1 tier order | ✅ Ordered server-side **before** paging. The app never re-sorts; nothing to change. |
+| §16.2 "Badges requis" filter | ✅ Shipped (`badges=`). **In the app now.** |
+| §16.3 untyped `badges[]` | ✅ Typed `BadgeCode`, already in prestige order. **This one had bitten us:** the values the app had guessed (`TRUSTED_PROVIDER`, `VERIFIED_IDENTITY`, `VERIFIED_PHOTOS`) were all wrong, so every badge was silently dropped on the fiche. A wrong wire value looks exactly like an empty list. |
+| §17 seed photos | ⏳ Needs files in the dev R2 bucket, not code. Several listings do render real photos now. |
+| §18.1 fuzzed coordinates | ✅ Now an HMAC offset of 100–200 m under a server secret, stable per listing. The 200 m disc and its wording are right. |
+| §18.2 positions outside Cameroon | ✅ Refused on write, and the dev data was repaired — 85 listings and units moved back to Douala. The camera's median-cluster rule stays: it is cheap, and one bad row is always one deploy away. |
+| §18.3 bounding-box search | ⏳ Agreed: not for the MVP. |
+| §8 amenities filter | ✅ Shipped (`amenities=`). **In the app now.** |
+| §19 / §20 / §21 | Open — raised after these answers were written. |
+
+**Also taken up:** malformed parameters answer `400 VALIDATION_ERROR` naming
+the parameter instead of `500`. The app's generic "server error" is now
+hiding a message worth reading; worth a pass over the error paths.

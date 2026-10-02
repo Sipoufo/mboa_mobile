@@ -11,8 +11,10 @@ import 'package:api_client/src/auth/bearer_auth.dart';
 import 'package:api_client/src/auth/oauth.dart';
 import 'package:api_client/src/api/account_api.dart';
 import 'package:api_client/src/api/admin_annonces_api.dart';
+import 'package:api_client/src/api/admin_badges_api.dart';
 import 'package:api_client/src/api/admin_contrats_api.dart';
 import 'package:api_client/src/api/admin_kyc_api.dart';
+import 'package:api_client/src/api/admin_mboa_score_api.dart';
 import 'package:api_client/src/api/admin_modration_api.dart';
 import 'package:api_client/src/api/admin_subscriptions_api.dart';
 import 'package:api_client/src/api/admin_type_change_api.dart';
@@ -26,17 +28,20 @@ import 'package:api_client/src/api/assignation_agent_api.dart';
 import 'package:api_client/src/api/assignation_agent_rsidence_api.dart';
 import 'package:api_client/src/api/authentication_api.dart';
 import 'package:api_client/src/api/avis_rsident_api.dart';
+import 'package:api_client/src/api/badges_api.dart';
 import 'package:api_client/src/api/contrats_api.dart';
 import 'package:api_client/src/api/current_user_api.dart';
 import 'package:api_client/src/api/favoris_api.dart';
 import 'package:api_client/src/api/historique_api.dart';
 import 'package:api_client/src/api/kyc_api.dart';
 import 'package:api_client/src/api/locations_api.dart';
+import 'package:api_client/src/api/mboa_score_api.dart';
 import 'package:api_client/src/api/media_api.dart';
 import 'package:api_client/src/api/messagerie_api.dart';
 import 'package:api_client/src/api/notification_devices_api.dart';
 import 'package:api_client/src/api/password_api.dart';
 import 'package:api_client/src/api/phone_change_api.dart';
+import 'package:api_client/src/api/prestataire_dashboard_api.dart';
 import 'package:api_client/src/api/prestataire_profile_api.dart';
 import 'package:api_client/src/api/prestataire_visites_api.dart';
 import 'package:api_client/src/api/residences_api.dart';
@@ -155,6 +160,12 @@ class ApiClient {
     return AdminAnnoncesApi(dio, serializers);
   }
 
+  /// Get AdminBadgesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminBadgesApi getAdminBadgesApi() {
+    return AdminBadgesApi(dio, serializers);
+  }
+
   /// Get AdminContratsApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AdminContratsApi getAdminContratsApi() {
@@ -165,6 +176,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   AdminKYCApi getAdminKYCApi() {
     return AdminKYCApi(dio, serializers);
+  }
+
+  /// Get AdminMboaScoreApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminMboaScoreApi getAdminMboaScoreApi() {
+    return AdminMboaScoreApi(dio, serializers);
   }
 
   /// Get AdminModrationApi instance, base route and serializer can be overridden by a given but be careful,
@@ -245,6 +262,12 @@ class ApiClient {
     return AvisRsidentApi(dio, serializers);
   }
 
+  /// Get BadgesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  BadgesApi getBadgesApi() {
+    return BadgesApi(dio, serializers);
+  }
+
   /// Get ContratsApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   ContratsApi getContratsApi() {
@@ -281,6 +304,12 @@ class ApiClient {
     return LocationsApi(dio, serializers);
   }
 
+  /// Get MboaScoreApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  MboaScoreApi getMboaScoreApi() {
+    return MboaScoreApi(dio, serializers);
+  }
+
   /// Get MediaApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   MediaApi getMediaApi() {
@@ -309,6 +338,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   PhoneChangeApi getPhoneChangeApi() {
     return PhoneChangeApi(dio, serializers);
+  }
+
+  /// Get PrestataireDashboardApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  PrestataireDashboardApi getPrestataireDashboardApi() {
+    return PrestataireDashboardApi(dio, serializers);
   }
 
   /// Get PrestataireProfileApi instance, base route and serializer can be overridden by a given but be careful,

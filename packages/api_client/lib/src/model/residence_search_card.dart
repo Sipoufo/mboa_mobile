@@ -25,6 +25,7 @@ part 'residence_search_card.g.dart';
 /// * [fromMonthlyRent] 
 /// * [latitude] 
 /// * [longitude] 
+/// * [badges] 
 @BuiltValue()
 abstract class ResidenceSearchCard implements Built<ResidenceSearchCard, ResidenceSearchCardBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -62,6 +63,10 @@ abstract class ResidenceSearchCard implements Built<ResidenceSearchCard, Residen
 
   @BuiltValueField(wireName: r'longitude')
   double? get longitude;
+
+  @BuiltValueField(wireName: r'badges')
+  BuiltList<ResidenceSearchCardBadgesEnum>? get badges;
+  // enum badgesEnum {  TRUSTED,  RECERTIFIED,  IDENTITY_VERIFIED,  PHOTOS_VERIFIED,  };
 
   ResidenceSearchCard._();
 
@@ -168,6 +173,13 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
       yield serializers.serialize(
         object.longitude,
         specifiedType: const FullType(double),
+      );
+    }
+    if (object.badges != null) {
+      yield r'badges';
+      yield serializers.serialize(
+        object.badges,
+        specifiedType: const FullType(BuiltList, [FullType(ResidenceSearchCardBadgesEnum)]),
       );
     }
   }
@@ -289,6 +301,14 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
           if (valueDes == null) continue;
           result.longitude = valueDes;
           break;
+        case r'badges':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltList, [FullType(ResidenceSearchCardBadgesEnum)]),
+          ) as BuiltList<ResidenceSearchCardBadgesEnum>?;
+          if (valueDes == null) continue;
+          result.badges.replace(valueDes);
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -316,5 +336,26 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
     );
     return result.build();
   }
+}
+
+class ResidenceSearchCardBadgesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'TRUSTED')
+  static const ResidenceSearchCardBadgesEnum TRUSTED = _$residenceSearchCardBadgesEnum_TRUSTED;
+  @BuiltValueEnumConst(wireName: r'RECERTIFIED')
+  static const ResidenceSearchCardBadgesEnum RECERTIFIED = _$residenceSearchCardBadgesEnum_RECERTIFIED;
+  @BuiltValueEnumConst(wireName: r'IDENTITY_VERIFIED')
+  static const ResidenceSearchCardBadgesEnum IDENTITY_VERIFIED = _$residenceSearchCardBadgesEnum_IDENTITY_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'PHOTOS_VERIFIED')
+  static const ResidenceSearchCardBadgesEnum PHOTOS_VERIFIED = _$residenceSearchCardBadgesEnum_PHOTOS_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const ResidenceSearchCardBadgesEnum unknownDefaultOpenApi = _$residenceSearchCardBadgesEnum_unknownDefaultOpenApi;
+
+  static Serializer<ResidenceSearchCardBadgesEnum> get serializer => _$residenceSearchCardBadgesEnumSerializer;
+
+  const ResidenceSearchCardBadgesEnum._(String name): super(name);
+
+  static BuiltSet<ResidenceSearchCardBadgesEnum> get values => _$residenceSearchCardBadgesEnumValues;
+  static ResidenceSearchCardBadgesEnum valueOf(String name) => _$residenceSearchCardBadgesEnumValueOf(name);
 }
 

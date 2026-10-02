@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 
 import '../../profile/models/base_profile.dart';
 import 'amenity.dart';
@@ -8,28 +9,52 @@ import 'rental_period.dart';
 
 /// A trust badge on a prestataire (CDC M05).
 ///
-/// **The wire values are undocumented** — `ProviderCard.badges` is a bare
-/// `string[]` (see `docs/backend-requests.md` §16) — so parsing is defensive: a
-/// value this build does not know is dropped rather than drawn as a blank chip.
-/// What matters for RM-M05-03 is the order, and that is this enum's declaration
-/// order: 🏆 → 🔄 → ✅ → 📸.
+/// The wire values are the backend's `BadgeCode` enum, typed since
+/// 2026-09-30. They were a bare `string[]` before, and the values this app
+/// guessed for them were wrong — `TRUSTED_PROVIDER` for `TRUSTED`,
+/// `VERIFIED_IDENTITY` for `IDENTITY_VERIFIED` — so every badge was silently
+/// dropped on the fiche. Guessing a wire value is a bug that looks like an
+/// empty list.
+///
+/// Declaration order is the prestige order RM-M05-03 asks for: 🏆 → 🔄 → ✅ →
+/// 📸. The server sorts them too; this enum keeps the rule where the rule is
+/// applied.
 enum TrustBadge {
   trustedProvider,
   recertified,
   verifiedIdentity,
   verifiedPhotos;
 
-  static TrustBadge? fromWire(String? value) => switch (value?.toUpperCase()) {
-        'TRUSTED_PROVIDER' ||
-        'PRESTATAIRE_DE_CONFIANCE' =>
-          TrustBadge.trustedProvider,
-        'RECERTIFIED' || 'RECERTIFIE' => TrustBadge.recertified,
-        'VERIFIED_IDENTITY' ||
-        'IDENTITE_VERIFIEE' =>
-          TrustBadge.verifiedIdentity,
-        'VERIFIED_PHOTOS' || 'PHOTOS_VERIFIEES' => TrustBadge.verifiedPhotos,
+  /// One mapping, from the one enum: the generated client gives a different
+  /// Dart type per schema that carries badges, and they all mean `BadgeCode`.
+  static TrustBadge? fromWire(String? value) => switch (value) {
+        'TRUSTED' => TrustBadge.trustedProvider,
+        'RECERTIFIED' => TrustBadge.recertified,
+        'IDENTITY_VERIFIED' => TrustBadge.verifiedIdentity,
+        'PHOTOS_VERIFIED' => TrustBadge.verifiedPhotos,
+        // `unknown_default_open_api`, or a code added after this build.
         _ => null,
       };
+
+  /// The words the fiche's chip uses, so a filter and a badge never disagree.
+  String label(I18n l10n) => switch (this) {
+        TrustBadge.trustedProvider => l10n.badgeTrustedProvider,
+        TrustBadge.recertified => l10n.badgeRecertified,
+        TrustBadge.verifiedIdentity => l10n.badgeVerifiedIdentity,
+        TrustBadge.verifiedPhotos => l10n.badgeVerifiedPhotos,
+      };
+
+  /// The wire value, for the `badges` query parameter (Doc 10 M04).
+  String get asSearchParam => switch (this) {
+        TrustBadge.trustedProvider => 'TRUSTED',
+        TrustBadge.recertified => 'RECERTIFIED',
+        TrustBadge.verifiedIdentity => 'IDENTITY_VERIFIED',
+        TrustBadge.verifiedPhotos => 'PHOTOS_VERIFIED',
+      };
+
+  /// RM-M05-03 — prestige order, highest first, whatever order they arrived in.
+  static List<TrustBadge> sorted(Iterable<TrustBadge> badges) =>
+      badges.toSet().toList()..sort((a, b) => a.index.compareTo(b.index));
 }
 
 /// What kind of outfit the prestataire is (Doc 10 M02).
@@ -72,12 +97,10 @@ class ProviderSummary extends Equatable {
   String? get logoUrl => BaseProfile.mediaUrl(logoObjectKey);
 
   static ProviderSummary fromResponse(ProviderCard card) {
-    final badges =
-        card.badges?.map(TrustBadge.fromWire).nonNulls.toSet().toList() ??
-            <TrustBadge>[];
-    // RM-M05-03 — the order is ours, not the server's: it has never promised
-    // one, and "prestige descending" is a rule of the fiche.
-    badges.sort((a, b) => a.index.compareTo(b.index));
+    final badges = TrustBadge.sorted(
+      card.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
+          const <TrustBadge>[],
+    );
 
     return ProviderSummary(
       accountId: card.accountId,

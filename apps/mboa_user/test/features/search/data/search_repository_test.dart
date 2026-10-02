@@ -71,6 +71,62 @@ void main() {
     );
   });
 
+  test('Doc 10 M04 — the two filters the endpoint only grew in October', () async {
+    when(
+      () => api.searchListings(
+        cityId: any(named: 'cityId'),
+        districtIds: any(named: 'districtIds'),
+        propertyTypes: any(named: 'propertyTypes'),
+        rentalPeriods: any(named: 'rentalPeriods'),
+        rentMin: any(named: 'rentMin'),
+        rentMax: any(named: 'rentMax'),
+        roomsMin: any(named: 'roomsMin'),
+        surfaceMin: any(named: 'surfaceMin'),
+        surfaceMax: any(named: 'surfaceMax'),
+        furnished: any(named: 'furnished'),
+        availableNow: any(named: 'availableNow'),
+        amenities: any(named: 'amenities'),
+        badges: any(named: 'badges'),
+        page: any(named: 'page'),
+        size: any(named: 'size'),
+      ),
+    ).thenAnswer((_) async => page([listing('a')]));
+
+    await repository.search(
+      const SearchQuery(
+        cityId: 'c-1',
+        amenities: [Amenity.wifi, Amenity.parking],
+        badges: [TrustBadge.verifiedPhotos],
+      ),
+    );
+
+    final call = verify(
+      () => api.searchListings(
+        cityId: any(named: 'cityId'),
+        districtIds: any(named: 'districtIds'),
+        propertyTypes: any(named: 'propertyTypes'),
+        rentalPeriods: any(named: 'rentalPeriods'),
+        rentMin: any(named: 'rentMin'),
+        rentMax: any(named: 'rentMax'),
+        roomsMin: any(named: 'roomsMin'),
+        surfaceMin: any(named: 'surfaceMin'),
+        surfaceMax: any(named: 'surfaceMax'),
+        furnished: any(named: 'furnished'),
+        availableNow: any(named: 'availableNow'),
+        amenities: captureAny(named: 'amenities'),
+        badges: captureAny(named: 'badges'),
+        page: any(named: 'page'),
+        size: any(named: 'size'),
+      ),
+    ).captured;
+
+    // The wire values are written out, not derived from the Dart names: the
+    // app had guessed `VERIFIED_PHOTOS` for badges once, and every badge was
+    // silently dropped.
+    expect((call[0] as BuiltList<String>).toList(), ['WIFI', 'PARKING']);
+    expect((call[1] as BuiltList<String>).toList(), ['PHOTOS_VERIFIED']);
+  });
+
   test('RM-M04-03 — asks for 20 per page, and maps the filters', () async {
     when(
       () => api.searchListings(

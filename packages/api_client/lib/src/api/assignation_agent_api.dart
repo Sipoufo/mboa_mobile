@@ -25,7 +25,7 @@ class AssignationAgentApi {
 
   const AssignationAgentApi(this._dio, this._serializers);
 
-  /// Accept an application; the other applicants are declined automatically
+  /// Accept an application; the other applicants stay open — the listing holds a pool (RM-M11-07)
   /// 
   ///
   /// Parameters:
@@ -552,7 +552,7 @@ class AssignationAgentApi {
     );
   }
 
-  /// Remove the listing&#39;s agent; visits already planned are cancelled (RM-M11-06)
+  /// Remove the listing&#39;s only agent; 409 AGENT_REQUIRED when the pool holds several — use withdrawAgentFromAnnonce
   /// 
   ///
   /// Parameters:
@@ -576,6 +576,61 @@ class AssignationAgentApi {
     ProgressCallback? onReceiveProgress,
   }) async {
     final _path = r'/api/v1/annonces/{annonceId}/agent'.replaceAll('{' r'annonceId' '}', encodeQueryParameter(_serializers, annonceId, const FullType(String)).toString());
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    return _response;
+  }
+
+  /// Remove one agent from the listing&#39;s pool; their planned visits are cancelled (RM-M11-06)
+  /// 
+  ///
+  /// Parameters:
+  /// * [annonceId] 
+  /// * [agentAccountId] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future]
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<void>> withdrawAgentFromAnnonce({ 
+    required String annonceId,
+    required String agentAccountId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/annonces/{annonceId}/agent/{agentAccountId}'.replaceAll('{' r'annonceId' '}', encodeQueryParameter(_serializers, annonceId, const FullType(String)).toString()).replaceAll('{' r'agentAccountId' '}', encodeQueryParameter(_serializers, agentAccountId, const FullType(String)).toString());
     final _options = Options(
       method: r'DELETE',
       headers: <String, dynamic>{

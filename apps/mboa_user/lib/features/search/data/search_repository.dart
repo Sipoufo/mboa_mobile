@@ -75,6 +75,12 @@ class SearchRepository {
       surfaceMax: query.surfaceMax,
       furnished: query.furnished,
       availableNow: query.availableNow,
+      amenities: query.amenities.isEmpty
+          ? null
+          : BuiltList<String>(query.amenities.map((a) => a.asSearchParam)),
+      badges: query.badges.isEmpty
+          ? null
+          : BuiltList<String>(query.badges.map((b) => b.asSearchParam)),
       page: page,
       size: _pageSize,
     );

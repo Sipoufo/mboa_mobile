@@ -6,6 +6,94 @@ part of 'residence_search_card.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const ResidenceSearchCardBadgesEnum _$residenceSearchCardBadgesEnum_TRUSTED =
+    const ResidenceSearchCardBadgesEnum._('TRUSTED');
+const ResidenceSearchCardBadgesEnum
+_$residenceSearchCardBadgesEnum_RECERTIFIED =
+    const ResidenceSearchCardBadgesEnum._('RECERTIFIED');
+const ResidenceSearchCardBadgesEnum
+_$residenceSearchCardBadgesEnum_IDENTITY_VERIFIED =
+    const ResidenceSearchCardBadgesEnum._('IDENTITY_VERIFIED');
+const ResidenceSearchCardBadgesEnum
+_$residenceSearchCardBadgesEnum_PHOTOS_VERIFIED =
+    const ResidenceSearchCardBadgesEnum._('PHOTOS_VERIFIED');
+const ResidenceSearchCardBadgesEnum
+_$residenceSearchCardBadgesEnum_unknownDefaultOpenApi =
+    const ResidenceSearchCardBadgesEnum._('unknownDefaultOpenApi');
+
+ResidenceSearchCardBadgesEnum _$residenceSearchCardBadgesEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'TRUSTED':
+      return _$residenceSearchCardBadgesEnum_TRUSTED;
+    case 'RECERTIFIED':
+      return _$residenceSearchCardBadgesEnum_RECERTIFIED;
+    case 'IDENTITY_VERIFIED':
+      return _$residenceSearchCardBadgesEnum_IDENTITY_VERIFIED;
+    case 'PHOTOS_VERIFIED':
+      return _$residenceSearchCardBadgesEnum_PHOTOS_VERIFIED;
+    case 'unknownDefaultOpenApi':
+      return _$residenceSearchCardBadgesEnum_unknownDefaultOpenApi;
+    default:
+      return _$residenceSearchCardBadgesEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<ResidenceSearchCardBadgesEnum>
+_$residenceSearchCardBadgesEnumValues = BuiltSet<ResidenceSearchCardBadgesEnum>(
+  const <ResidenceSearchCardBadgesEnum>[
+    _$residenceSearchCardBadgesEnum_TRUSTED,
+    _$residenceSearchCardBadgesEnum_RECERTIFIED,
+    _$residenceSearchCardBadgesEnum_IDENTITY_VERIFIED,
+    _$residenceSearchCardBadgesEnum_PHOTOS_VERIFIED,
+    _$residenceSearchCardBadgesEnum_unknownDefaultOpenApi,
+  ],
+);
+
+Serializer<ResidenceSearchCardBadgesEnum>
+_$residenceSearchCardBadgesEnumSerializer =
+    _$ResidenceSearchCardBadgesEnumSerializer();
+
+class _$ResidenceSearchCardBadgesEnumSerializer
+    implements PrimitiveSerializer<ResidenceSearchCardBadgesEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'TRUSTED': 'TRUSTED',
+    'RECERTIFIED': 'RECERTIFIED',
+    'IDENTITY_VERIFIED': 'IDENTITY_VERIFIED',
+    'PHOTOS_VERIFIED': 'PHOTOS_VERIFIED',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'TRUSTED': 'TRUSTED',
+    'RECERTIFIED': 'RECERTIFIED',
+    'IDENTITY_VERIFIED': 'IDENTITY_VERIFIED',
+    'PHOTOS_VERIFIED': 'PHOTOS_VERIFIED',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[ResidenceSearchCardBadgesEnum];
+  @override
+  final String wireName = 'ResidenceSearchCardBadgesEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    ResidenceSearchCardBadgesEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  ResidenceSearchCardBadgesEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => ResidenceSearchCardBadgesEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$ResidenceSearchCard extends ResidenceSearchCard {
   @override
   final String? id;
@@ -31,6 +119,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
   final double? latitude;
   @override
   final double? longitude;
+  @override
+  final BuiltList<ResidenceSearchCardBadgesEnum>? badges;
 
   factory _$ResidenceSearchCard([
     void Function(ResidenceSearchCardBuilder)? updates,
@@ -49,6 +139,7 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
     this.fromMonthlyRent,
     this.latitude,
     this.longitude,
+    this.badges,
   }) : super._();
   @override
   ResidenceSearchCard rebuild(
@@ -74,7 +165,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
         breakdown == other.breakdown &&
         fromMonthlyRent == other.fromMonthlyRent &&
         latitude == other.latitude &&
-        longitude == other.longitude;
+        longitude == other.longitude &&
+        badges == other.badges;
   }
 
   @override
@@ -92,6 +184,7 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
     _$hash = $jc(_$hash, fromMonthlyRent.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
+    _$hash = $jc(_$hash, badges.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -110,7 +203,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
           ..add('breakdown', breakdown)
           ..add('fromMonthlyRent', fromMonthlyRent)
           ..add('latitude', latitude)
-          ..add('longitude', longitude))
+          ..add('longitude', longitude)
+          ..add('badges', badges))
         .toString();
   }
 }
@@ -173,6 +267,12 @@ class ResidenceSearchCardBuilder
   double? get longitude => _$this._longitude;
   set longitude(double? longitude) => _$this._longitude = longitude;
 
+  ListBuilder<ResidenceSearchCardBadgesEnum>? _badges;
+  ListBuilder<ResidenceSearchCardBadgesEnum> get badges =>
+      _$this._badges ??= ListBuilder<ResidenceSearchCardBadgesEnum>();
+  set badges(ListBuilder<ResidenceSearchCardBadgesEnum>? badges) =>
+      _$this._badges = badges;
+
   ResidenceSearchCardBuilder() {
     ResidenceSearchCard._defaults(this);
   }
@@ -192,6 +292,7 @@ class ResidenceSearchCardBuilder
       _fromMonthlyRent = $v.fromMonthlyRent;
       _latitude = $v.latitude;
       _longitude = $v.longitude;
+      _badges = $v.badges?.toBuilder();
       _$v = null;
     }
     return this;
@@ -228,12 +329,16 @@ class ResidenceSearchCardBuilder
             fromMonthlyRent: fromMonthlyRent,
             latitude: latitude,
             longitude: longitude,
+            badges: _badges?.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'breakdown';
         _breakdown?.build();
+
+        _$failedField = 'badges';
+        _badges?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'ResidenceSearchCard',

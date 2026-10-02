@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **fromMonthlyRent** | **int** |  | [optional] 
 **latitude** | **double** |  | [optional] 
 **longitude** | **double** |  | [optional] 
+**badges** | **BuiltList&lt;String&gt;** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

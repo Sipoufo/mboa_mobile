@@ -193,7 +193,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **searchListings**
-> PageResponseSearchResult searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, page, size)
+> PageResponseSearchResult searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, badges, amenities, page, size)
 
 Search listings and residences (city/district required; other filters cumulative)
 
@@ -213,11 +213,13 @@ final int surfaceMin = 56; // int |
 final int surfaceMax = 56; // int | 
 final bool furnished = true; // bool | 
 final bool availableNow = true; // bool | 
+final BuiltList<String> badges = ; // BuiltList<String> | Doc 10 \"Badges requis\": only listings carrying every one of these
+final BuiltList<String> amenities = ; // BuiltList<String> | Only listings offering every one of these équipements
 final int page = 56; // int | 
 final int size = 56; // int | 
 
 try {
-    final response = api.searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, page, size);
+    final response = api.searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, badges, amenities, page, size);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling SearchApi->searchListings: $e\n');
@@ -239,6 +241,8 @@ Name | Type | Description  | Notes
  **surfaceMax** | **int**|  | [optional] 
  **furnished** | **bool**|  | [optional] 
  **availableNow** | **bool**|  | [optional] 
+ **badges** | [**BuiltList&lt;String&gt;**](String.md)| Doc 10 \"Badges requis\": only listings carrying every one of these | [optional] 
+ **amenities** | [**BuiltList&lt;String&gt;**](String.md)| Only listings offering every one of these équipements | [optional] 
  **page** | **int**|  | [optional] [default to 0]
  **size** | **int**|  | [optional] [default to 20]
 

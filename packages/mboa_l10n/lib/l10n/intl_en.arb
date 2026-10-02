@@ -609,6 +609,14 @@
   "@searchRoomsMin": {
     "description": "roomsMin."
   },
+  "searchAmenities": "Amenities",
+  "@searchAmenities": {
+    "description": "Doc 10 M04 — the amenities filter."
+  },
+  "searchBadges": "Required badges",
+  "@searchBadges": {
+    "description": "Doc 10 M04 — the required-badges filter."
+  },
   "searchRoomsPlus": "{count}+",
   "@searchRoomsPlus": {
     "description": "4+ rooms.",

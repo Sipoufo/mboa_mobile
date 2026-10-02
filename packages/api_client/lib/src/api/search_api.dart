@@ -378,6 +378,8 @@ class SearchApi {
   /// * [surfaceMax] 
   /// * [furnished] 
   /// * [availableNow] 
+  /// * [badges] - Doc 10 \"Badges requis\": only listings carrying every one of these
+  /// * [amenities] - Only listings offering every one of these équipements
   /// * [page] 
   /// * [size] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -401,6 +403,8 @@ class SearchApi {
     int? surfaceMax,
     bool? furnished,
     bool? availableNow,
+    BuiltList<String>? badges,
+    BuiltList<String>? amenities,
     int? page = 0,
     int? size = 20,
     CancelToken? cancelToken,
@@ -441,6 +445,8 @@ class SearchApi {
       if (surfaceMax != null) r'surfaceMax': encodeQueryParameter(_serializers, surfaceMax, const FullType(int)),
       if (furnished != null) r'furnished': encodeQueryParameter(_serializers, furnished, const FullType(bool)),
       if (availableNow != null) r'availableNow': encodeQueryParameter(_serializers, availableNow, const FullType(bool)),
+      if (badges != null) r'badges': encodeCollectionQueryParameter<String>(_serializers, badges, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
+      if (amenities != null) r'amenities': encodeCollectionQueryParameter<String>(_serializers, amenities, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
       if (page != null) r'page': encodeQueryParameter(_serializers, page, const FullType(int)),
       if (size != null) r'size': encodeQueryParameter(_serializers, size, const FullType(int)),
     };

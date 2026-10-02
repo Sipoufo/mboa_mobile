@@ -38,8 +38,47 @@ final BuiltSet<ProviderCardTypeEnum> _$providerCardTypeEnumValues =
       _$providerCardTypeEnum_unknownDefaultOpenApi,
     ]);
 
+const ProviderCardBadgesEnum _$providerCardBadgesEnum_TRUSTED =
+    const ProviderCardBadgesEnum._('TRUSTED');
+const ProviderCardBadgesEnum _$providerCardBadgesEnum_RECERTIFIED =
+    const ProviderCardBadgesEnum._('RECERTIFIED');
+const ProviderCardBadgesEnum _$providerCardBadgesEnum_IDENTITY_VERIFIED =
+    const ProviderCardBadgesEnum._('IDENTITY_VERIFIED');
+const ProviderCardBadgesEnum _$providerCardBadgesEnum_PHOTOS_VERIFIED =
+    const ProviderCardBadgesEnum._('PHOTOS_VERIFIED');
+const ProviderCardBadgesEnum _$providerCardBadgesEnum_unknownDefaultOpenApi =
+    const ProviderCardBadgesEnum._('unknownDefaultOpenApi');
+
+ProviderCardBadgesEnum _$providerCardBadgesEnumValueOf(String name) {
+  switch (name) {
+    case 'TRUSTED':
+      return _$providerCardBadgesEnum_TRUSTED;
+    case 'RECERTIFIED':
+      return _$providerCardBadgesEnum_RECERTIFIED;
+    case 'IDENTITY_VERIFIED':
+      return _$providerCardBadgesEnum_IDENTITY_VERIFIED;
+    case 'PHOTOS_VERIFIED':
+      return _$providerCardBadgesEnum_PHOTOS_VERIFIED;
+    case 'unknownDefaultOpenApi':
+      return _$providerCardBadgesEnum_unknownDefaultOpenApi;
+    default:
+      return _$providerCardBadgesEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<ProviderCardBadgesEnum> _$providerCardBadgesEnumValues =
+    BuiltSet<ProviderCardBadgesEnum>(const <ProviderCardBadgesEnum>[
+      _$providerCardBadgesEnum_TRUSTED,
+      _$providerCardBadgesEnum_RECERTIFIED,
+      _$providerCardBadgesEnum_IDENTITY_VERIFIED,
+      _$providerCardBadgesEnum_PHOTOS_VERIFIED,
+      _$providerCardBadgesEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<ProviderCardTypeEnum> _$providerCardTypeEnumSerializer =
     _$ProviderCardTypeEnumSerializer();
+Serializer<ProviderCardBadgesEnum> _$providerCardBadgesEnumSerializer =
+    _$ProviderCardBadgesEnumSerializer();
 
 class _$ProviderCardTypeEnumSerializer
     implements PrimitiveSerializer<ProviderCardTypeEnum> {
@@ -78,6 +117,45 @@ class _$ProviderCardTypeEnumSerializer
   );
 }
 
+class _$ProviderCardBadgesEnumSerializer
+    implements PrimitiveSerializer<ProviderCardBadgesEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'TRUSTED': 'TRUSTED',
+    'RECERTIFIED': 'RECERTIFIED',
+    'IDENTITY_VERIFIED': 'IDENTITY_VERIFIED',
+    'PHOTOS_VERIFIED': 'PHOTOS_VERIFIED',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'TRUSTED': 'TRUSTED',
+    'RECERTIFIED': 'RECERTIFIED',
+    'IDENTITY_VERIFIED': 'IDENTITY_VERIFIED',
+    'PHOTOS_VERIFIED': 'PHOTOS_VERIFIED',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[ProviderCardBadgesEnum];
+  @override
+  final String wireName = 'ProviderCardBadgesEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    ProviderCardBadgesEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  ProviderCardBadgesEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => ProviderCardBadgesEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$ProviderCard extends ProviderCard {
   @override
   final String? accountId;
@@ -90,7 +168,7 @@ class _$ProviderCard extends ProviderCard {
   @override
   final int? tierRank;
   @override
-  final BuiltList<String>? badges;
+  final BuiltList<ProviderCardBadgesEnum>? badges;
 
   factory _$ProviderCard([void Function(ProviderCardBuilder)? updates]) =>
       (ProviderCardBuilder()..update(updates))._build();
@@ -173,9 +251,11 @@ class ProviderCardBuilder
   int? get tierRank => _$this._tierRank;
   set tierRank(int? tierRank) => _$this._tierRank = tierRank;
 
-  ListBuilder<String>? _badges;
-  ListBuilder<String> get badges => _$this._badges ??= ListBuilder<String>();
-  set badges(ListBuilder<String>? badges) => _$this._badges = badges;
+  ListBuilder<ProviderCardBadgesEnum>? _badges;
+  ListBuilder<ProviderCardBadgesEnum> get badges =>
+      _$this._badges ??= ListBuilder<ProviderCardBadgesEnum>();
+  set badges(ListBuilder<ProviderCardBadgesEnum>? badges) =>
+      _$this._badges = badges;
 
   ProviderCardBuilder() {
     ProviderCard._defaults(this);

@@ -16,7 +16,7 @@ void main() {
 
     // List pending KYC submissions (with pre-signed document URLs)
     //
-    //Future<PageResponseKycReviewItem> listPendingKycSubmissions(Pageable pageable) async
+    //Future<PageResponseKycReviewItem> listPendingKycSubmissions(Pageable pageable, { String role }) async
     test('test listPendingKycSubmissions', () async {
       // TODO
     });

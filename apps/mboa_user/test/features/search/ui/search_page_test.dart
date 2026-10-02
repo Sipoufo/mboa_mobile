@@ -164,6 +164,34 @@ void main() {
     expect(find.text('Aucun bien trouvé'), findsNothing);
   });
 
+  testWidgets('RM-M20 — a badged listing shows it on the card', (tester) async {
+    when(() => bloc.state).thenReturn(
+      const SearchReady(
+        query: douala,
+        hits: [
+          ListingHit(
+            id: 'a',
+            title: 'Studio meublé — Bonapriso',
+            city: 'Douala',
+            district: 'Bonapriso',
+            price: 110000,
+            propertyType: PropertyType.studio,
+            badges: [
+              TrustBadge.trustedProvider,
+              TrustBadge.verifiedPhotos,
+            ],
+          ),
+        ],
+      ),
+    );
+    await pump(tester);
+
+    // Icons only on a card — four labels would wrap onto three lines and bury
+    // the price. The words are on the fiche.
+    expect(find.byTooltip('Prestataire de confiance'), findsOneWidget);
+    expect(find.byTooltip('Photos vérifiées'), findsOneWidget);
+  });
+
   testWidgets('the filters badge counts what is on', (tester) async {
     when(() => bloc.state).thenReturn(
       SearchReady(

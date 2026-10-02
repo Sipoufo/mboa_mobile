@@ -12,16 +12,18 @@ part 'availability_rule_request.g.dart';
 ///
 /// Properties:
 /// * [dayOfWeek] 
-/// * [startTime] 
-/// * [endTime] 
+/// * [startTime] - Local wall-clock time (Africa/Douala), HH:mm; seconds are accepted and ignored
+/// * [endTime] - Local wall-clock time (Africa/Douala), HH:mm; must be after startTime
 @BuiltValue()
 abstract class AvailabilityRuleRequest implements Built<AvailabilityRuleRequest, AvailabilityRuleRequestBuilder> {
   @BuiltValueField(wireName: r'dayOfWeek')
   int get dayOfWeek;
 
+  /// Local wall-clock time (Africa/Douala), HH:mm; seconds are accepted and ignored
   @BuiltValueField(wireName: r'startTime')
   String get startTime;
 
+  /// Local wall-clock time (Africa/Douala), HH:mm; must be after startTime
   @BuiltValueField(wireName: r'endTime')
   String get endTime;
 

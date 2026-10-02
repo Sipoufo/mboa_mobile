@@ -56,7 +56,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listPendingKycSubmissions**
-> PageResponseKycReviewItem listPendingKycSubmissions(pageable)
+> PageResponseKycReviewItem listPendingKycSubmissions(pageable, role)
 
 List pending KYC submissions (with pre-signed document URLs)
 
@@ -66,9 +66,10 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminKYCApi();
 final Pageable pageable = ; // Pageable | 
+final String role = role_example; // String | 
 
 try {
-    final response = api.listPendingKycSubmissions(pageable);
+    final response = api.listPendingKycSubmissions(pageable, role);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling AdminKYCApi->listPendingKycSubmissions: $e\n');
@@ -80,6 +81,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pageable** | [**Pageable**](.md)|  | 
+ **role** | **String**|  | [optional] 
 
 ### Return type
 

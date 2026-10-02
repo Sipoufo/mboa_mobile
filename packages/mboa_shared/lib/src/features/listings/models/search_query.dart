@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'amenity.dart';
+import 'listing_detail.dart';
 import 'property_type.dart';
 import 'rental_period.dart';
 
@@ -25,6 +27,8 @@ class SearchQuery extends Equatable {
     this.surfaceMax,
     this.furnished,
     this.availableNow,
+    this.amenities = const [],
+    this.badges = const [],
   });
 
   final String? cityId;
@@ -46,6 +50,14 @@ class SearchQuery extends Equatable {
   final bool? furnished;
   final bool? availableNow;
 
+  /// Doc 10 M04 "Équipements" — a listing must offer **all** of them.
+  final List<Amenity> amenities;
+
+  /// Doc 10 M04 "Badges requis" — a listing must carry **all** of them
+  /// (RM-M20). Shipped by the backend on 2026-10-02; until then the criteria
+  /// table described a filter that did not exist.
+  final List<TrustBadge> badges;
+
   bool get isValid => cityId != null && cityId!.isNotEmpty;
 
   /// How many optional criteria are on, for the badge on the filters button.
@@ -60,6 +72,8 @@ class SearchQuery extends Equatable {
         surfaceMax != null,
         furnished != null,
         availableNow != null,
+        amenities.isNotEmpty,
+        badges.isNotEmpty,
       ].where((on) => on).length;
 
   SearchQuery copyWith({
@@ -75,6 +89,8 @@ class SearchQuery extends Equatable {
     int? surfaceMax,
     bool? furnished,
     bool? availableNow,
+    List<Amenity>? amenities,
+    List<TrustBadge>? badges,
     bool clearRent = false,
     bool clearRooms = false,
     bool clearSurface = false,
@@ -95,6 +111,8 @@ class SearchQuery extends Equatable {
         furnished: clearFurnished ? null : (furnished ?? this.furnished),
         availableNow:
             clearAvailableNow ? null : (availableNow ?? this.availableNow),
+        amenities: amenities ?? this.amenities,
+        badges: badges ?? this.badges,
       );
 
   /// Keeps the city, drops the rest — what "réinitialiser les filtres" means.
@@ -114,6 +132,8 @@ class SearchQuery extends Equatable {
         'surfaceMax': surfaceMax,
         'furnished': furnished,
         'availableNow': availableNow,
+        'amenities': amenities.map((a) => a.name).toList(),
+        'badges': badges.map((b) => b.name).toList(),
       };
 
   /// Tolerant on purpose: a cached query written by an older build must not
@@ -133,6 +153,8 @@ class SearchQuery extends Equatable {
         surfaceMax: json['surfaceMax'] as int?,
         furnished: json['furnished'] as bool?,
         availableNow: json['availableNow'] as bool?,
+        amenities: _enums(json['amenities'], Amenity.values),
+        badges: _enums(json['badges'], TrustBadge.values),
       );
 
   /// A field whose shape changed between builds degrades to "no filter"
@@ -159,5 +181,7 @@ class SearchQuery extends Equatable {
         surfaceMax,
         furnished,
         availableNow,
+        amenities,
+        badges,
       ];
 }

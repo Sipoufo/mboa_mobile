@@ -67,5 +67,10 @@ void main() {
       // TODO
     });
 
+    // BuiltList<String> badges
+    test('to test the property `badges`', () async {
+      // TODO
+    });
+
   });
 }

@@ -1325,9 +1325,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
       "What the tenant saw",
     ),
+    "searchAmenities": MessageLookupByLibrary.simpleMessage("Amenities"),
     "searchAny": MessageLookupByLibrary.simpleMessage("Any"),
     "searchApply": MessageLookupByLibrary.simpleMessage("See results"),
     "searchAvailableNow": MessageLookupByLibrary.simpleMessage("Available now"),
+    "searchBadges": MessageLookupByLibrary.simpleMessage("Required badges"),
     "searchCityPrompt": MessageLookupByLibrary.simpleMessage("Choose a city"),
     "searchClearFilters": MessageLookupByLibrary.simpleMessage("Reset"),
     "searchEmptyBody": MessageLookupByLibrary.simpleMessage(

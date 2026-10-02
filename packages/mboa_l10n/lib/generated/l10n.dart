@@ -1531,6 +1531,26 @@ class I18n {
     );
   }
 
+  /// `Équipements`
+  String get searchAmenities {
+    return Intl.message(
+      'Équipements',
+      name: 'searchAmenities',
+      desc: 'Doc 10 M04 — the amenities filter.',
+      args: [],
+    );
+  }
+
+  /// `Badges requis`
+  String get searchBadges {
+    return Intl.message(
+      'Badges requis',
+      name: 'searchBadges',
+      desc: 'Doc 10 M04 — the required-badges filter.',
+      args: [],
+    );
+  }
+
   /// `{count}+`
   String searchRoomsPlus(int count) {
     return Intl.message(

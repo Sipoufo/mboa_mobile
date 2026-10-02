@@ -142,6 +142,52 @@ class _FiltersSheetState extends State<_FiltersSheet> {
                   ),
                   const SizedBox(height: Dimens.spacingLg),
 
+                  // Doc 10 M04 listed both of these in the criteria table from
+                  // the start; the endpoint only grew them on 2026-10-02.
+                  _Label(l10n.searchAmenities),
+                  const SizedBox(height: Dimens.spacingSm),
+                  Wrap(
+                    spacing: Dimens.spacingSm,
+                    runSpacing: Dimens.spacingSm,
+                    children: [
+                      for (final amenity in Amenity.values)
+                        _Choice(
+                          label: amenity.label(l10n),
+                          selected: _draft.amenities.contains(amenity),
+                          onTap: () => setState(() {
+                            final amenities = [..._draft.amenities];
+                            amenities.contains(amenity)
+                                ? amenities.remove(amenity)
+                                : amenities.add(amenity);
+                            _draft = _draft.copyWith(amenities: amenities);
+                          }),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: Dimens.spacingLg),
+
+                  _Label(l10n.searchBadges),
+                  const SizedBox(height: Dimens.spacingSm),
+                  Wrap(
+                    spacing: Dimens.spacingSm,
+                    runSpacing: Dimens.spacingSm,
+                    children: [
+                      for (final badge in TrustBadge.values)
+                        _Choice(
+                          label: badge.label(l10n),
+                          selected: _draft.badges.contains(badge),
+                          onTap: () => setState(() {
+                            final badges = [..._draft.badges];
+                            badges.contains(badge)
+                                ? badges.remove(badge)
+                                : badges.add(badge);
+                            _draft = _draft.copyWith(badges: badges);
+                          }),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: Dimens.spacingLg),
+
                   _Label(l10n.searchRoomsMin),
                   const SizedBox(height: Dimens.spacingSm),
                   Wrap(

@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -18,6 +19,10 @@ part 'kyc_review_item.g.dart';
 /// * [idDocumentFrontUrl] 
 /// * [idDocumentBackUrl] 
 /// * [selfieUrl] 
+/// * [role] 
+/// * [displayName] 
+/// * [dueAt] 
+/// * [overdue] 
 @BuiltValue()
 abstract class KycReviewItem implements Built<KycReviewItem, KycReviewItemBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -40,6 +45,19 @@ abstract class KycReviewItem implements Built<KycReviewItem, KycReviewItemBuilde
 
   @BuiltValueField(wireName: r'selfieUrl')
   String? get selfieUrl;
+
+  @BuiltValueField(wireName: r'role')
+  KycReviewItemRoleEnum? get role;
+  // enum roleEnum {  USER,  PRESTATAIRE,  AGENT,  ADMIN,  };
+
+  @BuiltValueField(wireName: r'displayName')
+  String? get displayName;
+
+  @BuiltValueField(wireName: r'dueAt')
+  DateTime? get dueAt;
+
+  @BuiltValueField(wireName: r'overdue')
+  bool? get overdue;
 
   KycReviewItem._();
 
@@ -111,6 +129,34 @@ class _$KycReviewItemSerializer implements PrimitiveSerializer<KycReviewItem> {
       yield serializers.serialize(
         object.selfieUrl,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.role != null) {
+      yield r'role';
+      yield serializers.serialize(
+        object.role,
+        specifiedType: const FullType(KycReviewItemRoleEnum),
+      );
+    }
+    if (object.displayName != null) {
+      yield r'displayName';
+      yield serializers.serialize(
+        object.displayName,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.dueAt != null) {
+      yield r'dueAt';
+      yield serializers.serialize(
+        object.dueAt,
+        specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.overdue != null) {
+      yield r'overdue';
+      yield serializers.serialize(
+        object.overdue,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -192,6 +238,38 @@ class _$KycReviewItemSerializer implements PrimitiveSerializer<KycReviewItem> {
           if (valueDes == null) continue;
           result.selfieUrl = valueDes;
           break;
+        case r'role':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(KycReviewItemRoleEnum),
+          ) as KycReviewItemRoleEnum?;
+          if (valueDes == null) continue;
+          result.role = valueDes;
+          break;
+        case r'displayName':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.displayName = valueDes;
+          break;
+        case r'dueAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DateTime),
+          ) as DateTime?;
+          if (valueDes == null) continue;
+          result.dueAt = valueDes;
+          break;
+        case r'overdue':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.overdue = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -219,5 +297,26 @@ class _$KycReviewItemSerializer implements PrimitiveSerializer<KycReviewItem> {
     );
     return result.build();
   }
+}
+
+class KycReviewItemRoleEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'USER')
+  static const KycReviewItemRoleEnum USER = _$kycReviewItemRoleEnum_USER;
+  @BuiltValueEnumConst(wireName: r'PRESTATAIRE')
+  static const KycReviewItemRoleEnum PRESTATAIRE = _$kycReviewItemRoleEnum_PRESTATAIRE;
+  @BuiltValueEnumConst(wireName: r'AGENT')
+  static const KycReviewItemRoleEnum AGENT = _$kycReviewItemRoleEnum_AGENT;
+  @BuiltValueEnumConst(wireName: r'ADMIN')
+  static const KycReviewItemRoleEnum ADMIN = _$kycReviewItemRoleEnum_ADMIN;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const KycReviewItemRoleEnum unknownDefaultOpenApi = _$kycReviewItemRoleEnum_unknownDefaultOpenApi;
+
+  static Serializer<KycReviewItemRoleEnum> get serializer => _$kycReviewItemRoleEnumSerializer;
+
+  const KycReviewItemRoleEnum._(String name): super(name);
+
+  static BuiltSet<KycReviewItemRoleEnum> get values => _$kycReviewItemRoleEnumValues;
+  static KycReviewItemRoleEnum valueOf(String name) => _$kycReviewItemRoleEnumValueOf(name);
 }
 

@@ -72,5 +72,10 @@ void main() {
       // TODO
     });
 
+    // BuiltSet<String> amenities
+    test('to test the property `amenities`', () async {
+      // TODO
+    });
+
   });
 }

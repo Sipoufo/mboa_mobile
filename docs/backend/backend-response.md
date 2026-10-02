@@ -2187,3 +2187,63 @@ Create/update of a listing or residence with a point outside Cameroon → `400 L
 ## Verification
 
 Live against the dev database: a San Francisco listing refused (400), a Douala one published and its fiche point 151 m off and identical across requests; two agents accepted on one listing, the agent-less delete answering `409 AGENT_REQUIRED`, agent A removed alone (A `WITHDRAWN`, B `ACCEPTED`), the old route working again once one agent was left; a client booking the owner as visitor, the owner confirming, reading the client's name and phone, cancelling (`CANCELLED`, by them), an agent refused the owner's route (403). 761 unit tests pass.
+
+---
+
+# 2026-10-02 — M20b: search by badge and by équipement, badges on every card
+
+Closes **§16.2** and the search half of **§8**.
+
+## `GET /search` — two new filters
+
+| Param | Meaning |
+|---|---|
+| `badges=PHOTOS_VERIFIED,IDENTITY_VERIFIED,TRUSTED` | Doc 10's "Badges requis": only listings carrying **every** badge listed. Any `BadgeCode` is accepted. |
+| `amenities=WIFI,PARKING` | only listings offering **every** équipement listed. |
+
+Both apply to standalone listings and to residence units alike, so a residence
+appears when one of its units matches — the same way every other filter works.
+`PHOTOS_VERIFIED` follows the fiche's rule: the listing's own photos, or its
+residence's when it shows the residence's.
+
+## Badges on cards
+
+`SearchResultItem.badges` and `ResidenceSearchCard.badges` — same `BadgeCode`
+list, same prestige order as the fiche, already sorted. A residence card shows
+📸 when the residence's shared photos are verified. The units listed in
+`GET /search/residences/{id}` carry theirs too.
+
+## Équipements on a residence (§8)
+
+`CreateResidenceRequest.units[].amenities` — each group's équipements are copied
+onto every unit it creates; a unit is then edited like any listing
+(`PATCH /annonces/{unitId}`). Different groups can differ (clim in the studios,
+not the rooms), which is why it is per group and not per residence.
+
+## RM-M11-08 — agents apply only where photos were checked
+
+Doc 10 asked for it once M20 could award 📸. **The agent opportunity feed now
+lists only listings whose photos are verified**, and applying elsewhere is
+`409 PHOTOS_NOT_VERIFIED`; a residence application skips (by name) the units
+without verified photos. **Expect an empty feed** until admins have verified
+some photos — in dev too. A prestataire offering their listing to an agent
+directly is unaffected.
+
+## Also fixed: bad parameters were 500s
+
+Any malformed query/path parameter used to answer `500 INTERNAL_ERROR`. It is now
+`400 VALIDATION_ERROR` naming the parameter and, for an enum, the accepted
+values. If the app had a "server error" fallback for those, it can show the
+real reason now.
+
+## Verification
+
+Live against the dev database: a ✅ prestataire with a 📸 listing offering WiFi,
+a plain listing, and a residence whose units got PARKING from their group —
+`badges=PHOTOS_VERIFIED` returned the 📸 listing only, `badges=IDENTITY_VERIFIED`
+all three, both together the 📸 one, `TRUSTED` nothing; `amenities=WIFI` the
+first, `PARKING` the residence, both together none; once the residence's photos
+were approved it joined the 📸 results, card and units badged. An agent's feed
+held the 📸 listing and the residence but not the plain one, applying to the
+plain one was refused (409) and to the others accepted. `?badges=NOPE` and a
+malformed `cityId` answered 400. 770 unit tests pass.

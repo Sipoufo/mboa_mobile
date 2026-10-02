@@ -25,6 +25,7 @@ part 'unit_group.g.dart';
 /// * [bathroomCount] 
 /// * [furnished] 
 /// * [description] 
+/// * [amenities] 
 @BuiltValue()
 abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -67,6 +68,10 @@ abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
 
   @BuiltValueField(wireName: r'description')
   String? get description;
+
+  @BuiltValueField(wireName: r'amenities')
+  BuiltSet<UnitGroupAmenitiesEnum>? get amenities;
+  // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
 
   UnitGroup._();
 
@@ -174,6 +179,13 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
       yield serializers.serialize(
         object.description,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.amenities != null) {
+      yield r'amenities';
+      yield serializers.serialize(
+        object.amenities,
+        specifiedType: const FullType(BuiltSet, [FullType(UnitGroupAmenitiesEnum)]),
       );
     }
   }
@@ -300,6 +312,14 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
           if (valueDes == null) continue;
           result.description = valueDes;
           break;
+        case r'amenities':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltSet, [FullType(UnitGroupAmenitiesEnum)]),
+          ) as BuiltSet<UnitGroupAmenitiesEnum>?;
+          if (valueDes == null) continue;
+          result.amenities.replace(valueDes);
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -375,5 +395,30 @@ class UnitGroupRentalPeriodEnum extends EnumClass {
 
   static BuiltSet<UnitGroupRentalPeriodEnum> get values => _$unitGroupRentalPeriodEnumValues;
   static UnitGroupRentalPeriodEnum valueOf(String name) => _$unitGroupRentalPeriodEnumValueOf(name);
+}
+
+class UnitGroupAmenitiesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'AIR_CONDITIONING')
+  static const UnitGroupAmenitiesEnum AIR_CONDITIONING = _$unitGroupAmenitiesEnum_AIR_CONDITIONING;
+  @BuiltValueEnumConst(wireName: r'HOT_WATER')
+  static const UnitGroupAmenitiesEnum HOT_WATER = _$unitGroupAmenitiesEnum_HOT_WATER;
+  @BuiltValueEnumConst(wireName: r'GENERATOR')
+  static const UnitGroupAmenitiesEnum GENERATOR = _$unitGroupAmenitiesEnum_GENERATOR;
+  @BuiltValueEnumConst(wireName: r'SECURITY_GUARD')
+  static const UnitGroupAmenitiesEnum SECURITY_GUARD = _$unitGroupAmenitiesEnum_SECURITY_GUARD;
+  @BuiltValueEnumConst(wireName: r'PARKING')
+  static const UnitGroupAmenitiesEnum PARKING = _$unitGroupAmenitiesEnum_PARKING;
+  @BuiltValueEnumConst(wireName: r'WIFI')
+  static const UnitGroupAmenitiesEnum WIFI = _$unitGroupAmenitiesEnum_WIFI;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const UnitGroupAmenitiesEnum unknownDefaultOpenApi = _$unitGroupAmenitiesEnum_unknownDefaultOpenApi;
+
+  static Serializer<UnitGroupAmenitiesEnum> get serializer => _$unitGroupAmenitiesEnumSerializer;
+
+  const UnitGroupAmenitiesEnum._(String name): super(name);
+
+  static BuiltSet<UnitGroupAmenitiesEnum> get values => _$unitGroupAmenitiesEnumValues;
+  static UnitGroupAmenitiesEnum valueOf(String name) => _$unitGroupAmenitiesEnumValueOf(name);
 }
 

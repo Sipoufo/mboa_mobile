@@ -43,7 +43,7 @@ void main() {
 
     // Search listings and residences (city/district required; other filters cumulative)
     //
-    //Future<PageResponseSearchResult> searchListings({ String cityId, BuiltList<String> districtIds, BuiltList<String> propertyTypes, BuiltList<String> rentalPeriods, int rentMin, int rentMax, int roomsMin, int surfaceMin, int surfaceMax, bool furnished, bool availableNow, int page, int size }) async
+    //Future<PageResponseSearchResult> searchListings({ String cityId, BuiltList<String> districtIds, BuiltList<String> propertyTypes, BuiltList<String> rentalPeriods, int rentMin, int rentMax, int roomsMin, int surfaceMin, int surfaceMax, bool furnished, bool availableNow, BuiltList<String> badges, BuiltList<String> amenities, int page, int size }) async
     test('test searchListings', () async {
       // TODO
     });

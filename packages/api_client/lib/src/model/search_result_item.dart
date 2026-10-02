@@ -30,6 +30,7 @@ part 'search_result_item.g.dart';
 /// * [latitude] 
 /// * [longitude] 
 /// * [availableFrom] 
+/// * [badges] 
 @BuiltValue()
 abstract class SearchResultItem implements Built<SearchResultItem, SearchResultItemBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -85,6 +86,10 @@ abstract class SearchResultItem implements Built<SearchResultItem, SearchResultI
 
   @BuiltValueField(wireName: r'availableFrom')
   Date? get availableFrom;
+
+  @BuiltValueField(wireName: r'badges')
+  BuiltList<SearchResultItemBadgesEnum>? get badges;
+  // enum badgesEnum {  TRUSTED,  RECERTIFIED,  IDENTITY_VERIFIED,  PHOTOS_VERIFIED,  };
 
   SearchResultItem._();
 
@@ -226,6 +231,13 @@ class _$SearchResultItemSerializer implements PrimitiveSerializer<SearchResultIt
       yield serializers.serialize(
         object.availableFrom,
         specifiedType: const FullType(Date),
+      );
+    }
+    if (object.badges != null) {
+      yield r'badges';
+      yield serializers.serialize(
+        object.badges,
+        specifiedType: const FullType(BuiltList, [FullType(SearchResultItemBadgesEnum)]),
       );
     }
   }
@@ -387,6 +399,14 @@ class _$SearchResultItemSerializer implements PrimitiveSerializer<SearchResultIt
           if (valueDes == null) continue;
           result.availableFrom = valueDes;
           break;
+        case r'badges':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltList, [FullType(SearchResultItemBadgesEnum)]),
+          ) as BuiltList<SearchResultItemBadgesEnum>?;
+          if (valueDes == null) continue;
+          result.badges.replace(valueDes);
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -487,5 +507,26 @@ class SearchResultItemStatusEnum extends EnumClass {
 
   static BuiltSet<SearchResultItemStatusEnum> get values => _$searchResultItemStatusEnumValues;
   static SearchResultItemStatusEnum valueOf(String name) => _$searchResultItemStatusEnumValueOf(name);
+}
+
+class SearchResultItemBadgesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'TRUSTED')
+  static const SearchResultItemBadgesEnum TRUSTED = _$searchResultItemBadgesEnum_TRUSTED;
+  @BuiltValueEnumConst(wireName: r'RECERTIFIED')
+  static const SearchResultItemBadgesEnum RECERTIFIED = _$searchResultItemBadgesEnum_RECERTIFIED;
+  @BuiltValueEnumConst(wireName: r'IDENTITY_VERIFIED')
+  static const SearchResultItemBadgesEnum IDENTITY_VERIFIED = _$searchResultItemBadgesEnum_IDENTITY_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'PHOTOS_VERIFIED')
+  static const SearchResultItemBadgesEnum PHOTOS_VERIFIED = _$searchResultItemBadgesEnum_PHOTOS_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const SearchResultItemBadgesEnum unknownDefaultOpenApi = _$searchResultItemBadgesEnum_unknownDefaultOpenApi;
+
+  static Serializer<SearchResultItemBadgesEnum> get serializer => _$searchResultItemBadgesEnumSerializer;
+
+  const SearchResultItemBadgesEnum._(String name): super(name);
+
+  static BuiltSet<SearchResultItemBadgesEnum> get values => _$searchResultItemBadgesEnumValues;
+  static SearchResultItemBadgesEnum valueOf(String name) => _$searchResultItemBadgesEnumValueOf(name);
 }
 

@@ -7,7 +7,7 @@ void main() {
   final instance = ApiClient().getAssignationAgentRsidenceApi();
 
   group(AssignationAgentRsidenceApi, () {
-    // Choose this agent for the residence; rival applications on those units are declined
+    // Choose this agent for the residence; other agents' applications stay open (RM-M11-07)
     //
     //Future<ResidenceAssignmentResult> acceptResidenceApplication(String residenceId, String agentAccountId) async
     test('test acceptResidenceApplication', () async {
@@ -49,7 +49,14 @@ void main() {
       // TODO
     });
 
-    // Take the whole residence back; each unit's planned visits are cancelled
+    // Remove one agent from every unit of the residence; other agents keep theirs (RM-M11-06)
+    //
+    //Future<BatchResult> withdrawAgentFromResidence(String residenceId, String agentAccountId) async
+    test('test withdrawAgentFromResidence', () async {
+      // TODO
+    });
+
+    // Take the whole residence back from every agent; each unit's planned visits are cancelled
     //
     //Future<BatchResult> withdrawResidenceAgentAssignment(String residenceId) async
     test('test withdrawResidenceAgentAssignment', () async {

@@ -42,5 +42,25 @@ void main() {
       // TODO
     });
 
+    // String role
+    test('to test the property `role`', () async {
+      // TODO
+    });
+
+    // String displayName
+    test('to test the property `displayName`', () async {
+      // TODO
+    });
+
+    // DateTime dueAt
+    test('to test the property `dueAt`', () async {
+      // TODO
+    });
+
+    // bool overdue
+    test('to test the property `overdue`', () async {
+      // TODO
+    });
+
   });
 }

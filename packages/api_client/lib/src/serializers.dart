@@ -15,6 +15,9 @@ import 'package:api_client/src/date_serializer.dart';
 import 'package:api_client/src/model/date.dart';
 
 import 'package:api_client/src/model/add_favori_request.dart';
+import 'package:api_client/src/model/admin_mboa_score_response.dart';
+import 'package:api_client/src/model/admin_photo_verification_item.dart';
+import 'package:api_client/src/model/admin_prestataire_badges_response.dart';
 import 'package:api_client/src/model/admin_user_summary.dart';
 import 'package:api_client/src/model/agent_candidate.dart';
 import 'package:api_client/src/model/agent_opportunity.dart';
@@ -29,6 +32,8 @@ import 'package:api_client/src/model/assignment_response.dart';
 import 'package:api_client/src/model/auth_tokens.dart';
 import 'package:api_client/src/model/availability_response.dart';
 import 'package:api_client/src/model/availability_rule_request.dart';
+import 'package:api_client/src/model/badge_award_response.dart';
+import 'package:api_client/src/model/badge_decision_request.dart';
 import 'package:api_client/src/model/batch_result.dart';
 import 'package:api_client/src/model/block_day_request.dart';
 import 'package:api_client/src/model/book_visite_request.dart';
@@ -47,6 +52,10 @@ import 'package:api_client/src/model/create_contract_request.dart';
 import 'package:api_client/src/model/create_residence_request.dart';
 import 'package:api_client/src/model/create_signalement_request.dart';
 import 'package:api_client/src/model/create_upload_request.dart';
+import 'package:api_client/src/model/dashboard_figures.dart';
+import 'package:api_client/src/model/dashboard_item.dart';
+import 'package:api_client/src/model/dashboard_metric.dart';
+import 'package:api_client/src/model/dashboard_summary_response.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/favori_response.dart';
 import 'package:api_client/src/model/field_error.dart';
@@ -55,19 +64,24 @@ import 'package:api_client/src/model/grant_subscription_request.dart';
 import 'package:api_client/src/model/historique_response.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
+import 'package:api_client/src/model/listing_stats.dart';
 import 'package:api_client/src/model/location_option.dart';
 import 'package:api_client/src/model/login_otp_request.dart';
 import 'package:api_client/src/model/login_request.dart';
 import 'package:api_client/src/model/logout_request.dart';
+import 'package:api_client/src/model/mboa_score_response.dart';
 import 'package:api_client/src/model/me_response.dart';
 import 'package:api_client/src/model/message_response.dart';
+import 'package:api_client/src/model/my_badges_response.dart';
 import 'package:api_client/src/model/notification_setting.dart';
 import 'package:api_client/src/model/opportunity_item.dart';
+import 'package:api_client/src/model/page_response_admin_photo_verification_item.dart';
 import 'package:api_client/src/model/page_response_admin_user_summary.dart';
 import 'package:api_client/src/model/page_response_annonce_response.dart';
 import 'package:api_client/src/model/page_response_assignment_item.dart';
 import 'package:api_client/src/model/page_response_contract_response.dart';
 import 'package:api_client/src/model/page_response_conversation_response.dart';
+import 'package:api_client/src/model/page_response_dashboard_item.dart';
 import 'package:api_client/src/model/page_response_favori_response.dart';
 import 'package:api_client/src/model/page_response_historique_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
@@ -85,6 +99,7 @@ import 'package:api_client/src/model/payment_initiated_response.dart';
 import 'package:api_client/src/model/payment_summary.dart';
 import 'package:api_client/src/model/payment_webhook_request.dart';
 import 'package:api_client/src/model/phone_change_response.dart';
+import 'package:api_client/src/model/photo_verification_response.dart';
 import 'package:api_client/src/model/presigned_upload.dart';
 import 'package:api_client/src/model/prestataire_profile_response.dart';
 import 'package:api_client/src/model/property_rating.dart';
@@ -110,10 +125,14 @@ import 'package:api_client/src/model/residence_detail_response.dart';
 import 'package:api_client/src/model/residence_opportunity.dart';
 import 'package:api_client/src/model/residence_response.dart';
 import 'package:api_client/src/model/residence_search_card.dart';
+import 'package:api_client/src/model/residence_stats.dart';
 import 'package:api_client/src/model/respond_to_change_request.dart';
 import 'package:api_client/src/model/review_comment_request.dart';
 import 'package:api_client/src/model/review_response.dart';
 import 'package:api_client/src/model/review_signalement_request.dart';
+import 'package:api_client/src/model/score_adjustment_request.dart';
+import 'package:api_client/src/model/score_adjustment_response.dart';
+import 'package:api_client/src/model/score_signal.dart';
 import 'package:api_client/src/model/search_result.dart';
 import 'package:api_client/src/model/search_result_item.dart';
 import 'package:api_client/src/model/send_message_request.dart';
@@ -161,6 +180,9 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   AddFavoriRequest,
+  AdminMboaScoreResponse,
+  AdminPhotoVerificationItem,
+  AdminPrestataireBadgesResponse,
   AdminUserSummary,
   AgentCandidate,
   AgentOpportunity,
@@ -175,6 +197,8 @@ part 'serializers.g.dart';
   AuthTokens,
   AvailabilityResponse,
   AvailabilityRuleRequest,
+  BadgeAwardResponse,
+  BadgeDecisionRequest,
   BatchResult,
   BlockDayRequest,
   BookVisiteRequest,
@@ -193,6 +217,10 @@ part 'serializers.g.dart';
   CreateResidenceRequest,
   CreateSignalementRequest,
   CreateUploadRequest,
+  DashboardFigures,
+  DashboardItem,
+  DashboardMetric,
+  DashboardSummaryResponse,
   ErrorResponse,
   FavoriResponse,
   FieldError,
@@ -201,19 +229,24 @@ part 'serializers.g.dart';
   HistoriqueResponse,
   KycReviewItem,
   KycStatusResponse,
+  ListingStats,
   LocationOption,
   LoginOtpRequest,
   LoginRequest,
   LogoutRequest,
+  MboaScoreResponse,
   MeResponse,
   MessageResponse,
+  MyBadgesResponse,
   NotificationSetting,
   OpportunityItem,
+  PageResponseAdminPhotoVerificationItem,
   PageResponseAdminUserSummary,
   PageResponseAnnonceResponse,
   PageResponseAssignmentItem,
   PageResponseContractResponse,
   PageResponseConversationResponse,
+  PageResponseDashboardItem,
   PageResponseFavoriResponse,
   PageResponseHistoriqueResponse,
   PageResponseKycReviewItem,
@@ -231,6 +264,7 @@ part 'serializers.g.dart';
   PaymentSummary,
   PaymentWebhookRequest,
   PhoneChangeResponse,
+  PhotoVerificationResponse,
   PresignedUpload,
   PrestataireProfileResponse,
   PropertyRating,
@@ -256,10 +290,14 @@ part 'serializers.g.dart';
   ResidenceOpportunity,
   ResidenceResponse,
   ResidenceSearchCard,
+  ResidenceStats,
   RespondToChangeRequest,
   ReviewCommentRequest,
   ReviewResponse,
   ReviewSignalementRequest,
+  ScoreAdjustmentRequest,
+  ScoreAdjustmentResponse,
+  ScoreSignal,
   SearchResult,
   SearchResultItem,
   SendMessageRequest,
@@ -305,12 +343,8 @@ part 'serializers.g.dart';
 ])
 Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
-        const FullType(BuiltMap, [FullType(String), FullType(String)]),
-        () => MapBuilder<String, String>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(Zone)]),
-        () => ListBuilder<Zone>(),
+        const FullType(BuiltList, [FullType(ScoreAdjustmentResponse)]),
+        () => ListBuilder<ScoreAdjustmentResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Comment)]),
@@ -319,26 +353,6 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AssignmentResponse)]),
         () => ListBuilder<AssignmentResponse>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(ResidenceApplicationSummary)]),
-        () => ListBuilder<ResidenceApplicationSummary>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(NotificationSetting)]),
-        () => ListBuilder<NotificationSetting>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(BookableSlot)]),
-        () => ListBuilder<BookableSlot>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(ConversationResponse)]),
-        () => ListBuilder<ConversationResponse>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(PaymentSummary)]),
-        () => ListBuilder<PaymentSummary>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SignalementResponse)]),
@@ -353,20 +367,8 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<MessageResponse>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(HistoriqueResponse)]),
-        () => ListBuilder<HistoriqueResponse>(),
-      )
-      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(VisitorSlots)]),
         () => ListBuilder<VisitorSlots>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(Reply)]),
-        () => ListBuilder<Reply>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(LocationOption)]),
-        () => ListBuilder<LocationOption>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(OpportunityItem)]),
@@ -381,16 +383,8 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<ChangeRequestResponse>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(SearchResultItem)]),
-        () => ListBuilder<SearchResultItem>(),
-      )
-      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ResidenceResponse)]),
         () => ListBuilder<ResidenceResponse>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(AgentCandidate)]),
-        () => ListBuilder<AgentCandidate>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AssignmentItem)]),
@@ -409,6 +403,90 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<FieldError>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(DashboardItem)]),
+        () => ListBuilder<DashboardItem>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AdminUserSummary)]),
+        () => ListBuilder<AdminUserSummary>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(BadgeAwardResponse)]),
+        () => ListBuilder<BadgeAwardResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(FavoriResponse)]),
+        () => ListBuilder<FavoriResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AnnonceResponse)]),
+        () => ListBuilder<AnnonceResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ScoreSignal)]),
+        () => ListBuilder<ScoreSignal>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(TypeCount)]),
+        () => ListBuilder<TypeCount>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(VisiteResponse)]),
+        () => ListBuilder<VisiteResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltMap, [FullType(String), FullType(String)]),
+        () => MapBuilder<String, String>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Zone)]),
+        () => ListBuilder<Zone>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ResidenceApplicationSummary)]),
+        () => ListBuilder<ResidenceApplicationSummary>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(NotificationSetting)]),
+        () => ListBuilder<NotificationSetting>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(BookableSlot)]),
+        () => ListBuilder<BookableSlot>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(PhotoVerificationResponse)]),
+        () => ListBuilder<PhotoVerificationResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ConversationResponse)]),
+        () => ListBuilder<ConversationResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(PaymentSummary)]),
+        () => ListBuilder<PaymentSummary>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(HistoriqueResponse)]),
+        () => ListBuilder<HistoriqueResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Reply)]),
+        () => ListBuilder<Reply>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(LocationOption)]),
+        () => ListBuilder<LocationOption>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(SearchResultItem)]),
+        () => ListBuilder<SearchResultItem>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AgentCandidate)]),
+        () => ListBuilder<AgentCandidate>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(UnitSummary)]),
         () => ListBuilder<UnitSummary>(),
       )
@@ -417,24 +495,16 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<SkippedUnit>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(AdminUserSummary)]),
-        () => ListBuilder<AdminUserSummary>(),
-      )
-      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AvailabilityRuleRequest)]),
         () => ListBuilder<AvailabilityRuleRequest>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(FavoriResponse)]),
-        () => ListBuilder<FavoriResponse>(),
+        const FullType(BuiltList, [FullType(ListingStats)]),
+        () => ListBuilder<ListingStats>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SearchResult)]),
         () => ListBuilder<SearchResult>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(AnnonceResponse)]),
-        () => ListBuilder<AnnonceResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SignatureResponse)]),
@@ -445,8 +515,8 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<TypeChangeReviewItem>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(TypeCount)]),
-        () => ListBuilder<TypeCount>(),
+        const FullType(BuiltList, [FullType(AdminPhotoVerificationItem)]),
+        () => ListBuilder<AdminPhotoVerificationItem>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(TierInfo)]),
@@ -459,10 +529,6 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(CountryResponse)]),
         () => ListBuilder<CountryResponse>(),
-      )
-      ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(VisiteResponse)]),
-        () => ListBuilder<VisiteResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ZoneResponse)]),

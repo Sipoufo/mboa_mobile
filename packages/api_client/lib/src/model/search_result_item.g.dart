@@ -162,6 +162,45 @@ final BuiltSet<SearchResultItemStatusEnum> _$searchResultItemStatusEnumValues =
       _$searchResultItemStatusEnum_unknownDefaultOpenApi,
     ]);
 
+const SearchResultItemBadgesEnum _$searchResultItemBadgesEnum_TRUSTED =
+    const SearchResultItemBadgesEnum._('TRUSTED');
+const SearchResultItemBadgesEnum _$searchResultItemBadgesEnum_RECERTIFIED =
+    const SearchResultItemBadgesEnum._('RECERTIFIED');
+const SearchResultItemBadgesEnum
+_$searchResultItemBadgesEnum_IDENTITY_VERIFIED =
+    const SearchResultItemBadgesEnum._('IDENTITY_VERIFIED');
+const SearchResultItemBadgesEnum _$searchResultItemBadgesEnum_PHOTOS_VERIFIED =
+    const SearchResultItemBadgesEnum._('PHOTOS_VERIFIED');
+const SearchResultItemBadgesEnum
+_$searchResultItemBadgesEnum_unknownDefaultOpenApi =
+    const SearchResultItemBadgesEnum._('unknownDefaultOpenApi');
+
+SearchResultItemBadgesEnum _$searchResultItemBadgesEnumValueOf(String name) {
+  switch (name) {
+    case 'TRUSTED':
+      return _$searchResultItemBadgesEnum_TRUSTED;
+    case 'RECERTIFIED':
+      return _$searchResultItemBadgesEnum_RECERTIFIED;
+    case 'IDENTITY_VERIFIED':
+      return _$searchResultItemBadgesEnum_IDENTITY_VERIFIED;
+    case 'PHOTOS_VERIFIED':
+      return _$searchResultItemBadgesEnum_PHOTOS_VERIFIED;
+    case 'unknownDefaultOpenApi':
+      return _$searchResultItemBadgesEnum_unknownDefaultOpenApi;
+    default:
+      return _$searchResultItemBadgesEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<SearchResultItemBadgesEnum> _$searchResultItemBadgesEnumValues =
+    BuiltSet<SearchResultItemBadgesEnum>(const <SearchResultItemBadgesEnum>[
+      _$searchResultItemBadgesEnum_TRUSTED,
+      _$searchResultItemBadgesEnum_RECERTIFIED,
+      _$searchResultItemBadgesEnum_IDENTITY_VERIFIED,
+      _$searchResultItemBadgesEnum_PHOTOS_VERIFIED,
+      _$searchResultItemBadgesEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<SearchResultItemPropertyTypeEnum>
 _$searchResultItemPropertyTypeEnumSerializer =
     _$SearchResultItemPropertyTypeEnumSerializer();
@@ -170,6 +209,8 @@ _$searchResultItemRentalPeriodEnumSerializer =
     _$SearchResultItemRentalPeriodEnumSerializer();
 Serializer<SearchResultItemStatusEnum> _$searchResultItemStatusEnumSerializer =
     _$SearchResultItemStatusEnumSerializer();
+Serializer<SearchResultItemBadgesEnum> _$searchResultItemBadgesEnumSerializer =
+    _$SearchResultItemBadgesEnumSerializer();
 
 class _$SearchResultItemPropertyTypeEnumSerializer
     implements PrimitiveSerializer<SearchResultItemPropertyTypeEnum> {
@@ -298,6 +339,45 @@ class _$SearchResultItemStatusEnumSerializer
   );
 }
 
+class _$SearchResultItemBadgesEnumSerializer
+    implements PrimitiveSerializer<SearchResultItemBadgesEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'TRUSTED': 'TRUSTED',
+    'RECERTIFIED': 'RECERTIFIED',
+    'IDENTITY_VERIFIED': 'IDENTITY_VERIFIED',
+    'PHOTOS_VERIFIED': 'PHOTOS_VERIFIED',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'TRUSTED': 'TRUSTED',
+    'RECERTIFIED': 'RECERTIFIED',
+    'IDENTITY_VERIFIED': 'IDENTITY_VERIFIED',
+    'PHOTOS_VERIFIED': 'PHOTOS_VERIFIED',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[SearchResultItemBadgesEnum];
+  @override
+  final String wireName = 'SearchResultItemBadgesEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    SearchResultItemBadgesEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  SearchResultItemBadgesEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => SearchResultItemBadgesEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$SearchResultItem extends SearchResultItem {
   @override
   final String? id;
@@ -333,6 +413,8 @@ class _$SearchResultItem extends SearchResultItem {
   final double? longitude;
   @override
   final Date? availableFrom;
+  @override
+  final BuiltList<SearchResultItemBadgesEnum>? badges;
 
   factory _$SearchResultItem([
     void Function(SearchResultItemBuilder)? updates,
@@ -356,6 +438,7 @@ class _$SearchResultItem extends SearchResultItem {
     this.latitude,
     this.longitude,
     this.availableFrom,
+    this.badges,
   }) : super._();
   @override
   SearchResultItem rebuild(void Function(SearchResultItemBuilder) updates) =>
@@ -385,7 +468,8 @@ class _$SearchResultItem extends SearchResultItem {
         tierRank == other.tierRank &&
         latitude == other.latitude &&
         longitude == other.longitude &&
-        availableFrom == other.availableFrom;
+        availableFrom == other.availableFrom &&
+        badges == other.badges;
   }
 
   @override
@@ -408,6 +492,7 @@ class _$SearchResultItem extends SearchResultItem {
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, availableFrom.hashCode);
+    _$hash = $jc(_$hash, badges.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -431,7 +516,8 @@ class _$SearchResultItem extends SearchResultItem {
           ..add('tierRank', tierRank)
           ..add('latitude', latitude)
           ..add('longitude', longitude)
-          ..add('availableFrom', availableFrom))
+          ..add('availableFrom', availableFrom)
+          ..add('badges', badges))
         .toString();
   }
 }
@@ -512,6 +598,12 @@ class SearchResultItemBuilder
   set availableFrom(Date? availableFrom) =>
       _$this._availableFrom = availableFrom;
 
+  ListBuilder<SearchResultItemBadgesEnum>? _badges;
+  ListBuilder<SearchResultItemBadgesEnum> get badges =>
+      _$this._badges ??= ListBuilder<SearchResultItemBadgesEnum>();
+  set badges(ListBuilder<SearchResultItemBadgesEnum>? badges) =>
+      _$this._badges = badges;
+
   SearchResultItemBuilder() {
     SearchResultItem._defaults(this);
   }
@@ -536,6 +628,7 @@ class SearchResultItemBuilder
       _latitude = $v.latitude;
       _longitude = $v.longitude;
       _availableFrom = $v.availableFrom;
+      _badges = $v.badges?.toBuilder();
       _$v = null;
     }
     return this;
@@ -555,27 +648,44 @@ class SearchResultItemBuilder
   SearchResultItem build() => _build();
 
   _$SearchResultItem _build() {
-    final _$result =
-        _$v ??
-        _$SearchResultItem._(
-          id: id,
-          title: title,
-          propertyType: propertyType,
-          city: city,
-          district: district,
-          price: price,
-          rentalPeriod: rentalPeriod,
-          monthlyRent: monthlyRent,
-          furnished: furnished,
-          roomCount: roomCount,
-          surfaceArea: surfaceArea,
-          primaryPhotoKey: primaryPhotoKey,
-          status: status,
-          tierRank: tierRank,
-          latitude: latitude,
-          longitude: longitude,
-          availableFrom: availableFrom,
+    _$SearchResultItem _$result;
+    try {
+      _$result =
+          _$v ??
+          _$SearchResultItem._(
+            id: id,
+            title: title,
+            propertyType: propertyType,
+            city: city,
+            district: district,
+            price: price,
+            rentalPeriod: rentalPeriod,
+            monthlyRent: monthlyRent,
+            furnished: furnished,
+            roomCount: roomCount,
+            surfaceArea: surfaceArea,
+            primaryPhotoKey: primaryPhotoKey,
+            status: status,
+            tierRank: tierRank,
+            latitude: latitude,
+            longitude: longitude,
+            availableFrom: availableFrom,
+            badges: _badges?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'badges';
+        _badges?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'SearchResultItem',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -9,6 +9,12 @@ part of 'serializers.dart';
 Serializers _$serializers =
     (Serializers().toBuilder()
           ..add(AddFavoriRequest.serializer)
+          ..add(AdminMboaScoreResponse.serializer)
+          ..add(AdminPhotoVerificationItem.serializer)
+          ..add(AdminPhotoVerificationItemStatusEnum.serializer)
+          ..add(AdminPhotoVerificationItemTargetEnum.serializer)
+          ..add(AdminPrestataireBadgesResponse.serializer)
+          ..add(AdminPrestataireBadgesResponseBadgesEnum.serializer)
           ..add(AdminUserSummary.serializer)
           ..add(AdminUserSummaryRoleEnum.serializer)
           ..add(AdminUserSummaryStatusEnum.serializer)
@@ -40,6 +46,9 @@ Serializers _$serializers =
           ..add(AuthTokens.serializer)
           ..add(AvailabilityResponse.serializer)
           ..add(AvailabilityRuleRequest.serializer)
+          ..add(BadgeAwardResponse.serializer)
+          ..add(BadgeAwardResponseBadgeEnum.serializer)
+          ..add(BadgeDecisionRequest.serializer)
           ..add(BatchResult.serializer)
           ..add(BlockDayRequest.serializer)
           ..add(BookVisiteRequest.serializer)
@@ -69,6 +78,13 @@ Serializers _$serializers =
           ..add(CreateSignalementRequestTargetTypeEnum.serializer)
           ..add(CreateUploadRequest.serializer)
           ..add(CreateUploadRequestCategoryEnum.serializer)
+          ..add(DashboardFigures.serializer)
+          ..add(DashboardItem.serializer)
+          ..add(DashboardItemTypeEnum.serializer)
+          ..add(DashboardMetric.serializer)
+          ..add(DashboardMetricRequiredTierEnum.serializer)
+          ..add(DashboardSummaryResponse.serializer)
+          ..add(DashboardSummaryResponseTierEnum.serializer)
           ..add(ErrorResponse.serializer)
           ..add(FavoriResponse.serializer)
           ..add(FavoriResponseRentalPeriodEnum.serializer)
@@ -79,26 +95,34 @@ Serializers _$serializers =
           ..add(HistoriqueResponse.serializer)
           ..add(HistoriqueResponseRentalPeriodEnum.serializer)
           ..add(KycReviewItem.serializer)
+          ..add(KycReviewItemRoleEnum.serializer)
           ..add(KycStatusResponse.serializer)
+          ..add(ListingStats.serializer)
+          ..add(ListingStatsStatusEnum.serializer)
           ..add(LocationOption.serializer)
           ..add(LoginOtpRequest.serializer)
           ..add(LoginRequest.serializer)
           ..add(LogoutRequest.serializer)
+          ..add(MboaScoreResponse.serializer)
           ..add(MeResponse.serializer)
           ..add(MeResponseAuthProviderEnum.serializer)
           ..add(MeResponseRoleEnum.serializer)
           ..add(MeResponseStatusEnum.serializer)
           ..add(MeResponseTierEnum.serializer)
           ..add(MessageResponse.serializer)
+          ..add(MyBadgesResponse.serializer)
+          ..add(MyBadgesResponseBadgesEnum.serializer)
           ..add(NotificationSetting.serializer)
           ..add(NotificationSettingTypeEnum.serializer)
           ..add(OpportunityItem.serializer)
           ..add(OpportunityItemTypeEnum.serializer)
+          ..add(PageResponseAdminPhotoVerificationItem.serializer)
           ..add(PageResponseAdminUserSummary.serializer)
           ..add(PageResponseAnnonceResponse.serializer)
           ..add(PageResponseAssignmentItem.serializer)
           ..add(PageResponseContractResponse.serializer)
           ..add(PageResponseConversationResponse.serializer)
+          ..add(PageResponseDashboardItem.serializer)
           ..add(PageResponseFavoriResponse.serializer)
           ..add(PageResponseHistoriqueResponse.serializer)
           ..add(PageResponseKycReviewItem.serializer)
@@ -121,6 +145,9 @@ Serializers _$serializers =
           ..add(PaymentWebhookRequest.serializer)
           ..add(PaymentWebhookRequestStatusEnum.serializer)
           ..add(PhoneChangeResponse.serializer)
+          ..add(PhotoVerificationResponse.serializer)
+          ..add(PhotoVerificationResponseStatusEnum.serializer)
+          ..add(PhotoVerificationResponseTargetEnum.serializer)
           ..add(PresignedUpload.serializer)
           ..add(PrestataireProfileResponse.serializer)
           ..add(PrestataireProfileResponseTypeEnum.serializer)
@@ -128,6 +155,7 @@ Serializers _$serializers =
           ..add(PropertyReview.serializer)
           ..add(PropertyReviewTypeEnum.serializer)
           ..add(ProviderCard.serializer)
+          ..add(ProviderCardBadgesEnum.serializer)
           ..add(ProviderCardTypeEnum.serializer)
           ..add(RateAgentRequest.serializer)
           ..add(ReceiptResponse.serializer)
@@ -157,12 +185,19 @@ Serializers _$serializers =
           ..add(ResidenceResponse.serializer)
           ..add(ResidenceResponseStatusEnum.serializer)
           ..add(ResidenceSearchCard.serializer)
+          ..add(ResidenceSearchCardBadgesEnum.serializer)
+          ..add(ResidenceStats.serializer)
           ..add(RespondToChangeRequest.serializer)
           ..add(ReviewCommentRequest.serializer)
           ..add(ReviewResponse.serializer)
           ..add(ReviewSignalementRequest.serializer)
+          ..add(ScoreAdjustmentRequest.serializer)
+          ..add(ScoreAdjustmentResponse.serializer)
+          ..add(ScoreSignal.serializer)
+          ..add(ScoreSignalCodeEnum.serializer)
           ..add(SearchResult.serializer)
           ..add(SearchResultItem.serializer)
+          ..add(SearchResultItemBadgesEnum.serializer)
           ..add(SearchResultItemPropertyTypeEnum.serializer)
           ..add(SearchResultItemRentalPeriodEnum.serializer)
           ..add(SearchResultItemStatusEnum.serializer)
@@ -203,6 +238,7 @@ Serializers _$serializers =
           ..add(TypeCount.serializer)
           ..add(TypeCountPropertyTypeEnum.serializer)
           ..add(UnitGroup.serializer)
+          ..add(UnitGroupAmenitiesEnum.serializer)
           ..add(UnitGroupPropertyTypeEnum.serializer)
           ..add(UnitGroupRentalPeriodEnum.serializer)
           ..add(UnitSummary.serializer)
@@ -240,6 +276,30 @@ Serializers _$serializers =
           ..add(VisitorSlotsVisitorKindEnum.serializer)
           ..add(Zone.serializer)
           ..add(ZoneResponse.serializer)
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AdminPhotoVerificationItem),
+            ]),
+            () => ListBuilder<AdminPhotoVerificationItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AdminPrestataireBadgesResponseBadgesEnum),
+            ]),
+            () => ListBuilder<AdminPrestataireBadgesResponseBadgesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(BadgeAwardResponse),
+            ]),
+            () => ListBuilder<BadgeAwardResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(PhotoVerificationResponse),
+            ]),
+            () => ListBuilder<PhotoVerificationResponse>(),
+          )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(AdminUserSummary)]),
             () => ListBuilder<AdminUserSummary>(),
@@ -289,6 +349,10 @@ Serializers _$serializers =
             () => ListBuilder<ConversationResponse>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(DashboardItem)]),
+            () => ListBuilder<DashboardItem>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(FavoriResponse)]),
             () => ListBuilder<FavoriResponse>(),
           )
@@ -307,8 +371,24 @@ Serializers _$serializers =
             () => ListBuilder<KycReviewItem>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(ListingStats)]),
+            () => ListBuilder<ListingStats>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(MessageResponse)]),
             () => ListBuilder<MessageResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(MyBadgesResponseBadgesEnum),
+            ]),
+            () => ListBuilder<MyBadgesResponseBadgesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(PhotoVerificationResponse),
+            ]),
+            () => ListBuilder<PhotoVerificationResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
@@ -326,6 +406,12 @@ Serializers _$serializers =
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
+              const FullType(ProviderCardBadgesEnum),
+            ]),
+            () => ListBuilder<ProviderCardBadgesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
               const FullType(RequestChangesRequestContestedTermsEnum),
             ]),
             () => ListBuilder<RequestChangesRequestContestedTermsEnum>(),
@@ -337,8 +423,24 @@ Serializers _$serializers =
             () => ListBuilder<ResidenceResponse>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ScoreAdjustmentResponse),
+            ]),
+            () => ListBuilder<ScoreAdjustmentResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(ScoreSignal)]),
+            () => ListBuilder<ScoreSignal>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(SearchResult)]),
             () => ListBuilder<SearchResult>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(SearchResultItemBadgesEnum),
+            ]),
+            () => ListBuilder<SearchResultItemBadgesEnum>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
@@ -515,6 +617,12 @@ Serializers _$serializers =
             () => ListBuilder<TypeCount>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ResidenceSearchCardBadgesEnum),
+            ]),
+            () => ListBuilder<ResidenceSearchCardBadgesEnum>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(VisiteResponse)]),
             () => ListBuilder<VisiteResponse>(),
           )
@@ -542,6 +650,12 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
             () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltSet, const [
+              const FullType(UnitGroupAmenitiesEnum),
+            ]),
+            () => SetBuilder<UnitGroupAmenitiesEnum>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [

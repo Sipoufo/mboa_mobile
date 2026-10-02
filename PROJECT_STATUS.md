@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**705 tests green, analyze clean.** `mboa_user` 133 · `mboa_pro` 432 ·
+**707 tests green, analyze clean.** `mboa_user` 135 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -45,7 +45,7 @@
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports |
-| M04 search | ✅ public shell, filters, list, offline cache, **map (MapLibre + MapTiler)** |
+| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
 | M12 messagerie | ✅ **both apps** — list, thread, attachments, offline queue · shared views |
@@ -69,6 +69,18 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### A guessed wire value looks like an empty list
+`ProviderCard.badges` was a bare `string[]`, so this app guessed its values —
+`TRUSTED_PROVIDER`, `VERIFIED_IDENTITY`, `VERIFIED_PHOTOS`. All three were
+wrong (`TRUSTED`, `IDENTITY_VERIFIED`, `PHOTOS_VERIFIED`), and the defensive
+parser dropped every badge it did not recognise: **no badge had ever been
+drawn on a fiche**, and nothing failed. Typing the enum server-side is what
+surfaced it.
+
+The spec in `tools/gac/` is now the backend's `/v3/api-docs` under our header.
+Refresh it by re-exporting; a path or schema edited here to make the app
+compile is a client describing an API that does not exist.
 
 ### A screen in a nested router has nothing to pop
 Everything under `/app` is pushed into a nested router and sits alone in its

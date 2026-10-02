@@ -97,10 +97,59 @@ final BuiltSet<UnitGroupRentalPeriodEnum> _$unitGroupRentalPeriodEnumValues =
       _$unitGroupRentalPeriodEnum_unknownDefaultOpenApi,
     ]);
 
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_AIR_CONDITIONING =
+    const UnitGroupAmenitiesEnum._('AIR_CONDITIONING');
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_HOT_WATER =
+    const UnitGroupAmenitiesEnum._('HOT_WATER');
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_GENERATOR =
+    const UnitGroupAmenitiesEnum._('GENERATOR');
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_SECURITY_GUARD =
+    const UnitGroupAmenitiesEnum._('SECURITY_GUARD');
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_PARKING =
+    const UnitGroupAmenitiesEnum._('PARKING');
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_WIFI =
+    const UnitGroupAmenitiesEnum._('WIFI');
+const UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnum_unknownDefaultOpenApi =
+    const UnitGroupAmenitiesEnum._('unknownDefaultOpenApi');
+
+UnitGroupAmenitiesEnum _$unitGroupAmenitiesEnumValueOf(String name) {
+  switch (name) {
+    case 'AIR_CONDITIONING':
+      return _$unitGroupAmenitiesEnum_AIR_CONDITIONING;
+    case 'HOT_WATER':
+      return _$unitGroupAmenitiesEnum_HOT_WATER;
+    case 'GENERATOR':
+      return _$unitGroupAmenitiesEnum_GENERATOR;
+    case 'SECURITY_GUARD':
+      return _$unitGroupAmenitiesEnum_SECURITY_GUARD;
+    case 'PARKING':
+      return _$unitGroupAmenitiesEnum_PARKING;
+    case 'WIFI':
+      return _$unitGroupAmenitiesEnum_WIFI;
+    case 'unknownDefaultOpenApi':
+      return _$unitGroupAmenitiesEnum_unknownDefaultOpenApi;
+    default:
+      return _$unitGroupAmenitiesEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<UnitGroupAmenitiesEnum> _$unitGroupAmenitiesEnumValues =
+    BuiltSet<UnitGroupAmenitiesEnum>(const <UnitGroupAmenitiesEnum>[
+      _$unitGroupAmenitiesEnum_AIR_CONDITIONING,
+      _$unitGroupAmenitiesEnum_HOT_WATER,
+      _$unitGroupAmenitiesEnum_GENERATOR,
+      _$unitGroupAmenitiesEnum_SECURITY_GUARD,
+      _$unitGroupAmenitiesEnum_PARKING,
+      _$unitGroupAmenitiesEnum_WIFI,
+      _$unitGroupAmenitiesEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<UnitGroupPropertyTypeEnum> _$unitGroupPropertyTypeEnumSerializer =
     _$UnitGroupPropertyTypeEnumSerializer();
 Serializer<UnitGroupRentalPeriodEnum> _$unitGroupRentalPeriodEnumSerializer =
     _$UnitGroupRentalPeriodEnumSerializer();
+Serializer<UnitGroupAmenitiesEnum> _$unitGroupAmenitiesEnumSerializer =
+    _$UnitGroupAmenitiesEnumSerializer();
 
 class _$UnitGroupPropertyTypeEnumSerializer
     implements PrimitiveSerializer<UnitGroupPropertyTypeEnum> {
@@ -186,6 +235,49 @@ class _$UnitGroupRentalPeriodEnumSerializer
   );
 }
 
+class _$UnitGroupAmenitiesEnumSerializer
+    implements PrimitiveSerializer<UnitGroupAmenitiesEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'AIR_CONDITIONING': 'AIR_CONDITIONING',
+    'HOT_WATER': 'HOT_WATER',
+    'GENERATOR': 'GENERATOR',
+    'SECURITY_GUARD': 'SECURITY_GUARD',
+    'PARKING': 'PARKING',
+    'WIFI': 'WIFI',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'AIR_CONDITIONING': 'AIR_CONDITIONING',
+    'HOT_WATER': 'HOT_WATER',
+    'GENERATOR': 'GENERATOR',
+    'SECURITY_GUARD': 'SECURITY_GUARD',
+    'PARKING': 'PARKING',
+    'WIFI': 'WIFI',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[UnitGroupAmenitiesEnum];
+  @override
+  final String wireName = 'UnitGroupAmenitiesEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    UnitGroupAmenitiesEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  UnitGroupAmenitiesEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => UnitGroupAmenitiesEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$UnitGroup extends UnitGroup {
   @override
   final UnitGroupPropertyTypeEnum propertyType;
@@ -213,6 +305,8 @@ class _$UnitGroup extends UnitGroup {
   final bool? furnished;
   @override
   final String? description;
+  @override
+  final BuiltSet<UnitGroupAmenitiesEnum>? amenities;
 
   factory _$UnitGroup([void Function(UnitGroupBuilder)? updates]) =>
       (UnitGroupBuilder()..update(updates))._build();
@@ -231,6 +325,7 @@ class _$UnitGroup extends UnitGroup {
     this.bathroomCount,
     this.furnished,
     this.description,
+    this.amenities,
   }) : super._();
   @override
   UnitGroup rebuild(void Function(UnitGroupBuilder) updates) =>
@@ -255,7 +350,8 @@ class _$UnitGroup extends UnitGroup {
         roomCount == other.roomCount &&
         bathroomCount == other.bathroomCount &&
         furnished == other.furnished &&
-        description == other.description;
+        description == other.description &&
+        amenities == other.amenities;
   }
 
   @override
@@ -274,6 +370,7 @@ class _$UnitGroup extends UnitGroup {
     _$hash = $jc(_$hash, bathroomCount.hashCode);
     _$hash = $jc(_$hash, furnished.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, amenities.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -293,7 +390,8 @@ class _$UnitGroup extends UnitGroup {
           ..add('roomCount', roomCount)
           ..add('bathroomCount', bathroomCount)
           ..add('furnished', furnished)
-          ..add('description', description))
+          ..add('description', description)
+          ..add('amenities', amenities))
         .toString();
   }
 }
@@ -358,6 +456,12 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
   String? get description => _$this._description;
   set description(String? description) => _$this._description = description;
 
+  SetBuilder<UnitGroupAmenitiesEnum>? _amenities;
+  SetBuilder<UnitGroupAmenitiesEnum> get amenities =>
+      _$this._amenities ??= SetBuilder<UnitGroupAmenitiesEnum>();
+  set amenities(SetBuilder<UnitGroupAmenitiesEnum>? amenities) =>
+      _$this._amenities = amenities;
+
   UnitGroupBuilder() {
     UnitGroup._defaults(this);
   }
@@ -378,6 +482,7 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
       _bathroomCount = $v.bathroomCount;
       _furnished = $v.furnished;
       _description = $v.description;
+      _amenities = $v.amenities?.toBuilder();
       _$v = null;
     }
     return this;
@@ -397,35 +502,52 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
   UnitGroup build() => _build();
 
   _$UnitGroup _build() {
-    final _$result =
-        _$v ??
-        _$UnitGroup._(
-          propertyType: BuiltValueNullFieldError.checkNotNull(
-            propertyType,
-            r'UnitGroup',
-            'propertyType',
-          ),
-          count: BuiltValueNullFieldError.checkNotNull(
-            count,
-            r'UnitGroup',
-            'count',
-          ),
-          namePrefix: BuiltValueNullFieldError.checkNotNull(
-            namePrefix,
-            r'UnitGroup',
-            'namePrefix',
-          ),
-          price: price,
-          rentalPeriod: rentalPeriod,
-          monthlyRent: monthlyRent,
-          chargesIncluded: chargesIncluded,
-          chargesAmount: chargesAmount,
-          surfaceArea: surfaceArea,
-          roomCount: roomCount,
-          bathroomCount: bathroomCount,
-          furnished: furnished,
-          description: description,
+    _$UnitGroup _$result;
+    try {
+      _$result =
+          _$v ??
+          _$UnitGroup._(
+            propertyType: BuiltValueNullFieldError.checkNotNull(
+              propertyType,
+              r'UnitGroup',
+              'propertyType',
+            ),
+            count: BuiltValueNullFieldError.checkNotNull(
+              count,
+              r'UnitGroup',
+              'count',
+            ),
+            namePrefix: BuiltValueNullFieldError.checkNotNull(
+              namePrefix,
+              r'UnitGroup',
+              'namePrefix',
+            ),
+            price: price,
+            rentalPeriod: rentalPeriod,
+            monthlyRent: monthlyRent,
+            chargesIncluded: chargesIncluded,
+            chargesAmount: chargesAmount,
+            surfaceArea: surfaceArea,
+            roomCount: roomCount,
+            bathroomCount: bathroomCount,
+            furnished: furnished,
+            description: description,
+            amenities: _amenities?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'amenities';
+        _amenities?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'UnitGroup',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

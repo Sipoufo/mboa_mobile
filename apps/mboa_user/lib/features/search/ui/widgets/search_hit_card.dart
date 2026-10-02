@@ -198,6 +198,7 @@ class _ListingBody extends StatelessWidget {
         _Title(hit.title),
         const SizedBox(height: Dimens.spacingXs),
         _Place(city: hit.city, district: hit.district),
+        _Badges(badges: hit.badges),
         if (facts.isNotEmpty) ...[
           const SizedBox(height: Dimens.spacingMd),
           _Facts(facts: facts),
@@ -226,6 +227,7 @@ class _ResidenceBody extends StatelessWidget {
         _Title(hit.title),
         const SizedBox(height: Dimens.spacingXs),
         _Place(city: hit.city, district: hit.district),
+        _Badges(badges: hit.badges),
         const SizedBox(height: Dimens.spacingMd),
         _Facts(
           facts: [
@@ -259,6 +261,54 @@ class _Title extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       );
+}
+
+/// The trust badges, as icons only (RM-M20, on cards since 2026-10-02).
+///
+/// No labels here: four of them would wrap onto three lines and bury the price.
+/// The fiche spells them out — this is the signal that a card is worth opening.
+class _Badges extends StatelessWidget {
+  const _Badges({required this.badges});
+
+  final List<TrustBadge> badges;
+
+  @override
+  Widget build(BuildContext context) {
+    if (badges.isEmpty) return const SizedBox.shrink();
+    final colors = context.mboaColors;
+    final l10n = I18n.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimens.spacingSm),
+      child: Row(
+        children: [
+          for (final badge in badges) ...[
+            Tooltip(
+              message: badge.label(l10n),
+              child: Container(
+                padding: const EdgeInsets.all(Dimens.spacingXs),
+                decoration: BoxDecoration(
+                  color: colors.primaryPale,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  switch (badge) {
+                    TrustBadge.trustedProvider => LucideIcons.award,
+                    TrustBadge.recertified => LucideIcons.refreshCw,
+                    TrustBadge.verifiedIdentity => LucideIcons.badgeCheck,
+                    TrustBadge.verifiedPhotos => LucideIcons.camera,
+                  },
+                  size: 14,
+                  color: colors.primaryDark,
+                ),
+              ),
+            ),
+            const SizedBox(width: Dimens.spacingXs),
+          ],
+        ],
+      ),
+    );
+  }
 }
 
 /// Icon + value, repeated — bedrooms, surface, furnished.
