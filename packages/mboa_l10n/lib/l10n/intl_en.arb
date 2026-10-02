@@ -343,6 +343,139 @@
   "@searchStaleBanner": {
     "description": "CE-M04-03 with a warm cache: online, but the search failed."
   },
+  "visitsUpcoming": "Upcoming",
+  "@visitsUpcoming": {
+    "description": "Section of upcoming visits (M07)."
+  },
+  "visitsPast": "Past",
+  "@visitsPast": {
+    "description": "Section of past visits (M07)."
+  },
+  "visitsEmptyTitle": "No visits",
+  "@visitsEmptyTitle": {
+    "description": "No visit booked yet."
+  },
+  "visitsEmptyBody": "Book a visit from any property page.",
+  "@visitsEmptyBody": {
+    "description": "No visit booked yet."
+  },
+  "visitsOffline": "Offline visits — what is coming, as last saved.",
+  "@visitsOffline": {
+    "description": "Cached upcoming visits."
+  },
+  "visitBookTitle": "Book a visit",
+  "@visitBookTitle": {
+    "description": "M07 booking sheet title."
+  },
+  "visitBookVisitor": "Who shows you around",
+  "@visitBookVisitor": {
+    "description": "Visitor picker heading."
+  },
+  "visitBookSlot": "Pick a time",
+  "@visitBookSlot": {
+    "description": "Slot picker heading."
+  },
+  "visitBookConfirm": "Confirm the visit",
+  "@visitBookConfirm": {
+    "description": "Booking CTA."
+  },
+  "visitBookFree": "Your first visit is free.",
+  "@visitBookFree": {
+    "description": "RM-M07-02 — the first visit is free in MVP."
+  },
+  "visitBookedTitle": "Visit confirmed",
+  "@visitBookedTitle": {
+    "description": "A published slot was taken."
+  },
+  "visitRequestedTitle": "Request sent",
+  "@visitRequestedTitle": {
+    "description": "RM-M15-06 — the visitor confirms by hand."
+  },
+  "visitRequestedBody": "The visitor still has to confirm this time. You will be notified.",
+  "@visitRequestedBody": {
+    "description": "RM-M15-06."
+  },
+  "visitAlreadyBooked": "You already have a visit running on this property.",
+  "@visitAlreadyBooked": {
+    "description": "RM-M07-03."
+  },
+  "visitNoSlotAvailability": "Nobody has declared hours for this property yet. Reach the provider through messages.",
+  "@visitNoSlotAvailability": {
+    "description": "CE-M07-01 AGENT_NO_AVAILABILITY."
+  },
+  "visitNoSlotBlocked": "No availability in the next 7 days.",
+  "@visitNoSlotBlocked": {
+    "description": "CE-M07-01 ALL_DAYS_BLOCKED."
+  },
+  "visitNoSlotBooked": "Every slot in the next 7 days is taken.",
+  "@visitNoSlotBooked": {
+    "description": "CE-M07-01 FULLY_BOOKED."
+  },
+  "visitVisitorAgent": "Mboa agent",
+  "@visitVisitorAgent": {
+    "description": "The visitor is an assigned agent."
+  },
+  "visitVisitorOwner": "The owner",
+  "@visitVisitorOwner": {
+    "description": "RM-M11-10 — the owner shows the property."
+  },
+  "visitVisitorRecord": "{count, plural, =0{No visits} =1{1 visit} other{{count} visits}}",
+  "@visitVisitorRecord": {
+    "description": "How many visits this visitor has completed.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visitStatusRequested": "Awaiting confirmation",
+  "@visitStatusRequested": {
+    "description": "VisitStatus.requested."
+  },
+  "visitStatusScheduled": "Confirmed",
+  "@visitStatusScheduled": {
+    "description": "VisitStatus.scheduled."
+  },
+  "visitStatusCompleted": "Done",
+  "@visitStatusCompleted": {
+    "description": "VisitStatus.completed."
+  },
+  "visitStatusCancelled": "Cancelled",
+  "@visitStatusCancelled": {
+    "description": "VisitStatus.cancelled."
+  },
+  "visitStatusNotFulfilled": "Not fulfilled",
+  "@visitStatusNotFulfilled": {
+    "description": "VisitStatus.notFulfilled."
+  },
+  "visitConfirmPresence": "I'm here",
+  "@visitConfirmPresence": {
+    "description": "RM-M07-05 — the tenant's half."
+  },
+  "visitWaitingVisitor": "You are confirmed on site. Waiting for the visitor.",
+  "@visitWaitingVisitor": {
+    "description": "RM-M07-05 — one half in."
+  },
+  "visitCancel": "Cancel the visit",
+  "@visitCancel": {
+    "description": "RM-M07-04."
+  },
+  "visitCancelTooLate": "It is too late to cancel. Reach the visitor through messages.",
+  "@visitCancelTooLate": {
+    "description": "CE-M07-03."
+  },
+  "visitRateTitle": "Rate the visitor",
+  "@visitRateTitle": {
+    "description": "RM-M07-07."
+  },
+  "visitRateBody": "Optional. This rates the visitor's service, not the property.",
+  "@visitRateBody": {
+    "description": "RM-M07-07."
+  },
+  "visitRateDone": "Thanks for your rating.",
+  "@visitRateDone": {
+    "description": "RM-M07-07 — rated."
+  },
   "searchResultCount": "{count, plural, =0{No property} =1{1 property} other{{count} properties}}",
   "@searchResultCount": {
     "description": "How many results are on screen, above the list.",

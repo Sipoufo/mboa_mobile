@@ -12,6 +12,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../../favorites/bloc/favorites_bloc.dart';
 import '../../favorites/ui/widgets/favorite_heart.dart';
 import '../../messaging/ui/contact_sheet.dart';
+import '../../visits/ui/book_visit_sheet.dart';
 import '../bloc/listing_detail_bloc.dart';
 import 'widgets/listing_bits.dart';
 
@@ -732,10 +733,11 @@ class _Actions extends StatelessWidget {
               const SizedBox(height: Dimens.spacingSm),
               Button.outline(
                 title: l10n.listingPlanVisit,
-                onPressed: () => MboaToast.info(
-                  context: context,
-                  title: l10n.commonComingSoon,
-                ),
+                // M07. `canPlanVisit` is the server's verdict that someone can
+                // actually show this place (RM-M07-01); the sheet then says
+                // who, and when.
+                onPressed: () =>
+                    showBookVisitSheet(context, annonceId: detail.id),
               ),
             ],
             // Only where it explains something: a signed-out reader whose

@@ -884,6 +884,329 @@ class I18n {
     );
   }
 
+  /// `À venir`
+  String get visitsUpcoming {
+    return Intl.message(
+      'À venir',
+      name: 'visitsUpcoming',
+      desc: 'Section of upcoming visits (M07).',
+      args: [],
+    );
+  }
+
+  /// `Passées`
+  String get visitsPast {
+    return Intl.message(
+      'Passées',
+      name: 'visitsPast',
+      desc: 'Section of past visits (M07).',
+      args: [],
+    );
+  }
+
+  /// `Aucune visite`
+  String get visitsEmptyTitle {
+    return Intl.message(
+      'Aucune visite',
+      name: 'visitsEmptyTitle',
+      desc: 'No visit booked yet.',
+      args: [],
+    );
+  }
+
+  /// `Planifiez une visite depuis la fiche d'un bien.`
+  String get visitsEmptyBody {
+    return Intl.message(
+      'Planifiez une visite depuis la fiche d\'un bien.',
+      name: 'visitsEmptyBody',
+      desc: 'No visit booked yet.',
+      args: [],
+    );
+  }
+
+  /// `Visites hors ligne — vos prochaines visites, telles qu'enregistrées.`
+  String get visitsOffline {
+    return Intl.message(
+      'Visites hors ligne — vos prochaines visites, telles qu\'enregistrées.',
+      name: 'visitsOffline',
+      desc: 'Cached upcoming visits.',
+      args: [],
+    );
+  }
+
+  /// `Planifier une visite`
+  String get visitBookTitle {
+    return Intl.message(
+      'Planifier une visite',
+      name: 'visitBookTitle',
+      desc: 'M07 booking sheet title.',
+      args: [],
+    );
+  }
+
+  /// `Qui vous fait visiter`
+  String get visitBookVisitor {
+    return Intl.message(
+      'Qui vous fait visiter',
+      name: 'visitBookVisitor',
+      desc: 'Visitor picker heading.',
+      args: [],
+    );
+  }
+
+  /// `Choisissez un créneau`
+  String get visitBookSlot {
+    return Intl.message(
+      'Choisissez un créneau',
+      name: 'visitBookSlot',
+      desc: 'Slot picker heading.',
+      args: [],
+    );
+  }
+
+  /// `Confirmer la visite`
+  String get visitBookConfirm {
+    return Intl.message(
+      'Confirmer la visite',
+      name: 'visitBookConfirm',
+      desc: 'Booking CTA.',
+      args: [],
+    );
+  }
+
+  /// `Première visite offerte.`
+  String get visitBookFree {
+    return Intl.message(
+      'Première visite offerte.',
+      name: 'visitBookFree',
+      desc: 'RM-M07-02 — the first visit is free in MVP.',
+      args: [],
+    );
+  }
+
+  /// `Visite confirmée`
+  String get visitBookedTitle {
+    return Intl.message(
+      'Visite confirmée',
+      name: 'visitBookedTitle',
+      desc: 'A published slot was taken.',
+      args: [],
+    );
+  }
+
+  /// `Demande envoyée`
+  String get visitRequestedTitle {
+    return Intl.message(
+      'Demande envoyée',
+      name: 'visitRequestedTitle',
+      desc: 'RM-M15-06 — the visitor confirms by hand.',
+      args: [],
+    );
+  }
+
+  /// `Le visiteur doit confirmer ce créneau. Vous recevrez une notification.`
+  String get visitRequestedBody {
+    return Intl.message(
+      'Le visiteur doit confirmer ce créneau. Vous recevrez une notification.',
+      name: 'visitRequestedBody',
+      desc: 'RM-M15-06.',
+      args: [],
+    );
+  }
+
+  /// `Vous avez déjà une visite en cours sur ce bien.`
+  String get visitAlreadyBooked {
+    return Intl.message(
+      'Vous avez déjà une visite en cours sur ce bien.',
+      name: 'visitAlreadyBooked',
+      desc: 'RM-M07-03.',
+      args: [],
+    );
+  }
+
+  /// `Aucun horaire n'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.`
+  String get visitNoSlotAvailability {
+    return Intl.message(
+      'Aucun horaire n\'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.',
+      name: 'visitNoSlotAvailability',
+      desc: 'CE-M07-01 AGENT_NO_AVAILABILITY.',
+      args: [],
+    );
+  }
+
+  /// `Aucune disponibilité dans les 7 prochains jours.`
+  String get visitNoSlotBlocked {
+    return Intl.message(
+      'Aucune disponibilité dans les 7 prochains jours.',
+      name: 'visitNoSlotBlocked',
+      desc: 'CE-M07-01 ALL_DAYS_BLOCKED.',
+      args: [],
+    );
+  }
+
+  /// `Tous les créneaux des 7 prochains jours sont réservés.`
+  String get visitNoSlotBooked {
+    return Intl.message(
+      'Tous les créneaux des 7 prochains jours sont réservés.',
+      name: 'visitNoSlotBooked',
+      desc: 'CE-M07-01 FULLY_BOOKED.',
+      args: [],
+    );
+  }
+
+  /// `Agent Mboa`
+  String get visitVisitorAgent {
+    return Intl.message(
+      'Agent Mboa',
+      name: 'visitVisitorAgent',
+      desc: 'The visitor is an assigned agent.',
+      args: [],
+    );
+  }
+
+  /// `Le propriétaire`
+  String get visitVisitorOwner {
+    return Intl.message(
+      'Le propriétaire',
+      name: 'visitVisitorOwner',
+      desc: 'RM-M11-10 — the owner shows the property.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Aucune visite} =1{1 visite} other{{count} visites}}`
+  String visitVisitorRecord(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucune visite',
+      one: '1 visite',
+      other: '$count visites',
+      name: 'visitVisitorRecord',
+      desc: 'How many visits this visitor has completed.',
+      args: [count],
+    );
+  }
+
+  /// `En attente de confirmation`
+  String get visitStatusRequested {
+    return Intl.message(
+      'En attente de confirmation',
+      name: 'visitStatusRequested',
+      desc: 'VisitStatus.requested.',
+      args: [],
+    );
+  }
+
+  /// `Confirmée`
+  String get visitStatusScheduled {
+    return Intl.message(
+      'Confirmée',
+      name: 'visitStatusScheduled',
+      desc: 'VisitStatus.scheduled.',
+      args: [],
+    );
+  }
+
+  /// `Effectuée`
+  String get visitStatusCompleted {
+    return Intl.message(
+      'Effectuée',
+      name: 'visitStatusCompleted',
+      desc: 'VisitStatus.completed.',
+      args: [],
+    );
+  }
+
+  /// `Annulée`
+  String get visitStatusCancelled {
+    return Intl.message(
+      'Annulée',
+      name: 'visitStatusCancelled',
+      desc: 'VisitStatus.cancelled.',
+      args: [],
+    );
+  }
+
+  /// `Non honorée`
+  String get visitStatusNotFulfilled {
+    return Intl.message(
+      'Non honorée',
+      name: 'visitStatusNotFulfilled',
+      desc: 'VisitStatus.notFulfilled.',
+      args: [],
+    );
+  }
+
+  /// `Je suis sur place`
+  String get visitConfirmPresence {
+    return Intl.message(
+      'Je suis sur place',
+      name: 'visitConfirmPresence',
+      desc: 'RM-M07-05 — the tenant\'s half.',
+      args: [],
+    );
+  }
+
+  /// `Votre présence est confirmée. En attente du visiteur.`
+  String get visitWaitingVisitor {
+    return Intl.message(
+      'Votre présence est confirmée. En attente du visiteur.',
+      name: 'visitWaitingVisitor',
+      desc: 'RM-M07-05 — one half in.',
+      args: [],
+    );
+  }
+
+  /// `Annuler la visite`
+  String get visitCancel {
+    return Intl.message(
+      'Annuler la visite',
+      name: 'visitCancel',
+      desc: 'RM-M07-04.',
+      args: [],
+    );
+  }
+
+  /// `L'annulation n'est plus possible. Contactez le visiteur par message.`
+  String get visitCancelTooLate {
+    return Intl.message(
+      'L\'annulation n\'est plus possible. Contactez le visiteur par message.',
+      name: 'visitCancelTooLate',
+      desc: 'CE-M07-03.',
+      args: [],
+    );
+  }
+
+  /// `Noter le visiteur`
+  String get visitRateTitle {
+    return Intl.message(
+      'Noter le visiteur',
+      name: 'visitRateTitle',
+      desc: 'RM-M07-07.',
+      args: [],
+    );
+  }
+
+  /// `Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.`
+  String get visitRateBody {
+    return Intl.message(
+      'Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.',
+      name: 'visitRateBody',
+      desc: 'RM-M07-07.',
+      args: [],
+    );
+  }
+
+  /// `Merci pour votre note.`
+  String get visitRateDone {
+    return Intl.message(
+      'Merci pour votre note.',
+      name: 'visitRateDone',
+      desc: 'RM-M07-07 — rated.',
+      args: [],
+    );
+  }
+
   /// `{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}`
   String searchResultCount(int count) {
     return Intl.plural(

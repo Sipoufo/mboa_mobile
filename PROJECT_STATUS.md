@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**651 tests green, analyze clean.** `mboa_user` 92 · `mboa_pro` 432 ·
+**685 tests green, analyze clean.** `mboa_user` 126 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -69,6 +69,26 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### M07 — the tenant books, and the server arbitrates
+The app never decides that a visit happened. RM-M07-05 needs both parties to
+confirm on the spot, so "I'm here" reports the tenant's half and the **list is
+re-read**: whether that completed the visit is the server's call, and patching
+the row from the response would be the app deciding.
+
+`VisitRules` holds the clock rules as pure functions rather than getters on
+`Visit`, because the same visit obeys two clocks — the tenant may cancel up to
+four hours before, the visitor up to one (RM-M07-04 / RM-M16-04) — and `Visit`
+is shared by both apps. They exist so the screen never offers a button the
+server is going to refuse.
+
+A visitor with no published time is "nothing free" whatever their mode:
+`BookVisiteRequest` requires `startsAt`, so there is nothing to send. CE-M07-01
+means the screen says *which* kind of nothing — usually that nobody has
+declared their hours, which the prestataire can act on.
+
+**Untested against the API:** no seeded listing has `canPlanVisit`, so the
+whole module is covered by tests only (§19 of docs/backend-requests.md).
 
 ### "Offline" is a diagnosis, not a catch block
 A search that fails falls back to the Hive cache (CE-M04-02). It used to

@@ -1176,3 +1176,1014 @@ Live: the profile fetched unauthenticated with 12 visits and 4.75★ from 4
 ratings, no contact details in the payload, 404 on an unknown id; the candidate
 list carrying the rating; and the photo key on both a single assignment and a
 grouped residence batch. 561 unit tests pass.
+
+---
+
+# 2026-08-14 — a listing holds a pool of agents (RM-M11-01, revised)
+
+**Behaviour change, no shape change.** Following the CDC revision of 2026-08-13.
+
+A listing used to hold **one** live agent — enforced by a database constraint,
+which is why offering it to a second one failed. It now holds as many as the
+owner accepts.
+
+## What changes
+
+- **Offering** the same listing to several agents succeeds. Only offering it
+  twice to the *same* agent is refused (`409 AGENT_ALREADY_ASSIGNED`, message
+  reworded to "This agent already holds this listing").
+- **Accepting an application no longer declines the others** (RM-M11-07). The
+  owner may accept two, three, all of them.
+- **Applying** to a listing that already has agents is allowed — it stays in
+  `/opportunities` for other agents.
+- **Residence batches** offer every unit, including those another agent covers.
+  `skipped` now means only "this same agent already holds it".
+- **Withdrawal, resignation and the suspension sweep** touch one agent's rows
+  and leave the rest of the pool alone (RM-M11-06).
+- **`canPlanVisit`** is unchanged in meaning and now honest with a pool: it stays
+  true while *at least one* bookable agent remains, and goes false when the last
+  one leaves (RM-M11-05). Verified with three agents.
+
+## What has not changed yet
+
+**Booking still resolves a single agent.** `/visites/slots?annonceId=` and
+`POST /visites` pick one accepted agent rather than letting the client choose
+their visitor. That is the M07 rework — the next slice — and it is where the
+response shapes will break (a slot list per visitor, a visitor id on booking).
+Until then a pooled listing books with whichever agent the query returns first.
+
+Flagging it rather than leaving you to find it.
+
+## Verification
+
+Live: three agents accepted on one listing (two offered, one self-applied and
+accepted while the other two held it); the same agent refused twice; the owner's
+cross-listing view showing all three; one resignation leaving the other two
+untouched; and `canPlanVisit` staying true through the first two resignations and
+going false only on the last. 562 unit tests pass.
+
+---
+
+# 2026-08-14 — the client chooses their visitor (M07 rework, part 1)
+
+Second slice of the 2026-08-13 CDC revision. **Three breaking changes**, all on
+visit endpoints, which you confirmed are not wired.
+
+## 1. ⚠️ `GET /visites/slots` returns a list of visitors
+
+A listing can now be shown by several agents *and* by the owner (RM-M07-01,
+RM-M11-10), so the answer is one entry per visitor rather than one merged list:
+
+```json
+[ { "visitorAccountId": "…", "visitorKind": "AGENT",
+    "displayName": "Awa N", "photoObjectKey": "awa.jpg",
+    "completedVisitCount": 12, "averageRating": 4.75, "ratingCount": 4,
+    "mode": "SLOTS", "slots": [ … ], "reason": null },
+  { "visitorAccountId": "…", "visitorKind": "AGENT", "displayName": "Bilo N",
+    "mode": "SLOTS", "slots": [], "reason": "AGENT_NO_AVAILABILITY" },
+  { "visitorAccountId": "…", "visitorKind": "OWNER",
+    "displayName": "Agence Mboa", "photoObjectKey": "logo.jpg",
+    "mode": "ON_REQUEST", "slots": [], "reason": null } ]
+```
+
+- **`mode`** is the field to branch on. `SLOTS` — pick one of theirs. `ON_REQUEST`
+  — the owner publishes no availability (RM-M15-06); the client proposes a time.
+- A visitor with **no** times still appears, carrying `reason`. The client learns
+  *this agent has set no hours* instead of watching them vanish.
+- An owner carries no `completedVisitCount` / `averageRating` (null): they are not
+  rated as an agent. Their reputation is the listing's (→ M27).
+- `409 NO_AGENT_ASSIGNED` / `AGENT_NOT_CONFIRMED` still answer an empty pool, with
+  the same meanings as before.
+
+## 2. ⚠️ `POST /visites` takes `visitorAccountId`
+
+```json
+{ "annonceId": "…", "visitorAccountId": "…", "startsAt": "2026-08-16T10:00:00Z" }
+```
+
+- With an **agent** → `SCHEDULED`, and `startsAt` must be one of their times.
+- With an **owner** → `REQUESTED`, awaiting their answer. The time is a proposal.
+- `400 VISITOR_NOT_AVAILABLE` if that visitor does not show this listing.
+
+**New status `REQUESTED`.** It is *live*: it holds the slot and counts for
+RM-M07-03, so a client cannot stack requests on one bien.
+
+## 3. ⚠️ `VisiteResponse`: `agentAccountId` → `visitorAccountId` + `visitorKind`
+
+The visitor may be the owner, and a field called "agent" holding a prestataire's
+id is a lie every later reader inherits.
+
+## New: the owner's side
+
+| Endpoint | `operationId` |
+|---|---|
+| `GET /prestataires/me/visites?status=&from=&to=` | `listMyOwnerVisites` |
+| `POST /prestataires/me/visites/{id}/confirm` | `confirmVisiteRequest` |
+| `POST /prestataires/me/visites/{id}/decline` | `declineVisiteRequest` |
+
+A decline cancels the visit; the client may propose another time. Answering twice
+is `409 VISIT_NOT_REQUESTED`.
+
+**`PATCH /annonces/{id}` gains `ownerVisitsEnabled`**, per listing (RM-M11-10) —
+an owner may show one property themselves and leave another to their agents. It
+is on `AnnonceResponse` too, and `canPlanVisit` now counts the owner as a
+bookable visitor.
+
+## Still to come (slice 2b)
+
+Mutual on-site confirmation (RM-M07-05), the ±30 min no-show sweep, and the
+removal of the agent-written report — which M07bis replaces with the client's.
+
+## Verification
+
+Live: a listing with two agents and owner visits on → **three** entries, one with
+133 slots, one empty carrying `AGENT_NO_AVAILABILITY`, one `ON_REQUEST`; booking
+the specific agent chosen and the row recording *that* agent; a request to the
+owner creating `REQUESTED`, appearing in their list, refusing a second one from
+the same client, confirming to `SCHEDULED`, and refusing to be answered twice.
+572 unit tests pass.
+
+---
+
+# 2026-08-14 — a visit is done when both sides say so (M07 rework, part 2)
+
+## 1. "Start" becomes a confirmation, from both sides
+
+| Endpoint | `operationId` | Who |
+|---|---|---|
+| `POST /visites/{id}/visitor-confirmation` | `confirmVisitorPresence` | the visitor — body `{latitude, longitude, overrideReason?}`, 500 m rule unchanged |
+| `POST /visites/{id}/client-confirmation` | `confirmClientPresence` | the client — no geolocation asked |
+
+Order does not matter; **whichever arrives second completes the visit** (CA-M16-02).
+`POST /agents/me/visites/{id}/start` is **gone** — same logic, honest name, and it
+works for an owner-visitor too.
+
+`VisiteResponse` renames: `startedAt` → `visitorConfirmedAt`, plus
+`clientConfirmedAt`.
+
+## 2. New status `NOT_FULFILLED`, and the closure sweep
+
+Every ten minutes:
+
+- visitor confirmed, client silent, slot elapsed → **`COMPLETED`** with
+  `clientConfirmedAt: null`. Nobody is penalised for a client who left early.
+  **No report may be written on such a visit** (RM-M07bis-01 needs both), so treat
+  that null as load-bearing.
+- nobody confirmed within **30 minutes** of the slot → **`NOT_FULFILLED`**, admins
+  alerted (N-17). A client confirming alone changes nothing.
+
+**An agent is put under review only on the third unfulfilled visit in 30 rolling
+days**, never the first — a late client or a dead phone should not suspend
+someone's work. An owner is never demoted for not showing their own bien.
+
+## 3. ⚠️ The agent-written report is removed
+
+`submitVisiteReport` and `getVisiteReport` are gone, and their tables dropped. The
+agent no longer writes the report; **the client does**, and M07bis rebuilds it
+with a different shape (rating 1–5, free lists of good and bad points, up to ten
+photos, visitor replies underneath, public on the fiche). Migrating one into the
+other would have been pretending they are the same document.
+
+**Between this release and M07bis there is no visit report at all.** That is what
+the revised CDC says should be true, but it is worth knowing.
+
+`completedVisitCount` now increments on **completion** rather than on filing a
+report, and only for an agent visitor. `rateVisiteAgent` answers
+`409 NOT_AN_AGENT_VISIT` on a visit the owner carried out.
+
+## Verification
+
+Live: both sides confirming and the visit completing with the agent's count going
+to 1; a visitor-only confirmation closed by the sweep as `COMPLETED` with the
+client silent; and three no-shows in a row leaving the agent `ACTIVE`, `ACTIVE`,
+then `PENDING` — with N-17 on the wire to a listening admin. 579 unit tests pass.
+
+---
+
+# 2026-08-14 — M07bis: the client reviews the property
+
+The evaluation has changed hands. The agent's professional report is gone (last
+release); the person who was shown round now writes what they thought, it is
+public on the fiche, and the visitor answers underneath.
+
+## Writing one
+
+`POST /visites/{id}/review` — `submitVisiteReview`
+
+```json
+{ "rating": 4,                       // 1–5, the ONLY required field
+  "perceivedCondition": 3,           // 1–5, optional
+  "comment": "Bel appartement, quartier bruyant.",
+  "pros": ["Lumineux", "Proche du marché"],
+  "cons": ["Bruit la nuit"],
+  "photoKeys": ["avis/1.jpg"] }      // 0–10
+```
+
+Only the rating is compulsory. The old report demanded three photos and a
+conformity verdict because it was professional work; this is asked of an ordinary
+person, and asking too much is how you get nothing.
+
+- Needs a visit **both parties confirmed** — `409 VISIT_NOT_CONFIRMED` otherwise.
+  A visit the sweep closed on the visitor's word alone cannot be reviewed.
+- One per visit, **locked on publication** (`409 REVIEW_ALREADY_SUBMITTED`). There
+  is no edit endpoint and there will not be one (RM-M07bis-03).
+
+## Answering one
+
+`POST /visites/{id}/review/comments` — `commentVisiteReview`, visitor only
+(`403 NOT_THE_VISITOR`). Several allowed. They add beside the review; nothing can
+reach the rating or the text.
+
+## Reading them
+
+- `GET /search/annonces/{id}/reviews` — `listAnnonceReviews`, **public**, paged.
+- `GET /visites/{id}/review` — one review, with its replies.
+- `GET /visites/{id}/review/pdf` — `exportVisiteReviewPdf`, printable, and the
+  page says on its face that it carries no contractual value.
+
+## The fiche gains a note (RM-M05-08 + RG-06)
+
+`AnnonceDetailResponse.rating`:
+
+```json
+{ "average": 4.5, "reviewCount": 2, "visitCount": 2, "residentCount": 0 }
+```
+
+**null when there are no reviews** — never `0/5`, which would be a claim about
+the property rather than an absence of opinions.
+
+RG-06 is implemented in full: a resident review counts **three times** a visit
+review. `residentCount` stays 0 until M27 ships resident reviews; the formula is
+already right, only its inputs are half.
+
+## `authorName` may be null
+
+A review **survives its author** (RM-M07bis-08). When someone deletes their
+account the name goes and the review stays — it describes the property, and
+deleting it would move that property's note every time somebody left. Render a
+null author as "Utilisateur supprimé" or similar.
+
+## N-18
+
+One nudge, a day after a mutually confirmed visit with no review yet. Opt-outable
+and sent once.
+
+## Verification
+
+Live: a review published and locked; the agent's reply leaving rating and text
+untouched; the client refused a reply to their own review; the review public
+without auth and the note reading 4.0, then 4.5 after a second; the PDF
+downloading; and — the case the schema was designed around — the author deleting
+her account, her visit purged with it, and **her review still on the fiche,
+anonymised, with the note unchanged**. 593 unit tests pass.
+
+---
+
+# 2026-08-14 — M08 Contrat Mboa (slice 4a: the contract and its signatures)
+
+The lease is now a real object with a real state machine. The PDF (RM-M08-04's
+document, R2 storage, the public verification page) is slice 4b — everything
+below is live today.
+
+## The flow
+
+```
+[Prestataire] POST /contracts                    → DRAFT   (silent; the tenant sees nothing)
+              POST /contracts/{id}/send          → SENT    (N-07 to the tenant)
+[User]        POST /contracts/{id}/changes       → CHANGES_REQUESTED  (comment kept, N19)
+[Prestataire] PATCH /contracts/{id}, send again  → SENT
+[User]        POST /contracts/{id}/accept        → ACCEPTED (N19; signing opens for both)
+[both]        POST /contracts/{id}/sign          → the second one locks it → SIGNED (N-08)
+[either]      DELETE /contracts/{id}             → CANCELLED (refused once SIGNED)
+```
+
+`GET /contracts` returns both sides — you are landlord on one and tenant on
+another, and one list shows both. `?status=` filters.
+
+## Three things worth wiring carefully
+
+**A DRAFT does not exist for the tenant.** They are named on it, but until it is
+sent, `GET /contracts/{id}` answers **404** and the list omits it. Do not build a
+screen expecting to poll a draft into existence.
+
+**`exactAddress` is absent until SIGNED** (CA-M08-02) — and absent means the key
+is not in the JSON at all, since null fields are omitted. It appears in the
+response to the *second* signature and in every read afterwards. This is the
+first and only place the tenant learns the address.
+
+**`canSign`** is computed for the caller: true only when the contract is ACCEPTED
+and that caller has not signed yet. `signatures[].current` says whether a
+signature still covers the terms as they stand — it can only go false if terms
+change under a signature, which the status machine currently prevents, but the
+field is there rather than assumed.
+
+## The signature
+
+`POST /contracts/{id}/sign` takes an optional `{"sessionId": "..."}` — your
+identifier for the PIN/biometric confirmation. The IP and User-Agent are read
+from the request. What is stored is an HMAC over (contract, terms, signer,
+instant) under a server key, so a row inserted or edited straight in the database
+does not verify. It is **not** a qualified electronic signature: it is a
+tamper-evident record with an audit trail, which is what Doc 10's "substitut
+légal partiel" describes. Never present it in the UI as legally equivalent to a
+notarised act.
+
+RM-M08-02 gates **both** parties on either signature: the prestataire's KYC must
+be approved and the tenant's profile complete, or neither can sign
+(`OWNER_NOT_VERIFIED` / `TENANT_PROFILE_INCOMPLETE`, both 403).
+
+## Naming the tenant
+
+`tenantAccountId` **or** `tenantPhone` (E.164), not both. A phone with no Mboa
+account answers `TENANT_HAS_NO_ACCOUNT` (404) — CE-M08-01's SMS invitation is
+not built yet, so the prestataire is told plainly rather than left with a
+contract addressed to nobody.
+
+## Duration follows the period (RM-M10-09)
+
+`durationUnits` is counted in the contract's own `rentalPeriod`: 3 DAY, 2 WEEK,
+12 MONTH. `endDate` is derived and returned. A daily let cannot state its
+duration in months, which is the point.
+
+## New: `PushTarget.CONTRACT`, `NotificationType.N19`
+
+`CONTRACT` is **appended** to PushTarget (`entityId` = contract id, deep link
+`mboa://contracts/{id}`). Older clients will see a `type` they do not know and
+must fall back to opening the app. N19 is the middle of the negotiation —
+changes requested, terms accepted, contract cancelled — and is mandatory: every
+one of them is the other party waiting on you.
+
+## The contract outlives everything (RM-M08-05)
+
+Deliberate, and the one place personal data is **not** erased. A contract is kept
+five years (OHADA + RGPD), is not anonymised, and survives:
+
+- **the tenant deleting their account** — the lease still names them;
+- **the prestataire deleting their account**, which purges their listings;
+- **the listing being deleted or archived.**
+
+It works because the contract keeps its **own copy** of the property (title,
+city, district, exact address) exactly as it keeps its own copy of the price.
+Nothing in a contract response is read from the live listing, so nothing shifts
+under it. A listing can still not be deleted while a contract is being
+*negotiated* on it (`ANNONCE_IN_USE`, 409) — archive it instead.
+
+## Verification
+
+Live, end to end: the draft invisible to its tenant, the address withheld through
+SENT / CHANGES_REQUESTED / ACCEPTED and revealed on the second signature, a
+change request returned with its comment and answered by an amendment, a
+signature refused while the owner's KYC was pending and accepted after an admin
+approved it, a double signature refused, the locked contract refusing both PATCH
+and DELETE, the listing deletion refused during negotiation and allowed after
+signature — and then **both parties deleting their accounts with the contract,
+its address and both signature rows still intact**. 613 unit tests pass.
+
+---
+
+# 2026-08-14 — M08 slice 4b: the contract becomes a document
+
+The PDF, its verification, the admin archive, and the SMS invitation. M08 is now
+complete.
+
+## The PDF
+
+Produced once, right after the second signature (CA-M08-01 allows 30 seconds;
+in practice it is under two), stored on R2, and **never re-rendered** — a
+download serves the stored bytes, so nothing in a signed contract can drift
+because a profile was edited or a listing deleted afterwards.
+
+`GET /contracts/{id}/pdf` → `{ "downloadUrl": "…" }`, a short-lived pre-signed
+URL, exactly like `getPaymentReceipt`. Both parties only; a stranger gets 404.
+
+Three states the app has to tell apart:
+
+| Answer | Meaning | What to show |
+|---|---|---|
+| `200` + url | ready | the document |
+| `409 PDF_NOT_READY` | signed, still being produced | "préparation en cours", offer to look again |
+| `409 CONTRACT_NOT_SIGNED` | not signed yet | nothing — there is no document to want |
+
+`PDF_NOT_READY` is not a failure. Retries continue in the background, and an
+admin can force one; polling every few seconds for a minute is the right client
+behaviour.
+
+Content follows Doc 10's "Contenu du Contrat Mboa": both identities with their
+CNI/RCCM, the property **with its full address**, the financial terms with the
+periodicity, the duration in the contract's own units, six standard OHADA
+clauses, and both signatures with their timestamps and session identifiers.
+Signatures are on their own page. Missing identity fields print "Non renseigné"
+rather than blocking a signature.
+
+## New profile field: `registrationNumber`
+
+`PATCH /prestataires/me` accepts `registrationNumber` (max 50) — CNI for an
+individual, RCCM for a company — and `GET` returns it. Doc 10 puts it in the
+contract's identity section and there was nowhere to keep it. Optional, but a
+contract that prints "Non renseigné" where the landlord's RCCM should be does
+not look like much of a lease: worth prompting for in the profile screen.
+
+The user side already had `cniNumber` on `PATCH /users/me`; it now appears on
+the contract too.
+
+## Verifying a printed contract — public
+
+```
+GET /api/v1/contracts/verify/{id}?code=…        (no auth)
+→ { "contractId": "…", "signed": true, "signedAt": "…", "city": "Douala", "district": "Akwa" }
+```
+
+The id and code are both printed in the document's footer. The answer is
+deliberately thin — **no names, no address, no terms**. Whoever holds the PDF can
+read all of that on it; the endpoint confirms the paper, it does not republish
+its contents to anyone who asks.
+
+A wrong code, an unsigned contract and an unknown id all return the same
+`404 CONTRACT_NOT_VERIFIED`, so the endpoint can never be used to discover
+whether an id names a real lease.
+
+The code is a server MAC over the contract and its signatures, 32 hex characters
+(readable off a printed page). It deliberately does **not** cover the file's own
+bytes — it is printed among them. The byte-level proof is a stored SHA-256 of
+the PDF, used to settle "is this file the one you produced?" if a specific
+document is ever disputed.
+
+## CE-M08-01 — a tenant with no account
+
+`POST /contracts` with a `tenantPhone` that has no Mboa account now **sends them
+an SMS invitation** and returns `404 TENANT_HAS_NO_ACCOUNT` with a message
+saying so. The contract is not created and there is no pending state to poll:
+the prestataire draws it up once the invitation has been taken up. Surface the
+message as information, not as a failure.
+
+## CE-M08-02 — when the document cannot be produced
+
+Three attempts, counted in the database so they survive a restart, then every
+admin gets **N-20** (mandatory, `PushTarget.CONTRACT`). An admin can force a
+retry once the cause is fixed — `POST /api/v1/admin/contracts/{id}/pdf`, 202 —
+which clears the alarm. Without that remedy the alert would only ever announce a
+dead end.
+
+## Admin archive
+
+`GET /api/v1/admin/contracts` (paged, `?status=`), `/{id}`, `/{id}/pdf`.
+Read-only and staying that way: CA-M08-03 says a locked contract cannot be
+modified even by an admin, so no write path exists to be relaxed later.
+
+## New: `NotificationType.N20`
+
+Admin-only, mandatory, routed as `PushTarget.CONTRACT` with the contract id.
+Nothing changes for the mobile apps beyond the admin console.
+
+## Verification
+
+Live, against a real S3-compatible store: a contract signed and its PDF on
+storage within two seconds; the served bytes' SHA-256 matching the stored digest
+exactly; the printed verification code accepted by the public endpoint without
+auth and a wrong code refused; the download refused to a stranger; the invitation
+SMS sent for an unknown number; and the whole failure path — storage stopped,
+three attempts, the N-20 push with the right routing payload, storage restored,
+the admin retry producing the document and clearing the alarm. Then both parties
+deleted their accounts and all six contracts, with their addresses and
+signatures, were still there. 628 unit tests pass.
+
+---
+
+# 2026-08-15 — M27 Avis Résident, and the property's real note
+
+RG-06 shipped with M07bis weighing a resident's opinion three times a visitor's,
+and with nothing to weigh: the resident half was stubbed at zero. It is filled
+in now, so **every property note on every fiche can move**.
+
+## Writing one
+
+```
+POST   /api/v1/contracts/{id}/review          → publish   (tenant)
+PUT    /api/v1/contracts/{id}/review          → revise    (tenant, while the window is open)
+GET    /api/v1/contracts/{id}/review          → read      (either party)
+POST   /api/v1/contracts/{id}/review/reply    → answer    (landlord, once)
+```
+
+Hung off the **contract**, not the listing: the contract is the entitlement
+(RM-M27-01) and the unit of "one review each" (RM-M27-02), so a tenant who rents
+the same flat twice writes two reviews and nothing has to disambiguate them
+(RM-M27-04).
+
+Body: `rating` (1–5, the only required field), `comment`, `pros`, `cons`. No
+photos and no "perceived condition" — a resident is describing a year of living
+somewhere, not inspecting it.
+
+## Who may write one — and how the app knows (CA-M27-02)
+
+`ContractResponse` gains **`residentReviewEligible`**: true when the caller is
+that contract's tenant, it is SIGNED, and it ran for at least a month. Show the
+"avis résident" option on that alone; if `GET …/review` then returns a review,
+switch to "modifier".
+
+Whole months are counted from the dates, so 30 nightly lets and one month are
+the same thing. A 3-day let answers `409 TENANCY_TOO_SHORT` and should be
+steered to a visit review instead — it would otherwise weigh triple an
+afternoon's visit.
+
+## The editing window (RM-M27-02)
+
+Open while the tenancy runs, and for 30 days after it ends. **Each edit restarts
+those 30 days.** After that, `409 REVIEW_LOCKED`. The landlord can never edit it
+(403), and their reply changes nothing about it — a right of reply is not a
+right of veto.
+
+## The fiche's review list is now a union — please read
+
+`GET /search/annonces/{id}/reviews` keeps its path and `operationId`, and now
+returns **both kinds** in one list, newest first, with a `type` discriminator:
+
+```json
+{ "type": "RESIDENT", "rating": 4, "residenceMonths": 12, "editedAt": "…",
+  "replies": [ { "authorName": "Agence Douala", "body": "…" } ] }
+{ "type": "VISIT",    "rating": 3, "perceivedCondition": 4, "photoKeys": ["…"],
+  "replies": [ … ] }
+```
+
+Changes from the M07bis shape: `comments` is now **`replies`** (the same
+structure — the visitor's answers on a visit review, the landlord's single
+answer on a resident one), and `type` / `residenceMonths` / `editedAt` are new.
+`perceivedCondition` and `photoKeys` appear on VISIT items only. Add
+`?type=VISIT` or `?type=RESIDENT` to show one kind.
+
+The single-review endpoints under `/visites/{id}/review` are unchanged.
+
+## The note itself
+
+`rating` on the fiche is unchanged in shape and now really weighted:
+
+```
+(Σ resident × 3 + Σ visit × 1) / (n resident × 3 + n visit × 1)
+```
+
+`residentCount` finally moves off zero. It recomputes on publication, on an
+edit, and on a moderation removal, in the same transaction (CA-M27-01) — there
+is no sweep to wait for.
+
+## Reporting a review (RM-M27-06)
+
+`ReportTargetType` gains **`REVIEW`**. Any signed-in user may report a review of
+either kind through the existing `POST /signalements`. **One upheld report
+removes it** — a listing takes three, because a listing is somebody's
+livelihood; a sentence an admin has just read and ruled on is not. A removed
+review leaves the feed and the note immediately, and can no longer be reported
+(`404`). The row is kept so the decision stays auditable.
+
+## Verification
+
+Live, with RG-06 checked by hand at every step: a 12-month tenancy reviewed 5 →
+5.0; with a visit review of 3 → (5×3+3)/4 = 4.5; revised to 2 → 2.25; a second
+tenancy on the same property rated 4 → ((2+4)×3+3)/7 = 3.0; the 2 removed by an
+upheld report → (4×3+3)/4 = 3.75. A 3-day let refused. A second review on the
+same contract refused. The landlord's reply accepted once and refused twice, and
+unable to touch the review. Then the author deleted her account and both reviews
+stayed, anonymised, with the note unmoved.
+
+---
+
+# 2026-08-15 — a reviewed listing cannot be deleted
+
+`DELETE /api/v1/annonces/{id}` (and the residence equivalent) now answers
+`409 ANNONCE_IN_USE` when the listing carries any review, of either kind:
+
+> This listing has been reviewed by visitors or tenants. Archive it instead of
+> deleting it — the reviews belong to the property.
+
+Deleting was a way to erase what people had said and come back with a clean
+note. Archiving does everything an owner legitimately wants — the listing leaves
+search — without destroying anything, so offer that in the UI when this comes
+back.
+
+Reviews removed by moderation still hold the listing: they are kept so the
+ruling stays auditable, and deleting the listing would take that record too.
+
+The same code (`ANNONCE_IN_USE`) already covered "a contract is under
+negotiation on it"; the message distinguishes them.
+
+---
+
+# 2026-08-16 — three fixes from testing: confirmations, ratings, the review PDF
+
+## 1. You can now see who confirmed a visit
+
+`VisiteResponse` gains **`visitorConfirmedAt`** and **`clientConfirmedAt`**
+(additive). A visit completes when both are set (RM-M07-05), so one present and
+the other null is exactly "waiting on the other side" — render it that way.
+
+`AgentVisiteDetail` was still describing the world before the mutual-confirmation
+rework, so three fields changed. **Breaking, but they were lying:**
+
+| Was | Now |
+|---|---|
+| `startedAt` | `visitorConfirmedAt` |
+| `canStart` | `canConfirm` |
+| `reportSubmitted` | *removed* — it was hardcoded `false` since the agent report became the client's review (M07bis) |
+
+It also gains `clientConfirmedAt`, so the visitor knows whether the visit is
+still waiting on the client.
+
+## 2. `/rating` and `/review` are different things — and now one call
+
+They are not duplicates:
+
+| | `POST /visites/{id}/rating` | `POST /visites/{id}/review` |
+|---|---|---|
+| Rates | the **agent's service** (RM-M07-07) | the **property** (M07bis) |
+| Feeds | that agent's profile average | the property's note, weight 1 (RG-06) |
+| Needs | the visit COMPLETED | both parties confirmed (CE-M07bis-01) |
+| Owner-led visit | refused (`NOT_AN_AGENT_VISIT`) | allowed |
+| Public | no | yes, on the fiche |
+
+The preconditions genuinely differ: a visit the sweep closed on the visitor's
+evidence alone can be rated but not reviewed.
+
+**What changed:** `SubmitReviewRequest` accepts an optional **`agentRating`**
+(1–5), so the post-visit screen is one call. If the visit was owner-led, or the
+client already rated it from the standalone route, the field is ignored without
+error — the review is what they came to do, and it should not fail because a
+side-effect had already happened. `/rating` stays for rating without reviewing,
+and for visits that cannot be reviewed at all.
+
+## 3. The review PDF now wears the charte
+
+`GET /visites/{id}/review/pdf` was plain black Helvetica; the receipt and the
+contract had the Vert Forêt band, warm-neutral tables and grey captions. It now
+matches them — verified by pulling the fill colours out of the generated file
+(`0x1A5C45`, `0xF9F7F4`, `0x6B7280`).
+
+The brand furniture moved into one shared helper that all three PDFs use, so
+they cannot drift apart again, and the "aucune valeur contractuelle" line stays
+on the review — the more so now that it looks official.
+
+## Verification
+
+Live, end to end: a visit booked with an agent, the visitor confirming and then
+the client, with the two timestamps filling in one at a time and the status
+flipping to COMPLETED only on the second; the agent's sheet showing both; a
+review posted with `agentRating: 5` recording the agent's average as 5.0 and the
+standalone route then answering `ALREADY_RATED`; and the PDF downloaded and
+checked for the brand colours. 661 unit tests pass.
+
+---
+
+# 2026-08-19 — M08: the negotiation was a dead end. It isn't now.
+
+Three problems, all around "Modifications demandées".
+
+## The dead end (the one that blocked you)
+
+A contract in `CHANGES_REQUESTED` could not be accepted by the tenant (`accept`
+required `SENT`), could not be signed by anyone, and the only way out was a
+second `POST /contracts/{id}/send` that nothing in the API mentioned. The error
+you hit — *"The terms must be accepted by the tenant before anyone can sign"* —
+was true and useless, because the tenant was unable to.
+
+**Two ways out now, both natural:**
+
+- **`PATCH /contracts/{id}` on a contested contract sends it straight back to the
+  tenant.** Amending *is* answering; the status returns to `SENT` and the tenant
+  is notified. No second call.
+- **The tenant can accept directly from `CHANGES_REQUESTED`** — withdrawing your
+  own objection shouldn't need the other side to act first. Anything still open
+  is closed as withdrawn, so a signed lease never carries an unanswered
+  objection.
+
+## `awaiting` — read this instead of guessing
+
+`ContractResponse` gains **`awaiting`**: `PRESTATAIRE` · `TENANT` · `BOTH` ·
+`NOBODY`. It accounts for the case `status` can't express — `ACCEPTED` with one
+signature already in is waiting on the *other* party, not on both.
+
+| status | awaiting |
+|---|---|
+| `DRAFT` | `PRESTATAIRE` (send it) |
+| `SENT` | `TENANT` (accept or object) |
+| `CHANGES_REQUESTED` | `PRESTATAIRE` (amend or answer) |
+| `ACCEPTED`, nobody signed | `BOTH` |
+| `ACCEPTED`, one signature | the other party |
+| `SIGNED`, `CANCELLED` | `NOBODY` |
+
+Drive the buttons off this. The error messages were also rewritten to name the
+party being waited on.
+
+## Objecting to a specific term
+
+`POST /contracts/{id}/changes` now takes **`contestedTerms`** alongside the
+comment — any of `PRICE`, `RENTAL_PERIOD`, `DEPOSIT_AMOUNT`, `CHARGES_INCLUDED`,
+`START_DATE`, `DURATION_UNITS`, `TACIT_RENEWAL`. Highlight exactly those on the
+prestataire's screen; everything else reads as agreed. The list is optional — an
+objection naming no term is still valid.
+
+## Editing, withdrawing, answering
+
+- `PUT /contracts/{id}/changes/{changeId}` — the tenant corrects their own
+  objection **while it is still pending**.
+- `DELETE /contracts/{id}/changes/{changeId}` — they take it back. The row stays,
+  marked `withdrawnAt`; withdrawing the last open one returns the contract to
+  `SENT`.
+- `POST /contracts/{id}/changes/{changeId}/response` — **the prestataire answers
+  one objection**, whether or not they amend. "La caution reste à 300 000" is a
+  legitimate reply and now lives beside the objection. Answering the last open
+  one hands the contract back to the tenant.
+
+Once answered or withdrawn, a change request locks (`409 CHANGE_ALREADY_CLOSED`).
+Both parties rely on this history if they later disagree, and one either side can
+rewrite is worth nothing.
+
+Each entry now carries `contestedTerms`, `response`, `respondedAt`,
+`withdrawnAt` and `pending`.
+
+## Verification
+
+Live, following your exact sequence: tenant contests two terms, corrects the
+objection to one, prestataire refuses in writing → back to `SENT`; tenant objects
+again, prestataire **amends** → straight back to `SENT` with the history showing
+both rounds closed; tenant accepts → `ACCEPTED`, `awaiting: BOTH`, signable.
+Then the other route: objecting, trying to sign (now told the tenant asked for
+changes), and the tenant accepting anyway with their objection auto-closed as
+withdrawn. Plus withdrawal returning the contract to `SENT`, a closed request
+refusing to be rewritten, and the prestataire refused an objection on their own
+contract (403). 669 unit tests pass.
+
+---
+
+# 2026-09-30 — M09: the Mboa Score
+
+New, and not asked for from your side — here is everything the apps need.
+
+## Three reads, one shape
+
+| Who | Route | `operationId` |
+|---|---|---|
+| The user, their own (App Mboa) | `GET /users/me/score` | `getMyMboaScore` |
+| A prestataire, about a tenant (App Mboa Pro) | `GET /prestataires/me/tenants/{userId}/score` | `getTenantMboaScore` |
+| Admin | `GET /admin/users/{userId}/score` | `getAdminMboaScore` |
+
+```json
+{
+  "score": 45,
+  "maxScore": 90,
+  "signals": [
+    { "code": "PROFILE_COMPLETE",  "points": 10,  "maxPoints": 10, "available": true },
+    { "code": "IDENTITY_VERIFIED", "points": 20,  "maxPoints": 20, "available": true },
+    { "code": "ACCOUNT_SENIORITY", "points": 10,  "maxPoints": 10, "available": true },
+    { "code": "SIGNED_CONTRACTS",  "points": 0,   "maxPoints": 30, "count": 0, "available": true },
+    { "code": "PROVIDER_RATING",   "points": 0,   "maxPoints": 20, "available": false },
+    { "code": "VALIDATED_REPORTS", "points": -15, "maxPoints": 0,  "count": 1, "available": true },
+    { "code": "ADMIN_ADJUSTMENT",  "points": 20,  "count": 1, "available": true }
+  ]
+}
+```
+
+- **All seven signals, always, in this order.** Render the list as-is.
+- **You own the wording** (CA-M09-03 — "compréhensible pour un non-technicien").
+  The API sends `code`, never a sentence. Suggested copy: "Profil complet (photo,
+  prénom, nom)", "Identité vérifiée", "Membre depuis plus de 6 mois", "Contrats
+  Mboa signés (10 pts chacun, 3 max)", "Note des propriétaires", "Signalements
+  retenus", "Ajustement Mboa".
+- **`PROVIDER_RATING` is `available: false`** — prestataires cannot rate tenants
+  yet. Show it greyed as "bientôt", not as a zero the user failed to earn.
+- **`score` is held between 0 and 90; the signals are not.** A user with two
+  upheld reports and nothing else scores 0, and the breakdown shows the −30.
+  Do not re-add the signals client-side.
+- `count` appears on countable signals only; absent means "yes/no signal"
+  (null fields are omitted, as everywhere).
+- `ADMIN_ADJUSTMENT` has no `maxPoints` and is 0 for almost everyone. Hiding it
+  at 0 is your call.
+
+## The prestataire's route is gated (RM-M09-04)
+
+`403 SCORE_NOT_ACCESSIBLE` until the user has **messaged them** or **asked to
+visit one of their properties** — either, whatever became of it. Show the score
+on the conversation and on the visit request, where the prestataire already has
+the user's id; never on a search result (RM-M09-05 — it is never public).
+
+Only a USER account has a score: asking about anyone else is
+`404 SCORE_NOT_APPLICABLE` on the user and admin routes. On the prestataire route
+the 403 comes first, so it cannot be used to discover who is a user.
+
+## Admin (RM-M18-05)
+
+`POST /admin/users/{userId}/score/adjustments` (`adjustMboaScore`) with
+`{"delta": -10, "reason": "…"}` → `201` and the admin view:
+`{ "score": { …as above… }, "adjustments": [ {id, delta, reason, adminAccountId, createdAt}, … ] }`,
+newest first. Delta −90…90 and not 0 (`SCORE_ADJUSTMENT_ZERO`); reason
+mandatory, 300 characters. Adjustments are never edited or deleted — undo one
+with another the other way.
+
+## Verification
+
+Live against the dev database: a new user at 0; +10 only once the photo joined
+first and last name; +20 on KYC approval (not on submission); +10 at six months;
+a real tenant's signed contract counting +10; the prestataire refused before any
+contact and let in once a thread existed; a reported message upheld costing −15
+and **staying** −15 after the message itself was purged; admin adjustments
+adding up, clamped at 90, refused at 0 or without a reason; the reporter
+deleting their account leaving the upheld report anonymised and the −15 intact;
+the user deleting theirs taking their adjustments with it. 695 unit tests pass.
+
+---
+
+# 2026-09-30 — M14: the prestataire dashboard
+
+The home screen of App Mboa Pro. Two routes, PRESTATAIRE only.
+
+| Route | `operationId` | What |
+|---|---|---|
+| `GET /prestataires/me/dashboard` | `getMyDashboard` | The whole portfolio's totals |
+| `GET /prestataires/me/dashboard/annonces?page=&size=` | `listMyDashboardEntries` | One line per listing, residences grouped |
+
+## Every figure has the same shape
+
+```json
+{ "value": 50.0, "locked": false, "requiredTier": "BASIC_PLUS", "available": true }
+```
+
+- **`locked: true` → there is no `value`.** Draw the blur and the "Passer à
+  Basic+ / Pro+" button from `requiredTier` (CA-M14-02). The number is not in
+  the payload, so there is nothing to un-blur client-side.
+- **`available: false`** → nobody can see it yet, whatever the tier. Today that
+  is only `averagePosition` (search does not record ranks). Show "bientôt",
+  not an upgrade button — unless it is also `locked`.
+- `requiredTier` is absent on figures every tier sees.
+- `conversionRate` is contacts per 100 views, one decimal. With no views yet it
+  is **unlocked with no `value`** — show "—", not 0 %.
+
+## The summary
+
+```json
+{
+  "tier": "BASIC_PLUS",
+  "totals": {
+    "views":           { "value": 3 },
+    "viewsLast7Days":  { "value": 3 },
+    "contacts":        { "value": 1 },
+    "conversionRate":  { "value": 33.3, "requiredTier": "BASIC_PLUS" },
+    "agentVisits":     { "value": 0,    "requiredTier": "BASIC_PLUS" },
+    "signedContracts": { "value": 0 }
+  },
+  "averagePosition": { "locked": true, "requiredTier": "PRO_PLUS", "available": false }
+}
+```
+(`locked`/`available` trimmed above for brevity; they are always present.)
+
+## The list
+
+A page of `DashboardItem`, newest first — the same `type` union as
+`AssignmentItem` / `SearchResult`:
+
+- `{"type":"LISTING","listing":{annonceId,title,status,figures}}`
+- `{"type":"RESIDENCE","residence":{residenceId,name,unitCount,totals,units:[…listing lines…]}}`
+
+A residence is **one** entry however many units it has; paging counts entries.
+Archived and suspended listings are listed too (RM-M14-03) — `status` says which.
+
+## What the figures mean
+
+- **Views** are counted views (one per viewer per 24h, the owner's own excluded),
+  and **`viewsLast7Days` is the same unit** over today and the six days before,
+  Cameroon time. It starts counting on deployment: the week before it reads low.
+  Anonymous views still need `X-Device-Id` to count at all.
+- **Contacts** are threads users opened on the listing. A second message in the
+  same thread is not a second contact. Purged threads stay counted.
+- **Agent visits** are visits carried out by an agent — not those the owner did
+  themselves.
+- **Contracts**: signed Mboa contracts. The summary counts all of them, including
+  on listings deleted since.
+- **After a downgrade** nothing is lost: figures lock, keep counting, and the
+  next upgrade shows the full history.
+
+## Verification
+
+Live against the dev database: V048's backfill matched a direct SQL count (0
+mismatches; 3 agent visits recovered); a published listing viewed by a signed-in
+user (twice — counted once) and an anonymous device → 2 views, 2 this week; a
+thread opened and written in again → 1 contact; FREE showing the locks with no
+values, a BASIC_PLUS grant unlocking a 50.0 % conversion; a two-unit residence as
+one entry with its totals and per-unit lines, paging by entry; a user refused
+(403); both routes answering in 20–30 ms. 709 unit tests pass.
+
+---
+
+# 2026-09-30 — M20: trust badges are real now
+
+`ProviderCard.badges` on the fiche stopped being always `[]`. Same field, same
+strings on the wire — now typed as `BadgeCode` in the spec.
+
+## What the fiche shows
+
+`provider.badges` is already in prestige order (RM-M05-03) — render as-is:
+
+| Value | Badge | Level |
+|---|---|---|
+| `TRUSTED` | 🏆 Prestataire de confiance | prestataire |
+| `RECERTIFIED` | 🔄 Recertifié | prestataire |
+| `IDENTITY_VERIFIED` | ✅ Identité vérifiée | prestataire |
+| `PHOTOS_VERIFIED` | 📸 Photos vérifiées | **this listing** |
+
+📸 is about the photos the listing *shows*: a residence unit without photos of
+its own shows the residence's, and carries 📸 when the residence's are verified.
+
+## App Mboa Pro — asking for 📸
+
+- `POST /annonces/{id}/photo-verification` or `POST /residences/{id}/photo-verification`
+  → `201 {id, target, targetId, status: "PENDING", requestedAt, dueAt, decidedAt, reason}`.
+  `dueAt` is the team's 48-weekday-hour target (RM-M20-01) — show it as "réponse
+  sous 48 h ouvrées".
+- A unit that inherits its residence's photos answers `409 PHOTOS_INHERITED`:
+  send the owner to the residence.
+- `GET` on the same route → the latest request, whatever its status. After a
+  `REJECTED`, the owner may ask again straight away (RM-M20-02) — show `reason`.
+- **Changing the photos withdraws the badge** (RM-M10-06): status becomes
+  `REVOKED` with a reason saying so. Reordering the same photos does not. Warn
+  before saving new photos on a verified listing.
+- `GET /prestataires/me/badges` → `{badges: [...prestataire-level], verifications: [...all 📸 requests]}`.
+
+## N-22 (new, mandatory)
+
+`type: BADGE`, `entityId` = the prestataire's account id → open the badges
+screen. Sent on 📸 granted / refused / withdrawn, on ✅ withdrawn or restored, and
+on 🏆 or 🔄 granted, and on 🏆 lost. Not sent when ✅ comes with the KYC
+approval (N-11 already says so), nor when 🔄 lapses (RM-M05-04: silently).
+**Old clients** will see an unknown `type` — fall back to home.
+
+## Admin console
+
+- `GET /admin/badges/photo-verifications?status=PENDING` — the queue, oldest first,
+  with `photoUrls`, `dueAt` and `overdue`.
+- `POST …/{id}/approve` · `…/{id}/reject {reason}` · `…/{id}/revoke {reason}`.
+- `GET /admin/badges/prestataires/{id}` — badges held, every award past and
+  present (who withdrew it, why), every 📸 request (RM-M20-03).
+- `POST /admin/badges/prestataires/{id}/identity/revoke {reason}` and `/identity/restore`.
+- `GET /admin/kyc?role=AGENT` — **the agent validation queue** (M20's other half):
+  items now carry `role`, `displayName` (to compare with the CNI), `dueAt`, `overdue`.
+
+## Verification
+
+Live against the dev database: V049 back-filled ✅ for exactly the 2 prestataires
+already KYC-approved; a new prestataire's KYC approval granted ✅ silently; a 📸
+request queued with its photos and its Friday target, a duplicate refused
+(`PHOTO_VERIFICATION_OPEN`), approved → fiche `[IDENTITY_VERIFIED,
+PHOTOS_VERIFIED]`; reordered photos kept it, a replaced one withdrew it
+(N-22 delivered, `type=BADGE`); refused with a reason, asked again, granted,
+withdrawn by an admin; a residence's badge covering the unit that shows its
+photos and not the one with its own; a seasoned, well-rated prestataire three
+months into a paid plan reaching 🔄 then 🏆 on the sweep, the fiche showing all
+four in order; ✅ withdrawn → 🏆 gone in the same request, account untouched,
+restored → 🏆 back; the KYC queue filtered to agents showing the agent's name.
+Deleting the prestataire first failed with a 500 (fixed: see DEV_WORKFLOW) and
+then purged every badge row. 750 unit tests pass.
+
+---
+
+# 2026-10-01 — answers to the requests of 2026-08-20 → 2026-10-01 (§6, §9–§18)
+
+## Already done — please tick them
+
+- **§6 Dashboard (M14)** — shipped 2026-09-30, see that section above: `GET /prestataires/me/dashboard` and `/dashboard/annonces`. Every Doc 10 figure is real except the average position (`available: false`).
+- **§9** — tier on `/me`, `residenceUnitAllowance` (documented in Doc 10's M10bis) and the Bien Multiple section all landed in August.
+- **§15** — the code exists: `404 TENANT_HAS_NO_ACCOUNT`, and it is the **only** 404 meaning "invitation sent". A deleted listing is `404 ANNONCE_NOT_FOUND`, so branch on `error`, not on the status. The other M08 refusals are all in `api-error-codes.md` → *M08 — Mboa Contract* (`OWNER_NOT_VERIFIED`, `TENANT_PROFILE_INCOMPLETE`, `CONTRACT_LOCKED`, …).
+- **§16.1** — yes, server-side: groups are ordered `tier_rank DESC, published_at DESC` **before** paging, so page 2 is right. Never re-sort.
+- **§16.3** — `ProviderCard.badges` is the `BadgeCode` enum since 2026-09-30, already in prestige order.
+
+## §13 — removing one agent from a pool ✅ (and it was worse than a guess)
+
+With a pool of two, `DELETE /annonces/{id}/agent` did not pick one: it **failed with a 500** (a single-result query found two rows). An agent applying to a residence hit the same query and also skipped any unit another agent held, against RM-M11-01. Both fixed.
+
+- **New:** `DELETE /annonces/{annonceId}/agent/{agentAccountId}` → 204, removes that agent only, cancels their planned visits (RM-M11-06). 404 `ASSIGNMENT_NOT_FOUND` if they hold nothing there.
+- **New:** `DELETE /residences/{residenceId}/agent/{agentAccountId}` → `{count}` of units taken back from that agent; the others keep theirs.
+- **Kept:** the agent-less `DELETE` still works while the pool holds exactly one agent; with several → `409 AGENT_REQUIRED`. Your `canWithdraw` guard can go.
+- **Stale prose fixed:** accepting an application **does not** decline the others (RM-M11-07 revised) — the summaries said otherwise; the behaviour was already right.
+
+## §14 — the prestataire's own visits ✅
+
+- `GET /prestataires/me/visites/{id}` → the same sheet the agent gets (`AgentVisiteDetail`): client name and phone, exact address, `canConfirm`. The `prestataire*` fields are their own.
+- `POST /prestataires/me/visites/{id}/cancel` → 204, **up to one hour before the slot** (founder's call — the agent's rule, RM-M16-04). Later → `409 CANCELLATION_TOO_LATE`. The client is told (N-05). `cancellationReason` reads `BY_AGENT` — "by the visitor"; the name predates owner-visitors and is a published value.
+
+## §18.1 — the map is fuzzed, now properly ✅
+
+It was fuzzed, but recoverably: the offset came from a PRNG seeded with the **public** listing id, so anyone with the algorithm could subtract it; and the distance started at 0, leaving some points metres from the door. Now the offset is an HMAC under a server secret (`GEO_FUZZ_SECRET`), 100–200 m, still stable per listing. **Every marker moved once** with this deployment — expected. Your 200 m disc and its wording are right.
+
+## §18.2 — positions outside Cameroon are refused on write ✅
+
+Create/update of a listing or residence with a point outside Cameroon → `400 LOCATION_OUTSIDE_SERVICE_AREA`. Coarse on purpose (cities carry no outline to check against), but it catches the simulator's San Francisco. **The dev data was worse than the four you found:** 5 listings sat in San Francisco and 80 residence units carried Yaoundé coordinates with a Douala city. All 85, and their 2 residences, now sit at the approximate centre of their declared quartier (Akwa, Bepanda, PK14) — the map should open on Douala. Note the write check would **not** catch the Yaoundé case (Yaoundé is in Cameroon): checking a point against its own city needs city outlines we do not have yet.
+
+## §10 — the time format is in the spec ✅
+
+`AvailabilityRuleRequest.startTime/endTime`: `format: time`, example `"08:00"`, local Africa/Douala, `HH:mm` (seconds accepted and ignored — they are stored as `HH:mm`). And for an agent **only `/agents/me` counts** — name and photo there are what `profileComplete`, candidates and every agent card read; the `/users/me` profile is not consulted for agents.
+
+## Not done — and why
+
+- **§8** amenities filter on `GET /search` and amenities on residences → **next slice (M20b)**, which reworks the same search query for the badge filter (§16.2). Metering ("Compteur Prépayé") is not in Doc 10 — needs a product decision first.
+- **§11** listing an agent's individual ratings, permissions, invitations, job titles → product questions, no CDC section yet.
+- **§16.2** "Badges requis" filter → M20b, now that badges exist.
+- **§17** the seed's photo keys point at nothing → needs real files uploaded to the dev R2 bucket; the API side only has dummy credentials. Not a code change.
+- **§18.3** bounding-box search → agreed it is not needed for the MVP; ask when the map becomes the entry point.
+
+## Verification
+
+Live against the dev database: a San Francisco listing refused (400), a Douala one published and its fiche point 151 m off and identical across requests; two agents accepted on one listing, the agent-less delete answering `409 AGENT_REQUIRED`, agent A removed alone (A `WITHDRAWN`, B `ACCEPTED`), the old route working again once one agent was left; a client booking the owner as visitor, the owner confirming, reading the client's name and phone, cancelling (`CANCELLED`, by them), an agent refused the owner's route (403). 761 unit tests pass.

@@ -27,6 +27,9 @@ class StorageKeys {
   // `POST /subscriptions` and is the only key to the receipt, so it is kept
   // locally until a payments-list endpoint exists.
   static const String subscriptionBox = 'subscriptionBox';
+  // Upcoming visits (M07). A tenant checking the time of a visit from a taxi
+  // with no line is the case this exists for.
+  static const String visitsBox = 'visitsBox';
   // Prestataire dashboard counters (M14) — cheap to refetch, cached so the Pro
   // home renders instantly and works offline.
   static const String dashboardBox = 'dashboardBox';
@@ -39,6 +42,7 @@ class StorageKeys {
     appSettingsBox,
     dashboardBox,
     subscriptionBox,
+    visitsBox,
   ];
 }
 
@@ -51,4 +55,8 @@ class CacheTtl {
   /// RM-M14-01 wants near-real-time stats, so keep this short — the cache is
   /// for instant first paint and offline, not for avoiding the fetch.
   static const Duration dashboard = Duration(minutes: 5);
+
+  /// M07 — a booked visit barely changes, but a cancellation by the visitor
+  /// (CE-M07-02) must not linger on screen for long.
+  static const Duration visits = Duration(hours: 1);
 }

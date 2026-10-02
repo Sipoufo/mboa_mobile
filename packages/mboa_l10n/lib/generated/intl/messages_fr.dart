@@ -130,9 +130,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m49(date) => "Valable jusqu’au ${date}";
 
-  static String m50(time) => "Confirmé à ${time}";
+  static String m50(count) =>
+      "${Intl.plural(count, zero: 'Aucune visite', one: '1 visite', other: '${count} visites')}";
 
-  static String m51(distance) =>
+  static String m51(time) => "Confirmé à ${time}";
+
+  static String m52(distance) =>
       "Vous êtes à environ ${distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1536,6 +1539,73 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
       "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
     ),
+    "visitAlreadyBooked": MessageLookupByLibrary.simpleMessage(
+      "Vous avez déjà une visite en cours sur ce bien.",
+    ),
+    "visitBookConfirm": MessageLookupByLibrary.simpleMessage(
+      "Confirmer la visite",
+    ),
+    "visitBookFree": MessageLookupByLibrary.simpleMessage(
+      "Première visite offerte.",
+    ),
+    "visitBookSlot": MessageLookupByLibrary.simpleMessage(
+      "Choisissez un créneau",
+    ),
+    "visitBookTitle": MessageLookupByLibrary.simpleMessage(
+      "Planifier une visite",
+    ),
+    "visitBookVisitor": MessageLookupByLibrary.simpleMessage(
+      "Qui vous fait visiter",
+    ),
+    "visitBookedTitle": MessageLookupByLibrary.simpleMessage(
+      "Visite confirmée",
+    ),
+    "visitCancel": MessageLookupByLibrary.simpleMessage("Annuler la visite"),
+    "visitCancelTooLate": MessageLookupByLibrary.simpleMessage(
+      "L\'annulation n\'est plus possible. Contactez le visiteur par message.",
+    ),
+    "visitConfirmPresence": MessageLookupByLibrary.simpleMessage(
+      "Je suis sur place",
+    ),
+    "visitNoSlotAvailability": MessageLookupByLibrary.simpleMessage(
+      "Aucun horaire n\'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.",
+    ),
+    "visitNoSlotBlocked": MessageLookupByLibrary.simpleMessage(
+      "Aucune disponibilité dans les 7 prochains jours.",
+    ),
+    "visitNoSlotBooked": MessageLookupByLibrary.simpleMessage(
+      "Tous les créneaux des 7 prochains jours sont réservés.",
+    ),
+    "visitRateBody": MessageLookupByLibrary.simpleMessage(
+      "Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.",
+    ),
+    "visitRateDone": MessageLookupByLibrary.simpleMessage(
+      "Merci pour votre note.",
+    ),
+    "visitRateTitle": MessageLookupByLibrary.simpleMessage("Noter le visiteur"),
+    "visitRequestedBody": MessageLookupByLibrary.simpleMessage(
+      "Le visiteur doit confirmer ce créneau. Vous recevrez une notification.",
+    ),
+    "visitRequestedTitle": MessageLookupByLibrary.simpleMessage(
+      "Demande envoyée",
+    ),
+    "visitStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulée"),
+    "visitStatusCompleted": MessageLookupByLibrary.simpleMessage("Effectuée"),
+    "visitStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
+      "Non honorée",
+    ),
+    "visitStatusRequested": MessageLookupByLibrary.simpleMessage(
+      "En attente de confirmation",
+    ),
+    "visitStatusScheduled": MessageLookupByLibrary.simpleMessage("Confirmée"),
+    "visitVisitorAgent": MessageLookupByLibrary.simpleMessage("Agent Mboa"),
+    "visitVisitorOwner": MessageLookupByLibrary.simpleMessage(
+      "Le propriétaire",
+    ),
+    "visitVisitorRecord": m50,
+    "visitWaitingVisitor": MessageLookupByLibrary.simpleMessage(
+      "Votre présence est confirmée. En attente du visiteur.",
+    ),
     "visitsActionFailed": MessageLookupByLibrary.simpleMessage(
       "Action impossible pour le moment.",
     ),
@@ -1583,9 +1653,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsDetailTitle": MessageLookupByLibrary.simpleMessage(
       "Détail de la visite",
     ),
+    "visitsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Planifiez une visite depuis la fiche d\'un bien.",
+    ),
     "visitsEmptyPast": MessageLookupByLibrary.simpleMessage(
       "Aucune visite passée",
     ),
+    "visitsEmptyTitle": MessageLookupByLibrary.simpleMessage("Aucune visite"),
     "visitsEmptyToday": MessageLookupByLibrary.simpleMessage(
       "Aucune visite aujourd\'hui",
     ),
@@ -1614,10 +1688,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsNotFulfilledTitle": MessageLookupByLibrary.simpleMessage(
       "Visite non honorée",
     ),
+    "visitsOffline": MessageLookupByLibrary.simpleMessage(
+      "Visites hors ligne — vos prochaines visites, telles qu\'enregistrées.",
+    ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
+    "visitsPast": MessageLookupByLibrary.simpleMessage("Passées"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Numéro copié"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Locataire"),
-    "visitsPresenceConfirmedAt": m50,
+    "visitsPresenceConfirmedAt": m51,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "La visite n\'est validée que lorsque les deux présences sont confirmées.",
     ),
@@ -1652,7 +1730,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
-    "visitsTooFarBody": m51,
+    "visitsTooFarBody": m52,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer quand même",
     ),
@@ -1662,6 +1740,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTooFarTitle": MessageLookupByLibrary.simpleMessage(
       "Vous semblez loin du bien",
     ),
+    "visitsUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "welcome_inscriptionButton": MessageLookupByLibrary.simpleMessage(
       "Inscription",
     ),

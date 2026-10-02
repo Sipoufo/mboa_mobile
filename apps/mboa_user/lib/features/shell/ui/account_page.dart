@@ -44,6 +44,17 @@ class AccountPage extends StatelessWidget {
                       const AuthenticatedRouter(children: [SettingsRoute()]),
                     ),
                   ),
+                  const SizedBox(height: Dimens.spacingMd),
+                  // M07 — booked from a fiche, checked from here. Not a fifth
+                  // tab: Doc 05 §6.5 allows five and the four we have are the
+                  // ones used every session.
+                  MboaTileCard(
+                    icon: LucideIcons.calendarCheck,
+                    title: l10n.visitsTitle,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [MyVisitsRoute()]),
+                    ),
+                  ),
                 ] else ...[
                   const SizedBox(height: Dimens.spacingXl),
                   Icon(

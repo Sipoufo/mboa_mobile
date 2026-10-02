@@ -343,6 +343,139 @@
   "@searchStaleBanner": {
     "description": "CE-M04-03 with a warm cache: online, but the search failed."
   },
+  "visitsUpcoming": "À venir",
+  "@visitsUpcoming": {
+    "description": "Section of upcoming visits (M07)."
+  },
+  "visitsPast": "Passées",
+  "@visitsPast": {
+    "description": "Section of past visits (M07)."
+  },
+  "visitsEmptyTitle": "Aucune visite",
+  "@visitsEmptyTitle": {
+    "description": "No visit booked yet."
+  },
+  "visitsEmptyBody": "Planifiez une visite depuis la fiche d'un bien.",
+  "@visitsEmptyBody": {
+    "description": "No visit booked yet."
+  },
+  "visitsOffline": "Visites hors ligne — vos prochaines visites, telles qu'enregistrées.",
+  "@visitsOffline": {
+    "description": "Cached upcoming visits."
+  },
+  "visitBookTitle": "Planifier une visite",
+  "@visitBookTitle": {
+    "description": "M07 booking sheet title."
+  },
+  "visitBookVisitor": "Qui vous fait visiter",
+  "@visitBookVisitor": {
+    "description": "Visitor picker heading."
+  },
+  "visitBookSlot": "Choisissez un créneau",
+  "@visitBookSlot": {
+    "description": "Slot picker heading."
+  },
+  "visitBookConfirm": "Confirmer la visite",
+  "@visitBookConfirm": {
+    "description": "Booking CTA."
+  },
+  "visitBookFree": "Première visite offerte.",
+  "@visitBookFree": {
+    "description": "RM-M07-02 — the first visit is free in MVP."
+  },
+  "visitBookedTitle": "Visite confirmée",
+  "@visitBookedTitle": {
+    "description": "A published slot was taken."
+  },
+  "visitRequestedTitle": "Demande envoyée",
+  "@visitRequestedTitle": {
+    "description": "RM-M15-06 — the visitor confirms by hand."
+  },
+  "visitRequestedBody": "Le visiteur doit confirmer ce créneau. Vous recevrez une notification.",
+  "@visitRequestedBody": {
+    "description": "RM-M15-06."
+  },
+  "visitAlreadyBooked": "Vous avez déjà une visite en cours sur ce bien.",
+  "@visitAlreadyBooked": {
+    "description": "RM-M07-03."
+  },
+  "visitNoSlotAvailability": "Aucun horaire n'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.",
+  "@visitNoSlotAvailability": {
+    "description": "CE-M07-01 AGENT_NO_AVAILABILITY."
+  },
+  "visitNoSlotBlocked": "Aucune disponibilité dans les 7 prochains jours.",
+  "@visitNoSlotBlocked": {
+    "description": "CE-M07-01 ALL_DAYS_BLOCKED."
+  },
+  "visitNoSlotBooked": "Tous les créneaux des 7 prochains jours sont réservés.",
+  "@visitNoSlotBooked": {
+    "description": "CE-M07-01 FULLY_BOOKED."
+  },
+  "visitVisitorAgent": "Agent Mboa",
+  "@visitVisitorAgent": {
+    "description": "The visitor is an assigned agent."
+  },
+  "visitVisitorOwner": "Le propriétaire",
+  "@visitVisitorOwner": {
+    "description": "RM-M11-10 — the owner shows the property."
+  },
+  "visitVisitorRecord": "{count, plural, =0{Aucune visite} =1{1 visite} other{{count} visites}}",
+  "@visitVisitorRecord": {
+    "description": "How many visits this visitor has completed.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visitStatusRequested": "En attente de confirmation",
+  "@visitStatusRequested": {
+    "description": "VisitStatus.requested."
+  },
+  "visitStatusScheduled": "Confirmée",
+  "@visitStatusScheduled": {
+    "description": "VisitStatus.scheduled."
+  },
+  "visitStatusCompleted": "Effectuée",
+  "@visitStatusCompleted": {
+    "description": "VisitStatus.completed."
+  },
+  "visitStatusCancelled": "Annulée",
+  "@visitStatusCancelled": {
+    "description": "VisitStatus.cancelled."
+  },
+  "visitStatusNotFulfilled": "Non honorée",
+  "@visitStatusNotFulfilled": {
+    "description": "VisitStatus.notFulfilled."
+  },
+  "visitConfirmPresence": "Je suis sur place",
+  "@visitConfirmPresence": {
+    "description": "RM-M07-05 — the tenant's half."
+  },
+  "visitWaitingVisitor": "Votre présence est confirmée. En attente du visiteur.",
+  "@visitWaitingVisitor": {
+    "description": "RM-M07-05 — one half in."
+  },
+  "visitCancel": "Annuler la visite",
+  "@visitCancel": {
+    "description": "RM-M07-04."
+  },
+  "visitCancelTooLate": "L'annulation n'est plus possible. Contactez le visiteur par message.",
+  "@visitCancelTooLate": {
+    "description": "CE-M07-03."
+  },
+  "visitRateTitle": "Noter le visiteur",
+  "@visitRateTitle": {
+    "description": "RM-M07-07."
+  },
+  "visitRateBody": "Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.",
+  "@visitRateBody": {
+    "description": "RM-M07-07."
+  },
+  "visitRateDone": "Merci pour votre note.",
+  "@visitRateDone": {
+    "description": "RM-M07-07 — rated."
+  },
   "searchResultCount": "{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}",
   "@searchResultCount": {
     "description": "How many results are on screen, above the list.",

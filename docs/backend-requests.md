@@ -549,3 +549,37 @@ coordinates disagreeing is worth a server-side check on write.
 That is the behaviour we want for the MVP — one source of truth, one set of
 filters — but if a map-first search is planned, the parameter has to come from
 here rather than from a second query the app invents.
+
+---
+
+## §19 — Planning a visit (M07)
+
+**Raised 2026-10-02**, building the tenant's side of M07.
+
+**1. CE-M07-03 asks for the visitor's contact details, which do not exist.**
+Inside four hours the tenant cannot cancel and the CDC says to show "les
+coordonnées" so they can reach the visitor directly. No phone number travels
+through the API, by design — hiding it is the whole point of M12 (CA-M12-02).
+The app therefore tells them to reach the visitor **through messages**. If a
+number is meant to be revealed at that moment, it has to be a deliberate
+decision with its own field, not a side effect.
+
+**2. Can an `ON_REQUEST` visitor return no slots?** `BookVisiteRequest`
+requires `startsAt`, so a visitor who publishes no time cannot be booked at
+all. We read RM-M15-06 — "un créneau proposé à un propriétaire qui confirme à
+la main" — as meaning the slot is always published and the mode only decides
+what happens next (`REQUESTED` rather than `SCHEDULED`). The app treats a
+visitor with an empty `slots` list as "nothing free" whatever their mode.
+Please confirm; if an open-ended request is meant to be possible, `startsAt`
+has to become optional and the app needs a date picker instead.
+
+**3. Nothing says whether a visit has already been rated.** RM-M07-07 allows
+one rating per visit, and `VisiteResponse` carries no flag for it. The app
+hides the stars after rating, but only for the rest of that session — reopen
+the app and it offers a rating the server will refuse. A boolean on
+`VisiteResponse` (or the rating itself) would fix it.
+
+**4. No seeded listing accepts visits.** Every `canPlanVisit` is false in dev,
+so the whole of M07 is covered by tests and has never run against the API:
+not the slots endpoint, not a booking, not a confirmation. A listing with an
+assigned agent who has declared availability would make this testable.

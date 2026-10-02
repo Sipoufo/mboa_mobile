@@ -10,6 +10,9 @@ import '../../features/listing/bloc/listing_detail_bloc.dart';
 import '../../features/listing/data/listing_repository.dart';
 import '../../features/search/bloc/search_bloc.dart';
 import '../../features/search/data/search_repository.dart';
+import '../../features/visits/bloc/my_visits_bloc.dart';
+import '../../features/visits/bloc/visit_booking_bloc.dart';
+import '../../features/visits/data/visits_repository.dart';
 import '../../features/splash/logic/splash_cubit.dart';
 import '../login_flow_controller_impl.dart';
 
@@ -71,6 +74,22 @@ void registerAppModule() {
   );
   getIt.registerLazySingleton<FavoritesBloc>(
     () => FavoritesBloc(repository: getIt<FavoritesRepository>()),
+  );
+
+  // Planification de visite (M07) — booking is a sheet over the fiche, the
+  // list is its own screen, so the sheet's bloc is a factory and the list's is
+  // not: two sheets would otherwise share one.
+  getIt.registerLazySingleton<VisitsRepository>(
+    () => VisitsRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+    ),
+  );
+  getIt.registerFactory<VisitBookingBloc>(
+    () => VisitBookingBloc(repository: getIt<VisitsRepository>()),
+  );
+  getIt.registerFactory<MyVisitsBloc>(
+    () => MyVisitsBloc(repository: getIt<VisitsRepository>()),
   );
 
   // Messagerie (M12) — repository, list and thread are shared with the pro
