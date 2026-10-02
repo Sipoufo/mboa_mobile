@@ -1445,13 +1445,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBookConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm the visit",
     ),
+    "visitBookDay": MessageLookupByLibrary.simpleMessage("Day"),
     "visitBookFree": MessageLookupByLibrary.simpleMessage(
       "Your first visit is free.",
     ),
+    "visitBookHour": MessageLookupByLibrary.simpleMessage("Time"),
+    "visitBookNoHour": MessageLookupByLibrary.simpleMessage(
+      "No free time that day.",
+    ),
+    "visitBookNoSlotAction": MessageLookupByLibrary.simpleMessage(
+      "Contact the provider",
+    ),
     "visitBookSlot": MessageLookupByLibrary.simpleMessage("Pick a time"),
+    "visitBookSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Pick a visitor and a time.",
+    ),
     "visitBookTitle": MessageLookupByLibrary.simpleMessage("Book a visit"),
     "visitBookVisitor": MessageLookupByLibrary.simpleMessage(
       "Who shows you around",
+    ),
+    "visitBookWindow": MessageLookupByLibrary.simpleMessage(
+      "Times for the next 7 days.",
     ),
     "visitBookedTitle": MessageLookupByLibrary.simpleMessage("Visit confirmed"),
     "visitCancel": MessageLookupByLibrary.simpleMessage("Cancel the visit"),

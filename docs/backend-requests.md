@@ -615,3 +615,30 @@ for the same reason: the record has to survive the listing.
 
 Until then the app sends the tenant to a dead end two taps from a visit that is
 about to happen, and there is nothing it can do about it from here.
+
+---
+
+## §21 — The bookable window is seven days, and the tenant hits the wall
+
+**Raised 2026-10-02**, from a real device.
+
+`GET /visites/slots` takes `annonceId` and nothing else, and answers with the
+next seven days. On a property whose week is taken, the tenant is told "every
+slot in the next 7 days is taken" and has **no way to look further** — not a
+later week, not a date of their own. The app cannot widen a window it does not
+choose.
+
+Two ways out, and they are not exclusive:
+
+1. **A range on the endpoint** — `from` / `to`, or a `weeks` count. The app
+   would then let the tenant page forward through the visitor's calendar, which
+   is what anyone expects of a booking screen.
+2. **An open request** — the tenant proposes a date and the visitor answers,
+   which is what RM-M15-06 already describes for an owner. `BookVisiteRequest`
+   takes any `startsAt` today; what we do not know is whether the server
+   validates it against declared availability, and it should, or a tenant will
+   book a time nobody will honour (see §19.2).
+
+Until one of them exists, the sheet says the window is seven days and offers to
+message the provider — who can open a slot. That is a workaround, not an answer:
+the tenant is asking a human to do what the calendar should do.

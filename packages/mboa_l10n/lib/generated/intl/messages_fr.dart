@@ -1548,17 +1548,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBookConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer la visite",
     ),
+    "visitBookDay": MessageLookupByLibrary.simpleMessage("Jour"),
     "visitBookFree": MessageLookupByLibrary.simpleMessage(
       "Première visite offerte.",
     ),
+    "visitBookHour": MessageLookupByLibrary.simpleMessage("Heure"),
+    "visitBookNoHour": MessageLookupByLibrary.simpleMessage(
+      "Aucune heure ce jour-là.",
+    ),
+    "visitBookNoSlotAction": MessageLookupByLibrary.simpleMessage(
+      "Contacter le prestataire",
+    ),
     "visitBookSlot": MessageLookupByLibrary.simpleMessage(
       "Choisissez un créneau",
+    ),
+    "visitBookSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Choisissez un visiteur et une heure.",
     ),
     "visitBookTitle": MessageLookupByLibrary.simpleMessage(
       "Planifier une visite",
     ),
     "visitBookVisitor": MessageLookupByLibrary.simpleMessage(
       "Qui vous fait visiter",
+    ),
+    "visitBookWindow": MessageLookupByLibrary.simpleMessage(
+      "Créneaux des 7 prochains jours.",
     ),
     "visitBookedTitle": MessageLookupByLibrary.simpleMessage(
       "Visite confirmée",

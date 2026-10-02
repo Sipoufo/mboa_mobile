@@ -476,6 +476,30 @@
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
+  "visitBookSubtitle": "Choisissez un visiteur et une heure.",
+  "@visitBookSubtitle": {
+    "description": "Booking sheet subtitle."
+  },
+  "visitBookNoSlotAction": "Contacter le prestataire",
+  "@visitBookNoSlotAction": {
+    "description": "CE-M07-01 — the way out of a full week."
+  },
+  "visitBookWindow": "Créneaux des 7 prochains jours.",
+  "@visitBookWindow": {
+    "description": "The server publishes a 7-day window."
+  },
+  "visitBookDay": "Jour",
+  "@visitBookDay": {
+    "description": "Day strip heading."
+  },
+  "visitBookHour": "Heure",
+  "@visitBookHour": {
+    "description": "Time chips heading."
+  },
+  "visitBookNoHour": "Aucune heure ce jour-là.",
+  "@visitBookNoHour": {
+    "description": "A day in the strip with no free time."
+  },
   "visitDetailTitle": "Détail de la visite",
   "@visitDetailTitle": {
     "description": "M07 visit detail screen."

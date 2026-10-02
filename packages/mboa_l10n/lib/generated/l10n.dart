@@ -1207,6 +1207,66 @@ class I18n {
     );
   }
 
+  /// `Choisissez un visiteur et une heure.`
+  String get visitBookSubtitle {
+    return Intl.message(
+      'Choisissez un visiteur et une heure.',
+      name: 'visitBookSubtitle',
+      desc: 'Booking sheet subtitle.',
+      args: [],
+    );
+  }
+
+  /// `Contacter le prestataire`
+  String get visitBookNoSlotAction {
+    return Intl.message(
+      'Contacter le prestataire',
+      name: 'visitBookNoSlotAction',
+      desc: 'CE-M07-01 — the way out of a full week.',
+      args: [],
+    );
+  }
+
+  /// `Créneaux des 7 prochains jours.`
+  String get visitBookWindow {
+    return Intl.message(
+      'Créneaux des 7 prochains jours.',
+      name: 'visitBookWindow',
+      desc: 'The server publishes a 7-day window.',
+      args: [],
+    );
+  }
+
+  /// `Jour`
+  String get visitBookDay {
+    return Intl.message(
+      'Jour',
+      name: 'visitBookDay',
+      desc: 'Day strip heading.',
+      args: [],
+    );
+  }
+
+  /// `Heure`
+  String get visitBookHour {
+    return Intl.message(
+      'Heure',
+      name: 'visitBookHour',
+      desc: 'Time chips heading.',
+      args: [],
+    );
+  }
+
+  /// `Aucune heure ce jour-là.`
+  String get visitBookNoHour {
+    return Intl.message(
+      'Aucune heure ce jour-là.',
+      name: 'visitBookNoHour',
+      desc: 'A day in the strip with no free time.',
+      args: [],
+    );
+  }
+
   /// `Détail de la visite`
   String get visitDetailTitle {
     return Intl.message(

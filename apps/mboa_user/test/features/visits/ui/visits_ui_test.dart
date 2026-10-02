@@ -232,7 +232,7 @@ void main() {
           supportedLocales: MboaLocalizations.supportedLocales,
           home: BlocProvider<VisitBookingBloc>.value(
             value: booking,
-            child: const Scaffold(body: BookVisitSheetBody()),
+            child: const Scaffold(body: BookVisitSheetBody(annonceId: 'a-1')),
           ),
         ),
       );
@@ -251,6 +251,51 @@ void main() {
       expect(find.textContaining('déclaré'), findsOneWidget);
     });
 
+    testWidgets('CE-M07-01 — a full week offers the way out of it',
+        (tester) async {
+      when(() => booking.state).thenReturn(
+        const BookingUnavailable(reason: NoSlotReason.fullyBooked),
+      );
+      await pumpSheet(tester);
+
+      // The provider can open another slot, and messaging is how one asks.
+      // A sentence on its own left the tenant with nothing to do.
+      expect(find.text('Contacter le prestataire'), findsOneWidget);
+    });
+
+    testWidgets('the day strip holds a day per published date', (tester) async {
+      when(() => booking.state).thenReturn(
+        BookingReady(
+          annonceId: 'a-1',
+          visitors: [
+            visitor(
+              slots: [
+                VisitSlot(startsAt: DateTime(2026, 10, 5, 9)),
+                VisitSlot(startsAt: DateTime(2026, 10, 5, 11)),
+                VisitSlot(startsAt: DateTime(2026, 10, 7, 14)),
+              ],
+            ),
+          ],
+          selectedVisitorId: 'v-1',
+        ),
+      );
+      await pumpSheet(tester);
+
+      // Two days, and only the first day's hours — seven days of times in one
+      // flat list is what the strip replaces.
+      expect(find.text('5'), findsOneWidget);
+      expect(find.text('7'), findsOneWidget);
+      expect(find.text('09:00'), findsOneWidget);
+      expect(find.text('11:00'), findsOneWidget);
+      expect(find.text('14:00'), findsNothing);
+
+      await tester.tap(find.text('7'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('14:00'), findsOneWidget);
+      expect(find.text('09:00'), findsNothing);
+    });
+
     testWidgets('CA-M07-01 — one visitor, so the slot is the only choice',
         (tester) async {
       when(() => booking.state).thenReturn(
@@ -266,7 +311,8 @@ void main() {
 
       // The visitor picker would be a list of one.
       expect(find.text('Qui vous fait visiter'), findsNothing);
-      expect(find.text('Choisissez un créneau'), findsOneWidget);
+      expect(find.text('Jour'), findsOneWidget);
+      expect(find.text('Heure'), findsOneWidget);
       // RM-M07-02 — said before the tap, not after.
       expect(find.textContaining('offerte'), findsOneWidget);
     });

@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**703 tests green, analyze clean.** `mboa_user` 131 · `mboa_pro` 432 ·
+**705 tests green, analyze clean.** `mboa_user` 133 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -112,8 +112,10 @@ A visitor with no published time is "nothing free" whatever their mode:
 means the screen says *which* kind of nothing — usually that nobody has
 declared their hours, which the prestataire can act on.
 
-**Untested against the API:** no seeded listing has `canPlanVisit`, so the
-whole module is covered by tests only (§19 of docs/backend-requests.md).
+The booking sheet shows a day strip and the times of the chosen day, not seven
+days of times in one list. The window is **the server's** — `GET /visites/slots`
+takes only `annonceId` and answers seven days — so the sheet says so, and a full
+week offers to message the provider instead of ending there (§21).
 
 ### "Offline" is a diagnosis, not a catch block
 A search that fails falls back to the Hive cache (CE-M04-02). It used to

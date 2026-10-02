@@ -737,7 +737,11 @@ class _Actions extends StatelessWidget {
                 // actually show this place (RM-M07-01); the sheet then says
                 // who, and when.
                 onPressed: () =>
-                    showBookVisitSheet(context, annonceId: detail.id),
+                    showBookVisitSheet(
+                      context,
+                      annonceId: detail.id,
+                      annonceTitle: detail.title,
+                    ),
               ),
             ],
             // Only where it explains something: a signed-out reader whose
