@@ -1207,6 +1207,116 @@ class I18n {
     );
   }
 
+  /// `Détail de la visite`
+  String get visitDetailTitle {
+    return Intl.message(
+      'Détail de la visite',
+      name: 'visitDetailTitle',
+      desc: 'M07 visit detail screen.',
+      args: [],
+    );
+  }
+
+  /// `Présence sur place`
+  String get visitPresenceSection {
+    return Intl.message(
+      'Présence sur place',
+      name: 'visitPresenceSection',
+      desc: 'RM-M07-05 — the mutual confirmation block.',
+      args: [],
+    );
+  }
+
+  /// `Vous`
+  String get visitPresenceYou {
+    return Intl.message(
+      'Vous',
+      name: 'visitPresenceYou',
+      desc: 'RM-M07-05 — the tenant\'s half.',
+      args: [],
+    );
+  }
+
+  /// `Le visiteur`
+  String get visitPresenceVisitor {
+    return Intl.message(
+      'Le visiteur',
+      name: 'visitPresenceVisitor',
+      desc: 'RM-M07-05 — the visitor\'s half.',
+      args: [],
+    );
+  }
+
+  /// `Confirmé`
+  String get visitPresenceConfirmed {
+    return Intl.message(
+      'Confirmé',
+      name: 'visitPresenceConfirmed',
+      desc: 'One half is in.',
+      args: [],
+    );
+  }
+
+  /// `Pas encore`
+  String get visitPresencePending {
+    return Intl.message(
+      'Pas encore',
+      name: 'visitPresencePending',
+      desc: 'One half is missing.',
+      args: [],
+    );
+  }
+
+  /// `La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.`
+  String get visitPresenceExplainer {
+    return Intl.message(
+      'La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.',
+      name: 'visitPresenceExplainer',
+      desc: 'RM-M07-05.',
+      args: [],
+    );
+  }
+
+  /// `Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.`
+  String get visitAwaitingVisitor {
+    return Intl.message(
+      'Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.',
+      name: 'visitAwaitingVisitor',
+      desc: 'RM-M15-06 — the tenant cannot confirm for the visitor.',
+      args: [],
+    );
+  }
+
+  /// `Voir le bien`
+  String get visitSeeListing {
+    return Intl.message(
+      'Voir le bien',
+      name: 'visitSeeListing',
+      desc: 'Open the listing from a visit.',
+      args: [],
+    );
+  }
+
+  /// `À venir`
+  String get visitsFilterUpcoming {
+    return Intl.message(
+      'À venir',
+      name: 'visitsFilterUpcoming',
+      desc: 'My visits filter.',
+      args: [],
+    );
+  }
+
+  /// `Passées`
+  String get visitsFilterPast {
+    return Intl.message(
+      'Passées',
+      name: 'visitsFilterPast',
+      desc: 'My visits filter.',
+      args: [],
+    );
+  }
+
   /// `{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}`
   String searchResultCount(int count) {
     return Intl.plural(

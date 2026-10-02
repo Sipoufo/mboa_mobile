@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**685 tests green, analyze clean.** `mboa_user` 126 · `mboa_pro` 432 ·
+**690 tests green, analyze clean.** `mboa_user` 131 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -69,6 +69,18 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### Signing in does not rebuild the shell
+`replaceAll([UserShellRoute()])` lands on the route that is already there, so
+the tab pages stay alive: their `initState` does not run again and nothing in
+the navigation redraws them. A page that read `SessionSnapshot.hasSession`
+once therefore kept telling a signed-in tenant to create an account, and the
+thread they had just started was reported as "no conversations".
+
+`SessionSnapshot` is now a `ChangeNotifier` and those tabs listen to it, and
+`loadSessionScopedBlocs()` asks for the favourites and threads of the new
+session — the mirror of the reset on sign-out. **Any screen that renders from
+the session outside a bloc builder has to listen for it.**
 
 ### M07 — the tenant books, and the server arbitrates
 The app never decides that a visit happened. RM-M07-05 needs both parties to

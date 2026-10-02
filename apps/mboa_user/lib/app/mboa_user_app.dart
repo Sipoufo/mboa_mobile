@@ -48,6 +48,9 @@ class _MboaUserAppState extends State<MboaUserApp> {
               getIt<SessionExpiryWatcher>().start();
               startNotifications(router: _router, context: () => context);
               _router.replaceAll([const UserShellRoute()]);
+              // The shell is reused across this transition, so nothing else
+              // would ask for the favourites and threads this account has.
+              loadSessionScopedBlocs();
             case AuthUnauthenticated():
               getIt<SessionSnapshot>().markUnauthenticated();
               getIt<SessionExpiryWatcher>().stop();

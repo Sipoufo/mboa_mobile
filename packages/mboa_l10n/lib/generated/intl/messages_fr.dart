@@ -1542,6 +1542,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitAlreadyBooked": MessageLookupByLibrary.simpleMessage(
       "Vous avez déjà une visite en cours sur ce bien.",
     ),
+    "visitAwaitingVisitor": MessageLookupByLibrary.simpleMessage(
+      "Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.",
+    ),
     "visitBookConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer la visite",
     ),
@@ -1567,6 +1570,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitConfirmPresence": MessageLookupByLibrary.simpleMessage(
       "Je suis sur place",
     ),
+    "visitDetailTitle": MessageLookupByLibrary.simpleMessage(
+      "Détail de la visite",
+    ),
     "visitNoSlotAvailability": MessageLookupByLibrary.simpleMessage(
       "Aucun horaire n\'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.",
     ),
@@ -1576,6 +1582,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitNoSlotBooked": MessageLookupByLibrary.simpleMessage(
       "Tous les créneaux des 7 prochains jours sont réservés.",
     ),
+    "visitPresenceConfirmed": MessageLookupByLibrary.simpleMessage("Confirmé"),
+    "visitPresenceExplainer": MessageLookupByLibrary.simpleMessage(
+      "La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.",
+    ),
+    "visitPresencePending": MessageLookupByLibrary.simpleMessage("Pas encore"),
+    "visitPresenceSection": MessageLookupByLibrary.simpleMessage(
+      "Présence sur place",
+    ),
+    "visitPresenceVisitor": MessageLookupByLibrary.simpleMessage("Le visiteur"),
+    "visitPresenceYou": MessageLookupByLibrary.simpleMessage("Vous"),
     "visitRateBody": MessageLookupByLibrary.simpleMessage(
       "Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.",
     ),
@@ -1589,6 +1605,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitRequestedTitle": MessageLookupByLibrary.simpleMessage(
       "Demande envoyée",
     ),
+    "visitSeeListing": MessageLookupByLibrary.simpleMessage("Voir le bien"),
     "visitStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulée"),
     "visitStatusCompleted": MessageLookupByLibrary.simpleMessage("Effectuée"),
     "visitStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1666,6 +1683,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsEmptyUpcoming": MessageLookupByLibrary.simpleMessage(
       "Aucune visite prévue",
     ),
+    "visitsFilterPast": MessageLookupByLibrary.simpleMessage("Passées"),
+    "visitsFilterUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsLocating": MessageLookupByLibrary.simpleMessage(
       "Localisation en cours…",
     ),

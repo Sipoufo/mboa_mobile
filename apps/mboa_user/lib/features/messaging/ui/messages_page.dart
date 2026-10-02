@@ -32,7 +32,14 @@ class _MessagesPageState extends State<MessagesPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+        // Same reason as the favourites tab: the shell is not rebuilt by a
+        // sign-in, so the session has to be listened to rather than read once.
+        listenable: getIt<SessionSnapshot>(),
+        builder: (context, _) => _build(context),
+      );
+
+  Widget _build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
 

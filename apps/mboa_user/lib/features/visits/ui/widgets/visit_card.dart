@@ -19,11 +19,13 @@ class VisitCard extends StatelessWidget {
     required this.visit,
     this.isBusy = false,
     this.isRated = false,
+    this.onTap,
   });
 
   final Visit visit;
   final bool isBusy;
   final bool isRated;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,55 +35,58 @@ class VisitCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: Dimens.spacingMd),
-      padding: const EdgeInsets.all(Dimens.spacing),
       decoration: BoxDecoration(
         color: colors.surface,
         borderRadius: BorderRadius.circular(Dimens.radiusMd),
         boxShadow: MboaShadows.card,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.spacing),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  visit.annonceTitle ?? '',
-                  style: context.mboaText.h3.copyWith(color: colors.ink),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      visit.annonceTitle ?? '',
+                      style: context.mboaText.h3.copyWith(color: colors.ink),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  _StatusChip(status: visit.status),
+                ],
               ),
-              _StatusChip(status: visit.status),
-            ],
-          ),
-          if (visit.scheduledAt case final at?) ...[
-            const SizedBox(height: Dimens.spacingXs),
-            Row(
-              children: [
-                Icon(
-                  LucideIcons.calendar,
-                  size: 14,
-                  color: colors.textTertiary,
-                ),
-                const SizedBox(width: Dimens.spacingXs),
-                Text(
-                  DateFormat.MMMEd(locale).add_Hm().format(at),
-                  style: context.mboaText.caption
-                      .copyWith(color: colors.textSecondary),
+              if (visit.scheduledAt case final at?) ...[
+                const SizedBox(height: Dimens.spacingXs),
+                Row(
+                  children: [
+                    Icon(
+                      LucideIcons.calendar,
+                      size: 14,
+                      color: colors.textTertiary,
+                    ),
+                    const SizedBox(width: Dimens.spacingXs),
+                    Text(
+                      DateFormat.MMMEd(locale).add_Hm().format(at),
+                      style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ],
-          const SizedBox(height: Dimens.spacingXs),
-          Text(
-            visit.visitorKind == VisitorKind.owner
-                ? l10n.visitVisitorOwner
-                : l10n.visitVisitorAgent,
-            style: context.mboaText.caption.copyWith(color: colors.textTertiary),
+              const SizedBox(height: Dimens.spacingXs),
+              Text(
+                visit.visitorKind == VisitorKind.owner ? l10n.visitVisitorOwner : l10n.visitVisitorAgent,
+                style: context.mboaText.caption.copyWith(color: colors.textTertiary),
+              ),
+              VisitActions(visit: visit, isBusy: isBusy, isRated: isRated),
+            ],
           ),
-          _Actions(visit: visit, isBusy: isBusy, isRated: isRated),
-        ],
+        ),
       ),
     );
   }
@@ -104,9 +109,7 @@ class _StatusChip extends StatelessWidget {
       VisitStatus.cancelled => (l10n.visitStatusCancelled, colors.error),
       // RM-M07-05 — nobody confirmed. Not the tenant's fault and not the
       // visitor's, so it is stated rather than blamed.
-      VisitStatus.notFulfilled ||
-      VisitStatus.unknown =>
-        (l10n.visitStatusNotFulfilled, colors.textSecondary),
+      VisitStatus.notFulfilled || VisitStatus.unknown => (l10n.visitStatusNotFulfilled, colors.textSecondary),
     };
 
     return Container(
@@ -127,11 +130,15 @@ class _StatusChip extends StatelessWidget {
 }
 
 /// Whatever it is the tenant's turn to do — often nothing.
-class _Actions extends StatelessWidget {
-  const _Actions({
+///
+/// Public because the card and the detail screen offer the same actions, and
+/// two copies of "can this still be cancelled" is one copy too many.
+class VisitActions extends StatelessWidget {
+  const VisitActions({
+    super.key,
     required this.visit,
-    required this.isBusy,
-    required this.isRated,
+    this.isBusy = false,
+    this.isRated = false,
   });
 
   final Visit visit;
@@ -162,8 +169,7 @@ class _Actions extends StatelessWidget {
         if (VisitRules.canCancel(visit)) ...[
           const SizedBox(height: Dimens.spacingSm),
           TextButton(
-            onPressed:
-                isBusy ? null : () => _confirmCancel(context, bloc, l10n),
+            onPressed: isBusy ? null : () => _confirmCancel(context, bloc, l10n),
             child: Text(
               l10n.visitCancel,
               style: context.mboaText.label.copyWith(color: colors.error),
@@ -181,8 +187,7 @@ class _Actions extends StatelessWidget {
             _Note(icon: LucideIcons.check, text: l10n.visitRateDone)
           else
             _Rating(
-              onRate: (rating) =>
-                  bloc.add(VisitorRated(visitId: visit.id, rating: rating)),
+              onRate: (rating) => bloc.add(VisitorRated(visitId: visit.id, rating: rating)),
             ),
         ],
       ],
@@ -279,8 +284,7 @@ class _Note extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: context.mboaText.caption
-                  .copyWith(color: colors.textSecondary),
+              style: context.mboaText.caption.copyWith(color: colors.textSecondary),
             ),
           ),
         ],

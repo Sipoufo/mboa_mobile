@@ -9,6 +9,7 @@ import 'package:mboa_user/features/visits/bloc/my_visits_bloc.dart';
 import 'package:mboa_user/features/visits/bloc/visit_booking_bloc.dart';
 import 'package:mboa_user/features/visits/models/bookable_visitor.dart';
 import 'package:mboa_user/features/visits/ui/book_visit_sheet.dart';
+import 'package:mboa_user/features/visits/ui/visit_detail_page.dart';
 import 'package:mboa_user/features/visits/ui/widgets/visit_card.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -52,6 +53,24 @@ void main() {
     visits = MockMyVisitsBloc();
     when(() => visits.state).thenReturn(const MyVisitsReady());
   });
+
+  /// For a child that scrolls on its own — a `ListView` inside the scroll view
+  /// [pump] provides would have no height to lay out in.
+  Future<void> pumpScrollable(WidgetTester tester, Widget child) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('fr'),
+        theme: MboaTheme.light(),
+        localizationsDelegates: MboaLocalizations.delegates,
+        supportedLocales: MboaLocalizations.supportedLocales,
+        home: BlocProvider<MyVisitsBloc>.value(
+          value: visits,
+          child: Scaffold(body: child),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
 
   Future<void> pump(WidgetTester tester, Widget child) async {
     await tester.pumpWidget(
@@ -153,6 +172,37 @@ void main() {
       expect(find.text('Annuler la visite'), findsNothing);
       // Nor should it claim it is too late to cancel what is already gone.
       expect(find.textContaining('n\'est plus possible'), findsNothing);
+    });
+  });
+
+  group('the visit detail screen', () {
+    testWidgets('RM-M07-05 — it says who is still awaited, by name',
+        (tester) async {
+      await pumpScrollable(
+        tester,
+        VisitDetailBody(
+          visit: visit(at: soon, clientConfirmedAt: DateTime.now()),
+        ),
+      );
+
+      // "Waiting" on its own is ambiguous: the tenant needs to know whether
+      // they are the one being waited for.
+      expect(find.text('Vous'), findsOneWidget);
+      expect(find.text('Le visiteur'), findsOneWidget);
+      expect(find.text('Confirmé'), findsOneWidget);
+      expect(find.text('Pas encore'), findsOneWidget);
+    });
+
+    testWidgets('RM-M15-06 — a proposed slot cannot be confirmed by the tenant',
+        (tester) async {
+      await pumpScrollable(
+        tester,
+        VisitDetailBody(
+          visit: visit(status: VisitStatus.requested, at: later),
+        ),
+      );
+
+      expect(find.textContaining('doit encore confirmer'), findsOneWidget);
     });
   });
 

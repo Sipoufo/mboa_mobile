@@ -476,6 +476,50 @@
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
+  "visitDetailTitle": "Détail de la visite",
+  "@visitDetailTitle": {
+    "description": "M07 visit detail screen."
+  },
+  "visitPresenceSection": "Présence sur place",
+  "@visitPresenceSection": {
+    "description": "RM-M07-05 — the mutual confirmation block."
+  },
+  "visitPresenceYou": "Vous",
+  "@visitPresenceYou": {
+    "description": "RM-M07-05 — the tenant's half."
+  },
+  "visitPresenceVisitor": "Le visiteur",
+  "@visitPresenceVisitor": {
+    "description": "RM-M07-05 — the visitor's half."
+  },
+  "visitPresenceConfirmed": "Confirmé",
+  "@visitPresenceConfirmed": {
+    "description": "One half is in."
+  },
+  "visitPresencePending": "Pas encore",
+  "@visitPresencePending": {
+    "description": "One half is missing."
+  },
+  "visitPresenceExplainer": "La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.",
+  "@visitPresenceExplainer": {
+    "description": "RM-M07-05."
+  },
+  "visitAwaitingVisitor": "Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.",
+  "@visitAwaitingVisitor": {
+    "description": "RM-M15-06 — the tenant cannot confirm for the visitor."
+  },
+  "visitSeeListing": "Voir le bien",
+  "@visitSeeListing": {
+    "description": "Open the listing from a visit."
+  },
+  "visitsFilterUpcoming": "À venir",
+  "@visitsFilterUpcoming": {
+    "description": "My visits filter."
+  },
+  "visitsFilterPast": "Passées",
+  "@visitsFilterPast": {
+    "description": "My visits filter."
+  },
   "searchResultCount": "{count, plural, =0{Aucun bien} =1{1 bien} other{{count} biens}}",
   "@searchResultCount": {
     "description": "How many results are on screen, above the list.",

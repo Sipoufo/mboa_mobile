@@ -72,6 +72,7 @@ class AppRouter extends RootStackRouter {
             // M07 — a visit belongs to an account, so it lives behind the
             // session guard with the rest of `/app`.
             AutoRoute(page: MyVisitsRoute.page, path: 'visits'),
+            AutoRoute(page: VisitDetailRoute.page, path: 'visits/:visitId'),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),

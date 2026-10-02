@@ -1439,6 +1439,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitAlreadyBooked": MessageLookupByLibrary.simpleMessage(
       "You already have a visit running on this property.",
     ),
+    "visitAwaitingVisitor": MessageLookupByLibrary.simpleMessage(
+      "The visitor still has to confirm this time. You cannot confirm on their behalf.",
+    ),
     "visitBookConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm the visit",
     ),
@@ -1456,6 +1459,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "It is too late to cancel. Reach the visitor through messages.",
     ),
     "visitConfirmPresence": MessageLookupByLibrary.simpleMessage("I\'m here"),
+    "visitDetailTitle": MessageLookupByLibrary.simpleMessage("Visit details"),
     "visitNoSlotAvailability": MessageLookupByLibrary.simpleMessage(
       "Nobody has declared hours for this property yet. Reach the provider through messages.",
     ),
@@ -1465,6 +1469,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitNoSlotBooked": MessageLookupByLibrary.simpleMessage(
       "Every slot in the next 7 days is taken.",
     ),
+    "visitPresenceConfirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
+    "visitPresenceExplainer": MessageLookupByLibrary.simpleMessage(
+      "The visit only starts once you and the visitor have both confirmed being there.",
+    ),
+    "visitPresencePending": MessageLookupByLibrary.simpleMessage("Not yet"),
+    "visitPresenceSection": MessageLookupByLibrary.simpleMessage(
+      "On-site presence",
+    ),
+    "visitPresenceVisitor": MessageLookupByLibrary.simpleMessage("The visitor"),
+    "visitPresenceYou": MessageLookupByLibrary.simpleMessage("You"),
     "visitRateBody": MessageLookupByLibrary.simpleMessage(
       "Optional. This rates the visitor\'s service, not the property.",
     ),
@@ -1476,6 +1490,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The visitor still has to confirm this time. You will be notified.",
     ),
     "visitRequestedTitle": MessageLookupByLibrary.simpleMessage("Request sent"),
+    "visitSeeListing": MessageLookupByLibrary.simpleMessage("See the property"),
     "visitStatusCancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
     "visitStatusCompleted": MessageLookupByLibrary.simpleMessage("Done"),
     "visitStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1543,6 +1558,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsEmptyUpcoming": MessageLookupByLibrary.simpleMessage(
       "No visit scheduled",
     ),
+    "visitsFilterPast": MessageLookupByLibrary.simpleMessage("Past"),
+    "visitsFilterUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsLocating": MessageLookupByLibrary.simpleMessage("Locating…"),
     "visitsLocationDenied": MessageLookupByLibrary.simpleMessage(
       "Allow location access to confirm your presence.",

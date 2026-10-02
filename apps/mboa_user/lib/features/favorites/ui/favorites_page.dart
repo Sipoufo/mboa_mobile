@@ -35,6 +35,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
+    // The shell survives a sign-in, so this page is never rebuilt by the
+    // navigation — it has to listen for the session itself, or it keeps
+    // offering to create an account to someone who just made one.
+    return ListenableBuilder(
+      listenable: getIt<SessionSnapshot>(),
+      builder: (context, _) => _build(context),
+    );
+  }
+
+  Widget _build(BuildContext context) {
     final l10n = I18n.of(context);
 
     if (!getIt<SessionSnapshot>().hasSession) {

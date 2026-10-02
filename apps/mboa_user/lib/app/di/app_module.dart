@@ -88,7 +88,10 @@ void registerAppModule() {
   getIt.registerFactory<VisitBookingBloc>(
     () => VisitBookingBloc(repository: getIt<VisitsRepository>()),
   );
-  getIt.registerFactory<MyVisitsBloc>(
+  // A singleton, like favourites: the list and the detail screen must agree
+  // about a visit, and a detail built from its own bloc would open empty on a
+  // route pushed outside the list's provider.
+  getIt.registerLazySingleton<MyVisitsBloc>(
     () => MyVisitsBloc(repository: getIt<VisitsRepository>()),
   );
 
@@ -162,6 +165,18 @@ void registerAppModule() {
   );
 }
 
+/// Loads what a fresh session makes readable.
+///
+/// Favourites and conversations are lazy singletons living under the tab
+/// shell, and the shell **survives a sign-in** — `replaceAll` lands on the same
+/// route, so the tab pages are not rebuilt and their `initState` never runs
+/// again. Without this the tenant signs in, opens Messages, and is told they
+/// have no conversations while the server holds several.
+void loadSessionScopedBlocs() {
+  getIt<FavoritesBloc>().add(const FavoritesLoadRequested());
+  getIt<ConversationsBloc>().add(const ConversationsLoadRequested());
+}
+
 /// Drops the blocs that belong to a signed-in account.
 ///
 /// Favourites and conversations are lazy singletons so every heart and every
@@ -173,6 +188,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<ConversationsBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<MyVisitsBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
 }

@@ -6,6 +6,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../bloc/my_visits_bloc.dart';
 import 'widgets/visit_card.dart';
 
@@ -19,8 +20,8 @@ class MyVisitsPage extends StatelessWidget implements AutoRouteWrapper {
   const MyVisitsPage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<MyVisitsBloc>(
-        create: (_) => getIt<MyVisitsBloc>()..add(const MyVisitsRequested()),
+  Widget wrappedRoute(BuildContext context) => BlocProvider<MyVisitsBloc>.value(
+        value: getIt<MyVisitsBloc>()..add(const MyVisitsRequested()),
         child: this,
       );
 
@@ -30,7 +31,12 @@ class MyVisitsPage extends StatelessWidget implements AutoRouteWrapper {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.visitsTitle)),
+      appBar: AppBar(
+        // Pushed into the nested `/app` router, where the inner Navigator has
+        // nothing to pop — `AutoLeadingButton` knows about the stack above it.
+        leading: const AutoLeadingButton(),
+        title: Text(l10n.visitsTitle),
+      ),
       body: BlocConsumer<MyVisitsBloc, MyVisitsState>(
         listenWhen: (previous, current) =>
             current is MyVisitsReady && current.failed,
@@ -52,68 +58,170 @@ class MyVisitsPage extends StatelessWidget implements AutoRouteWrapper {
   }
 }
 
-class _List extends StatelessWidget {
+/// À venir / Passées.
+enum _Filter { upcoming, past }
+
+class _List extends StatefulWidget {
   const _List({required this.state});
 
   final MyVisitsReady state;
 
   @override
+  State<_List> createState() => _ListState();
+}
+
+class _ListState extends State<_List> {
+  /// Upcoming first: a tenant opens this to check a visit they have, far more
+  /// often than to look back at one they had.
+  _Filter _filter = _Filter.upcoming;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = widget.state;
+    final bloc = context.read<MyVisitsBloc>();
+    final shown =
+        _filter == _Filter.upcoming ? state.upcoming : state.past;
+
+    return Column(
+      children: [
+        if (state.isOffline)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              Dimens.screenMargin,
+              Dimens.spacing,
+              Dimens.screenMargin,
+              0,
+            ),
+            child: _OfflineBanner(),
+          ),
+        Padding(
+          padding: const EdgeInsets.all(Dimens.screenMargin),
+          child: _FilterBar(
+            filter: _filter,
+            upcomingCount: state.upcoming.length,
+            pastCount: state.past.length,
+            onChanged: (filter) => setState(() => _filter = filter),
+          ),
+        ),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async => bloc.add(const MyVisitsRequested()),
+            child: shown.isEmpty
+                ? _EmptyFilter(filter: _filter)
+                : ListView.builder(
+                    padding: const EdgeInsets.fromLTRB(
+                      Dimens.screenMargin,
+                      0,
+                      Dimens.screenMargin,
+                      Dimens.spacingXl,
+                    ),
+                    itemCount: shown.length,
+                    itemBuilder: (context, index) {
+                      final visit = shown[index];
+                      return VisitCard(
+                        visit: visit,
+                        isBusy: state.busyVisitId == visit.id,
+                        isRated: state.ratedVisitIds.contains(visit.id),
+                        onTap: () => context.router.push(
+                          VisitDetailRoute(visitId: visit.id),
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The counts are on the tabs on purpose: "Passées (0)" answers the question
+/// before the tap, and an empty tab you chose is not a surprise.
+class _FilterBar extends StatelessWidget {
+  const _FilterBar({
+    required this.filter,
+    required this.upcomingCount,
+    required this.pastCount,
+    required this.onChanged,
+  });
+
+  final _Filter filter;
+  final int upcomingCount;
+  final int pastCount;
+  final ValueChanged<_Filter> onChanged;
+
+  @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
-    final bloc = context.read<MyVisitsBloc>();
+    final colors = context.mboaColors;
 
-    return RefreshIndicator(
-      onRefresh: () async => bloc.add(const MyVisitsRequested()),
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(
-          Dimens.screenMargin,
-          Dimens.spacing,
-          Dimens.screenMargin,
-          Dimens.spacingXl,
-        ),
+    return Container(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: colors.surfaceWarm,
+        borderRadius: BorderRadius.circular(Dimens.radiusFull),
+      ),
+      child: Row(
         children: [
-          if (state.isOffline) ...[
-            _OfflineBanner(),
-            const SizedBox(height: Dimens.spacing),
-          ],
-          if (state.upcoming.isNotEmpty) ...[
-            _SectionTitle(l10n.visitsUpcoming),
-            for (final visit in state.upcoming)
-              VisitCard(
-                visit: visit,
-                isBusy: state.busyVisitId == visit.id,
-                isRated: state.ratedVisitIds.contains(visit.id),
+          for (final value in _Filter.values)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => onChanged(value),
+                behavior: HitTestBehavior.opaque,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  curve: Curves.easeOut,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Dimens.spacingSm,
+                  ),
+                  decoration: BoxDecoration(
+                    color: value == filter ? colors.primary : Colors.transparent,
+                    borderRadius: BorderRadius.circular(Dimens.radiusFull),
+                  ),
+                  child: Text(
+                    switch (value) {
+                      _Filter.upcoming =>
+                        '${l10n.visitsFilterUpcoming} ($upcomingCount)',
+                      _Filter.past => '${l10n.visitsFilterPast} ($pastCount)',
+                    },
+                    textAlign: TextAlign.center,
+                    style: context.mboaText.label.copyWith(
+                      color: value == filter ? colors.onBrand : colors.textSecondary,
+                    ),
+                  ),
+                ),
               ),
-            const SizedBox(height: Dimens.spacingLg),
-          ],
-          if (state.past.isNotEmpty) ...[
-            _SectionTitle(l10n.visitsPast),
-            for (final visit in state.past)
-              VisitCard(
-                visit: visit,
-                isBusy: state.busyVisitId == visit.id,
-                isRated: state.ratedVisitIds.contains(visit.id),
-              ),
-          ],
+            ),
         ],
       ),
     );
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
+class _EmptyFilter extends StatelessWidget {
+  const _EmptyFilter({required this.filter});
 
-  final String title;
+  final _Filter filter;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: Dimens.spacingMd),
-        child: Text(
-          title,
-          style: context.mboaText.h3.copyWith(color: context.mboaColors.ink),
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    // A scrollable, so the pull-to-refresh still works on an empty tab.
+    return ListView(
+      padding: const EdgeInsets.all(Dimens.spacingXl),
+      children: [
+        Text(
+          filter == _Filter.upcoming
+              ? l10n.visitsEmptyUpcoming
+              : l10n.visitsEmptyPast,
+          textAlign: TextAlign.center,
+          style: context.mboaText.body
+              .copyWith(color: context.mboaColors.textSecondary),
         ),
-      );
+      ],
+    );
+  }
 }
 
 class _OfflineBanner extends StatelessWidget {

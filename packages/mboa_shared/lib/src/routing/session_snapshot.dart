@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../features/profile/models/account_role.dart';
 
 /// Synchronous view of "is there a live session right now?", readable from a
@@ -11,7 +13,12 @@ import '../features/profile/models/account_role.dart';
 ///
 /// This deliberately holds **no token material** — only whether one exists.
 /// Tokens stay exclusively in `SecureTokenStorage`.
-class SessionSnapshot {
+///
+/// It is also a [ChangeNotifier], because a screen that reads it outside a
+/// bloc builder — "sign in to see your favourites" — otherwise keeps saying
+/// that after the sign-in: the tab shell survives the transition, so its pages
+/// are never rebuilt and `initState` never runs again.
+class SessionSnapshot extends ChangeNotifier {
   bool _hasSession = false;
   AccountRole? _role;
 
@@ -29,10 +36,12 @@ class SessionSnapshot {
   void markAuthenticated({AccountRole? role}) {
     _hasSession = true;
     _role = role;
+    notifyListeners();
   }
 
   void markUnauthenticated() {
     _hasSession = false;
     _role = null;
+    notifyListeners();
   }
 }
