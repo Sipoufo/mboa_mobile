@@ -12,6 +12,7 @@ import '../../features/search/bloc/search_bloc.dart';
 import '../../features/search/data/search_repository.dart';
 import '../../features/visits/bloc/my_visits_bloc.dart';
 import '../../features/visits/bloc/visit_booking_bloc.dart';
+import '../../features/visits/bloc/write_review_bloc.dart';
 import '../../features/visits/data/visits_repository.dart';
 import '../../features/splash/logic/splash_cubit.dart';
 import '../login_flow_controller_impl.dart';
@@ -93,6 +94,15 @@ void registerAppModule() {
   // route pushed outside the list's provider.
   getIt.registerLazySingleton<MyVisitsBloc>(
     () => MyVisitsBloc(repository: getIt<VisitsRepository>()),
+  );
+
+  // Rapport de visite (M07bis) — the client writes it; the repository is the
+  // one the pro app reads it with.
+  getIt.registerLazySingleton<VisitReviewRepository>(
+    () => VisitReviewRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<WriteReviewBloc>(
+    () => WriteReviewBloc(repository: getIt<VisitReviewRepository>()),
   );
 
   // Messagerie (M12) — repository, list and thread are shared with the pro

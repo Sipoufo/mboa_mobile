@@ -166,6 +166,36 @@ void main() {
     expect(find.text('Locataire'), findsOneWidget);
   });
 
+  testWidgets('M07bis — a visit report shows its bullets, not just its text',
+      (tester) async {
+    when(() => bloc.state).thenReturn(
+      ListingDetailReady(
+        detail: detail(
+          rating: const PropertyRatingSummary(average: 4.0, reviewCount: 1),
+        ),
+        reviews: [
+          ReviewEntry(
+            id: 'r-1',
+            kind: ReviewKind.visit,
+            authorName: 'Awa Nkeng',
+            rating: 4,
+            pros: const ['Quartier calme'],
+            cons: const ['Humidité au mur'],
+            publishedAt: DateTime(2026, 9, 30),
+          ),
+        ],
+      ),
+    );
+    await pump(tester);
+    await scrollTo(tester, find.text('Quartier calme'));
+
+    // The bullets are half of what M07bis asks a visitor to write; the fiche
+    // showed only the free text until the tenant app could write them.
+    expect(find.text('Quartier calme'), findsOneWidget);
+    expect(find.text('Humidité au mur'), findsOneWidget);
+    expect(find.text('Visite'), findsOneWidget);
+  });
+
   testWidgets('RM-M05-07 — no bookable visitor, no booking button',
       (tester) async {
     // Signed in: the sign-in line would otherwise take the place of the

@@ -666,3 +666,25 @@ here, and what is still open:
 **Also taken up:** malformed parameters answer `400 VALIDATION_ERROR` naming
 the parameter instead of `500`. The app's generic "server error" is now
 hiding a message worth reading; worth a pass over the error paths.
+
+---
+
+## §22 — M07bis: two ratings, two endpoints, one question
+
+**Raised 2026-10-05**, building the client's visit report.
+
+`SubmitReviewRequest` carries an optional `agentRating`, and
+`POST /visites/{id}/rating` exists on its own. Both rate the **visitor's
+service** (RM-M07-07), which is a different thing from the report's `rating`
+on the property.
+
+The app sends the visitor's rating only through `POST /visites/{id}/rating`,
+from the visit card, and leaves `agentRating` out of the report — one concept
+should not have two write paths, and a tenant who rates from the card and then
+writes a report would otherwise send it twice.
+
+**What we need to know:** is the second one refused (`409`), ignored, or does
+it overwrite? If the report's `agentRating` is the intended path, say so and
+the card's stars will move into the form instead. Related to §19.3: nothing in
+`VisiteResponse` says whether a rating was given, so the app cannot tell either
+way after a restart.

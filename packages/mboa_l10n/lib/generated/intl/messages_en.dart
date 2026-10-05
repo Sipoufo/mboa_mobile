@@ -1296,9 +1296,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
+    "reviewAddPoint": MessageLookupByLibrary.simpleMessage("Add"),
+    "reviewAlreadyWritten": MessageLookupByLibrary.simpleMessage(
+      "You have already reviewed this visit.",
+    ),
     "reviewCommentHint": MessageLookupByLibrary.simpleMessage(
       "Reply to this review…",
     ),
+    "reviewCommentLabel": MessageLookupByLibrary.simpleMessage("Comment"),
     "reviewCommentRule": MessageLookupByLibrary.simpleMessage(
       "Your reply is added to the review: it changes neither the tenant\'s rating nor their text.",
     ),
@@ -1313,17 +1318,51 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Your replies"),
     "reviewCondition": m43,
+    "reviewConditionLabel": MessageLookupByLibrary.simpleMessage(
+      "Condition as you saw it",
+    ),
     "reviewCons": MessageLookupByLibrary.simpleMessage("Negatives"),
     "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage("Deleted user"),
     "reviewExport": MessageLookupByLibrary.simpleMessage("Export as PDF"),
+    "reviewFreeTextHint": MessageLookupByLibrary.simpleMessage(
+      "What you saw, what stayed with you.",
+    ),
+    "reviewLocked": MessageLookupByLibrary.simpleMessage(
+      "Your review is published and can no longer be changed.",
+    ),
     "reviewNoneBody": MessageLookupByLibrary.simpleMessage(
       "The tenant can publish their review whenever they like. You\'ll be notified as soon as they do.",
     ),
     "reviewNoneTitle": MessageLookupByLibrary.simpleMessage("No review yet"),
+    "reviewNotAllowed": MessageLookupByLibrary.simpleMessage(
+      "A confirmed visit is required to review this property.",
+    ),
+    "reviewPhotosLabel": MessageLookupByLibrary.simpleMessage(
+      "Photos taken on site",
+    ),
+    "reviewPhotosLimit": MessageLookupByLibrary.simpleMessage(
+      "10 photos at most.",
+    ),
+    "reviewPointHint": MessageLookupByLibrary.simpleMessage(
+      "e.g. quiet street",
+    ),
     "reviewPros": MessageLookupByLibrary.simpleMessage("Positives"),
+    "reviewPublish": MessageLookupByLibrary.simpleMessage("Publish my review"),
+    "reviewPublished": MessageLookupByLibrary.simpleMessage("Review published"),
+    "reviewRatingLabel": MessageLookupByLibrary.simpleMessage("Overall rating"),
+    "reviewRatingRequired": MessageLookupByLibrary.simpleMessage(
+      "The overall rating is required.",
+    ),
     "reviewTitle": MessageLookupByLibrary.simpleMessage("Visit review"),
     "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
       "What the tenant saw",
+    ),
+    "reviewWriteCta": MessageLookupByLibrary.simpleMessage("Leave a review"),
+    "reviewWriteSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Published on the property page. You will not be able to change it.",
+    ),
+    "reviewWriteTitle": MessageLookupByLibrary.simpleMessage(
+      "Your review of this property",
     ),
     "searchAmenities": MessageLookupByLibrary.simpleMessage("Amenities"),
     "searchAny": MessageLookupByLibrary.simpleMessage("Any"),

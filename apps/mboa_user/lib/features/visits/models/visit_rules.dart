@@ -52,6 +52,18 @@ abstract final class VisitRules {
       visit.clientConfirmedAt != null &&
       visit.visitorConfirmedAt == null;
 
+  /// RM-M07bis-01 — only a visit **both parties confirmed** can be reported
+  /// on, which is exactly what `COMPLETED` means after RM-M07-05.
+  ///
+  /// `NOT_FULFILLED` is the trap: "effectuée — non confirmée par le client"
+  /// looks like a visit that happened, and the CDC refuses a report for it
+  /// precisely because only one side vouched for it.
+  ///
+  /// Whether one was already written is the server's to say (one per visit);
+  /// the screen asks when it opens.
+  static bool canWriteReview(Visit visit) =>
+      visit.status == VisitStatus.completed;
+
   /// RM-M07-07 — the agent's service, after a visit that actually happened.
   /// Never a prestataire showing their own property, and never the property
   /// itself, which is M07bis.

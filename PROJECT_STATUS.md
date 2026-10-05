@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**707 tests green, analyze clean.** `mboa_user` 135 · `mboa_pro` 432 ·
+**723 tests green, analyze clean.** `mboa_user` 151 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -48,12 +48,14 @@
 | M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
+| M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur |
+| M07bis rapport (locataire) | ✅ écriture, verrouillé une fois publié · la fiche montre points +/− et photos |
 | M12 messagerie | ✅ **both apps** — list, thread, attachments, offline queue · shared views |
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
 | Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · pas de détail ni d'annulation côté API (§14) |
-| M07bis — visitor side (read, comment, PDF) | ✅ agent + prestataire · **writing is the client's, in mboa_user** |
+| M07bis — visitor side (read, comment, PDF) | ✅ agent + prestataire · the writing half is the client's, and now exists |
 | M08 Contrat Mboa | ✅ **prestataire side** — draw up, send, answer objections, amend, sign, PDF, cancel · the tenant's half is in `mboa_user` |
 | M27 resident review | ❌ not started (endpoints exist) |
 
@@ -106,6 +108,26 @@ thread they had just started was reported as "no conversations".
 `loadSessionScopedBlocs()` asks for the favourites and threads of the new
 session — the mirror of the reset on sign-out. **Any screen that renders from
 the session outside a bloc builder has to listen for it.**
+
+### M07bis — the client writes, the visitor may only answer
+The 2026-08-13 revision moved the report from the visitor to the client, and
+that is the whole shape of the module: the tenant writes a note, bullets, a
+text and photos; the visitor can add a comment beside them and never into them
+(CA-M07bis-02).
+
+Only a `COMPLETED` visit can be reported on — which, after RM-M07-05, means
+both parties confirmed being there. `NOT_FULFILLED` is the trap: "effectuée —
+non confirmée par le client" reads like a visit that happened, and the CDC
+refuses a report for it because only one side vouched.
+
+Published is **locked** (RM-M07bis-03): the screen opens by reading any report
+that exists and shows it read-only rather than offering a form the server will
+refuse. A refusal (409 already written, 403 not confirmed) keeps the draft on
+screen — losing what someone typed would be the app's fault, not the server's.
+
+The fiche now renders the bullets and the photos too. It showed only the free
+text, so half of what M07bis asks a visitor to write would never have been
+read by anyone.
 
 ### M07 — the tenant books, and the server arbitrates
 The app never decides that a visit happened. RM-M07-05 needs both parties to

@@ -2,14 +2,17 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mboa_user/features/visits/bloc/my_visits_bloc.dart';
 import 'package:mboa_user/features/visits/bloc/visit_booking_bloc.dart';
+import 'package:mboa_user/features/visits/bloc/write_review_bloc.dart';
 import 'package:mboa_user/features/visits/models/bookable_visitor.dart';
 import 'package:mboa_user/features/visits/ui/book_visit_sheet.dart';
 import 'package:mboa_user/features/visits/ui/visit_detail_page.dart';
+import 'package:mboa_user/features/visits/ui/write_review_page.dart';
 import 'package:mboa_user/features/visits/ui/widgets/visit_card.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -17,6 +20,10 @@ import '../../../_helpers/load_brand_fonts.dart';
 
 class MockMyVisitsBloc extends MockBloc<MyVisitsEvent, MyVisitsState>
     implements MyVisitsBloc {}
+
+class MockWriteReviewBloc
+    extends MockBloc<WriteReviewEvent, WriteReviewState>
+    implements WriteReviewBloc {}
 
 class MockVisitBookingBloc
     extends MockBloc<VisitBookingEvent, VisitBookingState>
@@ -125,6 +132,28 @@ void main() {
       expect(find.text('Je suis sur place'), findsNothing);
     });
 
+    testWidgets('RM-M07bis-01 — a confirmed visit can be reported on',
+        (tester) async {
+      await pump(
+        tester,
+        VisitCard(visit: visit(status: VisitStatus.completed, at: later)),
+      );
+
+      expect(find.text('Laisser un avis'), findsOneWidget);
+    });
+
+    testWidgets('CE-M07bis-01 — a visit nobody confirmed cannot',
+        (tester) async {
+      await pump(
+        tester,
+        VisitCard(visit: visit(status: VisitStatus.notFulfilled, at: later)),
+      );
+
+      // "Effectuée — non confirmée par le client" looks like a visit that
+      // happened; the CDC refuses a report because only one side vouched.
+      expect(find.text('Laisser un avis'), findsNothing);
+    });
+
     testWidgets('RM-M07-07 — an agent is rated, an owner is not',
         (tester) async {
       await pump(
@@ -203,6 +232,76 @@ void main() {
       );
 
       expect(find.textContaining('doit encore confirmer'), findsOneWidget);
+    });
+  });
+
+  group('writing the report (M07bis)', () {
+    late MockWriteReviewBloc review;
+
+    setUp(() {
+      review = MockWriteReviewBloc();
+      when(() => review.state)
+          .thenReturn(const ReviewDraft(visitId: 'v-1'));
+    });
+
+    Future<void> pumpForm(WidgetTester tester, ReviewDraft draft) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('fr'),
+          theme: MboaTheme.light(),
+          localizationsDelegates: MboaLocalizations.delegates,
+          supportedLocales: MboaLocalizations.supportedLocales,
+          home: MultiBlocProvider(
+            providers: [
+              BlocProvider<WriteReviewBloc>.value(value: review),
+              BlocProvider<MyVisitsBloc>.value(value: visits),
+            ],
+            child: Scaffold(body: WriteReviewForm(draft: draft)),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('it says it is public and final before a word is written',
+        (tester) async {
+      await pumpForm(tester, const ReviewDraft(visitId: 'v-1'));
+
+      // RM-M07bis-03 and -05 after the fact would be a trap, not a notice.
+      expect(find.textContaining('Publié sur la fiche'), findsOneWidget);
+      expect(find.textContaining('ne pourrez plus le modifier'), findsOneWidget);
+    });
+
+    testWidgets('only the rating gates publishing', (tester) async {
+      final publish = find.widgetWithText(Button, 'Publier mon avis');
+
+      await pumpForm(tester, const ReviewDraft(visitId: 'v-1'));
+      expect(tester.widget<Button>(publish).onPressed, isNull);
+
+      // Everything else in M07bis's content table is optional.
+      await pumpForm(tester, const ReviewDraft(visitId: 'v-1', rating: 4));
+      expect(tester.widget<Button>(publish).onPressed, isNotNull);
+    });
+
+    testWidgets('the tenth photo closes the picker', (tester) async {
+      await pumpForm(
+        tester,
+        ReviewDraft(
+          visitId: 'v-1',
+          photoKeys: [for (var i = 0; i < 10; i++) 'key-$i'],
+        ),
+      );
+
+      // The photo block is below the fold on a test-sized screen.
+      await tester.scrollUntilVisible(
+        find.textContaining('10 photos'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+
+      // The cap is M07bis's; an add button that refuses is worse than none.
+      expect(find.byIcon(LucideIcons.plus), findsNothing);
+      expect(find.textContaining('10 photos'), findsOneWidget);
     });
   });
 

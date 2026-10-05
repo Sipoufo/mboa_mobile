@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +7,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../../app/router/app_router.gr.dart';
 import '../../bloc/my_visits_bloc.dart';
 import '../../models/visit_rules.dart';
 
@@ -180,6 +182,18 @@ class VisitActions extends StatelessWidget {
           // CE-M07-03 — the visitor may already be on their way, so the screen
           // says to reach them rather than offering a button that is refused.
           _Note(icon: LucideIcons.info, text: l10n.visitCancelTooLate),
+        ],
+        // M07bis — the report on the property. Offered before the rating
+        // because it is the one that feeds the property's note (RG-06); the
+        // stars below rate the visitor's service, which is a different thing.
+        if (VisitRules.canWriteReview(visit)) ...[
+          const SizedBox(height: Dimens.spacingMd),
+          Button.outline(
+            title: l10n.reviewWriteCta,
+            onPressed: () => context.router.root.push(
+              AuthenticatedRouter(children: [WriteReviewRoute(visitId: visit.id)]),
+            ),
+          ),
         ],
         if (VisitRules.canRateVisitor(visit)) ...[
           const SizedBox(height: Dimens.spacingMd),

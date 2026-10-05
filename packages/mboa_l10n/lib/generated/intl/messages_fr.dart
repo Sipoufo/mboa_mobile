@@ -1387,9 +1387,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
+    "reviewAddPoint": MessageLookupByLibrary.simpleMessage("Ajouter"),
+    "reviewAlreadyWritten": MessageLookupByLibrary.simpleMessage(
+      "Vous avez déjà donné votre avis sur cette visite.",
+    ),
     "reviewCommentHint": MessageLookupByLibrary.simpleMessage(
       "Répondre à cet avis…",
     ),
+    "reviewCommentLabel": MessageLookupByLibrary.simpleMessage("Commentaire"),
     "reviewCommentRule": MessageLookupByLibrary.simpleMessage(
       "Votre réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.",
     ),
@@ -1404,21 +1409,55 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Vos réponses"),
     "reviewCondition": m43,
+    "reviewConditionLabel": MessageLookupByLibrary.simpleMessage(
+      "État général perçu",
+    ),
     "reviewCons": MessageLookupByLibrary.simpleMessage("Points négatifs"),
     "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage(
       "Utilisateur supprimé",
     ),
     "reviewExport": MessageLookupByLibrary.simpleMessage("Exporter en PDF"),
+    "reviewFreeTextHint": MessageLookupByLibrary.simpleMessage(
+      "Ce que vous avez vu, ce qui vous a marqué.",
+    ),
+    "reviewLocked": MessageLookupByLibrary.simpleMessage(
+      "Votre avis est publié et ne peut plus être modifié.",
+    ),
     "reviewNoneBody": MessageLookupByLibrary.simpleMessage(
       "Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu\'il l\'aura fait.",
     ),
     "reviewNoneTitle": MessageLookupByLibrary.simpleMessage(
       "Aucun avis pour le moment",
     ),
+    "reviewNotAllowed": MessageLookupByLibrary.simpleMessage(
+      "Une visite confirmée est nécessaire pour laisser un avis sur ce bien.",
+    ),
+    "reviewPhotosLabel": MessageLookupByLibrary.simpleMessage(
+      "Photos prises sur place",
+    ),
+    "reviewPhotosLimit": MessageLookupByLibrary.simpleMessage(
+      "10 photos maximum.",
+    ),
+    "reviewPointHint": MessageLookupByLibrary.simpleMessage(
+      "Ex. quartier calme",
+    ),
     "reviewPros": MessageLookupByLibrary.simpleMessage("Points positifs"),
+    "reviewPublish": MessageLookupByLibrary.simpleMessage("Publier mon avis"),
+    "reviewPublished": MessageLookupByLibrary.simpleMessage("Avis publié"),
+    "reviewRatingLabel": MessageLookupByLibrary.simpleMessage("Note globale"),
+    "reviewRatingRequired": MessageLookupByLibrary.simpleMessage(
+      "La note globale est obligatoire.",
+    ),
     "reviewTitle": MessageLookupByLibrary.simpleMessage("Avis de visite"),
     "reviewWhatTheySaw": MessageLookupByLibrary.simpleMessage(
       "Ce que le locataire a vu",
+    ),
+    "reviewWriteCta": MessageLookupByLibrary.simpleMessage("Laisser un avis"),
+    "reviewWriteSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Publié sur la fiche du bien. Vous ne pourrez plus le modifier.",
+    ),
+    "reviewWriteTitle": MessageLookupByLibrary.simpleMessage(
+      "Votre avis sur ce bien",
     ),
     "searchAmenities": MessageLookupByLibrary.simpleMessage("Équipements"),
     "searchAny": MessageLookupByLibrary.simpleMessage("Peu importe"),

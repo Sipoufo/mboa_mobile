@@ -476,6 +476,74 @@
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
+  "reviewWriteCta": "Laisser un avis",
+  "@reviewWriteCta": {
+    "description": "M07bis — entry point from a completed visit."
+  },
+  "reviewWriteTitle": "Votre avis sur ce bien",
+  "@reviewWriteTitle": {
+    "description": "M07bis writing screen title."
+  },
+  "reviewWriteSubtitle": "Publié sur la fiche du bien. Vous ne pourrez plus le modifier.",
+  "@reviewWriteSubtitle": {
+    "description": "RM-M07bis-03 + RM-M07bis-05, said before writing."
+  },
+  "reviewRatingLabel": "Note globale",
+  "@reviewRatingLabel": {
+    "description": "Required, 1-5."
+  },
+  "reviewConditionLabel": "État général perçu",
+  "@reviewConditionLabel": {
+    "description": "Optional, 1-5."
+  },
+  "reviewAddPoint": "Ajouter",
+  "@reviewAddPoint": {
+    "description": "Adds a pro/con to the list."
+  },
+  "reviewPointHint": "Ex. quartier calme",
+  "@reviewPointHint": {
+    "description": "Placeholder for a pro/con."
+  },
+  "reviewCommentLabel": "Commentaire",
+  "@reviewCommentLabel": {
+    "description": "Optional free text."
+  },
+  "reviewFreeTextHint": "Ce que vous avez vu, ce qui vous a marqué.",
+  "@reviewFreeTextHint": {
+    "description": "Placeholder for the free text."
+  },
+  "reviewPhotosLabel": "Photos prises sur place",
+  "@reviewPhotosLabel": {
+    "description": "Optional, 0-10."
+  },
+  "reviewPhotosLimit": "10 photos maximum.",
+  "@reviewPhotosLimit": {
+    "description": "The cap from M07bis's content table."
+  },
+  "reviewPublish": "Publier mon avis",
+  "@reviewPublish": {
+    "description": "Submit."
+  },
+  "reviewPublished": "Avis publié",
+  "@reviewPublished": {
+    "description": "Success."
+  },
+  "reviewLocked": "Votre avis est publié et ne peut plus être modifié.",
+  "@reviewLocked": {
+    "description": "RM-M07bis-03."
+  },
+  "reviewAlreadyWritten": "Vous avez déjà donné votre avis sur cette visite.",
+  "@reviewAlreadyWritten": {
+    "description": "RM-M07bis-01 — one report per visit."
+  },
+  "reviewNotAllowed": "Une visite confirmée est nécessaire pour laisser un avis sur ce bien.",
+  "@reviewNotAllowed": {
+    "description": "CE-M07bis-01, verbatim from Doc 10."
+  },
+  "reviewRatingRequired": "La note globale est obligatoire.",
+  "@reviewRatingRequired": {
+    "description": "Only `rating` is required."
+  },
   "visitBookSubtitle": "Choisissez un visiteur et une heure.",
   "@visitBookSubtitle": {
     "description": "Booking sheet subtitle."

@@ -605,6 +605,44 @@ class _Review extends StatelessWidget {
               style: context.mboaText.body.copyWith(color: colors.ink),
             ),
           ],
+          // M07bis's content table: the bullets and the photos are half of
+          // what a visitor writes, and the fiche showed neither until the
+          // tenant app could write them.
+          if (review.pros.isNotEmpty || review.cons.isNotEmpty) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            Wrap(
+              spacing: Dimens.spacingSm,
+              runSpacing: Dimens.spacingXs,
+              children: [
+                for (final pro in review.pros)
+                  _ReviewPoint(label: pro, isPro: true),
+                for (final con in review.cons)
+                  _ReviewPoint(label: con, isPro: false),
+              ],
+            ),
+          ],
+          if (review.photoKeys.isNotEmpty) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            SizedBox(
+              height: 72,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: review.photoKeys.length,
+                separatorBuilder: (_, _) =>
+                    const SizedBox(width: Dimens.spacingSm),
+                itemBuilder: (context, index) => ClipRRect(
+                  borderRadius: BorderRadius.circular(Dimens.radius),
+                  child: SizedBox(
+                    width: 72,
+                    child: MboaNetworkImage(
+                      url: BaseProfile.mediaUrl(review.photoKeys[index]),
+                      placeholder: const MboaImagePlaceholder(size: 72),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
           for (final reply in review.replies) ...[
             const SizedBox(height: Dimens.spacingSm),
             Container(
@@ -633,6 +671,36 @@ class _Review extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// One bullet of a review — the sign carries the meaning, not the colour
+/// alone, so it still reads in greyscale and to a colour-blind reader.
+class _ReviewPoint extends StatelessWidget {
+  const _ReviewPoint({required this.label, required this.isPro});
+
+  final String label;
+  final bool isPro;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          isPro ? LucideIcons.plus : LucideIcons.minus,
+          size: 14,
+          color: isPro ? colors.success : colors.error,
+        ),
+        const SizedBox(width: Dimens.spacingXs),
+        Text(
+          label,
+          style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+        ),
+      ],
     );
   }
 }

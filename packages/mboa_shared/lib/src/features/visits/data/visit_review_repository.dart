@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:built_collection/built_collection.dart';
+
 import 'package:dio/dio.dart';
 import 'package:mboa_core/mboa_core.dart';
 
@@ -8,10 +10,11 @@ import '../models/visit_review.dart';
 /// The client's report on a visit, read by the people who carried it out
 /// (CDC M07bis).
 ///
-/// Shared: an agent reads it from his visit detail, a prestataire from his own
-/// agenda, and the client's app will read the same shape back when it writes
-/// one. **Nothing here writes the review itself** — the note and the text are
-/// the client's, and only a comment may be added beside them (RM-M07bis-04).
+/// Shared: the client writes one from App Mboa, an agent reads it from his
+/// visit detail, a prestataire from his own agenda. **The note and the text
+/// are the client's**: [submit] is the tenant app's, and the only thing the
+/// visitor may add is a [comment] beside them (RM-M07bis-04), never into
+/// them (CA-M07bis-02).
 class VisitReviewRepository {
   VisitReviewRepository({required DioClient dioClient})
       : _dioClient = dioClient;
@@ -34,6 +37,42 @@ class VisitReviewRepository {
       if (e.response?.statusCode == 404) return null;
       rethrow;
     }
+  }
+
+  /// RM-M07bis-01 — publishes the client's report, once, for a visit both
+  /// parties confirmed being at.
+  ///
+  /// Only [rating] is required; everything else is optional (M07bis's content
+  /// table), and an empty list is sent as an empty list rather than left out,
+  /// so "I had nothing good to say" and "I did not fill this in" are the same
+  /// thing to the server — which they are.
+  ///
+  /// Refusals belong to the caller: `409` for a second report on the same
+  /// visit, `403`/`409` for a visit nobody confirmed (CE-M07bis-01).
+  Future<VisitReview> submit(
+    String visiteId, {
+    required int rating,
+    int? perceivedCondition,
+    String? comment,
+    List<String> pros = const [],
+    List<String> cons = const [],
+    List<String> photoKeys = const [],
+  }) async {
+    final response = await _api.submitVisiteReview(
+      visiteId: visiteId,
+      submitReviewRequest: SubmitReviewRequest(
+        (b) => b
+          ..rating = rating
+          ..perceivedCondition = perceivedCondition
+          ..comment = (comment?.trim().isEmpty ?? true) ? null : comment!.trim()
+          ..pros = ListBuilder<String>(pros)
+          ..cons = ListBuilder<String>(cons)
+          ..photoKeys = ListBuilder<String>(photoKeys),
+      ),
+    );
+    final data = response.data;
+    if (data == null) throw StateError('submit returned no review');
+    return VisitReview.fromResponse(data);
   }
 
   /// RM-M07bis-04 — answers beside the client's words, never into them.

@@ -73,6 +73,12 @@ class AppRouter extends RootStackRouter {
             // session guard with the rest of `/app`.
             AutoRoute(page: MyVisitsRoute.page, path: 'visits'),
             AutoRoute(page: VisitDetailRoute.page, path: 'visits/:visitId'),
+            // M07bis — the report belongs to a visit, and to the account that
+            // made it.
+            AutoRoute(
+              page: WriteReviewRoute.page,
+              path: 'visits/:visitId/review',
+            ),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),

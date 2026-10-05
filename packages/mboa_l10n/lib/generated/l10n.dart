@@ -1207,6 +1207,176 @@ class I18n {
     );
   }
 
+  /// `Laisser un avis`
+  String get reviewWriteCta {
+    return Intl.message(
+      'Laisser un avis',
+      name: 'reviewWriteCta',
+      desc: 'M07bis — entry point from a completed visit.',
+      args: [],
+    );
+  }
+
+  /// `Votre avis sur ce bien`
+  String get reviewWriteTitle {
+    return Intl.message(
+      'Votre avis sur ce bien',
+      name: 'reviewWriteTitle',
+      desc: 'M07bis writing screen title.',
+      args: [],
+    );
+  }
+
+  /// `Publié sur la fiche du bien. Vous ne pourrez plus le modifier.`
+  String get reviewWriteSubtitle {
+    return Intl.message(
+      'Publié sur la fiche du bien. Vous ne pourrez plus le modifier.',
+      name: 'reviewWriteSubtitle',
+      desc: 'RM-M07bis-03 + RM-M07bis-05, said before writing.',
+      args: [],
+    );
+  }
+
+  /// `Note globale`
+  String get reviewRatingLabel {
+    return Intl.message(
+      'Note globale',
+      name: 'reviewRatingLabel',
+      desc: 'Required, 1-5.',
+      args: [],
+    );
+  }
+
+  /// `État général perçu`
+  String get reviewConditionLabel {
+    return Intl.message(
+      'État général perçu',
+      name: 'reviewConditionLabel',
+      desc: 'Optional, 1-5.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter`
+  String get reviewAddPoint {
+    return Intl.message(
+      'Ajouter',
+      name: 'reviewAddPoint',
+      desc: 'Adds a pro/con to the list.',
+      args: [],
+    );
+  }
+
+  /// `Ex. quartier calme`
+  String get reviewPointHint {
+    return Intl.message(
+      'Ex. quartier calme',
+      name: 'reviewPointHint',
+      desc: 'Placeholder for a pro/con.',
+      args: [],
+    );
+  }
+
+  /// `Commentaire`
+  String get reviewCommentLabel {
+    return Intl.message(
+      'Commentaire',
+      name: 'reviewCommentLabel',
+      desc: 'Optional free text.',
+      args: [],
+    );
+  }
+
+  /// `Ce que vous avez vu, ce qui vous a marqué.`
+  String get reviewFreeTextHint {
+    return Intl.message(
+      'Ce que vous avez vu, ce qui vous a marqué.',
+      name: 'reviewFreeTextHint',
+      desc: 'Placeholder for the free text.',
+      args: [],
+    );
+  }
+
+  /// `Photos prises sur place`
+  String get reviewPhotosLabel {
+    return Intl.message(
+      'Photos prises sur place',
+      name: 'reviewPhotosLabel',
+      desc: 'Optional, 0-10.',
+      args: [],
+    );
+  }
+
+  /// `10 photos maximum.`
+  String get reviewPhotosLimit {
+    return Intl.message(
+      '10 photos maximum.',
+      name: 'reviewPhotosLimit',
+      desc: 'The cap from M07bis\'s content table.',
+      args: [],
+    );
+  }
+
+  /// `Publier mon avis`
+  String get reviewPublish {
+    return Intl.message(
+      'Publier mon avis',
+      name: 'reviewPublish',
+      desc: 'Submit.',
+      args: [],
+    );
+  }
+
+  /// `Avis publié`
+  String get reviewPublished {
+    return Intl.message(
+      'Avis publié',
+      name: 'reviewPublished',
+      desc: 'Success.',
+      args: [],
+    );
+  }
+
+  /// `Votre avis est publié et ne peut plus être modifié.`
+  String get reviewLocked {
+    return Intl.message(
+      'Votre avis est publié et ne peut plus être modifié.',
+      name: 'reviewLocked',
+      desc: 'RM-M07bis-03.',
+      args: [],
+    );
+  }
+
+  /// `Vous avez déjà donné votre avis sur cette visite.`
+  String get reviewAlreadyWritten {
+    return Intl.message(
+      'Vous avez déjà donné votre avis sur cette visite.',
+      name: 'reviewAlreadyWritten',
+      desc: 'RM-M07bis-01 — one report per visit.',
+      args: [],
+    );
+  }
+
+  /// `Une visite confirmée est nécessaire pour laisser un avis sur ce bien.`
+  String get reviewNotAllowed {
+    return Intl.message(
+      'Une visite confirmée est nécessaire pour laisser un avis sur ce bien.',
+      name: 'reviewNotAllowed',
+      desc: 'CE-M07bis-01, verbatim from Doc 10.',
+      args: [],
+    );
+  }
+
+  /// `La note globale est obligatoire.`
+  String get reviewRatingRequired {
+    return Intl.message(
+      'La note globale est obligatoire.',
+      name: 'reviewRatingRequired',
+      desc: 'Only `rating` is required.',
+      args: [],
+    );
+  }
+
   /// `Choisissez un visiteur et une heure.`
   String get visitBookSubtitle {
     return Intl.message(
