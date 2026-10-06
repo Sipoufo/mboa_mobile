@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**726 tests green, analyze clean.** `mboa_user` 152 · `mboa_pro` 432 ·
+**731 tests green, analyze clean.** `mboa_user` 157 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -143,6 +143,23 @@ thread they had just started was reported as "no conversations".
 `loadSessionScopedBlocs()` asks for the favourites and threads of the new
 session — the mirror of the reset on sign-out. **Any screen that renders from
 the session outside a bloc builder has to listen for it.**
+
+### M07bis — and then reads it back
+A published report is read-only and downloadable: the same screen shows the
+form before, and the report plus a PDF button after (RM-M07bis-06). The
+exporter moved to `mboa_shared` — the client taking their own report away and
+the agent taking the same one are the same bytes and the same share sheet.
+
+**Whether a visit already carries a report is asked, not guessed.**
+`VisiteResponse` has no flag for it (§19.3), so the list asks once per
+*completed* visit, in parallel. A lookup that fails leaves the visit open to
+writing: not knowing is not the same as knowing there is none, and the
+server's 409 catches a second attempt.
+
+That extra round-trip made a latent race visible — an action tapped while the
+list was reloading was dropped, because its handler required a
+`MyVisitsReady` that had not arrived yet. The three actions no longer need
+one: they carry their own visit id, and only the busy flag needs a list.
 
 ### M07bis — the client writes, the visitor may only answer
 The 2026-08-13 revision moved the report from the visitor to the client, and

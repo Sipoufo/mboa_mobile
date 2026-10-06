@@ -143,6 +143,22 @@ void main() {
       expect(find.text('Laisser un avis'), findsOneWidget);
     });
 
+    testWidgets('a visit already reported on offers to read, not to write',
+        (tester) async {
+      await pump(
+        tester,
+        VisitCard(
+          visit: visit(status: VisitStatus.completed, at: later),
+          isReviewed: true,
+        ),
+      );
+
+      // RM-M07bis-01 — one report per visit; offering to write a second is
+      // offering a refusal.
+      expect(find.text('Laisser un avis'), findsNothing);
+      expect(find.text('Voir mon avis'), findsOneWidget);
+    });
+
     testWidgets('CE-M07bis-01 — a visit nobody confirmed cannot',
         (tester) async {
       await pump(
@@ -336,6 +352,49 @@ void main() {
     // throws while building, exactly as it did on the device.
     expect(tester.takeException(), isNull);
     expect(find.byType(WriteReviewPage), findsOneWidget);
+  });
+
+  group('reading the published report (RM-M07bis-03, -06)', () {
+    testWidgets('it reads back, locked, and can be taken away',
+        (tester) async {
+      await pumpScrollable(
+        tester,
+        const ReviewPublishedView(
+          review: VisitReview(
+            id: 'r-1',
+            rating: 4,
+            perceivedCondition: 3,
+            comment: 'Lumineux, mais humide au mur nord.',
+            pros: ['Quartier calme'],
+            cons: ['Humidité'],
+            comments: [ReviewComment(authorName: 'Awa', body: 'Repeint depuis.')],
+          ),
+        ),
+      );
+
+      expect(find.text('4/5'), findsOneWidget);
+      expect(find.text('Quartier calme'), findsOneWidget);
+      expect(find.text('Humidité'), findsOneWidget);
+      // RM-M07bis-04 — the visitor answers beside the report, attributed.
+      expect(find.text('Repeint depuis.'), findsOneWidget);
+      // RM-M07bis-03 — said plainly, not discovered by trying to edit.
+      expect(find.textContaining('ne peut plus être modifié'), findsOneWidget);
+      expect(find.text('Télécharger en PDF'), findsOneWidget);
+    });
+
+    testWidgets('the download is one tap', (tester) async {
+      var asked = false;
+      await pumpScrollable(
+        tester,
+        ReviewPublishedView(
+          review: const VisitReview(id: 'r-1', rating: 5),
+          onDownload: () => asked = true,
+        ),
+      );
+
+      await tester.tap(find.text('Télécharger en PDF'));
+      expect(asked, isTrue);
+    });
   });
 
   group('the booking sheet', () {

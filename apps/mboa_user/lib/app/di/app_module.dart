@@ -93,7 +93,10 @@ void registerAppModule() {
   // about a visit, and a detail built from its own bloc would open empty on a
   // route pushed outside the list's provider.
   getIt.registerLazySingleton<MyVisitsBloc>(
-    () => MyVisitsBloc(repository: getIt<VisitsRepository>()),
+    () => MyVisitsBloc(
+      repository: getIt<VisitsRepository>(),
+      reviews: getIt<VisitReviewRepository>(),
+    ),
   );
 
   // Rapport de visite (M07bis) — the client writes it; the repository is the

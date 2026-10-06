@@ -21,12 +21,17 @@ class VisitCard extends StatelessWidget {
     required this.visit,
     this.isBusy = false,
     this.isRated = false,
+    this.isReviewed = false,
     this.onTap,
   });
 
   final Visit visit;
   final bool isBusy;
   final bool isRated;
+
+  /// RM-M07bis-01 — a report has already been written for this visit, so the
+  /// screen offers to read it instead of to write a second one.
+  final bool isReviewed;
   final VoidCallback? onTap;
 
   @override
@@ -85,7 +90,12 @@ class VisitCard extends StatelessWidget {
                 visit.visitorKind == VisitorKind.owner ? l10n.visitVisitorOwner : l10n.visitVisitorAgent,
                 style: context.mboaText.caption.copyWith(color: colors.textTertiary),
               ),
-              VisitActions(visit: visit, isBusy: isBusy, isRated: isRated),
+              VisitActions(
+                visit: visit,
+                isBusy: isBusy,
+                isRated: isRated,
+                isReviewed: isReviewed,
+              ),
             ],
           ),
         ),
@@ -141,11 +151,13 @@ class VisitActions extends StatelessWidget {
     required this.visit,
     this.isBusy = false,
     this.isRated = false,
+    this.isReviewed = false,
   });
 
   final Visit visit;
   final bool isBusy;
   final bool isRated;
+  final bool isReviewed;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +201,9 @@ class VisitActions extends StatelessWidget {
         if (VisitRules.canWriteReview(visit)) ...[
           const SizedBox(height: Dimens.spacingMd),
           Button.outline(
-            title: l10n.reviewWriteCta,
+            // One report per visit: once it is written, the only thing left to
+            // do with it is read it and take it away.
+            title: isReviewed ? l10n.reviewSeeCta : l10n.reviewWriteCta,
             onPressed: () => context.router.root.push(
               AuthenticatedRouter(children: [WriteReviewRoute(visitId: visit.id)]),
             ),

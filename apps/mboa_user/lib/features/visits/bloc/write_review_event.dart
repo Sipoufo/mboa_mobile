@@ -88,3 +88,15 @@ final class ReviewPhotoRemoved extends WriteReviewEvent {
 final class ReviewSubmitted extends WriteReviewEvent {
   const ReviewSubmitted();
 }
+
+/// RM-M07bis-06 — take the published report away as a PDF. [fileName] carries
+/// the property rather than an id, because it is what the reader will see in
+/// their files.
+final class ReviewPdfRequested extends WriteReviewEvent {
+  const ReviewPdfRequested(this.fileName);
+
+  final String fileName;
+
+  @override
+  List<Object?> get props => [fileName];
+}

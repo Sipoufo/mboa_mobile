@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
@@ -61,6 +62,12 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
                 title: l10n.reviewPublished,
                 description: l10n.reviewLocked,
               );
+            case ReviewPublished(exportFailed: true):
+              MboaToast.error(
+                context: context,
+                title: l10n.commonErrorTitle,
+                description: l10n.reviewDownloadFailed,
+              );
             case ReviewDraft(refusal: final refusal?):
               MboaToast.error(
                 context: context,
@@ -74,7 +81,7 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
             case ReviewDraft():
             case ReviewLoadInProgress():
             case ReviewLoadFailure():
-            case ReviewAlreadyPublished():
+            case ReviewPublished():
               break;
           }
         },
@@ -89,8 +96,8 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
                     .copyWith(color: context.mboaColors.textSecondary),
               ),
             ),
-          // RM-M07bis-03 — locked once published.
-          ReviewAlreadyPublished() => _Locked(),
+          // RM-M07bis-03 — locked once published: read it, take it away.
+          final ReviewPublished published => _Published(state: published),
           final ReviewDraft draft => WriteReviewForm(draft: draft),
         },
       ),
@@ -98,38 +105,219 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
   }
 }
 
-class _Locked extends StatelessWidget {
+/// The published report, as its author can now read it — and take it away.
+///
+/// Public so it can be pumped without a router, like the form.
+class ReviewPublishedView extends StatelessWidget {
+  const ReviewPublishedView({
+    super.key,
+    required this.review,
+    this.isExporting = false,
+    this.onDownload,
+  });
+
+  final VisitReview review;
+  final bool isExporting;
+  final VoidCallback? onDownload;
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toLanguageTag();
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(Dimens.spacingXl),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(LucideIcons.lock, size: Dimens.iconLg, color: colors.textTertiary),
-            const SizedBox(height: Dimens.spacing),
-            Text(
-              l10n.reviewAlreadyWritten,
-              textAlign: TextAlign.center,
-              style: context.mboaText.h3.copyWith(color: colors.ink),
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(
+              Dimens.screenMargin,
+              Dimens.spacing,
+              Dimens.screenMargin,
+              Dimens.spacingXl,
             ),
-            const SizedBox(height: Dimens.spacingXs),
-            Text(
-              // A visit report describes one moment and has no reason to
-              // change — unlike a resident's review (RM-M27-02).
-              l10n.reviewLocked,
-              textAlign: TextAlign.center,
-              style: context.mboaText.body.copyWith(color: colors.textSecondary),
-            ),
-          ],
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l10n.reviewYours,
+                      style: context.mboaText.h3.copyWith(color: colors.ink),
+                    ),
+                  ),
+                  if (review.rating case final rating?)
+                    Text(
+                      '$rating/5',
+                      style: context.mboaText.h3
+                          .copyWith(color: colors.primaryDark),
+                    ),
+                ],
+              ),
+              if (review.publishedAt case final at?) ...[
+                const SizedBox(height: Dimens.spacingXs),
+                Text(
+                  l10n.reviewPublishedOn(DateFormat.yMMMMd(locale).format(at)),
+                  style: context.mboaText.caption
+                      .copyWith(color: colors.textTertiary),
+                ),
+              ],
+              const SizedBox(height: Dimens.spacingSm),
+              // Said plainly rather than discovered by trying to edit.
+              Text(
+                l10n.reviewLocked,
+                style:
+                    context.mboaText.caption.copyWith(color: colors.textSecondary),
+              ),
+              if (review.perceivedCondition case final condition?) ...[
+                const SizedBox(height: Dimens.spacingLg),
+                Text(
+                  l10n.reviewConditionValue(condition),
+                  style: context.mboaText.body.copyWith(color: colors.ink),
+                ),
+              ],
+              if (review.comment case final comment?
+                  when comment.trim().isNotEmpty) ...[
+                const SizedBox(height: Dimens.spacingLg),
+                Text(
+                  comment,
+                  style: context.mboaText.body.copyWith(color: colors.ink),
+                ),
+              ],
+              if (review.pros.isNotEmpty) ...[
+                const SizedBox(height: Dimens.spacingLg),
+                _PointList(values: review.pros, isPro: true),
+              ],
+              if (review.cons.isNotEmpty) ...[
+                const SizedBox(height: Dimens.spacingMd),
+                _PointList(values: review.cons, isPro: false),
+              ],
+              if (review.photoKeys.isNotEmpty) ...[
+                const SizedBox(height: Dimens.spacingLg),
+                SizedBox(
+                  height: 88,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: review.photoKeys.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(width: Dimens.spacingSm),
+                    itemBuilder: (context, index) => ClipRRect(
+                      borderRadius: BorderRadius.circular(Dimens.radius),
+                      child: SizedBox(
+                        width: 88,
+                        child: MboaNetworkImage(
+                          url: BaseProfile.mediaUrl(review.photoKeys[index]),
+                          placeholder: const MboaImagePlaceholder(size: 88),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              // RM-M07bis-04 — the visitor answers beside the report, never
+              // into it, and their words are attributed.
+              if (review.comments.isNotEmpty) ...[
+                const SizedBox(height: Dimens.spacingLg),
+                for (final reply in review.comments)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: Dimens.spacingSm),
+                    padding: const EdgeInsets.all(Dimens.spacingMd),
+                    decoration: BoxDecoration(
+                      color: colors.surfaceWarm,
+                      borderRadius: BorderRadius.circular(Dimens.radius),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          reply.authorName ?? '',
+                          style: context.mboaText.caption
+                              .copyWith(color: colors.primaryDark),
+                        ),
+                        const SizedBox(height: Dimens.spacingXs),
+                        Text(
+                          reply.body ?? '',
+                          style: context.mboaText.body
+                              .copyWith(color: colors.textSecondary),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ],
+          ),
         ),
-      ),
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.all(Dimens.screenMargin),
+            child: SizedBox(
+              width: double.infinity,
+              child: Button.outline(
+                title: l10n.reviewDownload,
+                isLoading: isExporting,
+                onPressed: onDownload,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
+}
+
+class _PointList extends StatelessWidget {
+  const _PointList({required this.values, required this.isPro});
+
+  final List<String> values;
+  final bool isPro;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final value in values)
+          Padding(
+            padding: const EdgeInsets.only(bottom: Dimens.spacingXs),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  isPro ? LucideIcons.plus : LucideIcons.minus,
+                  size: 14,
+                  color: isPro ? colors.success : colors.error,
+                ),
+                const SizedBox(width: Dimens.spacingSm),
+                Expanded(
+                  child: Text(
+                    value,
+                    style: context.mboaText.body.copyWith(color: colors.ink),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// Wires the published view to the bloc.
+class _Published extends StatelessWidget {
+  const _Published({required this.state});
+
+  final ReviewPublished state;
+
+  @override
+  Widget build(BuildContext context) => ReviewPublishedView(
+        review: state.review,
+        isExporting: state.isExporting,
+        onDownload: () => context.read<WriteReviewBloc>().add(
+              ReviewPdfRequested(I18n.of(context).reviewYours),
+            ),
+      );
 }
 
 /// The form itself, public so it can be pumped without a router — the page

@@ -57,6 +57,7 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
             visit: visit,
             isBusy: state.busyVisitId == visit.id,
             isRated: state.ratedVisitIds.contains(visit.id),
+            isReviewed: state.reviewedVisitIds.contains(visit.id),
           );
         },
       ),
@@ -73,11 +74,13 @@ class VisitDetailBody extends StatelessWidget {
     required this.visit,
     this.isBusy = false,
     this.isRated = false,
+    this.isReviewed = false,
   });
 
   final Visit visit;
   final bool isBusy;
   final bool isRated;
+  final bool isReviewed;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +131,12 @@ class VisitDetailBody extends StatelessWidget {
             onPressed: () =>
                 context.router.root.push(ListingDetailRoute(id: annonceId)),
           ),
-        VisitActions(visit: visit, isBusy: isBusy, isRated: isRated),
+        VisitActions(
+          visit: visit,
+          isBusy: isBusy,
+          isRated: isRated,
+          isReviewed: isReviewed,
+        ),
       ],
     );
   }

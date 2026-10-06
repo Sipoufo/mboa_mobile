@@ -122,6 +122,8 @@ class _ListState extends State<_List> {
                         visit: visit,
                         isBusy: state.busyVisitId == visit.id,
                         isRated: state.ratedVisitIds.contains(visit.id),
+                        isReviewed:
+                            state.reviewedVisitIds.contains(visit.id),
                         onTap: () => context.router.push(
                           VisitDetailRoute(visitId: visit.id),
                         ),

@@ -23,6 +23,7 @@ final class MyVisitsReady extends MyVisitsState {
     this.busyVisitId,
     this.failed = false,
     this.ratedVisitIds = const {},
+    this.reviewedVisitIds = const {},
   });
 
   /// Soonest first — what is coming is read top-down.
@@ -43,6 +44,11 @@ final class MyVisitsReady extends MyVisitsState {
   /// hidden here and the screen stops offering what would be refused.
   final Set<String> ratedVisitIds;
 
+  /// RM-M07bis-01 — one report per visit, so a visit in here is done being
+  /// written about. Read from the server, because `VisiteResponse` carries no
+  /// flag for it.
+  final Set<String> reviewedVisitIds;
+
   bool get isEmpty => upcoming.isEmpty && past.isEmpty;
 
   MyVisitsReady copyWith({
@@ -52,6 +58,7 @@ final class MyVisitsReady extends MyVisitsState {
     String? busyVisitId,
     bool failed = false,
     Set<String>? ratedVisitIds,
+    Set<String>? reviewedVisitIds,
   }) =>
       MyVisitsReady(
         upcoming: upcoming ?? this.upcoming,
@@ -60,6 +67,7 @@ final class MyVisitsReady extends MyVisitsState {
         busyVisitId: busyVisitId,
         failed: failed,
         ratedVisitIds: ratedVisitIds ?? this.ratedVisitIds,
+        reviewedVisitIds: reviewedVisitIds ?? this.reviewedVisitIds,
       );
 
   @override
@@ -70,6 +78,7 @@ final class MyVisitsReady extends MyVisitsState {
         busyVisitId,
         failed,
         ratedVisitIds,
+        reviewedVisitIds,
       ];
 }
 

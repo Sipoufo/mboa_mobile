@@ -43,7 +43,7 @@ void main() {
     build: build,
     act: (bloc) => bloc.add(const ReviewOpened('v-1')),
     // Offering a form that cannot be sent is worse than showing what was said.
-    verify: (bloc) => expect(bloc.state, isA<ReviewAlreadyPublished>()),
+    verify: (bloc) => expect(bloc.state, isA<ReviewPublished>()),
   );
 
   blocTest<WriteReviewBloc, WriteReviewState>(

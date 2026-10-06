@@ -476,6 +476,40 @@
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
+  "reviewSeeCta": "See my review",
+  "@reviewSeeCta": {
+    "description": "M07bis — a visit already reported on."
+  },
+  "reviewDownload": "Download as PDF",
+  "@reviewDownload": {
+    "description": "RM-M07bis-06."
+  },
+  "reviewDownloadFailed": "The PDF could not be generated.",
+  "@reviewDownloadFailed": {
+    "description": "RM-M07bis-06 failure."
+  },
+  "reviewYours": "Your review",
+  "@reviewYours": {
+    "description": "Heading of the read-only review."
+  },
+  "reviewPublishedOn": "Published on {date}",
+  "@reviewPublishedOn": {
+    "description": "When the review was published.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewConditionValue": "Condition as seen: {value}/5",
+  "@reviewConditionValue": {
+    "description": "Perceived condition on the read view.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
   "reviewWriteCta": "Leave a review",
   "@reviewWriteCta": {
     "description": "M07bis — entry point from a completed visit."

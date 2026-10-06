@@ -6,6 +6,10 @@ import 'package:share_plus/share_plus.dart';
 
 /// Hands a generated PDF to the operating system (RM-M07bis-06).
 ///
+/// Shared: the client downloads their own report from App Mboa, the agent and
+/// the prestataire the same one from App Mboa Pro. The same bytes, the same
+/// sheet — there was never a reason for two copies of this.
+///
 /// The endpoint answers with bytes, not a link, so there is nothing to open in
 /// a browser: the file is written to the cache and passed to the share sheet,
 /// which is where printing, saving to Files and sending live on a phone. Split

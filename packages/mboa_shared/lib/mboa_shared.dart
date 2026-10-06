@@ -47,6 +47,7 @@ export 'src/features/listings/models/search_query.dart';
 // Visits (M07 / M16) — the list model both apps read; the client, the agent and
 // the prestataire visiting his own property are served the same DTO.
 export 'src/features/visits/bloc/visits_agenda_bloc.dart';
+export 'src/features/visits/data/review_pdf_exporter.dart';
 export 'src/features/visits/data/visit_review_repository.dart';
 export 'src/features/visits/data/visits_source.dart';
 export 'src/features/visits/models/visit.dart';

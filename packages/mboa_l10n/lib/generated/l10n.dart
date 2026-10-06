@@ -1207,6 +1207,66 @@ class I18n {
     );
   }
 
+  /// `Voir mon avis`
+  String get reviewSeeCta {
+    return Intl.message(
+      'Voir mon avis',
+      name: 'reviewSeeCta',
+      desc: 'M07bis — a visit already reported on.',
+      args: [],
+    );
+  }
+
+  /// `Télécharger en PDF`
+  String get reviewDownload {
+    return Intl.message(
+      'Télécharger en PDF',
+      name: 'reviewDownload',
+      desc: 'RM-M07bis-06.',
+      args: [],
+    );
+  }
+
+  /// `Le PDF n'a pas pu être généré.`
+  String get reviewDownloadFailed {
+    return Intl.message(
+      'Le PDF n\'a pas pu être généré.',
+      name: 'reviewDownloadFailed',
+      desc: 'RM-M07bis-06 failure.',
+      args: [],
+    );
+  }
+
+  /// `Votre avis`
+  String get reviewYours {
+    return Intl.message(
+      'Votre avis',
+      name: 'reviewYours',
+      desc: 'Heading of the read-only review.',
+      args: [],
+    );
+  }
+
+  /// `Publié le {date}`
+  String reviewPublishedOn(String date) {
+    return Intl.message(
+      'Publié le $date',
+      name: 'reviewPublishedOn',
+      desc: 'When the review was published.',
+      args: [date],
+    );
+  }
+
+  /// `État général perçu : {value}/5`
+  String reviewConditionValue(int value) {
+    return Intl.message(
+      'État général perçu : $value/5',
+      name: 'reviewConditionValue',
+      desc: 'Perceived condition on the read view.',
+      args: [value],
+    );
+  }
+
   /// `Laisser un avis`
   String get reviewWriteCta {
     return Intl.message(

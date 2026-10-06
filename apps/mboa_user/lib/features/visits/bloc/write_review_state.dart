@@ -95,18 +95,39 @@ final class ReviewDraft extends WriteReviewState {
       ];
 }
 
-/// RM-M07bis-03 — a report that was already there when the screen opened.
-final class ReviewAlreadyPublished extends WriteReviewState {
-  const ReviewAlreadyPublished(this.review);
+/// RM-M07bis-03 — the published report, read-only.
+///
+/// Locked on purpose: a visit report describes one moment and has no reason to
+/// change, unlike a resident's review which the tenant corrects as the lease
+/// goes on (RM-M27-02). So this state is for reading and for taking away — the
+/// PDF of RM-M07bis-06 — and never for editing.
+final class ReviewPublished extends WriteReviewState {
+  const ReviewPublished({
+    required this.visitId,
+    required this.review,
+    this.isExporting = false,
+    this.exportFailed = false,
+  });
 
+  final String visitId;
   final VisitReview review;
+  final bool isExporting;
+  final bool exportFailed;
+
+  ReviewPublished copyWith({bool isExporting = false, bool exportFailed = false}) =>
+      ReviewPublished(
+        visitId: visitId,
+        review: review,
+        isExporting: isExporting,
+        exportFailed: exportFailed,
+      );
 
   @override
-  List<Object?> get props => [review];
+  List<Object?> get props => [visitId, review, isExporting, exportFailed];
 }
 
-/// Published just now. Separate from [ReviewAlreadyPublished] because only
-/// this one closes the screen and congratulates.
+/// Published just now. Separate from [ReviewPublished] because only this one
+/// closes the screen and congratulates.
 final class ReviewJustPublished extends WriteReviewState {
   const ReviewJustPublished(this.review);
 

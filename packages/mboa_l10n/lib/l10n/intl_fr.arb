@@ -476,6 +476,40 @@
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
+  "reviewSeeCta": "Voir mon avis",
+  "@reviewSeeCta": {
+    "description": "M07bis — a visit already reported on."
+  },
+  "reviewDownload": "Télécharger en PDF",
+  "@reviewDownload": {
+    "description": "RM-M07bis-06."
+  },
+  "reviewDownloadFailed": "Le PDF n'a pas pu être généré.",
+  "@reviewDownloadFailed": {
+    "description": "RM-M07bis-06 failure."
+  },
+  "reviewYours": "Votre avis",
+  "@reviewYours": {
+    "description": "Heading of the read-only review."
+  },
+  "reviewPublishedOn": "Publié le {date}",
+  "@reviewPublishedOn": {
+    "description": "When the review was published.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewConditionValue": "État général perçu : {value}/5",
+  "@reviewConditionValue": {
+    "description": "Perceived condition on the read view.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
   "reviewWriteCta": "Laisser un avis",
   "@reviewWriteCta": {
     "description": "M07bis — entry point from a completed visit."

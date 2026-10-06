@@ -7,9 +7,12 @@ import 'package:mocktail/mocktail.dart';
 
 class MockVisitsRepository extends Mock implements VisitsRepository {}
 
+class MockVisitReviewRepository extends Mock implements VisitReviewRepository {}
+
 /// The tenant's own visits (CDC M07).
 void main() {
   late MockVisitsRepository repository;
+  late MockVisitReviewRepository reviews;
 
   final now = DateTime(2026, 10, 1, 12);
 
@@ -34,6 +37,8 @@ void main() {
 
   setUp(() {
     repository = MockVisitsRepository();
+    reviews = MockVisitReviewRepository();
+    when(() => reviews.fetch(any())).thenAnswer((_) async => null);
     when(repository.cachedUpcoming).thenReturn(const []);
     when(() => repository.cancel(any())).thenAnswer((_) async {});
     when(() => repository.confirmPresence(any()))
@@ -46,8 +51,11 @@ void main() {
     ).thenAnswer((_) async {});
   });
 
-  MyVisitsBloc build() =>
-      MyVisitsBloc(repository: repository, now: () => now);
+  MyVisitsBloc build() => MyVisitsBloc(
+        repository: repository,
+        reviews: reviews,
+        now: () => now,
+      );
 
   blocTest<MyVisitsBloc, MyVisitsState>(
     'what is coming reads soonest first, what is done reads newest first',
@@ -117,7 +125,8 @@ void main() {
     act: (bloc) => bloc
       ..add(const MyVisitsRequested())
       ..add(const VisitPresenceConfirmed('v-1')),
-    wait: const Duration(milliseconds: 20),
+    // A reload also asks which completed visits carry a report.
+    wait: const Duration(milliseconds: 150),
     verify: (_) {
       verify(() => repository.confirmPresence('v-1')).called(1);
       // Whether both halves are in is the server's call, so the answer comes
@@ -125,6 +134,47 @@ void main() {
       verify(repository.mine).called(2);
     },
   );
+
+  group('RM-M07bis-01 — one report per visit', () {
+    blocTest<MyVisitsBloc, MyVisitsState>(
+      'a completed visit is asked whether it already carries one',
+      setUp: () {
+        when(repository.mine).thenAnswer(
+          (_) async => [
+            visit('done', status: VisitStatus.completed, at: DateTime(2026, 9, 20)),
+            visit('soon', at: DateTime(2026, 10, 5)),
+          ],
+        );
+        when(() => reviews.fetch('done'))
+            .thenAnswer((_) async => const VisitReview(id: 'r-1', rating: 4));
+      },
+      build: build,
+      act: (bloc) => bloc.add(const MyVisitsRequested()),
+      verify: (bloc) {
+        expect((bloc.state as MyVisitsReady).reviewedVisitIds, {'done'});
+        // Only the completed ones: a visit still to happen cannot have one.
+        verifyNever(() => reviews.fetch('soon'));
+      },
+    );
+
+    blocTest<MyVisitsBloc, MyVisitsState>(
+      'a lookup that fails leaves the visit open to writing',
+      setUp: () {
+        when(repository.mine).thenAnswer(
+          (_) async => [
+            visit('done', status: VisitStatus.completed, at: DateTime(2026, 9, 20)),
+          ],
+        );
+        when(() => reviews.fetch('done')).thenThrow(Exception('boom'));
+      },
+      build: build,
+      act: (bloc) => bloc.add(const MyVisitsRequested()),
+      // Not knowing is not knowing there is none: the button stays, and the
+      // server's 409 catches a second attempt.
+      verify: (bloc) =>
+          expect((bloc.state as MyVisitsReady).reviewedVisitIds, isEmpty),
+    );
+  });
 
   blocTest<MyVisitsBloc, MyVisitsState>(
     'RM-M07-07 — a rating given is not offered again',
@@ -137,7 +187,8 @@ void main() {
     act: (bloc) => bloc
       ..add(const MyVisitsRequested())
       ..add(const VisitorRated(visitId: 'v-1', rating: 5)),
-    wait: const Duration(milliseconds: 20),
+    // A reload also asks which completed visits carry a report.
+    wait: const Duration(milliseconds: 150),
     verify: (bloc) {
       // The endpoint accepts one rating and nothing in `VisiteResponse` says
       // one was given, so the screen remembers for the rest of the session.
@@ -147,23 +198,24 @@ void main() {
 
   blocTest<MyVisitsBloc, MyVisitsState>(
     'a failed cancellation keeps the visit on screen',
-    setUp: () {
-      when(repository.mine).thenAnswer(
-        (_) async => [visit('v-1', at: DateTime(2026, 10, 5))],
-      );
-      when(() => repository.cancel(any())).thenThrow(Exception('boom'));
-    },
+    setUp: () =>
+        when(() => repository.cancel(any())).thenThrow(Exception('boom')),
     build: build,
-    act: (bloc) => bloc
-      ..add(const MyVisitsRequested())
-      ..add(const VisitCancelled('v-1')),
-    wait: const Duration(milliseconds: 20),
+    // Seeded rather than loaded first: firing the load and the cancellation
+    // together races the reload against the failure, and which one lands last
+    // is not what this pins.
+    seed: () => MyVisitsReady(
+      upcoming: [visit('v-1', at: DateTime(2026, 10, 5))],
+    ),
+    act: (bloc) => bloc.add(const VisitCancelled('v-1')),
+    wait: const Duration(milliseconds: 50),
     verify: (bloc) {
       final state = bloc.state as MyVisitsReady;
       // Removing it optimistically would tell someone a visit is cancelled
-      // when the visitor is still expecting them.
+      // while the visitor is still expecting them.
       expect(state.upcoming.single.id, 'v-1');
       expect(state.failed, isTrue);
     },
   );
+
 }
