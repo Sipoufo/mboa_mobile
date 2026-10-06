@@ -52,6 +52,7 @@ class SessionRepository {
     }
 
     if (!await _networkMonitor.isOnline) {
+      _log('offline — trusting the stored token');
       return const SessionAuthenticated(fromCache: true);
     }
 
@@ -59,6 +60,7 @@ class SessionRepository {
       // The role rides along with the check that already had to happen —
       // knowing it here is what stops the wrong shell being drawn first.
       final me = await _dioClient.api.getCurrentUserApi().getMe();
+      _log('restored — /me answered');
       return SessionAuthenticated(
         role: AccountRole.fromResponse(me.data?.role),
       );
@@ -68,8 +70,10 @@ class SessionRepository {
         return _rejected(NoSessionReason.rejectedByServer);
       }
       if (_isConnectivityError(e)) {
+        _log('unreachable — trusting the stored token');
         return const SessionAuthenticated(fromCache: true);
       }
+      _log('check failed: ${e.response?.statusCode ?? e.type.name}');
       return const SessionCheckError();
     }
   }
@@ -80,11 +84,14 @@ class SessionRepository {
   /// hear about: the tester says "it logged me out again" and there is nothing
   /// to go on. One line names which of the four doors it went through.
   SessionUnauthenticated _rejected(NoSessionReason reason, {String? detail}) {
-    if (kDebugMode) {
-      final suffix = detail == null ? '' : ' — $detail';
-      debugPrint('[session] no session: ${reason.name}$suffix');
-    }
+    _log('no session: ${reason.name}${detail == null ? '' : ' — $detail'}');
     return SessionUnauthenticated(reason);
+  }
+
+  /// Every outcome speaks, not only the refusals: an absent line has to mean
+  /// "this code did not run", never "it ran and said nothing".
+  static void _log(String what) {
+    if (kDebugMode) debugPrint('[session] $what');
   }
 
   bool _isConnectivityError(DioException e) =>

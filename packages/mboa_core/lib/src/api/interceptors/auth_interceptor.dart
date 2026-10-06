@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../models/auth_tokens.dart';
 import '../../storage/secure_token_storage.dart';
@@ -68,7 +69,7 @@ class AuthInterceptor extends QueuedInterceptor {
 
     final refreshToken = await _storage.readRefreshToken();
     if (refreshToken == null) {
-      await _forceLogout();
+      await _forceLogout(why: 'no refresh token for ${err.requestOptions.path}');
       return handler.next(err);
     }
 
@@ -78,21 +79,27 @@ class AuthInterceptor extends QueuedInterceptor {
       _refreshLock = null;
 
       if (tokens == null || !tokens.isValid) {
-        await _forceLogout();
+        await _forceLogout(why: 'refresh refused for ${err.requestOptions.path}');
         return handler.next(err);
       }
 
       await _storage.save(tokens);
       final retried = await _replay(err.requestOptions, tokens.accessToken);
       return handler.resolve(retried);
-    } catch (_) {
+    } catch (error) {
       _refreshLock = null;
-      await _forceLogout();
+      await _forceLogout(why: 'refresh threw for ${err.requestOptions.path}: $error');
       return handler.next(err);
     }
   }
 
-  Future<void> _forceLogout() async {
+  /// The session is over and the tokens go. **Says so**: this is the quietest
+  /// way an app can log someone out — a request fails somewhere, the tokens
+  /// vanish, and the next screen simply offers to sign in.
+  Future<void> _forceLogout({String? why}) async {
+    if (kDebugMode) {
+      debugPrint('[session] forced logout by the interceptor${why == null ? '' : ' — $why'}');
+    }
     await _storage.clear();
     await _onSessionExpired();
   }

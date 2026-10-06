@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 
 import '../models/auth_tokens.dart';
@@ -95,7 +96,10 @@ class SessionExpiryWatcher {
     }
   }
 
+  /// Ends the session and says so — a watcher that logs someone out while the
+  /// app is idle is the hardest kind of logout to explain afterwards.
   Future<void> _expire() async {
+    if (kDebugMode) debugPrint('[session] expired by the watcher');
     stop();
     await _tokenStorage.clear();
     await _onSessionExpired();
