@@ -106,6 +106,8 @@ PODS:
     - Flutter
     - FlutterMacOS
     - Sentry/HybridSDK (= 8.58.4)
+  - share_plus (0.0.1):
+    - Flutter
   - sqflite_darwin (0.0.4):
     - Flutter
     - FlutterMacOS
@@ -122,6 +124,7 @@ DEPENDENCIES:
   - maplibre_gl (from `.symlinks/plugins/maplibre_gl/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
 
 SPEC REPOS:
@@ -164,6 +167,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   sentry_flutter:
     :path: ".symlinks/plugins/sentry_flutter/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   sqflite_darwin:
     :path: ".symlinks/plugins/sqflite_darwin/darwin"
 
@@ -193,6 +198,7 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 0e06e365080397465cc73a7a9b472d8a3bd0f377
   Sentry: 5321d74bdd28d6f6f8beaa1ca06f1fdc746bff49
   sentry_flutter: 01a996130a18996b59600c51e68b0e6364cde8b3
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
 
 PODFILE CHECKSUM: 2f3795dca274d53c9745ae7166647862abfdd4ca
