@@ -60,14 +60,8 @@ type would mean carrying a font rasteriser for six letters. The word itself
 lives in the app's name, where it is always legible.
 
 **Android needs one thing from you first.** The flavours suffix the
-application id, and `google-services.json` only knows the two production ids:
-
-```
-cm.mboa.mboa_user      cm.mboa.mboa_pro
-```
-
-Register these four in the Firebase console and re-download the file into
-`apps/<app>/android/app/`, or `dev` and `staging` Android builds fail with
+application id, and `google-services.json` only knows the two production ones.
+Until these four are registered, `dev` and `staging` Android builds fail with
 "No matching client found for package name":
 
 ```
@@ -75,4 +69,30 @@ cm.mboa.mboa_user.dev       cm.mboa.mboa_user.staging
 cm.mboa.mboa_pro.dev        cm.mboa.mboa_pro.staging
 ```
 
-iOS has no equivalent constraint — it is already building and running.
+### One Firebase project (what we have)
+
+`google-services.json` describes a **project**, not an app: its `client` array
+holds one entry per registered Android app, and ours already carries two. Add
+the four ids in the same project, download the file **once** — it comes back
+with six clients — and drop it into both `apps/<app>/android/app/`. The plugin
+picks the right block at build time from the application id. The download
+button sits under each app in the console, but every one of them yields the
+same project-wide file.
+
+### A Firebase project per environment (if you'd rather)
+
+Defensible — dev data never touches production, and a key leaked in dev opens
+nothing. There is no filename clash either, because the plugin reads the
+flavour source sets too:
+
+```
+apps/<app>/android/app/google-services.json              production
+apps/<app>/android/app/src/dev/google-services.json      the dev project
+apps/<app>/android/app/src/staging/google-services.json  the staging project
+```
+
+Nothing to configure; the lookup is automatic. On iOS the equivalent is one
+`GoogleService-Info.plist` per flavour, which needs a build phase to copy the
+right one — ask and it gets wired.
+
+iOS has no equivalent constraint today — it is already building and running.
