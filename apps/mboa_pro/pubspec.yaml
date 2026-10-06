@@ -66,8 +66,14 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-# Native (OS-level) splash shown before Flutter boots. Regenerate with:
-#   dart run flutter_native_splash:create
+# Native (OS-level) splash shown before Flutter boots.
+#
+# **Regenerate with `make brand-assets`, never with the tool alone.**
+# `flutter_native_splash` does not honour `background_image` on iOS or
+# Android — it writes a 1x1 colour swatch and stretches it — so running
+# `dart run flutter_native_splash:create` by itself flattens the wallpaper to
+# plain green. The Makefile target runs the tool for the storyboard, the
+# Android 12 style and the plumbing, then lays the real artwork back over it.
 #
 # Vert Forêt strewn with small monograms, the white logotype centred — the
 # same picture as `MboaSplashView`, which replaces it a frame later, so the
@@ -76,8 +82,6 @@ flutter:
 flutter_native_splash:
   color: "#1A5C45"
   color_dark: "#0F3829"
-  background_image: assets/splash/splash_background.png
-  background_image_dark: assets/splash/splash_background_dark.png
   image: assets/splash/splash_logo.png
   image_dark: assets/splash/splash_logo.png
   android_12:

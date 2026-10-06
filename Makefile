@@ -7,7 +7,7 @@ APPS := mboa_user mboa_pro
 # Packages that carry their own test suites.
 TEST_PACKAGES := mboa_core mboa_shared mboa_ui
 
-.PHONY: help bootstrap gen gen-api gen-code gen-l10n analyze format test coverage clean run-user run-pro
+.PHONY: help bootstrap gen gen-api gen-code gen-l10n brand-assets analyze format test coverage clean run-user run-pro
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -23,6 +23,15 @@ gen-api: ## Regenerate packages/api_client from the OpenAPI spec
 
 gen-code: ## Run build_runner (auto_route + json) for both apps
 	./scripts/gen_code.sh
+
+brand-assets: ## Regenerate logos, icons and splash screens from the brandbook
+	@set -e; \
+	for app in $(APPS); do \
+	  echo "==> native splash: $$app"; \
+	  (cd apps/$$app && dart run flutter_native_splash:create >/dev/null); \
+	done; \
+	echo "==> brand artwork (after the tool: it flattens backgrounds to 1x1)"; \
+	python3 scripts/brand/make_assets.py
 
 gen-l10n: ## Regenerate the shared I18n class from ARB files
 	./scripts/gen_l10n.sh
