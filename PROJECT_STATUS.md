@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**724 tests green, analyze clean.** `mboa_user` 152 · `mboa_pro` 432 ·
-`mboa_core` 17 · `mboa_shared` 110 · `mboa_ui` 13.
+**726 tests green, analyze clean.** `mboa_user` 152 · `mboa_pro` 432 ·
+`mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -83,6 +83,24 @@ surfaced it.
 The spec in `tools/gac/` is now the backend's `/v3/api-docs` under our header.
 Refresh it by re-exporting; a path or schema edited here to make the app
 compile is a client describing an API that does not exist.
+
+### Signed out on screen, signed in on the wire
+The startup check used to declare the session over when the **refresh** token
+was past its expiry — on its own, without a call. The access token was often
+still good, so every request kept going out authenticated while
+`SessionSnapshot.hasSession` stayed false: the Favoris, Messages and Compte
+tabs offered to create an account, and a visit booked from the same screen
+arrived at the server under the reader's name.
+
+Two rules came out of it:
+
+- **A dead refresh token does not end a usable session.** It is rejected
+  locally only when the access token is *also* known to be past. An absent
+  expiry is never treated as lapsed — a session is not thrown away over
+  something the app never knew. The refresh matters at the next 401, which is
+  the interceptor's moment, not the splash's.
+- **A rejection clears the tokens.** Concluding "no session" while leaving
+  usable ones in storage is what let the two layers disagree at all.
 
 ### A route provides every bloc it reads — all of them
 Three times now a screen pushed outside its provider has thrown

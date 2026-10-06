@@ -17,9 +17,11 @@ DioException _dio(String path, {int? status, DioExceptionType type = DioExceptio
   );
 }
 
-AuthTokens _tokens({DateTime? refreshExpiry}) => AuthTokens(
+AuthTokens _tokens({DateTime? refreshExpiry, DateTime? accessExpiry}) =>
+    AuthTokens(
       accessToken: 'a',
       refreshToken: 'r',
+      accessTokenExpiresAt: accessExpiry,
       refreshTokenExpiresAt: refreshExpiry,
     );
 
@@ -44,6 +46,8 @@ void main() {
     when(() => dioClient.api).thenReturn(apiClient);
     when(apiClient.getCurrentUserApi).thenReturn(currentUserApi);
 
+    when(storage.clear).thenAnswer((_) async {});
+
     repository = SessionRepository(
       dioClient: dioClient,
       tokenStorage: storage,
@@ -58,12 +62,48 @@ void main() {
     verifyNever(() => dioClient.api);
   });
 
-  test('refresh token already expired → unauthenticated locally (no call)', () async {
-    when(storage.readTokens).thenAnswer((_) async => _tokens(refreshExpiry: past));
+  test('both tokens expired → unauthenticated locally (no call)', () async {
+    when(storage.readTokens).thenAnswer(
+      (_) async => _tokens(refreshExpiry: past, accessExpiry: past),
+    );
 
     expect(await repository.resolve(), isA<SessionUnauthenticated>());
     verifyNever(() => network.isOnline);
     verifyNever(currentUserApi.getMe);
+  });
+
+  test('a dead refresh token does not end a session the access token can still run',
+      () async {
+    // The bug this replaces: the app declared the session over at startup on
+    // the refresh expiry alone. Every request kept working — the access token
+    // was fine — so a reader was offered "create an account" on the Favoris
+    // tab while booking a visit under their own name.
+    when(storage.readTokens).thenAnswer(
+      (_) async => _tokens(refreshExpiry: past, accessExpiry: future),
+    );
+    when(() => network.isOnline).thenAnswer((_) async => true);
+    when(currentUserApi.getMe).thenAnswer(
+      (_) async => Response(
+        requestOptions: RequestOptions(),
+        statusCode: 200,
+      ),
+    );
+
+    expect(await repository.resolve(), isA<SessionAuthenticated>());
+    // The refresh matters at the next 401, and the interceptor owns that.
+    verify(currentUserApi.getMe).called(1);
+  });
+
+  test('a rejected session leaves nothing usable behind', () async {
+    when(storage.readTokens).thenAnswer(
+      (_) async => _tokens(refreshExpiry: past, accessExpiry: past),
+    );
+
+    await repository.resolve();
+
+    // Deciding "no session" while leaving usable tokens in storage is what
+    // gives an app signed out on screen and signed in on the wire.
+    verify(storage.clear).called(1);
   });
 
   test('token + offline → authenticated from cache (offline-first)', () async {

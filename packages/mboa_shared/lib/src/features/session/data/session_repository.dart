@@ -40,14 +40,20 @@ class SessionRepository {
       return _rejected(NoSessionReason.noTokens);
     }
 
-    // Fast-path: a refresh token past its own expiry is definitively dead — the
-    // refresh (and thus /me) would 401, so reject locally without a call. A null
-    // expiry (older tokens / backend omitted it) falls through to /me.
-    final refreshExpiry = tokens.refreshTokenExpiresAt;
-    if (refreshExpiry != null && !refreshExpiry.isAfter(DateTime.now())) {
-      return _rejected(
+    // Fast-path: reject locally only when the pair is **definitively** dead —
+    // the refresh token past its own expiry *and* no access token left to work
+    // with. A dead refresh token alone proves nothing about right now: the
+    // access token may have hours on it, every request will be accepted, and
+    // declaring the session over would sign the reader out of their own screens
+    // while their bookings still go through under their name.
+    //
+    // That is not hypothetical — it is the bug this replaces. The refresh
+    // matters at the next 401, and the interceptor owns that moment.
+    if (_lapsed(tokens.refreshTokenExpiresAt) &&
+        _lapsed(tokens.accessTokenExpiresAt)) {
+      return _rejectAndClear(
         NoSessionReason.refreshExpired,
-        detail: 'refresh token expired at $refreshExpiry',
+        detail: 'both tokens expired (refresh at ${tokens.refreshTokenExpiresAt})',
       );
     }
 
@@ -66,8 +72,10 @@ class SessionRepository {
       );
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
-        // The interceptor already tried to refresh and could not.
-        return _rejected(NoSessionReason.rejectedByServer);
+        // The interceptor already tried to refresh and could not — it clears
+        // on its way out, but say so here too: this path must not depend on
+        // another object's housekeeping.
+        return _rejectAndClear(NoSessionReason.rejectedByServer);
       }
       if (_isConnectivityError(e)) {
         _log('unreachable — trusting the stored token');
@@ -78,6 +86,12 @@ class SessionRepository {
     }
   }
 
+  /// Known to be past. An **absent** expiry is not lapsed: older tokens and
+  /// backends that omit the field must fall through to `/me` rather than be
+  /// thrown away on something this app never knew.
+  static bool _lapsed(DateTime? expiry) =>
+      expiry != null && !expiry.isAfter(DateTime.now());
+
   /// Says why, out loud, in debug.
   ///
   /// A startup that silently drops a session is the hardest kind of bug to
@@ -86,6 +100,20 @@ class SessionRepository {
   SessionUnauthenticated _rejected(NoSessionReason reason, {String? detail}) {
     _log('no session: ${reason.name}${detail == null ? '' : ' — $detail'}');
     return SessionUnauthenticated(reason);
+  }
+
+  /// Makes the conclusion true.
+  ///
+  /// Deciding "no session" while leaving usable tokens in storage gives an app
+  /// that is signed out on screen and signed in on the wire: the Favoris tab
+  /// offers to create an account while a visit is booked under the reader's
+  /// name. Whatever the reason, the two layers have to agree.
+  Future<SessionResult> _rejectAndClear(
+    NoSessionReason reason, {
+    String? detail,
+  }) async {
+    await _tokenStorage.clear();
+    return _rejected(reason, detail: detail);
   }
 
   /// Every outcome speaks, not only the refusals: an absent line has to mean
