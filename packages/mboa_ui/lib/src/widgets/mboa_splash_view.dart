@@ -39,7 +39,7 @@ class MboaSplashView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  logo ?? const MboaLogo(size: 80),
+                  logo ?? const MboaLogo(height: 52),
                   if (showProgress) ...[
                     const SizedBox(height: 32),
                     const SizedBox.square(

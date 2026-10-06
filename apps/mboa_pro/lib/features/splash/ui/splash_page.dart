@@ -52,6 +52,10 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
       builder: (context, state) {
         final l10n = I18n.of(context);
         return MboaSplashView(
+          // Brand architecture (§02): the provider app signs itself "Mboa Pro",
+          // never the bare wordmark — two apps on one phone have to be told
+          // apart before either is opened.
+          logo: const MboaLogo(height: 44, lockup: MboaLogoLockup.pro),
           showProgress: state is! SplashFailure,
           footer: state is SplashFailure
               ? _RetryFooter(

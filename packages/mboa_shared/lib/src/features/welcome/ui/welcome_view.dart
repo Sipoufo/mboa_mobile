@@ -41,7 +41,7 @@ class _WelcomeViewState extends State<WelcomeView> {
               Column(
                 children: [
                   const SizedBox(height: 100,),
-                  const MboaLogo(size: 50,),
+                  const MboaLogo(height: 36),
                   const Spacer(),
 
                   Column(

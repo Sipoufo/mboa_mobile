@@ -67,7 +67,7 @@ class AuthScaffold extends StatelessWidget {
                           ),
                         ),
                       Center(
-                        child: hero ?? const MboaLogo(size: 64, variant: MboaLogoVariant.white),
+                        child: hero ?? const MboaLogo(height: 40, variant: MboaLogoVariant.white),
                       ),
                     ],
                   ),
