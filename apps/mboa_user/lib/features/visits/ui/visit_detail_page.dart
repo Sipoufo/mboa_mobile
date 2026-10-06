@@ -38,7 +38,7 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(
-        leading: const AutoLeadingButton(),
+        leading: const MboaHeaderBackButton(),
         title: Text(l10n.visitDetailTitle),
       ),
       body: BlocBuilder<MyVisitsBloc, MyVisitsState>(

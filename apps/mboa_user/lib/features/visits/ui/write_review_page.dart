@@ -22,9 +22,19 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
 
   final String visitId;
 
+  /// Both blocs, because this is a **root-level** route: it is pushed from the
+  /// visit card, outside the list's provider, so nothing above it carries
+  /// `MyVisitsBloc` — and publishing a report has to make the list re-read
+  /// itself. Third time this shape has bitten: a screen under `/app` provides
+  /// what it reads, or it provides nothing at all.
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<WriteReviewBloc>(
-        create: (_) => getIt<WriteReviewBloc>()..add(ReviewOpened(visitId)),
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<WriteReviewBloc>(
+            create: (_) => getIt<WriteReviewBloc>()..add(ReviewOpened(visitId)),
+          ),
+          BlocProvider<MyVisitsBloc>.value(value: getIt<MyVisitsBloc>()),
+        ],
         child: this,
       );
 
@@ -35,7 +45,7 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(
-        leading: const AutoLeadingButton(),
+        leading: const MboaHeaderBackButton(),
         title: Text(l10n.reviewWriteTitle),
       ),
       body: BlocConsumer<WriteReviewBloc, WriteReviewState>(

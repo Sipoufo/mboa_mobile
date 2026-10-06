@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -303,6 +304,38 @@ void main() {
       expect(find.byIcon(LucideIcons.plus), findsNothing);
       expect(find.textContaining('10 photos'), findsOneWidget);
     });
+  });
+
+  testWidgets('the review route carries both blocs it reads', (tester) async {
+    // `/app/visits/:id/review` is pushed from the visit card, outside the
+    // list's provider — and publishing makes the list re-read itself, so the
+    // page reads `MyVisitsBloc` from a tree that did not have it. Third time
+    // this shape has bitten; this is the shape, pinned.
+    final review = MockWriteReviewBloc();
+    when(() => review.state).thenReturn(const ReviewLoadInProgress());
+    getIt.registerLazySingleton<MyVisitsBloc>(() => visits);
+    getIt.registerFactory<WriteReviewBloc>(() => review);
+    addTearDown(getIt.reset);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('fr'),
+        theme: MboaTheme.light(),
+        localizationsDelegates: MboaLocalizations.delegates,
+        supportedLocales: MboaLocalizations.supportedLocales,
+        home: Builder(
+          builder: (context) =>
+              const WriteReviewPage(visitId: 'v-1').wrappedRoute(context),
+        ),
+      ),
+    );
+    // `pump`, not `pumpAndSettle`: the loader spins for ever by design.
+    await tester.pump();
+
+    // The listener reaches for `MyVisitsBloc` on publish; a missing provider
+    // throws while building, exactly as it did on the device.
+    expect(tester.takeException(), isNull);
+    expect(find.byType(WriteReviewPage), findsOneWidget);
   });
 
   group('the booking sheet', () {

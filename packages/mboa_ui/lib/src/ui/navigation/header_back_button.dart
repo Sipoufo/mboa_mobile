@@ -10,8 +10,11 @@ import 'package:mboa_ui/mboa_ui.dart';
 /// appeared, stranding the reader on the Settings hub. The stack that actually
 /// has something to go back to is the one above.
 ///
-/// A screen with an ordinary `AppBar` uses auto_route's `AutoLeadingButton`
-/// instead, which does the same reasoning and also knows close from back.
+/// Used in an `AppBar`'s `leading` too, in preference to auto_route's
+/// `AutoLeadingButton`: that one reasons about the stack just as well, but its
+/// `AutoRouter.of` throws without a router, which makes every screen carrying
+/// it unpumpable in a widget test. One button, and every screen stays testable
+/// without a router around it.
 ///
 /// When there is nothing to pop it holds the space instead, so a centred title
 /// stays centred. `Navigator.maybeOf` rather than `of`, because these views are

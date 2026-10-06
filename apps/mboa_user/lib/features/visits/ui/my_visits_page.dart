@@ -34,7 +34,7 @@ class MyVisitsPage extends StatelessWidget implements AutoRouteWrapper {
       appBar: AppBar(
         // Pushed into the nested `/app` router, where the inner Navigator has
         // nothing to pop — `AutoLeadingButton` knows about the stack above it.
-        leading: const AutoLeadingButton(),
+        leading: const MboaHeaderBackButton(),
         title: Text(l10n.visitsTitle),
       ),
       body: BlocConsumer<MyVisitsBloc, MyVisitsState>(

@@ -24,7 +24,7 @@ void main() {
   blocTest<SplashCubit, SplashState>(
     'emits [Loading, Unauthenticated] when there is no session',
     setUp: () => when(session.resolve)
-        .thenAnswer((_) async => const SessionUnauthenticated()),
+        .thenAnswer((_) async => const SessionUnauthenticated(NoSessionReason.noTokens)),
     build: () =>
         SplashCubit(sessionRepository: session, minimumDisplay: Duration.zero),
     act: (cubit) => cubit.initialize(),

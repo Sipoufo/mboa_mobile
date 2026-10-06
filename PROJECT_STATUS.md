@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**723 tests green, analyze clean.** `mboa_user` 151 · `mboa_pro` 432 ·
+**724 tests green, analyze clean.** `mboa_user` 152 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 110 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -83,6 +83,23 @@ surfaced it.
 The spec in `tools/gac/` is now the backend's `/v3/api-docs` under our header.
 Refresh it by re-exporting; a path or schema edited here to make the app
 compile is a client describing an API that does not exist.
+
+### A route provides every bloc it reads — all of them
+Three times now a screen pushed outside its provider has thrown
+`ProviderNotFoundException`: the fiche's heart, the visit detail's list, and
+the review screen's `MyVisitsBloc`. The shape is always the same — a route
+under `/app` or at the root reads a bloc that only exists under the tab shell
+or under another screen's `wrappedRoute`.
+
+A screen's `wrappedRoute` provides **everything it reads**, including what it
+reaches for in a listener, where the compiler cannot see it. The three
+session-scoped blocs are getIt singletons precisely so a second provider is
+free.
+
+Every AppBar back button is `MboaHeaderBackButton` rather than auto_route's
+`AutoLeadingButton`: the latter's `AutoRouter.of` throws without a router,
+which makes every screen carrying it unpumpable — and unpumpable is how this
+bug keeps shipping.
 
 ### A screen in a nested router has nothing to pop
 Everything under `/app` is pushed into a nested router and sits alone in its

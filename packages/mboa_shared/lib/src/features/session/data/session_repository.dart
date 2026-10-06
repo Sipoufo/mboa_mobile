@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mboa_core/mboa_core.dart';
 
 import '../../profile/models/account_role.dart';
@@ -36,7 +37,7 @@ class SessionRepository {
   Future<SessionResult> resolve() async {
     final tokens = await _tokenStorage.readTokens();
     if (tokens == null) {
-      return const SessionUnauthenticated();
+      return _rejected(NoSessionReason.noTokens);
     }
 
     // Fast-path: a refresh token past its own expiry is definitively dead — the
@@ -44,7 +45,10 @@ class SessionRepository {
     // expiry (older tokens / backend omitted it) falls through to /me.
     final refreshExpiry = tokens.refreshTokenExpiresAt;
     if (refreshExpiry != null && !refreshExpiry.isAfter(DateTime.now())) {
-      return const SessionUnauthenticated();
+      return _rejected(
+        NoSessionReason.refreshExpired,
+        detail: 'refresh token expired at $refreshExpiry',
+      );
     }
 
     if (!await _networkMonitor.isOnline) {
@@ -60,13 +64,27 @@ class SessionRepository {
       );
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
-        return const SessionUnauthenticated();
+        // The interceptor already tried to refresh and could not.
+        return _rejected(NoSessionReason.rejectedByServer);
       }
       if (_isConnectivityError(e)) {
         return const SessionAuthenticated(fromCache: true);
       }
       return const SessionCheckError();
     }
+  }
+
+  /// Says why, out loud, in debug.
+  ///
+  /// A startup that silently drops a session is the hardest kind of bug to
+  /// hear about: the tester says "it logged me out again" and there is nothing
+  /// to go on. One line names which of the four doors it went through.
+  SessionUnauthenticated _rejected(NoSessionReason reason, {String? detail}) {
+    if (kDebugMode) {
+      final suffix = detail == null ? '' : ' — $detail';
+      debugPrint('[session] no session: ${reason.name}$suffix');
+    }
+    return SessionUnauthenticated(reason);
   }
 
   bool _isConnectivityError(DioException e) =>

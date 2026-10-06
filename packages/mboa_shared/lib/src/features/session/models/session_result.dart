@@ -33,9 +33,33 @@ final class SessionAuthenticated extends SessionResult {
   List<Object?> get props => [fromCache, role];
 }
 
+/// Why the startup check decided there is no session.
+///
+/// Four very different situations end on the same screen, and without this
+/// they are indistinguishable from the outside — "why am I asked to sign in
+/// again?" has no answer you can read off a log, a crash report, or a bug
+/// report from a tester.
+enum NoSessionReason {
+  /// Nothing in secure storage: a fresh install, or a sign-out.
+  noTokens,
+
+  /// The refresh token is past its own expiry — rejected locally, without a
+  /// call, because redeeming it could only 401.
+  refreshExpired,
+
+  /// The server rejected it: `/me` answered 401 after the interceptor had
+  /// already tried, and failed, to refresh.
+  rejectedByServer,
+}
+
 /// No session, or the session was rejected by the server (refresh failed).
 final class SessionUnauthenticated extends SessionResult {
-  const SessionUnauthenticated();
+  const SessionUnauthenticated(this.reason);
+
+  final NoSessionReason reason;
+
+  @override
+  List<Object?> get props => [reason];
 }
 
 /// An unexpected error prevented the check (not a connectivity problem); the
