@@ -53,8 +53,12 @@ ifneq ($(wildcard $(ENV_FILE)),)
 DEFINES += --dart-define-from-file=$(ENV_FILE)
 endif
 
+# Each environment is a build flavour: its own bundle id, name and icon, so
+# dev, staging and production sit side by side on one phone.
+FLAVOR ?= dev
+
 run-user: ## Run App Mboa (public) in dev
-	cd apps/mboa_user && flutter run $(DEFINES)
+	cd apps/mboa_user && flutter run --flavor $(FLAVOR) $(DEFINES)
 
 run-pro: ## Run App Mboa Pro in dev
-	cd apps/mboa_pro && flutter run $(DEFINES)
+	cd apps/mboa_pro && flutter run --flavor $(FLAVOR) $(DEFINES)

@@ -35,3 +35,44 @@ passed on the command line, so the file can leave it out.
 Staging and production builds pass their own file (`env/staging.json`,
 `env/production.json`) or plain `--dart-define` flags from CI — the same keys,
 never checked in.
+
+## Build flavours
+
+`dev`, `staging` and `production` are real build flavours, not just a
+`--dart-define`: each has its own bundle id, name and app icon, so the three
+builds live side by side on one phone.
+
+| Flavour | Name (tenant / pro) | Icon ground | Bundle id suffix |
+|---------|--------------------|-------------|------------------|
+| `dev` | Mboa Dev / Mboa Pro Dev | Quasi-Noir `#1A1A1A` | `.dev` |
+| `staging` | Mboa Staging / Mboa Pro Stg | Corail `#E8735A` | `.staging` |
+| `production` | Mboa / Mboa Pro | Vert Forêt `#1A5C45` | — |
+
+```bash
+make run-user                    # dev, the default
+make run-user FLAVOR=staging
+cd apps/mboa_user && flutter build ipa --flavor production --dart-define=ENV=production
+```
+
+The ground colour is what tells them apart, rather than a "DEV" ribbon: at
+60pt a ribbon's text is about eight pixels tall and unreadable, and rendering
+type would mean carrying a font rasteriser for six letters. The word itself
+lives in the app's name, where it is always legible.
+
+**Android needs one thing from you first.** The flavours suffix the
+application id, and `google-services.json` only knows the two production ids:
+
+```
+cm.mboa.mboa_user      cm.mboa.mboa_pro
+```
+
+Register these four in the Firebase console and re-download the file into
+`apps/<app>/android/app/`, or `dev` and `staging` Android builds fail with
+"No matching client found for package name":
+
+```
+cm.mboa.mboa_user.dev       cm.mboa.mboa_user.staging
+cm.mboa.mboa_pro.dev        cm.mboa.mboa_pro.staging
+```
+
+iOS has no equivalent constraint — it is already building and running.

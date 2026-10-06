@@ -31,6 +31,30 @@ android {
         versionName = flutter.versionName
     }
 
+    // Brandbook §08: the tenant app is named "Mboa", with no subtitle; the
+    // provider app "Mboa Pro". Dev and staging say so in the name and carry a
+    // different ground on the icon, so three builds on one phone are told
+    // apart before any of them is opened.
+    //
+    // NOTE: the application id suffixes need `cm.mboa.<app>.dev` and
+    // `.staging` registered in Firebase — google-services.json only knows the
+    // two production ids today, and the plugin fails the build on a package it
+    // cannot find. See docs/brand-identity-report.md.
+    flavorDimensions += "env"
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            applicationIdSuffix = ".dev"
+        }
+        create("staging") {
+            dimension = "env"
+            applicationIdSuffix = ".staging"
+        }
+        create("production") {
+            dimension = "env"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

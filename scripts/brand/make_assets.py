@@ -34,6 +34,20 @@ VB = (0, -2, 104, 102)
 
 FOREST = (26, 92, 69)        # #1A5C45 — Vert Forêt
 FOREST_DARK = (15, 56, 41)   # #0F3829 — the dark-mode ground
+CORAL = (232, 115, 90)       # #E8735A — Corail Chaud
+INK = (26, 26, 26)           # #1A1A1A — Quasi-Noir
+
+# One ground per environment, all three from the palette.
+#
+# Not a "DEV" ribbon like some apps use: at 60pt the band's text is about
+# eight pixels tall and unreadable, and rendering type would mean carrying a
+# font rasteriser for six letters. The ground is legible at every size, and
+# the word itself lives in the app's name, where it is always readable.
+FLAVOR_GROUNDS = {
+    'production': FOREST,
+    'staging': CORAL,
+    'dev': INK,
+}
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 APPS = ('mboa_user', 'mboa_pro')
@@ -108,6 +122,40 @@ def write(path, width, height, raw):
         f.write(png(width, height, raw))
 
 
+def app_icons():
+    """The square app icon, one per environment, for both stores."""
+    import json
+    for app in APPS:
+        ios_root = f'{ROOT}/apps/{app}/ios/Runner/Assets.xcassets'
+        meta = json.load(open(f'{ios_root}/AppIcon.appiconset/Contents.json'))
+        wanted = {}
+        for image in meta['images']:
+            name = image.get('filename')
+            if not name:
+                continue
+            side = float(image['size'].split('x')[0]) * int(image['scale'].rstrip('x'))
+            wanted[name] = max(wanted.get(name, 0), round(side))
+
+        for flavor, ground in FLAVOR_GROUNDS.items():
+            suffix = '' if flavor == 'production' else flavor.capitalize()
+            out_set = f'{ios_root}/AppIcon{suffix}.appiconset'
+            os.makedirs(out_set, exist_ok=True)
+            with open(f'{out_set}/Contents.json', 'w') as f:
+                json.dump(meta, f, indent=2)
+            for name, px in sorted(wanted.items()):
+                # 0.45: the monogram's own proportion inside the brand's
+                # 1024 master, kept so every size matches the supplied icon.
+                write(f'{out_set}/{name}', px, px,
+                      monogram(px, px, glyph=0.45, rgb=(255, 255, 255), ground=ground))
+
+            res = f'{ROOT}/apps/{app}/android/app/src'
+            where = 'main' if flavor == 'production' else flavor
+            for dens, px in (('mdpi', 48), ('hdpi', 72), ('xhdpi', 96),
+                             ('xxhdpi', 144), ('xxxhdpi', 192)):
+                write(f'{res}/{where}/res/mipmap-{dens}/ic_launcher.png', px, px,
+                      monogram(px, px, glyph=0.45, rgb=(255, 255, 255), ground=ground))
+
+
 def adaptive_foregrounds():
     """The Android adaptive icon's foreground: white M, inside the safe zone."""
     for app in APPS:
@@ -177,6 +225,7 @@ def launch_logos(src_dir):
 if __name__ == '__main__':
     logo_dir = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser(
         '~/Documents/Claude/Projects/MyHome/assets 2/logo-v2')
+    app_icons()
     adaptive_foregrounds()
     launch_backgrounds()
     launch_logos(logo_dir)
