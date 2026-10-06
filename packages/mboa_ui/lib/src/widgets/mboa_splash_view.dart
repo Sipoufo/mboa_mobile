@@ -30,36 +30,59 @@ class MboaSplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
     return Scaffold(
-      backgroundColor: context.mboaColors.primaryDark,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  logo ?? const MboaLogo(height: 52),
-                  if (showProgress) ...[
-                    const SizedBox(height: 32),
-                    const SizedBox.square(
-                      dimension: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2.5),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            if (footer != null)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: footer,
+      // Vert Forêt and the same wallpaper as the OS-level splash this replaces
+      // a frame later, so the hand-off is invisible. It used to be the dark
+      // green with the logo in its default green — a green mark on a green
+      // ground, all but unreadable.
+      backgroundColor: backgroundColor ?? colors.primary,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/illustrations/brand_pattern.png',
+            package: 'mboa_ui',
+            fit: BoxFit.cover,
+          ),
+          SafeArea(
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      logo ??
+                          const MboaLogo(
+                            height: 52,
+                            variant: MboaLogoVariant.white,
+                          ),
+                      if (showProgress) ...[
+                        const SizedBox(height: 32),
+                        SizedBox.square(
+                          dimension: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.5,
+                            color: colors.onBrand,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              ),
-          ],
-        ),
+                if (footer != null)
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: footer,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

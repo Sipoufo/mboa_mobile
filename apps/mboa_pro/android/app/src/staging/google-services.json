@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "824453960145",
+    "project_id": "mboa-7162d",
+    "storage_bucket": "mboa-7162d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824453960145:android:ece7f067e79080401390f0",
+        "android_client_info": {
+          "package_name": "cm.mboa.mboa_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-ZCTz5S6lmcYfvy8oJRpiXNMoC-gTOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824453960145:android:f5412ba5226290511390f0",
+        "android_client_info": {
+          "package_name": "cm.mboa.mboa_pro.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-ZCTz5S6lmcYfvy8oJRpiXNMoC-gTOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824453960145:android:1ada7f4e407b5e3d1390f0",
+        "android_client_info": {
+          "package_name": "cm.mboa.mboa_pro.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-ZCTz5S6lmcYfvy8oJRpiXNMoC-gTOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824453960145:android:b94891689a6ae5a31390f0",
+        "android_client_info": {
+          "package_name": "cm.mboa.mboa_user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-ZCTz5S6lmcYfvy8oJRpiXNMoC-gTOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824453960145:android:987e50da7d7ad8e91390f0",
+        "android_client_info": {
+          "package_name": "cm.mboa.mboa_user.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-ZCTz5S6lmcYfvy8oJRpiXNMoC-gTOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824453960145:android:d5cf2831616dd89e1390f0",
+        "android_client_info": {
+          "package_name": "cm.mboa.mboa_user.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-ZCTz5S6lmcYfvy8oJRpiXNMoC-gTOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

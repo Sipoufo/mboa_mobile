@@ -105,6 +105,105 @@ def monogram(width, height, *, glyph, rgb, alpha=255, ground=None,
     return bytes(out)
 
 
+def _stamp(px, rotate=0.0, ss=3):
+    """Alpha mask (rows of floats 0..1) of one monogram filling `px` square.
+
+    Rendered once per size and angle, then blitted — scanline filling fifty
+    marks straight into a 1200x2400 canvas at supersample would be tens of
+    millions of cells per mark.
+    """
+    import math
+    vb_x, vb_y, vb_w, vb_h = VB
+    n = px * ss
+    scale = n / max(vb_w, vb_h)
+    cx, cy = n / 2, n / 2
+    cos_a, sin_a = math.cos(rotate), math.sin(rotate)
+    pts = []
+    for x, y in PATH:
+        dx = (x - vb_x) * scale - vb_w * scale / 2
+        dy = (y - vb_y) * scale - vb_h * scale / 2
+        pts.append((cx + dx * cos_a - dy * sin_a, cy + dx * sin_a + dy * cos_a))
+
+    rows = []
+    for py in range(n):
+        yc = py + 0.5
+        xs = []
+        for i in range(len(pts)):
+            x1, y1 = pts[i]
+            x2, y2 = pts[(i + 1) % len(pts)]
+            if (y1 <= yc < y2) or (y2 <= yc < y1):
+                xs.append(x1 + (yc - y1) * (x2 - x1) / (y2 - y1))
+        xs.sort()
+        row = bytearray(n)
+        for a, b in zip(xs[0::2], xs[1::2]):
+            for sx in range(max(0, int(a)), min(n, int(b) + 2)):
+                if a <= sx + 0.5 < b:
+                    row[sx] = 1
+        rows.append(row)
+
+    out = []
+    for y in range(px):
+        out.append([sum(rows[y * ss + dy][x * ss + dx]
+                        for dy in range(ss) for dx in range(ss)) / (ss * ss)
+                    for x in range(px)])
+    return out
+
+
+def pattern(width, height, ground, *, rgb=(255, 255, 255), seed=7):
+    """RGBA bytes: `ground`, strewn with small monograms.
+
+    A field of small marks rather than one large one. A single big M reads as
+    a cropped logo — a second logo competing with the one in the middle — while
+    a scatter reads as what it is: a texture the brand is made of.
+
+    Deterministic: the same seed gives the same wallpaper on every machine, so
+    regenerating does not churn the assets.
+    """
+    import math
+    import random
+
+    rnd = random.Random(seed)
+    buf = [[list(ground) for _ in range(width)] for _ in range(height)]
+
+    stamps = {}
+    step = width // 4
+    for row in range(-1, height // step + 2):
+        for col in range(-1, 5):
+            px = rnd.choice((28, 38, 48, 60))
+            angle = rnd.choice((-0.18, 0.0, 0.18))
+            alpha = rnd.uniform(0.05, 0.11)
+            key = (px, angle)
+            if key not in stamps:
+                stamps[key] = _stamp(px, angle)
+            mask = stamps[key]
+
+            # A jittered grid: regular enough to feel woven, irregular enough
+            # not to read as a checkerboard.
+            ox = int(col * step + rnd.uniform(-0.3, 0.3) * step)
+            oy = int(row * step + rnd.uniform(-0.3, 0.3) * step)
+            for y in range(px):
+                ty = oy + y
+                if not 0 <= ty < height:
+                    continue
+                for x in range(px):
+                    tx = ox + x
+                    if not 0 <= tx < width:
+                        continue
+                    a = mask[y][x] * alpha
+                    if a <= 0:
+                        continue
+                    px_out = buf[ty][tx]
+                    for i in range(3):
+                        px_out[i] = round(px_out[i] + (rgb[i] - px_out[i]) * a)
+
+    out = bytearray()
+    for y in range(height):
+        out += b'\x00'
+        for x in range(width):
+            out += bytes((*buf[y][x], 255))
+    return bytes(out)
+
+
 def png(width, height, raw):
     def chunk(tag, data):
         body = tag + data
@@ -168,26 +267,32 @@ def adaptive_foregrounds():
 
 
 def launch_backgrounds():
-    """Vert Forêt, with the monogram set large and low as a watermark.
+    """Vert Forêt strewn with small monograms — the brand's own wallpaper.
 
-    The watermark is 10% white rather than the 40% a flat background would
-    take: it sits under a white logotype, and at 40% the two marks compete —
-    the eye reads two logos instead of one on a textured ground.
+    Written both into the native launch screens and into `mboa_ui`, so the
+    OS-level splash and the Flutter one that replaces it are the same picture
+    and the hand-off is invisible.
     """
+    light = pattern(600, 1200, FOREST)
+    dark = pattern(600, 1200, FOREST_DARK)
+
+    shared = f'{ROOT}/packages/mboa_ui/assets/images/illustrations/brand_pattern.png'
+    write(shared, 600, 1200, light)
+
     for app in APPS:
         res = f'{ROOT}/apps/{app}/android/app/src/main/res'
         ios = f'{ROOT}/apps/{app}/ios/Runner/Assets.xcassets/LaunchBackground.imageset'
-        for ground, names in ((FOREST, [f'{res}/drawable/background.png',
-                                        f'{res}/drawable-v21/background.png',
-                                        f'{ios}/background.png']),
-                              (FOREST_DARK, [f'{res}/drawable-night/background.png',
-                                             f'{res}/drawable-night-v21/background.png',
-                                             f'{ios}/darkbackground.png'])):
-            # Drawn at 1:2, near a phone's own ratio, because the background
-            # is stretched to fill: one large shape survives that distortion,
-            # a repeating pattern would not.
-            raw = monogram(600, 1200, glyph=1.1, rgb=(255, 255, 255), alpha=26,
-                           ground=ground, centre=(0.80, 0.17))
+        splash = f'{ROOT}/apps/{app}/assets/splash'
+        for raw, names in (
+            (light, [f'{res}/drawable/background.png',
+                     f'{res}/drawable-v21/background.png',
+                     f'{ios}/background.png',
+                     f'{splash}/splash_background.png']),
+            (dark, [f'{res}/drawable-night/background.png',
+                    f'{res}/drawable-night-v21/background.png',
+                    f'{ios}/darkbackground.png',
+                    f'{splash}/splash_background_dark.png']),
+        ):
             for name in names:
                 write(name, 600, 1200, raw)
 
@@ -203,6 +308,8 @@ def launch_logos(src_dir):
         ios = f'{ROOT}/apps/{app}/ios/Runner/Assets.xcassets/LaunchImage.imageset'
         # 160pt wide, which clears the 80px brandbook minimum several times over.
         for path, px in (
+            # The source flutter_native_splash regenerates everything from.
+            (f'{ROOT}/apps/{app}/assets/splash/splash_logo.png', 640),
             (f'{res}/drawable-mdpi/splash.png', 160),
             (f'{res}/drawable-hdpi/splash.png', 240),
             (f'{res}/drawable-xhdpi/splash.png', 320),

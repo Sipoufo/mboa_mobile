@@ -58,20 +58,26 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-# Native (OS-level) splash shown before Flutter boots. Regenerate native assets
-# with: dart run flutter_native_splash:create
-# Background is Vert Forêt Foncé (#0F3829, MboaColors.primaryDark) with the white
-# logo, matching MboaSplashView for a seamless hand-off. Restyle here, then
-# re-run create.
+# Native (OS-level) splash shown before Flutter boots. Regenerate with:
+#   dart run flutter_native_splash:create
+#
+# Vert Forêt strewn with small monograms, the white logotype centred — the
+# same picture as `MboaSplashView`, which replaces it a frame later, so the
+# hand-off is invisible. Both images come from scripts/brand/make_assets.py;
+# restyle there, not here.
 flutter_native_splash:
-  color: "#0F3829"
+  color: "#1A5C45"
   color_dark: "#0F3829"
+  background_image: assets/splash/splash_background.png
+  background_image_dark: assets/splash/splash_background_dark.png
   image: assets/splash/splash_logo.png
   image_dark: assets/splash/splash_logo.png
   android_12:
+    # Android 12+ draws its own circle from the launcher icon, so it takes the
+    # monogram rather than the logotype.
     image: assets/splash/splash_logo.png
     image_dark: assets/splash/splash_logo.png
-    color: "#0F3829"
+    color: "#1A5C45"
     color_dark: "#0F3829"
   android: true
   ios: true
