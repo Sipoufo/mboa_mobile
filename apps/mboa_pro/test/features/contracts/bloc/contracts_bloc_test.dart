@@ -37,7 +37,7 @@ void main() {
     ContractsBloc build() => ContractsBloc(repository: repository);
 
     blocTest<ContractsBloc, ContractsState>(
-      'RM-M08-09 — "à vous de jouer" filters on awaiting, not on status',
+      'RM-M08-09 — "à toi de jouer" filters on awaiting, not on status',
       setUp: () => when(() => repository.list()).thenAnswer(
         (_) async => [
           contract(id: 'mine', awaiting: ContractParty.prestataire),

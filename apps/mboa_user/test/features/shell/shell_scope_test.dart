@@ -68,7 +68,7 @@ void main() {
     await pump(tester, const FavoritesPage());
 
     // An empty list would look like the app lost their favourites.
-    expect(find.text('Créez un compte pour enregistrer'), findsOneWidget);
+    expect(find.text('Crée un compte pour enregistrer'), findsOneWidget);
     expect(find.text('Aucun favori'), findsNothing);
   });
 
@@ -79,7 +79,7 @@ void main() {
     await pump(tester, const FavoritesPage());
 
     expect(find.text('Aucun favori'), findsOneWidget);
-    expect(find.textContaining('Touchez le cœur'), findsOneWidget);
+    expect(find.textContaining('Touche le cœur'), findsOneWidget);
   });
 
   testWidgets('a rented listing keeps its row, and says it is gone',

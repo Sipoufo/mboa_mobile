@@ -93,8 +93,8 @@ void main() {
       await pump(tester, withList(const ContractsListPage()));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('À vous de jouer (1)'), findsOneWidget);
-      expect(find.text('En attente de votre action'), findsOneWidget);
+      expect(find.text('À toi de jouer (1)'), findsOneWidget);
+      expect(find.text('En attente de ton action'), findsOneWidget);
     });
 
     testWidgets('RM-M08-01 — an empty list points at the biens', (tester) async {
@@ -191,7 +191,7 @@ void main() {
       // The negotiation sits below the terms and the parties.
       await tester.scrollUntilVisible(find.text('Répondre'), 200);
 
-      expect(find.text('Objection en attente de votre réponse'), findsOneWidget);
+      expect(find.text('Objection en attente de ta réponse'), findsOneWidget);
       expect(find.text('Caution'), findsWidgets);
       expect(find.text('Répondre'), findsOneWidget);
     });

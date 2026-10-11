@@ -688,3 +688,41 @@ it overwrite? If the report's `agentRating` is the intended path, say so and
 the card's stars will move into the form instead. Related to §19.3: nothing in
 `VisiteResponse` says whether a rating was given, so the app cannot tell either
 way after a restart.
+
+---
+
+## §23 — Push copy still vouvoies, and the app cannot fix it
+
+**Raised 2026-10-11**, finishing the brand-identity pass.
+
+Brandbook v2 §37 says *« On tutoie dans l'app et sur les réseaux »*, without
+distinguishing App Mboa from App Mboa Pro. §34 reserves the premium,
+vouvoyé register for documents, pitches and partners — not for product
+surfaces. The 125 French strings the app owns are now tutoyées, and
+`packages/mboa_l10n/test/voice_test.dart` keeps them that way.
+
+**Notification copy is not among them.** `PushMessage.fromData` takes `title`
+and `body` straight from the FCM payload (`packages/mboa_shared/.../models/
+push_message.dart`), so what the user reads on the lock screen is whatever the
+server composed. Today that is still the old register — the fixture we test
+against is `"Votre formule Pro est active."`, which is also what §35 gives as
+the example *not* to use for a confirmed payment.
+
+**What we need:** the server-side notification templates moved to the same
+register. For the one case the brandbook spells out, the copy is given
+verbatim:
+
+| Situation | Mboa says | Mboa does not say |
+|---|---|---|
+| Paiement confirmé | « C'est réglé. Tu recevras ta confirmation par SMS. » | « Votre transaction a été effectuée avec succès. » |
+
+The same rule covers the rest: no *veuillez*, no *prière de*, no
+*utilisateur*, no *plateforme*. The app deliberately does not rewrite these
+client-side — a notification arrives while the app is terminated, so the text
+has to be right when it leaves the server.
+
+**Alternative, if the templates are expensive to change:** send a `type` and
+the variables (`tier`, `amount`, `propertyTitle`) and let each app render the
+copy from its own ARB. That also fixes the language: a push composed
+server-side is in one language, while the app already knows which one the
+reader chose.

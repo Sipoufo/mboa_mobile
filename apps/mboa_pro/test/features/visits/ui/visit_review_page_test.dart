@@ -133,7 +133,7 @@ void main() {
     );
     await pump(tester);
 
-    expect(find.text('Utilisateur supprimé'), findsOneWidget);
+    expect(find.text('Compte supprimé'), findsOneWidget);
     expect(find.text('3/5'), findsOneWidget);
   });
 

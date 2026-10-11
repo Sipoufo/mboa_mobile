@@ -234,10 +234,10 @@ class I18n {
     );
   }
 
-  /// `Objection en attente de votre réponse`
+  /// `Objection en attente de ta réponse`
   String get contractChangePending {
     return Intl.message(
-      'Objection en attente de votre réponse',
+      'Objection en attente de ta réponse',
       name: 'contractChangePending',
       desc: 'CE-M08-03 — pending.',
       args: [],
@@ -274,10 +274,10 @@ class I18n {
     );
   }
 
-  /// `Répondez même si vous ne modifiez rien : un refus motivé est une réponse et reste au dossier.`
+  /// `Réponds même si tu ne modifies rien : un refus motivé est une réponse et reste au dossier.`
   String get contractChangeAnswerHelp {
     return Intl.message(
-      'Répondez même si vous ne modifiez rien : un refus motivé est une réponse et reste au dossier.',
+      'Réponds même si tu ne modifies rien : un refus motivé est une réponse et reste au dossier.',
       name: 'contractChangeAnswerHelp',
       desc: 'CE-M08-03.',
       args: [],
@@ -314,10 +314,10 @@ class I18n {
     );
   }
 
-  /// `Vous avez signé`
+  /// `Tu as signé`
   String get contractSignedByYou {
     return Intl.message(
-      'Vous avez signé',
+      'Tu as signé',
       name: 'contractSignedByYou',
       desc: 'Already signed by me.',
       args: [],
@@ -334,10 +334,10 @@ class I18n {
     );
   }
 
-  /// `Tapez {word} pour confirmer`
+  /// `Tape {word} pour confirmer`
   String contractSignPrompt(String word) {
     return Intl.message(
-      'Tapez $word pour confirmer',
+      'Tape $word pour confirmer',
       name: 'contractSignPrompt',
       desc: 'Signature confirmation.',
       args: [word],
@@ -424,10 +424,10 @@ class I18n {
     );
   }
 
-  /// `Votre signature`
+  /// `Ta signature`
   String get contractSignatureMine {
     return Intl.message(
-      'Votre signature',
+      'Ta signature',
       name: 'contractSignatureMine',
       desc: 'SignatureResponse.current.',
       args: [],
@@ -514,10 +514,10 @@ class I18n {
     );
   }
 
-  /// `Ce locataire n'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprenez le contrat une fois qu'il aura rejoint.`
+  /// `Ce locataire n'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprends le contrat une fois qu'il aura rejoint.`
   String get contractTenantInvited {
     return Intl.message(
-      'Ce locataire n\'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprenez le contrat une fois qu\'il aura rejoint.',
+      'Ce locataire n\'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprends le contrat une fois qu\'il aura rejoint.',
       name: 'contractTenantInvited',
       desc: 'CE-M08-01.',
       args: [],
@@ -544,10 +544,10 @@ class I18n {
     );
   }
 
-  /// `À vous de jouer`
+  /// `À toi de jouer`
   String get contractsFilterMine {
     return Intl.message(
-      'À vous de jouer',
+      'À toi de jouer',
       name: 'contractsFilterMine',
       desc: 'RM-M08-09 — awaiting = PRESTATAIRE or BOTH.',
       args: [],
@@ -574,10 +574,10 @@ class I18n {
     );
   }
 
-  /// `Un Contrat Mboa part toujours d'un bien. Ouvrez la fiche du bien concerné pour en rédiger un.`
+  /// `Un Contrat Mboa part toujours d'un bien. Ouvre la fiche du bien concerné pour en rédiger un.`
   String get contractsEmptyBody {
     return Intl.message(
-      'Un Contrat Mboa part toujours d\'un bien. Ouvrez la fiche du bien concerné pour en rédiger un.',
+      'Un Contrat Mboa part toujours d\'un bien. Ouvre la fiche du bien concerné pour en rédiger un.',
       name: 'contractsEmptyBody',
       desc: 'RM-M08-01.',
       args: [],
@@ -664,10 +664,10 @@ class I18n {
     );
   }
 
-  /// `En attente de votre action`
+  /// `En attente de ton action`
   String get contractAwaitingYou {
     return Intl.message(
-      'En attente de votre action',
+      'En attente de ton action',
       name: 'contractAwaitingYou',
       desc: 'RM-M08-09 — awaiting = PRESTATAIRE.',
       args: [],
@@ -754,20 +754,20 @@ class I18n {
     );
   }
 
-  /// `Créez votre compte Mboa`
+  /// `Crée ton compte Mboa`
   String get accountGuestTitle {
     return Intl.message(
-      'Créez votre compte Mboa',
+      'Crée ton compte Mboa',
       name: 'accountGuestTitle',
       desc: 'Account tab, signed out.',
       args: [],
     );
   }
 
-  /// `La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.`
+  /// `La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer tes favoris.`
   String get accountGuestBody {
     return Intl.message(
-      'La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.',
+      'La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer tes favoris.',
       name: 'accountGuestBody',
       desc: 'RM-M04-05 — the wall is on the actions, not on the search.',
       args: [],
@@ -824,50 +824,50 @@ class I18n {
     );
   }
 
-  /// `Où cherchez-vous ?`
+  /// `Tu cherches où ?`
   String get searchStartTitle {
     return Intl.message(
-      'Où cherchez-vous ?',
+      'Tu cherches où ?',
       name: 'searchStartTitle',
       desc: 'No city chosen yet.',
       args: [],
     );
   }
 
-  /// `Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.`
+  /// `Choisis une ville pour lancer la recherche. Les autres filtres sont facultatifs.`
   String get searchStartBody {
     return Intl.message(
-      'Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.',
+      'Choisis une ville pour lancer la recherche. Les autres filtres sont facultatifs.',
       name: 'searchStartBody',
       desc: 'RM-M04-01.',
       args: [],
     );
   }
 
-  /// `Aucun bien trouvé`
+  /// `Aucun bien ici pour l'instant`
   String get searchEmptyTitle {
     return Intl.message(
-      'Aucun bien trouvé',
+      'Aucun bien ici pour l\'instant',
       name: 'searchEmptyTitle',
       desc: 'CE-M04-01.',
       args: [],
     );
   }
 
-  /// `Essayez d'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.`
+  /// `Essaie un autre quartier, un loyer plus haut, ou un autre type de bien.`
   String get searchEmptyBody {
     return Intl.message(
-      'Essayez d\'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.',
+      'Essaie un autre quartier, un loyer plus haut, ou un autre type de bien.',
       name: 'searchEmptyBody',
       desc: 'CE-M04-01 — suggests widening.',
       args: [],
     );
   }
 
-  /// `Résultats hors ligne — ils datent de votre dernière recherche.`
+  /// `Résultats hors ligne — ils datent de ta dernière recherche.`
   String get searchOfflineBanner {
     return Intl.message(
-      'Résultats hors ligne — ils datent de votre dernière recherche.',
+      'Résultats hors ligne — ils datent de ta dernière recherche.',
       name: 'searchOfflineBanner',
       desc: 'CE-M04-02.',
       args: [],
@@ -914,20 +914,20 @@ class I18n {
     );
   }
 
-  /// `Planifiez une visite depuis la fiche d'un bien.`
+  /// `Planifie une visite depuis la fiche d'un bien.`
   String get visitsEmptyBody {
     return Intl.message(
-      'Planifiez une visite depuis la fiche d\'un bien.',
+      'Planifie une visite depuis la fiche d\'un bien.',
       name: 'visitsEmptyBody',
       desc: 'No visit booked yet.',
       args: [],
     );
   }
 
-  /// `Visites hors ligne — vos prochaines visites, telles qu'enregistrées.`
+  /// `Visites hors ligne — tes prochaines visites, telles qu'enregistrées.`
   String get visitsOffline {
     return Intl.message(
-      'Visites hors ligne — vos prochaines visites, telles qu\'enregistrées.',
+      'Visites hors ligne — tes prochaines visites, telles qu\'enregistrées.',
       name: 'visitsOffline',
       desc: 'Cached upcoming visits.',
       args: [],
@@ -944,20 +944,20 @@ class I18n {
     );
   }
 
-  /// `Qui vous fait visiter`
+  /// `Qui te fait visiter`
   String get visitBookVisitor {
     return Intl.message(
-      'Qui vous fait visiter',
+      'Qui te fait visiter',
       name: 'visitBookVisitor',
       desc: 'Visitor picker heading.',
       args: [],
     );
   }
 
-  /// `Choisissez un créneau`
+  /// `Choisis un créneau`
   String get visitBookSlot {
     return Intl.message(
-      'Choisissez un créneau',
+      'Choisis un créneau',
       name: 'visitBookSlot',
       desc: 'Slot picker heading.',
       args: [],
@@ -1004,30 +1004,30 @@ class I18n {
     );
   }
 
-  /// `Le visiteur doit confirmer ce créneau. Vous recevrez une notification.`
+  /// `Le visiteur doit confirmer ce créneau. Tu recevras une notification.`
   String get visitRequestedBody {
     return Intl.message(
-      'Le visiteur doit confirmer ce créneau. Vous recevrez une notification.',
+      'Le visiteur doit confirmer ce créneau. Tu recevras une notification.',
       name: 'visitRequestedBody',
       desc: 'RM-M15-06.',
       args: [],
     );
   }
 
-  /// `Vous avez déjà une visite en cours sur ce bien.`
+  /// `Tu as déjà une visite en cours sur ce bien.`
   String get visitAlreadyBooked {
     return Intl.message(
-      'Vous avez déjà une visite en cours sur ce bien.',
+      'Tu as déjà une visite en cours sur ce bien.',
       name: 'visitAlreadyBooked',
       desc: 'RM-M07-03.',
       args: [],
     );
   }
 
-  /// `Aucun horaire n'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.`
+  /// `Aucun horaire n'a encore été déclaré pour ce bien. Contacte le prestataire via la messagerie.`
   String get visitNoSlotAvailability {
     return Intl.message(
-      'Aucun horaire n\'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.',
+      'Aucun horaire n\'a encore été déclaré pour ce bien. Contacte le prestataire via la messagerie.',
       name: 'visitNoSlotAvailability',
       desc: 'CE-M07-01 AGENT_NO_AVAILABILITY.',
       args: [],
@@ -1147,10 +1147,10 @@ class I18n {
     );
   }
 
-  /// `Votre présence est confirmée. En attente du visiteur.`
+  /// `Ta présence est confirmée. En attente du visiteur.`
   String get visitWaitingVisitor {
     return Intl.message(
-      'Votre présence est confirmée. En attente du visiteur.',
+      'Ta présence est confirmée. En attente du visiteur.',
       name: 'visitWaitingVisitor',
       desc: 'RM-M07-05 — one half in.',
       args: [],
@@ -1167,10 +1167,10 @@ class I18n {
     );
   }
 
-  /// `L'annulation n'est plus possible. Contactez le visiteur par message.`
+  /// `L'annulation n'est plus possible. Contacte le visiteur par message.`
   String get visitCancelTooLate {
     return Intl.message(
-      'L\'annulation n\'est plus possible. Contactez le visiteur par message.',
+      'L\'annulation n\'est plus possible. Contacte le visiteur par message.',
       name: 'visitCancelTooLate',
       desc: 'CE-M07-03.',
       args: [],
@@ -1197,10 +1197,10 @@ class I18n {
     );
   }
 
-  /// `Merci pour votre note.`
+  /// `Merci pour ta note.`
   String get visitRateDone {
     return Intl.message(
-      'Merci pour votre note.',
+      'Merci pour ta note.',
       name: 'visitRateDone',
       desc: 'RM-M07-07 — rated.',
       args: [],
@@ -1257,10 +1257,10 @@ class I18n {
     );
   }
 
-  /// `Votre avis`
+  /// `Ton avis`
   String get reviewYours {
     return Intl.message(
-      'Votre avis',
+      'Ton avis',
       name: 'reviewYours',
       desc: 'Heading of the read-only review.',
       args: [],
@@ -1297,20 +1297,20 @@ class I18n {
     );
   }
 
-  /// `Votre avis sur ce bien`
+  /// `Ton avis sur ce bien`
   String get reviewWriteTitle {
     return Intl.message(
-      'Votre avis sur ce bien',
+      'Ton avis sur ce bien',
       name: 'reviewWriteTitle',
       desc: 'M07bis writing screen title.',
       args: [],
     );
   }
 
-  /// `Publié sur la fiche du bien. Vous ne pourrez plus le modifier.`
+  /// `Publié sur la fiche du bien. Tu ne pourras plus le modifier.`
   String get reviewWriteSubtitle {
     return Intl.message(
-      'Publié sur la fiche du bien. Vous ne pourrez plus le modifier.',
+      'Publié sur la fiche du bien. Tu ne pourras plus le modifier.',
       name: 'reviewWriteSubtitle',
       desc: 'RM-M07bis-03 + RM-M07bis-05, said before writing.',
       args: [],
@@ -1367,10 +1367,10 @@ class I18n {
     );
   }
 
-  /// `Ce que vous avez vu, ce qui vous a marqué.`
+  /// `Ce que tu as vu, ce qui t'a marqué.`
   String get reviewFreeTextHint {
     return Intl.message(
-      'Ce que vous avez vu, ce qui vous a marqué.',
+      'Ce que tu as vu, ce qui t\'a marqué.',
       name: 'reviewFreeTextHint',
       desc: 'Placeholder for the free text.',
       args: [],
@@ -1417,20 +1417,20 @@ class I18n {
     );
   }
 
-  /// `Votre avis est publié et ne peut plus être modifié.`
+  /// `Ton avis est publié et ne peut plus être modifié.`
   String get reviewLocked {
     return Intl.message(
-      'Votre avis est publié et ne peut plus être modifié.',
+      'Ton avis est publié et ne peut plus être modifié.',
       name: 'reviewLocked',
       desc: 'RM-M07bis-03.',
       args: [],
     );
   }
 
-  /// `Vous avez déjà donné votre avis sur cette visite.`
+  /// `Tu as déjà donné ton avis sur cette visite.`
   String get reviewAlreadyWritten {
     return Intl.message(
-      'Vous avez déjà donné votre avis sur cette visite.',
+      'Tu as déjà donné ton avis sur cette visite.',
       name: 'reviewAlreadyWritten',
       desc: 'RM-M07bis-01 — one report per visit.',
       args: [],
@@ -1457,10 +1457,10 @@ class I18n {
     );
   }
 
-  /// `Choisissez un visiteur et une heure.`
+  /// `Choisis un visiteur et une heure.`
   String get visitBookSubtitle {
     return Intl.message(
-      'Choisissez un visiteur et une heure.',
+      'Choisis un visiteur et une heure.',
       name: 'visitBookSubtitle',
       desc: 'Booking sheet subtitle.',
       args: [],
@@ -1537,10 +1537,10 @@ class I18n {
     );
   }
 
-  /// `Vous`
+  /// `Toi`
   String get visitPresenceYou {
     return Intl.message(
-      'Vous',
+      'Toi',
       name: 'visitPresenceYou',
       desc: 'RM-M07-05 — the tenant\'s half.',
       args: [],
@@ -1577,20 +1577,20 @@ class I18n {
     );
   }
 
-  /// `La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.`
+  /// `Il faut ta confirmation et celle du visiteur pour que la visite démarre.`
   String get visitPresenceExplainer {
     return Intl.message(
-      'La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.',
+      'Il faut ta confirmation et celle du visiteur pour que la visite démarre.',
       name: 'visitPresenceExplainer',
       desc: 'RM-M07-05.',
       args: [],
     );
   }
 
-  /// `Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.`
+  /// `Le visiteur doit encore confirmer ce créneau. Tu ne peux pas confirmer à sa place.`
   String get visitAwaitingVisitor {
     return Intl.message(
-      'Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.',
+      'Le visiteur doit encore confirmer ce créneau. Tu ne peux pas confirmer à sa place.',
       name: 'visitAwaitingVisitor',
       desc: 'RM-M15-06 — the tenant cannot confirm for the visitor.',
       args: [],
@@ -1700,10 +1700,10 @@ class I18n {
     );
   }
 
-  /// `Le fond de carte a besoin d'une connexion. Vos derniers résultats restent consultables en liste.`
+  /// `Le fond de carte a besoin d'une connexion. Tes derniers résultats restent consultables en liste.`
   String get searchMapOfflineBody {
     return Intl.message(
-      'Le fond de carte a besoin d\'une connexion. Vos derniers résultats restent consultables en liste.',
+      'Le fond de carte a besoin d\'une connexion. Tes derniers résultats restent consultables en liste.',
       name: 'searchMapOfflineBody',
       desc: 'CE-M04-02 on the map.',
       args: [],
@@ -1741,10 +1741,10 @@ class I18n {
     );
   }
 
-  /// `Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.`
+  /// `Vérifie la clé de cartographie de cette version. Les résultats restent consultables en liste.`
   String get searchMapStyleFailedBody {
     return Intl.message(
-      'Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.',
+      'Vérifie la clé de cartographie de cette version. Les résultats restent consultables en liste.',
       name: 'searchMapStyleFailedBody',
       desc: 'The style URL never loaded.',
       args: [],
@@ -1903,20 +1903,20 @@ class I18n {
     );
   }
 
-  /// `Créez un compte pour enregistrer`
+  /// `Crée un compte pour enregistrer`
   String get favoritesSignInTitle {
     return Intl.message(
-      'Créez un compte pour enregistrer',
+      'Crée un compte pour enregistrer',
       name: 'favoritesSignInTitle',
       desc: 'RM-M04-05 — the wall is on the action.',
       args: [],
     );
   }
 
-  /// `Vos favoris vous suivent d'un appareil à l'autre.`
+  /// `Tes favoris te suivent d'un appareil à l'autre.`
   String get favoritesSignInBody {
     return Intl.message(
-      'Vos favoris vous suivent d\'un appareil à l\'autre.',
+      'Tes favoris te suivent d\'un appareil à l\'autre.',
       name: 'favoritesSignInBody',
       desc: 'Why an account.',
       args: [],
@@ -1933,20 +1933,20 @@ class I18n {
     );
   }
 
-  /// `Touchez le cœur sur un bien pour le retrouver ici.`
+  /// `Touche le cœur sur un bien pour le retrouver ici.`
   String get favoritesEmptyBody {
     return Intl.message(
-      'Touchez le cœur sur un bien pour le retrouver ici.',
+      'Touche le cœur sur un bien pour le retrouver ici.',
       name: 'favoritesEmptyBody',
       desc: 'Empty tab.',
       args: [],
     );
   }
 
-  /// `Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.`
+  /// `Tu as atteint 50 favoris. Retires-en un pour en ajouter un autre.`
   String get favoritesLimitReached {
     return Intl.message(
-      'Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.',
+      'Tu as atteint 50 favoris. Retires-en un pour en ajouter un autre.',
       name: 'favoritesLimitReached',
       desc: 'RM-M06-02.',
       args: [],
@@ -1993,10 +1993,10 @@ class I18n {
     );
   }
 
-  /// `L'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.`
+  /// `L'annonce a été retirée ou a expiré. Essaie une nouvelle recherche.`
   String get listingGoneBody {
     return Intl.message(
-      'L\'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.',
+      'L\'annonce a été retirée ou a expiré. Essaie une nouvelle recherche.',
       name: 'listingGoneBody',
       desc: 'CE-M05-01.',
       args: [],
@@ -2103,10 +2103,10 @@ class I18n {
     );
   }
 
-  /// `Connectez-vous pour contacter le prestataire ou planifier une visite.`
+  /// `Connecte-toi pour contacter le prestataire ou planifier une visite.`
   String get listingActionsSignIn {
     return Intl.message(
-      'Connectez-vous pour contacter le prestataire ou planifier une visite.',
+      'Connecte-toi pour contacter le prestataire ou planifier une visite.',
       name: 'listingActionsSignIn',
       desc: 'RM-M04-05 / CA-M05-04.',
       args: [],
@@ -2295,20 +2295,20 @@ class I18n {
     );
   }
 
-  /// `Contactez un prestataire depuis la fiche d'un bien pour démarrer une conversation.`
+  /// `Contacte un prestataire depuis la fiche d'un bien pour démarrer une conversation.`
   String get messagingEmptyTenant {
     return Intl.message(
-      'Contactez un prestataire depuis la fiche d\'un bien pour démarrer une conversation.',
+      'Contacte un prestataire depuis la fiche d\'un bien pour démarrer une conversation.',
       name: 'messagingEmptyTenant',
       desc: 'RM-M12-01 — the tenant has the first word.',
       args: [],
     );
   }
 
-  /// `Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.`
+  /// `Les locataires t'écriront depuis tes annonces. Tu ne peux pas ouvrir une conversation.`
   String get messagingEmptyProvider {
     return Intl.message(
-      'Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.',
+      'Les locataires t\'écriront depuis tes annonces. Tu ne peux pas ouvrir une conversation.',
       name: 'messagingEmptyProvider',
       desc: 'RM-M12-01 — the provider cannot write first.',
       args: [],
@@ -2410,10 +2410,10 @@ class I18n {
     return Intl.message('Réessayer', name: 'commonRetry', desc: '', args: []);
   }
 
-  /// `Une erreur est survenue. Réessayez.`
+  /// `Ça n'a pas marché. Réessaie.`
   String get commonError {
     return Intl.message(
-      'Une erreur est survenue. Réessayez.',
+      'Ça n\'a pas marché. Réessaie.',
       name: 'commonError',
       desc: '',
       args: [],
@@ -2485,10 +2485,10 @@ class I18n {
     );
   }
 
-  /// `Veuillez patienter...`
+  /// `Un instant…`
   String get loadingDialog_content {
     return Intl.message(
-      'Veuillez patienter...',
+      'Un instant…',
       name: 'loadingDialog_content',
       desc: '',
       args: [],
@@ -2530,10 +2530,10 @@ class I18n {
     );
   }
 
-  /// `Entrez votre numéro de téléphone`
+  /// `Entre ton numéro de téléphone`
   String get loginEnterPhone {
     return Intl.message(
-      'Entrez votre numéro de téléphone',
+      'Entre ton numéro de téléphone',
       name: 'loginEnterPhone',
       desc: '',
       args: [],
@@ -2590,10 +2590,10 @@ class I18n {
     );
   }
 
-  /// `Impossible d’envoyer le code. Réessayez.`
+  /// `Impossible d’envoyer le code. Réessaie.`
   String get loginOtpSendError {
     return Intl.message(
-      'Impossible d’envoyer le code. Réessayez.',
+      'Impossible d’envoyer le code. Réessaie.',
       name: 'loginOtpSendError',
       desc: '',
       args: [],
@@ -2620,40 +2620,40 @@ class I18n {
     );
   }
 
-  /// `Vous n’avez pas de compte ?`
+  /// `Tu n’as pas de compte ?`
   String get loginNoAccountQuestion {
     return Intl.message(
-      'Vous n’avez pas de compte ?',
+      'Tu n’as pas de compte ?',
       name: 'loginNoAccountQuestion',
       desc: '',
       args: [],
     );
   }
 
-  /// `Inscrivez-vous`
+  /// `Inscris-toi`
   String get loginSignUpAction {
     return Intl.message(
-      'Inscrivez-vous',
+      'Inscris-toi',
       name: 'loginSignUpAction',
       desc: '',
       args: [],
     );
   }
 
-  /// `Vous avez déjà un compte ?`
+  /// `Tu as déjà un compte ?`
   String get registerHaveAccountQuestion {
     return Intl.message(
-      'Vous avez déjà un compte ?',
+      'Tu as déjà un compte ?',
       name: 'registerHaveAccountQuestion',
       desc: '',
       args: [],
     );
   }
 
-  /// `Connectez-vous`
+  /// `Connecte-toi`
   String get registerSignInAction {
     return Intl.message(
-      'Connectez-vous',
+      'Connecte-toi',
       name: 'registerSignInAction',
       desc: '',
       args: [],
@@ -2695,10 +2695,10 @@ class I18n {
     );
   }
 
-  /// `Votre mot de passe`
+  /// `Ton mot de passe`
   String get authPasswordHint {
     return Intl.message(
-      'Votre mot de passe',
+      'Ton mot de passe',
       name: 'authPasswordHint',
       desc: '',
       args: [],
@@ -2790,10 +2790,10 @@ class I18n {
     );
   }
 
-  /// `Inscription impossible. Vérifiez vos informations.`
+  /// `Inscription impossible. Vérifie tes informations.`
   String get registerFailed {
     return Intl.message(
-      'Inscription impossible. Vérifiez vos informations.',
+      'Inscription impossible. Vérifie tes informations.',
       name: 'registerFailed',
       desc: '',
       args: [],
@@ -3000,10 +3000,10 @@ class I18n {
     );
   }
 
-  /// `Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.`
+  /// `Impossible de changer le mot de passe. Vérifie ton mot de passe actuel.`
   String get changePasswordError {
     return Intl.message(
-      'Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.',
+      'Impossible de changer le mot de passe. Vérifie ton mot de passe actuel.',
       name: 'changePasswordError',
       desc: '',
       args: [],
@@ -3030,10 +3030,10 @@ class I18n {
     );
   }
 
-  /// `Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.`
+  /// `Cette action est définitive. Tes données personnelles seront supprimées et tu perdras l’accès à ton compte.`
   String get deleteAccountWarning {
     return Intl.message(
-      'Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.',
+      'Cette action est définitive. Tes données personnelles seront supprimées et tu perdras l’accès à ton compte.',
       name: 'deleteAccountWarning',
       desc: '',
       args: [],
@@ -3050,10 +3050,10 @@ class I18n {
     );
   }
 
-  /// `Tapez « {word} » pour confirmer`
+  /// `Tape « {word} » pour confirmer`
   String deleteAccountConfirmLabel(String word) {
     return Intl.message(
-      'Tapez « $word » pour confirmer',
+      'Tape « $word » pour confirmer',
       name: 'deleteAccountConfirmLabel',
       desc: '',
       args: [word],
@@ -3215,10 +3215,10 @@ class I18n {
     );
   }
 
-  /// `Complétez votre profil pour pouvoir publier vos biens.`
+  /// `Complète ton profil pour publier tes biens.`
   String get profileIncompleteBody {
     return Intl.message(
-      'Complétez votre profil pour pouvoir publier vos biens.',
+      'Complète ton profil pour publier tes biens.',
       name: 'profileIncompleteBody',
       desc: 'RM-M10-01.',
       args: [],
@@ -3420,10 +3420,10 @@ class I18n {
     );
   }
 
-  /// `Échec de l’envoi. Réessayez.`
+  /// `Échec de l’envoi. Réessaie.`
   String get kycUploadError {
     return Intl.message(
-      'Échec de l’envoi. Réessayez.',
+      'Échec de l’envoi. Réessaie.',
       name: 'kycUploadError',
       desc: '',
       args: [],
@@ -3445,10 +3445,10 @@ class I18n {
     return Intl.message('Importer', name: 'kycImport', desc: '', args: []);
   }
 
-  /// `Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité`
+  /// `Choisis le document avec lequel tu veux vérifier ton identité`
   String get kycIdDocumentPrompt {
     return Intl.message(
-      'Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité',
+      'Choisis le document avec lequel tu veux vérifier ton identité',
       name: 'kycIdDocumentPrompt',
       desc: '',
       args: [],
@@ -3540,20 +3540,20 @@ class I18n {
     return Intl.message('Valider', name: 'otpValidate', desc: '', args: []);
   }
 
-  /// `Code invalide. Réessayez.`
+  /// `Code invalide. Réessaie.`
   String get otpInvalidCode {
     return Intl.message(
-      'Code invalide. Réessayez.',
+      'Code invalide. Réessaie.',
       name: 'otpInvalidCode',
       desc: '',
       args: [],
     );
   }
 
-  /// `Vous n’avez pas reçu le code ?`
+  /// `Tu n’as pas reçu le code ?`
   String get otpNoCodeQuestion {
     return Intl.message(
-      'Vous n’avez pas reçu le code ?',
+      'Tu n’as pas reçu le code ?',
       name: 'otpNoCodeQuestion',
       desc: '',
       args: [],
@@ -3700,10 +3700,10 @@ class I18n {
     );
   }
 
-  /// `Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.`
+  /// `Cette fonctionnalité arrive bientôt. On te prévient dès qu’elle est prête.`
   String get accessComingSoonBody {
     return Intl.message(
-      'Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.',
+      'Cette fonctionnalité arrive bientôt. On te prévient dès qu’elle est prête.',
       name: 'accessComingSoonBody',
       desc: '',
       args: [],
@@ -3720,10 +3720,10 @@ class I18n {
     );
   }
 
-  /// `Complétez vos certifications pour accéder à cette fonctionnalité.`
+  /// `Complète tes certifications pour accéder à cette fonctionnalité.`
   String get accessKycRequiredBody {
     return Intl.message(
-      'Complétez vos certifications pour accéder à cette fonctionnalité.',
+      'Complète tes certifications pour accéder à cette fonctionnalité.',
       name: 'accessKycRequiredBody',
       desc: '',
       args: [],
@@ -3750,10 +3750,10 @@ class I18n {
     );
   }
 
-  /// `Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.`
+  /// `Tes documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.`
   String get accessKycPendingBody {
     return Intl.message(
-      'Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.',
+      'Tes documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.',
       name: 'accessKycPendingBody',
       desc: '',
       args: [],
@@ -3820,20 +3820,20 @@ class I18n {
     );
   }
 
-  /// `Appuyez de nouveau pour quitter.`
+  /// `Appuie de nouveau pour quitter.`
   String get exitAppBody {
     return Intl.message(
-      'Appuyez de nouveau pour quitter.',
+      'Appuie de nouveau pour quitter.',
       name: 'exitAppBody',
       desc: '',
       args: [],
     );
   }
 
-  /// `Gérez vos biens\nà travers l’application`
+  /// `Gère tes biens\ndepuis l’application`
   String get homeTitle {
     return Intl.message(
-      'Gérez vos biens\nà travers l’application',
+      'Gère tes biens\ndepuis l’application',
       name: 'homeTitle',
       desc: '',
       args: [],
@@ -3875,10 +3875,10 @@ class I18n {
     );
   }
 
-  /// `Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management`
+  /// `Enregistre tes biens et gère-les plus facilement, depuis un seul endroit`
   String get homeCtaBiensBody {
     return Intl.message(
-      'Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management',
+      'Enregistre tes biens et gère-les plus facilement, depuis un seul endroit',
       name: 'homeCtaBiensBody',
       desc: '',
       args: [],
@@ -3905,10 +3905,10 @@ class I18n {
     );
   }
 
-  /// `Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application`
+  /// `Suis les encaissements et les dépenses de tes biens, depuis l’application`
   String get homeCtaPortefeuilleBody {
     return Intl.message(
-      'Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application',
+      'Suis les encaissements et les dépenses de tes biens, depuis l’application',
       name: 'homeCtaPortefeuilleBody',
       desc: '',
       args: [],
@@ -3935,10 +3935,10 @@ class I18n {
     );
   }
 
-  /// `Créez des agents à qui déléguer la gestion partielle ou complète de vos biens`
+  /// `Crée des agents à qui déléguer tout ou partie de la gestion de tes biens`
   String get homeCtaAgentsBody {
     return Intl.message(
-      'Créez des agents à qui déléguer la gestion partielle ou complète de vos biens',
+      'Crée des agents à qui déléguer tout ou partie de la gestion de tes biens',
       name: 'homeCtaAgentsBody',
       desc: '',
       args: [],
@@ -4070,10 +4070,10 @@ class I18n {
     );
   }
 
-  /// `Vous n’avez encore enregistré aucun bien.`
+  /// `Tu n’as encore enregistré aucun bien.`
   String get homeEmptyBiens {
     return Intl.message(
-      'Vous n’avez encore enregistré aucun bien.',
+      'Tu n’as encore enregistré aucun bien.',
       name: 'homeEmptyBiens',
       desc: '',
       args: [],
@@ -4120,10 +4120,10 @@ class I18n {
     );
   }
 
-  /// `Votre abonnement a expiré`
+  /// `Ton abonnement a expiré`
   String get subscriptionExpired {
     return Intl.message(
-      'Votre abonnement a expiré',
+      'Ton abonnement a expiré',
       name: 'subscriptionExpired',
       desc: '',
       args: [],
@@ -4153,10 +4153,10 @@ class I18n {
     );
   }
 
-  /// `Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.`
+  /// `Impossible de vérifier ton abonnement. Formule Gratuit appliquée en attendant.`
   String get subscriptionUnknown {
     return Intl.message(
-      'Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.',
+      'Impossible de vérifier ton abonnement. Formule Gratuit appliquée en attendant.',
       name: 'subscriptionUnknown',
       desc: '',
       args: [],
@@ -4310,20 +4310,20 @@ class I18n {
     );
   }
 
-  /// `Finalisez sur votre téléphone`
+  /// `Termine sur ton téléphone`
   String get paymentAwaitingTitle {
     return Intl.message(
-      'Finalisez sur votre téléphone',
+      'Termine sur ton téléphone',
       name: 'paymentAwaitingTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.`
+  /// `Valide la demande de paiement reçue sur ton mobile (USSD ou application Mobile Money). Cet écran se met à jour tout seul.`
   String get paymentAwaitingBody {
     return Intl.message(
-      'Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.',
+      'Valide la demande de paiement reçue sur ton mobile (USSD ou application Mobile Money). Cet écran se met à jour tout seul.',
       name: 'paymentAwaitingBody',
       desc: '',
       args: [],
@@ -4350,10 +4350,10 @@ class I18n {
     );
   }
 
-  /// `Votre formule {tier} est active.`
+  /// `C'est réglé. Ta formule {tier} est active.`
   String paymentConfirmedBody(String tier) {
     return Intl.message(
-      'Votre formule $tier est active.',
+      'C\'est réglé. Ta formule $tier est active.',
       name: 'paymentConfirmedBody',
       desc: '',
       args: [tier],
@@ -4370,10 +4370,10 @@ class I18n {
     );
   }
 
-  /// `Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.`
+  /// `On n’a pas encore reçu la confirmation. Ça peut prendre quelques minutes — tu recevras une notification dès que ta formule sera active.`
   String get paymentPendingBody {
     return Intl.message(
-      'Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.',
+      'On n’a pas encore reçu la confirmation. Ça peut prendre quelques minutes — tu recevras une notification dès que ta formule sera active.',
       name: 'paymentPendingBody',
       desc: '',
       args: [],
@@ -4550,10 +4550,10 @@ class I18n {
     );
   }
 
-  /// `Aucun bien disponible. Appuyez sur + pour en enregistrer un.`
+  /// `Aucun bien disponible. Appuie sur + pour en enregistrer un.`
   String get annoncesEmptyAvailable {
     return Intl.message(
-      'Aucun bien disponible. Appuyez sur + pour en enregistrer un.',
+      'Aucun bien disponible. Appuie sur + pour en enregistrer un.',
       name: 'annoncesEmptyAvailable',
       desc: '',
       args: [],
@@ -4764,10 +4764,10 @@ class I18n {
     );
   }
 
-  /// `Cette action est définitive. Le bien sera retiré de votre portefeuille.`
+  /// `Cette action est définitive. Le bien sera retiré de ton portefeuille.`
   String get annonceDeleteConfirmBody {
     return Intl.message(
-      'Cette action est définitive. Le bien sera retiré de votre portefeuille.',
+      'Cette action est définitive. Le bien sera retiré de ton portefeuille.',
       name: 'annonceDeleteConfirmBody',
       desc: '',
       args: [],
@@ -4954,20 +4954,20 @@ class I18n {
     );
   }
 
-  /// `Autorisez la localisation pour enregistrer la position du bien.`
+  /// `Autorise la localisation pour enregistrer la position du bien.`
   String get annonceFormLocationDenied {
     return Intl.message(
-      'Autorisez la localisation pour enregistrer la position du bien.',
+      'Autorise la localisation pour enregistrer la position du bien.',
       name: 'annonceFormLocationDenied',
       desc: '',
       args: [],
     );
   }
 
-  /// `La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.`
+  /// `La position enregistrée est celle de ton téléphone. Place-toi sur le bien, ou corrige l’adresse.`
   String get annonceFormLocationHint {
     return Intl.message(
-      'La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.',
+      'La position enregistrée est celle de ton téléphone. Place-toi sur le bien, ou corrige l’adresse.',
       name: 'annonceFormLocationHint',
       desc: '',
       args: [],
@@ -5034,20 +5034,20 @@ class I18n {
     );
   }
 
-  /// `Complétez les champs obligatoires.`
+  /// `Complète les champs obligatoires.`
   String get annonceFormErrorIncomplete {
     return Intl.message(
-      'Complétez les champs obligatoires.',
+      'Complète les champs obligatoires.',
       name: 'annonceFormErrorIncomplete',
       desc: '',
       args: [],
     );
   }
 
-  /// `Enregistrement impossible. Réessayez.`
+  /// `Enregistrement impossible. Réessaie.`
   String get annonceFormErrorSave {
     return Intl.message(
-      'Enregistrement impossible. Réessayez.',
+      'Enregistrement impossible. Réessaie.',
       name: 'annonceFormErrorSave',
       desc: '',
       args: [],
@@ -5279,10 +5279,10 @@ class I18n {
     );
   }
 
-  /// `Complétez votre profil (logo, type, ville) avant de publier.`
+  /// `Complète ton profil (logo, type, ville) avant de publier.`
   String get publishBlockedProfileBody {
     return Intl.message(
-      'Complétez votre profil (logo, type, ville) avant de publier.',
+      'Complète ton profil (logo, type, ville) avant de publier.',
       name: 'publishBlockedProfileBody',
       desc: '',
       args: [],
@@ -5369,10 +5369,10 @@ class I18n {
     );
   }
 
-  /// `Ville non détectée. Choisissez-la manuellement.`
+  /// `Ville non détectée. Choisis-la manuellement.`
   String get annonceFormCityNotDetected {
     return Intl.message(
-      'Ville non détectée. Choisissez-la manuellement.',
+      'Ville non détectée. Choisis-la manuellement.',
       name: 'annonceFormCityNotDetected',
       desc: '',
       args: [],
@@ -5474,50 +5474,50 @@ class I18n {
     );
   }
 
-  /// `Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.`
+  /// `Ta formule ne permet pas autant d’unités. Passe à une formule supérieure ou réduis le nombre d’unités.`
   String get errorResidenceUnitLimit {
     return Intl.message(
-      'Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.',
+      'Ta formule ne permet pas autant d’unités. Passe à une formule supérieure ou réduis le nombre d’unités.',
       name: 'errorResidenceUnitLimit',
       desc: '',
       args: [],
     );
   }
 
-  /// `Limite d’annonces actives atteinte pour votre formule.`
+  /// `Limite d’annonces actives atteinte pour ta formule.`
   String get errorListingLimit {
     return Intl.message(
-      'Limite d’annonces actives atteinte pour votre formule.',
+      'Limite d’annonces actives atteinte pour ta formule.',
       name: 'errorListingLimit',
       desc: '',
       args: [],
     );
   }
 
-  /// `Complétez votre profil (photo, type, ville) avant de continuer.`
+  /// `Complète ton profil (photo, type, ville) avant de continuer.`
   String get errorProfileIncomplete {
     return Intl.message(
-      'Complétez votre profil (photo, type, ville) avant de continuer.',
+      'Complète ton profil (photo, type, ville) avant de continuer.',
       name: 'errorProfileIncomplete',
       desc: '',
       args: [],
     );
   }
 
-  /// `Vos certifications doivent être validées avant cette action.`
+  /// `Tes certifications doivent être validées avant cette action.`
   String get errorKycRequired {
     return Intl.message(
-      'Vos certifications doivent être validées avant cette action.',
+      'Tes certifications doivent être validées avant cette action.',
       name: 'errorKycRequired',
       desc: '',
       args: [],
     );
   }
 
-  /// `Certaines informations sont invalides. Vérifiez le formulaire.`
+  /// `Certaines informations sont invalides. Vérifie le formulaire.`
   String get errorValidation {
     return Intl.message(
-      'Certaines informations sont invalides. Vérifiez le formulaire.',
+      'Certaines informations sont invalides. Vérifie le formulaire.',
       name: 'errorValidation',
       desc: '',
       args: [],
@@ -5639,20 +5639,20 @@ class I18n {
     );
   }
 
-  /// `Une écriture concurrente a échoué. Réessayez.`
+  /// `Deux modifications se sont croisées. Réessaie.`
   String get errorConstraintViolation {
     return Intl.message(
-      'Une écriture concurrente a échoué. Réessayez.',
+      'Deux modifications se sont croisées. Réessaie.',
       name: 'errorConstraintViolation',
       desc: '',
       args: [],
     );
   }
 
-  /// `Votre compte n’a pas les droits pour cette action.`
+  /// `Ton compte n’a pas les droits pour cette action.`
   String get errorAccessDenied {
     return Intl.message(
-      'Votre compte n’a pas les droits pour cette action.',
+      'Ton compte n’a pas les droits pour cette action.',
       name: 'errorAccessDenied',
       desc: '',
       args: [],
@@ -5691,20 +5691,20 @@ class I18n {
     );
   }
 
-  /// `Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.`
+  /// `Le loyer tel que tu le perçois, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l'année. Mboa en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.`
   String get annonceFormHelpPrice {
     return Intl.message(
-      'Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.',
+      'Le loyer tel que tu le perçois, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l\'année. Mboa en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.',
       name: 'annonceFormHelpPrice',
       desc: 'Doc 10 RM-M10-09. Help text on the rent field.',
       args: [],
     );
   }
 
-  /// `Facultatif. Indiquez si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.`
+  /// `Facultatif. Indique si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.`
   String get annonceFormHelpCharges {
     return Intl.message(
-      'Facultatif. Indiquez si l\'eau et l\'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.',
+      'Facultatif. Indique si l\'eau et l\'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.',
       name: 'annonceFormHelpCharges',
       desc:
           'Doc 10 §M10 (Champs) — « Charges incluses (oui/non + montant) », facultatif, visible par les users.',
@@ -5927,10 +5927,10 @@ class I18n {
     );
   }
 
-  /// `Facultatif. Cochez ce que le bien propose — les locataires s'en servent pour comparer les annonces entre elles.`
+  /// `Facultatif. Coche ce que le bien propose — les locataires s'en servent pour comparer les annonces entre elles.`
   String get annonceFormHelpAmenities {
     return Intl.message(
-      'Facultatif. Cochez ce que le bien propose — les locataires s\'en servent pour comparer les annonces entre elles.',
+      'Facultatif. Coche ce que le bien propose — les locataires s\'en servent pour comparer les annonces entre elles.',
       name: 'annonceFormHelpAmenities',
       desc:
           'Doc 10 §M10 (Champs) — « Équipements (checklist) », facultatif, visible par les users.',
@@ -6110,20 +6110,20 @@ class I18n {
     );
   }
 
-  /// `Vous pouvez recevoir de nouvelles assignations.`
+  /// `Tu peux recevoir de nouvelles assignations.`
   String get agentAcceptingOn {
     return Intl.message(
-      'Vous pouvez recevoir de nouvelles assignations.',
+      'Tu peux recevoir de nouvelles assignations.',
       name: 'agentAcceptingOn',
       desc: 'RM-M15-05, accepting.',
       args: [],
     );
   }
 
-  /// `Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.`
+  /// `Tu ne recevras plus de nouvelles assignations. Les visites déjà planifiées restent à faire.`
   String get agentAcceptingOff {
     return Intl.message(
-      'Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.',
+      'Tu ne recevras plus de nouvelles assignations. Les visites déjà planifiées restent à faire.',
       name: 'agentAcceptingOff',
       desc:
           'RM-M15-05, inactive — Doc 10 is explicit that scheduled visits are still carried out.',
@@ -6141,10 +6141,10 @@ class I18n {
     );
   }
 
-  /// `Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.`
+  /// `Ajoute ton nom, une photo et au moins une zone pour recevoir des missions.`
   String get agentIncompleteBody {
     return Intl.message(
-      'Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.',
+      'Ajoute ton nom, une photo et au moins une zone pour recevoir des missions.',
       name: 'agentIncompleteBody',
       desc:
           'The server\'s completeness rule, spelled out: firstName + lastName + photoObjectKey + >=1 zone.',
@@ -6182,20 +6182,20 @@ class I18n {
     );
   }
 
-  /// `Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.`
+  /// `Choisis une ville entière ou seulement certains quartiers. Seuls les biens situés dans tes zones te seront proposés.`
   String get agentZonesHelp {
     return Intl.message(
-      'Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.',
+      'Choisis une ville entière ou seulement certains quartiers. Seuls les biens situés dans tes zones te seront proposés.',
       name: 'agentZonesHelp',
       desc: 'Doc 10 RM-M15-04.',
       args: [],
     );
   }
 
-  /// `Choisissez au moins une ville ou un quartier.`
+  /// `Choisis au moins une ville ou un quartier.`
   String get agentZonesEmptyError {
     return Intl.message(
-      'Choisissez au moins une ville ou un quartier.',
+      'Choisis au moins une ville ou un quartier.',
       name: 'agentZonesEmptyError',
       desc: 'The backend rejects a zones update where both lists are empty.',
       args: [],
@@ -6232,10 +6232,10 @@ class I18n {
     );
   }
 
-  /// `Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.`
+  /// `Définis tes horaires habituels. Les créneaux réservables en sont déduits, moins tes jours bloqués et tes visites déjà prévues.`
   String get agentAvailabilityHelp {
     return Intl.message(
-      'Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.',
+      'Définis tes horaires habituels. Les créneaux réservables en sont déduits, moins tes jours bloqués et tes visites déjà prévues.',
       name: 'agentAvailabilityHelp',
       desc: 'Doc 10 RM-M15-01.',
       args: [],
@@ -6343,10 +6343,10 @@ class I18n {
     );
   }
 
-  /// `Enregistrement impossible. Réessayez.`
+  /// `Enregistrement impossible. Réessaie.`
   String get agentSaveFailed {
     return Intl.message(
-      'Enregistrement impossible. Réessayez.',
+      'Enregistrement impossible. Réessaie.',
       name: 'agentSaveFailed',
       desc: 'Generic failure toast on the agent screens.',
       args: [],
@@ -6443,10 +6443,10 @@ class I18n {
     );
   }
 
-  /// `Assignez un agent à un bien pour que les locataires puissent planifier une visite.`
+  /// `Assigne un agent à un bien pour que les locataires puissent planifier une visite.`
   String get agentsMineEmptyBody {
     return Intl.message(
-      'Assignez un agent à un bien pour que les locataires puissent planifier une visite.',
+      'Assigne un agent à un bien pour que les locataires puissent planifier une visite.',
       name: 'agentsMineEmptyBody',
       desc: 'Doc 10 RM-M07-01 — the point of an assignment.',
       args: [],
@@ -6585,10 +6585,10 @@ class I18n {
     );
   }
 
-  /// `Vous serez notifié de sa réponse.`
+  /// `Tu seras notifié de sa réponse.`
   String get agentsOfferSentBody {
     return Intl.message(
-      'Vous serez notifié de sa réponse.',
+      'Tu seras notifié de sa réponse.',
       name: 'agentsOfferSentBody',
       desc: 'Doc 10 RM-M11-04.',
       args: [],
@@ -6615,20 +6615,20 @@ class I18n {
     );
   }
 
-  /// `Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.`
+  /// `Tu apparaîtras parmi les visiteurs proposés pour ce bien. Chaque demande te sera transmise pour confirmer un créneau.`
   String get agentsOwnerVisitsBody {
     return Intl.message(
-      'Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.',
+      'Tu apparaîtras parmi les visiteurs proposés pour ce bien. Chaque demande te sera transmise pour confirmer un créneau.',
       name: 'agentsOwnerVisitsBody',
       desc: 'RM-M11-10 / RM-M15-06 — no weekly availability for an owner.',
       args: [],
     );
   }
 
-  /// `Vos visites personnelles se règlent sur la fiche du bien.`
+  /// `Tes visites personnelles se règlent sur la fiche du bien.`
   String get agentsOwnerVisitsElsewhere {
     return Intl.message(
-      'Vos visites personnelles se règlent sur la fiche du bien.',
+      'Tes visites personnelles se règlent sur la fiche du bien.',
       name: 'agentsOwnerVisitsElsewhere',
       desc: 'RM-M11-10 — the switch lives on the listing; this points to it.',
       args: [],
@@ -6836,20 +6836,20 @@ class I18n {
     );
   }
 
-  /// `Aucune opportunité dans vos zones`
+  /// `Aucune opportunité dans tes zones`
   String get missionsEmptyOpportunities {
     return Intl.message(
-      'Aucune opportunité dans vos zones',
+      'Aucune opportunité dans tes zones',
       name: 'missionsEmptyOpportunities',
       desc: 'Empty opportunities — tied to RM-M15-04 zones.',
       args: [],
     );
   }
 
-  /// `Élargissez vos zones d'intervention pour recevoir plus de propositions.`
+  /// `Élargis tes zones d'intervention pour recevoir plus de propositions.`
   String get missionsEmptyOpportunitiesBody {
     return Intl.message(
-      'Élargissez vos zones d\'intervention pour recevoir plus de propositions.',
+      'Élargis tes zones d\'intervention pour recevoir plus de propositions.',
       name: 'missionsEmptyOpportunitiesBody',
       desc: 'Points at the fixable cause: the agent\'s zones.',
       args: [],
@@ -6966,10 +6966,10 @@ class I18n {
     );
   }
 
-  /// `Un agent ne peut être assigné qu'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.`
+  /// `Un agent ne peut être assigné qu'à un bien publié. Publie une annonce ou une unité de résidence pour continuer.`
   String get agentsPickPropertyNoneBody {
     return Intl.message(
-      'Un agent ne peut être assigné qu\'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.',
+      'Un agent ne peut être assigné qu\'à un bien publié. Publie une annonce ou une unité de résidence pour continuer.',
       name: 'agentsPickPropertyNoneBody',
       desc:
           'The backend refuses a non-published listing (ANNONCE_NOT_PUBLISHED) and a residence with no published unit (NO_PUBLISHED_UNITS).',
@@ -7198,10 +7198,10 @@ class I18n {
     );
   }
 
-  /// `Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.`
+  /// `Un locataire propose un créneau. Confirme-le ou refuse-le : il pourra en proposer un autre.`
   String get visitsRequestsBody {
     return Intl.message(
-      'Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.',
+      'Un locataire propose un créneau. Confirme-le ou refuse-le : il pourra en proposer un autre.',
       name: 'visitsRequestsBody',
       desc: 'RM-M15-06.',
       args: [],
@@ -7248,10 +7248,10 @@ class I18n {
     );
   }
 
-  /// `Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu'il l'aura fait.`
+  /// `Le locataire peut publier son avis quand il le souhaite. Tu seras notifié dès qu'il l'aura fait.`
   String get reviewNoneBody {
     return Intl.message(
-      'Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu\'il l\'aura fait.',
+      'Le locataire peut publier son avis quand il le souhaite. Tu seras notifié dès qu\'il l\'aura fait.',
       name: 'reviewNoneBody',
       desc: 'RM-M07bis-02 / N-18.',
       args: [],
@@ -7298,30 +7298,30 @@ class I18n {
     );
   }
 
-  /// `Utilisateur supprimé`
+  /// `Compte supprimé`
   String get reviewDeletedAuthor {
     return Intl.message(
-      'Utilisateur supprimé',
+      'Compte supprimé',
       name: 'reviewDeletedAuthor',
       desc: 'RM-M07bis-08 — the review outlives its author.',
       args: [],
     );
   }
 
-  /// `Vos réponses`
+  /// `Tes réponses`
   String get reviewCommentsTitle {
     return Intl.message(
-      'Vos réponses',
+      'Tes réponses',
       name: 'reviewCommentsTitle',
       desc: 'RM-M07bis-04 — the visitor\'s comments.',
       args: [],
     );
   }
 
-  /// `Vous n'avez pas encore répondu à cet avis.`
+  /// `Tu n'as pas encore répondu à cet avis.`
   String get reviewCommentsEmpty {
     return Intl.message(
-      'Vous n\'avez pas encore répondu à cet avis.',
+      'Tu n\'as pas encore répondu à cet avis.',
       name: 'reviewCommentsEmpty',
       desc: 'No comments yet.',
       args: [],
@@ -7338,10 +7338,10 @@ class I18n {
     );
   }
 
-  /// `Votre réponse s'ajoute à l'avis : elle ne modifie ni la note ni le texte du locataire.`
+  /// `Ta réponse s'ajoute à l'avis : elle ne modifie ni la note ni le texte du locataire.`
   String get reviewCommentRule {
     return Intl.message(
-      'Votre réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.',
+      'Ta réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.',
       name: 'reviewCommentRule',
       desc: 'RM-M07bis-04 — the asymmetry, said plainly.',
       args: [],
@@ -7458,10 +7458,10 @@ class I18n {
     );
   }
 
-  /// `Vous`
+  /// `Toi`
   String get visitsPresenceYou {
     return Intl.message(
-      'Vous',
+      'Toi',
       name: 'visitsPresenceYou',
       desc: 'The visitor\'s own half of the confirmation.',
       args: [],
@@ -7538,10 +7538,10 @@ class I18n {
     );
   }
 
-  /// `Visible uniquement par vous, pour cette visite.`
+  /// `Visible uniquement par toi, pour cette visite.`
   String get visitsAddressNote {
     return Intl.message(
-      'Visible uniquement par vous, pour cette visite.',
+      'Visible uniquement par toi, pour cette visite.',
       name: 'visitsAddressNote',
       desc: 'RM-M16-01.',
       args: [],
@@ -7588,20 +7588,20 @@ class I18n {
     );
   }
 
-  /// `Vous semblez loin du bien`
+  /// `Tu sembles loin du bien`
   String get visitsTooFarTitle {
     return Intl.message(
-      'Vous semblez loin du bien',
+      'Tu sembles loin du bien',
       name: 'visitsTooFarTitle',
       desc: 'RM-M16-02 — beyond 500 m.',
       args: [],
     );
   }
 
-  /// `Vous êtes à environ {distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.`
+  /// `Tu es à environ {distance} m. Explique pourquoi tu confirmes ta présence depuis cet endroit.`
   String visitsTooFarBody(int distance) {
     return Intl.message(
-      'Vous êtes à environ $distance m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.',
+      'Tu es à environ $distance m. Explique pourquoi tu confirmes ta présence depuis cet endroit.',
       name: 'visitsTooFarBody',
       desc: 'The justification Doc 10 asks for.',
       args: [distance],
@@ -7628,40 +7628,40 @@ class I18n {
     );
   }
 
-  /// `Autorisez la localisation pour confirmer votre présence.`
+  /// `Autorise la localisation pour confirmer ta présence.`
   String get visitsLocationDenied {
     return Intl.message(
-      'Autorisez la localisation pour confirmer votre présence.',
+      'Autorise la localisation pour confirmer ta présence.',
       name: 'visitsLocationDenied',
       desc: 'LocationFailure.denied.',
       args: [],
     );
   }
 
-  /// `La localisation est bloquée. Activez-la dans les réglages du téléphone.`
+  /// `La localisation est bloquée. Active-la dans les réglages du téléphone.`
   String get visitsLocationDeniedForever {
     return Intl.message(
-      'La localisation est bloquée. Activez-la dans les réglages du téléphone.',
+      'La localisation est bloquée. Active-la dans les réglages du téléphone.',
       name: 'visitsLocationDeniedForever',
       desc: 'LocationFailure.deniedForever.',
       args: [],
     );
   }
 
-  /// `Activez la localisation de votre téléphone.`
+  /// `Active la localisation de ton téléphone.`
   String get visitsLocationDisabled {
     return Intl.message(
-      'Activez la localisation de votre téléphone.',
+      'Active la localisation de ton téléphone.',
       name: 'visitsLocationDisabled',
       desc: 'LocationFailure.disabled.',
       args: [],
     );
   }
 
-  /// `Position introuvable. Réessayez dans un instant.`
+  /// `Position introuvable. Réessaie dans un instant.`
   String get visitsLocationUnavailable {
     return Intl.message(
-      'Position introuvable. Réessayez dans un instant.',
+      'Position introuvable. Réessaie dans un instant.',
       name: 'visitsLocationUnavailable',
       desc: 'LocationFailure.unavailable.',
       args: [],

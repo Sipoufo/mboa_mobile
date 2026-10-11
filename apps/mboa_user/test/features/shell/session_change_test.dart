@@ -69,12 +69,12 @@ void main() {
 
   testWidgets('the favourites tab stops asking for an account', (tester) async {
     await pump(tester, const FavoritesPage());
-    expect(find.textContaining('Créez un compte'), findsOneWidget);
+    expect(find.textContaining('Crée un compte'), findsOneWidget);
 
     getIt<SessionSnapshot>().markAuthenticated();
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Créez un compte'), findsNothing);
+    expect(find.textContaining('Crée un compte'), findsNothing);
     expect(find.text('Aucun favori'), findsOneWidget);
   });
 
@@ -100,6 +100,6 @@ void main() {
     await tester.pumpAndSettle();
 
     // The next person to open the app must not read the last one's screen.
-    expect(find.textContaining('Créez un compte'), findsOneWidget);
+    expect(find.textContaining('Crée un compte'), findsOneWidget);
   });
 }

@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-09-30.
+> Last updated: 2026-10-11.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**735 tests green, analyze clean.** `mboa_user` 161 · `mboa_pro` 432 ·
-`mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 13.
+**742 tests green, analyze clean.** `mboa_user` 161 · `mboa_pro` 432 ·
+`mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 13 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -71,6 +71,37 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### The brandbook is a test, not a review note
+
+Brandbook v2 §07 holds rules that are mechanically checkable — tutoiement,
+a list of banned words, verbatim copy for named situations — so
+`packages/mboa_l10n/test/voice_test.dart` checks them against the ARB files
+rather than leaving them to notice at review time. It reads the ARB directly:
+those files *are* the copy, and the generated `I18n` is a view of them.
+
+Two things this caught that reading would not have:
+
+- **The estimate was ten times too high.** "All the French UI vouvoies,
+  ~1 400 strings" was a guess; 124 of 799 actually did. Counting first turned
+  a mechanical sweep into a hand-written pass, which is what a register change
+  needs — `Choisissez` → `Choisis` is a rule, but `Où cherchez-vous ?` →
+  `Tu cherches où ?` is a rewrite, and a regex would have produced
+  `Où cherches-tu ?`.
+- **A test literal hid a half-change.** The tests assert copy, so the same
+  table was replayed over them — but a literal spelling `d\'intervention`
+  does not match a Python `d'intervention`, so the whole-string rule missed
+  and only the pronoun fragment landed, leaving `Élargissez tes zones`. The
+  verb and the possessive disagreed, and both tests and app still passed.
+  **A partial match is worse than no match**: it compiles, it reads almost
+  right, and nothing fails.
+
+Scope is settled, not inferred: §37 says *« on tutoie dans l'app »* without
+naming an app, so both get it; §34 reserves the vouvoyé register for
+documents, and the PDFs are rendered by the backend, so no string in the ARB
+belongs to it. Push copy is the server's (→ `docs/backend-requests.md` §23):
+`PushMessage` takes `title` and `body` from the FCM payload, so the app cannot
+fix the lock screen even though it reads as the app's own voice.
 
 ### A guessed wire value looks like an empty list
 `ProviderCard.badges` was a bare `string[]`, so this app guessed its values —

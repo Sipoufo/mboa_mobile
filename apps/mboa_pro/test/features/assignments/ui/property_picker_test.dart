@@ -224,6 +224,6 @@ void main() {
     await open(tester);
 
     expect(find.text('Aucun bien publié'), findsOneWidget);
-    expect(find.textContaining('Publiez une annonce'), findsOneWidget);
+    expect(find.textContaining('Publie une annonce'), findsOneWidget);
   });
 }

@@ -116,7 +116,7 @@ void main() {
     // RM-M15-04 — the cause is fixable by the agent, so the copy says how.
     expect(
       find.text(
-        'Élargissez vos zones d\'intervention pour recevoir plus de propositions.',
+        'Élargis tes zones d\'intervention pour recevoir plus de propositions.',
       ),
       findsOneWidget,
     );

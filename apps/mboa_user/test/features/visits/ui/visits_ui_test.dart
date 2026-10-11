@@ -233,7 +233,7 @@ void main() {
 
       // "Waiting" on its own is ambiguous: the tenant needs to know whether
       // they are the one being waited for.
-      expect(find.text('Vous'), findsOneWidget);
+      expect(find.text('Toi'), findsOneWidget);
       expect(find.text('Le visiteur'), findsOneWidget);
       expect(find.text('Confirmé'), findsOneWidget);
       expect(find.text('Pas encore'), findsOneWidget);
@@ -286,7 +286,7 @@ void main() {
 
       // RM-M07bis-03 and -05 after the fact would be a trap, not a notice.
       expect(find.textContaining('Publié sur la fiche'), findsOneWidget);
-      expect(find.textContaining('ne pourrez plus le modifier'), findsOneWidget);
+      expect(find.textContaining('ne pourras plus le modifier'), findsOneWidget);
     });
 
     testWidgets('only the rating gates publishing', (tester) async {
@@ -501,7 +501,7 @@ void main() {
       await pumpSheet(tester);
 
       // The visitor picker would be a list of one.
-      expect(find.text('Qui vous fait visiter'), findsNothing);
+      expect(find.text('Qui te fait visiter'), findsNothing);
       expect(find.text('Jour'), findsOneWidget);
       expect(find.text('Heure'), findsOneWidget);
       // RM-M07-02 — said before the tap, not after.
@@ -521,7 +521,7 @@ void main() {
       );
       await pumpSheet(tester);
 
-      expect(find.text('Qui vous fait visiter'), findsOneWidget);
+      expect(find.text('Qui te fait visiter'), findsOneWidget);
       expect(find.textContaining('24 visites'), findsNWidgets(2));
     });
   });

@@ -142,7 +142,7 @@ void main() {
 
       // RM-M16-01 — the agent's view is the only place it appears.
       expect(find.text('Rue 1.234, Bonapriso'), findsOneWidget);
-      expect(find.textContaining('Visible uniquement par vous'), findsOneWidget);
+      expect(find.textContaining('Visible uniquement par toi'), findsOneWidget);
     });
 
     testWidgets('gives the agent both numbers', (tester) async {
@@ -161,7 +161,7 @@ void main() {
       await pump(tester, withDetail(const VisitDetailPage(id: 'v-1')));
 
       // The screen's subject on the day: who is in, and who is still owed.
-      expect(find.text('Vous'), findsOneWidget);
+      expect(find.text('Toi'), findsOneWidget);
       expect(find.text('Locataire'), findsOneWidget);
       expect(find.text('En attente'), findsOneWidget);
       expect(find.textContaining('Confirmé à'), findsOneWidget);

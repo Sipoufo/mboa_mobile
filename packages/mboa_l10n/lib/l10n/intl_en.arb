@@ -327,11 +327,11 @@
   "@searchStartBody": {
     "description": "RM-M04-01."
   },
-  "searchEmptyTitle": "No property found",
+  "searchEmptyTitle": "Nothing here yet",
   "@searchEmptyTitle": {
     "description": "CE-M04-01."
   },
-  "searchEmptyBody": "Try widening your filters: a higher rent, fewer districts, or another property type.",
+  "searchEmptyBody": "Try another district, a higher rent, or another property type.",
   "@searchEmptyBody": {
     "description": "CE-M04-01."
   },
@@ -1011,7 +1011,7 @@
     "description": "Toast after starting a thread from a fiche."
   },
   "commonRetry": "Retry",
-  "commonError": "Something went wrong. Please try again.",
+  "commonError": "That didn’t work. Try again.",
   "commonErrorTitle": "Oops",
   "commonOr": "Or",
   "mediaTakePhoto": "Take a photo",
@@ -1020,7 +1020,7 @@
   "cityPickerTitle": "Choose a city",
   "cityPickerSearchHint": "Search a city",
   "cityPickerEmpty": "No city found",
-  "loadingDialog_content": "Please wait...",
+  "loadingDialog_content": "One moment…",
   "welcome_inscriptionButton": "Registration",
   "welcome_loginButton": "Login",
   "loginTitle": "Sign in",
@@ -1031,7 +1031,7 @@
   "loginPhoneHintLocal": "6 XX XX XX XX",
   "loginPhoneInvalid": "Invalid number",
   "loginRequestCode": "Get the code",
-  "loginOtpSendError": "Couldn’t send the code. Please try again.",
+  "loginOtpSendError": "Couldn’t send the code. Try again.",
   "loginContinueWithGoogle": "Continue with Google",
   "loginContinueWithApple": "Continue with Apple",
   "loginNoAccountQuestion": "Don’t have an account?",
@@ -1173,7 +1173,7 @@
   "kycAdded": "Added",
   "kycSubmit": "Submit",
   "kycSubmitted": "Documents submitted",
-  "kycUploadError": "Upload failed. Please try again.",
+  "kycUploadError": "Upload failed. Try again.",
   "kycTakePhoto": "Take a photo",
   "kycImport": "Import",
   "kycIdDocumentPrompt": "Choose the type of document you want to use to verify your identity",
@@ -1195,7 +1195,7 @@
   },
   "otpCodeLabel": "6-digit code",
   "otpValidate": "Confirm",
-  "otpInvalidCode": "Invalid code. Please try again.",
+  "otpInvalidCode": "Invalid code. Try again.",
   "otpNoCodeQuestion": "Didn’t receive the code?",
   "otpResend": "Resend code",
   "otpResendIn": "Resend in {seconds}s",
@@ -1426,7 +1426,7 @@
   },
   "paymentConfirmedTitle": "Payment confirmed",
   "@paymentConfirmedTitle": {},
-  "paymentConfirmedBody": "Your {tier} plan is active.",
+  "paymentConfirmedBody": "All good. Your {tier} plan is active.",
   "@paymentConfirmedBody": {
     "placeholders": {
       "tier": {
@@ -1796,7 +1796,7 @@
   "@annonceFormHelpPropertyType": {
     "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
   },
-  "annonceFormHelpPrice": "The rent as you collect it, and how often: daily, weekly, monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
+  "annonceFormHelpPrice": "The rent as you collect it, and how often: daily, weekly, monthly, quarterly or yearly. Mboa derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
   "@annonceFormHelpPrice": {
     "description": "Doc 10 RM-M10-09. Help text on the rent field."
   },
@@ -2515,7 +2515,7 @@
       }
     }
   },
-  "reviewDeletedAuthor": "Deleted user",
+  "reviewDeletedAuthor": "Deleted account",
   "@reviewDeletedAuthor": {
     "description": "RM-M07bis-08 — the review outlives its author."
   },

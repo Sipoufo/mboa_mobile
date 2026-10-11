@@ -5,7 +5,7 @@
 SHELL := /bin/bash
 APPS := mboa_user mboa_pro
 # Packages that carry their own test suites.
-TEST_PACKAGES := mboa_core mboa_shared mboa_ui
+TEST_PACKAGES := mboa_core mboa_shared mboa_ui mboa_l10n
 
 .PHONY: help bootstrap gen gen-api gen-code gen-l10n brand-assets analyze format test coverage clean run-user run-pro
 

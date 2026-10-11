@@ -105,7 +105,7 @@ void main() {
 
     expect(find.text('Inesse Kiawantio'), findsOneWidget);
     expect(find.text('Douala'), findsOneWidget);
-    expect(find.textContaining('Gérez vos biens'), findsOneWidget);
+    expect(find.textContaining('Gère tes biens'), findsOneWidget);
 
     expect(find.text('Mes biens'), findsOneWidget);
     expect(find.text('Portefeuille'), findsOneWidget);

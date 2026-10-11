@@ -70,7 +70,7 @@
   "@contractLocked": {
     "description": "RM-M08-03 / CA-M08-03."
   },
-  "contractChangePending": "Objection en attente de votre réponse",
+  "contractChangePending": "Objection en attente de ta réponse",
   "@contractChangePending": {
     "description": "CE-M08-03 — pending."
   },
@@ -86,7 +86,7 @@
   "@contractChangeAnswer": {
     "description": "Answer one objection."
   },
-  "contractChangeAnswerHelp": "Répondez même si vous ne modifiez rien : un refus motivé est une réponse et reste au dossier.",
+  "contractChangeAnswerHelp": "Réponds même si tu ne modifies rien : un refus motivé est une réponse et reste au dossier.",
   "@contractChangeAnswerHelp": {
     "description": "CE-M08-03."
   },
@@ -102,7 +102,7 @@
   "@contractSign": {
     "description": "RM-M08-03."
   },
-  "contractSignedByYou": "Vous avez signé",
+  "contractSignedByYou": "Tu as signé",
   "@contractSignedByYou": {
     "description": "Already signed by me."
   },
@@ -110,7 +110,7 @@
   "@contractSignWord": {
     "description": "The word to type; keep it upper-case."
   },
-  "contractSignPrompt": "Tapez {word} pour confirmer",
+  "contractSignPrompt": "Tape {word} pour confirmer",
   "@contractSignPrompt": {
     "description": "Signature confirmation.",
     "placeholders": {
@@ -151,7 +151,7 @@
   "@contractActionDone": {
     "description": "Generic success."
   },
-  "contractSignatureMine": "Votre signature",
+  "contractSignatureMine": "Ta signature",
   "@contractSignatureMine": {
     "description": "SignatureResponse.current."
   },
@@ -187,7 +187,7 @@
   "@contractSaved": {
     "description": "Toast."
   },
-  "contractTenantInvited": "Ce locataire n'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprenez le contrat une fois qu'il aura rejoint.",
+  "contractTenantInvited": "Ce locataire n'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprends le contrat une fois qu'il aura rejoint.",
   "@contractTenantInvited": {
     "description": "CE-M08-01."
   },
@@ -199,7 +199,7 @@
   "@contractsTitle": {
     "description": "M08 list."
   },
-  "contractsFilterMine": "À vous de jouer",
+  "contractsFilterMine": "À toi de jouer",
   "@contractsFilterMine": {
     "description": "RM-M08-09 — awaiting = PRESTATAIRE or BOTH."
   },
@@ -211,7 +211,7 @@
   "@contractsEmptyTitle": {
     "description": "Empty list."
   },
-  "contractsEmptyBody": "Un Contrat Mboa part toujours d'un bien. Ouvrez la fiche du bien concerné pour en rédiger un.",
+  "contractsEmptyBody": "Un Contrat Mboa part toujours d'un bien. Ouvre la fiche du bien concerné pour en rédiger un.",
   "@contractsEmptyBody": {
     "description": "RM-M08-01."
   },
@@ -247,7 +247,7 @@
   "@contractStatusCancelled": {
     "description": "ContractStatus.cancelled."
   },
-  "contractAwaitingYou": "En attente de votre action",
+  "contractAwaitingYou": "En attente de ton action",
   "@contractAwaitingYou": {
     "description": "RM-M08-09 — awaiting = PRESTATAIRE."
   },
@@ -291,11 +291,11 @@
   "@navAccount": {
     "description": "Tenant shell tab."
   },
-  "accountGuestTitle": "Créez votre compte Mboa",
+  "accountGuestTitle": "Crée ton compte Mboa",
   "@accountGuestTitle": {
     "description": "Account tab, signed out."
   },
-  "accountGuestBody": "La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.",
+  "accountGuestBody": "La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer tes favoris.",
   "@accountGuestBody": {
     "description": "RM-M04-05 — the wall is on the actions, not on the search."
   },
@@ -319,23 +319,23 @@
   "@searchApply": {
     "description": "Applies the filters sheet."
   },
-  "searchStartTitle": "Où cherchez-vous ?",
+  "searchStartTitle": "Tu cherches où ?",
   "@searchStartTitle": {
     "description": "No city chosen yet."
   },
-  "searchStartBody": "Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
+  "searchStartBody": "Choisis une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
   "@searchStartBody": {
     "description": "RM-M04-01."
   },
-  "searchEmptyTitle": "Aucun bien trouvé",
+  "searchEmptyTitle": "Aucun bien ici pour l'instant",
   "@searchEmptyTitle": {
     "description": "CE-M04-01."
   },
-  "searchEmptyBody": "Essayez d'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.",
+  "searchEmptyBody": "Essaie un autre quartier, un loyer plus haut, ou un autre type de bien.",
   "@searchEmptyBody": {
     "description": "CE-M04-01 — suggests widening."
   },
-  "searchOfflineBanner": "Résultats hors ligne — ils datent de votre dernière recherche.",
+  "searchOfflineBanner": "Résultats hors ligne — ils datent de ta dernière recherche.",
   "@searchOfflineBanner": {
     "description": "CE-M04-02."
   },
@@ -355,11 +355,11 @@
   "@visitsEmptyTitle": {
     "description": "No visit booked yet."
   },
-  "visitsEmptyBody": "Planifiez une visite depuis la fiche d'un bien.",
+  "visitsEmptyBody": "Planifie une visite depuis la fiche d'un bien.",
   "@visitsEmptyBody": {
     "description": "No visit booked yet."
   },
-  "visitsOffline": "Visites hors ligne — vos prochaines visites, telles qu'enregistrées.",
+  "visitsOffline": "Visites hors ligne — tes prochaines visites, telles qu'enregistrées.",
   "@visitsOffline": {
     "description": "Cached upcoming visits."
   },
@@ -367,11 +367,11 @@
   "@visitBookTitle": {
     "description": "M07 booking sheet title."
   },
-  "visitBookVisitor": "Qui vous fait visiter",
+  "visitBookVisitor": "Qui te fait visiter",
   "@visitBookVisitor": {
     "description": "Visitor picker heading."
   },
-  "visitBookSlot": "Choisissez un créneau",
+  "visitBookSlot": "Choisis un créneau",
   "@visitBookSlot": {
     "description": "Slot picker heading."
   },
@@ -391,15 +391,15 @@
   "@visitRequestedTitle": {
     "description": "RM-M15-06 — the visitor confirms by hand."
   },
-  "visitRequestedBody": "Le visiteur doit confirmer ce créneau. Vous recevrez une notification.",
+  "visitRequestedBody": "Le visiteur doit confirmer ce créneau. Tu recevras une notification.",
   "@visitRequestedBody": {
     "description": "RM-M15-06."
   },
-  "visitAlreadyBooked": "Vous avez déjà une visite en cours sur ce bien.",
+  "visitAlreadyBooked": "Tu as déjà une visite en cours sur ce bien.",
   "@visitAlreadyBooked": {
     "description": "RM-M07-03."
   },
-  "visitNoSlotAvailability": "Aucun horaire n'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.",
+  "visitNoSlotAvailability": "Aucun horaire n'a encore été déclaré pour ce bien. Contacte le prestataire via la messagerie.",
   "@visitNoSlotAvailability": {
     "description": "CE-M07-01 AGENT_NO_AVAILABILITY."
   },
@@ -452,7 +452,7 @@
   "@visitConfirmPresence": {
     "description": "RM-M07-05 — the tenant's half."
   },
-  "visitWaitingVisitor": "Votre présence est confirmée. En attente du visiteur.",
+  "visitWaitingVisitor": "Ta présence est confirmée. En attente du visiteur.",
   "@visitWaitingVisitor": {
     "description": "RM-M07-05 — one half in."
   },
@@ -460,7 +460,7 @@
   "@visitCancel": {
     "description": "RM-M07-04."
   },
-  "visitCancelTooLate": "L'annulation n'est plus possible. Contactez le visiteur par message.",
+  "visitCancelTooLate": "L'annulation n'est plus possible. Contacte le visiteur par message.",
   "@visitCancelTooLate": {
     "description": "CE-M07-03."
   },
@@ -472,7 +472,7 @@
   "@visitRateBody": {
     "description": "RM-M07-07."
   },
-  "visitRateDone": "Merci pour votre note.",
+  "visitRateDone": "Merci pour ta note.",
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
@@ -496,7 +496,7 @@
   "@reviewDownloadFailed": {
     "description": "RM-M07bis-06 failure."
   },
-  "reviewYours": "Votre avis",
+  "reviewYours": "Ton avis",
   "@reviewYours": {
     "description": "Heading of the read-only review."
   },
@@ -522,11 +522,11 @@
   "@reviewWriteCta": {
     "description": "M07bis — entry point from a completed visit."
   },
-  "reviewWriteTitle": "Votre avis sur ce bien",
+  "reviewWriteTitle": "Ton avis sur ce bien",
   "@reviewWriteTitle": {
     "description": "M07bis writing screen title."
   },
-  "reviewWriteSubtitle": "Publié sur la fiche du bien. Vous ne pourrez plus le modifier.",
+  "reviewWriteSubtitle": "Publié sur la fiche du bien. Tu ne pourras plus le modifier.",
   "@reviewWriteSubtitle": {
     "description": "RM-M07bis-03 + RM-M07bis-05, said before writing."
   },
@@ -550,7 +550,7 @@
   "@reviewCommentLabel": {
     "description": "Optional free text."
   },
-  "reviewFreeTextHint": "Ce que vous avez vu, ce qui vous a marqué.",
+  "reviewFreeTextHint": "Ce que tu as vu, ce qui t'a marqué.",
   "@reviewFreeTextHint": {
     "description": "Placeholder for the free text."
   },
@@ -570,11 +570,11 @@
   "@reviewPublished": {
     "description": "Success."
   },
-  "reviewLocked": "Votre avis est publié et ne peut plus être modifié.",
+  "reviewLocked": "Ton avis est publié et ne peut plus être modifié.",
   "@reviewLocked": {
     "description": "RM-M07bis-03."
   },
-  "reviewAlreadyWritten": "Vous avez déjà donné votre avis sur cette visite.",
+  "reviewAlreadyWritten": "Tu as déjà donné ton avis sur cette visite.",
   "@reviewAlreadyWritten": {
     "description": "RM-M07bis-01 — one report per visit."
   },
@@ -586,7 +586,7 @@
   "@reviewRatingRequired": {
     "description": "Only `rating` is required."
   },
-  "visitBookSubtitle": "Choisissez un visiteur et une heure.",
+  "visitBookSubtitle": "Choisis un visiteur et une heure.",
   "@visitBookSubtitle": {
     "description": "Booking sheet subtitle."
   },
@@ -618,7 +618,7 @@
   "@visitPresenceSection": {
     "description": "RM-M07-05 — the mutual confirmation block."
   },
-  "visitPresenceYou": "Vous",
+  "visitPresenceYou": "Toi",
   "@visitPresenceYou": {
     "description": "RM-M07-05 — the tenant's half."
   },
@@ -634,11 +634,11 @@
   "@visitPresencePending": {
     "description": "One half is missing."
   },
-  "visitPresenceExplainer": "La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.",
+  "visitPresenceExplainer": "Il faut ta confirmation et celle du visiteur pour que la visite démarre.",
   "@visitPresenceExplainer": {
     "description": "RM-M07-05."
   },
-  "visitAwaitingVisitor": "Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.",
+  "visitAwaitingVisitor": "Le visiteur doit encore confirmer ce créneau. Tu ne peux pas confirmer à sa place.",
   "@visitAwaitingVisitor": {
     "description": "RM-M15-06 — the tenant cannot confirm for the visitor."
   },
@@ -687,7 +687,7 @@
   "@searchMapOfflineTitle": {
     "description": "CE-M04-02 on the map — tiles are not cached."
   },
-  "searchMapOfflineBody": "Le fond de carte a besoin d'une connexion. Vos derniers résultats restent consultables en liste.",
+  "searchMapOfflineBody": "Le fond de carte a besoin d'une connexion. Tes derniers résultats restent consultables en liste.",
   "@searchMapOfflineBody": {
     "description": "CE-M04-02 on the map."
   },
@@ -703,7 +703,7 @@
   "@searchMapStyleFailedTitle": {
     "description": "The style URL never loaded — usually a bad or missing MapTiler key."
   },
-  "searchMapStyleFailedBody": "Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.",
+  "searchMapStyleFailedBody": "Vérifie la clé de cartographie de cette version. Les résultats restent consultables en liste.",
   "@searchMapStyleFailedBody": {
     "description": "The style URL never loaded."
   },
@@ -782,11 +782,11 @@
   "@favoritesRemove": {
     "description": "M06 — unsave."
   },
-  "favoritesSignInTitle": "Créez un compte pour enregistrer",
+  "favoritesSignInTitle": "Crée un compte pour enregistrer",
   "@favoritesSignInTitle": {
     "description": "RM-M04-05 — the wall is on the action."
   },
-  "favoritesSignInBody": "Vos favoris vous suivent d'un appareil à l'autre.",
+  "favoritesSignInBody": "Tes favoris te suivent d'un appareil à l'autre.",
   "@favoritesSignInBody": {
     "description": "Why an account."
   },
@@ -794,11 +794,11 @@
   "@favoritesEmptyTitle": {
     "description": "Empty tab."
   },
-  "favoritesEmptyBody": "Touchez le cœur sur un bien pour le retrouver ici.",
+  "favoritesEmptyBody": "Touche le cœur sur un bien pour le retrouver ici.",
   "@favoritesEmptyBody": {
     "description": "Empty tab."
   },
-  "favoritesLimitReached": "Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.",
+  "favoritesLimitReached": "Tu as atteint 50 favoris. Retires-en un pour en ajouter un autre.",
   "@favoritesLimitReached": {
     "description": "RM-M06-02."
   },
@@ -818,7 +818,7 @@
   "@listingGoneTitle": {
     "description": "CE-M05-01."
   },
-  "listingGoneBody": "L'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.",
+  "listingGoneBody": "L'annonce a été retirée ou a expiré. Essaie une nouvelle recherche.",
   "@listingGoneBody": {
     "description": "CE-M05-01."
   },
@@ -867,7 +867,7 @@
   "@listingReport": {
     "description": "RM-M05-05."
   },
-  "listingActionsSignIn": "Connectez-vous pour contacter le prestataire ou planifier une visite.",
+  "listingActionsSignIn": "Connecte-toi pour contacter le prestataire ou planifier une visite.",
   "@listingActionsSignIn": {
     "description": "RM-M04-05 / CA-M05-04."
   },
@@ -966,11 +966,11 @@
   "@messagingEmptyTitle": {
     "description": "Empty list."
   },
-  "messagingEmptyTenant": "Contactez un prestataire depuis la fiche d'un bien pour démarrer une conversation.",
+  "messagingEmptyTenant": "Contacte un prestataire depuis la fiche d'un bien pour démarrer une conversation.",
   "@messagingEmptyTenant": {
     "description": "RM-M12-01 — the tenant has the first word."
   },
-  "messagingEmptyProvider": "Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.",
+  "messagingEmptyProvider": "Les locataires t'écriront depuis tes annonces. Tu ne peux pas ouvrir une conversation.",
   "@messagingEmptyProvider": {
     "description": "RM-M12-01 — the provider cannot write first."
   },
@@ -1011,7 +1011,7 @@
     "description": "Toast after starting a thread from a fiche."
   },
   "commonRetry": "Réessayer",
-  "commonError": "Une erreur est survenue. Réessayez.",
+  "commonError": "Ça n'a pas marché. Réessaie.",
   "commonErrorTitle": "Oups",
   "commonOr": "Ou",
   "mediaTakePhoto": "Prendre une photo",
@@ -1020,29 +1020,29 @@
   "cityPickerTitle": "Choisir une ville",
   "cityPickerSearchHint": "Rechercher une ville",
   "cityPickerEmpty": "Aucune ville trouvée",
-  "loadingDialog_content": "Veuillez patienter...",
+  "loadingDialog_content": "Un instant…",
   "welcome_inscriptionButton": "Inscription",
   "welcome_loginButton": "Connexion",
   "loginTitle": "Se connecter",
   "registerTitle": "Créer un compte",
-  "loginEnterPhone": "Entrez votre numéro de téléphone",
+  "loginEnterPhone": "Entre ton numéro de téléphone",
   "loginPhoneLabel": "Téléphone",
   "loginPhoneHint": "+237 6XX XX XX XX",
   "loginPhoneHintLocal": "6 XX XX XX XX",
   "loginPhoneInvalid": "Numéro invalide",
   "loginRequestCode": "Recevoir le code",
-  "loginOtpSendError": "Impossible d’envoyer le code. Réessayez.",
+  "loginOtpSendError": "Impossible d’envoyer le code. Réessaie.",
   "loginContinueWithGoogle": "Continuer avec Google",
   "loginContinueWithApple": "Continuer avec Apple",
-  "loginNoAccountQuestion": "Vous n’avez pas de compte ?",
-  "loginSignUpAction": "Inscrivez-vous",
-  "registerHaveAccountQuestion": "Vous avez déjà un compte ?",
-  "registerSignInAction": "Connectez-vous",
+  "loginNoAccountQuestion": "Tu n’as pas de compte ?",
+  "loginSignUpAction": "Inscris-toi",
+  "registerHaveAccountQuestion": "Tu as déjà un compte ?",
+  "registerSignInAction": "Connecte-toi",
   "authEmailLabel": "E-mail",
   "authEmailHint": "nom@exemple.com",
   "authEmailInvalid": "E-mail invalide",
   "authPasswordLabel": "Mot de passe",
-  "authPasswordHint": "Votre mot de passe",
+  "authPasswordHint": "Ton mot de passe",
   "authPasswordRequired": "Mot de passe requis",
   "authLoginButton": "Se connecter",
   "authLoginInvalidCredentials": "E-mail ou mot de passe incorrect.",
@@ -1052,7 +1052,7 @@
   "registerRolePrestataire": "Prestataire",
   "registerRoleAgent": "Agent",
   "registerButton": "S’inscrire",
-  "registerFailed": "Inscription impossible. Vérifiez vos informations.",
+  "registerFailed": "Inscription impossible. Vérifie tes informations.",
   "commonComingSoon": "Bientôt disponible",
   "settingsTitle": "Profil",
   "settingsProfileCard": "Profil",
@@ -1082,12 +1082,12 @@
   "changePasswordMismatch": "Les mots de passe ne correspondent pas",
   "changePasswordButton": "Mettre à jour",
   "changePasswordSuccess": "Mot de passe mis à jour",
-  "changePasswordError": "Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.",
+  "changePasswordError": "Impossible de changer le mot de passe. Vérifie ton mot de passe actuel.",
   "deleteAccountLink": "Supprimer mon compte",
   "deleteAccountTitle": "Supprimer le compte",
-  "deleteAccountWarning": "Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.",
+  "deleteAccountWarning": "Cette action est définitive. Tes données personnelles seront supprimées et tu perdras l’accès à ton compte.",
   "deleteAccountConfirmWord": "SUPPRIMER",
-  "deleteAccountConfirmLabel": "Tapez « {word} » pour confirmer",
+  "deleteAccountConfirmLabel": "Tape « {word} » pour confirmer",
   "@deleteAccountConfirmLabel": {
     "placeholders": {
       "word": {
@@ -1130,7 +1130,7 @@
   "@profileIncompleteTitle": {
     "description": "RM-M10-01 — publishing is blocked until it is complete."
   },
-  "profileIncompleteBody": "Complétez votre profil pour pouvoir publier vos biens.",
+  "profileIncompleteBody": "Complète ton profil pour publier tes biens.",
   "@profileIncompleteBody": {
     "description": "RM-M10-01."
   },
@@ -1173,10 +1173,10 @@
   "kycAdded": "Ajouté",
   "kycSubmit": "Soumettre",
   "kycSubmitted": "Documents soumis",
-  "kycUploadError": "Échec de l’envoi. Réessayez.",
+  "kycUploadError": "Échec de l’envoi. Réessaie.",
   "kycTakePhoto": "Prendre une photo",
   "kycImport": "Importer",
-  "kycIdDocumentPrompt": "Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité",
+  "kycIdDocumentPrompt": "Choisis le document avec lequel tu veux vérifier ton identité",
   "kycDocCni": "Carte d’identité",
   "kycDocRecepisse": "Recépissé",
   "kycDocPassport": "Passeport",
@@ -1195,8 +1195,8 @@
   },
   "otpCodeLabel": "Code à 6 chiffres",
   "otpValidate": "Valider",
-  "otpInvalidCode": "Code invalide. Réessayez.",
-  "otpNoCodeQuestion": "Vous n’avez pas reçu le code ?",
+  "otpInvalidCode": "Code invalide. Réessaie.",
+  "otpNoCodeQuestion": "Tu n’as pas reçu le code ?",
   "otpResend": "Renvoyer le code",
   "otpResendIn": "Renvoyer dans {seconds}s",
   "@otpResendIn": {
@@ -1240,17 +1240,17 @@
   "@accessRestrictedTitle": {},
   "accessComingSoonTitle": "Bientôt disponible",
   "@accessComingSoonTitle": {},
-  "accessComingSoonBody": "Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.",
+  "accessComingSoonBody": "Cette fonctionnalité arrive bientôt. On te prévient dès qu’elle est prête.",
   "@accessComingSoonBody": {},
   "accessKycRequiredTitle": "Vérification requise",
   "@accessKycRequiredTitle": {},
-  "accessKycRequiredBody": "Complétez vos certifications pour accéder à cette fonctionnalité.",
+  "accessKycRequiredBody": "Complète tes certifications pour accéder à cette fonctionnalité.",
   "@accessKycRequiredBody": {},
   "accessKycRequiredCta": "Compléter mes certifications",
   "@accessKycRequiredCta": {},
   "accessKycPendingTitle": "Vérification en cours",
   "@accessKycPendingTitle": {},
-  "accessKycPendingBody": "Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.",
+  "accessKycPendingBody": "Tes documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.",
   "@accessKycPendingBody": {},
   "accessTierRequiredTitle": "Réservé aux abonnés",
   "@accessTierRequiredTitle": {},
@@ -1276,9 +1276,9 @@
   "@accessRoleRequiredBody": {},
   "exitAppTitle": "Quitter l’application ?",
   "@exitAppTitle": {},
-  "exitAppBody": "Appuyez de nouveau pour quitter.",
+  "exitAppBody": "Appuie de nouveau pour quitter.",
   "@exitAppBody": {},
-  "homeTitle": "Gérez vos biens\nà travers l’application",
+  "homeTitle": "Gère tes biens\ndepuis l’application",
   "@homeTitle": {},
   "homeLocationLabel": "Localisation",
   "@homeLocationLabel": {},
@@ -1288,19 +1288,19 @@
   "@homeOfflineBanner": {},
   "homeCtaBiensTitle": "Mes biens",
   "@homeCtaBiensTitle": {},
-  "homeCtaBiensBody": "Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management",
+  "homeCtaBiensBody": "Enregistre tes biens et gère-les plus facilement, depuis un seul endroit",
   "@homeCtaBiensBody": {},
   "homeCtaBiensAction": "Gérer mes biens",
   "@homeCtaBiensAction": {},
   "homeCtaPortefeuilleTitle": "Portefeuille",
   "@homeCtaPortefeuilleTitle": {},
-  "homeCtaPortefeuilleBody": "Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application",
+  "homeCtaPortefeuilleBody": "Suis les encaissements et les dépenses de tes biens, depuis l’application",
   "@homeCtaPortefeuilleBody": {},
   "homeCtaPortefeuilleAction": "Gérer mes transactions",
   "@homeCtaPortefeuilleAction": {},
   "homeCtaAgentsTitle": "Mes agents",
   "@homeCtaAgentsTitle": {},
-  "homeCtaAgentsBody": "Créez des agents à qui déléguer la gestion partielle ou complète de vos biens",
+  "homeCtaAgentsBody": "Crée des agents à qui déléguer tout ou partie de la gestion de tes biens",
   "@homeCtaAgentsBody": {},
   "homeCtaAgentsAction": "Gérer mes agents",
   "@homeCtaAgentsAction": {},
@@ -1338,7 +1338,7 @@
       }
     }
   },
-  "homeEmptyBiens": "Vous n’avez encore enregistré aucun bien.",
+  "homeEmptyBiens": "Tu n’as encore enregistré aucun bien.",
   "@homeEmptyBiens": {},
   "subscriptionTitle": "Mon abonnement",
   "@subscriptionTitle": {},
@@ -1354,7 +1354,7 @@
   },
   "subscriptionNoExpiry": "Sans expiration",
   "@subscriptionNoExpiry": {},
-  "subscriptionExpired": "Votre abonnement a expiré",
+  "subscriptionExpired": "Ton abonnement a expiré",
   "@subscriptionExpired": {},
   "subscriptionListingLimit": "{count, plural, =0{Aucune annonce active} one{1 annonce active} other{{count} annonces actives}}",
   "@subscriptionListingLimit": {
@@ -1366,7 +1366,7 @@
   },
   "subscriptionListingLimitUnlimited": "Annonces illimitées",
   "@subscriptionListingLimitUnlimited": {},
-  "subscriptionUnknown": "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
+  "subscriptionUnknown": "Impossible de vérifier ton abonnement. Formule Gratuit appliquée en attendant.",
   "@subscriptionUnknown": {},
   "subscriptionChangePlan": "Changer de formule",
   "@subscriptionChangePlan": {},
@@ -1412,9 +1412,9 @@
   "@paymentMethodOrange": {},
   "paymentInitiating": "Initialisation du paiement…",
   "@paymentInitiating": {},
-  "paymentAwaitingTitle": "Finalisez sur votre téléphone",
+  "paymentAwaitingTitle": "Termine sur ton téléphone",
   "@paymentAwaitingTitle": {},
-  "paymentAwaitingBody": "Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.",
+  "paymentAwaitingBody": "Valide la demande de paiement reçue sur ton mobile (USSD ou application Mobile Money). Cet écran se met à jour tout seul.",
   "@paymentAwaitingBody": {},
   "paymentReference": "Référence : {ref}",
   "@paymentReference": {
@@ -1426,7 +1426,7 @@
   },
   "paymentConfirmedTitle": "Paiement confirmé",
   "@paymentConfirmedTitle": {},
-  "paymentConfirmedBody": "Votre formule {tier} est active.",
+  "paymentConfirmedBody": "C'est réglé. Ta formule {tier} est active.",
   "@paymentConfirmedBody": {
     "placeholders": {
       "tier": {
@@ -1436,7 +1436,7 @@
   },
   "paymentPendingTitle": "Paiement en attente",
   "@paymentPendingTitle": {},
-  "paymentPendingBody": "Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.",
+  "paymentPendingBody": "On n’a pas encore reçu la confirmation. Ça peut prendre quelques minutes — tu recevras une notification dès que ta formule sera active.",
   "@paymentPendingBody": {},
   "paymentFailedTitle": "Paiement échoué",
   "@paymentFailedTitle": {},
@@ -1474,7 +1474,7 @@
   "@annoncesTabAvailable": {},
   "annoncesTabOccupied": "Occupés",
   "@annoncesTabOccupied": {},
-  "annoncesEmptyAvailable": "Aucun bien disponible. Appuyez sur + pour en enregistrer un.",
+  "annoncesEmptyAvailable": "Aucun bien disponible. Appuie sur + pour en enregistrer un.",
   "@annoncesEmptyAvailable": {},
   "annoncesEmptyOccupied": "Aucun bien occupé.",
   "@annoncesEmptyOccupied": {},
@@ -1546,7 +1546,7 @@
   "@annonceActionFailed": {},
   "annonceDeleteConfirmTitle": "Supprimer ce bien ?",
   "@annonceDeleteConfirmTitle": {},
-  "annonceDeleteConfirmBody": "Cette action est définitive. Le bien sera retiré de votre portefeuille.",
+  "annonceDeleteConfirmBody": "Cette action est définitive. Le bien sera retiré de ton portefeuille.",
   "@annonceDeleteConfirmBody": {},
   "annonceFormTitleNew": "Ajouter un bien",
   "@annonceFormTitleNew": {},
@@ -1590,9 +1590,9 @@
   "@annonceFormSavedDraft": {},
   "annonceFormLocating": "Localisation en cours…",
   "@annonceFormLocating": {},
-  "annonceFormLocationDenied": "Autorisez la localisation pour enregistrer la position du bien.",
+  "annonceFormLocationDenied": "Autorise la localisation pour enregistrer la position du bien.",
   "@annonceFormLocationDenied": {},
-  "annonceFormLocationHint": "La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.",
+  "annonceFormLocationHint": "La position enregistrée est celle de ton téléphone. Place-toi sur le bien, ou corrige l’adresse.",
   "@annonceFormLocationHint": {},
   "annonceFormAddress": "Adresse exacte",
   "@annonceFormAddress": {},
@@ -1606,9 +1606,9 @@
   "@annonceFormUnitCount": {},
   "annonceFormErrorPhoto": "Photo non uploadée, réessaie.",
   "@annonceFormErrorPhoto": {},
-  "annonceFormErrorIncomplete": "Complétez les champs obligatoires.",
+  "annonceFormErrorIncomplete": "Complète les champs obligatoires.",
   "@annonceFormErrorIncomplete": {},
-  "annonceFormErrorSave": "Enregistrement impossible. Réessayez.",
+  "annonceFormErrorSave": "Enregistrement impossible. Réessaie.",
   "@annonceFormErrorSave": {},
   "propertyTypeApartment": "Appartement",
   "@propertyTypeApartment": {
@@ -1690,7 +1690,7 @@
   "@annonceDetailNoInfo": {},
   "publishBlockedProfileTitle": "Profil incomplet",
   "@publishBlockedProfileTitle": {},
-  "publishBlockedProfileBody": "Complétez votre profil (logo, type, ville) avant de publier.",
+  "publishBlockedProfileBody": "Complète ton profil (logo, type, ville) avant de publier.",
   "@publishBlockedProfileBody": {},
   "publishBlockedPhotosTitle": "Photos manquantes",
   "@publishBlockedPhotosTitle": {},
@@ -1726,7 +1726,7 @@
       }
     }
   },
-  "annonceFormCityNotDetected": "Ville non détectée. Choisissez-la manuellement.",
+  "annonceFormCityNotDetected": "Ville non détectée. Choisis-la manuellement.",
   "@annonceFormCityNotDetected": {},
   "annonceFormPickDistrict": "Choisir le quartier",
   "@annonceFormPickDistrict": {},
@@ -1748,15 +1748,15 @@
   "@residencesTitle": {},
   "annoncesActionMore": "Plus d’actions",
   "@annoncesActionMore": {},
-  "errorResidenceUnitLimit": "Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.",
+  "errorResidenceUnitLimit": "Ta formule ne permet pas autant d’unités. Passe à une formule supérieure ou réduis le nombre d’unités.",
   "@errorResidenceUnitLimit": {},
-  "errorListingLimit": "Limite d’annonces actives atteinte pour votre formule.",
+  "errorListingLimit": "Limite d’annonces actives atteinte pour ta formule.",
   "@errorListingLimit": {},
-  "errorProfileIncomplete": "Complétez votre profil (photo, type, ville) avant de continuer.",
+  "errorProfileIncomplete": "Complète ton profil (photo, type, ville) avant de continuer.",
   "@errorProfileIncomplete": {},
-  "errorKycRequired": "Vos certifications doivent être validées avant cette action.",
+  "errorKycRequired": "Tes certifications doivent être validées avant cette action.",
   "@errorKycRequired": {},
-  "errorValidation": "Certaines informations sont invalides. Vérifiez le formulaire.",
+  "errorValidation": "Certaines informations sont invalides. Vérifie le formulaire.",
   "@errorValidation": {},
   "annoncesTabArchived": "Archivés",
   "@annoncesTabArchived": {},
@@ -1782,9 +1782,9 @@
   "@errorInsufficientPhotos": {},
   "errorInvalidTransition": "Ce changement de statut n’est pas possible pour ce bien.",
   "@errorInvalidTransition": {},
-  "errorConstraintViolation": "Une écriture concurrente a échoué. Réessayez.",
+  "errorConstraintViolation": "Deux modifications se sont croisées. Réessaie.",
   "@errorConstraintViolation": {},
-  "errorAccessDenied": "Votre compte n’a pas les droits pour cette action.",
+  "errorAccessDenied": "Ton compte n’a pas les droits pour cette action.",
   "@errorAccessDenied": {},
   "annonceDetailUnitOfResidence": "Unité d’une résidence",
   "@annonceDetailUnitOfResidence": {},
@@ -1796,11 +1796,11 @@
   "@annonceFormHelpPropertyType": {
     "description": "Doc 10 §M10 (Champs) + §M04 (filtres). Help text on the property-type field."
   },
-  "annonceFormHelpPrice": "Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
+  "annonceFormHelpPrice": "Le loyer tel que tu le perçois, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l'année. Mboa en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
   "@annonceFormHelpPrice": {
     "description": "Doc 10 RM-M10-09. Help text on the rent field."
   },
-  "annonceFormHelpCharges": "Facultatif. Indiquez si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
+  "annonceFormHelpCharges": "Facultatif. Indique si l'eau et l'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
   "@annonceFormHelpCharges": {
     "description": "Doc 10 §M10 (Champs) — « Charges incluses (oui/non + montant) », facultatif, visible par les users."
   },
@@ -1901,7 +1901,7 @@
   "@annonceFormFieldAmenities": {
     "description": "Label of the amenities checklist on the listing form."
   },
-  "annonceFormHelpAmenities": "Facultatif. Cochez ce que le bien propose — les locataires s'en servent pour comparer les annonces entre elles.",
+  "annonceFormHelpAmenities": "Facultatif. Coche ce que le bien propose — les locataires s'en servent pour comparer les annonces entre elles.",
   "@annonceFormHelpAmenities": {
     "description": "Doc 10 §M10 (Champs) — « Équipements (checklist) », facultatif, visible par les users."
   },
@@ -1978,11 +1978,11 @@
   "@agentAcceptingTitle": {
     "description": "RM-M15-05 toggle."
   },
-  "agentAcceptingOn": "Vous pouvez recevoir de nouvelles assignations.",
+  "agentAcceptingOn": "Tu peux recevoir de nouvelles assignations.",
   "@agentAcceptingOn": {
     "description": "RM-M15-05, accepting."
   },
-  "agentAcceptingOff": "Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.",
+  "agentAcceptingOff": "Tu ne recevras plus de nouvelles assignations. Les visites déjà planifiées restent à faire.",
   "@agentAcceptingOff": {
     "description": "RM-M15-05, inactive — Doc 10 is explicit that scheduled visits are still carried out."
   },
@@ -1990,7 +1990,7 @@
   "@agentIncompleteTitle": {
     "description": "profileComplete == false."
   },
-  "agentIncompleteBody": "Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.",
+  "agentIncompleteBody": "Ajoute ton nom, une photo et au moins une zone pour recevoir des missions.",
   "@agentIncompleteBody": {
     "description": "The server's completeness rule, spelled out: firstName + lastName + photoObjectKey + >=1 zone."
   },
@@ -2011,11 +2011,11 @@
   "@agentZonesNone": {
     "description": "No zones selected yet."
   },
-  "agentZonesHelp": "Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.",
+  "agentZonesHelp": "Choisis une ville entière ou seulement certains quartiers. Seuls les biens situés dans tes zones te seront proposés.",
   "@agentZonesHelp": {
     "description": "Doc 10 RM-M15-04."
   },
-  "agentZonesEmptyError": "Choisissez au moins une ville ou un quartier.",
+  "agentZonesEmptyError": "Choisis au moins une ville ou un quartier.",
   "@agentZonesEmptyError": {
     "description": "The backend rejects a zones update where both lists are empty."
   },
@@ -2036,7 +2036,7 @@
       }
     }
   },
-  "agentAvailabilityHelp": "Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.",
+  "agentAvailabilityHelp": "Définis tes horaires habituels. Les créneaux réservables en sont déduits, moins tes jours bloqués et tes visites déjà prévues.",
   "@agentAvailabilityHelp": {
     "description": "Doc 10 RM-M15-01."
   },
@@ -2085,7 +2085,7 @@
   "@agentSaved": {
     "description": "Confirmation toast."
   },
-  "agentSaveFailed": "Enregistrement impossible. Réessayez.",
+  "agentSaveFailed": "Enregistrement impossible. Réessaie.",
   "@agentSaveFailed": {
     "description": "Generic failure toast on the agent screens."
   },
@@ -2125,7 +2125,7 @@
   "@agentsMineEmpty": {
     "description": "Empty state for Mes agents."
   },
-  "agentsMineEmptyBody": "Assignez un agent à un bien pour que les locataires puissent planifier une visite.",
+  "agentsMineEmptyBody": "Assigne un agent à un bien pour que les locataires puissent planifier une visite.",
   "@agentsMineEmptyBody": {
     "description": "Doc 10 RM-M07-01 — the point of an assignment."
   },
@@ -2201,7 +2201,7 @@
       }
     }
   },
-  "agentsOfferSentBody": "Vous serez notifié de sa réponse.",
+  "agentsOfferSentBody": "Tu seras notifié de sa réponse.",
   "@agentsOfferSentBody": {
     "description": "Doc 10 RM-M11-04."
   },
@@ -2218,11 +2218,11 @@
   "@agentsOwnerVisitsTitle": {
     "description": "RM-M11-10 — the owner joins the property's visitor pool."
   },
-  "agentsOwnerVisitsBody": "Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.",
+  "agentsOwnerVisitsBody": "Tu apparaîtras parmi les visiteurs proposés pour ce bien. Chaque demande te sera transmise pour confirmer un créneau.",
   "@agentsOwnerVisitsBody": {
     "description": "RM-M11-10 / RM-M15-06 — no weekly availability for an owner."
   },
-  "agentsOwnerVisitsElsewhere": "Vos visites personnelles se règlent sur la fiche du bien.",
+  "agentsOwnerVisitsElsewhere": "Tes visites personnelles se règlent sur la fiche du bien.",
   "@agentsOwnerVisitsElsewhere": {
     "description": "RM-M11-10 — the switch lives on the listing; this points to it."
   },
@@ -2311,11 +2311,11 @@
   "@missionsEmptyMine": {
     "description": "Empty missions segment."
   },
-  "missionsEmptyOpportunities": "Aucune opportunité dans vos zones",
+  "missionsEmptyOpportunities": "Aucune opportunité dans tes zones",
   "@missionsEmptyOpportunities": {
     "description": "Empty opportunities — tied to RM-M15-04 zones."
   },
-  "missionsEmptyOpportunitiesBody": "Élargissez vos zones d'intervention pour recevoir plus de propositions.",
+  "missionsEmptyOpportunitiesBody": "Élargis tes zones d'intervention pour recevoir plus de propositions.",
   "@missionsEmptyOpportunitiesBody": {
     "description": "Points at the fixable cause: the agent's zones."
   },
@@ -2368,7 +2368,7 @@
   "@agentsPickPropertyNone": {
     "description": "Picker empty state title."
   },
-  "agentsPickPropertyNoneBody": "Un agent ne peut être assigné qu'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.",
+  "agentsPickPropertyNoneBody": "Un agent ne peut être assigné qu'à un bien publié. Publie une annonce ou une unité de résidence pour continuer.",
   "@agentsPickPropertyNoneBody": {
     "description": "The backend refuses a non-published listing (ANNONCE_NOT_PUBLISHED) and a residence with no published unit (NO_PUBLISHED_UNITS)."
   },
@@ -2470,7 +2470,7 @@
   "@visitsRequestsTitle": {
     "description": "RM-M15-06 — proposed times awaiting the owner's answer."
   },
-  "visitsRequestsBody": "Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.",
+  "visitsRequestsBody": "Un locataire propose un créneau. Confirme-le ou refuse-le : il pourra en proposer un autre.",
   "@visitsRequestsBody": {
     "description": "RM-M15-06."
   },
@@ -2490,7 +2490,7 @@
   "@reviewNoneTitle": {
     "description": "RM-M07bis-02 — writing is optional and undated."
   },
-  "reviewNoneBody": "Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu'il l'aura fait.",
+  "reviewNoneBody": "Le locataire peut publier son avis quand il le souhaite. Tu seras notifié dès qu'il l'aura fait.",
   "@reviewNoneBody": {
     "description": "RM-M07bis-02 / N-18."
   },
@@ -2515,15 +2515,15 @@
       }
     }
   },
-  "reviewDeletedAuthor": "Utilisateur supprimé",
+  "reviewDeletedAuthor": "Compte supprimé",
   "@reviewDeletedAuthor": {
     "description": "RM-M07bis-08 — the review outlives its author."
   },
-  "reviewCommentsTitle": "Vos réponses",
+  "reviewCommentsTitle": "Tes réponses",
   "@reviewCommentsTitle": {
     "description": "RM-M07bis-04 — the visitor's comments."
   },
-  "reviewCommentsEmpty": "Vous n'avez pas encore répondu à cet avis.",
+  "reviewCommentsEmpty": "Tu n'as pas encore répondu à cet avis.",
   "@reviewCommentsEmpty": {
     "description": "No comments yet."
   },
@@ -2531,7 +2531,7 @@
   "@reviewCommentHint": {
     "description": "Composer placeholder."
   },
-  "reviewCommentRule": "Votre réponse s'ajoute à l'avis : elle ne modifie ni la note ni le texte du locataire.",
+  "reviewCommentRule": "Ta réponse s'ajoute à l'avis : elle ne modifie ni la note ni le texte du locataire.",
   "@reviewCommentRule": {
     "description": "RM-M07bis-04 — the asymmetry, said plainly."
   },
@@ -2579,7 +2579,7 @@
   "@visitsPresenceTitle": {
     "description": "RM-M07-05 — the mutual confirmation section."
   },
-  "visitsPresenceYou": "Vous",
+  "visitsPresenceYou": "Toi",
   "@visitsPresenceYou": {
     "description": "The visitor's own half of the confirmation."
   },
@@ -2616,7 +2616,7 @@
   "@visitsAddress": {
     "description": "RM-M16-01 — only the agent's view shows it."
   },
-  "visitsAddressNote": "Visible uniquement par vous, pour cette visite.",
+  "visitsAddressNote": "Visible uniquement par toi, pour cette visite.",
   "@visitsAddressNote": {
     "description": "RM-M16-01."
   },
@@ -2636,11 +2636,11 @@
   "@visitsLocating": {
     "description": "Taking the GPS fix."
   },
-  "visitsTooFarTitle": "Vous semblez loin du bien",
+  "visitsTooFarTitle": "Tu sembles loin du bien",
   "@visitsTooFarTitle": {
     "description": "RM-M16-02 — beyond 500 m."
   },
-  "visitsTooFarBody": "Vous êtes à environ {distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.",
+  "visitsTooFarBody": "Tu es à environ {distance} m. Explique pourquoi tu confirmes ta présence depuis cet endroit.",
   "@visitsTooFarBody": {
     "description": "The justification Doc 10 asks for.",
     "placeholders": {
@@ -2657,19 +2657,19 @@
   "@visitsTooFarConfirm": {
     "description": "Confirm with a justification."
   },
-  "visitsLocationDenied": "Autorisez la localisation pour confirmer votre présence.",
+  "visitsLocationDenied": "Autorise la localisation pour confirmer ta présence.",
   "@visitsLocationDenied": {
     "description": "LocationFailure.denied."
   },
-  "visitsLocationDeniedForever": "La localisation est bloquée. Activez-la dans les réglages du téléphone.",
+  "visitsLocationDeniedForever": "La localisation est bloquée. Active-la dans les réglages du téléphone.",
   "@visitsLocationDeniedForever": {
     "description": "LocationFailure.deniedForever."
   },
-  "visitsLocationDisabled": "Activez la localisation de votre téléphone.",
+  "visitsLocationDisabled": "Active la localisation de ton téléphone.",
   "@visitsLocationDisabled": {
     "description": "LocationFailure.disabled."
   },
-  "visitsLocationUnavailable": "Position introuvable. Réessayez dans un instant.",
+  "visitsLocationUnavailable": "Position introuvable. Réessaie dans un instant.",
   "@visitsLocationUnavailable": {
     "description": "LocationFailure.unavailable."
   },

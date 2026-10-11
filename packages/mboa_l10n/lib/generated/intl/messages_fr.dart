@@ -72,9 +72,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m23(count, period) => "${count} ${period}";
 
-  static String m24(word) => "Tapez ${word} pour confirmer";
+  static String m24(word) => "Tape ${word} pour confirmer";
 
-  static String m25(word) => "Tapez « ${word} » pour confirmer";
+  static String m25(word) => "Tape « ${word} » pour confirmer";
 
   static String m26(tier) => "Inclus dans ${tier}";
 
@@ -94,7 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m34(seconds) => "Renvoyer dans ${seconds}s";
 
-  static String m35(tier) => "Votre formule ${tier} est active.";
+  static String m35(tier) => "C\'est réglé. Ta formule ${tier} est active.";
 
   static String m36(ref) => "Référence : ${ref}";
 
@@ -140,24 +140,24 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m53(time) => "Confirmé à ${time}";
 
   static String m54(distance) =>
-      "Vous êtes à environ ${distance} m. Expliquez pourquoi vous confirmez votre présence depuis cet endroit.";
+      "Tu es à environ ${distance} m. Explique pourquoi tu confirmes ta présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "accessComingSoonBody": MessageLookupByLibrary.simpleMessage(
-      "Cette fonctionnalité arrive prochainement. Nous vous préviendrons dès qu’elle sera prête.",
+      "Cette fonctionnalité arrive bientôt. On te prévient dès qu’elle est prête.",
     ),
     "accessComingSoonTitle": MessageLookupByLibrary.simpleMessage(
       "Bientôt disponible",
     ),
     "accessKycPendingBody": MessageLookupByLibrary.simpleMessage(
-      "Vos documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.",
+      "Tes documents sont en cours d’examen. Cette fonctionnalité s’activera dès validation.",
     ),
     "accessKycPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Vérification en cours",
     ),
     "accessKycRequiredBody": MessageLookupByLibrary.simpleMessage(
-      "Complétez vos certifications pour accéder à cette fonctionnalité.",
+      "Complète tes certifications pour accéder à cette fonctionnalité.",
     ),
     "accessKycRequiredCta": MessageLookupByLibrary.simpleMessage(
       "Compléter mes certifications",
@@ -180,24 +180,24 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "accessUpgradeCta": m1,
     "accountGuestBody": MessageLookupByLibrary.simpleMessage(
-      "La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer vos favoris.",
+      "La recherche est libre. Un compte sert à contacter un prestataire, planifier une visite et enregistrer tes favoris.",
     ),
     "accountGuestTitle": MessageLookupByLibrary.simpleMessage(
-      "Créez votre compte Mboa",
+      "Crée ton compte Mboa",
     ),
     "accountSignIn": MessageLookupByLibrary.simpleMessage("Se connecter"),
     "agentAcceptingOff": MessageLookupByLibrary.simpleMessage(
-      "Vous ne recevrez plus de nouvelles assignations. Les visites déjà planifiées restent à faire.",
+      "Tu ne recevras plus de nouvelles assignations. Les visites déjà planifiées restent à faire.",
     ),
     "agentAcceptingOn": MessageLookupByLibrary.simpleMessage(
-      "Vous pouvez recevoir de nouvelles assignations.",
+      "Tu peux recevoir de nouvelles assignations.",
     ),
     "agentAcceptingTitle": MessageLookupByLibrary.simpleMessage(
       "Je reçois des missions",
     ),
     "agentAddSlot": MessageLookupByLibrary.simpleMessage("Ajouter un créneau"),
     "agentAvailabilityHelp": MessageLookupByLibrary.simpleMessage(
-      "Définissez vos horaires habituels. Les créneaux réservables en sont déduits, moins vos jours bloqués et vos visites déjà prévues.",
+      "Définis tes horaires habituels. Les créneaux réservables en sont déduits, moins tes jours bloqués et tes visites déjà prévues.",
     ),
     "agentAvailabilitySubtitle": m2,
     "agentAvailabilityTitle": MessageLookupByLibrary.simpleMessage(
@@ -234,7 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Zones d\'intervention",
     ),
     "agentIncompleteBody": MessageLookupByLibrary.simpleMessage(
-      "Ajoutez votre nom, une photo et au moins une zone pour recevoir des missions.",
+      "Ajoute ton nom, une photo et au moins une zone pour recevoir des missions.",
     ),
     "agentIncompleteTitle": MessageLookupByLibrary.simpleMessage(
       "Profil incomplet",
@@ -251,7 +251,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentRatingCount": m4,
     "agentRatingNone": MessageLookupByLibrary.simpleMessage("Pas encore noté"),
     "agentSaveFailed": MessageLookupByLibrary.simpleMessage(
-      "Enregistrement impossible. Réessayez.",
+      "Enregistrement impossible. Réessaie.",
     ),
     "agentSaved": MessageLookupByLibrary.simpleMessage(
       "Modifications enregistrées",
@@ -283,10 +283,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "agentVisitDurationValue": m6,
     "agentZonesEmptyError": MessageLookupByLibrary.simpleMessage(
-      "Choisissez au moins une ville ou un quartier.",
+      "Choisis au moins une ville ou un quartier.",
     ),
     "agentZonesHelp": MessageLookupByLibrary.simpleMessage(
-      "Choisissez une ville entière ou seulement certains quartiers. Seuls les biens situés dans vos zones vous seront proposés.",
+      "Choisis une ville entière ou seulement certains quartiers. Seuls les biens situés dans tes zones te seront proposés.",
     ),
     "agentZonesNone": MessageLookupByLibrary.simpleMessage("Aucune zone"),
     "agentZonesSubtitle": m7,
@@ -328,22 +328,22 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun agent assigné",
     ),
     "agentsMineEmptyBody": MessageLookupByLibrary.simpleMessage(
-      "Assignez un agent à un bien pour que les locataires puissent planifier une visite.",
+      "Assigne un agent à un bien pour que les locataires puissent planifier une visite.",
     ),
     "agentsMineTitle": MessageLookupByLibrary.simpleMessage("Mes agents"),
     "agentsOfferSent": m9,
     "agentsOfferSentBody": MessageLookupByLibrary.simpleMessage(
-      "Vous serez notifié de sa réponse.",
+      "Tu seras notifié de sa réponse.",
     ),
     "agentsOfferSentTitle": MessageLookupByLibrary.simpleMessage(
       "Assignation d\'agent",
     ),
     "agentsOfferSkipped": m10,
     "agentsOwnerVisitsBody": MessageLookupByLibrary.simpleMessage(
-      "Vous apparaîtrez parmi les visiteurs proposés pour ce bien. Chaque demande vous sera transmise pour confirmer un créneau.",
+      "Tu apparaîtras parmi les visiteurs proposés pour ce bien. Chaque demande te sera transmise pour confirmer un créneau.",
     ),
     "agentsOwnerVisitsElsewhere": MessageLookupByLibrary.simpleMessage(
-      "Vos visites personnelles se règlent sur la fiche du bien.",
+      "Tes visites personnelles se règlent sur la fiche du bien.",
     ),
     "agentsOwnerVisitsTitle": MessageLookupByLibrary.simpleMessage(
       "Je fais les visites moi-même",
@@ -358,7 +358,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun bien publié",
     ),
     "agentsPickPropertyNoneBody": MessageLookupByLibrary.simpleMessage(
-      "Un agent ne peut être assigné qu\'à un bien publié. Publiez une annonce ou une unité de résidence pour continuer.",
+      "Un agent ne peut être assigné qu\'à un bien publié. Publie une annonce ou une unité de résidence pour continuer.",
     ),
     "agentsPickPropertyTitle": MessageLookupByLibrary.simpleMessage(
       "Choisir un bien",
@@ -408,7 +408,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Désarchiver",
     ),
     "annonceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
-      "Cette action est définitive. Le bien sera retiré de votre portefeuille.",
+      "Cette action est définitive. Le bien sera retiré de ton portefeuille.",
     ),
     "annonceDeleteConfirmTitle": MessageLookupByLibrary.simpleMessage(
       "Supprimer ce bien ?",
@@ -445,20 +445,20 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormCityDetected": m14,
     "annonceFormCityNotDetected": MessageLookupByLibrary.simpleMessage(
-      "Ville non détectée. Choisissez-la manuellement.",
+      "Ville non détectée. Choisis-la manuellement.",
     ),
     "annonceFormCurrency": MessageLookupByLibrary.simpleMessage("XAF"),
     "annonceFormDetectingCity": MessageLookupByLibrary.simpleMessage(
       "Détection de la ville…",
     ),
     "annonceFormErrorIncomplete": MessageLookupByLibrary.simpleMessage(
-      "Complétez les champs obligatoires.",
+      "Complète les champs obligatoires.",
     ),
     "annonceFormErrorPhoto": MessageLookupByLibrary.simpleMessage(
       "Photo non uploadée, réessaie.",
     ),
     "annonceFormErrorSave": MessageLookupByLibrary.simpleMessage(
-      "Enregistrement impossible. Réessayez.",
+      "Enregistrement impossible. Réessaie.",
     ),
     "annonceFormFieldAmenities": MessageLookupByLibrary.simpleMessage(
       "Équipements",
@@ -502,13 +502,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormFieldTitle": MessageLookupByLibrary.simpleMessage("Titre"),
     "annonceFormFieldType": MessageLookupByLibrary.simpleMessage("Type"),
     "annonceFormHelpAmenities": MessageLookupByLibrary.simpleMessage(
-      "Facultatif. Cochez ce que le bien propose — les locataires s\'en servent pour comparer les annonces entre elles.",
+      "Facultatif. Coche ce que le bien propose — les locataires s\'en servent pour comparer les annonces entre elles.",
     ),
     "annonceFormHelpAvailability": MessageLookupByLibrary.simpleMessage(
       "Obligatoire. Les locataires peuvent filtrer sur la disponibilité immédiate.",
     ),
     "annonceFormHelpCharges": MessageLookupByLibrary.simpleMessage(
-      "Facultatif. Indiquez si l\'eau et l\'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
+      "Facultatif. Indique si l\'eau et l\'électricité sont comprises dans le loyer, et leur montant si elles ne le sont pas.",
     ),
     "annonceFormHelpDescription": MessageLookupByLibrary.simpleMessage(
       "Facultatif, 1 500 caractères maximum.",
@@ -526,7 +526,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "3 photos minimum et 15 maximum. Elles sont compressées automatiquement avant l\'envoi. Modifier les photos d\'une annonce publiée relance la validation du badge « Photos vérifiées ».",
     ),
     "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
-      "Le loyer tel que vous le percevez, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l\'année. La plateforme en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
+      "Le loyer tel que tu le perçois, et sa périodicité : au jour, à la semaine, au mois, au trimestre ou à l\'année. Mboa en déduit un équivalent mensuel, utilisé uniquement pour comparer les annonces entre elles — jamais facturé, jamais repris dans le Contrat Mboa.",
     ),
     "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
       "Appartement, Studio, Villa, Chambre, Bureau ou Local commercial. Les locataires filtrent leur recherche sur ce critère.",
@@ -547,10 +547,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Localisation en cours…",
     ),
     "annonceFormLocationDenied": MessageLookupByLibrary.simpleMessage(
-      "Autorisez la localisation pour enregistrer la position du bien.",
+      "Autorise la localisation pour enregistrer la position du bien.",
     ),
     "annonceFormLocationHint": MessageLookupByLibrary.simpleMessage(
-      "La position enregistrée est celle de votre téléphone. Placez-vous sur le bien, ou corrigez l’adresse.",
+      "La position enregistrée est celle de ton téléphone. Place-toi sur le bien, ou corrige l’adresse.",
     ),
     "annonceFormNoDistricts": MessageLookupByLibrary.simpleMessage(
       "Aucun quartier disponible pour cette ville.",
@@ -601,7 +601,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun bien archivé.",
     ),
     "annoncesEmptyAvailable": MessageLookupByLibrary.simpleMessage(
-      "Aucun bien disponible. Appuyez sur + pour en enregistrer un.",
+      "Aucun bien disponible. Appuie sur + pour en enregistrer un.",
     ),
     "annoncesEmptyOccupied": MessageLookupByLibrary.simpleMessage(
       "Aucun bien occupé.",
@@ -632,7 +632,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Un nouveau code a été envoyé.",
     ),
     "authPasswordHint": MessageLookupByLibrary.simpleMessage(
-      "Votre mot de passe",
+      "Ton mot de passe",
     ),
     "authPasswordLabel": MessageLookupByLibrary.simpleMessage("Mot de passe"),
     "authPasswordRequired": MessageLookupByLibrary.simpleMessage(
@@ -658,7 +658,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mot de passe actuel",
     ),
     "changePasswordError": MessageLookupByLibrary.simpleMessage(
-      "Impossible de changer le mot de passe. Vérifiez votre mot de passe actuel.",
+      "Impossible de changer le mot de passe. Vérifie ton mot de passe actuel.",
     ),
     "changePasswordMismatch": MessageLookupByLibrary.simpleMessage(
       "Les mots de passe ne correspondent pas",
@@ -693,7 +693,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bientôt disponible",
     ),
     "commonError": MessageLookupByLibrary.simpleMessage(
-      "Une erreur est survenue. Réessayez.",
+      "Ça n\'a pas marché. Réessaie.",
     ),
     "commonErrorTitle": MessageLookupByLibrary.simpleMessage("Oups"),
     "commonNo": MessageLookupByLibrary.simpleMessage("Non"),
@@ -719,7 +719,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "En attente du locataire",
     ),
     "contractAwaitingYou": MessageLookupByLibrary.simpleMessage(
-      "En attente de votre action",
+      "En attente de ton action",
     ),
     "contractCancel": MessageLookupByLibrary.simpleMessage(
       "Annuler le contrat",
@@ -729,7 +729,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractChangeAnswer": MessageLookupByLibrary.simpleMessage("Répondre"),
     "contractChangeAnswerHelp": MessageLookupByLibrary.simpleMessage(
-      "Répondez même si vous ne modifiez rien : un refus motivé est une réponse et reste au dossier.",
+      "Réponds même si tu ne modifies rien : un refus motivé est une réponse et reste au dossier.",
     ),
     "contractChangeAnswerSend": MessageLookupByLibrary.simpleMessage(
       "Envoyer la réponse",
@@ -738,7 +738,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Objection traitée",
     ),
     "contractChangePending": MessageLookupByLibrary.simpleMessage(
-      "Objection en attente de votre réponse",
+      "Objection en attente de ta réponse",
     ),
     "contractChangeWithdrawn": MessageLookupByLibrary.simpleMessage(
       "Objection retirée",
@@ -795,7 +795,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractSignWord": MessageLookupByLibrary.simpleMessage("SIGNER"),
     "contractSignatureMine": MessageLookupByLibrary.simpleMessage(
-      "Votre signature",
+      "Ta signature",
     ),
     "contractSignatureOther": MessageLookupByLibrary.simpleMessage(
       "Signature du locataire",
@@ -803,9 +803,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "contractSignaturesTitle": MessageLookupByLibrary.simpleMessage(
       "Signatures",
     ),
-    "contractSignedByYou": MessageLookupByLibrary.simpleMessage(
-      "Vous avez signé",
-    ),
+    "contractSignedByYou": MessageLookupByLibrary.simpleMessage("Tu as signé"),
     "contractStatusAccepted": MessageLookupByLibrary.simpleMessage("Accepté"),
     "contractStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulé"),
     "contractStatusChangesRequested": MessageLookupByLibrary.simpleMessage(
@@ -815,7 +813,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "contractStatusSent": MessageLookupByLibrary.simpleMessage("Envoyé"),
     "contractStatusSigned": MessageLookupByLibrary.simpleMessage("Signé"),
     "contractTenantInvited": MessageLookupByLibrary.simpleMessage(
-      "Ce locataire n\'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprenez le contrat une fois qu\'il aura rejoint.",
+      "Ce locataire n\'a pas encore de compte Mboa. Une invitation lui a été envoyée ; reprends le contrat une fois qu\'il aura rejoint.",
     ),
     "contractTenantPending": MessageLookupByLibrary.simpleMessage(
       "Locataire à confirmer",
@@ -832,7 +830,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractTermsTitle": MessageLookupByLibrary.simpleMessage("Termes"),
     "contractsEmptyBody": MessageLookupByLibrary.simpleMessage(
-      "Un Contrat Mboa part toujours d\'un bien. Ouvrez la fiche du bien concerné pour en rédiger un.",
+      "Un Contrat Mboa part toujours d\'un bien. Ouvre la fiche du bien concerné pour en rédiger un.",
     ),
     "contractsEmptyFiltered": MessageLookupByLibrary.simpleMessage(
       "Aucun contrat dans cette vue.",
@@ -842,7 +840,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractsFilterAll": MessageLookupByLibrary.simpleMessage("Tous"),
     "contractsFilterMine": MessageLookupByLibrary.simpleMessage(
-      "À vous de jouer",
+      "À toi de jouer",
     ),
     "contractsTitle": MessageLookupByLibrary.simpleMessage("Contrats Mboa"),
     "dayFriday": MessageLookupByLibrary.simpleMessage("Vendredi"),
@@ -866,16 +864,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Supprimer le compte",
     ),
     "deleteAccountWarning": MessageLookupByLibrary.simpleMessage(
-      "Cette action est définitive. Vos données personnelles seront supprimées et vous perdrez l’accès à votre compte.",
+      "Cette action est définitive. Tes données personnelles seront supprimées et tu perdras l’accès à ton compte.",
     ),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Editer le Profil",
     ),
     "errorAccessDenied": MessageLookupByLibrary.simpleMessage(
-      "Votre compte n’a pas les droits pour cette action.",
+      "Ton compte n’a pas les droits pour cette action.",
     ),
     "errorConstraintViolation": MessageLookupByLibrary.simpleMessage(
-      "Une écriture concurrente a échoué. Réessayez.",
+      "Deux modifications se sont croisées. Réessaie.",
     ),
     "errorInsufficientPhotos": MessageLookupByLibrary.simpleMessage(
       "Ajoute au moins 3 photos pour publier.",
@@ -884,42 +882,42 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ce changement de statut n’est pas possible pour ce bien.",
     ),
     "errorKycRequired": MessageLookupByLibrary.simpleMessage(
-      "Vos certifications doivent être validées avant cette action.",
+      "Tes certifications doivent être validées avant cette action.",
     ),
     "errorListingLimit": MessageLookupByLibrary.simpleMessage(
-      "Limite d’annonces actives atteinte pour votre formule.",
+      "Limite d’annonces actives atteinte pour ta formule.",
     ),
     "errorProfileIncomplete": MessageLookupByLibrary.simpleMessage(
-      "Complétez votre profil (photo, type, ville) avant de continuer.",
+      "Complète ton profil (photo, type, ville) avant de continuer.",
     ),
     "errorResidenceUnitLimit": MessageLookupByLibrary.simpleMessage(
-      "Votre formule ne permet pas autant d’unités. Passez à une formule supérieure ou réduisez le nombre d’unités.",
+      "Ta formule ne permet pas autant d’unités. Passe à une formule supérieure ou réduis le nombre d’unités.",
     ),
     "errorValidation": MessageLookupByLibrary.simpleMessage(
-      "Certaines informations sont invalides. Vérifiez le formulaire.",
+      "Certaines informations sont invalides. Vérifie le formulaire.",
     ),
     "exitAppBody": MessageLookupByLibrary.simpleMessage(
-      "Appuyez de nouveau pour quitter.",
+      "Appuie de nouveau pour quitter.",
     ),
     "exitAppTitle": MessageLookupByLibrary.simpleMessage(
       "Quitter l’application ?",
     ),
     "favoritesAdd": MessageLookupByLibrary.simpleMessage("Enregistrer"),
     "favoritesEmptyBody": MessageLookupByLibrary.simpleMessage(
-      "Touchez le cœur sur un bien pour le retrouver ici.",
+      "Touche le cœur sur un bien pour le retrouver ici.",
     ),
     "favoritesEmptyTitle": MessageLookupByLibrary.simpleMessage("Aucun favori"),
     "favoritesLimitReached": MessageLookupByLibrary.simpleMessage(
-      "Vous avez atteint 50 favoris. Retirez-en un pour en ajouter un autre.",
+      "Tu as atteint 50 favoris. Retires-en un pour en ajouter un autre.",
     ),
     "favoritesRemove": MessageLookupByLibrary.simpleMessage(
       "Retirer des favoris",
     ),
     "favoritesSignInBody": MessageLookupByLibrary.simpleMessage(
-      "Vos favoris vous suivent d\'un appareil à l\'autre.",
+      "Tes favoris te suivent d\'un appareil à l\'autre.",
     ),
     "favoritesSignInTitle": MessageLookupByLibrary.simpleMessage(
-      "Créez un compte pour enregistrer",
+      "Crée un compte pour enregistrer",
     ),
     "favoritesUnavailable": MessageLookupByLibrary.simpleMessage(
       "Ce bien n\'est plus disponible",
@@ -931,27 +929,27 @@ class MessageLookup extends MessageLookupByLibrary {
       "Gérer mes agents",
     ),
     "homeCtaAgentsBody": MessageLookupByLibrary.simpleMessage(
-      "Créez des agents à qui déléguer la gestion partielle ou complète de vos biens",
+      "Crée des agents à qui déléguer tout ou partie de la gestion de tes biens",
     ),
     "homeCtaAgentsTitle": MessageLookupByLibrary.simpleMessage("Mes agents"),
     "homeCtaBiensAction": MessageLookupByLibrary.simpleMessage(
       "Gérer mes biens",
     ),
     "homeCtaBiensBody": MessageLookupByLibrary.simpleMessage(
-      "Enregistrez vos biens, et gérez ces derniers plus facilement à l’aide de plusieurs options de management",
+      "Enregistre tes biens et gère-les plus facilement, depuis un seul endroit",
     ),
     "homeCtaBiensTitle": MessageLookupByLibrary.simpleMessage("Mes biens"),
     "homeCtaPortefeuilleAction": MessageLookupByLibrary.simpleMessage(
       "Gérer mes transactions",
     ),
     "homeCtaPortefeuilleBody": MessageLookupByLibrary.simpleMessage(
-      "Gérez vos transactions financières en rapport avec vos biens immobiliers depuis l’application",
+      "Suis les encaissements et les dépenses de tes biens, depuis l’application",
     ),
     "homeCtaPortefeuilleTitle": MessageLookupByLibrary.simpleMessage(
       "Portefeuille",
     ),
     "homeEmptyBiens": MessageLookupByLibrary.simpleMessage(
-      "Vous n’avez encore enregistré aucun bien.",
+      "Tu n’as encore enregistré aucun bien.",
     ),
     "homeLocationEmpty": MessageLookupByLibrary.simpleMessage("--/--"),
     "homeLocationLabel": MessageLookupByLibrary.simpleMessage("Localisation"),
@@ -980,7 +978,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeStatsViews": MessageLookupByLibrary.simpleMessage("Vues"),
     "homeStatsVisits": MessageLookupByLibrary.simpleMessage("Visites"),
     "homeTitle": MessageLookupByLibrary.simpleMessage(
-      "Gérez vos biens\nà travers l’application",
+      "Gère tes biens\ndepuis l’application",
     ),
     "homeUserWelcome": MessageLookupByLibrary.simpleMessage(
       "Bienvenue sur Mboa 👋",
@@ -1001,7 +999,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycDone": MessageLookupByLibrary.simpleMessage("Terminé"),
     "kycIdDocumentPrompt": MessageLookupByLibrary.simpleMessage(
-      "Choisissez le type de document que vous souhaitez utiliser pour vérifier votre identité",
+      "Choisis le document avec lequel tu veux vérifier ton identité",
     ),
     "kycImport": MessageLookupByLibrary.simpleMessage("Importer"),
     "kycItemAddress": MessageLookupByLibrary.simpleMessage("Adresse"),
@@ -1026,13 +1024,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycTabStatut": MessageLookupByLibrary.simpleMessage("Statut"),
     "kycTakePhoto": MessageLookupByLibrary.simpleMessage("Prendre une photo"),
     "kycUploadError": MessageLookupByLibrary.simpleMessage(
-      "Échec de l’envoi. Réessayez.",
+      "Échec de l’envoi. Réessaie.",
     ),
     "kycVerso": MessageLookupByLibrary.simpleMessage("Verso"),
     "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
     "languageFrench": MessageLookupByLibrary.simpleMessage("Français"),
     "listingActionsSignIn": MessageLookupByLibrary.simpleMessage(
-      "Connectez-vous pour contacter le prestataire ou planifier une visite.",
+      "Connecte-toi pour contacter le prestataire ou planifier une visite.",
     ),
     "listingAmenities": MessageLookupByLibrary.simpleMessage("Équipements"),
     "listingCharacteristics": MessageLookupByLibrary.simpleMessage(
@@ -1041,7 +1039,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "listingContact": MessageLookupByLibrary.simpleMessage("Contacter"),
     "listingDescription": MessageLookupByLibrary.simpleMessage("Description"),
     "listingGoneBody": MessageLookupByLibrary.simpleMessage(
-      "L\'annonce a été retirée ou a expiré. Essayez une nouvelle recherche.",
+      "L\'annonce a été retirée ou a expiré. Essaie une nouvelle recherche.",
     ),
     "listingGoneTitle": MessageLookupByLibrary.simpleMessage(
       "Ce bien n\'est plus disponible",
@@ -1071,7 +1069,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "listingTitle": MessageLookupByLibrary.simpleMessage("Détail du bien"),
     "loadingDialog_content": MessageLookupByLibrary.simpleMessage(
-      "Veuillez patienter...",
+      "Un instant…",
     ),
     "loginContinueWithApple": MessageLookupByLibrary.simpleMessage(
       "Continuer avec Apple",
@@ -1080,13 +1078,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Continuer avec Google",
     ),
     "loginEnterPhone": MessageLookupByLibrary.simpleMessage(
-      "Entrez votre numéro de téléphone",
+      "Entre ton numéro de téléphone",
     ),
     "loginNoAccountQuestion": MessageLookupByLibrary.simpleMessage(
-      "Vous n’avez pas de compte ?",
+      "Tu n’as pas de compte ?",
     ),
     "loginOtpSendError": MessageLookupByLibrary.simpleMessage(
-      "Impossible d’envoyer le code. Réessayez.",
+      "Impossible d’envoyer le code. Réessaie.",
     ),
     "loginPhoneHint": MessageLookupByLibrary.simpleMessage("+237 6XX XX XX XX"),
     "loginPhoneHintLocal": MessageLookupByLibrary.simpleMessage(
@@ -1099,7 +1097,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "loginRequestCode": MessageLookupByLibrary.simpleMessage(
       "Recevoir le code",
     ),
-    "loginSignUpAction": MessageLookupByLibrary.simpleMessage("Inscrivez-vous"),
+    "loginSignUpAction": MessageLookupByLibrary.simpleMessage("Inscris-toi"),
     "loginTitle": MessageLookupByLibrary.simpleMessage("Se connecter"),
     "mediaImport": MessageLookupByLibrary.simpleMessage("Importer"),
     "mediaTakePhoto": MessageLookupByLibrary.simpleMessage("Prendre une photo"),
@@ -1150,10 +1148,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Message envoyé au prestataire",
     ),
     "messagingEmptyProvider": MessageLookupByLibrary.simpleMessage(
-      "Les locataires vous écriront depuis vos annonces. Vous ne pouvez pas initier une conversation.",
+      "Les locataires t\'écriront depuis tes annonces. Tu ne peux pas ouvrir une conversation.",
     ),
     "messagingEmptyTenant": MessageLookupByLibrary.simpleMessage(
-      "Contactez un prestataire depuis la fiche d\'un bien pour démarrer une conversation.",
+      "Contacte un prestataire depuis la fiche d\'un bien pour démarrer une conversation.",
     ),
     "messagingEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Aucune conversation",
@@ -1187,10 +1185,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucune proposition en attente",
     ),
     "missionsEmptyOpportunities": MessageLookupByLibrary.simpleMessage(
-      "Aucune opportunité dans vos zones",
+      "Aucune opportunité dans tes zones",
     ),
     "missionsEmptyOpportunitiesBody": MessageLookupByLibrary.simpleMessage(
-      "Élargissez vos zones d\'intervention pour recevoir plus de propositions.",
+      "Élargis tes zones d\'intervention pour recevoir plus de propositions.",
     ),
     "missionsResign": MessageLookupByLibrary.simpleMessage("Me désister"),
     "missionsResignConfirm": MessageLookupByLibrary.simpleMessage(
@@ -1214,20 +1212,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
     "otpCodeSentTo": m33,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
-      "Code invalide. Réessayez.",
+      "Code invalide. Réessaie.",
     ),
     "otpNoCodeQuestion": MessageLookupByLibrary.simpleMessage(
-      "Vous n’avez pas reçu le code ?",
+      "Tu n’as pas reçu le code ?",
     ),
     "otpResend": MessageLookupByLibrary.simpleMessage("Renvoyer le code"),
     "otpResendIn": m34,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
     "paymentAwaitingBody": MessageLookupByLibrary.simpleMessage(
-      "Validez la demande de paiement reçue sur votre mobile (USSD ou application Mobile Money). Cet écran se met à jour automatiquement.",
+      "Valide la demande de paiement reçue sur ton mobile (USSD ou application Mobile Money). Cet écran se met à jour tout seul.",
     ),
     "paymentAwaitingTitle": MessageLookupByLibrary.simpleMessage(
-      "Finalisez sur votre téléphone",
+      "Termine sur ton téléphone",
     ),
     "paymentConfirmedBody": m35,
     "paymentConfirmedTitle": MessageLookupByLibrary.simpleMessage(
@@ -1251,7 +1249,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mode de paiement",
     ),
     "paymentPendingBody": MessageLookupByLibrary.simpleMessage(
-      "Nous n’avons pas encore reçu la confirmation. Elle peut prendre quelques minutes — vous recevrez une notification dès que votre formule sera active.",
+      "On n’a pas encore reçu la confirmation. Ça peut prendre quelques minutes — tu recevras une notification dès que ta formule sera active.",
     ),
     "paymentPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Paiement en attente",
@@ -1288,7 +1286,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Compléter",
     ),
     "profileIncompleteBody": MessageLookupByLibrary.simpleMessage(
-      "Complétez votre profil pour pouvoir publier vos biens.",
+      "Complète ton profil pour publier tes biens.",
     ),
     "profileIncompleteTitle": MessageLookupByLibrary.simpleMessage(
       "Profil incomplet",
@@ -1340,17 +1338,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "Photos manquantes",
     ),
     "publishBlockedProfileBody": MessageLookupByLibrary.simpleMessage(
-      "Complétez votre profil (logo, type, ville) avant de publier.",
+      "Complète ton profil (logo, type, ville) avant de publier.",
     ),
     "publishBlockedProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Profil incomplet",
     ),
     "registerButton": MessageLookupByLibrary.simpleMessage("S’inscrire"),
     "registerFailed": MessageLookupByLibrary.simpleMessage(
-      "Inscription impossible. Vérifiez vos informations.",
+      "Inscription impossible. Vérifie tes informations.",
     ),
     "registerHaveAccountQuestion": MessageLookupByLibrary.simpleMessage(
-      "Vous avez déjà un compte ?",
+      "Tu as déjà un compte ?",
     ),
     "registerRoleAgent": MessageLookupByLibrary.simpleMessage("Agent"),
     "registerRoleLabel": MessageLookupByLibrary.simpleMessage("Je suis"),
@@ -1358,7 +1356,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Prestataire",
     ),
     "registerSignInAction": MessageLookupByLibrary.simpleMessage(
-      "Connectez-vous",
+      "Connecte-toi",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Créer un compte"),
     "residenceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
@@ -1393,14 +1391,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
     "reviewAddPoint": MessageLookupByLibrary.simpleMessage("Ajouter"),
     "reviewAlreadyWritten": MessageLookupByLibrary.simpleMessage(
-      "Vous avez déjà donné votre avis sur cette visite.",
+      "Tu as déjà donné ton avis sur cette visite.",
     ),
     "reviewCommentHint": MessageLookupByLibrary.simpleMessage(
       "Répondre à cet avis…",
     ),
     "reviewCommentLabel": MessageLookupByLibrary.simpleMessage("Commentaire"),
     "reviewCommentRule": MessageLookupByLibrary.simpleMessage(
-      "Votre réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.",
+      "Ta réponse s\'ajoute à l\'avis : elle ne modifie ni la note ni le texte du locataire.",
     ),
     "reviewCommentSend": MessageLookupByLibrary.simpleMessage(
       "Publier ma réponse",
@@ -1409,9 +1407,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Réponse publiée",
     ),
     "reviewCommentsEmpty": MessageLookupByLibrary.simpleMessage(
-      "Vous n\'avez pas encore répondu à cet avis.",
+      "Tu n\'as pas encore répondu à cet avis.",
     ),
-    "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Vos réponses"),
+    "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Tes réponses"),
     "reviewCondition": m43,
     "reviewConditionLabel": MessageLookupByLibrary.simpleMessage(
       "État général perçu",
@@ -1419,7 +1417,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewConditionValue": m44,
     "reviewCons": MessageLookupByLibrary.simpleMessage("Points négatifs"),
     "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage(
-      "Utilisateur supprimé",
+      "Compte supprimé",
     ),
     "reviewDownload": MessageLookupByLibrary.simpleMessage(
       "Télécharger en PDF",
@@ -1429,13 +1427,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reviewExport": MessageLookupByLibrary.simpleMessage("Exporter en PDF"),
     "reviewFreeTextHint": MessageLookupByLibrary.simpleMessage(
-      "Ce que vous avez vu, ce qui vous a marqué.",
+      "Ce que tu as vu, ce qui t\'a marqué.",
     ),
     "reviewLocked": MessageLookupByLibrary.simpleMessage(
-      "Votre avis est publié et ne peut plus être modifié.",
+      "Ton avis est publié et ne peut plus être modifié.",
     ),
     "reviewNoneBody": MessageLookupByLibrary.simpleMessage(
-      "Le locataire peut publier son avis quand il le souhaite. Vous serez notifié dès qu\'il l\'aura fait.",
+      "Le locataire peut publier son avis quand il le souhaite. Tu seras notifié dès qu\'il l\'aura fait.",
     ),
     "reviewNoneTitle": MessageLookupByLibrary.simpleMessage(
       "Aucun avis pour le moment",
@@ -1467,12 +1465,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reviewWriteCta": MessageLookupByLibrary.simpleMessage("Laisser un avis"),
     "reviewWriteSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Publié sur la fiche du bien. Vous ne pourrez plus le modifier.",
+      "Publié sur la fiche du bien. Tu ne pourras plus le modifier.",
     ),
     "reviewWriteTitle": MessageLookupByLibrary.simpleMessage(
-      "Votre avis sur ce bien",
+      "Ton avis sur ce bien",
     ),
-    "reviewYours": MessageLookupByLibrary.simpleMessage("Votre avis"),
+    "reviewYours": MessageLookupByLibrary.simpleMessage("Ton avis"),
     "searchAmenities": MessageLookupByLibrary.simpleMessage("Équipements"),
     "searchAny": MessageLookupByLibrary.simpleMessage("Peu importe"),
     "searchApply": MessageLookupByLibrary.simpleMessage("Voir les résultats"),
@@ -1485,10 +1483,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "searchClearFilters": MessageLookupByLibrary.simpleMessage("Réinitialiser"),
     "searchEmptyBody": MessageLookupByLibrary.simpleMessage(
-      "Essayez d\'élargir vos filtres : un loyer plus haut, moins de quartiers, ou un autre type de bien.",
+      "Essaie un autre quartier, un loyer plus haut, ou un autre type de bien.",
     ),
     "searchEmptyTitle": MessageLookupByLibrary.simpleMessage(
-      "Aucun bien trouvé",
+      "Aucun bien ici pour l\'instant",
     ),
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filtres"),
     "searchMapApprox": MessageLookupByLibrary.simpleMessage(
@@ -1507,13 +1505,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun bien à placer",
     ),
     "searchMapOfflineBody": MessageLookupByLibrary.simpleMessage(
-      "Le fond de carte a besoin d\'une connexion. Vos derniers résultats restent consultables en liste.",
+      "Le fond de carte a besoin d\'une connexion. Tes derniers résultats restent consultables en liste.",
     ),
     "searchMapOfflineTitle": MessageLookupByLibrary.simpleMessage(
       "Carte indisponible hors ligne",
     ),
     "searchMapStyleFailedBody": MessageLookupByLibrary.simpleMessage(
-      "Vérifiez la clé de cartographie de cette version. Les résultats restent consultables en liste.",
+      "Vérifie la clé de cartographie de cette version. Les résultats restent consultables en liste.",
     ),
     "searchMapStyleFailedTitle": MessageLookupByLibrary.simpleMessage(
       "Le fond de carte n\'a pas pu être chargé",
@@ -1521,7 +1519,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
     "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
-      "Résultats hors ligne — ils datent de votre dernière recherche.",
+      "Résultats hors ligne — ils datent de ta dernière recherche.",
     ),
     "searchRentRange": MessageLookupByLibrary.simpleMessage("Loyer (XAF)"),
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Résidence"),
@@ -1536,10 +1534,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Résultats non actualisés — le serveur n\'a pas répondu.",
     ),
     "searchStartBody": MessageLookupByLibrary.simpleMessage(
-      "Choisissez une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
+      "Choisis une ville pour lancer la recherche. Les autres filtres sont facultatifs.",
     ),
     "searchStartTitle": MessageLookupByLibrary.simpleMessage(
-      "Où cherchez-vous ?",
+      "Tu cherches où ?",
     ),
     "searchSurfaceRange": MessageLookupByLibrary.simpleMessage(
       "Superficie (m²)",
@@ -1570,7 +1568,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Formule actuelle",
     ),
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
-      "Votre abonnement a expiré",
+      "Ton abonnement a expiré",
     ),
     "subscriptionListingLimit": m50,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
@@ -1592,13 +1590,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionRenewsOn": m51,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage("Mon abonnement"),
     "subscriptionUnknown": MessageLookupByLibrary.simpleMessage(
-      "Impossible de vérifier votre abonnement. Formule Gratuit appliquée en attendant.",
+      "Impossible de vérifier ton abonnement. Formule Gratuit appliquée en attendant.",
     ),
     "visitAlreadyBooked": MessageLookupByLibrary.simpleMessage(
-      "Vous avez déjà une visite en cours sur ce bien.",
+      "Tu as déjà une visite en cours sur ce bien.",
     ),
     "visitAwaitingVisitor": MessageLookupByLibrary.simpleMessage(
-      "Le visiteur doit encore confirmer ce créneau. Vous ne pouvez pas confirmer à sa place.",
+      "Le visiteur doit encore confirmer ce créneau. Tu ne peux pas confirmer à sa place.",
     ),
     "visitBookConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer la visite",
@@ -1614,17 +1612,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBookNoSlotAction": MessageLookupByLibrary.simpleMessage(
       "Contacter le prestataire",
     ),
-    "visitBookSlot": MessageLookupByLibrary.simpleMessage(
-      "Choisissez un créneau",
-    ),
+    "visitBookSlot": MessageLookupByLibrary.simpleMessage("Choisis un créneau"),
     "visitBookSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Choisissez un visiteur et une heure.",
+      "Choisis un visiteur et une heure.",
     ),
     "visitBookTitle": MessageLookupByLibrary.simpleMessage(
       "Planifier une visite",
     ),
     "visitBookVisitor": MessageLookupByLibrary.simpleMessage(
-      "Qui vous fait visiter",
+      "Qui te fait visiter",
     ),
     "visitBookWindow": MessageLookupByLibrary.simpleMessage(
       "Créneaux des 7 prochains jours.",
@@ -1634,7 +1630,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitCancel": MessageLookupByLibrary.simpleMessage("Annuler la visite"),
     "visitCancelTooLate": MessageLookupByLibrary.simpleMessage(
-      "L\'annulation n\'est plus possible. Contactez le visiteur par message.",
+      "L\'annulation n\'est plus possible. Contacte le visiteur par message.",
     ),
     "visitConfirmPresence": MessageLookupByLibrary.simpleMessage(
       "Je suis sur place",
@@ -1643,7 +1639,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Détail de la visite",
     ),
     "visitNoSlotAvailability": MessageLookupByLibrary.simpleMessage(
-      "Aucun horaire n\'a encore été déclaré pour ce bien. Contactez le prestataire via la messagerie.",
+      "Aucun horaire n\'a encore été déclaré pour ce bien. Contacte le prestataire via la messagerie.",
     ),
     "visitNoSlotBlocked": MessageLookupByLibrary.simpleMessage(
       "Aucune disponibilité dans les 7 prochains jours.",
@@ -1653,23 +1649,23 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitPresenceConfirmed": MessageLookupByLibrary.simpleMessage("Confirmé"),
     "visitPresenceExplainer": MessageLookupByLibrary.simpleMessage(
-      "La visite ne démarre que lorsque vous et le visiteur avez confirmé votre présence.",
+      "Il faut ta confirmation et celle du visiteur pour que la visite démarre.",
     ),
     "visitPresencePending": MessageLookupByLibrary.simpleMessage("Pas encore"),
     "visitPresenceSection": MessageLookupByLibrary.simpleMessage(
       "Présence sur place",
     ),
     "visitPresenceVisitor": MessageLookupByLibrary.simpleMessage("Le visiteur"),
-    "visitPresenceYou": MessageLookupByLibrary.simpleMessage("Vous"),
+    "visitPresenceYou": MessageLookupByLibrary.simpleMessage("Toi"),
     "visitRateBody": MessageLookupByLibrary.simpleMessage(
       "Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.",
     ),
     "visitRateDone": MessageLookupByLibrary.simpleMessage(
-      "Merci pour votre note.",
+      "Merci pour ta note.",
     ),
     "visitRateTitle": MessageLookupByLibrary.simpleMessage("Noter le visiteur"),
     "visitRequestedBody": MessageLookupByLibrary.simpleMessage(
-      "Le visiteur doit confirmer ce créneau. Vous recevrez une notification.",
+      "Le visiteur doit confirmer ce créneau. Tu recevras une notification.",
     ),
     "visitRequestedTitle": MessageLookupByLibrary.simpleMessage(
       "Demande envoyée",
@@ -1690,14 +1686,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitVisitorRecord": m52,
     "visitWaitingVisitor": MessageLookupByLibrary.simpleMessage(
-      "Votre présence est confirmée. En attente du visiteur.",
+      "Ta présence est confirmée. En attente du visiteur.",
     ),
     "visitsActionFailed": MessageLookupByLibrary.simpleMessage(
       "Action impossible pour le moment.",
     ),
     "visitsAddress": MessageLookupByLibrary.simpleMessage("Adresse exacte"),
     "visitsAddressNote": MessageLookupByLibrary.simpleMessage(
-      "Visible uniquement par vous, pour cette visite.",
+      "Visible uniquement par toi, pour cette visite.",
     ),
     "visitsAgendaEmptyDay": MessageLookupByLibrary.simpleMessage(
       "Aucune visite ce jour-là.",
@@ -1740,7 +1736,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Détail de la visite",
     ),
     "visitsEmptyBody": MessageLookupByLibrary.simpleMessage(
-      "Planifiez une visite depuis la fiche d\'un bien.",
+      "Planifie une visite depuis la fiche d\'un bien.",
     ),
     "visitsEmptyPast": MessageLookupByLibrary.simpleMessage(
       "Aucune visite passée",
@@ -1758,16 +1754,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Localisation en cours…",
     ),
     "visitsLocationDenied": MessageLookupByLibrary.simpleMessage(
-      "Autorisez la localisation pour confirmer votre présence.",
+      "Autorise la localisation pour confirmer ta présence.",
     ),
     "visitsLocationDeniedForever": MessageLookupByLibrary.simpleMessage(
-      "La localisation est bloquée. Activez-la dans les réglages du téléphone.",
+      "La localisation est bloquée. Active-la dans les réglages du téléphone.",
     ),
     "visitsLocationDisabled": MessageLookupByLibrary.simpleMessage(
-      "Activez la localisation de votre téléphone.",
+      "Active la localisation de ton téléphone.",
     ),
     "visitsLocationUnavailable": MessageLookupByLibrary.simpleMessage(
-      "Position introuvable. Réessayez dans un instant.",
+      "Position introuvable. Réessaie dans un instant.",
     ),
     "visitsMineTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
     "visitsNotFulfilledBody": MessageLookupByLibrary.simpleMessage(
@@ -1777,7 +1773,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Visite non honorée",
     ),
     "visitsOffline": MessageLookupByLibrary.simpleMessage(
-      "Visites hors ligne — vos prochaines visites, telles qu\'enregistrées.",
+      "Visites hors ligne — tes prochaines visites, telles qu\'enregistrées.",
     ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Prestataire"),
     "visitsPast": MessageLookupByLibrary.simpleMessage("Passées"),
@@ -1791,13 +1787,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsPresenceTitle": MessageLookupByLibrary.simpleMessage(
       "Confirmation de présence",
     ),
-    "visitsPresenceYou": MessageLookupByLibrary.simpleMessage("Vous"),
+    "visitsPresenceYou": MessageLookupByLibrary.simpleMessage("Toi"),
     "visitsRequestConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer le créneau",
     ),
     "visitsRequestDecline": MessageLookupByLibrary.simpleMessage("Refuser"),
     "visitsRequestsBody": MessageLookupByLibrary.simpleMessage(
-      "Un locataire propose un créneau. Confirmez-le ou refusez-le : il pourra en proposer un autre.",
+      "Un locataire propose un créneau. Confirme-le ou refuse-le : il pourra en proposer un autre.",
     ),
     "visitsRequestsTitle": MessageLookupByLibrary.simpleMessage(
       "Demandes à confirmer",
@@ -1826,7 +1822,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ex. GPS imprécis, je suis au portail",
     ),
     "visitsTooFarTitle": MessageLookupByLibrary.simpleMessage(
-      "Vous semblez loin du bien",
+      "Tu sembles loin du bien",
     ),
     "visitsUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "welcomeBody": MessageLookupByLibrary.simpleMessage(

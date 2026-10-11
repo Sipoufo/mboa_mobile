@@ -218,7 +218,7 @@ void main() {
 
     final button = tester.widget<Button>(find.byType(Button).first);
     expect(button.onPressed, isNull);
-    expect(find.textContaining('Connectez-vous'), findsOneWidget);
+    expect(find.textContaining('Connecte-toi'), findsOneWidget);
   });
 
   testWidgets('CE-M05-01 — a withdrawn listing is not a retry', (tester) async {

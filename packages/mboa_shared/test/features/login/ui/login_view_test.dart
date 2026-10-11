@@ -64,7 +64,7 @@ void main() {
     await pumpLogin(tester);
     expect(find.text('Se connecter'), findsOneWidget);
 
-    final switchLink = find.textContaining('Inscrivez-vous');
+    final switchLink = find.textContaining('Inscris-toi');
     await tester.ensureVisible(switchLink);
     await tester.tap(switchLink);
     await tester.pump();

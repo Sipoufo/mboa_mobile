@@ -108,7 +108,7 @@ void main() {
     await pump(tester);
 
     expect(find.text('Choisir une ville'), findsOneWidget);
-    expect(find.text('Où cherchez-vous ?'), findsOneWidget);
+    expect(find.text('Tu cherches où ?'), findsOneWidget);
   });
 
   testWidgets('CE-M04-01 — an empty result offers to widen, not to retry',
@@ -117,7 +117,7 @@ void main() {
         .thenReturn(const SearchReady(query: douala, isEmpty: true));
     await pump(tester);
 
-    expect(find.text('Aucun bien trouvé'), findsOneWidget);
+    expect(find.text("Aucun bien ici pour l'instant"), findsOneWidget);
     expect(find.text('Réinitialiser'), findsOneWidget);
   });
 
@@ -161,7 +161,7 @@ void main() {
     await pump(tester);
 
     expect(find.text('Réessayer'), findsOneWidget);
-    expect(find.text('Aucun bien trouvé'), findsNothing);
+    expect(find.text("Aucun bien ici pour l'instant"), findsNothing);
   });
 
   testWidgets('RM-M20 — a badged listing shows it on the card', (tester) async {

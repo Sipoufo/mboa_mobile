@@ -93,7 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m34(seconds) => "Resend in ${seconds}s";
 
-  static String m35(tier) => "Your ${tier} plan is active.";
+  static String m35(tier) => "All good. Your ${tier} plan is active.";
 
   static String m36(ref) => "Reference: ${ref}";
 
@@ -503,7 +503,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "3 photos minimum, 15 maximum. They are compressed automatically before upload. Changing the photos on a published listing re-triggers validation of the “Verified photos” badge.",
     ),
     "annonceFormHelpPrice": MessageLookupByLibrary.simpleMessage(
-      "The rent as you collect it, and how often: daily, weekly, monthly, quarterly or yearly. The platform derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
+      "The rent as you collect it, and how often: daily, weekly, monthly, quarterly or yearly. Mboa derives a monthly equivalent used only to compare listings with each other — never billed, never carried into the Mboa Contract.",
     ),
     "annonceFormHelpPropertyType": MessageLookupByLibrary.simpleMessage(
       "Apartment, studio, villa, room, office or commercial space. Tenants filter their search on this.",
@@ -654,7 +654,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "commonComingSoon": MessageLookupByLibrary.simpleMessage("Coming soon"),
     "commonError": MessageLookupByLibrary.simpleMessage(
-      "Something went wrong. Please try again.",
+      "That didn’t work. Try again.",
     ),
     "commonErrorTitle": MessageLookupByLibrary.simpleMessage("Oops"),
     "commonNo": MessageLookupByLibrary.simpleMessage("No"),
@@ -965,7 +965,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycTabStatut": MessageLookupByLibrary.simpleMessage("Status"),
     "kycTakePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
     "kycUploadError": MessageLookupByLibrary.simpleMessage(
-      "Upload failed. Please try again.",
+      "Upload failed. Try again.",
     ),
     "kycVerso": MessageLookupByLibrary.simpleMessage("Back"),
     "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
@@ -1006,7 +1006,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "listingReviewsTitle": MessageLookupByLibrary.simpleMessage("Reviews"),
     "listingTitle": MessageLookupByLibrary.simpleMessage("Property details"),
     "loadingDialog_content": MessageLookupByLibrary.simpleMessage(
-      "Please wait...",
+      "One moment…",
     ),
     "loginContinueWithApple": MessageLookupByLibrary.simpleMessage(
       "Continue with Apple",
@@ -1021,7 +1021,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Don’t have an account?",
     ),
     "loginOtpSendError": MessageLookupByLibrary.simpleMessage(
-      "Couldn’t send the code. Please try again.",
+      "Couldn’t send the code. Try again.",
     ),
     "loginPhoneHint": MessageLookupByLibrary.simpleMessage("+237 6XX XX XX XX"),
     "loginPhoneHintLocal": MessageLookupByLibrary.simpleMessage(
@@ -1137,7 +1137,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("6-digit code"),
     "otpCodeSentTo": m33,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
-      "Invalid code. Please try again.",
+      "Invalid code. Try again.",
     ),
     "otpNoCodeQuestion": MessageLookupByLibrary.simpleMessage(
       "Didn’t receive the code?",
@@ -1327,7 +1327,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reviewConditionValue": m44,
     "reviewCons": MessageLookupByLibrary.simpleMessage("Negatives"),
-    "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage("Deleted user"),
+    "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage(
+      "Deleted account",
+    ),
     "reviewDownload": MessageLookupByLibrary.simpleMessage("Download as PDF"),
     "reviewDownloadFailed": MessageLookupByLibrary.simpleMessage(
       "The PDF could not be generated.",
@@ -1384,10 +1386,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchCityPrompt": MessageLookupByLibrary.simpleMessage("Choose a city"),
     "searchClearFilters": MessageLookupByLibrary.simpleMessage("Reset"),
     "searchEmptyBody": MessageLookupByLibrary.simpleMessage(
-      "Try widening your filters: a higher rent, fewer districts, or another property type.",
+      "Try another district, a higher rent, or another property type.",
     ),
     "searchEmptyTitle": MessageLookupByLibrary.simpleMessage(
-      "No property found",
+      "Nothing here yet",
     ),
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filters"),
     "searchMapApprox": MessageLookupByLibrary.simpleMessage(

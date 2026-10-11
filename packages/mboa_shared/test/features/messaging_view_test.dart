@@ -102,13 +102,13 @@ void main() {
       tester,
       ConversationsView(
         onOpen: (_) {},
-        emptyBody: 'Les locataires vous écriront depuis vos annonces.',
+        emptyBody: 'Les locataires t\'écriront depuis tes annonces.',
       ),
     );
 
     expect(find.text('Aucune conversation'), findsOneWidget);
     expect(
-      find.textContaining('Les locataires vous écriront'),
+      find.textContaining('Les locataires t\'écriront'),
       findsOneWidget,
     );
   });

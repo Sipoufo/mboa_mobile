@@ -89,7 +89,7 @@ void main() {
       (tester) async {
     await pump(tester);
 
-    expect(find.textContaining('Créez votre compte'), findsOneWidget);
+    expect(find.textContaining('Crée ton compte'), findsOneWidget);
     expect(find.text('Awa Nkeng'), findsNothing);
   });
 
