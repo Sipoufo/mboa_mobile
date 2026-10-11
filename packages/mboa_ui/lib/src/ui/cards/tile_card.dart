@@ -32,7 +32,7 @@ class MboaTileCard extends StatelessWidget {
       opacity: enabled ? 1 : 0.5,
       child: Material(
         color: colors.primaryLight2,
-        borderRadius: BorderRadius.circular(Dimens.radiusLg),
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: enabled ? onTap : null,

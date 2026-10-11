@@ -344,7 +344,7 @@ class _Header extends StatelessWidget {
         if (detail.displayPrice case final price?)
           Text(
             detail.rentalPeriod.priceLabel(l10n, price),
-            style: context.mboaText.h2.copyWith(color: colors.primaryDark),
+            style: context.mboaText.h2.copyWith(color: colors.action),
           ),
         const SizedBox(height: Dimens.spacingXs),
         Text(

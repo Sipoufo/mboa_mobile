@@ -57,7 +57,7 @@ class GlobalStatsCard extends StatelessWidget {
       padding: const EdgeInsets.all(Dimens.spacing),
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.circular(Dimens.radiusLg),
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
         border: Border.all(color: colors.border),
       ),
       child: Column(

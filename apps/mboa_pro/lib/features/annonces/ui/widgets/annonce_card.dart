@@ -53,7 +53,11 @@ class AnnonceCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: Dimens.spacing),
         decoration: BoxDecoration(
           color: colors.surface,
-          borderRadius: BorderRadius.circular(Dimens.radiusLg),
+          borderRadius: BorderRadius.circular(Dimens.radiusMd),
+          // §6.2: a card is lifted off the canvas. This one had neither a
+          // shadow nor a border, so a white card on a near-white canvas had
+          // no edge at all.
+          boxShadow: MboaShadows.card,
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -187,7 +191,7 @@ class _Summary extends StatelessWidget {
           const SizedBox(height: Dimens.spacingXs),
           Text(
             annonce.rentalPeriod.priceLabel(l10n, rent),
-            style: context.mboaText.h3.copyWith(color: colors.primary),
+            style: context.mboaText.h3.copyWith(color: colors.action),
           ),
         ],
       ],

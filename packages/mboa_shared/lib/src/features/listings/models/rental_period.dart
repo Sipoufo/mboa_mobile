@@ -155,9 +155,21 @@ extension RentalPeriodLabel on RentalPeriod {
         RentalPeriod.year => l10n.annoncePeriodYear,
       };
 
-  /// "75 000 XAF / mois".
+  /// The lowercase form, for use inside a sentence or a price.
+  ///
+  /// §25 asks for normal case, so a price reads "75 000 FCFA / mois" while
+  /// the picker beside it still opens its label with a capital.
+  String inlineLabel(I18n l10n) => switch (this) {
+        RentalPeriod.day => l10n.annoncePeriodDayInline,
+        RentalPeriod.week => l10n.annoncePeriodWeekInline,
+        RentalPeriod.month => l10n.annoncePeriodMonthInline,
+        RentalPeriod.quarter => l10n.annoncePeriodQuarterInline,
+        RentalPeriod.year => l10n.annoncePeriodYearInline,
+      };
+
+  /// "75 000 FCFA / mois".
   String priceLabel(I18n l10n, int price) => l10n.annoncePricePerPeriod(
         NumberFormat.decimalPattern().format(price),
-        label(l10n),
+        inlineLabel(l10n),
       );
 }

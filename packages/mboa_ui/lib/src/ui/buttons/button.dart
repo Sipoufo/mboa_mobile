@@ -194,8 +194,14 @@ class Button extends StatelessWidget {
       iconAlignment: iconAlignment,
       padding: icon != null ? const EdgeInsets.symmetric(horizontal: Dimens.spacing) : null,
       fixedSize: Size.fromHeight(height ?? Dimens.buttonHeight),
+      // Busy is not disabled: keep the variant's fill so the button reads as
+      // working, not unavailable.
+      disabledBackgroundColor: isLoading ? _getBackgroundColor(context) : null,
       shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(Dimens.radiusXl),
+        // §28: "rayon 12 px". This used to be radiusXl (28), which is the
+        // sheet radius — the Material button themes in mboa_theme.dart had the
+        // brandbook value all along, and this override was quietly undoing it.
+        borderRadius: borderRadius ?? BorderRadius.circular(Dimens.radius),
         side: _getBorderSide(context),
       ),
       backgroundColor: _getBackgroundColor(context),
@@ -211,10 +217,34 @@ class Button extends StatelessWidget {
     return Text(title, style: textStyle != null ? defaultStyle.merge(textStyle) : defaultStyle);
   }
 
+  /// A spinner in the variant's text colour, sized to sit inside the button.
+  Widget _buildSpinner(BuildContext context) => SizedBox.square(
+        dimension: Dimens.icon,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          color: _getTextColor(context),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final label = _buildLabel(context);
     final style = _getButtonStyle(context);
+
+    // `isLoading` was declared, forwarded by all five factories and read by
+    // nobody: 42 call sites asked for a busy state and got a button that
+    // looked idle and stayed tappable, so a slow save could be submitted
+    // twice. The flag now both swaps the label and withholds the callback.
+    if (isLoading) {
+      return SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: null,
+          style: style,
+          child: _buildSpinner(context),
+        ),
+      );
+    }
 
     return SizedBox(
       width: double.infinity,

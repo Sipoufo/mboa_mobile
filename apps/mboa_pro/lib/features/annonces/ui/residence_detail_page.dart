@@ -461,7 +461,7 @@ class _UnitRow extends StatelessWidget {
                       const SizedBox(height: Dimens.spacingXs),
                       Text(
                         unit.rentalPeriod.priceLabel(l10n, rent),
-                        style: context.mboaText.caption.copyWith(color: colors.primary),
+                        style: context.mboaText.caption.copyWith(color: colors.action),
                       ),
                     ],
                   ],

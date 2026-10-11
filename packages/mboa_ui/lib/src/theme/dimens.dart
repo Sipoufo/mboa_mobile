@@ -36,9 +36,10 @@ abstract final class Dimens {
   static const double iconMd = 24;
   static const double iconLg = 32;
 
-  // Controls
+  // Controls — §28 gives three button heights: 52 / 44 / 36.
   static const double buttonHeight = 52;
   static const double buttonHeightSm = 44;
+  static const double buttonHeightXs = 36;
   static const double inputHeight = 52;
 
   // Misc

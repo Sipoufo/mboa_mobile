@@ -1751,10 +1751,10 @@ class I18n {
     );
   }
 
-  /// `Loyer (XAF)`
+  /// `Loyer (FCFA)`
   String get searchRentRange {
     return Intl.message(
-      'Loyer (XAF)',
+      'Loyer (FCFA)',
       name: 'searchRentRange',
       desc: 'Rent filter.',
       args: [],
@@ -3300,10 +3300,10 @@ class I18n {
     return Intl.message('Selfie', name: 'kycItemSelfie', desc: '', args: []);
   }
 
-  /// `ID Document`
+  /// `Pièce d'identité`
   String get kycItemIdDocument {
     return Intl.message(
-      'ID Document',
+      'Pièce d\'identité',
       name: 'kycItemIdDocument',
       desc: '',
       args: [],
@@ -3620,9 +3620,9 @@ class I18n {
     return Intl.message('Menu', name: 'navMenu', desc: '', args: []);
   }
 
-  /// `Hello !!`
+  /// `Salut`
   String get menuGreeting {
-    return Intl.message('Hello !!', name: 'menuGreeting', desc: '', args: []);
+    return Intl.message('Salut', name: 'menuGreeting', desc: '', args: []);
   }
 
   /// `Profil`
@@ -4570,10 +4570,10 @@ class I18n {
     );
   }
 
-  /// `{price} XAF / Mois`
+  /// `{price} FCFA / mois`
   String annoncesPerMonth(String price) {
     return Intl.message(
-      '$price XAF / Mois',
+      '$price FCFA / mois',
       name: 'annoncesPerMonth',
       desc: '',
       args: [price],
@@ -5439,9 +5439,14 @@ class I18n {
     );
   }
 
-  /// `XAF`
+  /// `FCFA`
   String get annonceFormCurrency {
-    return Intl.message('XAF', name: 'annonceFormCurrency', desc: '', args: []);
+    return Intl.message(
+      'FCFA',
+      name: 'annonceFormCurrency',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Impossible de charger ce bien.`
@@ -5785,10 +5790,10 @@ class I18n {
     );
   }
 
-  /// `{price} XAF / {period}`
+  /// `{price} FCFA / {period}`
   String annoncePricePerPeriod(String price, String period) {
     return Intl.message(
-      '$price XAF / $period',
+      '$price FCFA / $period',
       name: 'annoncePricePerPeriod',
       desc:
           'Rent as entered, with its period (RM-M10-09). {period} is one of annoncePeriodMonth/Quarter/Year.',
@@ -5806,6 +5811,16 @@ class I18n {
     );
   }
 
+  /// `mois`
+  String get annoncePeriodMonthInline {
+    return Intl.message(
+      'mois',
+      name: 'annoncePeriodMonthInline',
+      desc: 'Lowercase form, for "{price} FCFA / {period}" (§25: normal case).',
+      args: [],
+    );
+  }
+
   /// `Trimestre`
   String get annoncePeriodQuarter {
     return Intl.message(
@@ -5816,12 +5831,32 @@ class I18n {
     );
   }
 
+  /// `trimestre`
+  String get annoncePeriodQuarterInline {
+    return Intl.message(
+      'trimestre',
+      name: 'annoncePeriodQuarterInline',
+      desc: 'Lowercase form, for "{price} FCFA / {period}" (§25: normal case).',
+      args: [],
+    );
+  }
+
   /// `An`
   String get annoncePeriodYear {
     return Intl.message(
       'An',
       name: 'annoncePeriodYear',
       desc: 'Doc 10 RM-M10-09 — rental period.',
+      args: [],
+    );
+  }
+
+  /// `an`
+  String get annoncePeriodYearInline {
+    return Intl.message(
+      'an',
+      name: 'annoncePeriodYearInline',
+      desc: 'Lowercase form, for "{price} FCFA / {period}" (§25: normal case).',
       args: [],
     );
   }
@@ -5959,6 +5994,16 @@ class I18n {
     );
   }
 
+  /// `jour`
+  String get annoncePeriodDayInline {
+    return Intl.message(
+      'jour',
+      name: 'annoncePeriodDayInline',
+      desc: 'Lowercase form, for "{price} FCFA / {period}" (§25: normal case).',
+      args: [],
+    );
+  }
+
   /// `Semaine`
   String get annoncePeriodWeek {
     return Intl.message(
@@ -5966,6 +6011,16 @@ class I18n {
       name: 'annoncePeriodWeek',
       desc:
           'Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them.',
+      args: [],
+    );
+  }
+
+  /// `semaine`
+  String get annoncePeriodWeekInline {
+    return Intl.message(
+      'semaine',
+      name: 'annoncePeriodWeekInline',
+      desc: 'Lowercase form, for "{price} FCFA / {period}" (§25: normal case).',
       args: [],
     );
   }

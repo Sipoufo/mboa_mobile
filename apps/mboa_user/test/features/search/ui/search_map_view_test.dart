@@ -200,7 +200,7 @@ void main() {
     final height = tester.getSize(find.byType(SearchHitCard)).height;
     expect(height, lessThan(120));
     // And it still says the three things that decide whether to tap.
-    expect(find.textContaining('XAF'), findsOneWidget);
+    expect(find.textContaining('FCFA'), findsOneWidget);
     expect(find.text('Studio a-1'), findsOneWidget);
     expect(find.text('Akwa, Douala'), findsOneWidget);
   });

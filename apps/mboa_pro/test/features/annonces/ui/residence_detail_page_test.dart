@@ -126,7 +126,7 @@ void main() {
 
     expect(find.text('Chambre 1'), findsOneWidget);
     expect(find.text('Chambre 2'), findsOneWidget);
-    expect(find.textContaining('XAF / Mois'), findsNWidgets(2));
+    expect(find.textContaining('FCFA / mois'), findsNWidgets(2));
     // Statuses are per unit, so a draft unit is visible as such.
     expect(find.text('Disponible'), findsWidgets);
     expect(find.text('Brouillon'), findsOneWidget);

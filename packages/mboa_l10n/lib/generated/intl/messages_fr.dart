@@ -54,9 +54,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m15(min) => "Ajouter des images (${min} photos minimum)";
 
-  static String m16(price, period) => "${price} XAF / ${period}";
+  static String m16(price, period) => "${price} FCFA / ${period}";
 
-  static String m17(price) => "${price} XAF / Mois";
+  static String m17(price) => "${price} FCFA / mois";
 
   static String m18(count) =>
       "${Intl.plural(count, one: '1 Pièce', other: '${count} Pièces')}";
@@ -447,7 +447,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceFormCityNotDetected": MessageLookupByLibrary.simpleMessage(
       "Ville non détectée. Choisis-la manuellement.",
     ),
-    "annonceFormCurrency": MessageLookupByLibrary.simpleMessage("XAF"),
+    "annonceFormCurrency": MessageLookupByLibrary.simpleMessage("FCFA"),
     "annonceFormDetectingCity": MessageLookupByLibrary.simpleMessage(
       "Détection de la ville…",
     ),
@@ -580,10 +580,17 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "annoncePeriodDay": MessageLookupByLibrary.simpleMessage("Jour"),
+    "annoncePeriodDayInline": MessageLookupByLibrary.simpleMessage("jour"),
     "annoncePeriodMonth": MessageLookupByLibrary.simpleMessage("Mois"),
+    "annoncePeriodMonthInline": MessageLookupByLibrary.simpleMessage("mois"),
     "annoncePeriodQuarter": MessageLookupByLibrary.simpleMessage("Trimestre"),
+    "annoncePeriodQuarterInline": MessageLookupByLibrary.simpleMessage(
+      "trimestre",
+    ),
     "annoncePeriodWeek": MessageLookupByLibrary.simpleMessage("Semaine"),
+    "annoncePeriodWeekInline": MessageLookupByLibrary.simpleMessage("semaine"),
     "annoncePeriodYear": MessageLookupByLibrary.simpleMessage("An"),
+    "annoncePeriodYearInline": MessageLookupByLibrary.simpleMessage("an"),
     "annoncePricePerPeriod": m16,
     "annonceStatusArchived": MessageLookupByLibrary.simpleMessage("Archivé"),
     "annonceStatusDraft": MessageLookupByLibrary.simpleMessage("Brouillon"),
@@ -1003,7 +1010,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycImport": MessageLookupByLibrary.simpleMessage("Importer"),
     "kycItemAddress": MessageLookupByLibrary.simpleMessage("Adresse"),
-    "kycItemIdDocument": MessageLookupByLibrary.simpleMessage("ID Document"),
+    "kycItemIdDocument": MessageLookupByLibrary.simpleMessage(
+      "Pièce d\'identité",
+    ),
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Recto"),
@@ -1104,7 +1113,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "menuBookmarks": MessageLookupByLibrary.simpleMessage("Signets"),
     "menuClose": MessageLookupByLibrary.simpleMessage("Fermer le menu"),
     "menuExplore": MessageLookupByLibrary.simpleMessage("Explorer"),
-    "menuGreeting": MessageLookupByLibrary.simpleMessage("Hello !!"),
+    "menuGreeting": MessageLookupByLibrary.simpleMessage("Salut"),
     "menuMessages": MessageLookupByLibrary.simpleMessage("Message"),
     "menuNotifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "menuOther": MessageLookupByLibrary.simpleMessage("Autres"),
@@ -1521,7 +1530,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
       "Résultats hors ligne — ils datent de ta dernière recherche.",
     ),
-    "searchRentRange": MessageLookupByLibrary.simpleMessage("Loyer (XAF)"),
+    "searchRentRange": MessageLookupByLibrary.simpleMessage("Loyer (FCFA)"),
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Résidence"),
     "searchResidenceFrom": m46,
     "searchResidenceUnits": m47,

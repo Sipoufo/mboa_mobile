@@ -222,7 +222,7 @@ class _UnitRow extends StatelessWidget {
             if (unit.displayPrice case final price?)
               Text(
                 unit.rentalPeriod.priceLabel(l10n, price),
-                style: context.mboaText.label.copyWith(color: colors.primaryDark),
+                style: context.mboaText.label.copyWith(color: colors.action),
               ),
             const SizedBox(width: Dimens.spacingXs),
             Icon(

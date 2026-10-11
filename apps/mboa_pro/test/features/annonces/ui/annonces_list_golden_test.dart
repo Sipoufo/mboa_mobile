@@ -89,7 +89,7 @@ void main() {
     expect(find.text('Chambre Moderne à louer'), findsOneWidget);
     // The FR locale groups thousands with a narrow no-break space, so match on
     // the parts rather than embedding an invisible character in the literal.
-    expect(find.textContaining('XAF / Mois'), findsNWidgets(3));
+    expect(find.textContaining('FCFA / mois'), findsNWidgets(3));
     expect(find.text('50 m² – 2 Pièces'), findsOneWidget);
     // The draft is visible and labelled, not hidden.
     expect(find.text('Brouillon'), findsOneWidget);

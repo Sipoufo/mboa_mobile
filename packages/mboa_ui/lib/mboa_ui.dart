@@ -9,7 +9,6 @@ export 'src/theme/elevation.dart';
 export 'src/theme/theme_extensions.dart';
 export 'src/widgets/mboa_logo.dart';
 export 'src/widgets/mboa_splash_view.dart';
-export 'src/widgets/primary_button.dart';
 export 'src/widgets/mboa_illustrations.dart';
 
 // Buttons

@@ -245,7 +245,7 @@ class _FavoriteCard extends StatelessWidget {
                       Text(
                         favorite.rentalPeriod.priceLabel(l10n, price),
                         style: context.mboaText.caption
-                            .copyWith(color: colors.primary),
+                            .copyWith(color: colors.action),
                       ),
                     Text(
                       [favorite.district, favorite.city].nonNulls.join(', '),

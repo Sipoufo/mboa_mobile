@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-/// Raw brand palette (Charte Graphique, Doc 05 §2). Prefer reading colours via
+/// Raw brand palette — Brandbook v2 §21, exhaustively.
+///
+/// Every constant here is a colour the brandbook names. It lists the palette in
+/// full, and §48's checklist asks for "couleurs de la palette officielle", so
+/// anything else is off-brand by construction: `palette_test.dart` asserts
+/// these values and nothing more. Prefer reading colours via
 /// [MboaColorScheme] / `context.mboaColors`; these constants exist for the few
 /// places a raw value is needed (e.g. native config).
 abstract final class MboaPalette {
   // Vert Forêt — brand colour (§2.1)
   static const Color forest = Color(0xFF1A5C45);
   static const Color forestLight = Color(0xFF2D8A67);
-  static const Color forestLight2 = Color(0xFFD8F3DC);
   static const Color forestPale = Color(0xFFE8F4F0);
   static const Color forestDark = Color(0xFF0F3829);
 
@@ -20,10 +24,6 @@ abstract final class MboaPalette {
   // Neutrals (§2.2)
   static const Color white = Color(0xFFFFFFFF);
   static const Color warmWhite = Color(0xFFF9F7F4);
-  // Page canvas — a hair off pure white so white cards still read as raised.
-  // Measured from the Pro designs (#FBFBFB); distinct from the warm [warmWhite]
-  // used for card and input fills.
-  static const Color offWhite = Color(0xFFFBFBFB);
   static const Color greyLight = Color(0xFFF0EFED);
   static const Color greyMedium = Color(0xFF9CA3AF);
   static const Color greyDark = Color(0xFF6B7280);
@@ -67,6 +67,10 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   // Brand (Vert Forêt) + action (Corail)
   final Color primary;
   final Color primaryLight;
+  /// Tinted card and chat-bubble fill. Equal to [primaryPale] in the light
+  /// scheme — the brandbook names one pale green, not two — and kept as its own
+  /// slot only because the dark adaptation still distinguishes them. Collapse
+  /// the two when the brandbook specifies dark.
   final Color primaryLight2;
   final Color primaryPale;
   final Color primaryDark;
@@ -97,7 +101,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
   static const MboaColorScheme light = MboaColorScheme(
     primary: MboaPalette.forest,
     primaryLight: MboaPalette.forestLight,
-    primaryLight2: MboaPalette.forestLight2,
+    primaryLight2: MboaPalette.forestPale,
     primaryPale: MboaPalette.forestPale,
     primaryDark: MboaPalette.forestDark,
     action: MboaPalette.coral,
@@ -106,7 +110,7 @@ class MboaColorScheme extends ThemeExtension<MboaColorScheme> {
     actionDark: MboaPalette.coralDark,
     surface: MboaPalette.white,
     surfaceWarm: MboaPalette.warmWhite,
-    background: MboaPalette.offWhite,
+    background: MboaPalette.warmWhite,
     border: MboaPalette.greyLight,
     textTertiary: MboaPalette.greyMedium,
     textSecondary: MboaPalette.greyDark,

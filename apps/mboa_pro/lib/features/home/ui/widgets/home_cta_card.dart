@@ -38,17 +38,12 @@ class HomeCtaCard extends StatelessWidget {
       height: height,
       child: Material(
         color: background,
-        borderRadius: BorderRadius.circular(Dimens.radiusLg),
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onPressed,
           child: Stack(
             children: [
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _DiscPainter(color: colors.onBrand),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(Dimens.spacing),
                 child: Column(
@@ -101,7 +96,9 @@ class HomeCtaCard extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: colors.onBrand,
                           side: BorderSide(color: colors.onBrand),
-                          shape: const StadiumBorder(),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimens.radius),
+                          ),
                           padding: const EdgeInsets.symmetric(
                             vertical: Dimens.spacingMd,
                           ),
@@ -124,23 +121,4 @@ class HomeCtaCard extends StatelessWidget {
       ),
     );
   }
-}
-
-/// The three translucent discs in the card's top-right, per the design assets.
-class _DiscPainter extends CustomPainter {
-  const _DiscPainter({required this.color});
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = color.withValues(alpha: 0.12);
-
-    canvas.drawCircle(Offset(size.width * 0.86, size.height * 0.22), 82, paint);
-    canvas.drawCircle(Offset(size.width * 0.42, size.height * 0.06), 12, paint);
-    canvas.drawCircle(Offset(size.width * 0.78, size.height * 0.58), 20, paint);
-  }
-
-  @override
-  bool shouldRepaint(_DiscPainter oldDelegate) => oldDelegate.color != color;
 }

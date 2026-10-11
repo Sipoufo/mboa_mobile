@@ -707,7 +707,7 @@
   "@searchMapStyleFailedBody": {
     "description": "The style URL never loaded."
   },
-  "searchRentRange": "Rent (XAF)",
+  "searchRentRange": "Rent (FCFA)",
   "@searchRentRange": {
     "description": "Rent filter."
   },
@@ -1216,7 +1216,7 @@
   "@navFinance": {},
   "navMenu": "Menu",
   "@navMenu": {},
-  "menuGreeting": "Hello !!",
+  "menuGreeting": "Hi",
   "@menuGreeting": {},
   "menuProfile": "Profile",
   "@menuProfile": {},
@@ -1478,7 +1478,7 @@
   "@annoncesEmptyAvailable": {},
   "annoncesEmptyOccupied": "No occupied property.",
   "@annoncesEmptyOccupied": {},
-  "annoncesPerMonth": "{price} XAF / month",
+  "annoncesPerMonth": "{price} FCFA / month",
   "@annoncesPerMonth": {
     "placeholders": {
       "price": {
@@ -1740,7 +1740,7 @@
   "@annonceFormFieldBathrooms2": {},
   "annonceFormUnitSquareMetres": "m²",
   "@annonceFormUnitSquareMetres": {},
-  "annonceFormCurrency": "XAF",
+  "annonceFormCurrency": "FCFA",
   "@annonceFormCurrency": {},
   "annonceFormLoadFailed": "Couldn’t load this property.",
   "@annonceFormLoadFailed": {},
@@ -1832,7 +1832,7 @@
   "@annonceFormPhotosLabel": {
     "description": "Label above the photo strip; also the title of its help sheet."
   },
-  "annoncePricePerPeriod": "{price} XAF / {period}",
+  "annoncePricePerPeriod": "{price} FCFA / {period}",
   "@annoncePricePerPeriod": {
     "description": "Rent as entered, with its period (RM-M10-09). {period} is one of annoncePeriodMonth/Quarter/Year.",
     "placeholders": {
@@ -1845,14 +1845,26 @@
     }
   },
   "annoncePeriodMonth": "month",
+  "annoncePeriodMonthInline": "month",
+  "@annoncePeriodMonthInline": {
+    "description": "Lowercase form, for \"{price} FCFA / {period}\" (§25: normal case)."
+  },
   "@annoncePeriodMonth": {
     "description": "Doc 10 RM-M10-09 — rental period."
   },
   "annoncePeriodQuarter": "quarter",
+  "annoncePeriodQuarterInline": "quarter",
+  "@annoncePeriodQuarterInline": {
+    "description": "Lowercase form, for \"{price} FCFA / {period}\" (§25: normal case)."
+  },
   "@annoncePeriodQuarter": {
     "description": "Doc 10 RM-M10-09 — rental period."
   },
   "annoncePeriodYear": "year",
+  "annoncePeriodYearInline": "year",
+  "@annoncePeriodYearInline": {
+    "description": "Lowercase form, for \"{price} FCFA / {period}\" (§25: normal case)."
+  },
   "@annoncePeriodYear": {
     "description": "Doc 10 RM-M10-09 — rental period."
   },
@@ -1910,10 +1922,18 @@
     "description": "Section heading on the listing detail."
   },
   "annoncePeriodDay": "day",
+  "annoncePeriodDayInline": "day",
+  "@annoncePeriodDayInline": {
+    "description": "Lowercase form, for \"{price} FCFA / {period}\" (§25: normal case)."
+  },
   "@annoncePeriodDay": {
     "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
   },
   "annoncePeriodWeek": "week",
+  "annoncePeriodWeekInline": "week",
+  "@annoncePeriodWeekInline": {
+    "description": "Lowercase form, for \"{price} FCFA / {period}\" (§25: normal case)."
+  },
   "@annoncePeriodWeek": {
     "description": "Doc 10 RM-M10-09 — rental period. DAY/WEEK were added by the API after the CDC; RM-M10-09 excludes them."
   },

@@ -70,15 +70,19 @@ void main() {
     });
   });
 
-  group('PrimaryButton', () {
-    testWidgets('shows a spinner and disables when loading', (tester) async {
+  // Ported from the deleted PrimaryButton: `Button` carried the same
+  // isLoading contract and nothing exercised it, so the coverage moved here
+  // rather than going away with the duplicate.
+  group('Button busy state', () {
+    testWidgets('shows a spinner, hides the label and refuses the tap',
+        (tester) async {
       var tapped = false;
       await tester.pumpWidget(
         MaterialApp(
           theme: MboaTheme.light(),
           home: Scaffold(
-            body: PrimaryButton(
-              label: 'Valider',
+            body: Button.primary(
+              title: 'Valider',
               isLoading: true,
               onPressed: () => tapped = true,
             ),
@@ -88,7 +92,7 @@ void main() {
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('Valider'), findsNothing);
-      await tester.tap(find.byType(PrimaryButton));
+      await tester.tap(find.byType(Button));
       expect(tapped, isFalse);
     });
 
@@ -98,12 +102,12 @@ void main() {
         MaterialApp(
           theme: MboaTheme.light(),
           home: Scaffold(
-            body: PrimaryButton(label: 'Valider', onPressed: () => tapped = true),
+            body: Button.primary(title: 'Valider', onPressed: () => tapped = true),
           ),
         ),
       );
 
-      await tester.tap(find.byType(PrimaryButton));
+      await tester.tap(find.byType(Button));
       expect(tapped, isTrue);
     });
   });
