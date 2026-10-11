@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**742 tests green, analyze clean.** `mboa_user` 161 · `mboa_pro` 432 ·
-`mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 13 · `mboa_l10n` 7.
+**750 tests green, analyze clean.** `mboa_user` 161 · `mboa_pro` 432 ·
+`mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -71,6 +71,39 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### A design token can be wrong for a year without anyone seeing it
+
+The brand audit (`docs/brand-audit.md`) found the palette and the whole
+9-level type scale exact to the hex and the pixel — and then found buttons at
+radius 28 where §28 says 12, cards at two different radii, and one price
+rendered in four different colours across two apps. None of it is visible in
+a screenshot. A value chosen by eye sits next to a value read from the
+document and looks the same.
+
+Two of these were worth more than their size:
+
+- **A stated intention is not a working one.** The page canvas was `#FBFBFB`,
+  with a comment explaining it was "a hair off pure white so white cards still
+  read as raised". 1.5% of contrast cannot do that. The Pro annonce card —
+  white, no border, no shadow — had no visible edge at all. The §6.2 shadow is
+  what lifts a card; the off-palette colour was doing nothing but being
+  off-palette.
+- **`Button.isLoading` was declared, forwarded by five factories, and never
+  read.** 42 call sites asked for a busy state and got a tappable button, so a
+  slow save could be fired twice. A duplicate `PrimaryButton` existed beside
+  it: someone needed a busy button, found the first one didn't work, and wrote
+  a second rather than asking why. **A dead flag and a mysterious duplicate
+  are usually the same bug** — when something in the design system has a twin,
+  check whether the original is broken before deleting either.
+
+The conformance rules that are mechanical are now tests
+(`mboa_ui/test/theme/palette_test.dart` alongside
+`mboa_l10n/test/voice_test.dart`), both verified failing before being trusted.
+What stays open is the one thing a test cannot settle: §20 wants coral for
+main action buttons, 41 `Button.primary` call sites render forest, and a
+blanket flip would break §22 (never coral on green) on the screens with green
+headers. That needs a screen-by-screen call, not a substitution.
 
 ### The brandbook is a test, not a review note
 
