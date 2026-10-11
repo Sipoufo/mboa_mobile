@@ -476,6 +476,14 @@
   "@visitRateDone": {
     "description": "RM-M07-07 — rated."
   },
+  "welcomeHeadline": "Welcome home.",
+  "@welcomeHeadline": {
+    "description": "Brandbook §07 — the onboarding line, verbatim."
+  },
+  "welcomeBody": "Find, book and manage your home with confidence.",
+  "@welcomeBody": {
+    "description": "Brandbook §08 — the App Store short description."
+  },
   "reviewSeeCta": "See my review",
   "@reviewSeeCta": {
     "description": "M07bis — a visit already reported on."

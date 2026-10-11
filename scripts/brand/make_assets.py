@@ -34,7 +34,10 @@ VB = (0, -2, 104, 102)
 
 FOREST = (26, 92, 69)        # #1A5C45 — Vert Forêt
 FOREST_DARK = (15, 56, 41)   # #0F3829 — the dark-mode ground
+FOREST_LIGHT = (45, 138, 103)  # #2D8A67
+FOREST_PALE = (232, 244, 240)  # #E8F4F0
 CORAL = (232, 115, 90)       # #E8735A — Corail Chaud
+CORAL_PALE = (253, 240, 236)  # #FDF0EC
 INK = (26, 26, 26)           # #1A1A1A — Quasi-Noir
 
 # One ground per environment, all three from the palette.
@@ -204,6 +207,85 @@ def pattern(width, height, ground, *, rgb=(255, 255, 255), seed=7):
     return bytes(out)
 
 
+def _poly_mask(points, width, height, ss=3):
+    """Coverage of one closed polygon, supersampled."""
+    rows = []
+    for py in range(height * ss):
+        yc = py + 0.5
+        xs = []
+        for i in range(len(points)):
+            x1, y1 = points[i]
+            x2, y2 = points[(i + 1) % len(points)]
+            x1, y1, x2, y2 = x1 * ss, y1 * ss, x2 * ss, y2 * ss
+            if (y1 <= yc < y2) or (y2 <= yc < y1):
+                xs.append(x1 + (yc - y1) * (x2 - x1) / (y2 - y1))
+        xs.sort()
+        row = bytearray(width * ss)
+        for a, b in zip(xs[0::2], xs[1::2]):
+            for sx in range(max(0, int(a)), min(width * ss, int(b) + 2)):
+                if a <= sx + 0.5 < b:
+                    row[sx] = 1
+        rows.append(row)
+    out = []
+    for y in range(height):
+        out.append([sum(rows[y * ss + dy][x * ss + dx]
+                        for dy in range(ss) for dx in range(ss)) / (ss * ss)
+                    for x in range(width)])
+    return out
+
+
+def skyline(width, height, seed=3):
+    """A row of gabled houses — flat, geometric, no outlines (Brandbook §05).
+
+    Illustration is allowed on onboarding, empty states and errors only, and
+    the style is flat and geometric. The gable is the logo's own shape, pitched
+    at the 45° the construction grid specifies, so the drawing and the mark are
+    made of the same thing.
+
+    No people: the brandbook asks for African characters, and a figure drawn
+    badly says more — and worse — than no figure at all. That one waits for a
+    designer.
+    """
+    import random
+
+    rnd = random.Random(seed)
+    buf = [[None for _ in range(width)] for _ in range(height)]
+
+    base = height * 0.92
+    # Corail *pâle*, never the full coral: §03 says coral always signals an
+    # action, and a bright coral house pulls the eye like a button.
+    tones = [FOREST, FOREST_LIGHT, FOREST_PALE, FOREST, CORAL_PALE, FOREST_LIGHT]
+    x = -width * 0.04
+    i = 0
+    while x < width:
+        w = width * rnd.uniform(0.13, 0.22)
+        body = height * rnd.uniform(0.30, 0.55)
+        # 45°, from the construction grid: the roof rises by half the width.
+        roof = w / 2
+        top = base - body
+        tone = tones[i % len(tones)]
+
+        house = [(x, base), (x, top), (x + w / 2, top - roof),
+                 (x + w, top), (x + w, base)]
+        mask = _poly_mask(house, width, height)
+        for y in range(height):
+            row = mask[y]
+            for px in range(width):
+                if row[px] > 0.5:
+                    buf[y][px] = tone
+
+        x += w + width * rnd.uniform(0.005, 0.02)
+        i += 1
+
+    out = bytearray()
+    for y in range(height):
+        out += b'\x00'
+        for px in range(width):
+            tone = buf[y][px]
+            out += bytes((*tone, 255)) if tone else b'\x00\x00\x00\x00'
+    return bytes(out)
+
+
 def png(width, height, raw):
     def chunk(tag, data):
         body = tag + data
@@ -276,8 +358,11 @@ def launch_backgrounds():
     light = pattern(600, 1200, FOREST)
     dark = pattern(600, 1200, FOREST_DARK)
 
-    shared = f'{ROOT}/packages/mboa_ui/assets/images/illustrations/brand_pattern.png'
-    write(shared, 600, 1200, light)
+    shared = f'{ROOT}/packages/mboa_ui/assets/images/illustrations'
+    write(f'{shared}/brand_pattern.png', 600, 1200, light)
+    # Onboarding, empty states and errors (§05) — the only places illustration
+    # is allowed.
+    write(f'{shared}/brand_skyline.png', 900, 420, skyline(900, 420))
 
     for app in APPS:
         res = f'{ROOT}/apps/{app}/android/app/src/main/res'

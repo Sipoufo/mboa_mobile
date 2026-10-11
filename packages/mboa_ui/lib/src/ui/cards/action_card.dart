@@ -45,16 +45,11 @@ class MboaActionCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: enabled ? onTap : null,
+          // No watermark: §05 allows illustration on onboarding, empty states
+          // and errors, and a card is none of the three. What sets this card
+          // apart is its radius and its shadow (§6.2).
           child: Stack(
             children: [
-              Positioned.fill(
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topRight,
-                  clipBehavior: Clip.hardEdge,
-                  child: MboaIllustrations.illustration3(),
-                ),
-              ),
               Container(
                 height: 180.0,
                 padding: const EdgeInsets.all(Dimens.spacingLg),

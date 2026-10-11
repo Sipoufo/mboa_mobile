@@ -109,12 +109,14 @@ class _SettingsViewState extends State<SettingsView> {
                                       title: l10n.settingsProfileCard,
                                       subtitle: data?.email,
                                       onTap: data == null ? null : () => context.router.push(const EditProfileRoute()),
+                                      // H2 on ink, like the tenant app: Doc 05
+                                      // reserves Display for display, and
+                                      // 32px of ExtraBold green turns a name
+                                      // into a headline about a person.
                                       child: Text(
                                         data?.fullName ?? '',
-                                        style: context.mboaText.display.copyWith(
-                                          color: colors.primary,
-                                          fontWeight: FontWeight.w800,
-                                        ),
+                                        style: context.mboaText.h2
+                                            .copyWith(color: colors.ink),
                                       ),
                                     ),
                                     if (data != null && data.isPrestataire) ...[

@@ -1207,6 +1207,26 @@ class I18n {
     );
   }
 
+  /// `Bienvenue chez toi.`
+  String get welcomeHeadline {
+    return Intl.message(
+      'Bienvenue chez toi.',
+      name: 'welcomeHeadline',
+      desc: 'Brandbook §07 — the onboarding line, verbatim.',
+      args: [],
+    );
+  }
+
+  /// `Trouve, réserve et gère ton logement en toute confiance.`
+  String get welcomeBody {
+    return Intl.message(
+      'Trouve, réserve et gère ton logement en toute confiance.',
+      name: 'welcomeBody',
+      desc: 'Brandbook §08 — the App Store short description.',
+      args: [],
+    );
+  }
+
   /// `Voir mon avis`
   String get reviewSeeCta {
     return Intl.message(

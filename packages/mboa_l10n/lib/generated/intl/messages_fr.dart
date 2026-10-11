@@ -1829,6 +1829,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vous semblez loin du bien",
     ),
     "visitsUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
+    "welcomeBody": MessageLookupByLibrary.simpleMessage(
+      "Trouve, réserve et gère ton logement en toute confiance.",
+    ),
+    "welcomeHeadline": MessageLookupByLibrary.simpleMessage(
+      "Bienvenue chez toi.",
+    ),
     "welcome_inscriptionButton": MessageLookupByLibrary.simpleMessage(
       "Inscription",
     ),

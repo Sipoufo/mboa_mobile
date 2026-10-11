@@ -51,9 +51,7 @@ class AuthScaffold extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 // Full-bleed brand pattern behind the logo.
-                Positioned.fill(
-                  child: MboaIllustrations.illustration2(fit: BoxFit.cover),
-                ),
+                Positioned.fill(child: MboaIllustrations.pattern()),
                 SafeArea(
                   bottom: false,
                   child: Stack(

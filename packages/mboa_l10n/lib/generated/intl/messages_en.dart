@@ -1700,6 +1700,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "You seem far from the property",
     ),
     "visitsUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
+    "welcomeBody": MessageLookupByLibrary.simpleMessage(
+      "Find, book and manage your home with confidence.",
+    ),
+    "welcomeHeadline": MessageLookupByLibrary.simpleMessage("Welcome home."),
     "welcome_inscriptionButton": MessageLookupByLibrary.simpleMessage(
       "Registration",
     ),
