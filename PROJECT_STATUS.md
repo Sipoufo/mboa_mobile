@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**731 tests green, analyze clean.** `mboa_user` 157 · `mboa_pro` 432 ·
+**735 tests green, analyze clean.** `mboa_user` 161 · `mboa_pro` 432 ·
 `mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 13.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):

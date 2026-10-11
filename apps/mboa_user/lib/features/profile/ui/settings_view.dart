@@ -87,12 +87,14 @@ class _SettingsViewState extends State<SettingsView> {
                                 onTap: data == null
                                     ? null
                                     : () => context.router.push(const EditProfileRoute()),
+                                // H2 on ink, not Display in green: Doc 05
+                                // reserves Display for display, and 32px of
+                                // ExtraBold green turns a name into a
+                                // headline about a person.
                                 child: Text(
                                   data?.fullName ?? '',
-                                  style: context.mboaText.display.copyWith(
-                                    color: colors.primary,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                                  style: context.mboaText.h2
+                                      .copyWith(color: colors.ink),
                                 ),
                               ),
                               const SizedBox(height: Dimens.spacingLg),
