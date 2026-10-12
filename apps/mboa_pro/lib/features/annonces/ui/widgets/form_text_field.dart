@@ -33,7 +33,7 @@ class FormTextField extends StatefulWidget {
   /// growing from a single line as you type.
   final int? minLines;
 
-  /// Unit shown inside the field — m², XAF. Belongs here rather than in the
+  /// Unit shown inside the field — m², FCFA. Belongs here rather than in the
   /// label so the value and its unit read together.
   final String? suffixText;
 

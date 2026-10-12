@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_core/mboa_core.dart';
 
 import '../../profile/models/base_profile.dart';
@@ -188,8 +189,8 @@ final class ResidenceHit extends SearchHit {
   final int? fromMonthlyRent;
 
   /// Formatted without a period suffix, since the figure is already monthly.
-  String rentFromLabel(int amount) =>
-      '${amount.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+$)'), (m) => '${m[1]} ')} XAF';
+  String rentFromLabel(I18n l10n, int amount) =>
+      '${amount.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+$)'), (m) => '${m[1]} ')} ${l10n.annonceFormCurrency}';
 
   static ResidenceHit fromResponse(ResidenceSearchCard card) => ResidenceHit(
         id: card.id ?? '',

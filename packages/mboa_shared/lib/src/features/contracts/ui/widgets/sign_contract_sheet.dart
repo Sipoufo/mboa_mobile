@@ -4,7 +4,6 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
-import 'contract_bits.dart';
 
 /// The signature gesture (RM-M08-03).
 ///
@@ -79,7 +78,7 @@ class _SignSheetState extends State<_SignSheet> {
             if (contract.depositAmount case final deposit?)
               _Line(
                 label: l10n.contractTermDeposit,
-                value: moneyLabel(deposit),
+                value: moneyLabel(l10n, deposit),
               ),
             if (contract.startDate case final start?)
               _Line(

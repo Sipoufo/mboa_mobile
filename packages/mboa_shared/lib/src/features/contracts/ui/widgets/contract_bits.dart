@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
+import '../../models/contract.dart';
+import '../../../listings/models/rental_period.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 /// The contract's status, in one word and one colour.
@@ -85,7 +86,7 @@ class AwaitingLine extends StatelessWidget {
 
 /// "12 mois", in the contract's own periodicity (RM-M08-08).
 String durationLabel(I18n l10n, int units, RentalPeriod period) =>
-    l10n.contractDurationValue(units, period.label(l10n).toLowerCase());
+    l10n.contractDurationValue(units, period.inlineLabel(l10n));
 
-String moneyLabel(int amount) =>
-    '${NumberFormat.decimalPattern().format(amount)} XAF';
+String moneyLabel(I18n l10n, int amount) =>
+    '${NumberFormat.decimalPattern().format(amount)} ${l10n.annonceFormCurrency}';

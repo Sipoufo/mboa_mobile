@@ -241,7 +241,7 @@ class _ResidenceBody extends StatelessWidget {
         if (hit.fromMonthlyRent case final from?) ...[
           const SizedBox(height: Dimens.spacingMd),
           _PriceRow(
-            label: l10n.searchResidenceFrom(hit.rentFromLabel(from)),
+            label: l10n.searchResidenceFrom(hit.rentFromLabel(l10n, from)),
           ),
         ],
       ],
@@ -459,7 +459,7 @@ class _CompactCard extends StatelessWidget {
                         final ResidenceHit residence
                             when residence.fromMonthlyRent != null =>
                           l10n.searchResidenceFrom(
-                            residence.rentFromLabel(residence.fromMonthlyRent!),
+                            residence.rentFromLabel(l10n, residence.fromMonthlyRent!),
                           ),
                         _ => '',
                       },

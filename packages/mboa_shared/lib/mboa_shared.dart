@@ -25,6 +25,9 @@ export 'src/features/notifications/notifications_background.dart';
 export 'src/features/contracts/bloc/contract_detail_bloc.dart';
 export 'src/features/contracts/bloc/contracts_bloc.dart';
 export 'src/features/contracts/data/contract_repository.dart';
+export 'src/features/contracts/ui/contract_detail_view.dart';
+export 'src/features/contracts/ui/contracts_list_view.dart';
+export 'src/features/contracts/ui/widgets/contract_bits.dart';
 export 'src/features/contracts/models/contract.dart';
 
 // Messaging (M12) — both apps call the same endpoints; only the entry points

@@ -29,7 +29,7 @@ enum RentalPeriod {
 
   /// Every known value is mapped explicitly. The fallback is for a value this
   /// build predates or an absent field — never for one the enum already has, or
-  /// a listing at 5 000 F/day would read "5 000 XAF / Mois".
+  /// a listing at 5 000 F/day would read "5 000 FCFA / mois".
   static RentalPeriod fromResponse(AnnonceResponseRentalPeriodEnum? value) =>
       switch (value) {
         AnnonceResponseRentalPeriodEnum.DAY => RentalPeriod.day,
