@@ -1,9 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mboa_pro/features/contracts/bloc/contract_detail_bloc.dart';
-import 'package:mboa_pro/features/contracts/bloc/contract_form_bloc.dart';
-import 'package:mboa_pro/features/contracts/bloc/contracts_bloc.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -25,11 +21,14 @@ Contract contract({
       changeRequests: changes,
     );
 
-/// The Contrat Mboa (CDC M08).
+/// The Contrat Mboa (CDC M08) — the blocs both apps drive.
+///
+/// They live in `mboa_shared` for the same reason [ContractRepository] does:
+/// the landlord and the tenant call the same endpoints, and the server decides
+/// who may do what. Drawing one up is the landlord's alone (RM-M08-01) and is
+/// tested in `mboa_pro`.
 void main() {
   late MockContractRepository repository;
-
-  setUpAll(() => registerFallbackValue(const ContractTerms()));
 
   setUp(() => repository = MockContractRepository());
 
@@ -177,58 +176,96 @@ void main() {
     );
   });
 
-  group('drawing one up', () {
-    ContractFormBloc build() => ContractFormBloc(repository: repository);
+  // The two moves only a tenant makes. They go through the same bloc as the
+  // landlord's: the server refuses what the caller may not do, so nothing here
+  // branches on a role.
+  group("the tenant's side", () {
+    ContractDetailBloc build() => ContractDetailBloc(repository: repository);
 
-    final terms = ContractTerms(
-      annonceId: 'a-1',
-      tenantPhone: '+237690000000',
-      price: 110000,
-      depositAmount: 220000,
-      startDate: DateTime(2026, 9, 1),
-      durationUnits: 12,
-    );
-
-    blocTest<ContractFormBloc, ContractFormState>(
-      'an incomplete draft is not sent',
-      build: build,
-      seed: () => const ContractFormState(
-        terms: ContractTerms(annonceId: 'a-1'),
-      ),
-      act: (bloc) => bloc.add(const ContractFormSubmitted()),
-      verify: (_) => verifyNever(() => repository.create(any())),
-    );
-
-    blocTest<ContractFormBloc, ContractFormState>(
-      'CE-M08-01 — a tenant with no account is a wait, not an error',
-      setUp: () => when(() => repository.create(any())).thenThrow(
-        DioException(
-          requestOptions: RequestOptions(path: '/contracts'),
-          response: Response(
-            requestOptions: RequestOptions(path: '/contracts'),
-            statusCode: 404,
-          ),
+    blocTest<ContractDetailBloc, ContractDetailState>(
+      'RM-M08-02 — accepting takes the contract the server answers with',
+      setUp: () => when(() => repository.accept('c-1')).thenAnswer(
+        (_) async => contract(
+          status: ContractStatus.accepted,
+          awaiting: ContractParty.both,
+          canSign: true,
         ),
       ),
       build: build,
-      seed: () => ContractFormState(terms: terms),
-      act: (bloc) => bloc.add(const ContractFormSubmitted()),
-      verify: (bloc) => expect(
-        bloc.state.failure,
-        ContractFormFailure.tenantHasNoAccount,
+      seed: () => ContractDetailReady(contract()),
+      act: (bloc) => bloc.add(const ContractAccepted()),
+      verify: (bloc) {
+        final state = bloc.state as ContractDetailReady;
+        // canSign is the server's (RM-M08-02); accepting must not be read here
+        // as "signing is now open" without being told so.
+        expect(state.contract.status, ContractStatus.accepted);
+        expect(state.contract.canSign, isTrue);
+        expect(state.justActed, isTrue);
+      },
+    );
+
+    blocTest<ContractDetailBloc, ContractDetailState>(
+      'CE-M08-03 — an objection with no words is not an objection',
+      build: build,
+      seed: () => ContractDetailReady(contract()),
+      act: (bloc) => bloc.add(const ContractChangesRequested(comment: '   ')),
+      verify: (_) => verifyNever(
+        () => repository.requestChanges(
+          any(),
+          comment: any(named: 'comment'),
+          terms: any(named: 'terms'),
+        ),
       ),
     );
 
-    blocTest<ContractFormBloc, ContractFormState>(
-      'RM-M08-08 — amending sends the terms to the contract, not a new one',
-      setUp: () => when(() => repository.amend('c-1', any()))
-          .thenAnswer((_) async => contract()),
+    blocTest<ContractDetailBloc, ContractDetailState>(
+      'RM-M08-07 — the contested terms travel with the comment, trimmed',
+      setUp: () => when(
+        () => repository.requestChanges(
+          'c-1',
+          comment: 'La caution est trop haute.',
+          terms: const [ContestedTerm.depositAmount],
+        ),
+      ).thenAnswer(
+        (_) async => contract(
+          status: ContractStatus.changesRequested,
+          awaiting: ContractParty.prestataire,
+        ),
+      ),
       build: build,
-      seed: () => ContractFormState(terms: terms, amendingId: 'c-1'),
-      act: (bloc) => bloc.add(const ContractFormSubmitted()),
-      verify: (_) {
-        verify(() => repository.amend('c-1', any())).called(1);
-        verifyNever(() => repository.create(any()));
+      seed: () => ContractDetailReady(contract()),
+      act: (bloc) => bloc.add(
+        const ContractChangesRequested(
+          comment: '  La caution est trop haute.  ',
+          terms: [ContestedTerm.depositAmount],
+        ),
+      ),
+      verify: (bloc) {
+        verify(
+          () => repository.requestChanges(
+            'c-1',
+            comment: 'La caution est trop haute.',
+            terms: const [ContestedTerm.depositAmount],
+          ),
+        ).called(1);
+        expect(
+          (bloc.state as ContractDetailReady).contract.awaiting,
+          ContractParty.prestataire,
+        );
+      },
+    );
+
+    blocTest<ContractDetailBloc, ContractDetailState>(
+      'a refused acceptance leaves the contract where it was',
+      setUp: () =>
+          when(() => repository.accept(any())).thenThrow(Exception('409')),
+      build: build,
+      seed: () => ContractDetailReady(contract()),
+      act: (bloc) => bloc.add(const ContractAccepted()),
+      verify: (bloc) {
+        final state = bloc.state as ContractDetailReady;
+        expect(state.lastActionFailed, isTrue);
+        expect(state.contract.status, ContractStatus.sent);
       },
     );
   });

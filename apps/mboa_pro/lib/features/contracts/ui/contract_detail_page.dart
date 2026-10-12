@@ -10,7 +10,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import '../bloc/contract_detail_bloc.dart';
 import 'widgets/contract_bits.dart';
 import 'widgets/sign_contract_sheet.dart';
 

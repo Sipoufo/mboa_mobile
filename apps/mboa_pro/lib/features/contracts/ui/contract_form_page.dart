@@ -8,7 +8,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../annonces/bloc/annonces_bloc.dart';
-import '../bloc/contract_detail_bloc.dart';
 import '../bloc/contract_form_bloc.dart';
 
 /// Drawing up a Contrat Mboa, or amending one (CDC M08).

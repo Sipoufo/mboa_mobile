@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_pro/features/contracts/bloc/contract_detail_bloc.dart';
-import 'package:mboa_pro/features/contracts/bloc/contracts_bloc.dart';
 import 'package:mboa_pro/features/contracts/ui/contract_detail_page.dart';
 import 'package:mboa_pro/features/contracts/ui/contracts_list_page.dart';
 import 'package:mboa_shared/mboa_shared.dart';

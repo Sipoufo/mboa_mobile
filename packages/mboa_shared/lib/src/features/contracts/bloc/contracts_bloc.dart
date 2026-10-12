@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mboa_shared/mboa_shared.dart';
+import '../data/contract_repository.dart';
+import '../models/contract.dart';
 
 part 'contracts_event.dart';
 part 'contracts_state.dart';
 
-/// The prestataire's contracts (CDC M08), newest first.
+/// The account's contracts (CDC M08), as landlord or as tenant, newest first.
 ///
 /// Filtering happens **here, over one read**, not per tab: a portfolio's
 /// contracts are few, and `awaiting` — the thing the list is really sorted by

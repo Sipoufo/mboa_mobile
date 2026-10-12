@@ -8,7 +8,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import '../bloc/contracts_bloc.dart';
 import 'widgets/contract_bits.dart';
 
 /// The prestataire's Contrats Mboa (CDC M08).

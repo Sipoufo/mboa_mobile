@@ -1,16 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mboa_shared/mboa_shared.dart';
+import '../data/contract_repository.dart';
+import '../models/contract.dart';
 
 part 'contract_detail_event.dart';
 part 'contract_detail_state.dart';
 
-/// One contract, and everything the prestataire may do to it (CDC M08).
+/// One contract, and everything either party may do to it (CDC M08).
 ///
-/// Every action answers with the contract as the server now holds it, so
-/// nothing is patched locally: `status`, `awaiting` and `canSign` are its
-/// verdicts (RM-M08-09, RM-M08-02) and a second opinion here would be a bug
-/// waiting to happen.
+/// Shared between the two apps for the same reason [ContractRepository] is:
+/// the landlord and the tenant call the **same** endpoints, and the server
+/// says who may do what. Every action answers with the contract as the server
+/// now holds it, so nothing is patched locally: `status`, `awaiting` and
+/// `canSign` are its verdicts (RM-M08-09, RM-M08-02) and a second opinion here
+/// would be a bug waiting to happen.
 class ContractDetailBloc
     extends Bloc<ContractDetailEvent, ContractDetailState> {
   ContractDetailBloc({required ContractRepository repository})
@@ -18,6 +21,8 @@ class ContractDetailBloc
         super(const ContractDetailInitial()) {
     on<ContractRequested>(_onRequested);
     on<ContractSent>(_onSent);
+    on<ContractAccepted>(_onAccepted);
+    on<ContractChangesRequested>(_onChangesRequested);
     on<ContractSigned>(_onSigned);
     on<ContractChangeAnswered>(_onChangeAnswered);
     on<ContractAmended>(_onAmended);
@@ -44,6 +49,33 @@ class ContractDetailBloc
     Emitter<ContractDetailState> emit,
   ) =>
       _run(emit, (contract) => _repository.send(contract.id));
+
+  /// RM-M08-02 — accepting opens signing for both parties. There is no
+  /// `canAccept` verdict to lean on the way [Contract.canSign] exists, so the
+  /// screen offers it from `status` and `awaiting`; see docs/backend-requests.md.
+  Future<void> _onAccepted(
+    ContractAccepted event,
+    Emitter<ContractDetailState> emit,
+  ) =>
+      _run(emit, (contract) => _repository.accept(contract.id));
+
+  /// CE-M08-03 — contesting sends it back to the landlord with the objection
+  /// attached; the terms themselves do not move until he amends them.
+  Future<void> _onChangesRequested(
+    ContractChangesRequested event,
+    Emitter<ContractDetailState> emit,
+  ) {
+    final comment = event.comment.trim();
+    if (comment.isEmpty) return Future.value();
+    return _run(
+      emit,
+      (contract) => _repository.requestChanges(
+        contract.id,
+        comment: comment,
+        terms: event.terms,
+      ),
+    );
+  }
 
   /// RM-M08-03 — the second signature locks it for good. The confirmation is a
   /// local gesture (the request carries only a session), which is why the
