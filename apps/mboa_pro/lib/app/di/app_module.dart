@@ -255,6 +255,14 @@ void registerAppModule() {
     () => ContractFormBloc(repository: getIt<ContractRepository>()),
   );
 
+  // M27 — he does not write a resident review; he answers one, once.
+  getIt.registerLazySingleton<ResidentReviewRepository>(
+    () => ResidentReviewRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<ResidentReplyBloc>(
+    () => ResidentReplyBloc(repository: getIt<ResidentReviewRepository>()),
+  );
+
   // M07bis — the client's review, read by whoever carried the visit out.
   getIt.registerLazySingleton<VisitReviewRepository>(
     () => VisitReviewRepository(dioClient: getIt<DioClient>()),

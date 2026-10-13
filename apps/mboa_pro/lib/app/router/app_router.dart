@@ -93,6 +93,11 @@ class AppRouter extends RootStackRouter {
             // points at that tab rather than pushing a second copy of it.
             AutoRoute(page: ContractFormRoute.page, path: 'contracts/form'),
             AutoRoute(page: ContractDetailRoute.page, path: 'contracts/:id'),
+            // M27 — the review hangs off the contract, so its route does too.
+            AutoRoute(
+              page: ResidentReplyRoute.page,
+              path: 'contracts/:contractId/review',
+            ),
             AutoRoute(page: AgentAvailabilityRoute.page, path: 'agent/availability'),
 
             // Agent assignment (M11).

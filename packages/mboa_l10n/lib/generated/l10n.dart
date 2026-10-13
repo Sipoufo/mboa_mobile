@@ -7583,6 +7583,96 @@ class I18n {
     );
   }
 
+  /// `L'avis de ton locataire`
+  String get residentReviewReadTitle {
+    return Intl.message(
+      'L\'avis de ton locataire',
+      name: 'residentReviewReadTitle',
+      desc: 'M27 — the landlord reading the review.',
+      args: [],
+    );
+  }
+
+  /// `Voir l'avis du locataire`
+  String get residentReviewSeeCta {
+    return Intl.message(
+      'Voir l\'avis du locataire',
+      name: 'residentReviewSeeCta',
+      desc: 'M27 — opens it from the contract.',
+      args: [],
+    );
+  }
+
+  /// `Ta réponse`
+  String get residentReplyTitle {
+    return Intl.message(
+      'Ta réponse',
+      name: 'residentReplyTitle',
+      desc: 'M27 RM-M27-03 — the answer composer.',
+      args: [],
+    );
+  }
+
+  /// `Ta réponse s'ajoute à l'avis, une seule fois. Elle ne modifie ni la note ni le texte de ton locataire.`
+  String get residentReplyRule {
+    return Intl.message(
+      'Ta réponse s\'ajoute à l\'avis, une seule fois. Elle ne modifie ni la note ni le texte de ton locataire.',
+      name: 'residentReplyRule',
+      desc: 'M27 RM-M27-03 — once, and it changes nothing.',
+      args: [],
+    );
+  }
+
+  /// `Réponds publiquement à cet avis…`
+  String get residentReplyHint {
+    return Intl.message(
+      'Réponds publiquement à cet avis…',
+      name: 'residentReplyHint',
+      desc: 'M27 — the answer field.',
+      args: [],
+    );
+  }
+
+  /// `Publier ma réponse`
+  String get residentReplySend {
+    return Intl.message(
+      'Publier ma réponse',
+      name: 'residentReplySend',
+      desc: 'M27 — publishes the answer.',
+      args: [],
+    );
+  }
+
+  /// `Réponse publiée`
+  String get residentReplySent {
+    return Intl.message(
+      'Réponse publiée',
+      name: 'residentReplySent',
+      desc: 'M27 — confirmation.',
+      args: [],
+    );
+  }
+
+  /// `Tu as déjà répondu à cet avis.`
+  String get residentReplyDone {
+    return Intl.message(
+      'Tu as déjà répondu à cet avis.',
+      name: 'residentReplyDone',
+      desc: 'M27 RM-M27-03 — one answer per review.',
+      args: [],
+    );
+  }
+
+  /// `Ton locataire peut publier son avis quand il le souhaite, pendant tout le bail.`
+  String get residentReviewNoneBody {
+    return Intl.message(
+      'Ton locataire peut publier son avis quand il le souhaite, pendant tout le bail.',
+      name: 'residentReviewNoneBody',
+      desc: 'M27 — no review yet, from the landlord side.',
+      args: [],
+    );
+  }
+
   /// `Voir l'avis du locataire`
   String get visitsReviewOpen {
     return Intl.message(

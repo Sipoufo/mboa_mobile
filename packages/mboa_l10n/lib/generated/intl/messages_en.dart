@@ -1321,6 +1321,22 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
+    "residentReplyDone": MessageLookupByLibrary.simpleMessage(
+      "You have already answered this review.",
+    ),
+    "residentReplyHint": MessageLookupByLibrary.simpleMessage(
+      "Answer this review publicly…",
+    ),
+    "residentReplyRule": MessageLookupByLibrary.simpleMessage(
+      "Your answer is added beside the review, once. It changes neither your tenant\'s rating nor their words.",
+    ),
+    "residentReplySend": MessageLookupByLibrary.simpleMessage(
+      "Publish my answer",
+    ),
+    "residentReplySent": MessageLookupByLibrary.simpleMessage(
+      "Answer published",
+    ),
+    "residentReplyTitle": MessageLookupByLibrary.simpleMessage("Your answer"),
     "residentReviewCta": MessageLookupByLibrary.simpleMessage(
       "Leave my review",
     ),
@@ -1333,11 +1349,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "residentReviewLockedTitle": MessageLookupByLibrary.simpleMessage(
       "Review locked",
     ),
+    "residentReviewNoneBody": MessageLookupByLibrary.simpleMessage(
+      "Your tenant can publish their review whenever they like, for the whole tenancy.",
+    ),
+    "residentReviewReadTitle": MessageLookupByLibrary.simpleMessage(
+      "Your tenant\'s review",
+    ),
     "residentReviewSave": MessageLookupByLibrary.simpleMessage(
       "Save my corrections",
     ),
     "residentReviewSaved": MessageLookupByLibrary.simpleMessage(
       "Review updated",
+    ),
+    "residentReviewSeeCta": MessageLookupByLibrary.simpleMessage(
+      "See the tenant\'s review",
     ),
     "residentReviewSubtitle": MessageLookupByLibrary.simpleMessage(
       "Published on the listing. You can correct it while you live there, and for 30 days after you leave.",

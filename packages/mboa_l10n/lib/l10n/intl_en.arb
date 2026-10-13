@@ -2621,6 +2621,42 @@
     "description": "M27 — and the review still stands."
   },
   "residentReviewWeight": "A tenant's review counts three times a visitor's in the property's rating.",
+  "residentReviewReadTitle": "Your tenant's review",
+  "@residentReviewReadTitle": {
+    "description": "M27 — the landlord reading the review."
+  },
+  "residentReviewSeeCta": "See the tenant's review",
+  "@residentReviewSeeCta": {
+    "description": "M27 — opens it from the contract."
+  },
+  "residentReplyTitle": "Your answer",
+  "@residentReplyTitle": {
+    "description": "M27 RM-M27-03 — the answer composer."
+  },
+  "residentReplyRule": "Your answer is added beside the review, once. It changes neither your tenant's rating nor their words.",
+  "@residentReplyRule": {
+    "description": "M27 RM-M27-03 — once, and it changes nothing."
+  },
+  "residentReplyHint": "Answer this review publicly…",
+  "@residentReplyHint": {
+    "description": "M27 — the answer field."
+  },
+  "residentReplySend": "Publish my answer",
+  "@residentReplySend": {
+    "description": "M27 — publishes the answer."
+  },
+  "residentReplySent": "Answer published",
+  "@residentReplySent": {
+    "description": "M27 — confirmation."
+  },
+  "residentReplyDone": "You have already answered this review.",
+  "@residentReplyDone": {
+    "description": "M27 RM-M27-03 — one answer per review."
+  },
+  "residentReviewNoneBody": "Your tenant can publish their review whenever they like, for the whole tenancy.",
+  "@residentReviewNoneBody": {
+    "description": "M27 — no review yet, from the landlord side."
+  },
   "@residentReviewWeight": {
     "description": "M27 RG-06 — why this review matters more."
   },

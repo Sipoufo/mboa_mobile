@@ -694,18 +694,35 @@ class _ActionBar extends StatelessWidget {
       );
     }
 
-    // CA-M27-02 / RM-M27-01 — the option appears on `residentReviewEligible`
-    // alone, which is the server's verdict that this caller is the tenant of a
-    // signed contract that ran long enough. The app does not second-guess it:
-    // a tenancy's length, a signature and a role are three things it would
-    // have to work out, and the server already has.
-    if (onReview != null && contract.residentReviewEligible) {
-      children.add(
-        Button.outline(
-          title: l10n.residentReviewCta,
-          onPressed: state.isBusy ? null : () => onReview!(contract),
-        ),
-      );
+    // M27 — the same door, opening on two different things.
+    //
+    // For the **tenant**, `residentReviewEligible` is the server's verdict
+    // that this caller may write one: a signature, a role and a tenancy length
+    // it has already combined, and that the app would otherwise have to work
+    // out for itself.
+    //
+    // For the **landlord** there is no such flag, and there should not be: he
+    // is not entitled to anything, he is merely allowed to read what was
+    // written about him and answer once (RM-M27-03). The door opens on a
+    // signed contract, and the screen behind it says "pas encore d'avis" when
+    // there is none — which is the ordinary case, since RM-M27-02 lets the
+    // tenant write whenever they like.
+    if (onReview != null) {
+      final label = switch (viewer) {
+        ContractParty.tenant when contract.residentReviewEligible =>
+          l10n.residentReviewCta,
+        ContractParty.prestataire when contract.isSigned =>
+          l10n.residentReviewSeeCta,
+        _ => null,
+      };
+      if (label != null) {
+        children.add(
+          Button.outline(
+            title: label,
+            onPressed: state.isBusy ? null : () => onReview!(contract),
+          ),
+        );
+      }
     }
 
     // RM-M08-08 — amendable only while nobody has accepted, and only by the

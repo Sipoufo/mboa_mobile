@@ -1416,6 +1416,22 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
+    "residentReplyDone": MessageLookupByLibrary.simpleMessage(
+      "Tu as déjà répondu à cet avis.",
+    ),
+    "residentReplyHint": MessageLookupByLibrary.simpleMessage(
+      "Réponds publiquement à cet avis…",
+    ),
+    "residentReplyRule": MessageLookupByLibrary.simpleMessage(
+      "Ta réponse s\'ajoute à l\'avis, une seule fois. Elle ne modifie ni la note ni le texte de ton locataire.",
+    ),
+    "residentReplySend": MessageLookupByLibrary.simpleMessage(
+      "Publier ma réponse",
+    ),
+    "residentReplySent": MessageLookupByLibrary.simpleMessage(
+      "Réponse publiée",
+    ),
+    "residentReplyTitle": MessageLookupByLibrary.simpleMessage("Ta réponse"),
     "residentReviewCta": MessageLookupByLibrary.simpleMessage(
       "Laisser mon avis",
     ),
@@ -1428,11 +1444,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "residentReviewLockedTitle": MessageLookupByLibrary.simpleMessage(
       "Avis verrouillé",
     ),
+    "residentReviewNoneBody": MessageLookupByLibrary.simpleMessage(
+      "Ton locataire peut publier son avis quand il le souhaite, pendant tout le bail.",
+    ),
+    "residentReviewReadTitle": MessageLookupByLibrary.simpleMessage(
+      "L\'avis de ton locataire",
+    ),
     "residentReviewSave": MessageLookupByLibrary.simpleMessage(
       "Enregistrer mes corrections",
     ),
     "residentReviewSaved": MessageLookupByLibrary.simpleMessage(
       "Avis mis à jour",
+    ),
+    "residentReviewSeeCta": MessageLookupByLibrary.simpleMessage(
+      "Voir l\'avis du locataire",
     ),
     "residentReviewSubtitle": MessageLookupByLibrary.simpleMessage(
       "Publié sur la fiche du bien. Tu peux le corriger tant que tu habites là, et 30 jours après ton départ.",

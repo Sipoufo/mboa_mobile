@@ -23,11 +23,13 @@ export 'src/features/notifications/notifications_background.dart';
 // Contracts (M08) — the same endpoints serve both parties, so the model and
 // the repository are shared; each app builds its own screens on top.
 export 'src/features/contracts/bloc/contract_detail_bloc.dart';
+export 'src/features/contracts/bloc/resident_reply_bloc.dart';
 export 'src/features/contracts/bloc/resident_review_bloc.dart';
 export 'src/features/contracts/bloc/contracts_bloc.dart';
 export 'src/features/contracts/data/contract_repository.dart';
 export 'src/features/contracts/data/resident_review_repository.dart';
 export 'src/features/contracts/ui/contract_detail_view.dart';
+export 'src/features/contracts/ui/resident_reply_view.dart';
 export 'src/features/contracts/ui/resident_review_view.dart';
 export 'src/features/contracts/ui/contracts_list_view.dart';
 export 'src/features/contracts/ui/widgets/contract_bits.dart';

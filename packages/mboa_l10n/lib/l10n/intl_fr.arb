@@ -2621,6 +2621,42 @@
     "description": "M27 — and the review still stands."
   },
   "residentReviewWeight": "Un avis de locataire pèse trois fois plus qu'un avis de visite dans la note du bien.",
+  "residentReviewReadTitle": "L'avis de ton locataire",
+  "@residentReviewReadTitle": {
+    "description": "M27 — the landlord reading the review."
+  },
+  "residentReviewSeeCta": "Voir l'avis du locataire",
+  "@residentReviewSeeCta": {
+    "description": "M27 — opens it from the contract."
+  },
+  "residentReplyTitle": "Ta réponse",
+  "@residentReplyTitle": {
+    "description": "M27 RM-M27-03 — the answer composer."
+  },
+  "residentReplyRule": "Ta réponse s'ajoute à l'avis, une seule fois. Elle ne modifie ni la note ni le texte de ton locataire.",
+  "@residentReplyRule": {
+    "description": "M27 RM-M27-03 — once, and it changes nothing."
+  },
+  "residentReplyHint": "Réponds publiquement à cet avis…",
+  "@residentReplyHint": {
+    "description": "M27 — the answer field."
+  },
+  "residentReplySend": "Publier ma réponse",
+  "@residentReplySend": {
+    "description": "M27 — publishes the answer."
+  },
+  "residentReplySent": "Réponse publiée",
+  "@residentReplySent": {
+    "description": "M27 — confirmation."
+  },
+  "residentReplyDone": "Tu as déjà répondu à cet avis.",
+  "@residentReplyDone": {
+    "description": "M27 RM-M27-03 — one answer per review."
+  },
+  "residentReviewNoneBody": "Ton locataire peut publier son avis quand il le souhaite, pendant tout le bail.",
+  "@residentReviewNoneBody": {
+    "description": "M27 — no review yet, from the landlord side."
+  },
   "@residentReviewWeight": {
     "description": "M27 RG-06 — why this review matters more."
   },
