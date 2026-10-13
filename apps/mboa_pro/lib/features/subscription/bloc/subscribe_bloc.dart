@@ -97,6 +97,10 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
         return;
       case PaymentStatus.failed:
       case PaymentStatus.cancelled:
+      // A refund is settled, and settled without a plan. Different from a
+      // failure in the ledger, identical here: there is nothing left to wait
+      // for, so it must not fall through to the poll.
+      case PaymentStatus.refunded:
         emit(SubscribeFailure(tier: tier, method: method, attempt: attempt));
         return;
       case PaymentStatus.pending:
@@ -126,6 +130,7 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
           return;
         case PaymentStatus.failed:
         case PaymentStatus.cancelled:
+        case PaymentStatus.refunded:
           // Reported now rather than after the full timeout — watching the tier
           // could never tell a rejection from "not yet".
           emit(SubscribeFailure(tier: tier, method: _method, attempt: settled));

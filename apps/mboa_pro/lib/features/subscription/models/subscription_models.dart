@@ -111,7 +111,14 @@ enum PaymentMethod {
       };
 }
 
-enum PaymentStatus { pending, confirmed, failed, cancelled }
+/// A payment's outcome.
+///
+/// [refunded] arrived with the 2026-10 spec: the payment went through and was
+/// then reversed. It is **settled**, not pending — mapping it to [pending],
+/// which is what the catch-all did before the value existed, left the
+/// subscribe screen polling for a confirmation that was never coming and then
+/// promising a notification.
+enum PaymentStatus { pending, confirmed, failed, cancelled, refunded }
 
 /// One payment, from initiation or from the server's history.
 class PaymentAttempt extends Equatable {
@@ -155,6 +162,8 @@ class PaymentAttempt extends Equatable {
           PaymentInitiatedResponseStatusEnum.FAILED => PaymentStatus.failed,
           PaymentInitiatedResponseStatusEnum.CANCELLED =>
             PaymentStatus.cancelled,
+          PaymentInitiatedResponseStatusEnum.REFUNDED =>
+            PaymentStatus.refunded,
           _ => PaymentStatus.pending,
         },
         initiatedAt: DateTime.now(),
@@ -175,6 +184,7 @@ class PaymentAttempt extends Equatable {
           PaymentSummaryStatusEnum.CONFIRMED => PaymentStatus.confirmed,
           PaymentSummaryStatusEnum.FAILED => PaymentStatus.failed,
           PaymentSummaryStatusEnum.CANCELLED => PaymentStatus.cancelled,
+          PaymentSummaryStatusEnum.REFUNDED => PaymentStatus.refunded,
           _ => PaymentStatus.pending,
         },
         method: switch (summary.method) {

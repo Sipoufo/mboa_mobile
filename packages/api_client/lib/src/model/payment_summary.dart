@@ -38,7 +38,7 @@ abstract class PaymentSummary implements Built<PaymentSummary, PaymentSummaryBui
 
   @BuiltValueField(wireName: r'status')
   PaymentSummaryStatusEnum? get status;
-  // enum statusEnum {  PENDING,  CONFIRMED,  FAILED,  CANCELLED,  };
+  // enum statusEnum {  PENDING,  CONFIRMED,  FAILED,  CANCELLED,  REFUNDED,  };
 
   @BuiltValueField(wireName: r'hasReceipt')
   bool? get hasReceipt;
@@ -292,6 +292,8 @@ class PaymentSummaryStatusEnum extends EnumClass {
   static const PaymentSummaryStatusEnum FAILED = _$paymentSummaryStatusEnum_FAILED;
   @BuiltValueEnumConst(wireName: r'CANCELLED')
   static const PaymentSummaryStatusEnum CANCELLED = _$paymentSummaryStatusEnum_CANCELLED;
+  @BuiltValueEnumConst(wireName: r'REFUNDED')
+  static const PaymentSummaryStatusEnum REFUNDED = _$paymentSummaryStatusEnum_REFUNDED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const PaymentSummaryStatusEnum unknownDefaultOpenApi = _$paymentSummaryStatusEnum_unknownDefaultOpenApi;
 

@@ -15,9 +15,13 @@ import 'package:api_client/src/date_serializer.dart';
 import 'package:api_client/src/model/date.dart';
 
 import 'package:api_client/src/model/add_favori_request.dart';
+import 'package:api_client/src/model/adjustment_response.dart';
 import 'package:api_client/src/model/admin_mboa_score_response.dart';
+import 'package:api_client/src/model/admin_payment_item.dart';
 import 'package:api_client/src/model/admin_photo_verification_item.dart';
 import 'package:api_client/src/model/admin_prestataire_badges_response.dart';
+import 'package:api_client/src/model/admin_subscription_detail.dart';
+import 'package:api_client/src/model/admin_subscription_item.dart';
 import 'package:api_client/src/model/admin_user_summary.dart';
 import 'package:api_client/src/model/agent_candidate.dart';
 import 'package:api_client/src/model/agent_opportunity.dart';
@@ -57,6 +61,7 @@ import 'package:api_client/src/model/dashboard_item.dart';
 import 'package:api_client/src/model/dashboard_metric.dart';
 import 'package:api_client/src/model/dashboard_summary_response.dart';
 import 'package:api_client/src/model/error_response.dart';
+import 'package:api_client/src/model/extend_subscription_request.dart';
 import 'package:api_client/src/model/favori_response.dart';
 import 'package:api_client/src/model/field_error.dart';
 import 'package:api_client/src/model/forgot_password_request.dart';
@@ -64,6 +69,7 @@ import 'package:api_client/src/model/grant_subscription_request.dart';
 import 'package:api_client/src/model/historique_response.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
+import 'package:api_client/src/model/line.dart';
 import 'package:api_client/src/model/listing_stats.dart';
 import 'package:api_client/src/model/location_option.dart';
 import 'package:api_client/src/model/login_otp_request.dart';
@@ -75,7 +81,9 @@ import 'package:api_client/src/model/message_response.dart';
 import 'package:api_client/src/model/my_badges_response.dart';
 import 'package:api_client/src/model/notification_setting.dart';
 import 'package:api_client/src/model/opportunity_item.dart';
+import 'package:api_client/src/model/page_response_admin_payment_item.dart';
 import 'package:api_client/src/model/page_response_admin_photo_verification_item.dart';
+import 'package:api_client/src/model/page_response_admin_subscription_item.dart';
 import 'package:api_client/src/model/page_response_admin_user_summary.dart';
 import 'package:api_client/src/model/page_response_annonce_response.dart';
 import 'package:api_client/src/model/page_response_assignment_item.dart';
@@ -108,6 +116,7 @@ import 'package:api_client/src/model/provider_card.dart';
 import 'package:api_client/src/model/rate_agent_request.dart';
 import 'package:api_client/src/model/receipt_response.dart';
 import 'package:api_client/src/model/refresh_token_request.dart';
+import 'package:api_client/src/model/refund_payment_request.dart';
 import 'package:api_client/src/model/register_device_request.dart';
 import 'package:api_client/src/model/register_professional_request.dart';
 import 'package:api_client/src/model/reject_kyc_request.dart';
@@ -148,6 +157,7 @@ import 'package:api_client/src/model/submit_kyc_request.dart';
 import 'package:api_client/src/model/submit_resident_review_request.dart';
 import 'package:api_client/src/model/submit_review_request.dart';
 import 'package:api_client/src/model/subscribe_request.dart';
+import 'package:api_client/src/model/subscription_recap_response.dart';
 import 'package:api_client/src/model/subscription_response.dart';
 import 'package:api_client/src/model/suspend_account_request.dart';
 import 'package:api_client/src/model/suspend_annonce_request.dart';
@@ -180,9 +190,13 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   AddFavoriRequest,
+  AdjustmentResponse,
   AdminMboaScoreResponse,
+  AdminPaymentItem,
   AdminPhotoVerificationItem,
   AdminPrestataireBadgesResponse,
+  AdminSubscriptionDetail,
+  AdminSubscriptionItem,
   AdminUserSummary,
   AgentCandidate,
   AgentOpportunity,
@@ -222,6 +236,7 @@ part 'serializers.g.dart';
   DashboardMetric,
   DashboardSummaryResponse,
   ErrorResponse,
+  ExtendSubscriptionRequest,
   FavoriResponse,
   FieldError,
   ForgotPasswordRequest,
@@ -229,6 +244,7 @@ part 'serializers.g.dart';
   HistoriqueResponse,
   KycReviewItem,
   KycStatusResponse,
+  Line,
   ListingStats,
   LocationOption,
   LoginOtpRequest,
@@ -240,7 +256,9 @@ part 'serializers.g.dart';
   MyBadgesResponse,
   NotificationSetting,
   OpportunityItem,
+  PageResponseAdminPaymentItem,
   PageResponseAdminPhotoVerificationItem,
+  PageResponseAdminSubscriptionItem,
   PageResponseAdminUserSummary,
   PageResponseAnnonceResponse,
   PageResponseAssignmentItem,
@@ -273,6 +291,7 @@ part 'serializers.g.dart';
   RateAgentRequest,
   ReceiptResponse,
   RefreshTokenRequest,
+  RefundPaymentRequest,
   RegisterDeviceRequest,
   RegisterProfessionalRequest,
   RejectKycRequest,
@@ -313,6 +332,7 @@ part 'serializers.g.dart';
   SubmitResidentReviewRequest,
   SubmitReviewRequest,
   SubscribeRequest,
+  SubscriptionRecapResponse,
   SubscriptionResponse,
   SuspendAccountRequest,
   SuspendAnnonceRequest,
@@ -367,8 +387,16 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<MessageResponse>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Line)]),
+        () => ListBuilder<Line>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(VisitorSlots)]),
         () => ListBuilder<VisitorSlots>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AdjustmentResponse)]),
+        () => ListBuilder<AdjustmentResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(OpportunityItem)]),
@@ -475,6 +503,10 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<Reply>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AdminSubscriptionItem)]),
+        () => ListBuilder<AdminSubscriptionItem>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(LocationOption)]),
         () => ListBuilder<LocationOption>(),
       )
@@ -505,6 +537,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SearchResult)]),
         () => ListBuilder<SearchResult>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AdminPaymentItem)]),
+        () => ListBuilder<AdminPaymentItem>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SignatureResponse)]),

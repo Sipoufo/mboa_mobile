@@ -19,6 +19,9 @@ const PaymentInitiatedResponseStatusEnum
 _$paymentInitiatedResponseStatusEnum_CANCELLED =
     const PaymentInitiatedResponseStatusEnum._('CANCELLED');
 const PaymentInitiatedResponseStatusEnum
+_$paymentInitiatedResponseStatusEnum_REFUNDED =
+    const PaymentInitiatedResponseStatusEnum._('REFUNDED');
+const PaymentInitiatedResponseStatusEnum
 _$paymentInitiatedResponseStatusEnum_unknownDefaultOpenApi =
     const PaymentInitiatedResponseStatusEnum._('unknownDefaultOpenApi');
 
@@ -34,6 +37,8 @@ PaymentInitiatedResponseStatusEnum _$paymentInitiatedResponseStatusEnumValueOf(
       return _$paymentInitiatedResponseStatusEnum_FAILED;
     case 'CANCELLED':
       return _$paymentInitiatedResponseStatusEnum_CANCELLED;
+    case 'REFUNDED':
+      return _$paymentInitiatedResponseStatusEnum_REFUNDED;
     case 'unknownDefaultOpenApi':
       return _$paymentInitiatedResponseStatusEnum_unknownDefaultOpenApi;
     default:
@@ -49,6 +54,7 @@ _$paymentInitiatedResponseStatusEnumValues =
         _$paymentInitiatedResponseStatusEnum_CONFIRMED,
         _$paymentInitiatedResponseStatusEnum_FAILED,
         _$paymentInitiatedResponseStatusEnum_CANCELLED,
+        _$paymentInitiatedResponseStatusEnum_REFUNDED,
         _$paymentInitiatedResponseStatusEnum_unknownDefaultOpenApi,
       ],
     );
@@ -64,6 +70,7 @@ class _$PaymentInitiatedResponseStatusEnumSerializer
     'CONFIRMED': 'CONFIRMED',
     'FAILED': 'FAILED',
     'CANCELLED': 'CANCELLED',
+    'REFUNDED': 'REFUNDED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -71,6 +78,7 @@ class _$PaymentInitiatedResponseStatusEnumSerializer
     'CONFIRMED': 'CONFIRMED',
     'FAILED': 'FAILED',
     'CANCELLED': 'CANCELLED',
+    'REFUNDED': 'REFUNDED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

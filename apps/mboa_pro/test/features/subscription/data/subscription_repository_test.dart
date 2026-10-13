@@ -221,6 +221,26 @@ void main() {
       // The tier alone could never express this — it just stays unchanged.
       expect((await repository.payment('pay-1'))?.status, PaymentStatus.failed);
     });
+
+    test('a refunded payment is read as refunded, not as still pending',
+        () async {
+      // REFUNDED arrived with the 2026-10 spec, and the mapper's catch-all
+      // silently read it as `pending` — a settled payment reported as one
+      // still being waited on.
+      when(() => api.getPayment(id: 'pay-1')).thenAnswer(
+        (_) async => ok(
+          PaymentSummary((s) => s
+            ..paymentId = 'pay-1'
+            ..tier = PaymentSummaryTierEnum.PRO
+            ..status = PaymentSummaryStatusEnum.REFUNDED),
+        ),
+      );
+
+      expect(
+        (await repository.payment('pay-1'))?.status,
+        PaymentStatus.refunded,
+      );
+    });
   });
 
   test('receiptUrl returns the signed download link', () async {

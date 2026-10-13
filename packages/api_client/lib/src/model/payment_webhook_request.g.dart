@@ -18,6 +18,9 @@ const PaymentWebhookRequestStatusEnum
 _$paymentWebhookRequestStatusEnum_CANCELLED =
     const PaymentWebhookRequestStatusEnum._('CANCELLED');
 const PaymentWebhookRequestStatusEnum
+_$paymentWebhookRequestStatusEnum_REFUNDED =
+    const PaymentWebhookRequestStatusEnum._('REFUNDED');
+const PaymentWebhookRequestStatusEnum
 _$paymentWebhookRequestStatusEnum_unknownDefaultOpenApi =
     const PaymentWebhookRequestStatusEnum._('unknownDefaultOpenApi');
 
@@ -33,6 +36,8 @@ PaymentWebhookRequestStatusEnum _$paymentWebhookRequestStatusEnumValueOf(
       return _$paymentWebhookRequestStatusEnum_FAILED;
     case 'CANCELLED':
       return _$paymentWebhookRequestStatusEnum_CANCELLED;
+    case 'REFUNDED':
+      return _$paymentWebhookRequestStatusEnum_REFUNDED;
     case 'unknownDefaultOpenApi':
       return _$paymentWebhookRequestStatusEnum_unknownDefaultOpenApi;
     default:
@@ -48,6 +53,7 @@ _$paymentWebhookRequestStatusEnumValues =
         _$paymentWebhookRequestStatusEnum_CONFIRMED,
         _$paymentWebhookRequestStatusEnum_FAILED,
         _$paymentWebhookRequestStatusEnum_CANCELLED,
+        _$paymentWebhookRequestStatusEnum_REFUNDED,
         _$paymentWebhookRequestStatusEnum_unknownDefaultOpenApi,
       ],
     );
@@ -63,6 +69,7 @@ class _$PaymentWebhookRequestStatusEnumSerializer
     'CONFIRMED': 'CONFIRMED',
     'FAILED': 'FAILED',
     'CANCELLED': 'CANCELLED',
+    'REFUNDED': 'REFUNDED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -70,6 +77,7 @@ class _$PaymentWebhookRequestStatusEnumSerializer
     'CONFIRMED': 'CONFIRMED',
     'FAILED': 'FAILED',
     'CANCELLED': 'CANCELLED',
+    'REFUNDED': 'REFUNDED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

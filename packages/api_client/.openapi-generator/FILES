@@ -2,6 +2,7 @@
 README.md
 doc/AccountApi.md
 doc/AddFavoriRequest.md
+doc/AdjustmentResponse.md
 doc/AdminAnnoncesApi.md
 doc/AdminBadgesApi.md
 doc/AdminContratsApi.md
@@ -9,8 +10,11 @@ doc/AdminKYCApi.md
 doc/AdminMboaScoreApi.md
 doc/AdminMboaScoreResponse.md
 doc/AdminModrationApi.md
+doc/AdminPaymentItem.md
 doc/AdminPhotoVerificationItem.md
 doc/AdminPrestataireBadgesResponse.md
+doc/AdminSubscriptionDetail.md
+doc/AdminSubscriptionItem.md
 doc/AdminSubscriptionsApi.md
 doc/AdminTypeChangeApi.md
 doc/AdminUserSummary.md
@@ -65,6 +69,7 @@ doc/DashboardItem.md
 doc/DashboardMetric.md
 doc/DashboardSummaryResponse.md
 doc/ErrorResponse.md
+doc/ExtendSubscriptionRequest.md
 doc/FavoriResponse.md
 doc/FavorisApi.md
 doc/FieldError.md
@@ -75,6 +80,7 @@ doc/HistoriqueResponse.md
 doc/KYCApi.md
 doc/KycReviewItem.md
 doc/KycStatusResponse.md
+doc/Line.md
 doc/ListingStats.md
 doc/LocationOption.md
 doc/LocationsApi.md
@@ -91,7 +97,9 @@ doc/MyBadgesResponse.md
 doc/NotificationDevicesApi.md
 doc/NotificationSetting.md
 doc/OpportunityItem.md
+doc/PageResponseAdminPaymentItem.md
 doc/PageResponseAdminPhotoVerificationItem.md
+doc/PageResponseAdminSubscriptionItem.md
 doc/PageResponseAdminUserSummary.md
 doc/PageResponseAnnonceResponse.md
 doc/PageResponseAssignmentItem.md
@@ -129,6 +137,7 @@ doc/ProviderCard.md
 doc/RateAgentRequest.md
 doc/ReceiptResponse.md
 doc/RefreshTokenRequest.md
+doc/RefundPaymentRequest.md
 doc/RegisterDeviceRequest.md
 doc/RegisterProfessionalRequest.md
 doc/RejectKycRequest.md
@@ -172,6 +181,7 @@ doc/SubmitKycRequest.md
 doc/SubmitResidentReviewRequest.md
 doc/SubmitReviewRequest.md
 doc/SubscribeRequest.md
+doc/SubscriptionRecapResponse.md
 doc/SubscriptionResponse.md
 doc/SubscriptionsApi.md
 doc/SuspendAccountRequest.md
@@ -259,9 +269,13 @@ lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/date_serializer.dart
 lib/src/model/add_favori_request.dart
+lib/src/model/adjustment_response.dart
 lib/src/model/admin_mboa_score_response.dart
+lib/src/model/admin_payment_item.dart
 lib/src/model/admin_photo_verification_item.dart
 lib/src/model/admin_prestataire_badges_response.dart
+lib/src/model/admin_subscription_detail.dart
+lib/src/model/admin_subscription_item.dart
 lib/src/model/admin_user_summary.dart
 lib/src/model/agent_candidate.dart
 lib/src/model/agent_opportunity.dart
@@ -302,6 +316,7 @@ lib/src/model/dashboard_metric.dart
 lib/src/model/dashboard_summary_response.dart
 lib/src/model/date.dart
 lib/src/model/error_response.dart
+lib/src/model/extend_subscription_request.dart
 lib/src/model/favori_response.dart
 lib/src/model/field_error.dart
 lib/src/model/forgot_password_request.dart
@@ -309,6 +324,7 @@ lib/src/model/grant_subscription_request.dart
 lib/src/model/historique_response.dart
 lib/src/model/kyc_review_item.dart
 lib/src/model/kyc_status_response.dart
+lib/src/model/line.dart
 lib/src/model/listing_stats.dart
 lib/src/model/location_option.dart
 lib/src/model/login_otp_request.dart
@@ -320,7 +336,9 @@ lib/src/model/message_response.dart
 lib/src/model/my_badges_response.dart
 lib/src/model/notification_setting.dart
 lib/src/model/opportunity_item.dart
+lib/src/model/page_response_admin_payment_item.dart
 lib/src/model/page_response_admin_photo_verification_item.dart
+lib/src/model/page_response_admin_subscription_item.dart
 lib/src/model/page_response_admin_user_summary.dart
 lib/src/model/page_response_annonce_response.dart
 lib/src/model/page_response_assignment_item.dart
@@ -353,6 +371,7 @@ lib/src/model/provider_card.dart
 lib/src/model/rate_agent_request.dart
 lib/src/model/receipt_response.dart
 lib/src/model/refresh_token_request.dart
+lib/src/model/refund_payment_request.dart
 lib/src/model/register_device_request.dart
 lib/src/model/register_professional_request.dart
 lib/src/model/reject_kyc_request.dart
@@ -393,6 +412,7 @@ lib/src/model/submit_kyc_request.dart
 lib/src/model/submit_resident_review_request.dart
 lib/src/model/submit_review_request.dart
 lib/src/model/subscribe_request.dart
+lib/src/model/subscription_recap_response.dart
 lib/src/model/subscription_response.dart
 lib/src/model/suspend_account_request.dart
 lib/src/model/suspend_annonce_request.dart
@@ -423,6 +443,7 @@ lib/src/model/zone_response.dart
 lib/src/serializers.dart
 test/account_api_test.dart
 test/add_favori_request_test.dart
+test/adjustment_response_test.dart
 test/admin_annonces_api_test.dart
 test/admin_badges_api_test.dart
 test/admin_contrats_api_test.dart
@@ -430,8 +451,11 @@ test/admin_kyc_api_test.dart
 test/admin_mboa_score_api_test.dart
 test/admin_mboa_score_response_test.dart
 test/admin_modration_api_test.dart
+test/admin_payment_item_test.dart
 test/admin_photo_verification_item_test.dart
 test/admin_prestataire_badges_response_test.dart
+test/admin_subscription_detail_test.dart
+test/admin_subscription_item_test.dart
 test/admin_subscriptions_api_test.dart
 test/admin_type_change_api_test.dart
 test/admin_user_summary_test.dart
@@ -486,6 +510,7 @@ test/dashboard_item_test.dart
 test/dashboard_metric_test.dart
 test/dashboard_summary_response_test.dart
 test/error_response_test.dart
+test/extend_subscription_request_test.dart
 test/favori_response_test.dart
 test/favoris_api_test.dart
 test/field_error_test.dart
@@ -496,6 +521,7 @@ test/historique_response_test.dart
 test/kyc_api_test.dart
 test/kyc_review_item_test.dart
 test/kyc_status_response_test.dart
+test/line_test.dart
 test/listing_stats_test.dart
 test/location_option_test.dart
 test/locations_api_test.dart
@@ -512,7 +538,9 @@ test/my_badges_response_test.dart
 test/notification_devices_api_test.dart
 test/notification_setting_test.dart
 test/opportunity_item_test.dart
+test/page_response_admin_payment_item_test.dart
 test/page_response_admin_photo_verification_item_test.dart
+test/page_response_admin_subscription_item_test.dart
 test/page_response_admin_user_summary_test.dart
 test/page_response_annonce_response_test.dart
 test/page_response_assignment_item_test.dart
@@ -550,6 +578,7 @@ test/provider_card_test.dart
 test/rate_agent_request_test.dart
 test/receipt_response_test.dart
 test/refresh_token_request_test.dart
+test/refund_payment_request_test.dart
 test/register_device_request_test.dart
 test/register_professional_request_test.dart
 test/reject_kyc_request_test.dart
@@ -593,6 +622,7 @@ test/submit_kyc_request_test.dart
 test/submit_resident_review_request_test.dart
 test/submit_review_request_test.dart
 test/subscribe_request_test.dart
+test/subscription_recap_response_test.dart
 test/subscription_response_test.dart
 test/subscriptions_api_test.dart
 test/suspend_account_request_test.dart

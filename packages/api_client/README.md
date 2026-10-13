@@ -89,7 +89,13 @@ Class | Method | HTTP request | Description
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**rejectSignalement**](doc/AdminModrationApi.md#rejectsignalement) | **POST** /api/v1/admin/signalements/{id}/reject | Dismiss a report as a false positive
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**restoreAnnonce**](doc/AdminModrationApi.md#restoreannonce) | **POST** /api/v1/admin/annonces/{id}/restore | Restore a suspended listing (false positive — RM-M19-04)
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**validateSignalement**](doc/AdminModrationApi.md#validatesignalement) | **POST** /api/v1/admin/signalements/{id}/validate | Uphold a report; the 3rd upheld one on a listing suspends it automatically
-[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantSubscription**](doc/AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier to an account for a number of days, without payment
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**extendSubscription**](doc/AdminSubscriptionsApi.md#extendsubscription) | **POST** /api/v1/admin/subscriptions/{accountId}/extend | Add days to a subscription, same tier, with a mandatory reason (RM-M21-04)
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getAdminSubscription**](doc/AdminSubscriptionsApi.md#getadminsubscription) | **GET** /api/v1/admin/subscriptions/{accountId} | One prestataire&#39;s subscription, payments and admin adjustments
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getSubscriptionRecap**](doc/AdminSubscriptionsApi.md#getsubscriptionrecap) | **GET** /api/v1/admin/subscriptions/recap | Monthly recap: revenue, refunds, active prestataires and MRR per tier, exact FCFA (RM-M21-02)
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantSubscription**](doc/AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier without payment, with a mandatory reason; refused over a paid period (RM-M21-01)
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**listAdminPayments**](doc/AdminSubscriptionsApi.md#listadminpayments) | **GET** /api/v1/admin/payments | Payment history, filtered by status, account and month
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**listAdminSubscriptions**](doc/AdminSubscriptionsApi.md#listadminsubscriptions) | **GET** /api/v1/admin/subscriptions | Subscriptions, filtered by tier and status
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**refundPayment**](doc/AdminSubscriptionsApi.md#refundpayment) | **POST** /api/v1/admin/payments/{id}/refund | Record a refund made outside the platform; access is not cut (RM-M21-03)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updatePlan**](doc/AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approveTypeChangeRequest**](doc/AdminTypeChangeApi.md#approvetypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPendingTypeChangeRequests**](doc/AdminTypeChangeApi.md#listpendingtypechangerequests) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
@@ -261,9 +267,13 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [AddFavoriRequest](doc/AddFavoriRequest.md)
+ - [AdjustmentResponse](doc/AdjustmentResponse.md)
  - [AdminMboaScoreResponse](doc/AdminMboaScoreResponse.md)
+ - [AdminPaymentItem](doc/AdminPaymentItem.md)
  - [AdminPhotoVerificationItem](doc/AdminPhotoVerificationItem.md)
  - [AdminPrestataireBadgesResponse](doc/AdminPrestataireBadgesResponse.md)
+ - [AdminSubscriptionDetail](doc/AdminSubscriptionDetail.md)
+ - [AdminSubscriptionItem](doc/AdminSubscriptionItem.md)
  - [AdminUserSummary](doc/AdminUserSummary.md)
  - [AgentCandidate](doc/AgentCandidate.md)
  - [AgentOpportunity](doc/AgentOpportunity.md)
@@ -303,6 +313,7 @@ Class | Method | HTTP request | Description
  - [DashboardMetric](doc/DashboardMetric.md)
  - [DashboardSummaryResponse](doc/DashboardSummaryResponse.md)
  - [ErrorResponse](doc/ErrorResponse.md)
+ - [ExtendSubscriptionRequest](doc/ExtendSubscriptionRequest.md)
  - [FavoriResponse](doc/FavoriResponse.md)
  - [FieldError](doc/FieldError.md)
  - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
@@ -310,6 +321,7 @@ Class | Method | HTTP request | Description
  - [HistoriqueResponse](doc/HistoriqueResponse.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
+ - [Line](doc/Line.md)
  - [ListingStats](doc/ListingStats.md)
  - [LocationOption](doc/LocationOption.md)
  - [LoginOtpRequest](doc/LoginOtpRequest.md)
@@ -321,7 +333,9 @@ Class | Method | HTTP request | Description
  - [MyBadgesResponse](doc/MyBadgesResponse.md)
  - [NotificationSetting](doc/NotificationSetting.md)
  - [OpportunityItem](doc/OpportunityItem.md)
+ - [PageResponseAdminPaymentItem](doc/PageResponseAdminPaymentItem.md)
  - [PageResponseAdminPhotoVerificationItem](doc/PageResponseAdminPhotoVerificationItem.md)
+ - [PageResponseAdminSubscriptionItem](doc/PageResponseAdminSubscriptionItem.md)
  - [PageResponseAdminUserSummary](doc/PageResponseAdminUserSummary.md)
  - [PageResponseAnnonceResponse](doc/PageResponseAnnonceResponse.md)
  - [PageResponseAssignmentItem](doc/PageResponseAssignmentItem.md)
@@ -354,6 +368,7 @@ Class | Method | HTTP request | Description
  - [RateAgentRequest](doc/RateAgentRequest.md)
  - [ReceiptResponse](doc/ReceiptResponse.md)
  - [RefreshTokenRequest](doc/RefreshTokenRequest.md)
+ - [RefundPaymentRequest](doc/RefundPaymentRequest.md)
  - [RegisterDeviceRequest](doc/RegisterDeviceRequest.md)
  - [RegisterProfessionalRequest](doc/RegisterProfessionalRequest.md)
  - [RejectKycRequest](doc/RejectKycRequest.md)
@@ -394,6 +409,7 @@ Class | Method | HTTP request | Description
  - [SubmitResidentReviewRequest](doc/SubmitResidentReviewRequest.md)
  - [SubmitReviewRequest](doc/SubmitReviewRequest.md)
  - [SubscribeRequest](doc/SubscribeRequest.md)
+ - [SubscriptionRecapResponse](doc/SubscriptionRecapResponse.md)
  - [SubscriptionResponse](doc/SubscriptionResponse.md)
  - [SuspendAccountRequest](doc/SuspendAccountRequest.md)
  - [SuspendAnnonceRequest](doc/SuspendAnnonceRequest.md)

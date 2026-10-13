@@ -79,6 +79,8 @@ const PaymentSummaryStatusEnum _$paymentSummaryStatusEnum_FAILED =
     const PaymentSummaryStatusEnum._('FAILED');
 const PaymentSummaryStatusEnum _$paymentSummaryStatusEnum_CANCELLED =
     const PaymentSummaryStatusEnum._('CANCELLED');
+const PaymentSummaryStatusEnum _$paymentSummaryStatusEnum_REFUNDED =
+    const PaymentSummaryStatusEnum._('REFUNDED');
 const PaymentSummaryStatusEnum
 _$paymentSummaryStatusEnum_unknownDefaultOpenApi =
     const PaymentSummaryStatusEnum._('unknownDefaultOpenApi');
@@ -93,6 +95,8 @@ PaymentSummaryStatusEnum _$paymentSummaryStatusEnumValueOf(String name) {
       return _$paymentSummaryStatusEnum_FAILED;
     case 'CANCELLED':
       return _$paymentSummaryStatusEnum_CANCELLED;
+    case 'REFUNDED':
+      return _$paymentSummaryStatusEnum_REFUNDED;
     case 'unknownDefaultOpenApi':
       return _$paymentSummaryStatusEnum_unknownDefaultOpenApi;
     default:
@@ -106,6 +110,7 @@ final BuiltSet<PaymentSummaryStatusEnum> _$paymentSummaryStatusEnumValues =
       _$paymentSummaryStatusEnum_CONFIRMED,
       _$paymentSummaryStatusEnum_FAILED,
       _$paymentSummaryStatusEnum_CANCELLED,
+      _$paymentSummaryStatusEnum_REFUNDED,
       _$paymentSummaryStatusEnum_unknownDefaultOpenApi,
     ]);
 
@@ -197,6 +202,7 @@ class _$PaymentSummaryStatusEnumSerializer
     'CONFIRMED': 'CONFIRMED',
     'FAILED': 'FAILED',
     'CANCELLED': 'CANCELLED',
+    'REFUNDED': 'REFUNDED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -204,6 +210,7 @@ class _$PaymentSummaryStatusEnumSerializer
     'CONFIRMED': 'CONFIRMED',
     'FAILED': 'FAILED',
     'CANCELLED': 'CANCELLED',
+    'REFUNDED': 'REFUNDED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

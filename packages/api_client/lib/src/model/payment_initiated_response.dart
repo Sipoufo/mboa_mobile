@@ -29,7 +29,7 @@ abstract class PaymentInitiatedResponse implements Built<PaymentInitiatedRespons
 
   @BuiltValueField(wireName: r'status')
   PaymentInitiatedResponseStatusEnum? get status;
-  // enum statusEnum {  PENDING,  CONFIRMED,  FAILED,  CANCELLED,  };
+  // enum statusEnum {  PENDING,  CONFIRMED,  FAILED,  CANCELLED,  REFUNDED,  };
 
   PaymentInitiatedResponse._();
 
@@ -176,6 +176,8 @@ class PaymentInitiatedResponseStatusEnum extends EnumClass {
   static const PaymentInitiatedResponseStatusEnum FAILED = _$paymentInitiatedResponseStatusEnum_FAILED;
   @BuiltValueEnumConst(wireName: r'CANCELLED')
   static const PaymentInitiatedResponseStatusEnum CANCELLED = _$paymentInitiatedResponseStatusEnum_CANCELLED;
+  @BuiltValueEnumConst(wireName: r'REFUNDED')
+  static const PaymentInitiatedResponseStatusEnum REFUNDED = _$paymentInitiatedResponseStatusEnum_REFUNDED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const PaymentInitiatedResponseStatusEnum unknownDefaultOpenApi = _$paymentInitiatedResponseStatusEnum_unknownDefaultOpenApi;
 

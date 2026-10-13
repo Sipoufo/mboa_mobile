@@ -9,12 +9,24 @@ part of 'serializers.dart';
 Serializers _$serializers =
     (Serializers().toBuilder()
           ..add(AddFavoriRequest.serializer)
+          ..add(AdjustmentResponse.serializer)
+          ..add(AdjustmentResponseKindEnum.serializer)
+          ..add(AdjustmentResponseTierEnum.serializer)
           ..add(AdminMboaScoreResponse.serializer)
+          ..add(AdminPaymentItem.serializer)
+          ..add(AdminPaymentItemMethodEnum.serializer)
+          ..add(AdminPaymentItemStatusEnum.serializer)
+          ..add(AdminPaymentItemTierEnum.serializer)
           ..add(AdminPhotoVerificationItem.serializer)
           ..add(AdminPhotoVerificationItemStatusEnum.serializer)
           ..add(AdminPhotoVerificationItemTargetEnum.serializer)
           ..add(AdminPrestataireBadgesResponse.serializer)
           ..add(AdminPrestataireBadgesResponseBadgesEnum.serializer)
+          ..add(AdminSubscriptionDetail.serializer)
+          ..add(AdminSubscriptionItem.serializer)
+          ..add(AdminSubscriptionItemEffectiveTierEnum.serializer)
+          ..add(AdminSubscriptionItemStatusEnum.serializer)
+          ..add(AdminSubscriptionItemTierEnum.serializer)
           ..add(AdminUserSummary.serializer)
           ..add(AdminUserSummaryRoleEnum.serializer)
           ..add(AdminUserSummaryStatusEnum.serializer)
@@ -86,6 +98,7 @@ Serializers _$serializers =
           ..add(DashboardSummaryResponse.serializer)
           ..add(DashboardSummaryResponseTierEnum.serializer)
           ..add(ErrorResponse.serializer)
+          ..add(ExtendSubscriptionRequest.serializer)
           ..add(FavoriResponse.serializer)
           ..add(FavoriResponseRentalPeriodEnum.serializer)
           ..add(FieldError.serializer)
@@ -97,6 +110,8 @@ Serializers _$serializers =
           ..add(KycReviewItem.serializer)
           ..add(KycReviewItemRoleEnum.serializer)
           ..add(KycStatusResponse.serializer)
+          ..add(Line.serializer)
+          ..add(LineTierEnum.serializer)
           ..add(ListingStats.serializer)
           ..add(ListingStatsStatusEnum.serializer)
           ..add(LocationOption.serializer)
@@ -116,7 +131,9 @@ Serializers _$serializers =
           ..add(NotificationSettingTypeEnum.serializer)
           ..add(OpportunityItem.serializer)
           ..add(OpportunityItemTypeEnum.serializer)
+          ..add(PageResponseAdminPaymentItem.serializer)
           ..add(PageResponseAdminPhotoVerificationItem.serializer)
+          ..add(PageResponseAdminSubscriptionItem.serializer)
           ..add(PageResponseAdminUserSummary.serializer)
           ..add(PageResponseAnnonceResponse.serializer)
           ..add(PageResponseAssignmentItem.serializer)
@@ -160,6 +177,7 @@ Serializers _$serializers =
           ..add(RateAgentRequest.serializer)
           ..add(ReceiptResponse.serializer)
           ..add(RefreshTokenRequest.serializer)
+          ..add(RefundPaymentRequest.serializer)
           ..add(RegisterDeviceRequest.serializer)
           ..add(RegisterDeviceRequestPlatformEnum.serializer)
           ..add(RegisterProfessionalRequest.serializer)
@@ -221,6 +239,7 @@ Serializers _$serializers =
           ..add(SubscribeRequest.serializer)
           ..add(SubscribeRequestMethodEnum.serializer)
           ..add(SubscribeRequestTierEnum.serializer)
+          ..add(SubscriptionRecapResponse.serializer)
           ..add(SubscriptionResponse.serializer)
           ..add(SubscriptionResponseTierEnum.serializer)
           ..add(SuspendAccountRequest.serializer)
@@ -277,6 +296,20 @@ Serializers _$serializers =
           ..add(Zone.serializer)
           ..add(ZoneResponse.serializer)
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(AdminPaymentItem)]),
+            () => ListBuilder<AdminPaymentItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(AdminPaymentItem)]),
+            () => ListBuilder<AdminPaymentItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AdjustmentResponse),
+            ]),
+            () => ListBuilder<AdjustmentResponse>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(AdminPhotoVerificationItem),
             ]),
@@ -299,6 +332,12 @@ Serializers _$serializers =
               const FullType(PhotoVerificationResponse),
             ]),
             () => ListBuilder<PhotoVerificationResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AdminSubscriptionItem),
+            ]),
+            () => ListBuilder<AdminSubscriptionItem>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(AdminUserSummary)]),
@@ -369,6 +408,10 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(KycReviewItem)]),
             () => ListBuilder<KycReviewItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(Line)]),
+            () => ListBuilder<Line>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ListingStats)]),

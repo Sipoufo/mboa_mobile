@@ -101,6 +101,8 @@ class _$GrantSubscriptionRequest extends GrantSubscriptionRequest {
   final GrantSubscriptionRequestTierEnum tier;
   @override
   final int days;
+  @override
+  final String reason;
 
   factory _$GrantSubscriptionRequest([
     void Function(GrantSubscriptionRequestBuilder)? updates,
@@ -110,6 +112,7 @@ class _$GrantSubscriptionRequest extends GrantSubscriptionRequest {
     required this.accountId,
     required this.tier,
     required this.days,
+    required this.reason,
   }) : super._();
   @override
   GrantSubscriptionRequest rebuild(
@@ -126,7 +129,8 @@ class _$GrantSubscriptionRequest extends GrantSubscriptionRequest {
     return other is GrantSubscriptionRequest &&
         accountId == other.accountId &&
         tier == other.tier &&
-        days == other.days;
+        days == other.days &&
+        reason == other.reason;
   }
 
   @override
@@ -135,6 +139,7 @@ class _$GrantSubscriptionRequest extends GrantSubscriptionRequest {
     _$hash = $jc(_$hash, accountId.hashCode);
     _$hash = $jc(_$hash, tier.hashCode);
     _$hash = $jc(_$hash, days.hashCode);
+    _$hash = $jc(_$hash, reason.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -144,7 +149,8 @@ class _$GrantSubscriptionRequest extends GrantSubscriptionRequest {
     return (newBuiltValueToStringHelper(r'GrantSubscriptionRequest')
           ..add('accountId', accountId)
           ..add('tier', tier)
-          ..add('days', days))
+          ..add('days', days)
+          ..add('reason', reason))
         .toString();
   }
 }
@@ -166,6 +172,10 @@ class GrantSubscriptionRequestBuilder
   int? get days => _$this._days;
   set days(int? days) => _$this._days = days;
 
+  String? _reason;
+  String? get reason => _$this._reason;
+  set reason(String? reason) => _$this._reason = reason;
+
   GrantSubscriptionRequestBuilder() {
     GrantSubscriptionRequest._defaults(this);
   }
@@ -176,6 +186,7 @@ class GrantSubscriptionRequestBuilder
       _accountId = $v.accountId;
       _tier = $v.tier;
       _days = $v.days;
+      _reason = $v.reason;
       _$v = null;
     }
     return this;
@@ -212,6 +223,11 @@ class GrantSubscriptionRequestBuilder
             days,
             r'GrantSubscriptionRequest',
             'days',
+          ),
+          reason: BuiltValueNullFieldError.checkNotNull(
+            reason,
+            r'GrantSubscriptionRequest',
+            'reason',
           ),
         );
     replace(_$result);

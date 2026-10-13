@@ -113,6 +113,30 @@ void main() {
       skip: 2,
       expect: () => [isA<SubscribeFailure>()],
     );
+
+    blocTest<SubscribeBloc, SubscribeState>(
+      'a refund settles the payment; it is not something still to wait for',
+      setUp: () {
+        stubSubscribe(pending);
+        // REFUNDED arrived with the 2026-10 spec. Before it was mapped, the
+        // catch-all read it as `pending`: the bloc polled it to the deadline
+        // and then promised a notification for a plan that was never going to
+        // activate.
+        when(() => repository.payment(any())).thenAnswer(
+          (_) async => const PaymentAttempt(
+            paymentId: 'pay-1',
+            tier: tier,
+            status: PaymentStatus.refunded,
+          ),
+        );
+      },
+      build: build,
+      act: (bloc) =>
+          bloc.add(const SubscribeRequested(tier: tier, method: method)),
+      wait: _pollWait,
+      skip: 2,
+      expect: () => [isA<SubscribeFailure>()],
+    );
   });
 
   group('the webhook does not land in time', () {

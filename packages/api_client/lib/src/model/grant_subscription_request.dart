@@ -15,6 +15,7 @@ part 'grant_subscription_request.g.dart';
 /// * [accountId] 
 /// * [tier] 
 /// * [days] 
+/// * [reason] 
 @BuiltValue()
 abstract class GrantSubscriptionRequest implements Built<GrantSubscriptionRequest, GrantSubscriptionRequestBuilder> {
   @BuiltValueField(wireName: r'accountId')
@@ -26,6 +27,9 @@ abstract class GrantSubscriptionRequest implements Built<GrantSubscriptionReques
 
   @BuiltValueField(wireName: r'days')
   int get days;
+
+  @BuiltValueField(wireName: r'reason')
+  String get reason;
 
   GrantSubscriptionRequest._();
 
@@ -64,6 +68,11 @@ class _$GrantSubscriptionRequestSerializer implements PrimitiveSerializer<GrantS
     yield serializers.serialize(
       object.days,
       specifiedType: const FullType(int),
+    );
+    yield r'reason';
+    yield serializers.serialize(
+      object.reason,
+      specifiedType: const FullType(String),
     );
   }
 
@@ -108,6 +117,13 @@ class _$GrantSubscriptionRequestSerializer implements PrimitiveSerializer<GrantS
             specifiedType: const FullType(int),
           ) as int;
           result.days = valueDes;
+          break;
+        case r'reason':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.reason = valueDes;
           break;
         default:
           unhandled.add(key);

@@ -22,7 +22,7 @@ abstract class PaymentWebhookRequest implements Built<PaymentWebhookRequest, Pay
 
   @BuiltValueField(wireName: r'status')
   PaymentWebhookRequestStatusEnum get status;
-  // enum statusEnum {  PENDING,  CONFIRMED,  FAILED,  CANCELLED,  };
+  // enum statusEnum {  PENDING,  CONFIRMED,  FAILED,  CANCELLED,  REFUNDED,  };
 
   @BuiltValueField(wireName: r'signature')
   String get signature;
@@ -148,6 +148,8 @@ class PaymentWebhookRequestStatusEnum extends EnumClass {
   static const PaymentWebhookRequestStatusEnum FAILED = _$paymentWebhookRequestStatusEnum_FAILED;
   @BuiltValueEnumConst(wireName: r'CANCELLED')
   static const PaymentWebhookRequestStatusEnum CANCELLED = _$paymentWebhookRequestStatusEnum_CANCELLED;
+  @BuiltValueEnumConst(wireName: r'REFUNDED')
+  static const PaymentWebhookRequestStatusEnum REFUNDED = _$paymentWebhookRequestStatusEnum_REFUNDED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const PaymentWebhookRequestStatusEnum unknownDefaultOpenApi = _$paymentWebhookRequestStatusEnum_unknownDefaultOpenApi;
 
