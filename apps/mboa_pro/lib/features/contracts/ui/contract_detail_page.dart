@@ -24,6 +24,7 @@ class ContractDetailPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) => ContractDetailView(
         id: id,
+        viewer: ContractParty.prestataire,
         onAmend: (contract) => context.router.push(
           ContractFormRoute(
             annonceId: contract.annonceId ?? '',

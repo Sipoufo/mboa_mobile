@@ -23,12 +23,29 @@ import 'widgets/sign_contract_sheet.dart';
 /// [onAmend]: redrafting the terms is the landlord's (RM-M08-01/08) and routes
 /// into a screen that only his app has.
 class ContractDetailView extends StatelessWidget {
-  const ContractDetailView({super.key, required this.id, this.onAmend});
+  const ContractDetailView({
+    super.key,
+    required this.id,
+    this.onAmend,
+    this.viewer = ContractParty.unknown,
+  });
 
   final String id;
 
   /// Opens the amendment form. Null on the tenant's side.
   final void Function(Contract contract)? onAmend;
+
+  /// Which side of the document the reader is on.
+  ///
+  /// Not a permission — the server decides those, and `canSign` is one of its
+  /// verdicts. This exists because `awaiting` says *whose* move it is and
+  /// reads the same for both parties, so a shared screen cannot tell from it
+  /// whether the reader is the one being waited on. Each app knows: App Mboa
+  /// is the tenant, App Mboa Pro the landlord.
+  ///
+  /// It would be unnecessary if `ContractResponse` carried a `canAccept`
+  /// beside `canSign` — see docs/backend-requests.md.
+  final ContractParty viewer;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +105,7 @@ class ContractDetailView extends StatelessWidget {
       ),
       bottomNavigationBar: BlocBuilder<ContractDetailBloc, ContractDetailState>(
         builder: (context, state) => state is ContractDetailReady
-            ? _ActionBar(state: state, onAmend: onAmend)
+            ? _ActionBar(state: state, onAmend: onAmend, viewer: viewer)
             : const SizedBox.shrink(),
       ),
     );
@@ -159,9 +176,20 @@ class _HeaderCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          // A Wrap, not a Row: the title and the status are both as long as
+          // their content, and at 390 px "Modifications demandées" beside a
+          // two-line title overflowed the row by a third of a pixel. Making
+          // the chip flexible instead only moved the damage — it truncated the
+          // status, and a status nobody can read is worse than a hairline of
+          // debug stripes. Here the chip drops to its own line and stays whole.
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: Dimens.spacingSm,
+            runSpacing: Dimens.spacingSm,
             children: [
-              Expanded(
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 200),
                 child: Text(
                   contract.annonceTitle ?? '',
                   style: context.mboaText.h3.copyWith(color: colors.primaryDark),
@@ -573,10 +601,15 @@ class _Signatures extends StatelessWidget {
 
 /// What he may do, from the server's verdicts alone.
 class _ActionBar extends StatelessWidget {
-  const _ActionBar({required this.state, this.onAmend});
+  const _ActionBar({
+    required this.state,
+    this.onAmend,
+    this.viewer = ContractParty.unknown,
+  });
 
   final ContractDetailReady state;
   final void Function(Contract contract)? onAmend;
+  final ContractParty viewer;
 
   @override
   Widget build(BuildContext context) {
@@ -585,6 +618,33 @@ class _ActionBar extends StatelessWidget {
     final contract = state.contract;
 
     final children = <Widget>[];
+
+    // RM-M08-02 / CE-M08-03 — the tenant takes the terms or contests them,
+    // while the ball is theirs. There is no `canAccept` verdict to lean on the
+    // way `canSign` exists, so this is the one place M08 reads two server
+    // values together instead of one: the status, and whose move it is.
+    if (viewer == ContractParty.tenant &&
+        contract.status == ContractStatus.sent &&
+        (contract.awaiting == ContractParty.tenant ||
+            contract.awaiting == ContractParty.both)) {
+      children.add(
+        Button.primary(
+          title: l10n.contractAccept,
+          isLoading: state.isBusy,
+          onPressed: state.isBusy
+              ? null
+              : () => context
+                  .read<ContractDetailBloc>()
+                  .add(const ContractAccepted()),
+        ),
+      );
+      children.add(
+        Button.outline(
+          title: l10n.contractContest,
+          onPressed: state.isBusy ? null : () => _contest(context),
+        ),
+      );
+    }
 
     if (contract.status == ContractStatus.draft) {
       children.add(
@@ -672,6 +732,28 @@ class _ActionBar extends StatelessWidget {
     if (confirmed ?? false) bloc.add(const ContractSigned());
   }
 
+  /// CE-M08-03 / RM-M08-07 — contesting names the terms and says why.
+  ///
+  /// The terms are optional: an objection that only says "the rent is too
+  /// high" is still an objection, and the server keeps the text either way.
+  /// What it must not be is empty, so the bloc drops a blank one.
+  Future<void> _contest(BuildContext context) async {
+    final bloc = context.read<ContractDetailBloc>();
+
+    final result = await showModalBottomSheet<({String comment, List<ContestedTerm> terms})>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const _ContestSheet(),
+    );
+
+    if (result != null) {
+      bloc.add(
+        ContractChangesRequested(comment: result.comment, terms: result.terms),
+      );
+    }
+  }
+
   Future<void> _cancel(BuildContext context) async {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
@@ -727,6 +809,115 @@ class _Card extends StatelessWidget {
           const SizedBox(height: Dimens.spacing),
           child,
         ],
+      ),
+    );
+  }
+}
+
+/// The tenant's objection (CE-M08-03): which terms, and why.
+///
+/// Owns its controller, so the framework disposes it with the sheet.
+class _ContestSheet extends StatefulWidget {
+  const _ContestSheet();
+
+  @override
+  State<_ContestSheet> createState() => _ContestSheetState();
+}
+
+class _ContestSheetState extends State<_ContestSheet> {
+  final _controller = TextEditingController();
+  final _terms = <ContestedTerm>{};
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  String _label(I18n l10n, ContestedTerm term) => switch (term) {
+        ContestedTerm.price => l10n.contractTermPrice,
+        ContestedTerm.rentalPeriod => l10n.contractTermPeriod,
+        ContestedTerm.depositAmount => l10n.contractTermDeposit,
+        ContestedTerm.chargesIncluded => l10n.contractTermCharges,
+        ContestedTerm.startDate => l10n.contractTermStart,
+        ContestedTerm.durationUnits => l10n.contractTermDuration,
+        ContestedTerm.tacitRenewal => l10n.contractTermTacit,
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final canSend = _controller.text.trim().isNotEmpty;
+
+    return Container(
+      padding: EdgeInsets.only(
+        left: Dimens.screenMargin,
+        right: Dimens.screenMargin,
+        top: Dimens.spacingLg,
+        bottom: MediaQuery.viewInsetsOf(context).bottom + Dimens.spacingLg,
+      ),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(Dimens.radiusXl),
+        ),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.contractContest,
+              style: context.mboaText.h3.copyWith(color: colors.ink),
+            ),
+            const SizedBox(height: Dimens.spacingXs),
+            Text(
+              l10n.contractContestHelp,
+              style: context.mboaText.body.copyWith(color: colors.textSecondary),
+            ),
+            const SizedBox(height: Dimens.spacing),
+            Wrap(
+              spacing: Dimens.spacingSm,
+              runSpacing: Dimens.spacingSm,
+              children: [
+                for (final term in ContestedTerm.values)
+                  FilterChip(
+                    label: Text(_label(l10n, term)),
+                    selected: _terms.contains(term),
+                    onSelected: (on) => setState(
+                      () => on ? _terms.add(term) : _terms.remove(term),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: Dimens.spacing),
+            TextField(
+              controller: _controller,
+              autofocus: true,
+              maxLines: 4,
+              maxLength: 2000,
+              decoration: InputDecoration(hintText: l10n.contractContestHint),
+              onChanged: (_) => setState(() {}),
+            ),
+            const SizedBox(height: Dimens.spacingSm),
+            SizedBox(
+              width: double.infinity,
+              child: Button.primary(
+                title: l10n.contractContestSend,
+                onPressed: canSend
+                    ? () => Navigator.of(context).pop(
+                          (
+                            comment: _controller.text.trim(),
+                            terms: _terms.toList(),
+                          ),
+                        )
+                    : null,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

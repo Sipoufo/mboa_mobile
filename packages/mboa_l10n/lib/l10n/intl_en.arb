@@ -136,6 +136,26 @@
     "description": "RM-M08-08."
   },
   "contractCancel": "Cancel the contract",
+  "contractAccept": "Accept the terms",
+  "@contractAccept": {
+    "description": "M08 RM-M08-02 — the tenant takes the terms as they stand."
+  },
+  "contractContest": "Request a change",
+  "@contractContest": {
+    "description": "M08 CE-M08-03 — the tenant contests the terms."
+  },
+  "contractContestHelp": "Say what does not work. The landlord has to answer, even if nothing moves.",
+  "@contractContestHelp": {
+    "description": "M08 — a refusal is an answer; the copy says so."
+  },
+  "contractContestHint": "What is wrong, and why.",
+  "@contractContestHint": {
+    "description": "M08 — the objection field."
+  },
+  "contractContestSend": "Send the objection",
+  "@contractContestSend": {
+    "description": "M08 — sends the objection."
+  },
   "@contractCancel": {
     "description": "Either party, up to the second signature."
   },
@@ -212,6 +232,10 @@
     "description": "Empty list."
   },
   "contractsEmptyBody": "A Contrat Mboa always starts from a property. Open the listing to draw one up.",
+  "contractsEmptyTenantBody": "Your Mboa Contracts appear here as soon as a landlord sends you one.",
+  "@contractsEmptyTenantBody": {
+    "description": "M08 — the tenant half of the empty list."
+  },
   "@contractsEmptyBody": {
     "description": "RM-M08-01."
   },

@@ -108,6 +108,16 @@ class _SignedInState extends State<_SignedIn> {
                     ),
                   ),
                   const SizedBox(height: Dimens.spacingMd),
+                  // M08 — where a tenancy is read, signed or contested, and
+                  // where M27's resident review starts from.
+                  MboaTileCard(
+                    icon: LucideIcons.fileText,
+                    title: l10n.contractsTitle,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [MyContractsRoute()]),
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacingMd),
                   MboaTileCard(
                     icon: LucideIcons.settings,
                     title: l10n.settingsMenuTitle,

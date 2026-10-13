@@ -707,6 +707,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonOr": MessageLookupByLibrary.simpleMessage("Ou"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Réessayer"),
     "commonYes": MessageLookupByLibrary.simpleMessage("Oui"),
+    "contractAccept": MessageLookupByLibrary.simpleMessage(
+      "Accepter les termes",
+    ),
     "contractActionDone": MessageLookupByLibrary.simpleMessage(
       "Contrat mis à jour",
     ),
@@ -752,6 +755,18 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractChangesTitle": MessageLookupByLibrary.simpleMessage(
       "Modifications demandées",
+    ),
+    "contractContest": MessageLookupByLibrary.simpleMessage(
+      "Demander une modification",
+    ),
+    "contractContestHelp": MessageLookupByLibrary.simpleMessage(
+      "Dis ce qui ne va pas. Le bailleur doit te répondre, même s\'il ne change rien.",
+    ),
+    "contractContestHint": MessageLookupByLibrary.simpleMessage(
+      "Ce qui te pose problème, et pourquoi.",
+    ),
+    "contractContestSend": MessageLookupByLibrary.simpleMessage(
+      "Envoyer l\'objection",
     ),
     "contractCreate": MessageLookupByLibrary.simpleMessage(
       "Créer un Contrat Mboa",
@@ -841,6 +856,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractsEmptyFiltered": MessageLookupByLibrary.simpleMessage(
       "Aucun contrat dans cette vue.",
+    ),
+    "contractsEmptyTenantBody": MessageLookupByLibrary.simpleMessage(
+      "Tes Contrats Mboa apparaîtront ici dès qu\'un bailleur t\'en enverra un.",
     ),
     "contractsEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Aucun contrat",

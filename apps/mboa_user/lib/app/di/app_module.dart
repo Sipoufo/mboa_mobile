@@ -108,6 +108,20 @@ void registerAppModule() {
     () => WriteReviewBloc(repository: getIt<VisitReviewRepository>()),
   );
 
+  // Contrat Mboa (M08) — repository, list and detail are shared with the pro
+  // app: both parties call the same endpoints and the server says who may do
+  // what. Drawing one up is the landlord's alone, so no `ContractFormBloc`
+  // here.
+  getIt.registerLazySingleton<ContractRepository>(
+    () => ContractRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<ContractsBloc>(
+    () => ContractsBloc(repository: getIt<ContractRepository>()),
+  );
+  getIt.registerFactory<ContractDetailBloc>(
+    () => ContractDetailBloc(repository: getIt<ContractRepository>()),
+  );
+
   // Messagerie (M12) — repository, list and thread are shared with the pro
   // app; only the entry points differ (RM-M12-01).
   getIt.registerLazySingleton<MessagingRepository>(

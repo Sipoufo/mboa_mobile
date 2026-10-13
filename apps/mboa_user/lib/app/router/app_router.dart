@@ -80,6 +80,15 @@ class AppRouter extends RootStackRouter {
               path: 'visits/:visitId/review',
             ),
 
+            // M08 — a contract belongs to the two parties to it, so the
+            // tenant's half sits behind the session guard like the rest.
+            // M27's resident review starts from one.
+            AutoRoute(page: MyContractsRoute.page, path: 'contracts'),
+            AutoRoute(
+              page: MyContractDetailRoute.page,
+              path: 'contracts/:id',
+            ),
+
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),
             AutoRoute(page: DeleteAccountRoute.page, path: 'settings/delete'),

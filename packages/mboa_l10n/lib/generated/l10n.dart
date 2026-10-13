@@ -394,6 +394,56 @@ class I18n {
     );
   }
 
+  /// `Accepter les termes`
+  String get contractAccept {
+    return Intl.message(
+      'Accepter les termes',
+      name: 'contractAccept',
+      desc: 'M08 RM-M08-02 — the tenant takes the terms as they stand.',
+      args: [],
+    );
+  }
+
+  /// `Demander une modification`
+  String get contractContest {
+    return Intl.message(
+      'Demander une modification',
+      name: 'contractContest',
+      desc: 'M08 CE-M08-03 — the tenant contests the terms.',
+      args: [],
+    );
+  }
+
+  /// `Dis ce qui ne va pas. Le bailleur doit te répondre, même s'il ne change rien.`
+  String get contractContestHelp {
+    return Intl.message(
+      'Dis ce qui ne va pas. Le bailleur doit te répondre, même s\'il ne change rien.',
+      name: 'contractContestHelp',
+      desc: 'M08 — a refusal is an answer; the copy says so.',
+      args: [],
+    );
+  }
+
+  /// `Ce qui te pose problème, et pourquoi.`
+  String get contractContestHint {
+    return Intl.message(
+      'Ce qui te pose problème, et pourquoi.',
+      name: 'contractContestHint',
+      desc: 'M08 — the objection field.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer l'objection`
+  String get contractContestSend {
+    return Intl.message(
+      'Envoyer l\'objection',
+      name: 'contractContestSend',
+      desc: 'M08 — sends the objection.',
+      args: [],
+    );
+  }
+
   /// `Le contrat sera annulé pour les deux parties. Cette action est définitive.`
   String get contractCancelConfirm {
     return Intl.message(
@@ -580,6 +630,16 @@ class I18n {
       'Un Contrat Mboa part toujours d\'un bien. Ouvre la fiche du bien concerné pour en rédiger un.',
       name: 'contractsEmptyBody',
       desc: 'RM-M08-01.',
+      args: [],
+    );
+  }
+
+  /// `Tes Contrats Mboa apparaîtront ici dès qu'un bailleur t'en enverra un.`
+  String get contractsEmptyTenantBody {
+    return Intl.message(
+      'Tes Contrats Mboa apparaîtront ici dès qu\'un bailleur t\'en enverra un.',
+      name: 'contractsEmptyTenantBody',
+      desc: 'M08 — the tenant half of the empty list.',
       args: [],
     );
   }

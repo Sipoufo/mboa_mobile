@@ -668,6 +668,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonOr": MessageLookupByLibrary.simpleMessage("Or"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Retry"),
     "commonYes": MessageLookupByLibrary.simpleMessage("Yes"),
+    "contractAccept": MessageLookupByLibrary.simpleMessage("Accept the terms"),
     "contractActionDone": MessageLookupByLibrary.simpleMessage(
       "Contract updated",
     ),
@@ -711,6 +712,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractChangesTitle": MessageLookupByLibrary.simpleMessage(
       "Requested changes",
+    ),
+    "contractContest": MessageLookupByLibrary.simpleMessage("Request a change"),
+    "contractContestHelp": MessageLookupByLibrary.simpleMessage(
+      "Say what does not work. The landlord has to answer, even if nothing moves.",
+    ),
+    "contractContestHint": MessageLookupByLibrary.simpleMessage(
+      "What is wrong, and why.",
+    ),
+    "contractContestSend": MessageLookupByLibrary.simpleMessage(
+      "Send the objection",
     ),
     "contractCreate": MessageLookupByLibrary.simpleMessage(
       "Draw up an Mboa contract",
@@ -800,6 +811,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractsEmptyFiltered": MessageLookupByLibrary.simpleMessage(
       "No contract in this view.",
+    ),
+    "contractsEmptyTenantBody": MessageLookupByLibrary.simpleMessage(
+      "Your Mboa Contracts appear here as soon as a landlord sends you one.",
     ),
     "contractsEmptyTitle": MessageLookupByLibrary.simpleMessage("No contract"),
     "contractsFilterAll": MessageLookupByLibrary.simpleMessage("All"),
