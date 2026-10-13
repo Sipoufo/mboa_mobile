@@ -7493,6 +7493,96 @@ class I18n {
     );
   }
 
+  /// `Ton avis de locataire`
+  String get residentReviewTitle {
+    return Intl.message(
+      'Ton avis de locataire',
+      name: 'residentReviewTitle',
+      desc: 'M27 — the resident review screen.',
+      args: [],
+    );
+  }
+
+  /// `Publié sur la fiche du bien. Tu peux le corriger tant que tu habites là, et 30 jours après ton départ.`
+  String get residentReviewSubtitle {
+    return Intl.message(
+      'Publié sur la fiche du bien. Tu peux le corriger tant que tu habites là, et 30 jours après ton départ.',
+      name: 'residentReviewSubtitle',
+      desc: 'M27 RM-M27-02 — the editing window, said plainly.',
+      args: [],
+    );
+  }
+
+  /// `Laisser mon avis`
+  String get residentReviewCta {
+    return Intl.message(
+      'Laisser mon avis',
+      name: 'residentReviewCta',
+      desc: 'M27 — opens the form from the contract.',
+      args: [],
+    );
+  }
+
+  /// `Modifier mon avis`
+  String get residentReviewEditCta {
+    return Intl.message(
+      'Modifier mon avis',
+      name: 'residentReviewEditCta',
+      desc: 'M27 — same entry point once a review exists.',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer mes corrections`
+  String get residentReviewSave {
+    return Intl.message(
+      'Enregistrer mes corrections',
+      name: 'residentReviewSave',
+      desc: 'M27 — submits a correction rather than a first review.',
+      args: [],
+    );
+  }
+
+  /// `Avis mis à jour`
+  String get residentReviewSaved {
+    return Intl.message(
+      'Avis mis à jour',
+      name: 'residentReviewSaved',
+      desc: 'M27 — confirmation after a correction.',
+      args: [],
+    );
+  }
+
+  /// `Avis verrouillé`
+  String get residentReviewLockedTitle {
+    return Intl.message(
+      'Avis verrouillé',
+      name: 'residentReviewLockedTitle',
+      desc: 'M27 RM-M27-02 — the window has closed.',
+      args: [],
+    );
+  }
+
+  /// `La période de modification est passée. Ton avis reste publié sur la fiche.`
+  String get residentReviewLockedBody {
+    return Intl.message(
+      'La période de modification est passée. Ton avis reste publié sur la fiche.',
+      name: 'residentReviewLockedBody',
+      desc: 'M27 — and the review still stands.',
+      args: [],
+    );
+  }
+
+  /// `Un avis de locataire pèse trois fois plus qu'un avis de visite dans la note du bien.`
+  String get residentReviewWeight {
+    return Intl.message(
+      'Un avis de locataire pèse trois fois plus qu\'un avis de visite dans la note du bien.',
+      name: 'residentReviewWeight',
+      desc: 'M27 RG-06 — why this review matters more.',
+      args: [],
+    );
+  }
+
   /// `Voir l'avis du locataire`
   String get visitsReviewOpen {
     return Intl.message(

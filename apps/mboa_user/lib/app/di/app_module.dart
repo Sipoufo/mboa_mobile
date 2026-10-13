@@ -122,6 +122,14 @@ void registerAppModule() {
     () => ContractDetailBloc(repository: getIt<ContractRepository>()),
   );
 
+  // M27 — the resident's review, written from a signed contract.
+  getIt.registerLazySingleton<ResidentReviewRepository>(
+    () => ResidentReviewRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<ResidentReviewBloc>(
+    () => ResidentReviewBloc(repository: getIt<ResidentReviewRepository>()),
+  );
+
   // Messagerie (M12) — repository, list and thread are shared with the pro
   // app; only the entry points differ (RM-M12-01).
   getIt.registerLazySingleton<MessagingRepository>(

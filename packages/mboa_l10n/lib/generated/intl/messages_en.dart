@@ -1321,6 +1321,33 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Residences"),
+    "residentReviewCta": MessageLookupByLibrary.simpleMessage(
+      "Leave my review",
+    ),
+    "residentReviewEditCta": MessageLookupByLibrary.simpleMessage(
+      "Edit my review",
+    ),
+    "residentReviewLockedBody": MessageLookupByLibrary.simpleMessage(
+      "The editing window has closed. Your review stays published on the listing.",
+    ),
+    "residentReviewLockedTitle": MessageLookupByLibrary.simpleMessage(
+      "Review locked",
+    ),
+    "residentReviewSave": MessageLookupByLibrary.simpleMessage(
+      "Save my corrections",
+    ),
+    "residentReviewSaved": MessageLookupByLibrary.simpleMessage(
+      "Review updated",
+    ),
+    "residentReviewSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Published on the listing. You can correct it while you live there, and for 30 days after you leave.",
+    ),
+    "residentReviewTitle": MessageLookupByLibrary.simpleMessage(
+      "Your tenant review",
+    ),
+    "residentReviewWeight": MessageLookupByLibrary.simpleMessage(
+      "A tenant\'s review counts three times a visitor\'s in the property\'s rating.",
+    ),
     "reviewAddPoint": MessageLookupByLibrary.simpleMessage("Add"),
     "reviewAlreadyWritten": MessageLookupByLibrary.simpleMessage(
       "You have already reviewed this visit.",

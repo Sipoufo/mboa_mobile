@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../../app/router/app_router.gr.dart';
+
 /// One Contrat Mboa from the tenant's side (CDC M08) — the shared view.
 ///
 /// No `onAmend`: redrafting the terms is the landlord's (RM-M08-01/08), so the
@@ -25,5 +27,10 @@ class MyContractDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) =>
-      ContractDetailView(id: id, viewer: ContractParty.tenant);
+      ContractDetailView(
+        id: id,
+        viewer: ContractParty.tenant,
+        onReview: (contract) =>
+            context.router.push(ResidentReviewRoute(contractId: contract.id)),
+      );
 }

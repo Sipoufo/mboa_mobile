@@ -27,6 +27,7 @@ class ContractDetailView extends StatelessWidget {
     super.key,
     required this.id,
     this.onAmend,
+    this.onReview,
     this.viewer = ContractParty.unknown,
   });
 
@@ -34,6 +35,10 @@ class ContractDetailView extends StatelessWidget {
 
   /// Opens the amendment form. Null on the tenant's side.
   final void Function(Contract contract)? onAmend;
+
+  /// Opens the resident review (M27). Null on the landlord's side, where
+  /// writing one would make no sense — he did not live there.
+  final void Function(Contract contract)? onReview;
 
   /// Which side of the document the reader is on.
   ///
@@ -105,7 +110,12 @@ class ContractDetailView extends StatelessWidget {
       ),
       bottomNavigationBar: BlocBuilder<ContractDetailBloc, ContractDetailState>(
         builder: (context, state) => state is ContractDetailReady
-            ? _ActionBar(state: state, onAmend: onAmend, viewer: viewer)
+            ? _ActionBar(
+                state: state,
+                onAmend: onAmend,
+                onReview: onReview,
+                viewer: viewer,
+              )
             : const SizedBox.shrink(),
       ),
     );
@@ -604,11 +614,13 @@ class _ActionBar extends StatelessWidget {
   const _ActionBar({
     required this.state,
     this.onAmend,
+    this.onReview,
     this.viewer = ContractParty.unknown,
   });
 
   final ContractDetailReady state;
   final void Function(Contract contract)? onAmend;
+  final void Function(Contract contract)? onReview;
   final ContractParty viewer;
 
   @override
@@ -678,6 +690,20 @@ class _ActionBar extends StatelessWidget {
               : () => context
                   .read<ContractDetailBloc>()
                   .add(const ContractPdfRequested()),
+        ),
+      );
+    }
+
+    // CA-M27-02 / RM-M27-01 — the option appears on `residentReviewEligible`
+    // alone, which is the server's verdict that this caller is the tenant of a
+    // signed contract that ran long enough. The app does not second-guess it:
+    // a tenancy's length, a signature and a role are three things it would
+    // have to work out, and the server already has.
+    if (onReview != null && contract.residentReviewEligible) {
+      children.add(
+        Button.outline(
+          title: l10n.residentReviewCta,
+          onPressed: state.isBusy ? null : () => onReview!(contract),
         ),
       );
     }

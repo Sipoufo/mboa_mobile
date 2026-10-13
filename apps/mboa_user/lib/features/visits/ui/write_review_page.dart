@@ -354,23 +354,25 @@ class WriteReviewForm extends StatelessWidget {
               const SizedBox(height: Dimens.spacingLg),
 
               _Label(l10n.reviewRatingLabel, required: true),
-              _Stars(
+              MboaStarRating(
                 value: draft.rating,
                 onPick: (value) => bloc.add(ReviewRatingChanged(value)),
               ),
               const SizedBox(height: Dimens.spacingLg),
 
               _Label(l10n.reviewConditionLabel),
-              _Stars(
+              MboaStarRating(
                 value: draft.perceivedCondition,
                 onPick: (value) => bloc.add(ReviewConditionChanged(value)),
               ),
               const SizedBox(height: Dimens.spacingLg),
 
               _Label(l10n.reviewPros),
-              _Points(
+              MboaPointEditor(
                 values: draft.pros,
                 isPro: true,
+                hintText: l10n.reviewPointHint,
+                addLabel: l10n.reviewAddPoint,
                 onAdd: (value) =>
                     bloc.add(ReviewPointAdded(value: value, isPro: true)),
                 onRemove: (value) =>
@@ -379,9 +381,11 @@ class WriteReviewForm extends StatelessWidget {
               const SizedBox(height: Dimens.spacingLg),
 
               _Label(l10n.reviewCons),
-              _Points(
+              MboaPointEditor(
                 values: draft.cons,
                 isPro: false,
+                hintText: l10n.reviewPointHint,
+                addLabel: l10n.reviewAddPoint,
                 onAdd: (value) =>
                     bloc.add(ReviewPointAdded(value: value, isPro: false)),
                 onRemove: (value) =>
@@ -455,116 +459,6 @@ class _Label extends StatelessWidget {
 }
 
 /// 1 to 5, filled up to the chosen one.
-class _Stars extends StatelessWidget {
-  const _Stars({required this.value, required this.onPick});
-
-  final int? value;
-  final ValueChanged<int> onPick;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-
-    return Row(
-      children: [
-        for (var star = 1; star <= 5; star++)
-          IconButton(
-            onPressed: () => onPick(star),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
-            icon: Icon(
-              LucideIcons.star,
-              size: Dimens.iconMd,
-              // Filled up to the choice: five outlines say nothing about what
-              // was picked.
-              color: (value ?? 0) >= star ? colors.warning : colors.border,
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-/// A free list — type, add, remove. Both lists use it.
-class _Points extends StatefulWidget {
-  const _Points({
-    required this.values,
-    required this.isPro,
-    required this.onAdd,
-    required this.onRemove,
-  });
-
-  final List<String> values;
-  final bool isPro;
-  final ValueChanged<String> onAdd;
-  final ValueChanged<String> onRemove;
-
-  @override
-  State<_Points> createState() => _PointsState();
-}
-
-class _PointsState extends State<_Points> {
-  final _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _add() {
-    widget.onAdd(_controller.text);
-    _controller.clear();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.values.isNotEmpty) ...[
-          Wrap(
-            spacing: Dimens.spacingSm,
-            runSpacing: Dimens.spacingSm,
-            children: [
-              for (final value in widget.values)
-                Chip(
-                  label: Text(value),
-                  onDeleted: () => widget.onRemove(value),
-                  deleteIcon: const Icon(LucideIcons.x, size: 14),
-                  backgroundColor:
-                      widget.isPro ? colors.primaryPale : colors.actionPale,
-                ),
-            ],
-          ),
-          const SizedBox(height: Dimens.spacingSm),
-        ],
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _controller,
-                maxLength: 120,
-                textInputAction: TextInputAction.done,
-                decoration: InputDecoration(
-                  hintText: l10n.reviewPointHint,
-                  counterText: '',
-                ),
-                onSubmitted: (_) => _add(),
-              ),
-            ),
-            const SizedBox(width: Dimens.spacingSm),
-            TextButton(onPressed: _add, child: Text(l10n.reviewAddPoint)),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
 /// Up to ten, each compressed before it leaves the phone (CLAUDE.md media
 /// rules — `MediaUploader` does the compressing).
 class _Photos extends StatelessWidget {

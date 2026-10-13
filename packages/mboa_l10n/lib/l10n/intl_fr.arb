@@ -2588,6 +2588,42 @@
     "description": "Toast after commenting."
   },
   "reviewExport": "Exporter en PDF",
+  "residentReviewTitle": "Ton avis de locataire",
+  "@residentReviewTitle": {
+    "description": "M27 — the resident review screen."
+  },
+  "residentReviewSubtitle": "Publié sur la fiche du bien. Tu peux le corriger tant que tu habites là, et 30 jours après ton départ.",
+  "@residentReviewSubtitle": {
+    "description": "M27 RM-M27-02 — the editing window, said plainly."
+  },
+  "residentReviewCta": "Laisser mon avis",
+  "@residentReviewCta": {
+    "description": "M27 — opens the form from the contract."
+  },
+  "residentReviewEditCta": "Modifier mon avis",
+  "@residentReviewEditCta": {
+    "description": "M27 — same entry point once a review exists."
+  },
+  "residentReviewSave": "Enregistrer mes corrections",
+  "@residentReviewSave": {
+    "description": "M27 — submits a correction rather than a first review."
+  },
+  "residentReviewSaved": "Avis mis à jour",
+  "@residentReviewSaved": {
+    "description": "M27 — confirmation after a correction."
+  },
+  "residentReviewLockedTitle": "Avis verrouillé",
+  "@residentReviewLockedTitle": {
+    "description": "M27 RM-M27-02 — the window has closed."
+  },
+  "residentReviewLockedBody": "La période de modification est passée. Ton avis reste publié sur la fiche.",
+  "@residentReviewLockedBody": {
+    "description": "M27 — and the review still stands."
+  },
+  "residentReviewWeight": "Un avis de locataire pèse trois fois plus qu'un avis de visite dans la note du bien.",
+  "@residentReviewWeight": {
+    "description": "M27 RG-06 — why this review matters more."
+  },
   "@reviewExport": {
     "description": "RM-M07bis-06."
   },

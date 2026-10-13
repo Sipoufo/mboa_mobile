@@ -2588,6 +2588,42 @@
     "description": "Toast after commenting."
   },
   "reviewExport": "Export as PDF",
+  "residentReviewTitle": "Your tenant review",
+  "@residentReviewTitle": {
+    "description": "M27 — the resident review screen."
+  },
+  "residentReviewSubtitle": "Published on the listing. You can correct it while you live there, and for 30 days after you leave.",
+  "@residentReviewSubtitle": {
+    "description": "M27 RM-M27-02 — the editing window, said plainly."
+  },
+  "residentReviewCta": "Leave my review",
+  "@residentReviewCta": {
+    "description": "M27 — opens the form from the contract."
+  },
+  "residentReviewEditCta": "Edit my review",
+  "@residentReviewEditCta": {
+    "description": "M27 — same entry point once a review exists."
+  },
+  "residentReviewSave": "Save my corrections",
+  "@residentReviewSave": {
+    "description": "M27 — submits a correction rather than a first review."
+  },
+  "residentReviewSaved": "Review updated",
+  "@residentReviewSaved": {
+    "description": "M27 — confirmation after a correction."
+  },
+  "residentReviewLockedTitle": "Review locked",
+  "@residentReviewLockedTitle": {
+    "description": "M27 RM-M27-02 — the window has closed."
+  },
+  "residentReviewLockedBody": "The editing window has closed. Your review stays published on the listing.",
+  "@residentReviewLockedBody": {
+    "description": "M27 — and the review still stands."
+  },
+  "residentReviewWeight": "A tenant's review counts three times a visitor's in the property's rating.",
+  "@residentReviewWeight": {
+    "description": "M27 RG-06 — why this review matters more."
+  },
   "@reviewExport": {
     "description": "RM-M07bis-06."
   },

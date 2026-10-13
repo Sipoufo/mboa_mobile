@@ -1416,6 +1416,33 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "residenceUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
     "residencesTitle": MessageLookupByLibrary.simpleMessage("Biens Multiples"),
+    "residentReviewCta": MessageLookupByLibrary.simpleMessage(
+      "Laisser mon avis",
+    ),
+    "residentReviewEditCta": MessageLookupByLibrary.simpleMessage(
+      "Modifier mon avis",
+    ),
+    "residentReviewLockedBody": MessageLookupByLibrary.simpleMessage(
+      "La période de modification est passée. Ton avis reste publié sur la fiche.",
+    ),
+    "residentReviewLockedTitle": MessageLookupByLibrary.simpleMessage(
+      "Avis verrouillé",
+    ),
+    "residentReviewSave": MessageLookupByLibrary.simpleMessage(
+      "Enregistrer mes corrections",
+    ),
+    "residentReviewSaved": MessageLookupByLibrary.simpleMessage(
+      "Avis mis à jour",
+    ),
+    "residentReviewSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Publié sur la fiche du bien. Tu peux le corriger tant que tu habites là, et 30 jours après ton départ.",
+    ),
+    "residentReviewTitle": MessageLookupByLibrary.simpleMessage(
+      "Ton avis de locataire",
+    ),
+    "residentReviewWeight": MessageLookupByLibrary.simpleMessage(
+      "Un avis de locataire pèse trois fois plus qu\'un avis de visite dans la note du bien.",
+    ),
     "reviewAddPoint": MessageLookupByLibrary.simpleMessage("Ajouter"),
     "reviewAlreadyWritten": MessageLookupByLibrary.simpleMessage(
       "Tu as déjà donné ton avis sur cette visite.",

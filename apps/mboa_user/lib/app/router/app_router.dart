@@ -88,6 +88,11 @@ class AppRouter extends RootStackRouter {
               page: MyContractDetailRoute.page,
               path: 'contracts/:id',
             ),
+            // M27 — the review hangs off the contract, so its route does too.
+            AutoRoute(
+              page: ResidentReviewRoute.page,
+              path: 'contracts/:contractId/review',
+            ),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),
