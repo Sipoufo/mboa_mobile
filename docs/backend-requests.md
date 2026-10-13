@@ -726,3 +726,74 @@ the variables (`tier`, `amount`, `propertyTitle`) and let each app render the
 copy from its own ARB. That also fixes the language: a push composed
 server-side is in one language, while the app already knows which one the
 reader chose.
+
+---
+
+## §24 — M27: Doc 10 moved after you shipped, and two things no longer line up
+
+**Raised 2026-10-13**, starting M27.
+
+Your 2026-08-15 answer on *Avis Résident* is implemented against as written —
+the app reads `residentReviewEligible` and never re-derives it. But Doc 10's
+M27 section was **revised on 2026-08-20, five days later**, and two of its
+rules now contradict what shipped. Neither blocks us; both change what a user
+sees, so we would rather ask than guess.
+
+### 24.1 The one-month gate vs. "any Contrat Mboa"
+
+You wrote: eligible when the contract is SIGNED and *"it ran for at least a
+month"*; a 3-day let answers `409 TENANCY_TOO_SHORT` and should be steered to
+a visit review.
+
+Doc 10 RM-M27-01, revised 2026-08-20, says the opposite in as many words:
+
+> Un avis résident peut être rédigé par tout utilisateur ayant un **Contrat
+> Mboa signé** … **quelle que soit la périodicité** (jour, semaine ou mois).
+> […] un séjour Day/Week reste un séjour réel — la personne a effectivement
+> occupé le bien, contrairement à un simple visiteur.
+
+RG-06's note carries the same revision for the weight of 3. RM-M27-02 also
+says the review is *"rédigeable à tout moment à partir de la signature"*,
+which leaves no room for a one-month wait.
+
+**What we need:** either `residentReviewEligible` turns true for Day/Week
+tenancies too, or Doc 10's revision is the one that is out of date. We are
+following your flag either way — we are only asking which document is now
+right, because a tenant of three days currently sees nothing and Doc 10 says
+they should.
+
+### 24.2 `residenceMonths` cannot express what RM-M27-02 asks for
+
+`PropertyReview.residenceMonths` is an integer count of months. RM-M27-02:
+
+> La durée de résidence est affichée **dans l'unité de périodicité du contrat**
+> (jours, semaines ou mois) : un séjour de 3 jours affiche "3 jours", un
+> contrat de 12 mois affiche "12 mois". **Aucune conversion forcée en mois.**
+
+A 3-day tenancy is `residenceMonths: 0`, and the fiche would read "0 mois sur
+place" — which is both wrong and unkind to the person who wrote the review.
+The public feed has no contract to recover the real unit from.
+
+**What we need:** a duration plus its unit on `PropertyReview` — e.g.
+`residenceDuration: 3` with `residencePeriod: "DAY" | "WEEK" | "MONTH"`,
+matching `RentalPeriod`. Additive; `residenceMonths` can stay for now.
+Until then the app shows the duration only when it is at least one month, and
+says nothing otherwise rather than saying zero.
+
+### 24.3 `canAccept` beside `canSign`
+
+Not M27, but it surfaced building M27's entry point. `ContractResponse` gives
+`canSign` — the server's verdict, which the app renders and never works out.
+There is no equivalent for accepting, and `awaiting` cannot stand in: it says
+*whose* move it is and reads identically for both parties, so a screen shared
+between the two apps cannot tell from it whether the reader is the one being
+waited on.
+
+The tenant's screen therefore offers *Accepter les termes* on `status == SENT`
+and `awaiting ∈ {TENANT, BOTH}`, plus the knowledge that App Mboa is always
+the tenant. That is the only place in M08 where the app combines two server
+values instead of reading one, and it is the kind of derivation that went
+wrong before.
+
+**What we need:** `canAccept` on `ContractResponse`, computed like `canSign`.
+One boolean deletes the derivation.
