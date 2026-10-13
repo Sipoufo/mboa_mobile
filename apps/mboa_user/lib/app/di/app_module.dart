@@ -130,6 +130,15 @@ void registerAppModule() {
     () => ResidentReviewBloc(repository: getIt<ResidentReviewRepository>()),
   );
 
+  // M23 — reporting a listing, a message or a review (RM-M27-06). One door,
+  // both apps; the reporter never learns the outcome (RM-M23-05).
+  getIt.registerLazySingleton<ReportRepository>(
+    () => ReportRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<ReportCubit>(
+    () => ReportCubit(repository: getIt<ReportRepository>()),
+  );
+
   // Messagerie (M12) — repository, list and thread are shared with the pro
   // app; only the entry points differ (RM-M12-01).
   getIt.registerLazySingleton<MessagingRepository>(

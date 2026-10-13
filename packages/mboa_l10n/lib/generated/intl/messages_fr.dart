@@ -1386,6 +1386,39 @@ class MessageLookup extends MessageLookupByLibrary {
       "Connecte-toi",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Créer un compte"),
+    "reportCommentHint": MessageLookupByLibrary.simpleMessage(
+      "Ce que l\'admin doit savoir.",
+    ),
+    "reportCommentLabel": MessageLookupByLibrary.simpleMessage(
+      "Précisions (facultatif)",
+    ),
+    "reportFailed": MessageLookupByLibrary.simpleMessage(
+      "Le signalement n\'est pas parti. Réessaie.",
+    ),
+    "reportReasonContent": MessageLookupByLibrary.simpleMessage(
+      "Contenu inapproprié",
+    ),
+    "reportReasonFraud": MessageLookupByLibrary.simpleMessage(
+      "Annonce frauduleuse",
+    ),
+    "reportReasonHarassment": MessageLookupByLibrary.simpleMessage(
+      "Harcèlement",
+    ),
+    "reportReasonLabel": MessageLookupByLibrary.simpleMessage("Pourquoi ?"),
+    "reportReasonPrice": MessageLookupByLibrary.simpleMessage("Prix anormal"),
+    "reportReviewTitle": MessageLookupByLibrary.simpleMessage(
+      "Signaler cet avis",
+    ),
+    "reportSend": MessageLookupByLibrary.simpleMessage(
+      "Envoyer le signalement",
+    ),
+    "reportSent": MessageLookupByLibrary.simpleMessage(
+      "Ton signalement a été pris en compte.",
+    ),
+    "reportSignInBody": MessageLookupByLibrary.simpleMessage(
+      "Connecte-toi pour signaler un contenu.",
+    ),
+    "reportTitle": MessageLookupByLibrary.simpleMessage("Signaler"),
     "residenceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
       "Cette action est définitive et supprime aussi toutes ses unités.",
     ),

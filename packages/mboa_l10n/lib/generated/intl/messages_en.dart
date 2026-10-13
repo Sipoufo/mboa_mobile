@@ -1293,6 +1293,37 @@ class MessageLookup extends MessageLookupByLibrary {
     "registerRolePrestataire": MessageLookupByLibrary.simpleMessage("Provider"),
     "registerSignInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
+    "reportCommentHint": MessageLookupByLibrary.simpleMessage(
+      "What the admin needs to know.",
+    ),
+    "reportCommentLabel": MessageLookupByLibrary.simpleMessage(
+      "Details (optional)",
+    ),
+    "reportFailed": MessageLookupByLibrary.simpleMessage(
+      "The report did not go through. Try again.",
+    ),
+    "reportReasonContent": MessageLookupByLibrary.simpleMessage(
+      "Inappropriate content",
+    ),
+    "reportReasonFraud": MessageLookupByLibrary.simpleMessage(
+      "Fraudulent listing",
+    ),
+    "reportReasonHarassment": MessageLookupByLibrary.simpleMessage(
+      "Harassment",
+    ),
+    "reportReasonLabel": MessageLookupByLibrary.simpleMessage("Why?"),
+    "reportReasonPrice": MessageLookupByLibrary.simpleMessage("Abnormal price"),
+    "reportReviewTitle": MessageLookupByLibrary.simpleMessage(
+      "Report this review",
+    ),
+    "reportSend": MessageLookupByLibrary.simpleMessage("Send the report"),
+    "reportSent": MessageLookupByLibrary.simpleMessage(
+      "Your report has been received.",
+    ),
+    "reportSignInBody": MessageLookupByLibrary.simpleMessage(
+      "Sign in to report content.",
+    ),
+    "reportTitle": MessageLookupByLibrary.simpleMessage("Report"),
     "residenceDeleteConfirmBody": MessageLookupByLibrary.simpleMessage(
       "This is permanent and removes all of its units too.",
     ),

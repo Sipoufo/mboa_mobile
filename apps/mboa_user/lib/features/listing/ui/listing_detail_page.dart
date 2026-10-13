@@ -517,17 +517,38 @@ class _Reviews extends StatelessWidget {
             const SizedBox(height: Dimens.spacing),
           ],
           for (final review in state.reviews)
-            _Review(review: review),
+            _Review(
+              review: review,
+              onReport: (entry) => _reportReview(context, entry),
+            ),
         ],
       ),
     );
   }
 }
 
+/// RM-M27-06 — reporting a review needs an account, like reporting a listing.
+Future<void> _reportReview(BuildContext context, ReviewEntry review) async {
+  final l10n = I18n.of(context);
+
+  if (!getIt<SessionSnapshot>().hasSession) {
+    MboaToast.info(context: context, title: l10n.reportSignInBody);
+    return;
+  }
+
+  await showReportSheet(
+    context,
+    target: ReportTarget.review(review.id),
+    title: l10n.reportReviewTitle,
+    cubit: getIt<ReportCubit>(),
+  );
+}
+
 class _Review extends StatelessWidget {
-  const _Review({required this.review});
+  const _Review({required this.review, required this.onReport});
 
   final ReviewEntry review;
+  final void Function(ReviewEntry review) onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -580,7 +601,12 @@ class _Review extends StatelessWidget {
                       .copyWith(color: colors.textSecondary),
                 ),
               ),
-              if (review.residenceMonths case final months?) ...[
+              // `> 0` because `residenceMonths` is whole months and a weekly
+              // let rounds to zero — "0 mois sur place" under somebody's
+              // review would be both wrong and insulting. The real unit is
+              // docs/backend-requests.md §24.2; until it exists, a short
+              // tenancy simply says nothing about its length.
+              if (review.residenceMonths case final months? when months > 0) ...[
                 const SizedBox(width: Dimens.spacingSm),
                 Text(
                   l10n.listingReviewMonths(months),
@@ -597,6 +623,17 @@ class _Review extends StatelessWidget {
                 ),
             ],
           ),
+          // RM-M27-02 — a resident may revise theirs, so a corrected review
+          // says so. The copy for this has existed since the feed shipped and
+          // was never rendered.
+          if (review.editedAt case final at?) ...[
+            const SizedBox(height: Dimens.spacingXs),
+            Text(
+              l10n.listingReviewEdited(DateFormat.yMMMd().format(at)),
+              style: context.mboaText.caption
+                  .copyWith(color: colors.textTertiary),
+            ),
+          ],
           if (review.comment case final comment?
               when comment.trim().isNotEmpty) ...[
             const SizedBox(height: Dimens.spacingSm),
@@ -669,6 +706,26 @@ class _Review extends StatelessWidget {
               ),
             ),
           ],
+          // RM-M27-06 — any signed-in user may report a review, of either
+          // kind. Placed under the review rather than in its header: a flag
+          // beside somebody's name reads as an accusation before anyone has
+          // read what they wrote.
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              onPressed: () => onReport(review),
+              icon: Icon(
+                LucideIcons.flag,
+                size: Dimens.iconSm,
+                color: colors.textTertiary,
+              ),
+              label: Text(
+                l10n.listingReport,
+                style: context.mboaText.caption
+                    .copyWith(color: colors.textTertiary),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -743,6 +800,28 @@ class _Actions extends StatelessWidget {
 
   /// Opens the thread the first message created — or the one that already
   /// existed, since a second tap is a 409 and not a failure.
+  /// RM-M27-06 / RM-M05-05 — reporting needs an account, so a visitor is
+  /// told that rather than shown a sheet whose send button would 401.
+  Future<void> _report(
+    BuildContext context, {
+    required ReportTarget target,
+    required String title,
+  }) async {
+    final l10n = I18n.of(context);
+
+    if (!getIt<SessionSnapshot>().hasSession) {
+      MboaToast.info(context: context, title: l10n.reportSignInBody);
+      return;
+    }
+
+    await showReportSheet(
+      context,
+      target: target,
+      title: title,
+      cubit: getIt<ReportCubit>(),
+    );
+  }
+
   Future<void> _contact(BuildContext context, ListingDetail detail) async {
     final l10n = I18n.of(context);
     final router = context.router;
@@ -789,9 +868,11 @@ class _Actions extends StatelessWidget {
                 const SizedBox(width: Dimens.spacingSm),
                 IconButton(
                   tooltip: l10n.listingReport,
-                  onPressed: () => MboaToast.info(
-                    context: context,
-                    title: l10n.commonComingSoon,
+                  // RM-M05-05 — any signed-in user may report a listing.
+                  onPressed: () => _report(
+                    context,
+                    target: ReportTarget.annonce(detail.id),
+                    title: l10n.listingReport,
                   ),
                   icon: Icon(LucideIcons.flag, color: colors.textSecondary),
                 ),

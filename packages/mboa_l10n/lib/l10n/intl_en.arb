@@ -888,6 +888,58 @@
     "description": "RM-M05-07."
   },
   "listingReport": "Report",
+  "reportTitle": "Report",
+  "@reportTitle": {
+    "description": "M23 — the report sheet."
+  },
+  "reportReviewTitle": "Report this review",
+  "@reportReviewTitle": {
+    "description": "M23 RM-M27-06 — reporting a review."
+  },
+  "reportReasonLabel": "Why?",
+  "@reportReasonLabel": {
+    "description": "M23 RM-M23-01 — the reason is required."
+  },
+  "reportCommentLabel": "Details (optional)",
+  "@reportCommentLabel": {
+    "description": "M23 — optional free text."
+  },
+  "reportCommentHint": "What the admin needs to know.",
+  "@reportCommentHint": {
+    "description": "M23 — the comment field."
+  },
+  "reportSend": "Send the report",
+  "@reportSend": {
+    "description": "M23 — submits the report."
+  },
+  "reportSent": "Your report has been received.",
+  "@reportSent": {
+    "description": "M23 RM-M23-05, verbatim — received, and no outcome is ever given."
+  },
+  "reportFailed": "The report did not go through. Try again.",
+  "@reportFailed": {
+    "description": "M23 — the request failed."
+  },
+  "reportSignInBody": "Sign in to report content.",
+  "@reportSignInBody": {
+    "description": "M23 — reporting needs an account."
+  },
+  "reportReasonFraud": "Fraudulent listing",
+  "@reportReasonFraud": {
+    "description": "M23 — FRAUDULENT_LISTING."
+  },
+  "reportReasonPrice": "Abnormal price",
+  "@reportReasonPrice": {
+    "description": "M23 — ABNORMAL_PRICE."
+  },
+  "reportReasonContent": "Inappropriate content",
+  "@reportReasonContent": {
+    "description": "M23 — INAPPROPRIATE_CONTENT."
+  },
+  "reportReasonHarassment": "Harassment",
+  "@reportReasonHarassment": {
+    "description": "M23 — HARASSMENT."
+  },
   "@listingReport": {
     "description": "RM-M05-05."
   },

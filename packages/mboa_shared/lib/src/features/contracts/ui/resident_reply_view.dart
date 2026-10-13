@@ -15,9 +15,19 @@ import '../bloc/resident_reply_bloc.dart';
 /// nothing on this screen that edits or removes what the tenant wrote, and
 /// the copy says so before the field rather than after the send.
 class ResidentReplyView extends StatelessWidget {
-  const ResidentReplyView({super.key, required this.contractId});
+  const ResidentReplyView({
+    super.key,
+    required this.contractId,
+    this.onReport,
+  });
 
   final String contractId;
+
+  /// RM-M27-06 — reports the review to moderation. A landlord is the likeliest
+  /// person to need this, and **one upheld report removes a review** where a
+  /// listing takes three, so the affordance is deliberately quiet: a text
+  /// button under the answer, not a button beside it.
+  final void Function(ReviewEntry review)? onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +69,9 @@ class ResidentReplyView extends StatelessWidget {
                 child: Text(l10n.commonRetry),
               ),
             ),
-          final ResidentReplyReady ready =>
-            ready.hasReview ? _Review(state: ready) : const _NoReviewYet(),
+          final ResidentReplyReady ready => ready.hasReview
+              ? _Review(state: ready, onReport: onReport)
+              : const _NoReviewYet(),
         },
       ),
     );
@@ -107,9 +118,10 @@ class _NoReviewYet extends StatelessWidget {
 }
 
 class _Review extends StatelessWidget {
-  const _Review({required this.state});
+  const _Review({required this.state, this.onReport});
 
   final ResidentReplyReady state;
+  final void Function(ReviewEntry review)? onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -193,6 +205,24 @@ class _Review extends StatelessWidget {
             _Composer(isSending: state.isSending)
           else
             for (final reply in review.replies) _Reply(reply: reply),
+
+          if (onReport != null)
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: () => onReport!(review),
+                icon: Icon(
+                  LucideIcons.flag,
+                  size: Dimens.iconSm,
+                  color: colors.textTertiary,
+                ),
+                label: Text(
+                  l10n.listingReport,
+                  style: context.mboaText.caption
+                      .copyWith(color: colors.textTertiary),
+                ),
+              ),
+            ),
         ],
       ),
     );

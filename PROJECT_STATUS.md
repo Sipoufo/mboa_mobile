@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-11.
+> Last updated: 2026-10-13.
 
 ## How to resume
 
@@ -57,7 +57,9 @@
 | Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · pas de détail ni d'annulation côté API (§14) |
 | M07bis — visitor side (read, comment, PDF) | ✅ agent + prestataire · the writing half is the client's, and now exists |
 | M08 Contrat Mboa | ✅ **prestataire side** — draw up, send, answer objections, amend, sign, PDF, cancel · the tenant's half is in `mboa_user` |
-| M27 resident review | ❌ not started (endpoints exist) |
+| M27 resident review | ✅ write + revise (tenant), reply once (landlord), report either kind · §24 open |
+| M08 Contrat Mboa — tenant half | ✅ list, detail, accept, contest, sign, PDF — the shared views, routed in both apps |
+| M23 signalements | ✅ listing + review from the app · admin queue is out of scope here |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -71,6 +73,21 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 
 Each cost a bug that `flutter analyze` and the bloc tests could not see. They are
 pinned by tests; do not "simplify" them away.
+
+### A Row with a Spacer is an overflow waiting for a longer translation
+
+Three times in M27, a header laid out as `Row(children: [Text, Spacer, Text])`
+overflowed once real copy went through it — by 0.3 px in the contract header,
+by 116 px in the resident review's. Both were found by a new widget test, not
+by looking, because an overflow paints debug stripes in a test and is nearly
+invisible in a screenshot at the right width.
+
+Nothing guarantees two translated strings fit on one line at 390 px. `Wrap`
+with `spaceBetween` costs the same and degrades by moving the second item to
+its own line. **Making the second child `Flexible` is not the fix** — tried it
+on the contract header, and it turned "Modifications demandées" into
+"Modifications dema…". A status nobody can read is worse than a hairline of
+stripes; the Pro golden is what caught it.
 
 ### A design token can be wrong for a year without anyone seeing it
 

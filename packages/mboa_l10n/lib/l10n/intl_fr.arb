@@ -888,6 +888,58 @@
     "description": "RM-M05-07."
   },
   "listingReport": "Signaler",
+  "reportTitle": "Signaler",
+  "@reportTitle": {
+    "description": "M23 — the report sheet."
+  },
+  "reportReviewTitle": "Signaler cet avis",
+  "@reportReviewTitle": {
+    "description": "M23 RM-M27-06 — reporting a review."
+  },
+  "reportReasonLabel": "Pourquoi ?",
+  "@reportReasonLabel": {
+    "description": "M23 RM-M23-01 — the reason is required."
+  },
+  "reportCommentLabel": "Précisions (facultatif)",
+  "@reportCommentLabel": {
+    "description": "M23 — optional free text."
+  },
+  "reportCommentHint": "Ce que l'admin doit savoir.",
+  "@reportCommentHint": {
+    "description": "M23 — the comment field."
+  },
+  "reportSend": "Envoyer le signalement",
+  "@reportSend": {
+    "description": "M23 — submits the report."
+  },
+  "reportSent": "Ton signalement a été pris en compte.",
+  "@reportSent": {
+    "description": "M23 RM-M23-05, verbatim — received, and no outcome is ever given."
+  },
+  "reportFailed": "Le signalement n'est pas parti. Réessaie.",
+  "@reportFailed": {
+    "description": "M23 — the request failed."
+  },
+  "reportSignInBody": "Connecte-toi pour signaler un contenu.",
+  "@reportSignInBody": {
+    "description": "M23 — reporting needs an account."
+  },
+  "reportReasonFraud": "Annonce frauduleuse",
+  "@reportReasonFraud": {
+    "description": "M23 — FRAUDULENT_LISTING."
+  },
+  "reportReasonPrice": "Prix anormal",
+  "@reportReasonPrice": {
+    "description": "M23 — ABNORMAL_PRICE."
+  },
+  "reportReasonContent": "Contenu inapproprié",
+  "@reportReasonContent": {
+    "description": "M23 — INAPPROPRIATE_CONTENT."
+  },
+  "reportReasonHarassment": "Harcèlement",
+  "@reportReasonHarassment": {
+    "description": "M23 — HARASSMENT."
+  },
   "@listingReport": {
     "description": "RM-M05-05."
   },

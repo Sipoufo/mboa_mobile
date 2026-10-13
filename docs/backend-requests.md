@@ -797,3 +797,44 @@ wrong before.
 
 **What we need:** `canAccept` on `ContractResponse`, computed like `canSign`.
 One boolean deletes the derivation.
+
+---
+
+## §25 — The report reasons were drawn for listings, and reviews now use them
+
+**Raised 2026-10-13**, wiring RM-M27-06.
+
+`CreateSignalementRequest.reason` offers four values:
+
+```
+FRAUDULENT_LISTING · ABNORMAL_PRICE · INAPPROPRIATE_CONTENT · HARASSMENT
+```
+
+Two of them are about listings. `REVIEW` was added to `targetType` without
+the reason list following, so the API currently accepts
+`{targetType: REVIEW, reason: ABNORMAL_PRICE}` — a review reported for being
+overpriced.
+
+**What the app does meanwhile:** it narrows the menu per target rather than
+asking a nonsensical question. A listing offers fraud, price and
+inappropriate content; a review and a message offer inappropriate content and
+harassment. Nothing is blocked, and the server is free to keep accepting
+anything.
+
+**What we need, eventually:** either the reason set grows a review-shaped
+pair — something like `FALSE_CLAIM` and `PERSONAL_ATTACK`, which are the two
+things a landlord actually disputes about a review — or the endpoint
+documents which reasons are valid per target so both ends agree. The second
+is cheaper and would do.
+
+**Worth saying plainly, because the asymmetry is deliberate and sharp:** your
+2026-08-15 note has one upheld report removing a review, where
+RM-M23-03 takes three to suspend a listing. The app treats that affordance
+accordingly — a quiet text button under the review, never a prominent one —
+but it does mean a single admin decision erases somebody's account of a year
+of their life. If the admin queue ever shows review reports and listing
+reports in the same list with the same weight, that difference will be easy
+to forget.
+
+**Also minor:** the endpoint's summary still reads *"Report a listing or a
+message"*. Reviews are missing from it.

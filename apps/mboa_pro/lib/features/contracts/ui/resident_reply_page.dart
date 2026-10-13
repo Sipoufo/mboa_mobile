@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 /// The landlord reading his tenant's review and answering it (CDC M27) —
@@ -23,6 +24,15 @@ class ResidentReplyPage extends StatelessWidget implements AutoRouteWrapper {
       );
 
   @override
-  Widget build(BuildContext context) =>
-      ResidentReplyView(contractId: contractId);
+  Widget build(BuildContext context) => ResidentReplyView(
+        contractId: contractId,
+        // RM-M27-06 — he cannot remove it, and he cannot edit it. He can
+        // report it, like anyone else.
+        onReport: (review) => showReportSheet(
+          context,
+          target: ReportTarget.review(review.id),
+          title: I18n.of(context).reportReviewTitle,
+          cubit: getIt<ReportCubit>(),
+        ),
+      );
 }

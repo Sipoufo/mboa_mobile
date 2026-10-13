@@ -263,6 +263,15 @@ void registerAppModule() {
     () => ResidentReplyBloc(repository: getIt<ResidentReviewRepository>()),
   );
 
+  // M23 — reporting a listing, a message or a review (RM-M27-06). One door,
+  // both apps; the reporter never learns the outcome (RM-M23-05).
+  getIt.registerLazySingleton<ReportRepository>(
+    () => ReportRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<ReportCubit>(
+    () => ReportCubit(repository: getIt<ReportRepository>()),
+  );
+
   // M07bis — the client's review, read by whoever carried the visit out.
   getIt.registerLazySingleton<VisitReviewRepository>(
     () => VisitReviewRepository(dioClient: getIt<DioClient>()),

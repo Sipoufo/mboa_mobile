@@ -2163,6 +2163,136 @@ class I18n {
     );
   }
 
+  /// `Signaler`
+  String get reportTitle {
+    return Intl.message(
+      'Signaler',
+      name: 'reportTitle',
+      desc: 'M23 — the report sheet.',
+      args: [],
+    );
+  }
+
+  /// `Signaler cet avis`
+  String get reportReviewTitle {
+    return Intl.message(
+      'Signaler cet avis',
+      name: 'reportReviewTitle',
+      desc: 'M23 RM-M27-06 — reporting a review.',
+      args: [],
+    );
+  }
+
+  /// `Pourquoi ?`
+  String get reportReasonLabel {
+    return Intl.message(
+      'Pourquoi ?',
+      name: 'reportReasonLabel',
+      desc: 'M23 RM-M23-01 — the reason is required.',
+      args: [],
+    );
+  }
+
+  /// `Précisions (facultatif)`
+  String get reportCommentLabel {
+    return Intl.message(
+      'Précisions (facultatif)',
+      name: 'reportCommentLabel',
+      desc: 'M23 — optional free text.',
+      args: [],
+    );
+  }
+
+  /// `Ce que l'admin doit savoir.`
+  String get reportCommentHint {
+    return Intl.message(
+      'Ce que l\'admin doit savoir.',
+      name: 'reportCommentHint',
+      desc: 'M23 — the comment field.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer le signalement`
+  String get reportSend {
+    return Intl.message(
+      'Envoyer le signalement',
+      name: 'reportSend',
+      desc: 'M23 — submits the report.',
+      args: [],
+    );
+  }
+
+  /// `Ton signalement a été pris en compte.`
+  String get reportSent {
+    return Intl.message(
+      'Ton signalement a été pris en compte.',
+      name: 'reportSent',
+      desc: 'M23 RM-M23-05, verbatim — received, and no outcome is ever given.',
+      args: [],
+    );
+  }
+
+  /// `Le signalement n'est pas parti. Réessaie.`
+  String get reportFailed {
+    return Intl.message(
+      'Le signalement n\'est pas parti. Réessaie.',
+      name: 'reportFailed',
+      desc: 'M23 — the request failed.',
+      args: [],
+    );
+  }
+
+  /// `Connecte-toi pour signaler un contenu.`
+  String get reportSignInBody {
+    return Intl.message(
+      'Connecte-toi pour signaler un contenu.',
+      name: 'reportSignInBody',
+      desc: 'M23 — reporting needs an account.',
+      args: [],
+    );
+  }
+
+  /// `Annonce frauduleuse`
+  String get reportReasonFraud {
+    return Intl.message(
+      'Annonce frauduleuse',
+      name: 'reportReasonFraud',
+      desc: 'M23 — FRAUDULENT_LISTING.',
+      args: [],
+    );
+  }
+
+  /// `Prix anormal`
+  String get reportReasonPrice {
+    return Intl.message(
+      'Prix anormal',
+      name: 'reportReasonPrice',
+      desc: 'M23 — ABNORMAL_PRICE.',
+      args: [],
+    );
+  }
+
+  /// `Contenu inapproprié`
+  String get reportReasonContent {
+    return Intl.message(
+      'Contenu inapproprié',
+      name: 'reportReasonContent',
+      desc: 'M23 — INAPPROPRIATE_CONTENT.',
+      args: [],
+    );
+  }
+
+  /// `Harcèlement`
+  String get reportReasonHarassment {
+    return Intl.message(
+      'Harcèlement',
+      name: 'reportReasonHarassment',
+      desc: 'M23 — HARASSMENT.',
+      args: [],
+    );
+  }
+
   /// `Connecte-toi pour contacter le prestataire ou planifier une visite.`
   String get listingActionsSignIn {
     return Intl.message(

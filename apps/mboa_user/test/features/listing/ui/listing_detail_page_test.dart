@@ -166,6 +166,79 @@ void main() {
     expect(find.text('Locataire'), findsOneWidget);
   });
 
+  testWidgets(
+    'RM-M27-02 — a corrected review says so, and a short let says nothing',
+    (tester) async {
+      when(() => bloc.state).thenReturn(
+        ListingDetailReady(
+          detail: detail(
+            rating: const PropertyRatingSummary(average: 4.0, reviewCount: 2),
+          ),
+          reviews: [
+            ReviewEntry(
+              id: 'r-1',
+              kind: ReviewKind.resident,
+              authorName: 'Awa Nkeng',
+              rating: 4,
+              comment: 'Corrigé après six mois.',
+              residenceMonths: 14,
+              publishedAt: DateTime(2026, 8, 12),
+              editedAt: DateTime(2026, 9, 3),
+            ),
+            ReviewEntry(
+              id: 'r-2',
+              kind: ReviewKind.resident,
+              authorName: 'Ndongo Bile',
+              rating: 5,
+              comment: 'Séjour court mais impeccable.',
+              // A weekly let rounds to zero whole months
+              // (docs/backend-requests.md §24.2).
+              residenceMonths: 0,
+              publishedAt: DateTime(2026, 9, 20),
+            ),
+          ],
+        ),
+      );
+      await pump(tester);
+      await scrollTo(tester, find.text('Corrigé après six mois.'));
+
+      // The copy for this has existed since the feed shipped and was never
+      // rendered, so a revised review looked identical to an original one.
+      expect(find.textContaining('Corrigé le'), findsOneWidget);
+      expect(find.text('14 mois sur place'), findsOneWidget);
+      // And "0 mois sur place" under somebody's review is both wrong and
+      // insulting, so a tenancy too short to count says nothing at all.
+      expect(find.textContaining('0 mois'), findsNothing);
+    },
+  );
+
+  testWidgets('RM-M27-06 — every review can be reported', (tester) async {
+    when(() => bloc.state).thenReturn(
+      ListingDetailReady(
+        detail: detail(
+          rating: const PropertyRatingSummary(average: 4.0, reviewCount: 1),
+        ),
+        reviews: [
+          ReviewEntry(
+            id: 'r-1',
+            kind: ReviewKind.resident,
+            authorName: 'Awa Nkeng',
+            rating: 1,
+            comment: 'Propos diffamatoires.',
+            residenceMonths: 3,
+            publishedAt: DateTime(2026, 8, 12),
+          ),
+        ],
+      ),
+    );
+    await pump(tester);
+    await scrollTo(tester, find.text('Propos diffamatoires.'));
+
+    // One upheld report removes a review, where a listing takes three — so
+    // the affordance exists, quietly, on every entry of the feed.
+    expect(find.text('Signaler'), findsOneWidget);
+  });
+
   testWidgets('M07bis — a visit report shows its bullets, not just its text',
       (tester) async {
     when(() => bloc.state).thenReturn(
