@@ -2363,6 +2363,66 @@ class I18n {
     );
   }
 
+  /// `{count, plural, one{{count} jour sur place} other{{count} jours sur place}}`
+  String residenceStayDay(int count) {
+    return Intl.plural(
+      count,
+      one: '$count jour sur place',
+      other: '$count jours sur place',
+      name: 'residenceStayDay',
+      desc: 'M27 RM-M27-02 — residence duration in days.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} semaine sur place} other{{count} semaines sur place}}`
+  String residenceStayWeek(int count) {
+    return Intl.plural(
+      count,
+      one: '$count semaine sur place',
+      other: '$count semaines sur place',
+      name: 'residenceStayWeek',
+      desc: 'M27 RM-M27-02 — residence duration in weeks.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} mois sur place} other{{count} mois sur place}}`
+  String residenceStayMonth(int count) {
+    return Intl.plural(
+      count,
+      one: '$count mois sur place',
+      other: '$count mois sur place',
+      name: 'residenceStayMonth',
+      desc: 'M27 RM-M27-02 — residence duration in months.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} trimestre sur place} other{{count} trimestres sur place}}`
+  String residenceStayQuarter(int count) {
+    return Intl.plural(
+      count,
+      one: '$count trimestre sur place',
+      other: '$count trimestres sur place',
+      name: 'residenceStayQuarter',
+      desc: 'M27 RM-M27-02 — residence duration in quarters.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} an sur place} other{{count} ans sur place}}`
+  String residenceStayYear(int count) {
+    return Intl.plural(
+      count,
+      one: '$count an sur place',
+      other: '$count ans sur place',
+      name: 'residenceStayYear',
+      desc: 'M27 RM-M27-02 — residence duration in years.',
+      args: [count],
+    );
+  }
+
   /// `Corrigé le {date}`
   String listingReviewEdited(String date) {
     return Intl.message(

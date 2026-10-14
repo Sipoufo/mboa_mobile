@@ -42,14 +42,10 @@ class ContractDetailView extends StatelessWidget {
 
   /// Which side of the document the reader is on.
   ///
-  /// Not a permission — the server decides those, and `canSign` is one of its
-  /// verdicts. This exists because `awaiting` says *whose* move it is and
-  /// reads the same for both parties, so a shared screen cannot tell from it
-  /// whether the reader is the one being waited on. Each app knows: App Mboa
-  /// is the tenant, App Mboa Pro the landlord.
-  ///
-  /// It would be unnecessary if `ContractResponse` carried a `canAccept`
-  /// beside `canSign` — see docs/backend-requests.md.
+  /// Not a permission — the server decides those (`canSign`, `canAccept`). It
+  /// survives only to word the M27 entry point: the tenant is offered "laisser
+  /// mon avis", the landlord "voir l'avis du locataire", and nothing in the
+  /// contract itself says which app is running. Each app passes its own side.
   final ContractParty viewer;
 
   @override
@@ -632,13 +628,12 @@ class _ActionBar extends StatelessWidget {
     final children = <Widget>[];
 
     // RM-M08-02 / CE-M08-03 — the tenant takes the terms or contests them,
-    // while the ball is theirs. There is no `canAccept` verdict to lean on the
-    // way `canSign` exists, so this is the one place M08 reads two server
-    // values together instead of one: the status, and whose move it is.
-    if (viewer == ContractParty.tenant &&
-        contract.status == ContractStatus.sent &&
-        (contract.awaiting == ContractParty.tenant ||
-            contract.awaiting == ContractParty.both)) {
+    // while the ball is theirs. `canAccept` is the server's verdict for
+    // exactly that window (tenant, SENT or CHANGES_REQUESTED), so the two
+    // actions ride on it and nothing here re-derives who may act — the one
+    // derivation M08 used to carry is gone. It is inherently tenant-scoped:
+    // the server never sets it for the landlord.
+    if (contract.canAccept) {
       children.add(
         Button.primary(
           title: l10n.contractAccept,

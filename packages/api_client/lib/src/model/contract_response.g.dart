@@ -326,6 +326,8 @@ class _$ContractResponse extends ContractResponse {
   @override
   final bool? canSign;
   @override
+  final bool? canAccept;
+  @override
   final bool? residentReviewEligible;
   @override
   final DateTime? lockedAt;
@@ -362,6 +364,7 @@ class _$ContractResponse extends ContractResponse {
     this.changeRequests,
     this.awaiting,
     this.canSign,
+    this.canAccept,
     this.residentReviewEligible,
     this.lockedAt,
     this.createdAt,
@@ -402,6 +405,7 @@ class _$ContractResponse extends ContractResponse {
         changeRequests == other.changeRequests &&
         awaiting == other.awaiting &&
         canSign == other.canSign &&
+        canAccept == other.canAccept &&
         residentReviewEligible == other.residentReviewEligible &&
         lockedAt == other.lockedAt &&
         createdAt == other.createdAt &&
@@ -434,6 +438,7 @@ class _$ContractResponse extends ContractResponse {
     _$hash = $jc(_$hash, changeRequests.hashCode);
     _$hash = $jc(_$hash, awaiting.hashCode);
     _$hash = $jc(_$hash, canSign.hashCode);
+    _$hash = $jc(_$hash, canAccept.hashCode);
     _$hash = $jc(_$hash, residentReviewEligible.hashCode);
     _$hash = $jc(_$hash, lockedAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -468,6 +473,7 @@ class _$ContractResponse extends ContractResponse {
           ..add('changeRequests', changeRequests)
           ..add('awaiting', awaiting)
           ..add('canSign', canSign)
+          ..add('canAccept', canAccept)
           ..add('residentReviewEligible', residentReviewEligible)
           ..add('lockedAt', lockedAt)
           ..add('createdAt', createdAt)
@@ -585,6 +591,10 @@ class ContractResponseBuilder
   bool? get canSign => _$this._canSign;
   set canSign(bool? canSign) => _$this._canSign = canSign;
 
+  bool? _canAccept;
+  bool? get canAccept => _$this._canAccept;
+  set canAccept(bool? canAccept) => _$this._canAccept = canAccept;
+
   bool? _residentReviewEligible;
   bool? get residentReviewEligible => _$this._residentReviewEligible;
   set residentReviewEligible(bool? residentReviewEligible) =>
@@ -632,6 +642,7 @@ class ContractResponseBuilder
       _changeRequests = $v.changeRequests?.toBuilder();
       _awaiting = $v.awaiting;
       _canSign = $v.canSign;
+      _canAccept = $v.canAccept;
       _residentReviewEligible = $v.residentReviewEligible;
       _lockedAt = $v.lockedAt;
       _createdAt = $v.createdAt;
@@ -683,6 +694,7 @@ class ContractResponseBuilder
             changeRequests: _changeRequests?.build(),
             awaiting: awaiting,
             canSign: canSign,
+            canAccept: canAccept,
             residentReviewEligible: residentReviewEligible,
             lockedAt: lockedAt,
             createdAt: createdAt,

@@ -276,6 +276,10 @@ class _$VisiteResponse extends VisiteResponse {
   final VisiteResponseCancellationReasonEnum? cancellationReason;
   @override
   final DateTime? createdAt;
+  @override
+  final int? agentRating;
+  @override
+  final String? visitorPhone;
 
   factory _$VisiteResponse([void Function(VisiteResponseBuilder)? updates]) =>
       (VisiteResponseBuilder()..update(updates))._build();
@@ -292,6 +296,8 @@ class _$VisiteResponse extends VisiteResponse {
     this.clientConfirmedAt,
     this.cancellationReason,
     this.createdAt,
+    this.agentRating,
+    this.visitorPhone,
   }) : super._();
   @override
   VisiteResponse rebuild(void Function(VisiteResponseBuilder) updates) =>
@@ -314,7 +320,9 @@ class _$VisiteResponse extends VisiteResponse {
         visitorConfirmedAt == other.visitorConfirmedAt &&
         clientConfirmedAt == other.clientConfirmedAt &&
         cancellationReason == other.cancellationReason &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        agentRating == other.agentRating &&
+        visitorPhone == other.visitorPhone;
   }
 
   @override
@@ -331,6 +339,8 @@ class _$VisiteResponse extends VisiteResponse {
     _$hash = $jc(_$hash, clientConfirmedAt.hashCode);
     _$hash = $jc(_$hash, cancellationReason.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, agentRating.hashCode);
+    _$hash = $jc(_$hash, visitorPhone.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -348,7 +358,9 @@ class _$VisiteResponse extends VisiteResponse {
           ..add('visitorConfirmedAt', visitorConfirmedAt)
           ..add('clientConfirmedAt', clientConfirmedAt)
           ..add('cancellationReason', cancellationReason)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('agentRating', agentRating)
+          ..add('visitorPhone', visitorPhone))
         .toString();
   }
 }
@@ -408,6 +420,14 @@ class VisiteResponseBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  int? _agentRating;
+  int? get agentRating => _$this._agentRating;
+  set agentRating(int? agentRating) => _$this._agentRating = agentRating;
+
+  String? _visitorPhone;
+  String? get visitorPhone => _$this._visitorPhone;
+  set visitorPhone(String? visitorPhone) => _$this._visitorPhone = visitorPhone;
+
   VisiteResponseBuilder() {
     VisiteResponse._defaults(this);
   }
@@ -426,6 +446,8 @@ class VisiteResponseBuilder
       _clientConfirmedAt = $v.clientConfirmedAt;
       _cancellationReason = $v.cancellationReason;
       _createdAt = $v.createdAt;
+      _agentRating = $v.agentRating;
+      _visitorPhone = $v.visitorPhone;
       _$v = null;
     }
     return this;
@@ -459,6 +481,8 @@ class VisiteResponseBuilder
           clientConfirmedAt: clientConfirmedAt,
           cancellationReason: cancellationReason,
           createdAt: createdAt,
+          agentRating: agentRating,
+          visitorPhone: visitorPhone,
         );
     replace(_$result);
     return _$result;

@@ -62,6 +62,16 @@ void main() {
       // TODO
     });
 
+    // int residenceDuration
+    test('to test the property `residenceDuration`', () async {
+      // TODO
+    });
+
+    // String residencePeriod
+    test('to test the property `residencePeriod`', () async {
+      // TODO
+    });
+
     // DateTime publishedAt
     test('to test the property `publishedAt`', () async {
       // TODO

@@ -70,6 +70,20 @@ enum RentalPeriod {
         _ => fallback,
       };
 
+  /// M27 — a review's residence period. **Nullable, and no fallback**: unlike
+  /// a listing (which always has a period, so an absent one means "old build,
+  /// assume month"), a review may simply carry no duration, and a fake "mois"
+  /// under someone's review would be wrong. Null means "say nothing".
+  static RentalPeriod? fromResidence(PropertyReviewResidencePeriodEnum? value) =>
+      switch (value) {
+        PropertyReviewResidencePeriodEnum.DAY => RentalPeriod.day,
+        PropertyReviewResidencePeriodEnum.WEEK => RentalPeriod.week,
+        PropertyReviewResidencePeriodEnum.MONTH => RentalPeriod.month,
+        PropertyReviewResidencePeriodEnum.QUARTER => RentalPeriod.quarter,
+        PropertyReviewResidencePeriodEnum.YEAR => RentalPeriod.year,
+        _ => null,
+      };
+
   /// M06 — a saved listing carries the same period as the fiche it points to.
   static RentalPeriod fromFavorite(FavoriResponseRentalPeriodEnum? value) =>
       switch (value) {

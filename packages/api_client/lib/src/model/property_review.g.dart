@@ -33,8 +33,64 @@ final BuiltSet<PropertyReviewTypeEnum> _$propertyReviewTypeEnumValues =
       _$propertyReviewTypeEnum_unknownDefaultOpenApi,
     ]);
 
+const PropertyReviewResidencePeriodEnum
+_$propertyReviewResidencePeriodEnum_DAY =
+    const PropertyReviewResidencePeriodEnum._('DAY');
+const PropertyReviewResidencePeriodEnum
+_$propertyReviewResidencePeriodEnum_WEEK =
+    const PropertyReviewResidencePeriodEnum._('WEEK');
+const PropertyReviewResidencePeriodEnum
+_$propertyReviewResidencePeriodEnum_MONTH =
+    const PropertyReviewResidencePeriodEnum._('MONTH');
+const PropertyReviewResidencePeriodEnum
+_$propertyReviewResidencePeriodEnum_QUARTER =
+    const PropertyReviewResidencePeriodEnum._('QUARTER');
+const PropertyReviewResidencePeriodEnum
+_$propertyReviewResidencePeriodEnum_YEAR =
+    const PropertyReviewResidencePeriodEnum._('YEAR');
+const PropertyReviewResidencePeriodEnum
+_$propertyReviewResidencePeriodEnum_unknownDefaultOpenApi =
+    const PropertyReviewResidencePeriodEnum._('unknownDefaultOpenApi');
+
+PropertyReviewResidencePeriodEnum _$propertyReviewResidencePeriodEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'DAY':
+      return _$propertyReviewResidencePeriodEnum_DAY;
+    case 'WEEK':
+      return _$propertyReviewResidencePeriodEnum_WEEK;
+    case 'MONTH':
+      return _$propertyReviewResidencePeriodEnum_MONTH;
+    case 'QUARTER':
+      return _$propertyReviewResidencePeriodEnum_QUARTER;
+    case 'YEAR':
+      return _$propertyReviewResidencePeriodEnum_YEAR;
+    case 'unknownDefaultOpenApi':
+      return _$propertyReviewResidencePeriodEnum_unknownDefaultOpenApi;
+    default:
+      return _$propertyReviewResidencePeriodEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<PropertyReviewResidencePeriodEnum>
+_$propertyReviewResidencePeriodEnumValues =
+    BuiltSet<PropertyReviewResidencePeriodEnum>(
+      const <PropertyReviewResidencePeriodEnum>[
+        _$propertyReviewResidencePeriodEnum_DAY,
+        _$propertyReviewResidencePeriodEnum_WEEK,
+        _$propertyReviewResidencePeriodEnum_MONTH,
+        _$propertyReviewResidencePeriodEnum_QUARTER,
+        _$propertyReviewResidencePeriodEnum_YEAR,
+        _$propertyReviewResidencePeriodEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 Serializer<PropertyReviewTypeEnum> _$propertyReviewTypeEnumSerializer =
     _$PropertyReviewTypeEnumSerializer();
+Serializer<PropertyReviewResidencePeriodEnum>
+_$propertyReviewResidencePeriodEnumSerializer =
+    _$PropertyReviewResidencePeriodEnumSerializer();
 
 class _$PropertyReviewTypeEnumSerializer
     implements PrimitiveSerializer<PropertyReviewTypeEnum> {
@@ -71,6 +127,47 @@ class _$PropertyReviewTypeEnumSerializer
   );
 }
 
+class _$PropertyReviewResidencePeriodEnumSerializer
+    implements PrimitiveSerializer<PropertyReviewResidencePeriodEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'DAY': 'DAY',
+    'WEEK': 'WEEK',
+    'MONTH': 'MONTH',
+    'QUARTER': 'QUARTER',
+    'YEAR': 'YEAR',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[PropertyReviewResidencePeriodEnum];
+  @override
+  final String wireName = 'PropertyReviewResidencePeriodEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    PropertyReviewResidencePeriodEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  PropertyReviewResidencePeriodEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => PropertyReviewResidencePeriodEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$PropertyReview extends PropertyReview {
   @override
   final PropertyReviewTypeEnum? type;
@@ -95,6 +192,10 @@ class _$PropertyReview extends PropertyReview {
   @override
   final int? residenceMonths;
   @override
+  final int? residenceDuration;
+  @override
+  final PropertyReviewResidencePeriodEnum? residencePeriod;
+  @override
   final DateTime? publishedAt;
   @override
   final DateTime? editedAt;
@@ -116,6 +217,8 @@ class _$PropertyReview extends PropertyReview {
     this.photoKeys,
     this.perceivedCondition,
     this.residenceMonths,
+    this.residenceDuration,
+    this.residencePeriod,
     this.publishedAt,
     this.editedAt,
     this.replies,
@@ -142,6 +245,8 @@ class _$PropertyReview extends PropertyReview {
         photoKeys == other.photoKeys &&
         perceivedCondition == other.perceivedCondition &&
         residenceMonths == other.residenceMonths &&
+        residenceDuration == other.residenceDuration &&
+        residencePeriod == other.residencePeriod &&
         publishedAt == other.publishedAt &&
         editedAt == other.editedAt &&
         replies == other.replies;
@@ -161,6 +266,8 @@ class _$PropertyReview extends PropertyReview {
     _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jc(_$hash, perceivedCondition.hashCode);
     _$hash = $jc(_$hash, residenceMonths.hashCode);
+    _$hash = $jc(_$hash, residenceDuration.hashCode);
+    _$hash = $jc(_$hash, residencePeriod.hashCode);
     _$hash = $jc(_$hash, publishedAt.hashCode);
     _$hash = $jc(_$hash, editedAt.hashCode);
     _$hash = $jc(_$hash, replies.hashCode);
@@ -182,6 +289,8 @@ class _$PropertyReview extends PropertyReview {
           ..add('photoKeys', photoKeys)
           ..add('perceivedCondition', perceivedCondition)
           ..add('residenceMonths', residenceMonths)
+          ..add('residenceDuration', residenceDuration)
+          ..add('residencePeriod', residencePeriod)
           ..add('publishedAt', publishedAt)
           ..add('editedAt', editedAt)
           ..add('replies', replies))
@@ -241,6 +350,17 @@ class PropertyReviewBuilder
   set residenceMonths(int? residenceMonths) =>
       _$this._residenceMonths = residenceMonths;
 
+  int? _residenceDuration;
+  int? get residenceDuration => _$this._residenceDuration;
+  set residenceDuration(int? residenceDuration) =>
+      _$this._residenceDuration = residenceDuration;
+
+  PropertyReviewResidencePeriodEnum? _residencePeriod;
+  PropertyReviewResidencePeriodEnum? get residencePeriod =>
+      _$this._residencePeriod;
+  set residencePeriod(PropertyReviewResidencePeriodEnum? residencePeriod) =>
+      _$this._residencePeriod = residencePeriod;
+
   DateTime? _publishedAt;
   DateTime? get publishedAt => _$this._publishedAt;
   set publishedAt(DateTime? publishedAt) => _$this._publishedAt = publishedAt;
@@ -271,6 +391,8 @@ class PropertyReviewBuilder
       _photoKeys = $v.photoKeys?.toBuilder();
       _perceivedCondition = $v.perceivedCondition;
       _residenceMonths = $v.residenceMonths;
+      _residenceDuration = $v.residenceDuration;
+      _residencePeriod = $v.residencePeriod;
       _publishedAt = $v.publishedAt;
       _editedAt = $v.editedAt;
       _replies = $v.replies?.toBuilder();
@@ -309,6 +431,8 @@ class PropertyReviewBuilder
             photoKeys: _photoKeys?.build(),
             perceivedCondition: perceivedCondition,
             residenceMonths: residenceMonths,
+            residenceDuration: residenceDuration,
+            residencePeriod: residencePeriod,
             publishedAt: publishedAt,
             editedAt: editedAt,
             replies: _replies?.build(),

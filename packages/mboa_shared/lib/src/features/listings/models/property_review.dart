@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 
 import '../../profile/models/base_profile.dart';
+import 'rental_period.dart';
 
 /// Where a review comes from (RG-06).
 ///
@@ -61,6 +63,8 @@ class ReviewEntry extends Equatable {
     this.photoKeys = const [],
     this.perceivedCondition,
     this.residenceMonths,
+    this.residenceDuration,
+    this.residencePeriod,
     this.publishedAt,
     this.editedAt,
     this.replies = const [],
@@ -83,7 +87,14 @@ class ReviewEntry extends Equatable {
   final int? perceivedCondition;
 
   /// How long the resident stayed — what earns RG-06's weight of three.
+  ///
+  /// `residenceMonths` is kept for compatibility (whole months, 0 for a short
+  /// let); [residenceDuration] + [residencePeriod] are the real unit the
+  /// contract was in (RM-M27-02, §24.2), so a 3-day stay reads "3 jours"
+  /// instead of rounding to "0 mois". Prefer [stayLabel], which uses them.
   final int? residenceMonths;
+  final int? residenceDuration;
+  final RentalPeriod? residencePeriod;
 
   final DateTime? publishedAt;
 
@@ -101,6 +112,22 @@ class ReviewEntry extends Equatable {
       pros.isNotEmpty ||
       cons.isNotEmpty;
 
+  /// "3 jours sur place", "12 mois sur place" — the stay in the contract's own
+  /// unit (RM-M27-02). Null when the server gave no duration, so a review
+  /// with nothing to say about length shows nothing rather than "0 mois".
+  String? stayLabel(I18n l10n) {
+    final count = residenceDuration;
+    final period = residencePeriod;
+    if (count == null || count <= 0 || period == null) return null;
+    return switch (period) {
+      RentalPeriod.day => l10n.residenceStayDay(count),
+      RentalPeriod.week => l10n.residenceStayWeek(count),
+      RentalPeriod.month => l10n.residenceStayMonth(count),
+      RentalPeriod.quarter => l10n.residenceStayQuarter(count),
+      RentalPeriod.year => l10n.residenceStayYear(count),
+    };
+  }
+
   static ReviewEntry fromResponse(PropertyReview response) => ReviewEntry(
         id: response.id ?? '',
         kind: ReviewKind.fromResponse(response.type),
@@ -113,6 +140,8 @@ class ReviewEntry extends Equatable {
         photoKeys: response.photoKeys?.toList() ?? const [],
         perceivedCondition: response.perceivedCondition,
         residenceMonths: response.residenceMonths,
+        residenceDuration: response.residenceDuration,
+        residencePeriod: RentalPeriod.fromResidence(response.residencePeriod),
         publishedAt: response.publishedAt?.toLocal(),
         editedAt: response.editedAt?.toLocal(),
         replies:
@@ -132,6 +161,8 @@ class ReviewEntry extends Equatable {
         photoKeys,
         perceivedCondition,
         residenceMonths,
+        residenceDuration,
+        residencePeriod,
         publishedAt,
         editedAt,
         replies,

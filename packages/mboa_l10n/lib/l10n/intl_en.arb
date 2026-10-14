@@ -976,6 +976,51 @@
     "description": "ReviewKind.resident."
   },
   "listingReviewMonths": "{count} months living there",
+  "residenceStayDay": "{count, plural, one{{count} day living there} other{{count} days living there}}",
+  "@residenceStayDay": {
+    "description": "M27 RM-M27-02 — residence duration in days.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceStayWeek": "{count, plural, one{{count} week living there} other{{count} weeks living there}}",
+  "@residenceStayWeek": {
+    "description": "M27 RM-M27-02 — residence duration in weeks.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceStayMonth": "{count, plural, one{{count} month living there} other{{count} months living there}}",
+  "@residenceStayMonth": {
+    "description": "M27 RM-M27-02 — residence duration in months.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceStayQuarter": "{count, plural, one{{count} quarter living there} other{{count} quarters living there}}",
+  "@residenceStayQuarter": {
+    "description": "M27 RM-M27-02 — residence duration in quarters.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceStayYear": "{count, plural, one{{count} year living there} other{{count} years living there}}",
+  "@residenceStayYear": {
+    "description": "M27 RM-M27-02 — residence duration in years.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "@listingReviewMonths": {
     "description": "residenceMonths.",
     "placeholders": {

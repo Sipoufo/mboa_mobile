@@ -167,5 +167,10 @@ void main() {
       // TODO
     });
 
+    // String archivedReason
+    test('to test the property `archivedReason`', () async {
+      // TODO
+    });
+
   });
 }

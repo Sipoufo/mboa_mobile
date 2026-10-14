@@ -122,6 +122,11 @@ void main() {
       // TODO
     });
 
+    // bool canAccept
+    test('to test the property `canAccept`', () async {
+      // TODO
+    });
+
     // bool residentReviewEligible
     test('to test the property `residentReviewEligible`', () async {
       // TODO

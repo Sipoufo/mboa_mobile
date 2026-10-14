@@ -30,7 +30,7 @@ void main() {
 
     // The bookable visitors for a listing, each with their own times (RM-M07-01)
     //
-    //Future<BuiltList<VisitorSlots>> listBookableSlots(String annonceId) async
+    //Future<BuiltList<VisitorSlots>> listBookableSlots(String annonceId, { DateTime from, int days }) async
     test('test listBookableSlots', () async {
       // TODO
     });

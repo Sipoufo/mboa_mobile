@@ -9,15 +9,15 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createSignalement**](SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing or a message
+[**createSignalement**](SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing, a message or a review; the reason must fit the target
 
 
 # **createSignalement**
 > SignalementResponse createSignalement(createSignalementRequest)
 
-Report a listing or a message
+Report a listing, a message or a review; the reason must fit the target
 
-The reporter is only told the report was received — the outcome is never disclosed to them (RM-M23-05).
+ANNONCE: FRAUDULENT_LISTING, ABNORMAL_PRICE, INAPPROPRIATE_CONTENT. MESSAGE and REVIEW: INAPPROPRIATE_CONTENT, HARASSMENT. Anything else is 400 REASON_NOT_APPLICABLE. One upheld report removes a review; a listing takes three. The reporter is only told the report was received — the outcome is never disclosed to them (RM-M23-05).
 
 ### Example
 ```dart

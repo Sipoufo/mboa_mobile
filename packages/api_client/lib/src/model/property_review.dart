@@ -24,6 +24,8 @@ part 'property_review.g.dart';
 /// * [photoKeys] 
 /// * [perceivedCondition] 
 /// * [residenceMonths] 
+/// * [residenceDuration] 
+/// * [residencePeriod] 
 /// * [publishedAt] 
 /// * [editedAt] 
 /// * [replies] 
@@ -62,6 +64,13 @@ abstract class PropertyReview implements Built<PropertyReview, PropertyReviewBui
 
   @BuiltValueField(wireName: r'residenceMonths')
   int? get residenceMonths;
+
+  @BuiltValueField(wireName: r'residenceDuration')
+  int? get residenceDuration;
+
+  @BuiltValueField(wireName: r'residencePeriod')
+  PropertyReviewResidencePeriodEnum? get residencePeriod;
+  // enum residencePeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'publishedAt')
   DateTime? get publishedAt;
@@ -170,6 +179,20 @@ class _$PropertyReviewSerializer implements PrimitiveSerializer<PropertyReview> 
       yield serializers.serialize(
         object.residenceMonths,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.residenceDuration != null) {
+      yield r'residenceDuration';
+      yield serializers.serialize(
+        object.residenceDuration,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.residencePeriod != null) {
+      yield r'residencePeriod';
+      yield serializers.serialize(
+        object.residencePeriod,
+        specifiedType: const FullType(PropertyReviewResidencePeriodEnum),
       );
     }
     if (object.publishedAt != null) {
@@ -304,6 +327,22 @@ class _$PropertyReviewSerializer implements PrimitiveSerializer<PropertyReview> 
           if (valueDes == null) continue;
           result.residenceMonths = valueDes;
           break;
+        case r'residenceDuration':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.residenceDuration = valueDes;
+          break;
+        case r'residencePeriod':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(PropertyReviewResidencePeriodEnum),
+          ) as PropertyReviewResidencePeriodEnum?;
+          if (valueDes == null) continue;
+          result.residencePeriod = valueDes;
+          break;
         case r'publishedAt':
           final valueDes = serializers.deserialize(
             value,
@@ -372,5 +411,28 @@ class PropertyReviewTypeEnum extends EnumClass {
 
   static BuiltSet<PropertyReviewTypeEnum> get values => _$propertyReviewTypeEnumValues;
   static PropertyReviewTypeEnum valueOf(String name) => _$propertyReviewTypeEnumValueOf(name);
+}
+
+class PropertyReviewResidencePeriodEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'DAY')
+  static const PropertyReviewResidencePeriodEnum DAY = _$propertyReviewResidencePeriodEnum_DAY;
+  @BuiltValueEnumConst(wireName: r'WEEK')
+  static const PropertyReviewResidencePeriodEnum WEEK = _$propertyReviewResidencePeriodEnum_WEEK;
+  @BuiltValueEnumConst(wireName: r'MONTH')
+  static const PropertyReviewResidencePeriodEnum MONTH = _$propertyReviewResidencePeriodEnum_MONTH;
+  @BuiltValueEnumConst(wireName: r'QUARTER')
+  static const PropertyReviewResidencePeriodEnum QUARTER = _$propertyReviewResidencePeriodEnum_QUARTER;
+  @BuiltValueEnumConst(wireName: r'YEAR')
+  static const PropertyReviewResidencePeriodEnum YEAR = _$propertyReviewResidencePeriodEnum_YEAR;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const PropertyReviewResidencePeriodEnum unknownDefaultOpenApi = _$propertyReviewResidencePeriodEnum_unknownDefaultOpenApi;
+
+  static Serializer<PropertyReviewResidencePeriodEnum> get serializer => _$propertyReviewResidencePeriodEnumSerializer;
+
+  const PropertyReviewResidencePeriodEnum._(String name): super(name);
+
+  static BuiltSet<PropertyReviewResidencePeriodEnum> get values => _$propertyReviewResidencePeriodEnumValues;
+  static PropertyReviewResidencePeriodEnum valueOf(String name) => _$propertyReviewResidencePeriodEnumValueOf(name);
 }
 

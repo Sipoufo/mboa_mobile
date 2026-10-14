@@ -223,6 +223,7 @@ class Contract extends Equatable {
     this.changeRequests = const [],
     this.awaiting = ContractParty.unknown,
     this.canSign = false,
+    this.canAccept = false,
     this.residentReviewEligible = false,
     this.lockedAt,
     this.createdAt,
@@ -272,6 +273,12 @@ class Contract extends Equatable {
   /// Server-computed: RM-M08-02 (both accounts verified) and the acceptance
   /// are its business, not the app's.
   final bool canSign;
+
+  /// Server-computed (RM-M08-02 / CE-M08-03): true for the tenant while the
+  /// contract is SENT or CHANGES_REQUESTED — the window to accept or contest.
+  /// The landlord never gets it. Gates both tenant actions, so the screen
+  /// does not work out whose move it is.
+  final bool canAccept;
 
   final bool residentReviewEligible;
   final DateTime? lockedAt;
@@ -324,6 +331,7 @@ class Contract extends Equatable {
                 const [],
         awaiting: ContractParty.fromResponse(response.awaiting),
         canSign: response.canSign ?? false,
+        canAccept: response.canAccept ?? false,
         residentReviewEligible: response.residentReviewEligible ?? false,
         lockedAt: response.lockedAt?.toLocal(),
         createdAt: response.createdAt?.toLocal(),
@@ -357,6 +365,7 @@ class Contract extends Equatable {
         changeRequests,
         awaiting,
         canSign,
+        canAccept,
         residentReviewEligible,
         lockedAt,
         createdAt,

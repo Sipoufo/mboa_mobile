@@ -26,6 +26,8 @@ void main() {
         comment: 'Coupures d’eau fréquentes.',
         cons: const ['Eau'],
         residenceMonths: 12,
+        residenceDuration: 12,
+        residencePeriod: RentalPeriod.month,
         publishedAt: DateTime(2026, 3, 2),
         replies: replies,
       );

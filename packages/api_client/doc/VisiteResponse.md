@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **clientConfirmedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **cancellationReason** | **String** |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**agentRating** | **int** |  | [optional] 
+**visitorPhone** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -62,5 +62,15 @@ void main() {
       // TODO
     });
 
+    // int agentRating
+    test('to test the property `agentRating`', () async {
+      // TODO
+    });
+
+    // String visitorPhone
+    test('to test the property `visitorPhone`', () async {
+      // TODO
+    });
+
   });
 }

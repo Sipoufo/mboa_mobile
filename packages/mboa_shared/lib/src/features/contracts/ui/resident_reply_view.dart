@@ -145,9 +145,9 @@ class _Review extends StatelessWidget {
             spacing: Dimens.spacingSm,
             runSpacing: Dimens.spacingXs,
             children: [
-              if (review.residenceMonths case final months? when months > 0)
+              if (review.stayLabel(l10n) case final stay?)
                 Text(
-                  l10n.listingReviewMonths(months),
+                  stay,
                   style: context.mboaText.caption
                       .copyWith(color: colors.textTertiary),
                 ),

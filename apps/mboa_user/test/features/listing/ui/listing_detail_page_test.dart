@@ -182,6 +182,8 @@ void main() {
               rating: 4,
               comment: 'Corrigé après six mois.',
               residenceMonths: 14,
+              residenceDuration: 14,
+              residencePeriod: RentalPeriod.month,
               publishedAt: DateTime(2026, 8, 12),
               editedAt: DateTime(2026, 9, 3),
             ),
@@ -191,9 +193,11 @@ void main() {
               authorName: 'Ndongo Bile',
               rating: 5,
               comment: 'Séjour court mais impeccable.',
-              // A weekly let rounds to zero whole months
-              // (docs/backend-requests.md §24.2).
+              // §24.2 — a 5-day let. It used to round to residenceMonths:0 and
+              // show "0 mois"; now it carries its real unit and reads "5 jours".
               residenceMonths: 0,
+              residenceDuration: 5,
+              residencePeriod: RentalPeriod.day,
               publishedAt: DateTime(2026, 9, 20),
             ),
           ],
@@ -206,8 +210,9 @@ void main() {
       // rendered, so a revised review looked identical to an original one.
       expect(find.textContaining('Corrigé le'), findsOneWidget);
       expect(find.text('14 mois sur place'), findsOneWidget);
-      // And "0 mois sur place" under somebody's review is both wrong and
-      // insulting, so a tenancy too short to count says nothing at all.
+      // §24.2 — the short let reads its real unit, "5 jours sur place", instead
+      // of rounding to the wrong, insulting "0 mois".
+      expect(find.text('5 jours sur place'), findsOneWidget);
       expect(find.textContaining('0 mois'), findsNothing);
     },
   );

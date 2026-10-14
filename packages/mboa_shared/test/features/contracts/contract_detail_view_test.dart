@@ -25,6 +25,7 @@ void main() {
     ContractStatus status = ContractStatus.sent,
     ContractParty awaiting = ContractParty.tenant,
     bool canSign = false,
+    bool canAccept = false,
   }) =>
       Contract(
         id: 'c-1',
@@ -39,11 +40,15 @@ void main() {
         durationUnits: 12,
         awaiting: awaiting,
         canSign: canSign,
+        canAccept: canAccept,
       );
 
   setUp(() {
     detail = MockContractDetailBloc();
-    when(() => detail.state).thenReturn(ContractDetailReady(contract()));
+    // canAccept is the server's verdict that the tenant may accept or contest
+    // (§24.3); most tenant-side cases here are exactly that situation.
+    when(() => detail.state)
+        .thenReturn(ContractDetailReady(contract(canAccept: true)));
   });
 
   Future<void> pump(WidgetTester tester, Widget child) async {
@@ -66,7 +71,7 @@ void main() {
 
   group("the tenant's side", () {
     testWidgets(
-      'RM-M08-02 — the terms can be taken or contested while the ball is theirs',
+      'RM-M08-02 — canAccept offers both taking the terms and contesting them',
       (tester) async {
         await pump(
           tester,
@@ -86,6 +91,8 @@ void main() {
       (tester) async {
         when(() => detail.state).thenReturn(
           ContractDetailReady(
+            // canAccept false: the server says the tenant has nothing to do
+            // while the landlord owes an answer.
             contract(
               status: ContractStatus.changesRequested,
               awaiting: ContractParty.prestataire,
@@ -158,6 +165,12 @@ void main() {
 
   group("the landlord's side", () {
     testWidgets('redrafting is offered, accepting is not', (tester) async {
+      // The server never sets canAccept for the landlord — it is the tenant's
+      // verdict. So the accept/contest pair cannot appear here regardless of
+      // which app passes `viewer`.
+      when(() => detail.state).thenReturn(
+        ContractDetailReady(contract(canAccept: false)),
+      );
       await pump(
         tester,
         ContractDetailView(

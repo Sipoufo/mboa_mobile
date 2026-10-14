@@ -601,15 +601,13 @@ class _Review extends StatelessWidget {
                       .copyWith(color: colors.textSecondary),
                 ),
               ),
-              // `> 0` because `residenceMonths` is whole months and a weekly
-              // let rounds to zero — "0 mois sur place" under somebody's
-              // review would be both wrong and insulting. The real unit is
-              // docs/backend-requests.md §24.2; until it exists, a short
-              // tenancy simply says nothing about its length.
-              if (review.residenceMonths case final months? when months > 0) ...[
+              // §24.2 — the stay in the contract's own unit: "3 jours",
+              // "12 mois". A short let says its real length now, instead of
+              // rounding to "0 mois". Null (no duration) shows nothing.
+              if (review.stayLabel(l10n) case final stay?) ...[
                 const SizedBox(width: Dimens.spacingSm),
                 Text(
-                  l10n.listingReviewMonths(months),
+                  stay,
                   style: context.mboaText.caption
                       .copyWith(color: colors.textTertiary),
                 ),

@@ -140,7 +140,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listBookableSlots**
-> BuiltList<VisitorSlots> listBookableSlots(annonceId)
+> BuiltList<VisitorSlots> listBookableSlots(annonceId, from, days)
 
 The bookable visitors for a listing, each with their own times (RM-M07-01)
 
@@ -150,9 +150,11 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getVisitesApi();
 final String annonceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final DateTime from = 2013-10-20T19:20:30+01:00; // DateTime | Start of the window (ISO instant); now when absent — page forward with it
+final int days = 56; // int | Days the window spans, 1–28
 
 try {
-    final response = api.listBookableSlots(annonceId);
+    final response = api.listBookableSlots(annonceId, from, days);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling VisitesApi->listBookableSlots: $e\n');
@@ -164,6 +166,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **annonceId** | **String**|  | 
+ **from** | **DateTime**| Start of the window (ISO instant); now when absent — page forward with it | [optional] 
+ **days** | **int**| Days the window spans, 1–28 | [optional] [default to 7]
 
 ### Return type
 

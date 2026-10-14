@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **changeRequests** | [**BuiltList&lt;ChangeRequestResponse&gt;**](ChangeRequestResponse.md) |  | [optional] 
 **awaiting** | **String** |  | [optional] 
 **canSign** | **bool** |  | [optional] 
+**canAccept** | **bool** |  | [optional] 
 **residentReviewEligible** | **bool** |  | [optional] 
 **lockedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 

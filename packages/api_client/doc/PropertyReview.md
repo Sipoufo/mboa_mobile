@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **photoKeys** | **BuiltList&lt;String&gt;** |  | [optional] 
 **perceivedCondition** | **int** |  | [optional] 
 **residenceMonths** | **int** |  | [optional] 
+**residenceDuration** | **int** |  | [optional] 
+**residencePeriod** | **String** |  | [optional] 
 **publishedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **editedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **replies** | [**BuiltList&lt;Reply&gt;**](Reply.md) |  | [optional] 

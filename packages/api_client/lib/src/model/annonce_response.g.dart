@@ -211,6 +211,47 @@ _$annonceResponseAmenitiesEnumValues =
       _$annonceResponseAmenitiesEnum_unknownDefaultOpenApi,
     ]);
 
+const AnnonceResponseArchivedReasonEnum
+_$annonceResponseArchivedReasonEnum_OWNER =
+    const AnnonceResponseArchivedReasonEnum._('OWNER');
+const AnnonceResponseArchivedReasonEnum
+_$annonceResponseArchivedReasonEnum_EXPIRED =
+    const AnnonceResponseArchivedReasonEnum._('EXPIRED');
+const AnnonceResponseArchivedReasonEnum
+_$annonceResponseArchivedReasonEnum_PLAN_LIMIT =
+    const AnnonceResponseArchivedReasonEnum._('PLAN_LIMIT');
+const AnnonceResponseArchivedReasonEnum
+_$annonceResponseArchivedReasonEnum_unknownDefaultOpenApi =
+    const AnnonceResponseArchivedReasonEnum._('unknownDefaultOpenApi');
+
+AnnonceResponseArchivedReasonEnum _$annonceResponseArchivedReasonEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'OWNER':
+      return _$annonceResponseArchivedReasonEnum_OWNER;
+    case 'EXPIRED':
+      return _$annonceResponseArchivedReasonEnum_EXPIRED;
+    case 'PLAN_LIMIT':
+      return _$annonceResponseArchivedReasonEnum_PLAN_LIMIT;
+    case 'unknownDefaultOpenApi':
+      return _$annonceResponseArchivedReasonEnum_unknownDefaultOpenApi;
+    default:
+      return _$annonceResponseArchivedReasonEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<AnnonceResponseArchivedReasonEnum>
+_$annonceResponseArchivedReasonEnumValues =
+    BuiltSet<AnnonceResponseArchivedReasonEnum>(
+      const <AnnonceResponseArchivedReasonEnum>[
+        _$annonceResponseArchivedReasonEnum_OWNER,
+        _$annonceResponseArchivedReasonEnum_EXPIRED,
+        _$annonceResponseArchivedReasonEnum_PLAN_LIMIT,
+        _$annonceResponseArchivedReasonEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 Serializer<AnnonceResponsePropertyTypeEnum>
 _$annonceResponsePropertyTypeEnumSerializer =
     _$AnnonceResponsePropertyTypeEnumSerializer();
@@ -222,6 +263,9 @@ Serializer<AnnonceResponseStatusEnum> _$annonceResponseStatusEnumSerializer =
 Serializer<AnnonceResponseAmenitiesEnum>
 _$annonceResponseAmenitiesEnumSerializer =
     _$AnnonceResponseAmenitiesEnumSerializer();
+Serializer<AnnonceResponseArchivedReasonEnum>
+_$annonceResponseArchivedReasonEnumSerializer =
+    _$AnnonceResponseArchivedReasonEnumSerializer();
 
 class _$AnnonceResponsePropertyTypeEnumSerializer
     implements PrimitiveSerializer<AnnonceResponsePropertyTypeEnum> {
@@ -393,6 +437,43 @@ class _$AnnonceResponseAmenitiesEnumSerializer
   );
 }
 
+class _$AnnonceResponseArchivedReasonEnumSerializer
+    implements PrimitiveSerializer<AnnonceResponseArchivedReasonEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'OWNER': 'OWNER',
+    'EXPIRED': 'EXPIRED',
+    'PLAN_LIMIT': 'PLAN_LIMIT',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'OWNER': 'OWNER',
+    'EXPIRED': 'EXPIRED',
+    'PLAN_LIMIT': 'PLAN_LIMIT',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[AnnonceResponseArchivedReasonEnum];
+  @override
+  final String wireName = 'AnnonceResponseArchivedReasonEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AnnonceResponseArchivedReasonEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  AnnonceResponseArchivedReasonEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AnnonceResponseArchivedReasonEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$AnnonceResponse extends AnnonceResponse {
   @override
   final String? id;
@@ -458,6 +539,8 @@ class _$AnnonceResponse extends AnnonceResponse {
   final DateTime? expiresAt;
   @override
   final DateTime? createdAt;
+  @override
+  final AnnonceResponseArchivedReasonEnum? archivedReason;
 
   factory _$AnnonceResponse([void Function(AnnonceResponseBuilder)? updates]) =>
       (AnnonceResponseBuilder()..update(updates))._build();
@@ -495,6 +578,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.publishedAt,
     this.expiresAt,
     this.createdAt,
+    this.archivedReason,
   }) : super._();
   @override
   AnnonceResponse rebuild(void Function(AnnonceResponseBuilder) updates) =>
@@ -538,7 +622,8 @@ class _$AnnonceResponse extends AnnonceResponse {
         viewCount == other.viewCount &&
         publishedAt == other.publishedAt &&
         expiresAt == other.expiresAt &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        archivedReason == other.archivedReason;
   }
 
   @override
@@ -576,6 +661,7 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, publishedAt.hashCode);
     _$hash = $jc(_$hash, expiresAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, archivedReason.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -614,7 +700,8 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('viewCount', viewCount)
           ..add('publishedAt', publishedAt)
           ..add('expiresAt', expiresAt)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('archivedReason', archivedReason))
         .toString();
   }
 }
@@ -763,6 +850,12 @@ class AnnonceResponseBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  AnnonceResponseArchivedReasonEnum? _archivedReason;
+  AnnonceResponseArchivedReasonEnum? get archivedReason =>
+      _$this._archivedReason;
+  set archivedReason(AnnonceResponseArchivedReasonEnum? archivedReason) =>
+      _$this._archivedReason = archivedReason;
+
   AnnonceResponseBuilder() {
     AnnonceResponse._defaults(this);
   }
@@ -802,6 +895,7 @@ class AnnonceResponseBuilder
       _publishedAt = $v.publishedAt;
       _expiresAt = $v.expiresAt;
       _createdAt = $v.createdAt;
+      _archivedReason = $v.archivedReason;
       _$v = null;
     }
     return this;
@@ -858,6 +952,7 @@ class AnnonceResponseBuilder
             publishedAt: publishedAt,
             expiresAt: expiresAt,
             createdAt: createdAt,
+            archivedReason: archivedReason,
           );
     } catch (_) {
       late String _$failedField;

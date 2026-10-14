@@ -20,8 +20,8 @@ class SignalementsApi {
 
   const SignalementsApi(this._dio, this._serializers);
 
-  /// Report a listing or a message
-  /// The reporter is only told the report was received — the outcome is never disclosed to them (RM-M23-05).
+  /// Report a listing, a message or a review; the reason must fit the target
+  /// ANNONCE: FRAUDULENT_LISTING, ABNORMAL_PRICE, INAPPROPRIATE_CONTENT. MESSAGE and REVIEW: INAPPROPRIATE_CONTENT, HARASSMENT. Anything else is 400 REASON_NOT_APPLICABLE. One upheld report removes a review; a listing takes three. The reporter is only told the report was received — the outcome is never disclosed to them (RM-M23-05).
   ///
   /// Parameters:
   /// * [createSignalementRequest] 

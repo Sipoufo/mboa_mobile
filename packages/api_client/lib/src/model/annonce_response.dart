@@ -45,6 +45,7 @@ part 'annonce_response.g.dart';
 /// * [publishedAt] 
 /// * [expiresAt] 
 /// * [createdAt] 
+/// * [archivedReason] 
 @BuiltValue()
 abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -146,6 +147,10 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
+
+  @BuiltValueField(wireName: r'archivedReason')
+  AnnonceResponseArchivedReasonEnum? get archivedReason;
+  // enum archivedReasonEnum {  OWNER,  EXPIRED,  PLAN_LIMIT,  };
 
   AnnonceResponse._();
 
@@ -392,6 +397,13 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
       yield serializers.serialize(
         object.createdAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.archivedReason != null) {
+      yield r'archivedReason';
+      yield serializers.serialize(
+        object.archivedReason,
+        specifiedType: const FullType(AnnonceResponseArchivedReasonEnum),
       );
     }
   }
@@ -673,6 +685,14 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           if (valueDes == null) continue;
           result.createdAt = valueDes;
           break;
+        case r'archivedReason':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(AnnonceResponseArchivedReasonEnum),
+          ) as AnnonceResponseArchivedReasonEnum?;
+          if (valueDes == null) continue;
+          result.archivedReason = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -798,5 +818,24 @@ class AnnonceResponseAmenitiesEnum extends EnumClass {
 
   static BuiltSet<AnnonceResponseAmenitiesEnum> get values => _$annonceResponseAmenitiesEnumValues;
   static AnnonceResponseAmenitiesEnum valueOf(String name) => _$annonceResponseAmenitiesEnumValueOf(name);
+}
+
+class AnnonceResponseArchivedReasonEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'OWNER')
+  static const AnnonceResponseArchivedReasonEnum OWNER = _$annonceResponseArchivedReasonEnum_OWNER;
+  @BuiltValueEnumConst(wireName: r'EXPIRED')
+  static const AnnonceResponseArchivedReasonEnum EXPIRED = _$annonceResponseArchivedReasonEnum_EXPIRED;
+  @BuiltValueEnumConst(wireName: r'PLAN_LIMIT')
+  static const AnnonceResponseArchivedReasonEnum PLAN_LIMIT = _$annonceResponseArchivedReasonEnum_PLAN_LIMIT;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const AnnonceResponseArchivedReasonEnum unknownDefaultOpenApi = _$annonceResponseArchivedReasonEnum_unknownDefaultOpenApi;
+
+  static Serializer<AnnonceResponseArchivedReasonEnum> get serializer => _$annonceResponseArchivedReasonEnumSerializer;
+
+  const AnnonceResponseArchivedReasonEnum._(String name): super(name);
+
+  static BuiltSet<AnnonceResponseArchivedReasonEnum> get values => _$annonceResponseArchivedReasonEnumValues;
+  static AnnonceResponseArchivedReasonEnum valueOf(String name) => _$annonceResponseArchivedReasonEnumValueOf(name);
 }
 

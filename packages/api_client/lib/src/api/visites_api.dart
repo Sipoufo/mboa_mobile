@@ -266,6 +266,8 @@ class VisitesApi {
   ///
   /// Parameters:
   /// * [annonceId] 
+  /// * [from] - Start of the window (ISO instant); now when absent — page forward with it
+  /// * [days] - Days the window spans, 1–28
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -277,6 +279,8 @@ class VisitesApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<VisitorSlots>>> listBookableSlots({ 
     required String annonceId,
+    DateTime? from,
+    int? days = 7,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -305,6 +309,8 @@ class VisitesApi {
 
     final _queryParameters = <String, dynamic>{
       r'annonceId': encodeQueryParameter(_serializers, annonceId, const FullType(String)),
+      if (from != null) r'from': encodeQueryParameter(_serializers, from, const FullType(DateTime)),
+      if (days != null) r'days': encodeQueryParameter(_serializers, days, const FullType(int)),
     };
 
     final _response = await _dio.request<Object>(

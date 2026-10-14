@@ -40,6 +40,7 @@ Name | Type | Description | Notes
 **publishedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **expiresAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**archivedReason** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

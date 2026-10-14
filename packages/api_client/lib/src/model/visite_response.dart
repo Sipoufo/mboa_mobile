@@ -23,6 +23,8 @@ part 'visite_response.g.dart';
 /// * [clientConfirmedAt] 
 /// * [cancellationReason] 
 /// * [createdAt] 
+/// * [agentRating] 
+/// * [visitorPhone] 
 @BuiltValue()
 abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -60,6 +62,12 @@ abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBui
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
+
+  @BuiltValueField(wireName: r'agentRating')
+  int? get agentRating;
+
+  @BuiltValueField(wireName: r'visitorPhone')
+  String? get visitorPhone;
 
   VisiteResponse._();
 
@@ -159,6 +167,20 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
       yield serializers.serialize(
         object.createdAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.agentRating != null) {
+      yield r'agentRating';
+      yield serializers.serialize(
+        object.agentRating,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.visitorPhone != null) {
+      yield r'visitorPhone';
+      yield serializers.serialize(
+        object.visitorPhone,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -271,6 +293,22 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
           ) as DateTime?;
           if (valueDes == null) continue;
           result.createdAt = valueDes;
+          break;
+        case r'agentRating':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.agentRating = valueDes;
+          break;
+        case r'visitorPhone':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.visitorPhone = valueDes;
           break;
         default:
           unhandled.add(key);

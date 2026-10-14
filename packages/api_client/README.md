@@ -239,7 +239,7 @@ Class | Method | HTTP request | Description
 [*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**listAnnonceReviews**](doc/SearchApi.md#listannoncereviews) | **GET** /api/v1/search/annonces/{id}/reviews | A property&#39;s reviews — visits and tenancies in one feed (RM-M27-05)
 [*SearchApi*](doc/SearchApi.md) | [**searchListings**](doc/SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
-[*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing or a message
+[*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing, a message or a review; the reason must fit the target
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getMySubscription**](doc/SubscriptionsApi.md#getmysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPayment**](doc/SubscriptionsApi.md#getpayment) | **GET** /api/v1/subscriptions/payments/{id} | Get one payment&#39;s current status (poll this after initiating a payment)
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPaymentReceipt**](doc/SubscriptionsApi.md#getpaymentreceipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt

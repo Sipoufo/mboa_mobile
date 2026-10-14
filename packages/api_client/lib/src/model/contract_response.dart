@@ -39,6 +39,7 @@ part 'contract_response.g.dart';
 /// * [changeRequests] 
 /// * [awaiting] 
 /// * [canSign] 
+/// * [canAccept] 
 /// * [residentReviewEligible] 
 /// * [lockedAt] 
 /// * [createdAt] 
@@ -116,6 +117,9 @@ abstract class ContractResponse implements Built<ContractResponse, ContractRespo
 
   @BuiltValueField(wireName: r'canSign')
   bool? get canSign;
+
+  @BuiltValueField(wireName: r'canAccept')
+  bool? get canAccept;
 
   @BuiltValueField(wireName: r'residentReviewEligible')
   bool? get residentReviewEligible;
@@ -310,6 +314,13 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
       yield r'canSign';
       yield serializers.serialize(
         object.canSign,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.canAccept != null) {
+      yield r'canAccept';
+      yield serializers.serialize(
+        object.canAccept,
         specifiedType: const FullType(bool),
       );
     }
@@ -547,6 +558,14 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
           ) as bool?;
           if (valueDes == null) continue;
           result.canSign = valueDes;
+          break;
+        case r'canAccept':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.canAccept = valueDes;
           break;
         case r'residentReviewEligible':
           final valueDes = serializers.deserialize(
