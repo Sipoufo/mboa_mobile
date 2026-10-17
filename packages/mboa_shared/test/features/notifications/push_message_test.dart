@@ -3,18 +3,24 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 void main() {
   group('PushType.parse', () {
-    test('recognises the payment types that close the M13 loop', () {
+    test('reads every published PushTarget value', () {
       expect(PushType.parse('PAYMENT_CONFIRMED'), PushType.paymentConfirmed);
-      expect(PushType.parse('subscription_activated'), PushType.paymentConfirmed);
+      expect(PushType.parse('MESSAGE'), PushType.message);
+      expect(PushType.parse('ANNONCE'), PushType.annonce);
+      expect(PushType.parse('VISIT'), PushType.visit);
+      expect(PushType.parse('KYC'), PushType.kyc);
+      expect(PushType.parse('CONTRACT'), PushType.contract);
+      expect(PushType.parse('RESIDENCE'), PushType.residence);
+      expect(PushType.parse('SAVED_SEARCH'), PushType.savedSearch);
     });
 
-    test('is tolerant of casing and vocabulary', () {
-      expect(PushType.parse('new_message'), PushType.message);
-      expect(PushType.parse('CHAT'), PushType.message);
-      expect(PushType.parse('annonce_published'), PushType.annonce);
-      expect(PushType.parse('LISTING_EXPIRED'), PushType.annonce);
-      expect(PushType.parse('visit_scheduled'), PushType.visit);
-      expect(PushType.parse('KYC_APPROVED'), PushType.kyc);
+    test('is tolerant of casing and whitespace, not of vocabulary', () {
+      expect(PushType.parse(' visit '), PushType.visit);
+      expect(PushType.parse('contract'), PushType.contract);
+      // Matched exactly: a value that merely contains a known one is unknown,
+      // not silently routed somewhere it does not belong.
+      expect(PushType.parse('VISIT_SCHEDULED'), PushType.unknown);
+      expect(PushType.parse('LISTING_EXPIRED'), PushType.unknown);
     });
 
     test('falls back to unknown rather than throwing', () {

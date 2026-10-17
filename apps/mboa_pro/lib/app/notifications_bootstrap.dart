@@ -34,21 +34,39 @@ void _showInApp(BuildContext context, PushMessage message) {
 
 /// CA-M03-02: a tap opens the screen the notification is about, not just home.
 ///
-/// The `{type, entityId}` payload contract is still unagreed with the backend
-/// (see `docs/notifications-setup.md`), so unmapped types fall through to the
-/// home rather than being dropped.
+/// The payload is `{type, entityId}`, the backend's append-only `PushTarget`.
+/// No id, or a type this build does not know, lands on the shell.
 void _route(AppRouter router, PushMessage message) {
+  final id = message.entityId;
+  final isAgent = getIt<SessionSnapshot>().role?.isAgent ?? false;
+
   switch (message.type) {
     case PushType.paymentConfirmed:
-      // Closes the loop on M13's SubscribePendingHandoff.
       router.push(const SubscriptionRoute());
     case PushType.kyc:
       router.push(CertificationsRoute());
-    case PushType.annonce:
-    case PushType.message:
+    case PushType.annonce when id != null:
+      router.push(AnnonceDetailRoute(id: id));
+    case PushType.contract when id != null:
+      router.push(ContractDetailRoute(id: id));
+    case PushType.visit when id != null && isAgent:
+      router.push(VisitDetailRoute(id: id));
+    case PushType.visit when isAgent:
+      router.navigate(const AgentShellRoute(children: [AgentVisitsRoute()]));
     case PushType.visit:
+      // The owner lands where a request is accepted or declined.
+      router.navigate(
+        const ProShellRoute(children: [PrestataireVisitsRoute()]),
+      );
+    case PushType.residence:
+      router.navigate(const AgentShellRoute(children: [AgentMissionsRoute()]));
+    case PushType.message:
+      // No endpoint reads one conversation by id; the inbox lists it first.
+      router.push(const MessagesRoute());
+    case PushType.annonce:
+    case PushType.contract:
+    case PushType.savedSearch:
     case PushType.unknown:
-      // Modules not built yet (M10/M12/M16) — land on the shell.
       router.navigate(const AuthenticatedRouter());
   }
 }

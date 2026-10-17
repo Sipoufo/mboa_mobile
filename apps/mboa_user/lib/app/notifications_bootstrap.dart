@@ -30,9 +30,29 @@ void _showInApp(BuildContext context, PushMessage message) {
 
 /// CA-M03-02: a tap opens the screen the notification is about.
 ///
-/// The public app's modules (search, favourites, messaging, visits) aren't
-/// built, so everything lands on the shell for now. The payload contract is
-/// still unagreed — see `docs/notifications-setup.md`.
+/// The payload is `{type, entityId}`, the backend's append-only `PushTarget`.
+/// No id, or a type this build does not know, lands on the shell.
 void _route(AppRouter router, PushMessage message) {
-  router.navigate(const AuthenticatedRouter());
+  final id = message.entityId;
+
+  switch (message.type) {
+    case PushType.visit when id != null:
+      router.push(AuthenticatedRouter(children: [VisitDetailRoute(visitId: id)]));
+    case PushType.visit:
+      router.push(const AuthenticatedRouter(children: [MyVisitsRoute()]));
+    case PushType.annonce when id != null:
+      router.push(ListingDetailRoute(id: id));
+    case PushType.contract when id != null:
+      router.push(AuthenticatedRouter(children: [MyContractDetailRoute(id: id)]));
+    case PushType.message:
+      router.navigate(const UserShellRoute(children: [MessagesRoute()]));
+    case PushType.annonce:
+    case PushType.contract:
+    case PushType.paymentConfirmed:
+    case PushType.kyc:
+    case PushType.residence:
+    case PushType.savedSearch:
+    case PushType.unknown:
+      router.navigate(const AuthenticatedRouter());
+  }
 }
