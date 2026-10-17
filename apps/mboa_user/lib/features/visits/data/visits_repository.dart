@@ -13,6 +13,13 @@ class VisitAlreadyBooked implements Exception {
   const VisitAlreadyBooked();
 }
 
+/// §19 — `400 INVALID_VISIT_TIME`: a proposal less than an hour ahead or more
+/// than 60 days out. Named so the screen can say *which* thing was wrong
+/// rather than "an error occurred".
+class VisitTimeRejected implements Exception {
+  const VisitTimeRejected();
+}
+
 /// Planning a visit, and the visits already planned (CDC M07).
 class VisitsRepository {
   VisitsRepository({required DioClient dioClient, required HiveCache cache})
@@ -32,8 +39,19 @@ class VisitsRepository {
   /// Visitors with nothing to offer are kept: their `reason` is what CE-M07-01
   /// asks the screen to say, and dropping them would leave the tenant with the
   /// blank "no slots" screen the reason exists to replace.
-  Future<List<BookableVisitor>> visitorsFor(String annonceId) async {
-    final response = await _api.listBookableSlots(annonceId: annonceId);
+  ///
+  /// §21 — [from] and [days] page through the calendar, up to 28 days ahead.
+  /// Null [from] is "from now", which is the server's default too.
+  Future<List<BookableVisitor>> visitorsFor(
+    String annonceId, {
+    DateTime? from,
+    int days = 7,
+  }) async {
+    final response = await _api.listBookableSlots(
+      annonceId: annonceId,
+      from: from?.toUtc(),
+      days: days,
+    );
     return (response.data?.toList() ?? const <VisitorSlots>[])
         .map(BookableVisitor.fromResponse)
         .nonNulls
@@ -62,6 +80,12 @@ class VisitsRepository {
       return Visit.fromResponse(visit);
     } on DioException catch (error) {
       if (error.response?.statusCode == 409) throw const VisitAlreadyBooked();
+      final body = error.response?.data;
+      if (error.response?.statusCode == 400 &&
+          body is Map &&
+          body['error'] == 'INVALID_VISIT_TIME') {
+        throw const VisitTimeRejected();
+      }
       rethrow;
     }
   }

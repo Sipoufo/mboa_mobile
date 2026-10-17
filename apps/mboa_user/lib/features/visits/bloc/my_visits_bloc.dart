@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
@@ -110,10 +111,17 @@ class MyVisitsBloc extends Bloc<MyVisitsEvent, MyVisitsState> {
         event.visitId,
         emit,
         () async {
-          await _repository.rateVisitor(
-            visitId: event.visitId,
-            rating: event.rating,
-          );
+          try {
+            await _repository.rateVisitor(
+              visitId: event.visitId,
+              rating: event.rating,
+            );
+          } on DioException catch (e) {
+            // §22 — `409 ALREADY_RATED` means it is done, which is what the
+            // tenant wanted. Treated as an answer, not an error: the stars
+            // simply give way to "merci", as they would have on success.
+            if (e.response?.statusCode != 409) rethrow;
+          }
           _rated.add(event.visitId);
           final current = _previous;
           if (current != null) {

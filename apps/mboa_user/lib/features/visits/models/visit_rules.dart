@@ -22,6 +22,10 @@ abstract final class VisitRules {
 
   static bool canCancel(Visit visit, {DateTime? now}) {
     if (!visit.status.isOpen) return false;
+    // §19 — an unanswered request is withdrawn **at any time**. The four-hour
+    // rule protects a visitor already on their way, and nobody is on their way
+    // to a time the owner has not accepted. The server enforces the same.
+    if (visit.status == VisitStatus.requested) return true;
     final at = visit.scheduledAt;
     // A visit with no time on it cannot be too late to cancel.
     if (at == null) return true;
@@ -31,9 +35,14 @@ abstract final class VisitRules {
   /// Inside four hours, cancelling is blocked and the tenant is told to reach
   /// the visitor directly (CE-M07-03) — they may already be on their way.
   static bool isTooLateToCancel(Visit visit, {DateTime? now}) =>
-      visit.status.isOpen &&
+      visit.status == VisitStatus.scheduled &&
       visit.scheduledAt != null &&
       !canCancel(visit, now: now);
+
+  /// A request is withdrawn, a visit is cancelled — the same call, two
+  /// different things for the person on the other side, so two words.
+  static bool isWithdrawal(Visit visit) =>
+      visit.status == VisitStatus.requested;
 
   /// RM-M07-05 — "I am here", once, around the hour, and only if this half is
   /// still missing.

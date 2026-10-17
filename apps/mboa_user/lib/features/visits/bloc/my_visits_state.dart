@@ -42,7 +42,13 @@ final class MyVisitsReady extends MyVisitsState {
   /// Rated in this session. The endpoint accepts a rating once (RM-M07-07) and
   /// nothing in `VisiteResponse` says whether one was given, so the stars are
   /// hidden here and the screen stops offering what would be refused.
+  /// Ratings given in this session, shown before the next read confirms
+  /// them. The lasting record is [Visit.agentRating]; use [isRated].
   final Set<String> ratedVisitIds;
+
+  /// §22 — rated if the server says so, or if it was just done here.
+  bool isRated(Visit visit) =>
+      visit.isRated || ratedVisitIds.contains(visit.id);
 
   /// RM-M07bis-01 — one report per visit, so a visit in here is done being
   /// written about. Read from the server, because `VisiteResponse` carries no

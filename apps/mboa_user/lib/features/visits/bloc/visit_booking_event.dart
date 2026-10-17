@@ -35,6 +35,17 @@ final class BookingSlotSelected extends VisitBookingEvent {
   List<Object?> get props => [slot];
 }
 
+/// §21 — page the calendar: week 0 is the next seven days, and the window
+/// may reach as far as the 28th day.
+final class BookingWeekChanged extends VisitBookingEvent {
+  const BookingWeekChanged(this.weekOffset);
+
+  final int weekOffset;
+
+  @override
+  List<Object?> get props => [weekOffset];
+}
+
 final class BookingSubmitted extends VisitBookingEvent {
   const BookingSubmitted();
 }

@@ -152,9 +152,11 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m57(count) =>
       "${Intl.plural(count, zero: 'Aucune visite', one: '1 visite', other: '${count} visites')}";
 
-  static String m58(time) => "Confirmé à ${time}";
+  static String m58(from, to) => "Du ${from} au ${to}";
 
-  static String m59(distance) =>
+  static String m59(time) => "Confirmé à ${time}";
+
+  static String m60(distance) =>
       "Tu es à environ ${distance} m. Explique pourquoi tu confirmes ta présence depuis cet endroit.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1092,6 +1094,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "listingNoVisitor": MessageLookupByLibrary.simpleMessage(
       "Ce bien n\'accepte pas encore de visites.",
     ),
+    "listingOffMarketBanner": MessageLookupByLibrary.simpleMessage(
+      "Cette annonce n\'est plus en ligne.",
+    ),
     "listingOfflineBanner": MessageLookupByLibrary.simpleMessage(
       "Fiche hors ligne — certaines actions sont indisponibles.",
     ),
@@ -1101,7 +1106,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "listingProvider": MessageLookupByLibrary.simpleMessage("Le prestataire"),
     "listingRatingSummary": m29,
+    "listingRentedBanner": MessageLookupByLibrary.simpleMessage(
+      "Ce bien est déjà loué.",
+    ),
     "listingReport": MessageLookupByLibrary.simpleMessage("Signaler"),
+    "listingReservedBanner": MessageLookupByLibrary.simpleMessage(
+      "Ce bien est réservé pour le moment.",
+    ),
     "listingReviewEdited": m30,
     "listingReviewMonths": m31,
     "listingReviewResident": MessageLookupByLibrary.simpleMessage("Locataire"),
@@ -1755,14 +1766,20 @@ class MessageLookup extends MessageLookupByLibrary {
       "Qui te fait visiter",
     ),
     "visitBookWindow": MessageLookupByLibrary.simpleMessage(
-      "Créneaux des 7 prochains jours.",
+      "Les 7 prochains jours",
     ),
     "visitBookedTitle": MessageLookupByLibrary.simpleMessage(
       "Visite confirmée",
     ),
+    "visitCallHint": MessageLookupByLibrary.simpleMessage(
+      "Le numéro du visiteur est visible jusqu\'à la fin de la visite.",
+    ),
+    "visitCallVisitor": MessageLookupByLibrary.simpleMessage(
+      "Appeler le visiteur",
+    ),
     "visitCancel": MessageLookupByLibrary.simpleMessage("Annuler la visite"),
     "visitCancelTooLate": MessageLookupByLibrary.simpleMessage(
-      "L\'annulation n\'est plus possible. Contacte le visiteur par message.",
+      "L\'annulation n\'est plus possible : préviens le visiteur directement.",
     ),
     "visitConfirmPresence": MessageLookupByLibrary.simpleMessage(
       "Je suis sur place",
@@ -1774,10 +1791,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aucun horaire n\'a encore été déclaré pour ce bien. Contacte le prestataire via la messagerie.",
     ),
     "visitNoSlotBlocked": MessageLookupByLibrary.simpleMessage(
-      "Aucune disponibilité dans les 7 prochains jours.",
+      "Aucune disponibilité cette semaine.",
     ),
     "visitNoSlotBooked": MessageLookupByLibrary.simpleMessage(
-      "Tous les créneaux des 7 prochains jours sont réservés.",
+      "Tous les créneaux de cette semaine sont réservés.",
     ),
     "visitPresenceConfirmed": MessageLookupByLibrary.simpleMessage("Confirmé"),
     "visitPresenceExplainer": MessageLookupByLibrary.simpleMessage(
@@ -1789,6 +1806,22 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitPresenceVisitor": MessageLookupByLibrary.simpleMessage("Le visiteur"),
     "visitPresenceYou": MessageLookupByLibrary.simpleMessage("Toi"),
+    "visitProposeBounds": MessageLookupByLibrary.simpleMessage(
+      "Au moins une heure à l\'avance, au plus 60 jours.",
+    ),
+    "visitProposeChange": MessageLookupByLibrary.simpleMessage("Changer"),
+    "visitProposeHelp": MessageLookupByLibrary.simpleMessage(
+      "Le propriétaire fait lui-même la visite : propose un moment, il l\'accepte ou le décline.",
+    ),
+    "visitProposePick": MessageLookupByLibrary.simpleMessage(
+      "Choisir une date et une heure",
+    ),
+    "visitProposeSend": MessageLookupByLibrary.simpleMessage(
+      "Envoyer la demande",
+    ),
+    "visitProposeTitle": MessageLookupByLibrary.simpleMessage(
+      "Propose une date et une heure",
+    ),
     "visitRateBody": MessageLookupByLibrary.simpleMessage(
       "Facultatif. Cette note porte sur le service du visiteur, pas sur le bien.",
     ),
@@ -1797,12 +1830,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitRateTitle": MessageLookupByLibrary.simpleMessage("Noter le visiteur"),
     "visitRequestedBody": MessageLookupByLibrary.simpleMessage(
-      "Le visiteur doit confirmer ce créneau. Tu recevras une notification.",
+      "Le propriétaire doit encore confirmer l\'heure proposée. Tu recevras une notification.",
     ),
     "visitRequestedTitle": MessageLookupByLibrary.simpleMessage(
       "Demande envoyée",
     ),
     "visitSeeListing": MessageLookupByLibrary.simpleMessage("Voir le bien"),
+    "visitSeeNextWeek": MessageLookupByLibrary.simpleMessage(
+      "Voir la semaine suivante",
+    ),
     "visitStatusCancelled": MessageLookupByLibrary.simpleMessage("Annulée"),
     "visitStatusCompleted": MessageLookupByLibrary.simpleMessage("Effectuée"),
     "visitStatusNotFulfilled": MessageLookupByLibrary.simpleMessage(
@@ -1812,6 +1848,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "En attente de confirmation",
     ),
     "visitStatusScheduled": MessageLookupByLibrary.simpleMessage("Confirmée"),
+    "visitTimeRejected": MessageLookupByLibrary.simpleMessage(
+      "Cette heure ne peut pas être proposée : au moins une heure à l\'avance, au plus 60 jours.",
+    ),
     "visitVisitorAgent": MessageLookupByLibrary.simpleMessage("Agent Mboa"),
     "visitVisitorOwner": MessageLookupByLibrary.simpleMessage(
       "Le propriétaire",
@@ -1820,6 +1859,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitWaitingVisitor": MessageLookupByLibrary.simpleMessage(
       "Ta présence est confirmée. En attente du visiteur.",
     ),
+    "visitWeekNext": MessageLookupByLibrary.simpleMessage("Semaine suivante"),
+    "visitWeekPrev": MessageLookupByLibrary.simpleMessage("Semaine précédente"),
+    "visitWeekRange": m58,
+    "visitWithdraw": MessageLookupByLibrary.simpleMessage("Retirer ma demande"),
     "visitsActionFailed": MessageLookupByLibrary.simpleMessage(
       "Action impossible pour le moment.",
     ),
@@ -1911,7 +1954,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsPast": MessageLookupByLibrary.simpleMessage("Passées"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Numéro copié"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Locataire"),
-    "visitsPresenceConfirmedAt": m58,
+    "visitsPresenceConfirmedAt": m59,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "La visite n\'est validée que lorsque les deux présences sont confirmées.",
     ),
@@ -1946,7 +1989,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Locataire"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("Mes visites"),
-    "visitsTooFarBody": m59,
+    "visitsTooFarBody": m60,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer quand même",
     ),

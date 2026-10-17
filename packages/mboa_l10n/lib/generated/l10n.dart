@@ -1064,10 +1064,10 @@ class I18n {
     );
   }
 
-  /// `Le visiteur doit confirmer ce créneau. Tu recevras une notification.`
+  /// `Le propriétaire doit encore confirmer l'heure proposée. Tu recevras une notification.`
   String get visitRequestedBody {
     return Intl.message(
-      'Le visiteur doit confirmer ce créneau. Tu recevras une notification.',
+      'Le propriétaire doit encore confirmer l\'heure proposée. Tu recevras une notification.',
       name: 'visitRequestedBody',
       desc: 'RM-M15-06.',
       args: [],
@@ -1094,20 +1094,20 @@ class I18n {
     );
   }
 
-  /// `Aucune disponibilité dans les 7 prochains jours.`
+  /// `Aucune disponibilité cette semaine.`
   String get visitNoSlotBlocked {
     return Intl.message(
-      'Aucune disponibilité dans les 7 prochains jours.',
+      'Aucune disponibilité cette semaine.',
       name: 'visitNoSlotBlocked',
       desc: 'CE-M07-01 ALL_DAYS_BLOCKED.',
       args: [],
     );
   }
 
-  /// `Tous les créneaux des 7 prochains jours sont réservés.`
+  /// `Tous les créneaux de cette semaine sont réservés.`
   String get visitNoSlotBooked {
     return Intl.message(
-      'Tous les créneaux des 7 prochains jours sont réservés.',
+      'Tous les créneaux de cette semaine sont réservés.',
       name: 'visitNoSlotBooked',
       desc: 'CE-M07-01 FULLY_BOOKED.',
       args: [],
@@ -1227,10 +1227,40 @@ class I18n {
     );
   }
 
-  /// `L'annulation n'est plus possible. Contacte le visiteur par message.`
+  /// `Retirer ma demande`
+  String get visitWithdraw {
+    return Intl.message(
+      'Retirer ma demande',
+      name: 'visitWithdraw',
+      desc: 'M07 §19 — withdrawing an unanswered request, at any time.',
+      args: [],
+    );
+  }
+
+  /// `Appeler le visiteur`
+  String get visitCallVisitor {
+    return Intl.message(
+      'Appeler le visiteur',
+      name: 'visitCallVisitor',
+      desc: 'M07 CE-M07-03 — call the visitor, inside four hours.',
+      args: [],
+    );
+  }
+
+  /// `Le numéro du visiteur est visible jusqu'à la fin de la visite.`
+  String get visitCallHint {
+    return Intl.message(
+      'Le numéro du visiteur est visible jusqu\'à la fin de la visite.',
+      name: 'visitCallHint',
+      desc: 'M07 CA-M12-02 — the number is temporary.',
+      args: [],
+    );
+  }
+
+  /// `L'annulation n'est plus possible : préviens le visiteur directement.`
   String get visitCancelTooLate {
     return Intl.message(
-      'L\'annulation n\'est plus possible. Contacte le visiteur par message.',
+      'L\'annulation n\'est plus possible : préviens le visiteur directement.',
       name: 'visitCancelTooLate',
       desc: 'CE-M07-03.',
       args: [],
@@ -1537,10 +1567,10 @@ class I18n {
     );
   }
 
-  /// `Créneaux des 7 prochains jours.`
+  /// `Les 7 prochains jours`
   String get visitBookWindow {
     return Intl.message(
-      'Créneaux des 7 prochains jours.',
+      'Les 7 prochains jours',
       name: 'visitBookWindow',
       desc: 'The server publishes a 7-day window.',
       args: [],
@@ -1563,6 +1593,116 @@ class I18n {
       'Heure',
       name: 'visitBookHour',
       desc: 'Time chips heading.',
+      args: [],
+    );
+  }
+
+  /// `Propose une date et une heure`
+  String get visitProposeTitle {
+    return Intl.message(
+      'Propose une date et une heure',
+      name: 'visitProposeTitle',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Le propriétaire fait lui-même la visite : propose un moment, il l'accepte ou le décline.`
+  String get visitProposeHelp {
+    return Intl.message(
+      'Le propriétaire fait lui-même la visite : propose un moment, il l\'accepte ou le décline.',
+      name: 'visitProposeHelp',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Choisir une date et une heure`
+  String get visitProposePick {
+    return Intl.message(
+      'Choisir une date et une heure',
+      name: 'visitProposePick',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Changer`
+  String get visitProposeChange {
+    return Intl.message(
+      'Changer',
+      name: 'visitProposeChange',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Au moins une heure à l'avance, au plus 60 jours.`
+  String get visitProposeBounds {
+    return Intl.message(
+      'Au moins une heure à l\'avance, au plus 60 jours.',
+      name: 'visitProposeBounds',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer la demande`
+  String get visitProposeSend {
+    return Intl.message(
+      'Envoyer la demande',
+      name: 'visitProposeSend',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Cette heure ne peut pas être proposée : au moins une heure à l'avance, au plus 60 jours.`
+  String get visitTimeRejected {
+    return Intl.message(
+      'Cette heure ne peut pas être proposée : au moins une heure à l\'avance, au plus 60 jours.',
+      name: 'visitTimeRejected',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Semaine précédente`
+  String get visitWeekPrev {
+    return Intl.message(
+      'Semaine précédente',
+      name: 'visitWeekPrev',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Semaine suivante`
+  String get visitWeekNext {
+    return Intl.message(
+      'Semaine suivante',
+      name: 'visitWeekNext',
+      desc: 'M07 §19/§21 booking.',
+      args: [],
+    );
+  }
+
+  /// `Du {from} au {to}`
+  String visitWeekRange(String from, String to) {
+    return Intl.message(
+      'Du $from au $to',
+      name: 'visitWeekRange',
+      desc: 'M07 §19/§21 booking.',
+      args: [from, to],
+    );
+  }
+
+  /// `Voir la semaine suivante`
+  String get visitSeeNextWeek {
+    return Intl.message(
+      'Voir la semaine suivante',
+      name: 'visitSeeNextWeek',
+      desc: 'M07 §19/§21 booking.',
       args: [],
     );
   }
@@ -2069,6 +2209,36 @@ class I18n {
       'Fiche hors ligne — certaines actions sont indisponibles.',
       name: 'listingOfflineBanner',
       desc: 'Cached fiche: the verdicts are stale, so the actions stay off.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien est réservé pour le moment.`
+  String get listingReservedBanner {
+    return Intl.message(
+      'Ce bien est réservé pour le moment.',
+      name: 'listingReservedBanner',
+      desc: 'M05 §20 — the fiche is off the market.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien est déjà loué.`
+  String get listingRentedBanner {
+    return Intl.message(
+      'Ce bien est déjà loué.',
+      name: 'listingRentedBanner',
+      desc: 'M05 §20 — the fiche is off the market.',
+      args: [],
+    );
+  }
+
+  /// `Cette annonce n'est plus en ligne.`
+  String get listingOffMarketBanner {
+    return Intl.message(
+      'Cette annonce n\'est plus en ligne.',
+      name: 'listingOffMarketBanner',
+      desc: 'M05 §20 — the fiche is off the market.',
       args: [],
     );
   }

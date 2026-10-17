@@ -7,6 +7,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../bloc/my_visits_bloc.dart';
@@ -56,7 +57,7 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
           return VisitDetailBody(
             visit: visit,
             isBusy: state.busyVisitId == visit.id,
-            isRated: state.ratedVisitIds.contains(visit.id),
+            isRated: state.isRated(visit),
             isReviewed: state.reviewedVisitIds.contains(visit.id),
           );
         },
@@ -119,6 +120,13 @@ class VisitDetailBody extends StatelessWidget {
         if (visit.status == VisitStatus.requested) ...[
           const SizedBox(height: Dimens.spacing),
           _Callout(icon: LucideIcons.clock, text: l10n.visitAwaitingVisitor),
+        ],
+        // CE-M07-03 — inside four hours the server sends the visitor's number,
+        // and only then. Its presence is the whole rule, so there is nothing
+        // to work out here: when it is there, the tenant can call.
+        if (visit.visitorPhone case final phone?) ...[
+          const SizedBox(height: Dimens.spacing),
+          _CallVisitor(phone: phone),
         ],
         if (visit.status.isOpen) ...[
           const SizedBox(height: Dimens.spacingLg),
@@ -284,6 +292,49 @@ class _Callout extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// The visitor's number, dialled rather than copied.
+class _CallVisitor extends StatelessWidget {
+  const _CallVisitor({required this.phone});
+
+  final String phone;
+
+  Future<void> _call(BuildContext context) async {
+    final uri = Uri(scheme: 'tel', path: phone.replaceAll(' ', ''));
+    final launched = await launchUrl(uri);
+    // A simulator, or a tablet with no telephony: say what the number is
+    // rather than failing silently.
+    if (!launched && context.mounted) {
+      MboaToast.info(context: context, title: phone);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: Button.primary(
+            title: l10n.visitCallVisitor,
+            icon: const Icon(LucideIcons.phone, size: Dimens.icon),
+            iconAlignment: IconAlignment.start,
+            onPressed: () => _call(context),
+          ),
+        ),
+        const SizedBox(height: Dimens.spacingXs),
+        Text(
+          l10n.visitCallHint,
+          style: context.mboaText.caption.copyWith(color: colors.textTertiary),
+        ),
+      ],
     );
   }
 }

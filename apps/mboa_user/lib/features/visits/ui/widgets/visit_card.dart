@@ -185,7 +185,10 @@ class VisitActions extends StatelessWidget {
           TextButton(
             onPressed: isBusy ? null : () => _confirmCancel(context, bloc, l10n),
             child: Text(
-              l10n.visitCancel,
+              // §19 — a request is withdrawn, a visit is cancelled.
+              VisitRules.isWithdrawal(visit)
+                  ? l10n.visitWithdraw
+                  : l10n.visitCancel,
               style: context.mboaText.label.copyWith(color: colors.error),
             ),
           ),
@@ -230,7 +233,9 @@ class VisitActions extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(l10n.visitCancel),
+        title: Text(
+          VisitRules.isWithdrawal(visit) ? l10n.visitWithdraw : l10n.visitCancel,
+        ),
         content: Text(visit.annonceTitle ?? ''),
         actions: [
           TextButton(

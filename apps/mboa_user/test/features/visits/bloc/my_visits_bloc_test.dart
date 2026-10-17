@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_user/features/visits/bloc/my_visits_bloc.dart';
@@ -190,9 +191,68 @@ void main() {
     // A reload also asks which completed visits carry a report.
     wait: const Duration(milliseconds: 150),
     verify: (bloc) {
-      // The endpoint accepts one rating and nothing in `VisiteResponse` says
-      // one was given, so the screen remembers for the rest of the session.
+      // Shown at once, before the next read brings `agentRating` back.
       expect((bloc.state as MyVisitsReady).ratedVisitIds, {'v-1'});
+    },
+  );
+
+  blocTest<MyVisitsBloc, MyVisitsState>(
+    '§22 — after a restart the server says it is rated, not memory',
+    setUp: () => when(repository.mine).thenAnswer(
+      (_) async => [
+        const Visit(
+          id: 'v-1',
+          status: VisitStatus.completed,
+          visitorKind: VisitorKind.agent,
+          agentRating: 4,
+        ),
+      ],
+    ),
+    build: build,
+    act: (bloc) => bloc.add(const MyVisitsRequested()),
+    wait: const Duration(milliseconds: 150),
+    verify: (bloc) {
+      final state = bloc.state as MyVisitsReady;
+      // Nothing rated in this session — and still rated. This is the case that
+      // used to offer the stars again and get `409 ALREADY_RATED` back.
+      expect(state.ratedVisitIds, isEmpty);
+      expect(state.isRated(state.past.single), isTrue);
+    },
+  );
+
+  blocTest<MyVisitsBloc, MyVisitsState>(
+    '§22 — ALREADY_RATED is an answer, not an error',
+    setUp: () {
+      when(repository.mine).thenAnswer(
+        (_) async => [
+          visit('v-1', status: VisitStatus.completed, at: DateTime(2026, 9, 28)),
+        ],
+      );
+      when(
+        () => repository.rateVisitor(
+          visitId: any(named: 'visitId'),
+          rating: any(named: 'rating'),
+        ),
+      ).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: '/visites/v-1/rating'),
+          response: Response<Map<String, dynamic>>(
+            requestOptions: RequestOptions(path: '/visites/v-1/rating'),
+            statusCode: 409,
+            data: {'error': 'ALREADY_RATED'},
+          ),
+        ),
+      );
+    },
+    build: build,
+    act: (bloc) => bloc
+      ..add(const MyVisitsRequested())
+      ..add(const VisitorRated(visitId: 'v-1', rating: 5)),
+    wait: const Duration(milliseconds: 150),
+    verify: (bloc) {
+      final state = bloc.state as MyVisitsReady;
+      expect(state.ratedVisitIds, {'v-1'});
+      expect(state.failed, isFalse);
     },
   );
 

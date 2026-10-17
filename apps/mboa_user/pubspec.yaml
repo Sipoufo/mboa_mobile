@@ -44,6 +44,9 @@ dependencies:
   # RM-M07bis-06 — the report as a printable PDF, handed to the share sheet.
   path_provider: ^2.1.4
   share_plus: ^10.1.2
+  # CE-M07-03 — dialling the visitor from the visit, inside four hours. A
+  # "call" button that copied the number instead would be a small lie.
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

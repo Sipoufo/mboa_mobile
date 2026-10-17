@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_user/features/visits/models/visit_rules.dart';
 
@@ -49,6 +50,55 @@ void main() {
       // Telling someone it is too late to cancel what is already cancelled
       // would read as a refusal.
       expect(VisitRules.isTooLateToCancel(gone, now: now), isFalse);
+    });
+  });
+
+  group('§19 — withdrawing a request', () {
+    test('a request is withdrawn at any time, even inside four hours', () {
+      // Nobody is on their way to a time the owner has not accepted, so the
+      // four-hour rule that protects a visitor does not apply. It used to:
+      // a request an hour away could neither be withdrawn nor answered.
+      final soon = visit(
+        status: VisitStatus.requested,
+        at: DateTime(2026, 10, 1, 13),
+      );
+      expect(VisitRules.canCancel(soon, now: now), isTrue);
+      expect(VisitRules.isTooLateToCancel(soon, now: now), isFalse);
+    });
+
+    test('and it is called a withdrawal, not a cancellation', () {
+      expect(
+        VisitRules.isWithdrawal(visit(status: VisitStatus.requested)),
+        isTrue,
+      );
+      expect(VisitRules.isWithdrawal(visit()), isFalse);
+    });
+
+    test('a confirmed visit is still bound by the four hours', () {
+      final soon = visit(at: DateTime(2026, 10, 1, 13));
+      expect(VisitRules.canCancel(soon, now: now), isFalse);
+      expect(VisitRules.isTooLateToCancel(soon, now: now), isTrue);
+    });
+  });
+
+  group('§22 — a rating survives a restart', () {
+    test('the server record says it is done', () {
+      expect(const Visit(id: 'v', status: VisitStatus.completed, agentRating: 4)
+          .isRated, isTrue);
+      expect(const Visit(id: 'v', status: VisitStatus.completed).isRated,
+          isFalse);
+    });
+
+    test('a blank phone is no phone', () {
+      // CA-M12-02 — the number is either there to call, or absent.
+      expect(
+        Visit.fromResponse(
+          VisiteResponse((b) => b
+            ..id = 'v'
+            ..visitorPhone = '   '),
+        ).visitorPhone,
+        isNull,
+      );
     });
   });
 

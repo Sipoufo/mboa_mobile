@@ -147,6 +147,34 @@ class PropertyRatingSummary extends Equatable {
   List<Object?> get props => [average, reviewCount, visitCount, residentCount];
 }
 
+/// Whether the property is still on the market, as far as the fiche goes.
+///
+/// §20 — the server now serves the fiche to whoever has a visit still to happen
+/// even once the listing is reserved, rented or archived. `status` then carries
+/// the real state, and the fiche says so rather than presenting an off-market
+/// property as if it could still be had.
+enum ListingAvailability {
+  available,
+  reserved,
+  rented,
+  offMarket;
+
+  static ListingAvailability fromResponse(
+    AnnonceDetailResponseStatusEnum? value,
+  ) =>
+      switch (value) {
+        AnnonceDetailResponseStatusEnum.RESERVED => ListingAvailability.reserved,
+        AnnonceDetailResponseStatusEnum.RENTED => ListingAvailability.rented,
+        AnnonceDetailResponseStatusEnum.ARCHIVED ||
+        AnnonceDetailResponseStatusEnum.SUSPENDED =>
+          ListingAvailability.offMarket,
+        // PUBLISHED, an absent field, or a value this build predates: the
+        // fiche reads as an ordinary live listing, which is what it was
+        // before the field mattered.
+        _ => ListingAvailability.available,
+      };
+}
+
 /// The public fiche of a listing (CDC M05).
 ///
 /// **The exact address is never here** (RM-M05-02 / CA-M05-03): the API does
@@ -180,6 +208,7 @@ class ListingDetail extends Equatable {
     this.canPlanVisit = false,
     this.rating = const PropertyRatingSummary(),
     this.viewCount,
+    this.availability = ListingAvailability.available,
   });
 
   /// RM-M05-01 — three in the carousel, the rest behind the gallery.
@@ -222,6 +251,9 @@ class ListingDetail extends Equatable {
   final bool canPlanVisit;
 
   final PropertyRatingSummary rating;
+
+  /// §20 — see [ListingAvailability].
+  final ListingAvailability availability;
 
   /// RM-M05-06 — counted by the server; **shown to the prestataire only**, so
   /// the tenant's fiche carries it and never draws it.
@@ -268,6 +300,7 @@ class ListingDetail extends Equatable {
             ? const PropertyRatingSummary()
             : PropertyRatingSummary.fromResponse(response.rating!),
         viewCount: response.viewCount,
+        availability: ListingAvailability.fromResponse(response.status),
       );
 
   @override
@@ -298,6 +331,7 @@ class ListingDetail extends Equatable {
         canPlanVisit,
         rating,
         viewCount,
+        availability,
       ];
 }
 

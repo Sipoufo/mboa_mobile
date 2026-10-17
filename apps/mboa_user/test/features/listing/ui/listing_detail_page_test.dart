@@ -30,6 +30,7 @@ void main() {
     bool canContact = true,
     bool canPlanVisit = true,
     PropertyRatingSummary rating = const PropertyRatingSummary(),
+    ListingAvailability availability = ListingAvailability.available,
   }) =>
       ListingDetail(
         id: 'a-1',
@@ -55,6 +56,7 @@ void main() {
         canContact: canContact,
         canPlanVisit: canPlanVisit,
         rating: rating,
+        availability: availability,
       );
 
   setUpAll(loadBrandFonts);
@@ -297,6 +299,28 @@ void main() {
     final button = tester.widget<Button>(find.byType(Button).first);
     expect(button.onPressed, isNull);
     expect(find.textContaining('Connecte-toi'), findsOneWidget);
+  });
+
+  testWidgets('§20 — an off-market fiche says so before anything else',
+      (tester) async {
+    when(() => bloc.state).thenReturn(
+      ListingDetailReady(
+        detail: detail(availability: ListingAvailability.rented),
+      ),
+    );
+    await pump(tester);
+
+    // Read by someone with a visit still to happen; without the banner it
+    // would look like a property that can still be had.
+    expect(find.text('Ce bien est déjà loué.'), findsOneWidget);
+  });
+
+  testWidgets('a live listing has no such banner', (tester) async {
+    when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail()));
+    await pump(tester);
+
+    expect(find.text('Ce bien est déjà loué.'), findsNothing);
+    expect(find.text('Cette annonce n\'est plus en ligne.'), findsNothing);
   });
 
   testWidgets('CE-M05-01 — a withdrawn listing is not a retry', (tester) async {

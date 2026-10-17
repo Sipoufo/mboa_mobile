@@ -70,6 +70,13 @@ class BookVisitSheetBody extends StatelessWidget {
           case BookingReady(alreadyBooked: true):
             // RM-M07-03 — not a failure, a fact about a visit they have.
             MboaToast.info(context: context, title: l10n.visitAlreadyBooked);
+          case BookingReady(timeRejected: true):
+            // §19 — say which rule, not "an error occurred".
+            MboaToast.error(
+              context: context,
+              title: l10n.commonErrorTitle,
+              description: l10n.visitTimeRejected,
+            );
           case BookingReady(failed: true):
             MboaToast.error(context: context, title: l10n.commonError);
           case BookingReady():
@@ -108,10 +115,10 @@ class BookVisitSheetBody extends StatelessWidget {
                       title: l10n.commonErrorTitle,
                       body: l10n.commonError,
                     ),
-                  BookingUnavailable(:final reason) => _Notice(
+                  final BookingUnavailable unavailable => _Notice(
                       icon: LucideIcons.calendarX,
                       title: l10n.visitBookTitle,
-                      body: switch (reason) {
+                      body: switch (unavailable.reason) {
                         NoSlotReason.noAvailability =>
                           l10n.visitNoSlotAvailability,
                         NoSlotReason.allDaysBlocked => l10n.visitNoSlotBlocked,
@@ -119,8 +126,22 @@ class BookVisitSheetBody extends StatelessWidget {
                         NoSlotReason.unknown =>
                           l10n.visitNoSlotBooked,
                       },
-                      // A full week is not a dead end: the provider can open
-                      // another slot, and messaging is how one asks (M12).
+                      // §21 — a full week is not a dead end any more: the next
+                      // one may have room, and that is the likelier way out.
+                      primaryAction: unavailable.canSeeNextWeek
+                          ? l10n.visitSeeNextWeek
+                          : null,
+                      onPrimary: () => context.read<VisitBookingBloc>().add(
+                            BookingWeekChanged(unavailable.weekOffset + 1),
+                          ),
+                      backAction: unavailable.canGoPrevWeek
+                          ? l10n.visitWeekPrev
+                          : null,
+                      onBack: () => context.read<VisitBookingBloc>().add(
+                            BookingWeekChanged(unavailable.weekOffset - 1),
+                          ),
+                      // The provider can still open a slot, and messaging is
+                      // how one asks (M12).
                       action: l10n.visitBookNoSlotAction,
                       onAction: () async {
                         Navigator.of(context).pop();
@@ -167,13 +188,27 @@ class _Notice extends StatelessWidget {
     required this.body,
     this.action,
     this.onAction,
+    this.primaryAction,
+    this.onPrimary,
+    this.backAction,
+    this.onBack,
   });
 
   final IconData icon;
   final String title;
   final String body;
+
+  /// Asking the provider — always there when set, as the fallback.
   final String? action;
   final VoidCallback? onAction;
+
+  /// The likelier way forward when there is one (next week); [action] then
+  /// becomes secondary.
+  final String? primaryAction;
+  final VoidCallback? onPrimary;
+
+  final String? backAction;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -210,12 +245,27 @@ class _Notice extends StatelessWidget {
             textAlign: TextAlign.center,
             style: context.mboaText.body.copyWith(color: colors.textSecondary),
           ),
-          if (action != null) ...[
+          if (primaryAction != null) ...[
             const SizedBox(height: Dimens.spacingLg),
             SizedBox(
               width: double.infinity,
-              child: Button.primary(title: action!, onPressed: onAction),
+              child: Button.primary(title: primaryAction!, onPressed: onPrimary),
             ),
+          ],
+          if (action != null) ...[
+            SizedBox(
+              height: primaryAction != null ? Dimens.spacingSm : Dimens.spacingLg,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: primaryAction != null
+                  ? Button.outline(title: action!, onPressed: onAction)
+                  : Button.primary(title: action!, onPressed: onAction),
+            ),
+          ],
+          if (backAction != null) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            TextButton(onPressed: onBack, child: Text(backAction!)),
           ],
         ],
       ),
@@ -296,6 +346,13 @@ class _FormState extends State<_Form> {
             shrinkWrap: true,
             padding: const EdgeInsets.only(top: Dimens.spacingLg),
             children: [
+              // §21 — "who has time this week": paging sits above the visitor
+              // choice because a full agent disappears from it, and turning
+              // the page is how they come back.
+              if (state.pageable) ...[
+                _WeekNav(state: state),
+                const SizedBox(height: Dimens.spacing),
+              ],
               // One visitor is already chosen, so showing the picker would be
               // a list of one (CA-M07-01).
               if (state.hasVisitorChoice) ...[
@@ -328,7 +385,11 @@ class _FormState extends State<_Form> {
                 ),
                 const SizedBox(height: Dimens.spacingLg),
               ],
-              if (state.selectedVisitor != null) ...[
+              if (state.selectedVisitor?.mode == BookingMode.onRequest)
+                // §19 — an owner showing their own bien publishes no slots;
+                // the tenant proposes a time instead of reading "nothing free".
+                _Proposal(selected: state.selectedSlot)
+              else if (state.selectedVisitor != null) ...[
                 _SectionTitle(l10n.visitBookDay),
                 SizedBox(
                   // Weekday, day number and month, with room for the tallest
@@ -379,19 +440,6 @@ class _FormState extends State<_Form> {
                           ],
                         ),
                 ),
-                const SizedBox(height: Dimens.spacingSm),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.screenMargin,
-                  ),
-                  // The window is the server's, and saying so beats letting a
-                  // tenant hunt for a date that is not on offer.
-                  child: Text(
-                    l10n.visitBookWindow,
-                    style: context.mboaText.caption
-                        .copyWith(color: colors.textTertiary),
-                  ),
-                ),
               ],
             ],
           ),
@@ -410,7 +458,9 @@ class _FormState extends State<_Form> {
               SizedBox(
                 width: double.infinity,
                 child: Button.primary(
-                  title: l10n.visitBookConfirm,
+                  title: state.selectedVisitor?.mode == BookingMode.onRequest
+                      ? l10n.visitProposeSend
+                      : l10n.visitBookConfirm,
                   isLoading: state.isSubmitting,
                   onPressed: state.canSubmit
                       ? () => context
@@ -636,6 +686,174 @@ class _HourChip extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// §21 — which week of the calendar is on screen, and the way to the next.
+class _WeekNav extends StatelessWidget {
+  const _WeekNav({required this.state});
+
+  final BookingReady state;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toString();
+    final bloc = context.read<VisitBookingBloc>();
+
+    final start = state.windowStart;
+    final label = start == null
+        ? l10n.visitBookWindow
+        : l10n.visitWeekRange(
+            DateFormat.MMMd(locale).format(start),
+            DateFormat.MMMd(locale).format(start.add(const Duration(days: 6))),
+          );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.screenMargin),
+      child: Row(
+        children: [
+          IconButton(
+            tooltip: l10n.visitWeekPrev,
+            onPressed: state.canGoPrevWeek
+                ? () => bloc.add(BookingWeekChanged(state.weekOffset - 1))
+                : null,
+            icon: const Icon(LucideIcons.chevronLeft),
+          ),
+          Expanded(
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: context.mboaText.label.copyWith(color: colors.ink),
+            ),
+          ),
+          IconButton(
+            tooltip: l10n.visitWeekNext,
+            onPressed: state.canGoNextWeek
+                ? () => bloc.add(BookingWeekChanged(state.weekOffset + 1))
+                : null,
+            icon: const Icon(LucideIcons.chevronRight),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// §19 — proposing a time to an owner who shows their own bien.
+///
+/// A date picker then a time picker, bounded by what the server accepts
+/// ([ProposalWindow]); the chosen moment travels as a [VisitSlot], the same
+/// thing a slot visitor's time does, so the bloc books both the same way.
+class _Proposal extends StatelessWidget {
+  const _Proposal({this.selected});
+
+  final VisitSlot? selected;
+
+  Future<void> _pick(BuildContext context) async {
+    final l10n = I18n.of(context);
+    final bloc = context.read<VisitBookingBloc>();
+    final now = DateTime.now();
+    final earliest = ProposalWindow.earliest(now);
+    final latest = ProposalWindow.latest(now);
+    final initial = selected?.startsAt ?? earliest;
+
+    final date = await showDatePicker(
+      context: context,
+      initialDate: initial,
+      firstDate: DateUtils.dateOnly(earliest),
+      lastDate: latest,
+    );
+    if (date == null || !context.mounted) return;
+
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(initial),
+    );
+    if (time == null || !context.mounted) return;
+
+    final at = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+    if (!ProposalWindow.accepts(at, DateTime.now())) {
+      MboaToast.error(
+        context: context,
+        title: l10n.commonErrorTitle,
+        description: l10n.visitTimeRejected,
+      );
+      return;
+    }
+    bloc.add(BookingSlotSelected(VisitSlot(startsAt: at)));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toString();
+    final at = selected?.startsAt;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionTitle(l10n.visitProposeTitle),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Dimens.screenMargin),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.visitProposeHelp,
+                style:
+                    context.mboaText.body.copyWith(color: colors.textSecondary),
+              ),
+              const SizedBox(height: Dimens.spacing),
+              if (at != null) ...[
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(Dimens.spacingMd),
+                  decoration: BoxDecoration(
+                    color: colors.primaryPale,
+                    borderRadius: BorderRadius.circular(Dimens.radius),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(LucideIcons.calendarClock, color: colors.primary),
+                      const SizedBox(width: Dimens.spacingSm),
+                      Expanded(
+                        child: Text(
+                          DateFormat.yMMMMEEEEd(locale).add_Hm().format(at),
+                          style:
+                              context.mboaText.label.copyWith(color: colors.ink),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => _pick(context),
+                        child: Text(l10n.visitProposeChange),
+                      ),
+                    ],
+                  ),
+                ),
+              ] else
+                SizedBox(
+                  width: double.infinity,
+                  child: Button.outline(
+                    title: l10n.visitProposePick,
+                    icon: const Icon(LucideIcons.calendarClock, size: Dimens.icon),
+                    iconAlignment: IconAlignment.start,
+                    onPressed: () => _pick(context),
+                  ),
+                ),
+              const SizedBox(height: Dimens.spacingXs),
+              Text(
+                l10n.visitProposeBounds,
+                style:
+                    context.mboaText.caption.copyWith(color: colors.textTertiary),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -30,24 +30,42 @@ enum NoSlotReason {
       };
 }
 
-/// What happens to a booking once it is made.
+/// How a time is chosen with this visitor, and what happens once it is.
 ///
-/// Both modes are booked **on a published time** — RM-M15-06 describes "a slot
-/// proposed to an owner who confirms by hand", and `BookVisiteRequest` requires
-/// `startsAt` either way. The difference is only what comes next, and therefore
-/// only what the screen says: a slot is taken, or a slot is asked for.
+/// This used to say both modes were booked on a published time. They are not:
+/// an owner showing their own bien publishes **no** slots — the tenant
+/// proposes a time and the owner accepts or declines it (§19, RM-M15-06). The
+/// old reading filtered such an owner out as "nothing free", so a listing
+/// visited only by its owner could not be booked at all.
 enum BookingMode {
-  /// Taking the slot schedules the visit.
+  /// The visitor publishes slots; taking one schedules the visit.
   slots,
 
-  /// Taking the slot asks for it; the visitor confirms by hand (RM-M15-06) and
-  /// the visit starts as `REQUESTED` rather than `SCHEDULED`.
+  /// The tenant proposes a time; the visit starts `REQUESTED` and waits on the
+  /// owner's answer.
   onRequest;
 
   static BookingMode fromResponse(VisitorSlotsModeEnum? value) =>
       value == VisitorSlotsModeEnum.ON_REQUEST
           ? BookingMode.onRequest
           : BookingMode.slots;
+}
+
+/// §19 — the bounds of a time proposed to an on-request visitor.
+///
+/// The server refuses anything outside them (`400 INVALID_VISIT_TIME`); these
+/// keep the picker from offering what will be refused.
+abstract final class ProposalWindow {
+  /// Less than an hour away is not a proposal the owner can act on.
+  static const minLead = Duration(hours: 1);
+
+  static const maxAhead = Duration(days: 60);
+
+  static DateTime earliest(DateTime now) => now.add(minLead);
+  static DateTime latest(DateTime now) => now.add(maxAhead);
+
+  static bool accepts(DateTime at, DateTime now) =>
+      !at.isBefore(earliest(now)) && !at.isAfter(latest(now));
 }
 
 /// One free time, as the server offers it.
@@ -109,10 +127,11 @@ class BookableVisitor extends Equatable {
 
   bool get hasRating => averageRating != null && ratingCount > 0;
 
-  /// Bookable now — there is a time to take. A visitor with none is not a
-  /// choice the tenant can make, whatever their mode; their [reason] is what
-  /// the screen says instead (CE-M07-01).
-  bool get isBookable => slots.isNotEmpty;
+  /// Bookable now. A slot visitor needs a free slot in the window; an
+  /// on-request visitor always is — there is no calendar to be full, only a
+  /// time to propose (§19). A slot visitor with none is not a choice the tenant
+  /// can make; their [reason] is what the screen says instead (CE-M07-01).
+  bool get isBookable => mode == BookingMode.onRequest || slots.isNotEmpty;
 
   static BookableVisitor? fromResponse(VisitorSlots response) {
     final accountId = response.visitorAccountId;

@@ -63,6 +63,8 @@ class Visit extends Equatable {
     this.visitorKind = VisitorKind.unknown,
     this.visitorConfirmedAt,
     this.clientConfirmedAt,
+    this.agentRating,
+    this.visitorPhone,
   });
 
   final String id;
@@ -77,6 +79,21 @@ class Visit extends Equatable {
   /// alone means the visit is still waiting on the other one.
   final DateTime? visitorConfirmedAt;
   final DateTime? clientConfirmedAt;
+
+  /// RM-M07-07 / §22 — the rating the client gave the visitor, or null.
+  ///
+  /// The server's record, so it survives a restart: before it existed the app
+  /// remembered ratings in memory, and after a relaunch it offered the stars
+  /// again only for the server to answer `409 ALREADY_RATED`.
+  final int? agentRating;
+
+  /// CE-M07-03 — the visitor's number, sent to the client only for a
+  /// scheduled visit, from four hours before it until it ends. Null the rest
+  /// of the time (CA-M12-02), so its presence is the whole rule: show a call
+  /// button when it is there, and nothing to work out when it is not.
+  final String? visitorPhone;
+
+  bool get isRated => agentRating != null;
 
   /// Still to happen, and not cancelled.
   bool get isUpcoming =>
@@ -104,6 +121,10 @@ class Visit extends Equatable {
         visitorKind: VisitorKind.fromResponse(response.visitorKind),
         visitorConfirmedAt: response.visitorConfirmedAt?.toLocal(),
         clientConfirmedAt: response.clientConfirmedAt?.toLocal(),
+        agentRating: response.agentRating,
+        visitorPhone: (response.visitorPhone?.trim().isEmpty ?? true)
+            ? null
+            : response.visitorPhone!.trim(),
       );
 
   @override
@@ -117,5 +138,7 @@ class Visit extends Equatable {
         visitorKind,
         visitorConfirmedAt,
         clientConfirmedAt,
+        agentRating,
+        visitorPhone,
       ];
 }

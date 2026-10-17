@@ -115,6 +115,19 @@ void main() {
       expect(find.textContaining('n\'est plus possible'), findsOneWidget);
     });
 
+    testWidgets('§19 — a request is withdrawn, at any time', (tester) async {
+      await pump(
+        tester,
+        VisitCard(visit: visit(status: VisitStatus.requested, at: soon)),
+      );
+
+      // Inside four hours, and still offered: nobody is on their way to a time
+      // the owner has not accepted. And it says what it does.
+      expect(find.text('Retirer ma demande'), findsOneWidget);
+      expect(find.text('Annuler la visite'), findsNothing);
+      expect(find.textContaining('n\'est plus possible'), findsNothing);
+    });
+
     testWidgets('RM-M07-05 — around the hour, "I am here"', (tester) async {
       await pump(tester, VisitCard(visit: visit(at: soon)));
 
@@ -237,6 +250,36 @@ void main() {
       expect(find.text('Le visiteur'), findsOneWidget);
       expect(find.text('Confirmé'), findsOneWidget);
       expect(find.text('Pas encore'), findsOneWidget);
+    });
+
+    testWidgets('CE-M07-03 — with the visitor\'s number, a call button',
+        (tester) async {
+      await pumpScrollable(
+        tester,
+        VisitDetailBody(
+          visit: Visit(
+            id: 'v-1',
+            status: VisitStatus.scheduled,
+            scheduledAt: soon,
+            visitorKind: VisitorKind.agent,
+            visitorPhone: '+237 690 00 00 00',
+          ),
+        ),
+      );
+
+      expect(find.text('Appeler le visiteur'), findsOneWidget);
+    });
+
+    testWidgets('without it, no button — the server decides the window',
+        (tester) async {
+      await pumpScrollable(
+        tester,
+        VisitDetailBody(visit: visit(at: later)),
+      );
+
+      // Ten days out the number is absent (CA-M12-02), and the screen does not
+      // work out the four hours itself.
+      expect(find.text('Appeler le visiteur'), findsNothing);
     });
 
     testWidgets('RM-M15-06 — a proposed slot cannot be confirmed by the tenant',
@@ -433,7 +476,10 @@ void main() {
     testWidgets('CE-M07-01 — says which kind of "nothing free" this is',
         (tester) async {
       when(() => booking.state).thenReturn(
-        const BookingUnavailable(reason: NoSlotReason.noAvailability),
+        const BookingUnavailable(
+          reason: NoSlotReason.noAvailability,
+          annonceId: 'a-1',
+        ),
       );
       await pumpSheet(tester);
 
@@ -445,13 +491,126 @@ void main() {
     testWidgets('CE-M07-01 — a full week offers the way out of it',
         (tester) async {
       when(() => booking.state).thenReturn(
-        const BookingUnavailable(reason: NoSlotReason.fullyBooked),
+        const BookingUnavailable(
+          reason: NoSlotReason.fullyBooked,
+          annonceId: 'a-1',
+        ),
       );
       await pumpSheet(tester);
 
-      // The provider can open another slot, and messaging is how one asks.
-      // A sentence on its own left the tenant with nothing to do.
+      // §21 — the next week is the likelier way out, and it is offered first.
+      // The provider can still open a slot, and messaging is how one asks.
+      expect(find.text('Voir la semaine suivante'), findsOneWidget);
       expect(find.text('Contacter le prestataire'), findsOneWidget);
+    });
+
+    testWidgets('§21 — turning to the next week asks for it', (tester) async {
+      when(() => booking.state).thenReturn(
+        const BookingUnavailable(
+          reason: NoSlotReason.fullyBooked,
+          annonceId: 'a-1',
+        ),
+      );
+      await pumpSheet(tester);
+      await tester.tap(find.text('Voir la semaine suivante'));
+      await tester.pump();
+
+      verify(() => booking.add(const BookingWeekChanged(1))).called(1);
+    });
+
+    testWidgets('a visitor with no hours at all is not paged through',
+        (tester) async {
+      // Declaring no hours is the same in every week; paging would only show
+      // this message four times.
+      when(() => booking.state).thenReturn(
+        const BookingUnavailable(
+          reason: NoSlotReason.noAvailability,
+          annonceId: 'a-1',
+        ),
+      );
+      await pumpSheet(tester);
+
+      expect(find.text('Voir la semaine suivante'), findsNothing);
+    });
+
+    testWidgets('the last week has no next', (tester) async {
+      when(() => booking.state).thenReturn(
+        const BookingUnavailable(
+          reason: NoSlotReason.fullyBooked,
+          annonceId: 'a-1',
+          weekOffset: VisitBookingBloc.maxWeekOffset,
+        ),
+      );
+      await pumpSheet(tester);
+
+      // 28 days is the server's horizon (§21); there is nothing past it.
+      expect(find.text('Voir la semaine suivante'), findsNothing);
+      expect(find.text('Semaine précédente'), findsOneWidget);
+    });
+
+    testWidgets('§19 — an owner gets a time proposal, not a calendar',
+        (tester) async {
+      when(() => booking.state).thenReturn(
+        const BookingReady(
+          annonceId: 'a-1',
+          visitors: [
+            BookableVisitor(
+              accountId: 'o-1',
+              kind: VisitorKind.owner,
+              mode: BookingMode.onRequest,
+            ),
+          ],
+          selectedVisitorId: 'o-1',
+        ),
+      );
+      await pumpSheet(tester);
+
+      expect(find.text('Propose une date et une heure'), findsOneWidget);
+      expect(find.text('Choisir une date et une heure'), findsOneWidget);
+      // No day strip: there is nothing published to pick from.
+      expect(find.text('Jour'), findsNothing);
+      // And the button says it sends a request.
+      expect(find.text('Envoyer la demande'), findsOneWidget);
+    });
+
+    testWidgets('a chosen proposal is shown, and can be changed', (tester) async {
+      when(() => booking.state).thenReturn(
+        BookingReady(
+          annonceId: 'a-1',
+          visitors: const [
+            BookableVisitor(
+              accountId: 'o-1',
+              kind: VisitorKind.owner,
+              mode: BookingMode.onRequest,
+            ),
+          ],
+          selectedVisitorId: 'o-1',
+          selectedSlot: VisitSlot(startsAt: DateTime(2026, 10, 23, 15)),
+        ),
+      );
+      await pumpSheet(tester);
+
+      expect(find.textContaining('15:00'), findsOneWidget);
+      expect(find.text('Changer'), findsOneWidget);
+    });
+
+    testWidgets('§21 — the calendar pages through the weeks', (tester) async {
+      when(() => booking.state).thenReturn(
+        BookingReady(
+          annonceId: 'a-1',
+          visitors: [
+            visitor(slots: [VisitSlot(startsAt: DateTime(2026, 10, 5, 9))]),
+          ],
+          selectedVisitorId: 'v-1',
+          pageable: true,
+        ),
+      );
+      await pumpSheet(tester);
+
+      expect(find.text('Les 7 prochains jours'), findsOneWidget);
+      await tester.tap(find.byTooltip('Semaine suivante'));
+      await tester.pump();
+      verify(() => booking.add(const BookingWeekChanged(1))).called(1);
     });
 
     testWidgets('the day strip holds a day per published date', (tester) async {

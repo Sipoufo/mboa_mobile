@@ -415,7 +415,7 @@
   "@visitRequestedTitle": {
     "description": "RM-M15-06 — the visitor confirms by hand."
   },
-  "visitRequestedBody": "The visitor still has to confirm this time. You will be notified.",
+  "visitRequestedBody": "The owner still has to confirm the proposed time. You will get a notification.",
   "@visitRequestedBody": {
     "description": "RM-M15-06."
   },
@@ -427,11 +427,11 @@
   "@visitNoSlotAvailability": {
     "description": "CE-M07-01 AGENT_NO_AVAILABILITY."
   },
-  "visitNoSlotBlocked": "No availability in the next 7 days.",
+  "visitNoSlotBlocked": "Nothing available this week.",
   "@visitNoSlotBlocked": {
     "description": "CE-M07-01 ALL_DAYS_BLOCKED."
   },
-  "visitNoSlotBooked": "Every slot in the next 7 days is taken.",
+  "visitNoSlotBooked": "Every slot this week is taken.",
   "@visitNoSlotBooked": {
     "description": "CE-M07-01 FULLY_BOOKED."
   },
@@ -481,10 +481,22 @@
     "description": "RM-M07-05 — one half in."
   },
   "visitCancel": "Cancel the visit",
+  "visitWithdraw": "Withdraw my request",
+  "@visitWithdraw": {
+    "description": "M07 §19 — withdrawing an unanswered request, at any time."
+  },
+  "visitCallVisitor": "Call the visitor",
+  "@visitCallVisitor": {
+    "description": "M07 CE-M07-03 — call the visitor, inside four hours."
+  },
+  "visitCallHint": "The visitor's number is shown until the visit ends.",
+  "@visitCallHint": {
+    "description": "M07 CA-M12-02 — the number is temporary."
+  },
   "@visitCancel": {
     "description": "RM-M07-04."
   },
-  "visitCancelTooLate": "It is too late to cancel. Reach the visitor through messages.",
+  "visitCancelTooLate": "Cancelling is no longer possible: let the visitor know directly.",
   "@visitCancelTooLate": {
     "description": "CE-M07-03."
   },
@@ -618,7 +630,7 @@
   "@visitBookNoSlotAction": {
     "description": "CE-M07-01 — the way out of a full week."
   },
-  "visitBookWindow": "Times for the next 7 days.",
+  "visitBookWindow": "The next 7 days",
   "@visitBookWindow": {
     "description": "The server publishes a 7-day window."
   },
@@ -627,6 +639,58 @@
     "description": "Day strip heading."
   },
   "visitBookHour": "Time",
+  "visitProposeTitle": "Propose a date and time",
+  "@visitProposeTitle": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitProposeHelp": "The owner shows the place themselves: propose a time, they accept or decline it.",
+  "@visitProposeHelp": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitProposePick": "Choose a date and time",
+  "@visitProposePick": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitProposeChange": "Change",
+  "@visitProposeChange": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitProposeBounds": "At least an hour ahead, at most 60 days.",
+  "@visitProposeBounds": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitProposeSend": "Send the request",
+  "@visitProposeSend": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitTimeRejected": "That time cannot be proposed: at least an hour ahead, at most 60 days.",
+  "@visitTimeRejected": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitWeekPrev": "Previous week",
+  "@visitWeekPrev": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitWeekNext": "Next week",
+  "@visitWeekNext": {
+    "description": "M07 §19/§21 booking."
+  },
+  "visitWeekRange": "{from} to {to}",
+  "@visitWeekRange": {
+    "description": "M07 §19/§21 booking.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "visitSeeNextWeek": "See next week",
+  "@visitSeeNextWeek": {
+    "description": "M07 §19/§21 booking."
+  },
   "@visitBookHour": {
     "description": "Time chips heading."
   },
@@ -847,6 +911,18 @@
     "description": "CE-M05-01."
   },
   "listingOfflineBanner": "Offline fiche — some actions are unavailable.",
+  "listingReservedBanner": "This property is reserved for now.",
+  "@listingReservedBanner": {
+    "description": "M05 §20 — the fiche is off the market."
+  },
+  "listingRentedBanner": "This property is already rented.",
+  "@listingRentedBanner": {
+    "description": "M05 §20 — the fiche is off the market."
+  },
+  "listingOffMarketBanner": "This listing is no longer online.",
+  "@listingOffMarketBanner": {
+    "description": "M05 §20 — the fiche is off the market."
+  },
   "@listingOfflineBanner": {
     "description": "Cached fiche."
   },

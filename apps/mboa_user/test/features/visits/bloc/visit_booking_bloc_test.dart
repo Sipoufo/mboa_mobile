@@ -44,7 +44,11 @@ void main() {
     ).thenAnswer((_) async => booked());
   });
 
-  VisitBookingBloc build() => VisitBookingBloc(repository: repository);
+  // A fixed clock: the slots below are on 5 October, a day after this.
+  final now = DateTime(2026, 10, 4, 10);
+
+  VisitBookingBloc build() =>
+      VisitBookingBloc(repository: repository, now: () => now);
 
   blocTest<VisitBookingBloc, VisitBookingState>(
     'CA-M07-01 — a lone visitor is preselected, so the slot is the first tap',
@@ -102,19 +106,31 @@ void main() {
   );
 
   blocTest<VisitBookingBloc, VisitBookingState>(
-    'a visitor with no free time is not a choice, whatever their mode',
+    '§19 — an owner who publishes no slots is still a choice',
     setUp: () => when(() => repository.visitorsFor('a-1')).thenAnswer(
-      (_) async => [
-        visitor(mode: BookingMode.onRequest, reason: NoSlotReason.fullyBooked),
-      ],
+      (_) async => [visitor(kind: VisitorKind.owner, mode: BookingMode.onRequest)],
     ),
     build: build,
     act: (bloc) => bloc.add(const BookingStarted('a-1')),
     verify: (bloc) {
-      // `BookVisiteRequest` requires `startsAt`, so there is nothing to send
-      // for a visitor who published no time — they are "nothing free".
-      expect(bloc.state, isA<BookingUnavailable>());
+      // This test used to assert the opposite — "nothing to send for a visitor
+      // who published no time" — which is exactly why a listing shown only by
+      // its owner could not be booked. The tenant proposes the time instead.
+      final state = bloc.state as BookingReady;
+      expect(state.selectedVisitor?.mode, BookingMode.onRequest);
+      // No calendar to page through for an owner alone.
+      expect(state.pageable, isFalse);
     },
+  );
+
+  blocTest<VisitBookingBloc, VisitBookingState>(
+    'a slot visitor with nothing free this week is not a choice',
+    setUp: () => when(() => repository.visitorsFor('a-1')).thenAnswer(
+      (_) async => [visitor(reason: NoSlotReason.fullyBooked)],
+    ),
+    build: build,
+    act: (bloc) => bloc.add(const BookingStarted('a-1')),
+    verify: (bloc) => expect(bloc.state, isA<BookingUnavailable>()),
   );
 
   blocTest<VisitBookingBloc, VisitBookingState>(
@@ -181,4 +197,157 @@ void main() {
       expect((bloc.state as BookingDone).mode, BookingMode.onRequest);
     },
   );
+
+  group('§21 — paging through the calendar', () {
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'the next week starts at midnight, seven days on',
+      setUp: () {
+        when(() => repository.visitorsFor('a-1'))
+            .thenAnswer((_) async => [visitor(slots: [slot])]);
+        when(
+          () => repository.visitorsFor('a-1', from: DateTime(2026, 10, 11)),
+        ).thenAnswer((_) async => [visitor(slots: [laterSlot])]);
+      },
+      build: build,
+      act: (bloc) => bloc
+        ..add(const BookingStarted('a-1'))
+        ..add(const BookingWeekChanged(1)),
+      verify: (bloc) {
+        // Midnight, not "now + 7 days": a page is whole days, and the fourth
+        // one then ends exactly on the 28th day the server allows.
+        verify(
+          () => repository.visitorsFor('a-1', from: DateTime(2026, 10, 11)),
+        ).called(1);
+        final state = bloc.state as BookingReady;
+        expect(state.weekOffset, 1);
+        expect(state.windowStart, DateTime(2026, 10, 11));
+      },
+    );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'turning the page keeps who the tenant chose',
+      setUp: () {
+        when(() => repository.visitorsFor('a-1')).thenAnswer(
+          (_) async => [
+            visitor(id: 'v-1', slots: [slot]),
+            visitor(id: 'v-2', slots: [laterSlot]),
+          ],
+        );
+        when(
+          () => repository.visitorsFor('a-1', from: any(named: 'from')),
+        ).thenAnswer(
+          (_) async => [
+            visitor(id: 'v-1', slots: [slot]),
+            visitor(id: 'v-2', slots: [laterSlot]),
+          ],
+        );
+      },
+      build: build,
+      act: (bloc) => bloc
+        ..add(const BookingStarted('a-1'))
+        ..add(const BookingVisitorSelected('v-2'))
+        ..add(const BookingWeekChanged(1)),
+      verify: (bloc) =>
+          expect((bloc.state as BookingReady).selectedVisitorId, 'v-2'),
+    );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'the calendar stops at the 28th day',
+      setUp: () => when(
+        () => repository.visitorsFor('a-1', from: any(named: 'from')),
+      ).thenAnswer((_) async => [visitor(slots: [slot])]),
+      build: build,
+      seed: () => BookingReady(
+        annonceId: 'a-1',
+        visitors: [visitor(slots: [slot])],
+        weekOffset: VisitBookingBloc.maxWeekOffset,
+      ),
+      act: (bloc) => bloc.add(const BookingWeekChanged(99)),
+      verify: (bloc) {
+        // Clamped to the last week rather than sent to be refused
+        // (`400 INVALID_WINDOW`).
+        expect(
+          (bloc.state as BookingReady).weekOffset,
+          VisitBookingBloc.maxWeekOffset,
+        );
+        expect((bloc.state as BookingReady).canGoNextWeek, isFalse);
+      },
+    );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'a full week can be paged past; an unset agenda cannot',
+      setUp: () => when(() => repository.visitorsFor('a-1')).thenAnswer(
+        (_) async => [visitor(reason: NoSlotReason.fullyBooked)],
+      ),
+      build: build,
+      act: (bloc) => bloc.add(const BookingStarted('a-1')),
+      verify: (bloc) =>
+          expect((bloc.state as BookingUnavailable).canSeeNextWeek, isTrue),
+    );
+  });
+
+  group('§19 — proposing a time to the owner', () {
+    BookingReady proposing(DateTime at) => BookingReady(
+          annonceId: 'a-1',
+          visitors: [
+            visitor(kind: VisitorKind.owner, mode: BookingMode.onRequest),
+          ],
+          selectedVisitorId: 'v-1',
+          selectedSlot: VisitSlot(startsAt: at),
+        );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'less than an hour ahead is refused before it is sent',
+      build: build,
+      seed: () => proposing(now.add(const Duration(minutes: 30))),
+      act: (bloc) => bloc.add(const BookingSubmitted()),
+      verify: (bloc) {
+        expect((bloc.state as BookingReady).timeRejected, isTrue);
+        verifyNever(
+          () => repository.book(
+            annonceId: any(named: 'annonceId'),
+            visitorAccountId: any(named: 'visitorAccountId'),
+            startsAt: any(named: 'startsAt'),
+          ),
+        );
+      },
+    );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'more than 60 days out is refused before it is sent',
+      build: build,
+      seed: () => proposing(now.add(const Duration(days: 61))),
+      act: (bloc) => bloc.add(const BookingSubmitted()),
+      verify: (bloc) =>
+          expect((bloc.state as BookingReady).timeRejected, isTrue),
+    );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'a valid proposal is sent, and becomes a request',
+      build: build,
+      seed: () => proposing(now.add(const Duration(days: 3))),
+      act: (bloc) => bloc.add(const BookingSubmitted()),
+      verify: (bloc) =>
+          expect((bloc.state as BookingDone).mode, BookingMode.onRequest),
+    );
+
+    blocTest<VisitBookingBloc, VisitBookingState>(
+      'the server refusing the time says which rule, not "an error"',
+      setUp: () => when(
+        () => repository.book(
+          annonceId: any(named: 'annonceId'),
+          visitorAccountId: any(named: 'visitorAccountId'),
+          startsAt: any(named: 'startsAt'),
+        ),
+      ).thenThrow(const VisitTimeRejected()),
+      build: build,
+      seed: () => proposing(now.add(const Duration(days: 3))),
+      act: (bloc) => bloc.add(const BookingSubmitted()),
+      verify: (bloc) {
+        final state = bloc.state as BookingReady;
+        expect(state.timeRejected, isTrue);
+        expect(state.failed, isFalse);
+      },
+    );
+  });
 }

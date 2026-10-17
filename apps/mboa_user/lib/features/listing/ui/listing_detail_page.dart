@@ -135,6 +135,10 @@ class _Body extends StatelessWidget {
       ),
       children: [
         if (state.isOffline) const _OfflineBanner(),
+        // §20 — someone with a visit still to happen can read an off-market
+        // fiche; it says so before anything else on it.
+        if (detail.availability != ListingAvailability.available)
+          _AvailabilityBanner(availability: detail.availability),
         _Gallery(detail: detail),
         const SizedBox(height: Dimens.spacing),
         _Header(detail: detail),
@@ -169,6 +173,49 @@ class _Body extends StatelessWidget {
         if (detail.rating.hasRating || state.reviews.isNotEmpty)
           _Reviews(state: state),
       ],
+    );
+  }
+}
+
+class _AvailabilityBanner extends StatelessWidget {
+  const _AvailabilityBanner({required this.availability});
+
+  final ListingAvailability availability;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final (text, icon) = switch (availability) {
+      ListingAvailability.reserved =>
+        (l10n.listingReservedBanner, LucideIcons.bookmark),
+      ListingAvailability.rented =>
+        (l10n.listingRentedBanner, LucideIcons.keyRound),
+      ListingAvailability.offMarket ||
+      ListingAvailability.available =>
+        (l10n.listingOffMarketBanner, LucideIcons.eyeOff),
+    };
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: Dimens.spacing),
+      padding: const EdgeInsets.all(Dimens.spacingMd),
+      decoration: BoxDecoration(
+        color: colors.info.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(Dimens.radius),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: Dimens.iconSm, color: colors.info),
+          const SizedBox(width: Dimens.spacingSm),
+          Expanded(
+            child: Text(
+              text,
+              style: context.mboaText.caption.copyWith(color: colors.ink),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
