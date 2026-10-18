@@ -878,3 +878,144 @@ work.
 visits: a request to answer and the visit sheet both open the client's score.
 A visit push still takes the owner to the agenda, not the sheet — he is also
 told about agents' visits on his property, whose sheet answers 404 to him.
+
+---
+
+## §27 — M29 lot 1 and the 2026-10-18 CDC: what the apps need before they start
+
+**Raised 2026-10-18**, after reading Doc 10 (M08, M10, M12, M24, M29–M31) and the
+developer brief v1.1 against both codebases. Items 1 to 5 block the mobile side
+of lot 1 (M29); items 6 and 7 are for lot 2 and lot 3, raised now so nothing is
+designed around a guess.
+
+### 1. The "lot préalable": M24 in-app payment is still live
+
+Brief v1.1 corrects itself — the in-app settlement of an M24 invoice was built
+on 2026-10-17 (`POST /invoices/{id}/pay`, `settlement=IN_APP`, settled by
+`InvoicePaymentListener` on the subscription webhook). It runs on the mock
+provider today, so nothing moves; but the day a real provider is plugged in for
+M13, tenants' rent-side money starts going through Mboa's merchant account,
+which DL-04 forbids until the COBAC opinion.
+
+**Ask:** the flag the brief describes, **off by default** — creating an invoice
+with `settlement=IN_APP` and calling `/invoices/{id}/pay` both refused with a
+stable `error` code (say `INVOICE_IN_APP_DISABLED`). Please name the code: the
+apps do not build M24 yet, but they will branch on it. Not in the last commits
+as of today.
+
+### 2. Lot 1 endpoints — the shapes the apps will be written against
+
+Nothing exists yet; listing what the screens need so the API fits them once.
+
+**Reservation requests (M29)**
+- Client: create `{annonceId, desiredStartDate, durationUnits, message?}`; list
+  mine (with status); cancel a pending one. Errors the screen branches on:
+  `LISTING_NOT_RESERVABLE` (CE-M29-01), `PROFILE_INCOMPLETE` (CE-M29-02),
+  `RESERVATION_ALREADY_ACTIVE` and `RESERVATION_LIMIT_REACHED` (CE-M29-03).
+  Please confirm or rename.
+- Prestataire: list incoming, by listing and in total (the Pro home will want a
+  count); accept; refuse `{reason, note?}` — the four reasons of RM-M29-06 as an
+  enum; extend once (RM-M29-07); and the request's status, `expiresAt` (48 h)
+  and, once accepted, the reservation's `reservedUntil` and `extended`.
+- Each request should carry the client's `userAccountId` (the Pro app opens the
+  Mboa Score from it, as for §26) and the `conversationId` of the thread it
+  opened (RM-M29-14), so "Répondre" lands in that thread.
+- The duration's unit is the listing's `rentalPeriod` (RM-M10-09) — please send
+  it on the request rather than leaving the app to re-read the listing.
+
+**Listing status**
+- **A way back from a manual reservation.** RM-M10-10 now says the prestataire
+  lifts a manual reservation himself; today `RESERVED` has no transition back
+  to `PUBLISHED` (only to `RENTED`). Something like `POST /annonces/{id}/unreserve`
+  (and the residence bulk equivalent).
+- `AnnonceResponse`: `reservedUntil` and `reservedFor` (or a nested
+  `reservation`) when the reservation came from a request, null for a manual
+  one, so the Pro list can say "réservée jusqu'au …".
+
+**Contract (M08)**
+- `CreateContractRequest` takes the accepted request (`reservationRequestId`),
+  and the server fills tenant, start date and duration (RM-M08-10). Refused for
+  anyone but that client while the reservation runs (RM-M08-13).
+- **Termination (RM-M08-11/12)**: request a termination `{effectiveDate,
+  reason, mutual: bool}`; the other party confirms a mutual one; the contract
+  response gains its state — at least `ACTIVE`/`ENDED` (or an `endedAt`), and a
+  pending termination with its effective date and who asked. The unilateral
+  notice (one rent period, 3 months at most) is the server's to enforce:
+  please answer a too-early date with a code (say `NOTICE_TOO_SHORT`) carrying
+  the earliest allowed date, so the date picker can start there.
+- The contract's response should say whether it came from a reservation, so the
+  tenant's screen can show "pré-rempli depuis ta demande".
+
+**Messaging (RM-M29-14)**
+- The thread opened by a request starts with a **system message**. Today
+  `message.sender_account_id` is NOT NULL, so this is a schema change. The apps
+  need to tell it apart: a `kind` (`USER`/`SYSTEM`) on `MessageResponse`, and the
+  request's fields (start date, duration, message) either structured or as the
+  text the server wrote — structured is better: the apps render the date in the
+  reader's locale.
+
+### 3. Push targets for N-32 to N-39
+
+RM-M03-04 wants every notification to open its screen (CA-M03-02), and the apps
+route on `PushTarget` (append-only). None of N-27 to N-39 has one. For lot 1:
+- **N-32** (new request, 24 h nudge) → prestataire, `entityId` = the request;
+- **N-33** (accepted, refused, not retained, expired, cancelled) → client,
+  `entityId` = the request;
+- **N-34** (reservation ending in 48 h, or ended) → both, `entityId` = the
+  request (or the listing — say which);
+- **N-19** on a termination already routes as `CONTRACT`: fine as is.
+
+A single new target `RESERVATION` would cover N-32 to N-34. For lot 2/3, please
+plan `TENANCY` (N-35 to N-37, N-39, `entityId` = the contract) and decide N-38
+with item 4 below.
+
+### 4. N-38 and the message push — the same double you avoided for N-32
+
+RM-M29-14 says the request's thread sends N-32 only, never N-02 as well.
+RM-M30-09 puts a tenant's requests in the property's single thread, so a reply
+to a request is also a message: as written, it sends the message push **and**
+N-38. Suggest the same rule: a message attached to a request sends N-38 only.
+Doc 10 does not say it yet — worth a line from you to the product side.
+
+### 5. `expiresAt` while a reservation suspends the Free deadline (RM-M10-04)
+
+The Pro app shows "Expire dans N jours" from `AnnonceResponse.expiresAt` on a
+published **or reserved** Free listing (shipped 2026-10-18). RM-M10-04 now
+suspends the J+30 deadline during a reservation that came from a request, and
+gives the remaining days back on return to `PUBLISHED`. If `expiresAt` keeps its
+old value meanwhile, the app counts down to a date that no longer applies.
+
+**Ask:** `expiresAt: null` while suspended (the app then shows nothing), and the
+recomputed date on return. Or keep it and add `expirySuspended: true` — either
+works, please say which.
+
+### 6. For lot 3: the SHA-256 "imposed at upload" (RM-M30-11)
+
+The CDC now has the app compute the photo's SHA-256 and the storage refuse any
+other content. That presumably means `x-amz-checksum-sha256` signed into the
+presigned PUT. Worth a spike before lot 3 depends on it: does R2 enforce a
+signed checksum header on a presigned PUT, and does the evidence endpoint
+check the stored object (`HEAD`) before recording the server timestamp? The app
+will hash **after** compression — the exact bytes it sends — and send the
+header base64-encoded, as S3 expects.
+
+### 7. For lot 2: what one declaration pays (RM-M30-02/03)
+
+Declarations are "attached to an échéance", singular. Not covered: a partial
+payment, one transfer for several échéances, the **deposit and first rent paid
+together** (and who declares the deposit — the CDC's "Caution" section says
+"état déclaré (versée)" without a mechanism), an overpayment. The apps need the
+rule before the declaration screen: is it one declaration → many échéances
+with amounts, or one échéance per declaration and the tenant splits? Raising it
+with you because it is a data-model question as much as a product one.
+
+### And one product point, for the record
+
+RM-M10-10 still lets the prestataire put a listing back to **Publiée** "before
+the contract's start date" while a signed contract exists. RM-M08-13 then
+forbids any other contract on it — so a request accepted on that republished
+listing can never become a contract. The app will offer that return only
+through the termination flow (before the start date, a termination counts as a
+cancellation, RM-M08-11), never as a bare status change. If the server allows
+`PUBLISHED` from `RENTED` with a signed, not-yet-started contract, please refuse
+it with a code instead.
