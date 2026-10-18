@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-13.
+> Last updated: 2026-10-18.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**750 tests green, analyze clean.** `mboa_user` 161 · `mboa_pro` 432 ·
-`mboa_core` 17 · `mboa_shared` 112 · `mboa_ui` 21 · `mboa_l10n` 7.
+**869 tests green, analyze clean.** `mboa_user` 192 · `mboa_pro` 439 ·
+`mboa_core` 17 · `mboa_shared` 193 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -37,18 +37,18 @@
 | Module | State |
 |---|---|
 | M01 auth (user phone-OTP, pro credential + 2FA) | ✅ |
-| M02 profile & settings (language, phone, password, deletion) | ✅ |
+| M02 profile & settings (language, phone, password, deletion, notification switches) | ✅ |
 | M01bis KYC / certifications (pro) | ✅ |
 | Media upload (compress → R2 presigned PUT) | ✅ |
 | Locations (cities, districts, pickers) | ✅ |
 | M14 Pro home dashboard | ✅ shell real, **views now real, 5 metrics still unsourced** |
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
-| M03 push notifications | ✅ **Android both apps** · iOS blocked on APNs key |
-| M10 listings + residences | ✅ complete for everything the API supports |
-| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache |
+| M03 push notifications | ✅ **Android both apps**, taps open the right screen (CA-M03-02) · iOS blocked on APNs key |
+| M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
+| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache · **saved searches not built** |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
-| M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur |
+| M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur, motif d'annulation |
 | M07bis rapport (locataire) | ✅ écriture, verrouillé une fois publié · la fiche montre points +/− et photos |
 | M12 messagerie | ✅ **both apps** — list, thread, attachments, offline queue · shared views |
 | M15 agent profile, zones, availability | ✅ shell + screens |
@@ -1050,28 +1050,30 @@ as the same thing.
 
 ## Pending / next
 
-- **`expiresAt` countdown** — mapped onto `Annonce`, unused in the UI. Free-tier
-  listings expire at J+30 (RM-M10-04); the field gives the countdown for free.
-  Smallest useful next task.
-- **Prestataire visit detail + cancellation** — both missing server-side
-  (`backend-requests.md` §14). Until then he cannot reach the person coming to
-  his property, and cannot call a confirmed visit off.
-- **M12 messaging** — live on the backend, entirely unbuilt. Constraints from
-  their handover: `ConversationResponse.readOnly` must disable the composer;
-  phone numbers are masked server-side both directions (RM-M12-03) so **no call
-  affordance anywhere**; attachments are **object keys, not URLs**, max 3, images
-  only, via the `MESSAGE_ATTACHMENT` upload category; `POST /conversations` is
-  **USER role only** (a prestataire gets 403); a double-tapped "Contact" returns
-  409 `CONSTRAINT_VIOLATION` — retry to get the existing thread.
-- **M04 search / M05 listing detail** — the user-app side.
-- **iOS push** — blocked only on the APNs key. Everything else is done.
-- Password reset (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
-- Settings extras: searchable toggle, per-type notification preferences.
-- **M08 contracts** — `registrationNumber` is now collected, so the identity
-  line is no longer a blocker. The largest new surface (both apps, 6 statuses, a
-  negotiation round-trip). Needs `registrationNumber` on the pro profile first.
-- M07 booking + M07bis client review + M27 resident review — all need M05.
-- Favourites (M06), Mboa Score (M09).
+Updated 2026-10-18. The spec was re-exported and the client regenerated on
+2026-10-17 (`bfeab62`) — but that export **predates the backend's M24 commit**
+(invoices, N-23/N-24/N-25 are absent from it). Ask for a fresh one before M24.
+
+Ready to build (the API exists, nothing in the apps):
+- **M04 saved searches + N-01** (tenant) — `SavedSearchesApi`: list, save,
+  rename / toggle alerts, delete, results. Also the last push type
+  (`SAVED_SEARCH`) still landing on the shell.
+- **M09 Mboa Score** (both) — `GET /users/me/score` for the tenant,
+  `GET /prestataires/me/tenants/{userId}/score` for a prestataire. Never started.
+- **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
+  (entries, summary, export, attachment) and `/addons/finance/subscribe`.
+  Paid option, never started.
+- **Prestataire visit cancellation** — §14 is half answered:
+  `POST /prestataires/me/visites/{id}/cancel`, up to one hour before the slot
+  (`409 CANCELLATION_TOO_LATE` after). Read the answer in
+  `docs/backend/backend-response.md` before building.
+- Password reset in Pro (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
+- Settings: the `searchable` toggle is still unwired.
+
+Blocked:
+- **M24 invoices / M26 payments to contractors** — no endpoints in the export.
+- **iOS push** — the APNs key, nothing else.
+- **M14** — five dashboard metrics have no source.
 
 ---
 
@@ -1081,8 +1083,9 @@ as the same thing.
   tests, analyze and native builds — not from the app running. Simulator install
   kept failing with CoreSimulator 405; a physical device may be easier. The
   broken "Republier" button is exactly the class of bug this misses.
-- **Deep-link routing** handles `PAYMENT_CONFIRMED` and `KYC`;
-  `MESSAGE`/`ANNONCE`/`VISIT` land on the shell until those modules exist.
+- **Push routing** matches `PushTarget` exactly. A `MESSAGE` tap opens the inbox,
+  not the thread: no endpoint reads one conversation by id. `SAVED_SEARCH`
+  lands on the shell until saved searches exist.
 - **Goldens now load the icon font too** (`load_brand_fonts` reads
   `lucide.ttf` out of the package config, which lives at the **workspace**
   root). Before that every icon rendered as an empty box, so three goldens were
