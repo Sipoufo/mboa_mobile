@@ -3174,5 +3174,139 @@
   "notifPrefN25": "Paid invoices",
   "@notifPrefN25": {
     "description": "N-25 \u2014 a tenant paid an invoice in the app (owner)."
+  },
+  "savedSearchesTitle": "Saved searches",
+  "@savedSearchesTitle": {
+    "description": "RM-M04-07 \u2014 list title, Compte tile."
+  },
+  "savedSearchesCount": "{count} of {limit}",
+  "@savedSearchesCount": {
+    "description": "How many saved searches, out of the MVP limit (3).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "savedSearchesEmpty": "No saved searches yet. Run a search, then tap the bookmark to hear about new places.",
+  "@savedSearchesEmpty": {
+    "description": "Empty saved-search list."
+  },
+  "savedSearchesOffline": "Offline: these are your searches as last saved. You can change them once you are back online.",
+  "@savedSearchesOffline": {
+    "description": "Saved-search list shown from the cache, read-only."
+  },
+  "savedSearchesFiltersFixed": "A saved search keeps its filters. For other filters, save a new search.",
+  "@savedSearchesFiltersFixed": {
+    "description": "The server does not edit a saved search's criteria."
+  },
+  "savedSearchNewCount": "{count, plural, =1{1 new} other{{count} new}}",
+  "@savedSearchNewCount": {
+    "description": "newMatchCount badge on a saved search.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedSearchAlerts": "Tell me about new places",
+  "@savedSearchAlerts": {
+    "description": "N-01 switch on a saved search."
+  },
+  "savedSearchRename": "Rename",
+  "@savedSearchRename": {
+    "description": "Saved-search menu."
+  },
+  "savedSearchRenameConfirm": "Save",
+  "@savedSearchRenameConfirm": {
+    "description": "Rename dialog confirm."
+  },
+  "savedSearchDelete": "Delete",
+  "@savedSearchDelete": {
+    "description": "Saved-search menu."
+  },
+  "savedSearchDeleteTitle": "Delete this search?",
+  "@savedSearchDeleteTitle": {
+    "description": "Delete confirmation title."
+  },
+  "savedSearchDeleteBody": "\"{name}\" will no longer tell you about new places.",
+  "@savedSearchDeleteBody": {
+    "description": "Delete confirmation body.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "savedSearchNameLabel": "Name (optional)",
+  "@savedSearchNameLabel": {
+    "description": "Save sheet name field."
+  },
+  "savedSearchNameHint": "Otherwise we name it after your filters",
+  "@savedSearchNameHint": {
+    "description": "The server builds a name when none is given."
+  },
+  "savedSearchChangeFailed": "This change was not saved. Try again.",
+  "@savedSearchChangeFailed": {
+    "description": "Rename / alerts / delete failed."
+  },
+  "savedSearchResultsEmpty": "Nothing matches this search for now. We'll tell you as soon as something does.",
+  "@savedSearchResultsEmpty": {
+    "description": "Saved-search results, empty."
+  },
+  "savedSearchResultsFailed": "The results could not be loaded. Check your connection.",
+  "@savedSearchResultsFailed": {
+    "description": "Saved-search results failed (offline or server)."
+  },
+  "saveSearchAction": "Save search",
+  "@saveSearchAction": {
+    "description": "Tooltip of the bookmark on the search results header."
+  },
+  "saveSearchTitle": "Save this search",
+  "@saveSearchTitle": {
+    "description": "Save sheet title."
+  },
+  "saveSearchAlertsHelp": "One grouped notification when new places match, never at night.",
+  "@saveSearchAlertsHelp": {
+    "description": "N-01 \u2014 one grouped push per search, not between 22:00 and 07:00."
+  },
+  "saveSearchConfirm": "Save",
+  "@saveSearchConfirm": {
+    "description": "Save sheet confirm."
+  },
+  "saveSearchSignInTitle": "Sign in to save",
+  "@saveSearchSignInTitle": {
+    "description": "Visitor tried to save a search (RM-M04-05)."
+  },
+  "saveSearchSignInBody": "A saved search tells you about new places: that needs an account.",
+  "@saveSearchSignInBody": {
+    "description": "Visitor tried to save a search."
+  },
+  "saveSearchLimitTitle": "3 searches at most",
+  "@saveSearchLimitTitle": {
+    "description": "RM-M04-07 / SAVED_SEARCH_LIMIT."
+  },
+  "saveSearchLimitBody": "Delete a saved search (in Account) to add another one.",
+  "@saveSearchLimitBody": {
+    "description": "RM-M04-07 / SAVED_SEARCH_LIMIT."
+  },
+  "saveSearchDone": "Search saved",
+  "@saveSearchDone": {
+    "description": "Save succeeded."
+  },
+  "saveSearchDoneBody": "You'll find it in Account.",
+  "@saveSearchDoneBody": {
+    "description": "Save succeeded."
+  },
+  "saveSearchDuplicate": "This search is already saved.",
+  "@saveSearchDuplicate": {
+    "description": "SAVED_SEARCH_DUPLICATE."
+  },
+  "saveSearchFailed": "The search was not saved. Try again.",
+  "@saveSearchFailed": {
+    "description": "Save failed."
   }
 }

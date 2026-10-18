@@ -100,6 +100,15 @@ class _SignedInState extends State<_SignedIn> {
                     ),
                   ),
                   const SizedBox(height: Dimens.spacingMd),
+                  // RM-M04-07 — the searches N-01 watches.
+                  MboaTileCard(
+                    icon: LucideIcons.bookmark,
+                    title: l10n.savedSearchesTitle,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [SavedSearchesRoute()]),
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacingMd),
                   MboaTileCard(
                     icon: LucideIcons.calendarCheck,
                     title: l10n.visitsTitle,

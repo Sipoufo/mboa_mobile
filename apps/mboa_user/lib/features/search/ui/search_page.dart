@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,8 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../saved_searches/bloc/saved_searches_bloc.dart';
+import '../../saved_searches/ui/widgets/save_search_sheet.dart';
 import '../bloc/search_bloc.dart';
 import 'widgets/search_filters_sheet.dart';
 import 'widgets/search_hit_card.dart';
@@ -21,9 +25,9 @@ class SearchPage extends StatefulWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<SearchBloc>(
-        create: (_) => getIt<SearchBloc>()..add(const SearchStarted()),
-        child: this,
-      );
+    create: (_) => getIt<SearchBloc>()..add(const SearchStarted()),
+    child: this,
+  );
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -102,6 +106,29 @@ class _SearchPageState extends State<SearchPage> {
       ..add(const SearchSubmitted());
   }
 
+  /// RM-M04-07 — keep this search, to be told when it has something new.
+  ///
+  /// An account is needed (the wall is on the action, RM-M04-05), and three
+  /// is the limit: both are said before the sheet, not after it.
+  Future<void> _save(SearchQuery query) async {
+    final l10n = I18n.of(context);
+    final saved = context.read<SavedSearchesBloc>();
+
+    if (!getIt<SessionSnapshot>().hasSession) {
+      MboaToast.info(context: context, title: l10n.saveSearchSignInTitle, description: l10n.saveSearchSignInBody);
+      unawaited(context.router.root.push(LoginRoute()));
+      return;
+    }
+    if (saved.state case final SavedSearchesReady ready when ready.isFull) {
+      MboaToast.info(context: context, title: l10n.saveSearchLimitTitle, description: l10n.saveSearchLimitBody);
+      return;
+    }
+
+    final choice = await showSaveSearchSheet(context);
+    if (choice == null) return;
+    saved.add(SavedSearchSaveRequested(query, name: choice.name, alertsEnabled: choice.alertsEnabled));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
@@ -109,14 +136,32 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(title: Text(l10n.navSearch)),
-      body: BlocBuilder<SearchBloc, SearchState>(
-        builder: (context, state) => switch (state) {
-          SearchInitial() => const Center(child: Loader()),
-          SearchFailure() => _Failure(
-              onRetry: () =>
-                  context.read<SearchBloc>().add(const SearchSubmitted()),
+      body: BlocListener<SavedSearchesBloc, SavedSearchesState>(
+        // Only what a save came to: changes made on the list say their own.
+        listenWhen: (prev, curr) =>
+            prev is SavedSearchesReady && prev.isSaving && curr is SavedSearchesReady && curr.outcome != null,
+        listener: (context, state) {
+          if (state is! SavedSearchesReady) return;
+          switch (state.outcome) {
+            case SavedSearchOutcome.saved:
+              MboaToast.success(context: context, title: l10n.saveSearchDone, description: l10n.saveSearchDoneBody);
+            case SavedSearchOutcome.limitReached:
+              MboaToast.info(context: context, title: l10n.saveSearchLimitTitle, description: l10n.saveSearchLimitBody);
+            case SavedSearchOutcome.alreadySaved:
+              MboaToast.info(context: context, title: l10n.saveSearchDuplicate);
+            case SavedSearchOutcome.failed:
+              MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.saveSearchFailed);
+            case null:
+              break;
+          }
+        },
+        child: BlocBuilder<SearchBloc, SearchState>(
+          builder: (context, state) => switch (state) {
+            SearchInitial() => const Center(child: Loader()),
+            SearchFailure() => _Failure(
+              onRetry: () => context.read<SearchBloc>().add(const SearchSubmitted()),
             ),
-          final SearchReady ready => Column(
+            final SearchReady ready => Column(
               children: [
                 _SearchBar(
                   state: ready,
@@ -126,9 +171,7 @@ class _SearchPageState extends State<SearchPage> {
                 if (ready.cachedBecause case final reason?)
                   _CacheBanner(
                     reason: reason,
-                    onRetry: () => context
-                        .read<SearchBloc>()
-                        .add(const SearchSubmitted()),
+                    onRetry: () => context.read<SearchBloc>().add(const SearchSubmitted()),
                   ),
                 // Nothing to switch between until a city is chosen
                 // (RM-M04-01), and an empty map is not a second empty state.
@@ -137,20 +180,21 @@ class _SearchPageState extends State<SearchPage> {
                     count: ready.hits.length,
                     view: _view,
                     onChanged: (view) => setState(() => _view = view),
+                    onSave: () => _save(ready.query),
                   ),
                 Expanded(
                   child: switch (_view) {
-                    _View.list =>
-                      _Results(state: ready, controller: _scroll),
+                    _View.list => _Results(state: ready, controller: _scroll),
                     _View.map => SearchMapView(
-                        state: ready,
-                        onOpen: (hit) => _open(context, hit),
-                      ),
+                      state: ready,
+                      onOpen: (hit) => _open(context, hit),
+                    ),
                   },
                 ),
               ],
             ),
-        },
+          },
+        ),
       ),
     );
   }
@@ -160,9 +204,9 @@ class _SearchPageState extends State<SearchPage> {
 /// (RM-M10bis-11). The list and the map both land here, so a marker and a row
 /// cannot drift apart.
 void _open(BuildContext context, SearchHit hit) => switch (hit) {
-      ListingHit() => context.router.push(ListingDetailRoute(id: hit.id)),
-      ResidenceHit() => context.router.push(ResidenceDetailRoute(id: hit.id)),
-    };
+  ListingHit() => context.router.push(ListingDetailRoute(id: hit.id)),
+  ResidenceHit() => context.router.push(ResidenceDetailRoute(id: hit.id)),
+};
 
 /// How many results, and which half is showing them.
 ///
@@ -174,11 +218,13 @@ class _ResultsHeader extends StatelessWidget {
     required this.count,
     required this.view,
     required this.onChanged,
+    required this.onSave,
   });
 
   final int count;
   final _View view;
   final ValueChanged<_View> onChanged;
+  final VoidCallback onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +245,11 @@ class _ResultsHeader extends StatelessWidget {
               l10n.searchResultCount(count),
               style: context.mboaText.label.copyWith(color: colors.ink),
             ),
+          ),
+          IconButton(
+            onPressed: onSave,
+            tooltip: l10n.saveSearchAction,
+            icon: Icon(LucideIcons.bookmarkPlus, color: colors.primary),
           ),
           _ViewToggle(view: view, onChanged: onChanged),
         ],
@@ -339,8 +390,7 @@ class _SearchBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(Dimens.radius),
               child: Container(
                 height: Dimens.inputHeight,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: Dimens.spacing),
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing),
                 decoration: BoxDecoration(
                   color: colors.surfaceWarm,
                   borderRadius: BorderRadius.circular(Dimens.radius),
@@ -358,8 +408,7 @@ class _SearchBar extends StatelessWidget {
                       child: Text(
                         state.query.cityName ?? l10n.searchCityPrompt,
                         style: state.query.cityName == null
-                            ? context.mboaText.body
-                                .copyWith(color: colors.textTertiary)
+                            ? context.mboaText.body.copyWith(color: colors.textTertiary)
                             : context.mboaText.label.copyWith(color: colors.ink),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

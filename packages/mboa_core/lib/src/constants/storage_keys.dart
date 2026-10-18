@@ -33,6 +33,10 @@ class StorageKeys {
   // Prestataire dashboard counters (M14) — cheap to refetch, cached so the Pro
   // home renders instantly and works offline.
   static const String dashboardBox = 'dashboardBox';
+  // Saved searches (M04, RM-M04-07) — at most three, replaced on every load.
+  // Read-only offline: they belong to an account, so they are cleared at
+  // sign-out, and nothing is changed while the network is gone.
+  static const String savedSearchesBox = 'savedSearchesBox';
 
   static const List<String> allBoxes = [
     viewedBox,
@@ -43,6 +47,7 @@ class StorageKeys {
     dashboardBox,
     subscriptionBox,
     visitsBox,
+    savedSearchesBox,
   ];
 }
 

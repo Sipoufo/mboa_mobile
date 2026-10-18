@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**869 tests green, analyze clean.** `mboa_user` 192 · `mboa_pro` 439 ·
+**907 tests green, analyze clean.** `mboa_user` 230 · `mboa_pro` 439 ·
 `mboa_core` 17 · `mboa_shared` 193 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -43,9 +43,9 @@
 | Locations (cities, districts, pickers) | ✅ |
 | M14 Pro home dashboard | ✅ shell real, **views now real, 5 metrics still unsourced** |
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
-| M03 push notifications | ✅ **Android both apps**, taps open the right screen (CA-M03-02) · iOS blocked on APNs key |
+| M03 push notifications | ✅ **Android both apps**, every `PushTarget` routed (CA-M03-02) · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
-| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache · **saved searches not built** |
+| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache, **saved searches + N-01** (read-only offline) |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
 | M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur, motif d'annulation |
@@ -1050,14 +1050,10 @@ as the same thing.
 
 ## Pending / next
 
-Updated 2026-10-18. The spec was re-exported and the client regenerated on
-2026-10-17 (`bfeab62`) — but that export **predates the backend's M24 commit**
-(invoices, N-23/N-24/N-25 are absent from it). Ask for a fresh one before M24.
+Updated 2026-10-18. The client was regenerated from the export carrying M24
+(invoices) and M26 (payments to contractors), `eb848cd`.
 
 Ready to build (the API exists, nothing in the apps):
-- **M04 saved searches + N-01** (tenant) — `SavedSearchesApi`: list, save,
-  rename / toggle alerts, delete, results. Also the last push type
-  (`SAVED_SEARCH`) still landing on the shell.
 - **M09 Mboa Score** (both) — `GET /users/me/score` for the tenant,
   `GET /prestataires/me/tenants/{userId}/score` for a prestataire. Never started.
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
@@ -1070,8 +1066,11 @@ Ready to build (the API exists, nothing in the apps):
 - Password reset in Pro (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
 - Settings: the `searchable` toggle is still unwired.
 
+- **M24 tenant invoices** (both apps: the owner issues, the tenant pays or it
+  is declared paid) and **M26 payments to contractors** (Pro) — endpoints
+  arrived with the latest export; same add-on as M25.
+
 Blocked:
-- **M24 invoices / M26 payments to contractors** — no endpoints in the export.
 - **iOS push** — the APNs key, nothing else.
 - **M14** — five dashboard metrics have no source.
 
@@ -1084,8 +1083,10 @@ Blocked:
   kept failing with CoreSimulator 405; a physical device may be easier. The
   broken "Republier" button is exactly the class of bug this misses.
 - **Push routing** matches `PushTarget` exactly. A `MESSAGE` tap opens the inbox,
-  not the thread: no endpoint reads one conversation by id. `SAVED_SEARCH`
-  lands on the shell until saved searches exist.
+  not the thread: no endpoint reads one conversation by id.
+- **Account-scoped Hive caches survive sign-out** (`visitsBox` at least) — the
+  next person on the device could read the last one's visits offline. Saved
+  searches clear theirs; the rest is not done yet.
 - **Goldens now load the icon font too** (`load_brand_fonts` reads
   `lucide.ttf` out of the package config, which lives at the **workspace**
   root). Before that every icon rendered as an empty box, so three goldens were

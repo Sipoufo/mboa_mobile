@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,8 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mboa_user/features/favorites/bloc/favorites_bloc.dart';
+import 'package:mboa_user/features/saved_searches/bloc/saved_searches_bloc.dart';
+import 'package:mboa_user/features/saved_searches/models/saved_search.dart';
 import 'package:mboa_user/features/search/bloc/search_bloc.dart';
 import 'package:mboa_user/features/search/ui/search_page.dart';
 import 'package:mocktail/mocktail.dart';
@@ -15,6 +19,9 @@ import '../../../_helpers/load_brand_fonts.dart';
 
 class MockSearchBloc extends MockBloc<SearchEvent, SearchState>
     implements SearchBloc {}
+
+class MockSavedSearchesBloc extends MockBloc<SavedSearchesEvent, SavedSearchesState>
+    implements SavedSearchesBloc {}
 
 class MockFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
     implements FavoritesBloc {}
@@ -28,6 +35,7 @@ class MockFavoritesBloc extends MockBloc<FavoritesEvent, FavoritesState>
 void main() {
   late MockSearchBloc bloc;
   late MockFavoritesBloc favorites;
+  late MockSavedSearchesBloc saved;
 
   const douala = SearchQuery(cityId: 'c-1', cityName: 'Douala');
 
@@ -51,11 +59,16 @@ void main() {
     availableUnitCount: 6,
   );
 
-  setUpAll(loadBrandFonts);
+  setUpAll(() async {
+    registerFallbackValue(const SavedSearchesRequested());
+    await loadBrandFonts();
+  });
 
   setUp(() {
     bloc = MockSearchBloc();
     favorites = MockFavoritesBloc();
+    saved = MockSavedSearchesBloc();
+    when(() => saved.state).thenReturn(const SavedSearchesReady(searches: []));
     when(() => favorites.state).thenReturn(const FavoritesInitial());
     if (!getIt.isRegistered<SessionSnapshot>()) {
       getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
@@ -83,6 +96,7 @@ void main() {
           providers: [
             BlocProvider<SearchBloc>.value(value: bloc),
             BlocProvider<FavoritesBloc>.value(value: favorites),
+            BlocProvider<SavedSearchesBloc>.value(value: saved),
           ],
           child: const SearchPage(),
         ),
@@ -251,5 +265,60 @@ void main() {
       find.byType(SearchPage),
       matchesGoldenFile('goldens/search.png'),
     );
+  });
+
+  group('saving the search (RM-M04-07)', () {
+    testWidgets('signed in: a sheet, then the search is sent to be saved', (tester) async {
+      getIt<SessionSnapshot>().markAuthenticated();
+      await pump(tester);
+
+      await tester.tap(find.byTooltip('Sauvegarder la recherche'));
+      await tester.pumpAndSettle();
+      expect(find.text('Sauvegarder cette recherche'), findsOneWidget);
+
+      await tester.tap(find.text('Sauvegarder'));
+      await tester.pumpAndSettle();
+
+      // No name typed: the server names it after the filters.
+      verify(() => saved.add(const SavedSearchSaveRequested(douala))).called(1);
+    });
+
+    testWidgets('three already saved: the limit is said before the sheet', (tester) async {
+      getIt<SessionSnapshot>().markAuthenticated();
+      when(() => saved.state).thenReturn(
+        const SavedSearchesReady(
+          searches: [
+            SavedSearch(id: '1', name: 'Akwa'),
+            SavedSearch(id: '2', name: 'Bonapriso'),
+            SavedSearch(id: '3', name: 'Deido'),
+          ],
+        ),
+      );
+      await pump(tester);
+
+      await tester.tap(find.byTooltip('Sauvegarder la recherche'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('3 recherches au maximum'), findsOneWidget);
+      expect(find.text('Sauvegarder cette recherche'), findsNothing);
+      verifyNever(() => saved.add(any()));
+    });
+
+    testWidgets('a duplicate is said, once the server answers', (tester) async {
+      // Fed after the screen is up: the listener reads a transition, from
+      // saving to its outcome, and must be subscribed to see it.
+      final states = StreamController<SavedSearchesState>.broadcast();
+      addTearDown(states.close);
+      whenListen(saved, states.stream, initialState: const SavedSearchesReady(searches: []));
+      await pump(tester);
+
+      states.add(const SavedSearchesReady(searches: [], isSaving: true));
+      await tester.pump();
+      states.add(const SavedSearchesReady(searches: [], outcome: SavedSearchOutcome.alreadySaved));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      expect(find.text('Cette recherche est déjà sauvegardée.'), findsOneWidget);
+    });
   });
 }

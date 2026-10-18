@@ -1,0 +1,59 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mboa_shared/mboa_shared.dart';
+import 'package:mboa_user/app/notifications_bootstrap.dart';
+import 'package:mboa_user/app/router/app_router.dart';
+import 'package:mboa_user/app/router/app_router.gr.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockAppRouter extends Mock implements AppRouter {}
+
+class _FakeRoute extends Fake implements PageRouteInfo<dynamic> {}
+
+/// CA-M03-02 — a tap opens the screen the notification is about.
+void main() {
+  late MockAppRouter router;
+
+  setUpAll(() => registerFallbackValue(_FakeRoute()));
+
+  setUp(() {
+    router = MockAppRouter();
+    when(() => router.push<Object?>(any())).thenAnswer((_) async => null);
+    when(() => router.navigate(any())).thenAnswer((_) async {});
+  });
+
+  PageRouteInfo<dynamic> pushed() => verify(() => router.push<Object?>(captureAny())).captured.single as PageRouteInfo;
+
+  test('N-01 opens what the saved search found', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.savedSearch, entityId: 's-1'));
+
+    final route = pushed();
+    expect(route.routeName, AuthenticatedRouter.name);
+    final child = route.initialChildren!.single;
+    expect(child.routeName, SavedSearchResultsRoute.name);
+    expect((child.args! as SavedSearchResultsRouteArgs).id, 's-1');
+  });
+
+  test('N-01 without an id opens the saved searches', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.savedSearch));
+
+    final route = pushed();
+    expect(route.routeName, AuthenticatedRouter.name);
+    expect(route.initialChildren!.single.routeName, SavedSearchesRoute.name);
+  });
+
+  test('a visit opens that visit', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.visit, entityId: 'v-1'));
+
+    final child = pushed().initialChildren!.single;
+    expect(child.routeName, VisitDetailRoute.name);
+    expect((child.args! as VisitDetailRouteArgs).visitId, 'v-1');
+  });
+
+  test('a type this build does not know lands on the shell', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.unknown));
+
+    verify(() => router.navigate(const AuthenticatedRouter())).called(1);
+    verifyNever(() => router.push<Object?>(any()));
+  });
+}

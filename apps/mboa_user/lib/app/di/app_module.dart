@@ -8,6 +8,9 @@ import '../../features/favorites/bloc/favorites_bloc.dart';
 import '../../features/favorites/data/favorites_repository.dart';
 import '../../features/listing/bloc/listing_detail_bloc.dart';
 import '../../features/listing/data/listing_repository.dart';
+import '../../features/saved_searches/bloc/saved_search_results_bloc.dart';
+import '../../features/saved_searches/bloc/saved_searches_bloc.dart';
+import '../../features/saved_searches/data/saved_searches_repository.dart';
 import '../../features/search/bloc/search_bloc.dart';
 import '../../features/search/data/search_repository.dart';
 import '../../features/visits/bloc/my_visits_bloc.dart';
@@ -88,6 +91,18 @@ void registerAppModule() {
   );
   getIt.registerFactory<VisitBookingBloc>(
     () => VisitBookingBloc(repository: getIt<VisitsRepository>()),
+  );
+
+  // Saved searches (M04, RM-M04-07). The list bloc is session-scoped like
+  // favourites: the search screen saves into it, the Compte list reads it.
+  getIt.registerLazySingleton<SavedSearchesRepository>(
+    () => SavedSearchesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<SavedSearchesBloc>(
+    () => SavedSearchesBloc(repository: getIt<SavedSearchesRepository>()),
+  );
+  getIt.registerFactory<SavedSearchResultsBloc>(
+    () => SavedSearchResultsBloc(repository: getIt<SavedSearchesRepository>()),
   );
   // A singleton, like favourites: the list and the detail screen must agree
   // about a visit, and a detail built from its own bloc would open empty on a
@@ -225,6 +240,7 @@ void registerAppModule() {
 void loadSessionScopedBlocs() {
   getIt<FavoritesBloc>().add(const FavoritesLoadRequested());
   getIt<ConversationsBloc>().add(const ConversationsLoadRequested());
+  getIt<SavedSearchesBloc>().add(const SavedSearchesRequested());
 }
 
 /// Drops the blocs that belong to a signed-in account.
@@ -243,4 +259,9 @@ Future<void> resetSessionScopedBlocs() async {
   await getIt.resetLazySingleton<MyVisitsBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
+  await getIt.resetLazySingleton<SavedSearchesBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  // The offline copy belongs to the account too.
+  await getIt<SavedSearchesRepository>().forget();
 }

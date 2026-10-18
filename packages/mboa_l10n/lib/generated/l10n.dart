@@ -8855,6 +8855,298 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Recherches sauvegardées`
+  String get savedSearchesTitle {
+    return Intl.message(
+      'Recherches sauvegardées',
+      name: 'savedSearchesTitle',
+      desc: 'RM-M04-07 — list title, Compte tile.',
+      args: [],
+    );
+  }
+
+  /// `{count} sur {limit}`
+  String savedSearchesCount(int count, int limit) {
+    return Intl.message(
+      '$count sur $limit',
+      name: 'savedSearchesCount',
+      desc: 'How many saved searches, out of the MVP limit (3).',
+      args: [count, limit],
+    );
+  }
+
+  /// `Aucune recherche sauvegardée. Lance une recherche, puis touche le signet pour être prévenu des nouveaux biens.`
+  String get savedSearchesEmpty {
+    return Intl.message(
+      'Aucune recherche sauvegardée. Lance une recherche, puis touche le signet pour être prévenu des nouveaux biens.',
+      name: 'savedSearchesEmpty',
+      desc: 'Empty saved-search list.',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : voici tes recherches telles qu'enregistrées. Tu pourras les modifier une fois reconnecté.`
+  String get savedSearchesOffline {
+    return Intl.message(
+      'Hors ligne : voici tes recherches telles qu\'enregistrées. Tu pourras les modifier une fois reconnecté.',
+      name: 'savedSearchesOffline',
+      desc: 'Saved-search list shown from the cache, read-only.',
+      args: [],
+    );
+  }
+
+  /// `Les filtres d'une recherche sauvegardée ne changent pas. Pour d'autres filtres, sauvegarde une nouvelle recherche.`
+  String get savedSearchesFiltersFixed {
+    return Intl.message(
+      'Les filtres d\'une recherche sauvegardée ne changent pas. Pour d\'autres filtres, sauvegarde une nouvelle recherche.',
+      name: 'savedSearchesFiltersFixed',
+      desc: 'The server does not edit a saved search\'s criteria.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 nouveau} other{{count} nouveaux}}`
+  String savedSearchNewCount(int count) {
+    return Intl.plural(
+      count,
+      one: '1 nouveau',
+      other: '$count nouveaux',
+      name: 'savedSearchNewCount',
+      desc: 'newMatchCount badge on a saved search.',
+      args: [count],
+    );
+  }
+
+  /// `Me prévenir des nouveaux biens`
+  String get savedSearchAlerts {
+    return Intl.message(
+      'Me prévenir des nouveaux biens',
+      name: 'savedSearchAlerts',
+      desc: 'N-01 switch on a saved search.',
+      args: [],
+    );
+  }
+
+  /// `Renommer`
+  String get savedSearchRename {
+    return Intl.message(
+      'Renommer',
+      name: 'savedSearchRename',
+      desc: 'Saved-search menu.',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get savedSearchRenameConfirm {
+    return Intl.message(
+      'Enregistrer',
+      name: 'savedSearchRenameConfirm',
+      desc: 'Rename dialog confirm.',
+      args: [],
+    );
+  }
+
+  /// `Supprimer`
+  String get savedSearchDelete {
+    return Intl.message(
+      'Supprimer',
+      name: 'savedSearchDelete',
+      desc: 'Saved-search menu.',
+      args: [],
+    );
+  }
+
+  /// `Supprimer cette recherche ?`
+  String get savedSearchDeleteTitle {
+    return Intl.message(
+      'Supprimer cette recherche ?',
+      name: 'savedSearchDeleteTitle',
+      desc: 'Delete confirmation title.',
+      args: [],
+    );
+  }
+
+  /// `« {name} » ne te préviendra plus des nouveaux biens.`
+  String savedSearchDeleteBody(String name) {
+    return Intl.message(
+      '« $name » ne te préviendra plus des nouveaux biens.',
+      name: 'savedSearchDeleteBody',
+      desc: 'Delete confirmation body.',
+      args: [name],
+    );
+  }
+
+  /// `Nom (facultatif)`
+  String get savedSearchNameLabel {
+    return Intl.message(
+      'Nom (facultatif)',
+      name: 'savedSearchNameLabel',
+      desc: 'Save sheet name field.',
+      args: [],
+    );
+  }
+
+  /// `Sinon, on la nomme d'après tes filtres`
+  String get savedSearchNameHint {
+    return Intl.message(
+      'Sinon, on la nomme d\'après tes filtres',
+      name: 'savedSearchNameHint',
+      desc: 'The server builds a name when none is given.',
+      args: [],
+    );
+  }
+
+  /// `Ce changement n'a pas été enregistré. Réessaie.`
+  String get savedSearchChangeFailed {
+    return Intl.message(
+      'Ce changement n\'a pas été enregistré. Réessaie.',
+      name: 'savedSearchChangeFailed',
+      desc: 'Rename / alerts / delete failed.',
+      args: [],
+    );
+  }
+
+  /// `Aucun bien ne correspond à cette recherche pour le moment. On te prévient dès qu'il y en a un.`
+  String get savedSearchResultsEmpty {
+    return Intl.message(
+      'Aucun bien ne correspond à cette recherche pour le moment. On te prévient dès qu\'il y en a un.',
+      name: 'savedSearchResultsEmpty',
+      desc: 'Saved-search results, empty.',
+      args: [],
+    );
+  }
+
+  /// `Impossible de charger les résultats. Vérifie ta connexion.`
+  String get savedSearchResultsFailed {
+    return Intl.message(
+      'Impossible de charger les résultats. Vérifie ta connexion.',
+      name: 'savedSearchResultsFailed',
+      desc: 'Saved-search results failed (offline or server).',
+      args: [],
+    );
+  }
+
+  /// `Sauvegarder la recherche`
+  String get saveSearchAction {
+    return Intl.message(
+      'Sauvegarder la recherche',
+      name: 'saveSearchAction',
+      desc: 'Tooltip of the bookmark on the search results header.',
+      args: [],
+    );
+  }
+
+  /// `Sauvegarder cette recherche`
+  String get saveSearchTitle {
+    return Intl.message(
+      'Sauvegarder cette recherche',
+      name: 'saveSearchTitle',
+      desc: 'Save sheet title.',
+      args: [],
+    );
+  }
+
+  /// `Une notification groupée quand de nouveaux biens correspondent, jamais la nuit.`
+  String get saveSearchAlertsHelp {
+    return Intl.message(
+      'Une notification groupée quand de nouveaux biens correspondent, jamais la nuit.',
+      name: 'saveSearchAlertsHelp',
+      desc: 'N-01 — one grouped push per search, not between 22:00 and 07:00.',
+      args: [],
+    );
+  }
+
+  /// `Sauvegarder`
+  String get saveSearchConfirm {
+    return Intl.message(
+      'Sauvegarder',
+      name: 'saveSearchConfirm',
+      desc: 'Save sheet confirm.',
+      args: [],
+    );
+  }
+
+  /// `Connecte-toi pour sauvegarder`
+  String get saveSearchSignInTitle {
+    return Intl.message(
+      'Connecte-toi pour sauvegarder',
+      name: 'saveSearchSignInTitle',
+      desc: 'Visitor tried to save a search (RM-M04-05).',
+      args: [],
+    );
+  }
+
+  /// `Une recherche sauvegardée te prévient des nouveaux biens : il faut un compte pour ça.`
+  String get saveSearchSignInBody {
+    return Intl.message(
+      'Une recherche sauvegardée te prévient des nouveaux biens : il faut un compte pour ça.',
+      name: 'saveSearchSignInBody',
+      desc: 'Visitor tried to save a search.',
+      args: [],
+    );
+  }
+
+  /// `3 recherches au maximum`
+  String get saveSearchLimitTitle {
+    return Intl.message(
+      '3 recherches au maximum',
+      name: 'saveSearchLimitTitle',
+      desc: 'RM-M04-07 / SAVED_SEARCH_LIMIT.',
+      args: [],
+    );
+  }
+
+  /// `Supprime une recherche sauvegardée (dans Compte) pour en ajouter une autre.`
+  String get saveSearchLimitBody {
+    return Intl.message(
+      'Supprime une recherche sauvegardée (dans Compte) pour en ajouter une autre.',
+      name: 'saveSearchLimitBody',
+      desc: 'RM-M04-07 / SAVED_SEARCH_LIMIT.',
+      args: [],
+    );
+  }
+
+  /// `Recherche sauvegardée`
+  String get saveSearchDone {
+    return Intl.message(
+      'Recherche sauvegardée',
+      name: 'saveSearchDone',
+      desc: 'Save succeeded.',
+      args: [],
+    );
+  }
+
+  /// `Tu la retrouves dans Compte.`
+  String get saveSearchDoneBody {
+    return Intl.message(
+      'Tu la retrouves dans Compte.',
+      name: 'saveSearchDoneBody',
+      desc: 'Save succeeded.',
+      args: [],
+    );
+  }
+
+  /// `Cette recherche est déjà sauvegardée.`
+  String get saveSearchDuplicate {
+    return Intl.message(
+      'Cette recherche est déjà sauvegardée.',
+      name: 'saveSearchDuplicate',
+      desc: 'SAVED_SEARCH_DUPLICATE.',
+      args: [],
+    );
+  }
+
+  /// `La recherche n'a pas été sauvegardée. Réessaie.`
+  String get saveSearchFailed {
+    return Intl.message(
+      'La recherche n\'a pas été sauvegardée. Réessaie.',
+      name: 'saveSearchFailed',
+      desc: 'Save failed.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

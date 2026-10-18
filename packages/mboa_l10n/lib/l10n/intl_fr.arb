@@ -3174,5 +3174,139 @@
   "notifPrefN25": "Factures payées",
   "@notifPrefN25": {
     "description": "N-25 \u2014 a tenant paid an invoice in the app (owner)."
+  },
+  "savedSearchesTitle": "Recherches sauvegardées",
+  "@savedSearchesTitle": {
+    "description": "RM-M04-07 \u2014 list title, Compte tile."
+  },
+  "savedSearchesCount": "{count} sur {limit}",
+  "@savedSearchesCount": {
+    "description": "How many saved searches, out of the MVP limit (3).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "savedSearchesEmpty": "Aucune recherche sauvegardée. Lance une recherche, puis touche le signet pour être prévenu des nouveaux biens.",
+  "@savedSearchesEmpty": {
+    "description": "Empty saved-search list."
+  },
+  "savedSearchesOffline": "Hors ligne : voici tes recherches telles qu'enregistrées. Tu pourras les modifier une fois reconnecté.",
+  "@savedSearchesOffline": {
+    "description": "Saved-search list shown from the cache, read-only."
+  },
+  "savedSearchesFiltersFixed": "Les filtres d'une recherche sauvegardée ne changent pas. Pour d'autres filtres, sauvegarde une nouvelle recherche.",
+  "@savedSearchesFiltersFixed": {
+    "description": "The server does not edit a saved search's criteria."
+  },
+  "savedSearchNewCount": "{count, plural, =1{1 nouveau} other{{count} nouveaux}}",
+  "@savedSearchNewCount": {
+    "description": "newMatchCount badge on a saved search.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedSearchAlerts": "Me prévenir des nouveaux biens",
+  "@savedSearchAlerts": {
+    "description": "N-01 switch on a saved search."
+  },
+  "savedSearchRename": "Renommer",
+  "@savedSearchRename": {
+    "description": "Saved-search menu."
+  },
+  "savedSearchRenameConfirm": "Enregistrer",
+  "@savedSearchRenameConfirm": {
+    "description": "Rename dialog confirm."
+  },
+  "savedSearchDelete": "Supprimer",
+  "@savedSearchDelete": {
+    "description": "Saved-search menu."
+  },
+  "savedSearchDeleteTitle": "Supprimer cette recherche ?",
+  "@savedSearchDeleteTitle": {
+    "description": "Delete confirmation title."
+  },
+  "savedSearchDeleteBody": "« {name} » ne te préviendra plus des nouveaux biens.",
+  "@savedSearchDeleteBody": {
+    "description": "Delete confirmation body.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "savedSearchNameLabel": "Nom (facultatif)",
+  "@savedSearchNameLabel": {
+    "description": "Save sheet name field."
+  },
+  "savedSearchNameHint": "Sinon, on la nomme d'après tes filtres",
+  "@savedSearchNameHint": {
+    "description": "The server builds a name when none is given."
+  },
+  "savedSearchChangeFailed": "Ce changement n'a pas été enregistré. Réessaie.",
+  "@savedSearchChangeFailed": {
+    "description": "Rename / alerts / delete failed."
+  },
+  "savedSearchResultsEmpty": "Aucun bien ne correspond à cette recherche pour le moment. On te prévient dès qu'il y en a un.",
+  "@savedSearchResultsEmpty": {
+    "description": "Saved-search results, empty."
+  },
+  "savedSearchResultsFailed": "Impossible de charger les résultats. Vérifie ta connexion.",
+  "@savedSearchResultsFailed": {
+    "description": "Saved-search results failed (offline or server)."
+  },
+  "saveSearchAction": "Sauvegarder la recherche",
+  "@saveSearchAction": {
+    "description": "Tooltip of the bookmark on the search results header."
+  },
+  "saveSearchTitle": "Sauvegarder cette recherche",
+  "@saveSearchTitle": {
+    "description": "Save sheet title."
+  },
+  "saveSearchAlertsHelp": "Une notification groupée quand de nouveaux biens correspondent, jamais la nuit.",
+  "@saveSearchAlertsHelp": {
+    "description": "N-01 \u2014 one grouped push per search, not between 22:00 and 07:00."
+  },
+  "saveSearchConfirm": "Sauvegarder",
+  "@saveSearchConfirm": {
+    "description": "Save sheet confirm."
+  },
+  "saveSearchSignInTitle": "Connecte-toi pour sauvegarder",
+  "@saveSearchSignInTitle": {
+    "description": "Visitor tried to save a search (RM-M04-05)."
+  },
+  "saveSearchSignInBody": "Une recherche sauvegardée te prévient des nouveaux biens : il faut un compte pour ça.",
+  "@saveSearchSignInBody": {
+    "description": "Visitor tried to save a search."
+  },
+  "saveSearchLimitTitle": "3 recherches au maximum",
+  "@saveSearchLimitTitle": {
+    "description": "RM-M04-07 / SAVED_SEARCH_LIMIT."
+  },
+  "saveSearchLimitBody": "Supprime une recherche sauvegardée (dans Compte) pour en ajouter une autre.",
+  "@saveSearchLimitBody": {
+    "description": "RM-M04-07 / SAVED_SEARCH_LIMIT."
+  },
+  "saveSearchDone": "Recherche sauvegardée",
+  "@saveSearchDone": {
+    "description": "Save succeeded."
+  },
+  "saveSearchDoneBody": "Tu la retrouves dans Compte.",
+  "@saveSearchDoneBody": {
+    "description": "Save succeeded."
+  },
+  "saveSearchDuplicate": "Cette recherche est déjà sauvegardée.",
+  "@saveSearchDuplicate": {
+    "description": "SAVED_SEARCH_DUPLICATE."
+  },
+  "saveSearchFailed": "La recherche n'a pas été sauvegardée. Réessaie.",
+  "@saveSearchFailed": {
+    "description": "Save failed."
   }
 }

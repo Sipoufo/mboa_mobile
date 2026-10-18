@@ -16,7 +16,7 @@ Future<void> startNotifications({
 }) {
   return getIt<NotificationsRepository>().start(
     onForeground: (message) => _showInApp(context(), message),
-    onOpened: (message) => _route(router, message),
+    onOpened: (message) => routeNotificationTap(router, message),
   );
 }
 
@@ -32,7 +32,8 @@ void _showInApp(BuildContext context, PushMessage message) {
 ///
 /// The payload is `{type, entityId}`, the backend's append-only `PushTarget`.
 /// No id, or a type this build does not know, lands on the shell.
-void _route(AppRouter router, PushMessage message) {
+@visibleForTesting
+void routeNotificationTap(AppRouter router, PushMessage message) {
   final id = message.entityId;
 
   switch (message.type) {
@@ -44,6 +45,11 @@ void _route(AppRouter router, PushMessage message) {
       router.push(ListingDetailRoute(id: id));
     case PushType.contract when id != null:
       router.push(AuthenticatedRouter(children: [MyContractDetailRoute(id: id)]));
+    case PushType.savedSearch when id != null:
+      // N-01 — straight to what the search found.
+      router.push(AuthenticatedRouter(children: [SavedSearchResultsRoute(id: id)]));
+    case PushType.savedSearch:
+      router.push(const AuthenticatedRouter(children: [SavedSearchesRoute()]));
     case PushType.message:
       router.navigate(const UserShellRoute(children: [MessagesRoute()]));
     case PushType.annonce:
@@ -51,7 +57,6 @@ void _route(AppRouter router, PushMessage message) {
     case PushType.paymentConfirmed:
     case PushType.kyc:
     case PushType.residence:
-    case PushType.savedSearch:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

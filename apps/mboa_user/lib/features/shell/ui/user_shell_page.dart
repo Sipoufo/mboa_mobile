@@ -10,6 +10,7 @@ import '../../../app/router/app_router.gr.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../favorites/bloc/favorites_bloc.dart';
+import '../../saved_searches/bloc/saved_searches_bloc.dart';
 
 /// App Mboa's home for everyone, signed in or not.
 ///
@@ -29,6 +30,8 @@ class UserShellPage extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider<FavoritesBloc>.value(value: getIt<FavoritesBloc>()),
+          // The search saves into it, the Compte tab's list reads it.
+          BlocProvider<SavedSearchesBloc>.value(value: getIt<SavedSearchesBloc>()),
           // The unread badge on the tab and the list itself read one instance.
           BlocProvider<ConversationsBloc>.value(
             value: getIt<ConversationsBloc>(),

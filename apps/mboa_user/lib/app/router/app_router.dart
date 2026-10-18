@@ -71,6 +71,8 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: SettingsRoute.page, path: 'settings/hub'),
             // M07 — a visit belongs to an account, so it lives behind the
             // session guard with the rest of `/app`.
+            AutoRoute(page: SavedSearchesRoute.page, path: 'saved-searches'),
+            AutoRoute(page: SavedSearchResultsRoute.page, path: 'saved-searches/:id'),
             AutoRoute(page: MyVisitsRoute.page, path: 'visits'),
             AutoRoute(page: VisitDetailRoute.page, path: 'visits/:visitId'),
             // M07bis — the report belongs to a visit, and to the account that
