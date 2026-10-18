@@ -95,6 +95,7 @@ class Visit extends Equatable {
     this.agentRating,
     this.visitorPhone,
     this.cancellationReason,
+    this.clientAccountId,
   });
 
   final String id;
@@ -126,6 +127,11 @@ class Visit extends Equatable {
   /// Null unless [status] is cancelled — and on a visit cancelled before the
   /// server recorded reasons.
   final VisitCancellationReason? cancellationReason;
+
+  /// §26 — the client's account, sent only to the owner showing their own
+  /// property: what opens the client's Mboa Score from a request to confirm
+  /// (RM-M09-04). Null on an agent's and on the client's own visits.
+  final String? clientAccountId;
 
   bool get isRated => agentRating != null;
 
@@ -160,6 +166,7 @@ class Visit extends Equatable {
             ? null
             : response.visitorPhone!.trim(),
         cancellationReason: VisitCancellationReason.fromResponse(response.cancellationReason),
+        clientAccountId: response.userAccountId,
       );
 
   @override
@@ -176,5 +183,6 @@ class Visit extends Equatable {
         agentRating,
         visitorPhone,
         cancellationReason,
+        clientAccountId,
       ];
 }

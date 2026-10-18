@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**959 tests green, analyze clean.** `mboa_user` 236 · `mboa_pro` 449 ·
+**973 tests green, analyze clean.** `mboa_user` 236 · `mboa_pro` 463 ·
 `mboa_core` 19 · `mboa_shared` 227 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -54,13 +54,13 @@
 | M15 agent profile, zones, availability | ✅ shell + screens |
 | M11 assignments | ✅ both sides + agent detail · **pool multi-agents + visites du propriétaire (RM-M11-10)** |
 | M16 agent visits | ✅ **agenda**, detail, mutual presence confirmation (the report is gone — it is the client's now, → M07bis) |
-| Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · pas de détail ni d'annulation côté API (§14) |
+| Visites prestataire (RM-M11-10 / RM-M15-06) | ✅ agenda + demandes à confirmer + présence · **fiche (§14)**: the agent's sheet, client contact + score, answer / cancel |
 | M07bis — visitor side (read, comment, PDF) | ✅ agent + prestataire · the writing half is the client's, and now exists |
 | M08 Contrat Mboa | ✅ **prestataire side** — draw up, send, answer objections, amend, sign, PDF, cancel · the tenant's half is in `mboa_user` |
 | M27 resident review | ✅ write + revise (tenant), reply once (landlord), report either kind · §24 open |
 | M08 Contrat Mboa — tenant half | ✅ list, detail, accept, contest, sign, PDF — the shared views, routed in both apps |
 | M23 signalements | ✅ listing + review from the app · admin queue is out of scope here |
-| M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread · not from a visit request yet (§26) |
+| M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -1076,12 +1076,10 @@ Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **Prestataire visit detail + cancellation** — §14 is answered in full:
-  `GET /prestataires/me/visites/{id}` (`AgentVisiteDetail`: client name and
-  phone, address, `canConfirm`) and `POST /prestataires/me/visites/{id}/cancel`,
-  up to one hour before the slot (`409 CANCELLATION_TOO_LATE` after).
-- **M09 from a visit request** — waits on §26 (`userAccountId` on the
-  prestataire's visit); the thread already opens the score.
+- **RM-M04-06 `exactLocation`** (tenant) — search cards and fiches now say
+  when their coordinates are the property's own point (contact established):
+  drop the 200 m circle for a pin then. Needs the token on `/search` and the
+  residence fiche too.
 - Password reset in Pro (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
 - Settings: the `searchable` toggle is still unwired.
 

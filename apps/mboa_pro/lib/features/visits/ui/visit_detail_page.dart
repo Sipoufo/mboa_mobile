@@ -12,6 +12,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
 import '../bloc/visit_detail_bloc.dart';
+import '../data/visit_detail_source.dart';
 import '../models/agent_visit.dart';
 import 'widgets/visit_row_tile.dart';
 
@@ -28,7 +29,7 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<VisitDetailBloc>(
-    create: (_) => getIt<VisitDetailBloc>()..add(VisitDetailRequested(id)),
+    create: (_) => getIt<VisitDetailBloc>(param1: visitPersona())..add(VisitDetailRequested(id)),
     child: this,
   );
 
@@ -77,7 +78,7 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
               child: Text(l10n.commonRetry),
             ),
           ),
-          final VisitDetailReady ready => _Body(state: ready),
+          final VisitDetailReady ready => _Body(state: ready, persona: ready.persona),
         },
       ),
       // The action the agent came for stays in reach whatever the page's
@@ -171,9 +172,10 @@ class _JustificationDialogState extends State<_JustificationDialog> {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.state});
+  const _Body({required this.state, required this.persona});
 
   final VisitDetailReady state;
+  final VisitPersona persona;
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +198,7 @@ class _Body extends StatelessWidget {
         ],
         if (visit.userName != null || visit.prestataireName != null) ...[
           const SizedBox(height: Dimens.spacing),
-          _ContactsCard(visit: visit),
+          _ContactsCard(visit: visit, persona: persona),
         ],
         // M07bis — the report is the client's to write; the agent reads it and
         // may answer beside it. Only once the visit is over: there is nothing
@@ -418,34 +420,58 @@ class _AddressCard extends StatelessWidget {
 /// the app, and a half-wired launcher is worse than a number he can paste into
 /// his own dialler.
 class _ContactsCard extends StatelessWidget {
-  const _ContactsCard({required this.visit});
+  const _ContactsCard({required this.visit, required this.persona});
 
   final AgentVisitDetail visit;
+  final VisitPersona persona;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
+    // §14 — on the owner's own visit the `prestataire*` fields are himself:
+    // the only person to reach is the client.
+    final showOwner = persona == VisitPersona.agent && visit.prestataireName != null;
 
     return _Card(
       title: l10n.visitsContactsTitle,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ContactRow(
             role: l10n.visitsTenant,
             name: visit.userName,
             phone: visit.userPhone,
           ),
-          if (visit.userName != null && visit.prestataireName != null) const SizedBox(height: Dimens.spacingMd),
-          _ContactRow(
-            role: l10n.visitsOwner,
-            name: visit.prestataireName,
-            phone: visit.prestatairePhone,
-          ),
+          // RM-M09-04 / §26 — the request is the contact that opens the
+          // score, and only the owner is sent the client's account id.
+          if (persona == VisitPersona.owner)
+            if (visit.userAccountId case final client?)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: () => showTenantScoreSheet(context, userAccountId: client, name: visit.userName),
+                  icon: const Icon(LucideIcons.gauge, size: Dimens.iconSm),
+                  label: Text(l10n.scoreOpen),
+                ),
+              ),
+          if (visit.userName != null && showOwner) const SizedBox(height: Dimens.spacingMd),
+          if (showOwner)
+            _ContactRow(
+              role: l10n.visitsOwner,
+              name: visit.prestataireName,
+              phone: visit.prestatairePhone,
+            ),
         ],
       ),
     );
   }
 }
+
+/// Who is reading — the session's role decides the route the sheet is read
+/// from and what it shows. An agent is the default: it is the screen's first
+/// reader, and the owner's route would refuse an agent anyway.
+VisitPersona visitPersona() =>
+    (getIt<SessionSnapshot>().role?.isPrestataire ?? false) ? VisitPersona.owner : VisitPersona.agent;
 
 class _ContactRow extends StatelessWidget {
   const _ContactRow({required this.role, this.name, this.phone});
@@ -634,6 +660,29 @@ class _ActionBar extends StatelessWidget {
         body: l10n.visitsNotFulfilledBody,
         color: colors.error,
       );
+    } else if (visit.status == VisitStatus.requested) {
+      // RM-M15-06 — a proposed time (an owner's visit only). Answered here,
+      // next to the client's name and score; it cannot be "cancelled", the
+      // server only cancels a scheduled visit.
+      final bloc = context.read<VisitDetailBloc>();
+      content = Row(
+        children: [
+          Expanded(
+            child: Button.outline(
+              title: l10n.visitsRequestDecline,
+              onPressed: state.isAnswering ? null : () => bloc.add(const VisitRequestAnswered(accept: false)),
+            ),
+          ),
+          const SizedBox(width: Dimens.spacingMd),
+          Expanded(
+            child: Button.primary(
+              title: l10n.visitsRequestConfirm,
+              isLoading: state.isAnswering,
+              onPressed: state.isAnswering ? null : () => bloc.add(const VisitRequestAnswered(accept: true)),
+            ),
+          ),
+        ],
+      );
     } else if (visit.isAwaitingClient) {
       // RM-M07-05 — he cannot supply the client's half, so offering the button
       // again would promise something he cannot do.
@@ -662,7 +711,8 @@ class _ActionBar extends StatelessWidget {
             textAlign: TextAlign.center,
             style: context.mboaText.caption.copyWith(color: colors.textSecondary),
           ),
-          if (visit.status.isOpen)
+          // Only a scheduled visit can be called off (RM-M16-04, §14).
+          if (visit.status == VisitStatus.scheduled)
             TextButton(
               onPressed: () => _confirmCancel(context, visit),
               style: TextButton.styleFrom(foregroundColor: colors.error),

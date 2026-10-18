@@ -20,6 +20,8 @@ class VisitDetailReady extends VisitDetailState {
     this.visit, {
     this.isConfirming = false,
     this.isCancelling = false,
+    this.isAnswering = false,
+    this.persona = VisitPersona.agent,
     this.lastActionFailed = false,
     this.locationFailure,
     this.pendingFix,
@@ -27,8 +29,15 @@ class VisitDetailReady extends VisitDetailState {
   });
 
   final AgentVisitDetail visit;
+
+  /// Who reads the sheet (§14) — what is shown follows: an owner's own
+  /// visit has no second party to call, and has his client's score.
+  final VisitPersona persona;
   final bool isConfirming;
   final bool isCancelling;
+
+  /// A confirm or decline of the proposed time is in flight.
+  final bool isAnswering;
   final bool lastActionFailed;
 
   /// Set when the fix could not be taken at all — the agent needs to know it is
@@ -47,6 +56,7 @@ class VisitDetailReady extends VisitDetailState {
     AgentVisitDetail? visit,
     bool? isConfirming,
     bool? isCancelling,
+    bool isAnswering = false,
     bool lastActionFailed = false,
     LocationFailure? locationFailure,
     LocationFix? pendingFix,
@@ -56,6 +66,8 @@ class VisitDetailReady extends VisitDetailState {
     visit ?? this.visit,
     isConfirming: isConfirming ?? this.isConfirming,
     isCancelling: isCancelling ?? this.isCancelling,
+    isAnswering: isAnswering,
+    persona: persona,
     lastActionFailed: lastActionFailed,
     locationFailure: locationFailure,
     pendingFix: clearPendingFix ? null : (pendingFix ?? this.pendingFix),
@@ -67,6 +79,8 @@ class VisitDetailReady extends VisitDetailState {
     visit,
     isConfirming,
     isCancelling,
+    isAnswering,
+    persona,
     lastActionFailed,
     locationFailure,
     pendingFix,
@@ -74,8 +88,8 @@ class VisitDetailReady extends VisitDetailState {
   ];
 }
 
-/// Cancelled. Terminal: the screen closes rather than showing a visit that no
-/// longer exists.
+/// Cancelled — or, for an owner, a proposed time declined. Terminal: the
+/// screen closes rather than showing a visit that no longer exists.
 class VisitWasCancelled extends VisitDetailState {
   const VisitWasCancelled();
 }

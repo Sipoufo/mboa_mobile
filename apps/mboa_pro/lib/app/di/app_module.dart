@@ -14,6 +14,7 @@ import '../../features/visits/bloc/prestataire_visits_bloc.dart';
 import '../../features/visits/bloc/visit_review_bloc.dart';
 import '../../features/visits/bloc/visits_agenda_blocs.dart';
 import '../../features/visits/data/prestataire_visit_repository.dart';
+import '../../features/visits/data/visit_detail_source.dart';
 import '../../features/visits/bloc/visit_detail_bloc.dart';
 import '../../features/visits/data/agent_visit_repository.dart';
 import '../../features/agent/bloc/agent_profile_bloc.dart';
@@ -299,10 +300,16 @@ void registerAppModule() {
       location: getIt<LocationCapture>(),
     ),
   );
-  getIt.registerFactory<VisitDetailBloc>(
-    () => VisitDetailBloc(
-      repository: getIt<AgentVisitRepository>(),
+  // One sheet, two visitors (§14): the agent's visits and the owner's own
+  // come from different routes but answer with the same detail.
+  getIt.registerFactoryParam<VisitDetailBloc, VisitPersona, void>(
+    (persona, _) => VisitDetailBloc(
+      repository: switch (persona) {
+        VisitPersona.agent => getIt<AgentVisitRepository>(),
+        VisitPersona.owner => getIt<PrestataireVisitRepository>(),
+      },
       location: getIt<LocationCapture>(),
+      persona: persona,
     ),
   );
 

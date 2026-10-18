@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -112,6 +113,7 @@ class _Agenda extends StatelessWidget {
           itemBuilder: (context, visit) => VisitRowTile(
             visit: visit,
             isBusy: busyId == visit.id,
+            onTap: () => openOwnerVisit(context, visit.id),
             actions: _actionsFor(context, visit, busyId: busyId),
           ),
         );
@@ -190,8 +192,18 @@ class _Requests extends StatelessWidget {
           VisitRowTile(
             visit: visit,
             isBusy: busyId == visit.id,
-            actions: Row(
+            onTap: () => openOwnerVisit(context, visit.id),
+            actions: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
+                // RM-M09-04 / §26 — the request is the contact that opens the
+                // client's score, at the moment it is useful: before answering.
+                if (visit.clientAccountId case final client?)
+                  TextButton.icon(
+                    onPressed: () => showTenantScoreSheet(context, userAccountId: client),
+                    icon: const Icon(LucideIcons.gauge, size: Dimens.iconSm),
+                    label: Text(l10n.scoreOpen),
+                  ),
                 TextButton(
                   onPressed: busyId != null
                       ? null
@@ -212,4 +224,13 @@ class _Requests extends StatelessWidget {
       ],
     );
   }
+}
+
+/// §14 — his own visit's sheet: the client's name and phone, the address, and
+/// what he can do about it. The agenda reloads on the way back, since the
+/// sheet may have confirmed, declined or cancelled.
+Future<void> openOwnerVisit(BuildContext context, String id) async {
+  await context.router.push(VisitDetailRoute(id: id));
+  if (!context.mounted) return;
+  context.read<PrestataireAgendaBloc>().add(const AgendaRefreshed());
 }

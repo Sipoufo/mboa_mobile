@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../annonces/data/location_capture.dart';
-import '../data/agent_visit_repository.dart';
+import '../data/visit_detail_source.dart';
 import '../models/agent_visit.dart';
 
 part 'visit_detail_event.dart';
@@ -19,20 +19,24 @@ part 'visit_detail_state.dart';
 /// may well come back still waiting.
 class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
   VisitDetailBloc({
-    required AgentVisitRepository repository,
+    required VisitDetailSource repository,
     required LocationCapture location,
+    VisitPersona persona = VisitPersona.agent,
   }) : _repository = repository,
        _location = location,
+       _persona = persona,
        super(const VisitDetailInitial()) {
     on<VisitDetailRequested>(_onRequested);
     on<VisitPresenceConfirmed>(_onConfirm);
     on<VisitPresenceOverridden>(_onOverride);
     on<VisitOverrideDismissed>(_onDismiss);
     on<VisitCancelRequested>(_onCancel);
+    on<VisitRequestAnswered>(_onAnswer);
   }
 
-  final AgentVisitRepository _repository;
+  final VisitDetailSource _repository;
   final LocationCapture _location;
+  final VisitPersona _persona;
 
   Future<void> _onRequested(
     VisitDetailRequested event,
@@ -40,7 +44,7 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
   ) async {
     emit(const VisitDetailLoadInProgress());
     try {
-      emit(VisitDetailReady(await _repository.detail(event.id)));
+      emit(VisitDetailReady(await _repository.detail(event.id), persona: _persona));
     } catch (_) {
       emit(const VisitDetailFailure());
     }
@@ -141,6 +145,31 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
     }
   }
 
+  /// Confirm reloads the sheet — the visit is now scheduled, and the
+  /// server says what that allows. Decline ends the request: the screen goes.
+  Future<void> _onAnswer(
+    VisitRequestAnswered event,
+    Emitter<VisitDetailState> emit,
+  ) async {
+    final current = state;
+    final responder = _repository;
+    if (current is! VisitDetailReady || responder is! VisitRequestResponder) return;
+    final id = current.visit.id;
+
+    emit(current.copyWith(isAnswering: true));
+    try {
+      if (event.accept) {
+        await (responder as VisitRequestResponder).confirm(id);
+        emit(VisitDetailReady(await _repository.detail(id), persona: _persona));
+      } else {
+        await (responder as VisitRequestResponder).decline(id);
+        emit(const VisitWasCancelled());
+      }
+    } catch (_) {
+      emit(current.copyWith(lastActionFailed: true));
+    }
+  }
+
   Future<void> _send(
     VisitDetailReady current,
     Emitter<VisitDetailState> emit, {
@@ -157,7 +186,7 @@ class VisitDetailBloc extends Bloc<VisitDetailEvent, VisitDetailState> {
       );
       // Re-read: `canConfirm`, both confirmation timestamps and the status
       // are all the server's to report.
-      emit(VisitDetailReady(await _repository.detail(current.visit.id)));
+      emit(VisitDetailReady(await _repository.detail(current.visit.id), persona: _persona));
     } catch (_) {
       emit(current.copyWith(isConfirming: false, lastActionFailed: true));
     }

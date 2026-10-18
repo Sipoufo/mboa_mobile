@@ -40,3 +40,14 @@ class VisitOverrideDismissed extends VisitDetailEvent {
 class VisitCancelRequested extends VisitDetailEvent {
   const VisitCancelRequested();
 }
+
+/// RM-M15-06 — the owner answers a proposed time from the sheet, where the
+/// client's name and score are (§14, §26). Ignored for an agent's source.
+class VisitRequestAnswered extends VisitDetailEvent {
+  const VisitRequestAnswered({required this.accept});
+
+  final bool accept;
+
+  @override
+  List<Object?> get props => [accept];
+}

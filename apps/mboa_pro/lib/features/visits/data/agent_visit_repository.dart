@@ -2,9 +2,10 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../models/agent_visit.dart';
+import 'visit_detail_source.dart';
 
 /// The agent's visits (CDC M16).
-class AgentVisitRepository implements VisitsSource {
+class AgentVisitRepository implements VisitsSource, VisitDetailSource {
   AgentVisitRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
   final DioClient _dioClient;
@@ -43,6 +44,7 @@ class AgentVisitRepository implements VisitsSource {
     return (response.data?.content ?? const <VisiteResponse>[]).map(Visit.fromResponse).toList();
   }
 
+  @override
   Future<AgentVisitDetail> detail(String id) async {
     final response = await _api.getMyAgentVisite(id: id);
     final data = response.data;
@@ -57,6 +59,7 @@ class AgentVisitRepository implements VisitsSource {
   /// confirms too, from their own app. [overrideReason] is the written
   /// justification Doc 10 asks for beyond 500 m — not a way round the rule,
   /// the rule's own escape hatch, and it is recorded.
+  @override
   Future<void> confirmPresence(
     String id, {
     required double latitude,
@@ -73,5 +76,6 @@ class AgentVisitRepository implements VisitsSource {
   );
 
   /// RM-M16-04 — the server enforces the one-hour cutoff.
+  @override
   Future<void> cancel(String id) => _api.cancelAgentVisite(id: id);
 }

@@ -25,6 +25,7 @@ class AgentVisitDetail extends Equatable {
     this.visitorConfirmedAt,
     this.clientConfirmedAt,
     this.canConfirm = false,
+    this.userAccountId,
   });
 
   final String id;
@@ -50,6 +51,11 @@ class AgentVisitDetail extends Equatable {
   /// **Server-computed.** Whether presence may be confirmed at all — the
   /// day-of rule lives there, not here, so the app never re-derives it.
   final bool canConfirm;
+
+  /// §26 — the client's account, sent only to the owner showing their own
+  /// property: what opens the client's Mboa Score (RM-M09-04). Null for an
+  /// agent, whom the score route refuses anyway.
+  final String? userAccountId;
 
   bool get hasConfirmed => visitorConfirmedAt != null;
 
@@ -84,6 +90,7 @@ class AgentVisitDetail extends Equatable {
     visitorConfirmedAt: response.visitorConfirmedAt?.toLocal(),
     clientConfirmedAt: response.clientConfirmedAt?.toLocal(),
     canConfirm: response.canConfirm ?? false,
+    userAccountId: response.userAccountId,
   );
 
   @override
@@ -103,6 +110,7 @@ class AgentVisitDetail extends Equatable {
     visitorConfirmedAt,
     clientConfirmedAt,
     canConfirm,
+    userAccountId,
   ];
 }
 

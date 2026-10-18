@@ -16,7 +16,7 @@ Future<void> startNotifications({
 }) {
   return getIt<NotificationsRepository>().start(
     onForeground: (message) => _showInApp(context(), message),
-    onOpened: (message) => _route(router, message),
+    onOpened: (message) => routeNotificationTap(router, message),
   );
 }
 
@@ -36,7 +36,8 @@ void _showInApp(BuildContext context, PushMessage message) {
 ///
 /// The payload is `{type, entityId}`, the backend's append-only `PushTarget`.
 /// No id, or a type this build does not know, lands on the shell.
-void _route(AppRouter router, PushMessage message) {
+@visibleForTesting
+void routeNotificationTap(AppRouter router, PushMessage message) {
   final id = message.entityId;
   final isAgent = getIt<SessionSnapshot>().role?.isAgent ?? false;
 
@@ -54,7 +55,11 @@ void _route(AppRouter router, PushMessage message) {
     case PushType.visit when isAgent:
       router.navigate(const AgentShellRoute(children: [AgentVisitsRoute()]));
     case PushType.visit:
-      // The owner lands where a request is accepted or declined.
+      // Not the sheet, though the owner has one now (§14): he is also told
+      // about the visits an agent makes on his property (N-03, N-05), whose
+      // sheet is the agent's and answers 404 to him — and the payload does
+      // not say which kind this is. The agenda, where requests are answered
+      // and every row opens its own sheet, holds both.
       router.navigate(
         const ProShellRoute(children: [PrestataireVisitsRoute()]),
       );

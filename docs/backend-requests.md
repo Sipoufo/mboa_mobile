@@ -434,6 +434,10 @@ which is itself worth a line in M07.
 status, and his own presence confirmation. No contact affordance is drawn at
 all, rather than an empty one.
 
+**✅ Answered 2026-10-17, built 2026-10-18.** The owner opens the agent's sheet
+(`VisitDetailPage`, one bloc over a `VisitDetailSource`), answers a proposed
+time there and cancels a scheduled visit up to an hour before.
+
 ---
 
 ## 15. M08 — the error code for a tenant with no Mboa account
@@ -869,3 +873,8 @@ visit does not need the field.
 **What the app does meanwhile:** the score is reachable from the conversation
 only. Nothing is drawn on the visit request, rather than a button that cannot
 work.
+
+**✅ Answered 2026-10-18, built the same day.** `userAccountId` on the owner's
+visits: a request to answer and the visit sheet both open the client's score.
+A visit push still takes the owner to the agenda, not the sheet — he is also
+told about agents' visits on his property, whose sheet answers 404 to him.
