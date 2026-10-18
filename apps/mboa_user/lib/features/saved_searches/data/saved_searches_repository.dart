@@ -109,9 +109,6 @@ class SavedSearchesRepository {
     );
   }
 
-  /// The list belongs to an account: dropped at sign-out.
-  Future<void> forget() => _cache.delete(StorageKeys.savedSearchesBox, _listKey);
-
   Future<SavedSearch> _update(String id, UpdateSavedSearchRequest request) async {
     final response = await _api.updateSavedSearch(id: id, updateSavedSearchRequest: request);
     final updated = response.data == null ? null : SavedSearch.fromResponse(response.data!);

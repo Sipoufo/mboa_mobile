@@ -10,8 +10,6 @@ import '../../../_helpers/mocks/mocks.dart';
 
 class MockSearchApi extends Mock implements SearchApi {}
 
-class MockHiveCache extends Mock implements HiveCache {}
-
 class MockNetworkMonitor extends Mock implements NetworkMonitor {}
 
 Response<PageResponseSearchResult> page(List<SearchResult> items) =>

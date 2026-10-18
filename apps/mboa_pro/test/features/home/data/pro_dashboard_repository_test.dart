@@ -8,8 +8,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../_helpers/mocks/mocks.dart';
 
-class MockHiveCache extends Mock implements HiveCache {}
-
 class MockAnnoncesApi extends Mock implements AnnoncesApi {}
 
 AnnonceResponse annonce(AnnonceResponseStatusEnum status) =>

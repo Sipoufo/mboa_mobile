@@ -18,6 +18,7 @@ void main() {
   late MockApiClient apiClient;
   late MockAuthApi authApi;
   late MockSecureTokenStorage storage;
+  late MockHiveCache cache;
   late AuthRepository repository;
 
   setUp(() {
@@ -25,12 +26,18 @@ void main() {
     apiClient = MockApiClient();
     authApi = MockAuthApi();
     storage = MockSecureTokenStorage();
+    cache = MockHiveCache();
 
     when(() => dioClient.api).thenReturn(apiClient);
     when(apiClient.getAuthenticationApi).thenReturn(authApi);
     when(() => storage.clear()).thenAnswer((_) async {});
+    when(() => cache.clearAccountScoped()).thenAnswer((_) async {});
 
-    repository = AuthRepository(dioClient: dioClient, tokenStorage: storage);
+    repository = AuthRepository(
+      dioClient: dioClient,
+      tokenStorage: storage,
+      cache: cache,
+    );
   });
 
   test('revokes the refresh token server-side then clears local tokens', () async {
@@ -61,5 +68,27 @@ void main() {
 
     verifyNever(() => authApi.logout(logoutRequest: any(named: 'logoutRequest')));
     verify(() => storage.clear()).called(1);
+  });
+
+  test('clears the account\'s cache once the tokens are gone', () async {
+    when(() => storage.readRefreshToken()).thenAnswer((_) async => null);
+
+    await repository.logout();
+
+    verifyInOrder([() => storage.clear(), () => cache.clearAccountScoped()]);
+  });
+
+  test('a cache that will not clear does not keep anyone signed in', () async {
+    when(() => storage.readRefreshToken()).thenAnswer((_) async => null);
+    when(() => cache.clearAccountScoped()).thenThrow(Exception('disk'));
+
+    await expectLater(repository.logout(), completes);
+    verify(() => storage.clear()).called(1);
+  });
+
+  test('a new session starts from an empty account cache', () async {
+    await repository.beginSession();
+
+    verify(() => cache.clearAccountScoped()).called(1);
   });
 }

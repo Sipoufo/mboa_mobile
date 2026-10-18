@@ -40,6 +40,7 @@ void registerAppModule() {
     () => AuthRepository(
       dioClient: getIt<DioClient>(),
       tokenStorage: getIt<SecureTokenStorage>(),
+      cache: getIt<HiveCache>(),
       notifications: getIt<NotificationsRepository>(),
     ),
   );
@@ -269,6 +270,4 @@ Future<void> resetSessionScopedBlocs() async {
   await getIt.resetLazySingleton<SavedSearchesBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
-  // The offline copy belongs to the account too.
-  await getIt<SavedSearchesRepository>().forget();
 }

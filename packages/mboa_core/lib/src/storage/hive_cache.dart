@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import '../constants/storage_keys.dart';
@@ -12,6 +13,22 @@ class HiveCache {
   /// after `Hive.initFlutter()`.
   static Future<void> init() async {
     await Hive.initFlutter();
+    await _openAll();
+  }
+
+  /// [init] for tests: boxes on disk under [directory], since a test has no
+  /// platform documents folder to find.
+  @visibleForTesting
+  static Future<void> initAt(String directory) async {
+    Hive.init(directory);
+    await _openAll();
+  }
+
+  /// Closes every box, so a test can delete [initAt]'s directory.
+  @visibleForTesting
+  static Future<void> close() => Hive.close();
+
+  static Future<void> _openAll() async {
     for (final name in StorageKeys.allBoxes) {
       if (!Hive.isBoxOpen(name)) {
         await Hive.openBox<Map<dynamic, dynamic>>(name);
@@ -46,4 +63,12 @@ class HiveCache {
   Future<void> delete(String boxName, String key) => _box(boxName).delete(key);
 
   Future<void> clearBox(String boxName) => _box(boxName).clear();
+
+  /// Empties what belongs to the signed-in account and keeps what belongs to
+  /// the device — see [StorageKeys.accountScopedBoxes].
+  Future<void> clearAccountScoped() async {
+    for (final name in StorageKeys.accountScopedBoxes) {
+      await clearBox(name);
+    }
+  }
 }

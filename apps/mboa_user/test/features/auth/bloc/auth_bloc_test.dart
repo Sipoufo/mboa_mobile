@@ -29,10 +29,12 @@ void main() {
   });
 
   blocTest<AuthBloc, AuthState>(
-    'AuthSessionEstablished emits [AuthAuthenticated]',
+    'AuthSessionEstablished clears the last account\'s cache, then emits [AuthAuthenticated]',
+    setUp: () => when(repository.beginSession).thenAnswer((_) async {}),
     build: () => AuthBloc(repository: repository),
     act: (bloc) => bloc.add(const AuthSessionEstablished()),
     expect: () => const [AuthAuthenticated()],
+    verify: (_) => verify(repository.beginSession).called(1),
   );
 
   blocTest<AuthBloc, AuthState>(

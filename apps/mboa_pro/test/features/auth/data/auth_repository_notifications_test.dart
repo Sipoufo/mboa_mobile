@@ -19,6 +19,7 @@ void main() {
   late MockAuthApi authApi;
   late MockSecureTokenStorage storage;
   late MockNotificationsRepository notifications;
+  late MockHiveCache cache;
   late AuthRepository repository;
   late List<String> calls;
 
@@ -30,6 +31,7 @@ void main() {
     authApi = MockAuthApi();
     storage = MockSecureTokenStorage();
     notifications = MockNotificationsRepository();
+    cache = MockHiveCache();
     calls = [];
 
     when(() => dioClient.api).thenReturn(apiClient);
@@ -46,10 +48,12 @@ void main() {
       );
     });
     when(storage.clear).thenAnswer((_) async => calls.add('clear'));
+    when(cache.clearAccountScoped).thenAnswer((_) async => calls.add('purge'));
 
     repository = AuthRepository(
       dioClient: dioClient,
       tokenStorage: storage,
+      cache: cache,
       notifications: notifications,
     );
   });
@@ -57,7 +61,7 @@ void main() {
   test('revokes the device, then the refresh token, then clears', () async {
     await repository.logout();
 
-    expect(calls, ['unregister', 'revoke', 'clear']);
+    expect(calls, ['unregister', 'revoke', 'clear', 'purge']);
   });
 
   test('still clears when the device unregister fails', () async {
@@ -65,14 +69,18 @@ void main() {
 
     // A failed deregistration must not strand the user signed-in.
     await expectLater(repository.logout(), completes);
-    expect(calls, ['revoke', 'clear']);
+    expect(calls, ['revoke', 'clear', 'purge']);
   });
 
   test('works without a notifications repository (mboa_user today)', () async {
-    final bare = AuthRepository(dioClient: dioClient, tokenStorage: storage);
+    final bare = AuthRepository(
+      dioClient: dioClient,
+      tokenStorage: storage,
+      cache: cache,
+    );
 
     await bare.logout();
 
-    expect(calls, ['revoke', 'clear']);
+    expect(calls, ['revoke', 'clear', 'purge']);
   });
 }
