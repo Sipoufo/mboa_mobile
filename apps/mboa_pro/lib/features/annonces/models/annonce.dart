@@ -35,6 +35,7 @@ class Annonce extends Equatable {
     this.createdAt,
     this.residenceId,
     this.expiresAt,
+    this.archivedReason,
     this.ownerVisitsEnabled = false,
   });
 
@@ -82,6 +83,28 @@ class Annonce extends Equatable {
   /// When a Free-tier listing auto-expires (RM-M10-04). Null on paid tiers.
   final DateTime? expiresAt;
 
+  /// Null unless [status] is archived.
+  final ArchivedReason? archivedReason;
+
+  /// RM-M10-04 — whole days left before a Free-tier listing is archived, for
+  /// a listing that is live. Null on a paid tier (no [expiresAt]) and for any
+  /// listing that is not on the market, where a countdown means nothing.
+  ///
+  /// Counted in calendar days, local time: a listing expiring tomorrow at
+  /// 08:00 is "tomorrow" at 23:00 today, not "today". A deadline already past
+  /// reads 0 — the hourly sweep has not caught it yet.
+  int? daysUntilExpiry({DateTime? now}) {
+    final at = expiresAt;
+    if (at == null || !status.isActive) return null;
+    final today = now ?? DateTime.now();
+    final local = at.toLocal();
+    // UTC dates, so a daylight-saving night is not a 23-hour day.
+    final days = DateTime.utc(local.year, local.month, local.day)
+        .difference(DateTime.utc(today.year, today.month, today.day))
+        .inDays;
+    return days < 0 ? 0 : days;
+  }
+
   /// RM-M11-10 — the prestataire shows this property himself, and joins its
   /// pool of bookable visitors alongside any assigned agents. Unlike an agent
   /// he has no weekly availability: each request reaches him for manual
@@ -125,6 +148,7 @@ class Annonce extends Equatable {
     createdAt: response.createdAt,
     residenceId: response.residenceId,
     expiresAt: response.expiresAt,
+    archivedReason: ArchivedReason.fromResponse(response.archivedReason),
     ownerVisitsEnabled: response.ownerVisitsEnabled ?? false,
   );
 
@@ -161,5 +185,6 @@ class Annonce extends Equatable {
     createdAt,
     residenceId,
     expiresAt,
+    archivedReason,
   ];
 }

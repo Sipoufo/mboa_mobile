@@ -1,5 +1,28 @@
 import 'package:mboa_core/mboa_core.dart';
 
+/// Why a listing is archived — `archivedReason`, null when it is not, or when
+/// it was archived before the server kept reasons (2026-10-13).
+///
+/// Each one has a different way back, which is the point of telling them
+/// apart: [expired] is republished for another 30 days (RM-M10-04),
+/// [planLimit] needs room under the Free limit after a plan lapsed, and
+/// [owner] was the prestataire's own doing.
+enum ArchivedReason {
+  owner,
+  expired,
+  planLimit,
+  unknown;
+
+  static ArchivedReason? fromResponse(AnnonceResponseArchivedReasonEnum? value) =>
+      switch (value) {
+        null => null,
+        AnnonceResponseArchivedReasonEnum.OWNER => ArchivedReason.owner,
+        AnnonceResponseArchivedReasonEnum.EXPIRED => ArchivedReason.expired,
+        AnnonceResponseArchivedReasonEnum.PLAN_LIMIT => ArchivedReason.planLimit,
+        _ => ArchivedReason.unknown,
+      };
+}
+
 /// Lifecycle state of a listing (CDC M10).
 ///
 /// ```

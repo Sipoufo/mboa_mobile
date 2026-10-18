@@ -12,6 +12,7 @@ import '../../assignments/models/assignment.dart';
 import '../bloc/annonces_bloc.dart';
 import '../models/annonce.dart';
 import 'widgets/annonce_status_chip.dart';
+import 'widgets/lifecycle_notice.dart';
 import 'widgets/status_actions_menu.dart';
 
 /// "Details du bien" (CDC M10).
@@ -71,7 +72,12 @@ class _AnnonceDetailPageState extends State<AnnonceDetailPage> {
             ],
           ),
           // Still fetching, or genuinely gone.
-          body: annonce == null ? const Center(child: Loader()) : _Body(annonce: annonce),
+          body: annonce == null
+              ? const Center(child: Loader())
+              : _Body(
+                  annonce: annonce,
+                  isBusy: state is AnnoncesReady && state.mutatingId == annonce.id,
+                ),
         );
       },
     );
@@ -79,9 +85,10 @@ class _AnnonceDetailPageState extends State<AnnonceDetailPage> {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.annonce});
+  const _Body({required this.annonce, this.isBusy = false});
 
   final Annonce annonce;
+  final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +112,13 @@ class _Body extends StatelessWidget {
             child: _Tag(label: l10n.annonceDetailUnitOfResidence),
           ),
         ],
+        ...switch (LifecycleNotice.of(annonce)) {
+          final notice? => [
+            const SizedBox(height: Dimens.spacing),
+            LifecycleNoticeCard(notice: notice, annonceId: annonce.id, isBusy: isBusy),
+          ],
+          null => const <Widget>[],
+        },
         const SizedBox(height: Dimens.spacing),
 
         // RM-M11-10 / RM-M11-01 — who can show this property. It belongs on the

@@ -7,6 +7,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../models/annonce.dart';
 import '../../models/annonce_status.dart';
 import 'annonce_status_chip.dart';
+import 'lifecycle_notice.dart';
 import 'status_actions_menu.dart';
 
 /// One listing on the Biens Uniques list.
@@ -193,6 +194,10 @@ class _Summary extends StatelessWidget {
             annonce.rentalPeriod.priceLabel(l10n, rent),
             style: context.mboaText.h3.copyWith(color: colors.action),
           ),
+        ],
+        if (LifecycleNotice.of(annonce) case final notice?) ...[
+          const SizedBox(height: Dimens.spacingXs),
+          LifecycleNoticeLine(notice: notice),
         ],
       ],
     );

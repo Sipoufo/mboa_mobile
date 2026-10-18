@@ -3061,5 +3061,46 @@
   "visitsCancelledListingUnavailable": "Listing taken off the market",
   "@visitsCancelledListingUnavailable": {
     "description": "Pro agenda \u2014 cancellationReason LISTING_UNAVAILABLE."
+  },
+  "annonceExpiredTitle": "Expired after 30 days",
+  "@annonceExpiredTitle": {
+    "description": "RM-M10-04 \u2014 archivedReason EXPIRED, on the listing detail."
+  },
+  "annonceExpiredBody": "On the Free plan a listing stays online for 30 days. Unarchive it, then publish it: it gets another 30 days.",
+  "@annonceExpiredBody": {
+    "description": "RM-M10-04 \u2014 how an expired listing comes back."
+  },
+  "annoncePlanLimitTitle": "Archived: Free plan limit",
+  "@annoncePlanLimitTitle": {
+    "description": "archivedReason PLAN_LIMIT \u2014 a paid plan lapsed and the listing was over the Free limit."
+  },
+  "annoncePlanLimitBody": "Your plan ended and this listing was over the Free limit. Upgrade to a paid plan, or archive another listing to make room for it.",
+  "@annoncePlanLimitBody": {
+    "description": "archivedReason PLAN_LIMIT \u2014 the two ways back."
+  },
+  "annonceExpiresIn": "{count, plural, =0{Expires today} =1{Expires tomorrow} other{Expires in {count} days}}",
+  "@annonceExpiresIn": {
+    "description": "RM-M10-04 \u2014 countdown on a live Free-tier listing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceExpiresBody": "On the Free plan a listing stays online for 30 days. A paid plan keeps it online with no limit.",
+  "@annonceExpiresBody": {
+    "description": "RM-M10-04 / RG-02 \u2014 why the countdown exists."
+  },
+  "annonceSeePlans": "See plans",
+  "@annonceSeePlans": {
+    "description": "Opens the subscription screen from a listing's lifecycle notice."
+  },
+  "annonceCardExpired": "Expired",
+  "@annonceCardExpired": {
+    "description": "Listing card \u2014 archivedReason EXPIRED."
+  },
+  "annonceCardPlanLimit": "Plan limit",
+  "@annonceCardPlanLimit": {
+    "description": "Listing card \u2014 archivedReason PLAN_LIMIT."
   }
 }

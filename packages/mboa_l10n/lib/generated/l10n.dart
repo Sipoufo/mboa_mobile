@@ -8578,6 +8578,100 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Expirée après 30 jours`
+  String get annonceExpiredTitle {
+    return Intl.message(
+      'Expirée après 30 jours',
+      name: 'annonceExpiredTitle',
+      desc: 'RM-M10-04 — archivedReason EXPIRED, on the listing detail.',
+      args: [],
+    );
+  }
+
+  /// `Sur la formule gratuite, une annonce reste en ligne 30 jours. Désarchive-la puis publie-la : elle repart pour 30 jours.`
+  String get annonceExpiredBody {
+    return Intl.message(
+      'Sur la formule gratuite, une annonce reste en ligne 30 jours. Désarchive-la puis publie-la : elle repart pour 30 jours.',
+      name: 'annonceExpiredBody',
+      desc: 'RM-M10-04 — how an expired listing comes back.',
+      args: [],
+    );
+  }
+
+  /// `Archivée : limite de la formule gratuite`
+  String get annoncePlanLimitTitle {
+    return Intl.message(
+      'Archivée : limite de la formule gratuite',
+      name: 'annoncePlanLimitTitle',
+      desc:
+          'archivedReason PLAN_LIMIT — a paid plan lapsed and the listing was over the Free limit.',
+      args: [],
+    );
+  }
+
+  /// `Ta formule a pris fin et cette annonce dépassait la limite gratuite. Passe à une formule payante, ou archive une autre annonce pour lui faire de la place.`
+  String get annoncePlanLimitBody {
+    return Intl.message(
+      'Ta formule a pris fin et cette annonce dépassait la limite gratuite. Passe à une formule payante, ou archive une autre annonce pour lui faire de la place.',
+      name: 'annoncePlanLimitBody',
+      desc: 'archivedReason PLAN_LIMIT — the two ways back.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Expire aujourd'hui} =1{Expire demain} other{Expire dans {count} jours}}`
+  String annonceExpiresIn(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Expire aujourd\'hui',
+      one: 'Expire demain',
+      other: 'Expire dans $count jours',
+      name: 'annonceExpiresIn',
+      desc: 'RM-M10-04 — countdown on a live Free-tier listing.',
+      args: [count],
+    );
+  }
+
+  /// `Sur la formule gratuite, une annonce reste en ligne 30 jours. Une formule payante la garde en ligne sans limite.`
+  String get annonceExpiresBody {
+    return Intl.message(
+      'Sur la formule gratuite, une annonce reste en ligne 30 jours. Une formule payante la garde en ligne sans limite.',
+      name: 'annonceExpiresBody',
+      desc: 'RM-M10-04 / RG-02 — why the countdown exists.',
+      args: [],
+    );
+  }
+
+  /// `Voir les formules`
+  String get annonceSeePlans {
+    return Intl.message(
+      'Voir les formules',
+      name: 'annonceSeePlans',
+      desc: 'Opens the subscription screen from a listing\'s lifecycle notice.',
+      args: [],
+    );
+  }
+
+  /// `Expirée`
+  String get annonceCardExpired {
+    return Intl.message(
+      'Expirée',
+      name: 'annonceCardExpired',
+      desc: 'Listing card — archivedReason EXPIRED.',
+      args: [],
+    );
+  }
+
+  /// `Limite de formule`
+  String get annonceCardPlanLimit {
+    return Intl.message(
+      'Limite de formule',
+      name: 'annonceCardPlanLimit',
+      desc: 'Listing card — archivedReason PLAN_LIMIT.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

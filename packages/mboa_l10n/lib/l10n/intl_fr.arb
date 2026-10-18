@@ -3061,5 +3061,46 @@
   "visitsCancelledListingUnavailable": "Annonce retirée du marché",
   "@visitsCancelledListingUnavailable": {
     "description": "Pro agenda \u2014 cancellationReason LISTING_UNAVAILABLE."
+  },
+  "annonceExpiredTitle": "Expirée après 30 jours",
+  "@annonceExpiredTitle": {
+    "description": "RM-M10-04 \u2014 archivedReason EXPIRED, on the listing detail."
+  },
+  "annonceExpiredBody": "Sur la formule gratuite, une annonce reste en ligne 30 jours. Désarchive-la puis publie-la : elle repart pour 30 jours.",
+  "@annonceExpiredBody": {
+    "description": "RM-M10-04 \u2014 how an expired listing comes back."
+  },
+  "annoncePlanLimitTitle": "Archivée : limite de la formule gratuite",
+  "@annoncePlanLimitTitle": {
+    "description": "archivedReason PLAN_LIMIT \u2014 a paid plan lapsed and the listing was over the Free limit."
+  },
+  "annoncePlanLimitBody": "Ta formule a pris fin et cette annonce dépassait la limite gratuite. Passe à une formule payante, ou archive une autre annonce pour lui faire de la place.",
+  "@annoncePlanLimitBody": {
+    "description": "archivedReason PLAN_LIMIT \u2014 the two ways back."
+  },
+  "annonceExpiresIn": "{count, plural, =0{Expire aujourd'hui} =1{Expire demain} other{Expire dans {count} jours}}",
+  "@annonceExpiresIn": {
+    "description": "RM-M10-04 \u2014 countdown on a live Free-tier listing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceExpiresBody": "Sur la formule gratuite, une annonce reste en ligne 30 jours. Une formule payante la garde en ligne sans limite.",
+  "@annonceExpiresBody": {
+    "description": "RM-M10-04 / RG-02 \u2014 why the countdown exists."
+  },
+  "annonceSeePlans": "Voir les formules",
+  "@annonceSeePlans": {
+    "description": "Opens the subscription screen from a listing's lifecycle notice."
+  },
+  "annonceCardExpired": "Expirée",
+  "@annonceCardExpired": {
+    "description": "Listing card \u2014 archivedReason EXPIRED."
+  },
+  "annonceCardPlanLimit": "Limite de formule",
+  "@annonceCardPlanLimit": {
+    "description": "Listing card \u2014 archivedReason PLAN_LIMIT."
   }
 }
