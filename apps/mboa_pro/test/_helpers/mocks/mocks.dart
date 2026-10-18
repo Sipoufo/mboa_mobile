@@ -26,6 +26,8 @@ class MockDioClient extends Mock implements DioClient {}
 
 class MockApiClient extends Mock implements ApiClient {}
 
+class MockHiveCache extends Mock implements HiveCache {}
+
 class MockAuthApi extends Mock implements AuthenticationApi {}
 
 class MockSecureTokenStorage extends Mock implements SecureTokenStorage {}

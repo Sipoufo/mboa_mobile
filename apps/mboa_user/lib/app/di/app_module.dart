@@ -37,6 +37,7 @@ void registerAppModule() {
     () => AuthRepository(
       dioClient: getIt<DioClient>(),
       tokenStorage: getIt<SecureTokenStorage>(),
+      cache: getIt<HiveCache>(),
       notifications: getIt<NotificationsRepository>(),
     ),
   );

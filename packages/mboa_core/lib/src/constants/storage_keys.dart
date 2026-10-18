@@ -5,6 +5,10 @@
 ///   searchBox          — last 20 search results     (1h)
 ///   favoritesBox       — favorites                  (permanent)
 ///   pendingMessagesBox — unsent messages            (until confirmed)
+///
+/// Every box is either [deviceScopedBoxes] or [accountScopedBoxes] — a new
+/// box is only opened once it is in one of the two, so where it stands on
+/// sign-out is decided when it is added, not after it has leaked.
 class StorageKeys {
   const StorageKeys._();
 
@@ -34,15 +38,45 @@ class StorageKeys {
   // home renders instantly and works offline.
   static const String dashboardBox = 'dashboardBox';
 
-  static const List<String> allBoxes = [
+  /// Boxes that belong to the **device**, kept across a sign-out on purpose.
+  ///
+  /// All three are written for a visitor too, and none holds anything an
+  /// account owns: the last search is restored at launch signed in or not
+  /// (RM-M04-02), a viewed fiche is public text with the server's verdicts
+  /// (`canContact`, `canPlanVisit`) stripped before it is stored, and the
+  /// settings are the language and the install id.
+  static const List<String> deviceScopedBoxes = [
     viewedBox,
     searchBox,
+    appSettingsBox,
+  ];
+
+  /// Boxes that belong to the **signed-in account**, emptied when a session
+  /// ends and again when the next one begins (`HiveCache.clearAccountScoped`).
+  ///
+  /// Without that, the next person to sign in on the device reads the last
+  /// one's visits offline. `favoritesBox` and `subscriptionBox` have no writer
+  /// today (favourites are server-side, payment handles moved to the API), but
+  /// an older build may have left data in them, and whatever lands there next
+  /// is an account's.
+  ///
+  /// **Unsent messages are dropped with the account.** They are its private
+  /// text and can only go out under its tokens, which are gone. Kept, they
+  /// would wait for the next account to sign in, be refused by the server
+  /// (not a participant), and — because `flushQueue` stops at the first
+  /// failure to keep messages in order — jam that account's own queue behind
+  /// them. Signing out with no line therefore loses what was typed offline.
+  static const List<String> accountScopedBoxes = [
     favoritesBox,
     pendingMessagesBox,
-    appSettingsBox,
     dashboardBox,
     subscriptionBox,
     visitsBox,
+  ];
+
+  static const List<String> allBoxes = [
+    ...deviceScopedBoxes,
+    ...accountScopedBoxes,
   ];
 }
 

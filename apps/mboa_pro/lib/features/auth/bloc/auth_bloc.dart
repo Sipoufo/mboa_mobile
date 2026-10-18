@@ -19,7 +19,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final AuthRepository _repository;
 
-  void _onSessionEstablished(AuthSessionEstablished event, Emitter<AuthState> emit) {
+  Future<void> _onSessionEstablished(AuthSessionEstablished event, Emitter<AuthState> emit) async {
+    // Nothing the last account cached may be read by this one.
+    await _repository.beginSession();
     emit(const AuthAuthenticated());
   }
 

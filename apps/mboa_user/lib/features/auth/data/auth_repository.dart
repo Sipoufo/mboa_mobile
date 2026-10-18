@@ -8,13 +8,16 @@ class AuthRepository {
   AuthRepository({
     required DioClient dioClient,
     required SecureTokenStorage tokenStorage,
+    required HiveCache cache,
     NotificationsRepository? notifications,
   })  : _dioClient = dioClient,
         _tokenStorage = tokenStorage,
+        _cache = cache,
         _notifications = notifications;
 
   final DioClient _dioClient;
   final SecureTokenStorage _tokenStorage;
+  final HiveCache _cache;
   final NotificationsRepository? _notifications;
 
   Future<bool> hasSession() => _tokenStorage.hasTokens();
@@ -43,5 +46,24 @@ class AuthRepository {
       }
     }
     await _tokenStorage.clear();
+    await _clearAccountCache();
+  }
+
+  /// A new session starts from an empty account cache.
+  ///
+  /// [logout] already emptied it; this catches what landed after — a fetch
+  /// still in flight when the tokens went writes its result on return — and a
+  /// purge that failed. Only an account reads these boxes, so clearing them
+  /// before it is signed in is all that has to hold.
+  Future<void> beginSession() => _clearAccountCache();
+
+  /// The account's visits, unsent messages and the rest go with it — see
+  /// `StorageKeys.accountScopedBoxes`; the device's last search and language
+  /// stay. Best-effort, like the revokes: a failing disk must not keep anyone
+  /// signed in, and [beginSession] clears again before the next account.
+  Future<void> _clearAccountCache() async {
+    try {
+      await _cache.clearAccountScoped();
+    } catch (_) {}
   }
 }

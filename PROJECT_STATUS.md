@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**869 tests green, analyze clean.** `mboa_user` 192 · `mboa_pro` 439 ·
-`mboa_core` 17 · `mboa_shared` 193 · `mboa_ui` 21 · `mboa_l10n` 7.
+**883 tests green, analyze clean.** `mboa_user` 198 · `mboa_pro` 445 ·
+`mboa_core` 19 · `mboa_shared` 193 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -224,6 +224,24 @@ thread they had just started was reported as "no conversations".
 `loadSessionScopedBlocs()` asks for the favourites and threads of the new
 session — the mirror of the reset on sign-out. **Any screen that renders from
 the session outside a bloc builder has to listen for it.**
+
+### A sign-out that resets the blocs still leaves the disk
+`resetSessionScopedBlocs()` drops what is in memory; the Hive boxes were never
+touched. `visitsBox` kept the tenant's upcoming visits until the next booking
+or cancellation, so whoever signed in next on the phone read them offline —
+and the pending-message queue would have been flushed under their tokens,
+refused, and (`flushQueue` stops at the first failure) jammed their own.
+
+Every box is now declared in `StorageKeys.deviceScopedBoxes` (`viewedBox`,
+`searchBox`, `appSettings` — visitors use them, nothing in them is an
+account's) or `accountScopedBoxes` (the rest); `allBoxes` is the two spread, so
+**a new box is not even opened until it is classified**. `AuthRepository`
+empties the account's on `logout()` — explicit sign-out, interceptor refresh
+failure and the expiry watcher all go through it — and again on
+`beginSession()`, for a fetch that was in flight when the tokens went. **Unsent
+messages are dropped with the account** on purpose: they are its text and can
+only leave under its tokens. Pinned by `sign_out_clears_account_cache_test.dart`
+in both apps, on a real on-disk Hive.
 
 ### M07bis — and then reads it back
 A published report is read-only and downloadable: the same screen shows the

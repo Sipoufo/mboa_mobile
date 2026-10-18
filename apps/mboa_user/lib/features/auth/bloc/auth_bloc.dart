@@ -27,8 +27,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(hasSession ? const AuthAuthenticated() : const AuthUnauthenticated());
   }
 
-  void _onSessionEstablished(AuthSessionEstablished event, Emitter<AuthState> emit) {
-    // Tokens were just persisted by the shared login flow.
+  Future<void> _onSessionEstablished(AuthSessionEstablished event, Emitter<AuthState> emit) async {
+    // Tokens were just persisted by the shared login flow. Nothing the last
+    // account cached may be read by this one.
+    await _repository.beginSession();
     emit(const AuthAuthenticated());
   }
 
