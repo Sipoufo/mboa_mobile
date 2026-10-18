@@ -65,6 +65,7 @@ import 'package:api_client/src/model/conversion.dart';
 import 'package:api_client/src/model/country_response.dart';
 import 'package:api_client/src/model/create_annonce_request.dart';
 import 'package:api_client/src/model/create_contract_request.dart';
+import 'package:api_client/src/model/create_invoice_request.dart';
 import 'package:api_client/src/model/create_residence_request.dart';
 import 'package:api_client/src/model/create_signalement_request.dart';
 import 'package:api_client/src/model/create_upload_request.dart';
@@ -86,6 +87,7 @@ import 'package:api_client/src/model/historique_response.dart';
 import 'package:api_client/src/model/history_section_admin_contract_line.dart';
 import 'package:api_client/src/model/history_section_admin_report_line.dart';
 import 'package:api_client/src/model/history_section_admin_visit_line.dart';
+import 'package:api_client/src/model/invoice_response.dart';
 import 'package:api_client/src/model/kpi_dashboard_response.dart';
 import 'package:api_client/src/model/kpi_day_response.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
@@ -99,6 +101,7 @@ import 'package:api_client/src/model/location_option.dart';
 import 'package:api_client/src/model/login_otp_request.dart';
 import 'package:api_client/src/model/login_request.dart';
 import 'package:api_client/src/model/logout_request.dart';
+import 'package:api_client/src/model/mark_invoice_paid_request.dart';
 import 'package:api_client/src/model/mboa_score_response.dart';
 import 'package:api_client/src/model/me_response.dart';
 import 'package:api_client/src/model/message_response.dart';
@@ -116,6 +119,7 @@ import 'package:api_client/src/model/page_response_conversation_response.dart';
 import 'package:api_client/src/model/page_response_dashboard_item.dart';
 import 'package:api_client/src/model/page_response_favori_response.dart';
 import 'package:api_client/src/model/page_response_historique_response.dart';
+import 'package:api_client/src/model/page_response_invoice_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
 import 'package:api_client/src/model/page_response_ledger_entry_response.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';
@@ -128,6 +132,7 @@ import 'package:api_client/src/model/page_response_type_change_review_item.dart'
 import 'package:api_client/src/model/page_response_visite_response.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/participant_summary.dart';
+import 'package:api_client/src/model/pay_invoice_request.dart';
 import 'package:api_client/src/model/payment_initiated_response.dart';
 import 'package:api_client/src/model/payment_summary.dart';
 import 'package:api_client/src/model/payment_webhook_request.dart';
@@ -175,6 +180,10 @@ import 'package:api_client/src/model/search_result.dart';
 import 'package:api_client/src/model/search_result_item.dart';
 import 'package:api_client/src/model/send_message_request.dart';
 import 'package:api_client/src/model/send_otp_request.dart';
+import 'package:api_client/src/model/service_provider_payment_request.dart';
+import 'package:api_client/src/model/service_provider_payment_response.dart';
+import 'package:api_client/src/model/service_provider_request.dart';
+import 'package:api_client/src/model/service_provider_response.dart';
 import 'package:api_client/src/model/sign_contract_request.dart';
 import 'package:api_client/src/model/signalement_response.dart';
 import 'package:api_client/src/model/signature_response.dart';
@@ -205,10 +214,12 @@ import 'package:api_client/src/model/update_agent_profile_request.dart';
 import 'package:api_client/src/model/update_annonce_request.dart';
 import 'package:api_client/src/model/update_availability_request.dart';
 import 'package:api_client/src/model/update_contract_request.dart';
+import 'package:api_client/src/model/update_invoice_request.dart';
 import 'package:api_client/src/model/update_plan_request.dart';
 import 'package:api_client/src/model/update_prestataire_profile_request.dart';
 import 'package:api_client/src/model/update_residence_request.dart';
 import 'package:api_client/src/model/update_saved_search_request.dart';
+import 'package:api_client/src/model/update_service_provider_request.dart';
 import 'package:api_client/src/model/update_user_profile_request.dart';
 import 'package:api_client/src/model/update_user_settings_request.dart';
 import 'package:api_client/src/model/update_zones_request.dart';
@@ -275,6 +286,7 @@ part 'serializers.g.dart';
   CountryResponse,
   CreateAnnonceRequest,
   CreateContractRequest,
+  CreateInvoiceRequest,
   CreateResidenceRequest,
   CreateSignalementRequest,
   CreateUploadRequest,
@@ -296,6 +308,7 @@ part 'serializers.g.dart';
   HistorySectionAdminContractLine,
   HistorySectionAdminReportLine,
   HistorySectionAdminVisitLine,
+  InvoiceResponse,
   KpiDashboardResponse,
   KpiDayResponse,
   KycReviewItem,
@@ -309,6 +322,7 @@ part 'serializers.g.dart';
   LoginOtpRequest,
   LoginRequest,
   LogoutRequest,
+  MarkInvoicePaidRequest,
   MboaScoreResponse,
   MeResponse,
   MessageResponse,
@@ -326,6 +340,7 @@ part 'serializers.g.dart';
   PageResponseDashboardItem,
   PageResponseFavoriResponse,
   PageResponseHistoriqueResponse,
+  PageResponseInvoiceResponse,
   PageResponseKycReviewItem,
   PageResponseLedgerEntryResponse,
   PageResponseMessageResponse,
@@ -338,6 +353,7 @@ part 'serializers.g.dart';
   PageResponseVisiteResponse,
   Pageable,
   ParticipantSummary,
+  PayInvoiceRequest,
   PaymentInitiatedResponse,
   PaymentSummary,
   PaymentWebhookRequest,
@@ -385,6 +401,10 @@ part 'serializers.g.dart';
   SearchResultItem,
   SendMessageRequest,
   SendOtpRequest,
+  ServiceProviderPaymentRequest,
+  ServiceProviderPaymentResponse,
+  ServiceProviderRequest,
+  ServiceProviderResponse,
   SignContractRequest,
   SignalementResponse,
   SignatureResponse,
@@ -415,10 +435,12 @@ part 'serializers.g.dart';
   UpdateAnnonceRequest,
   UpdateAvailabilityRequest,
   UpdateContractRequest,
+  UpdateInvoiceRequest,
   UpdatePlanRequest,
   UpdatePrestataireProfileRequest,
   UpdateResidenceRequest,
   UpdateSavedSearchRequest,
+  UpdateServiceProviderRequest,
   UpdateUserProfileRequest,
   UpdateUserSettingsRequest,
   UpdateZonesRequest,
@@ -459,6 +481,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(MessageResponse)]),
         () => ListBuilder<MessageResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(InvoiceResponse)]),
+        () => ListBuilder<InvoiceResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Line)]),
@@ -571,6 +597,14 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(TierCount)]),
         () => ListBuilder<TierCount>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ServiceProviderResponse)]),
+        () => ListBuilder<ServiceProviderResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ServiceProviderPaymentResponse)]),
+        () => ListBuilder<ServiceProviderPaymentResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(HistoriqueResponse)]),

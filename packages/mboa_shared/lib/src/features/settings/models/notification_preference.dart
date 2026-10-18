@@ -34,13 +34,9 @@ class NotificationPreference extends Equatable {
   /// visite" to an agent; N-06 and N-09 are never sent; N-13 goes to admins.
   /// A switch for a notification that cannot arrive is a switch that lies.
   /// Mandatory types are left out — there is nothing to choose.
-  ///
-  /// N-23 (invoice due, tenant) and N-25 (invoice paid, owner) belong here
-  /// too, but the spec this client was generated from predates M24 and cannot
-  /// carry them: add them once a fresh export has them.
   static const Map<NotificationAudience, List<String>> optOuts = {
-    NotificationAudience.tenant: ['N01', 'N03', 'N05', 'N18', 'N21'],
-    NotificationAudience.prestataire: ['N02', 'N03', 'N04', 'N05', 'N10', 'N15', 'N26'],
+    NotificationAudience.tenant: ['N01', 'N03', 'N05', 'N18', 'N21', 'N23'],
+    NotificationAudience.prestataire: ['N02', 'N03', 'N04', 'N05', 'N10', 'N15', 'N25', 'N26'],
     NotificationAudience.agent: ['N04', 'N05', 'N15'],
   };
 

@@ -32,5 +32,10 @@ void main() {
       // TODO
     });
 
+    // DashboardMetric averagePosition
+    test('to test the property `averagePosition`', () async {
+      // TODO
+    });
+
   });
 }

@@ -3166,5 +3166,13 @@
   "notifPrefN26": "Fin de l'option Gestion financière",
   "@notifPrefN26": {
     "description": "N-26 \u2014 the finance add-on ends in 7 days."
+  },
+  "notifPrefN23": "Rappels de facture",
+  "@notifPrefN23": {
+    "description": "N-23 \u2014 an invoice is due in 3 days (tenant)."
+  },
+  "notifPrefN25": "Factures payées",
+  "@notifPrefN25": {
+    "description": "N-25 \u2014 a tenant paid an invoice in the app (owner)."
   }
 }

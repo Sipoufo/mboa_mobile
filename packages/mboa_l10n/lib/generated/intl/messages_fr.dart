@@ -1309,6 +1309,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Rappel pour laisser un avis",
     ),
     "notifPrefN21": MessageLookupByLibrary.simpleMessage("Réponses à mes avis"),
+    "notifPrefN23": MessageLookupByLibrary.simpleMessage("Rappels de facture"),
+    "notifPrefN25": MessageLookupByLibrary.simpleMessage("Factures payées"),
     "notifPrefN26": MessageLookupByLibrary.simpleMessage(
       "Fin de l\'option Gestion financière",
     ),

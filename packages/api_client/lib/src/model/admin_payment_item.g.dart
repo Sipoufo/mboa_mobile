@@ -119,6 +119,8 @@ const AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnum_SUBSCRIPTION =
     const AdminPaymentItemPurposeEnum._('SUBSCRIPTION');
 const AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnum_FINANCE_ADDON =
     const AdminPaymentItemPurposeEnum._('FINANCE_ADDON');
+const AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnum_INVOICE =
+    const AdminPaymentItemPurposeEnum._('INVOICE');
 const AdminPaymentItemPurposeEnum
 _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi =
     const AdminPaymentItemPurposeEnum._('unknownDefaultOpenApi');
@@ -129,6 +131,8 @@ AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnumValueOf(String name) {
       return _$adminPaymentItemPurposeEnum_SUBSCRIPTION;
     case 'FINANCE_ADDON':
       return _$adminPaymentItemPurposeEnum_FINANCE_ADDON;
+    case 'INVOICE':
+      return _$adminPaymentItemPurposeEnum_INVOICE;
     case 'unknownDefaultOpenApi':
       return _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi;
     default:
@@ -141,6 +145,7 @@ _$adminPaymentItemPurposeEnumValues =
     BuiltSet<AdminPaymentItemPurposeEnum>(const <AdminPaymentItemPurposeEnum>[
       _$adminPaymentItemPurposeEnum_SUBSCRIPTION,
       _$adminPaymentItemPurposeEnum_FINANCE_ADDON,
+      _$adminPaymentItemPurposeEnum_INVOICE,
       _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi,
     ]);
 
@@ -274,11 +279,13 @@ class _$AdminPaymentItemPurposeEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'SUBSCRIPTION': 'SUBSCRIPTION',
     'FINANCE_ADDON': 'FINANCE_ADDON',
+    'INVOICE': 'INVOICE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'SUBSCRIPTION': 'SUBSCRIPTION',
     'FINANCE_ADDON': 'FINANCE_ADDON',
+    'INVOICE': 'INVOICE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

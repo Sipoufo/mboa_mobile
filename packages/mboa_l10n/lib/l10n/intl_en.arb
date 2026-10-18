@@ -3166,5 +3166,13 @@
   "notifPrefN26": "Finance add-on ending",
   "@notifPrefN26": {
     "description": "N-26 \u2014 the finance add-on ends in 7 days."
+  },
+  "notifPrefN23": "Invoice reminders",
+  "@notifPrefN23": {
+    "description": "N-23 \u2014 an invoice is due in 3 days (tenant)."
+  },
+  "notifPrefN25": "Paid invoices",
+  "@notifPrefN25": {
+    "description": "N-25 \u2014 a tenant paid an invoice in the app (owner)."
   }
 }

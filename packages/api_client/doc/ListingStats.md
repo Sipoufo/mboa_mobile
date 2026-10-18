@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **title** | **String** |  | [optional] 
 **status** | **String** |  | [optional] 
 **figures** | [**DashboardFigures**](DashboardFigures.md) |  | [optional] 
+**averagePosition** | [**DashboardMetric**](DashboardMetric.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

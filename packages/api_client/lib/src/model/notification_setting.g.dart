@@ -50,6 +50,12 @@ const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N21 =
     const NotificationSettingTypeEnum._('N21');
 const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N22 =
     const NotificationSettingTypeEnum._('N22');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N23 =
+    const NotificationSettingTypeEnum._('N23');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N24 =
+    const NotificationSettingTypeEnum._('N24');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N25 =
+    const NotificationSettingTypeEnum._('N25');
 const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N26 =
     const NotificationSettingTypeEnum._('N26');
 const NotificationSettingTypeEnum
@@ -102,6 +108,12 @@ NotificationSettingTypeEnum _$notificationSettingTypeEnumValueOf(String name) {
       return _$notificationSettingTypeEnum_N21;
     case 'N22':
       return _$notificationSettingTypeEnum_N22;
+    case 'N23':
+      return _$notificationSettingTypeEnum_N23;
+    case 'N24':
+      return _$notificationSettingTypeEnum_N24;
+    case 'N25':
+      return _$notificationSettingTypeEnum_N25;
     case 'N26':
       return _$notificationSettingTypeEnum_N26;
     case 'unknownDefaultOpenApi':
@@ -136,6 +148,9 @@ _$notificationSettingTypeEnumValues =
       _$notificationSettingTypeEnum_N20,
       _$notificationSettingTypeEnum_N21,
       _$notificationSettingTypeEnum_N22,
+      _$notificationSettingTypeEnum_N23,
+      _$notificationSettingTypeEnum_N24,
+      _$notificationSettingTypeEnum_N25,
       _$notificationSettingTypeEnum_N26,
       _$notificationSettingTypeEnum_unknownDefaultOpenApi,
     ]);
@@ -169,6 +184,9 @@ class _$NotificationSettingTypeEnumSerializer
     'N20': 'N20',
     'N21': 'N21',
     'N22': 'N22',
+    'N23': 'N23',
+    'N24': 'N24',
+    'N25': 'N25',
     'N26': 'N26',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
@@ -195,6 +213,9 @@ class _$NotificationSettingTypeEnumSerializer
     'N20': 'N20',
     'N21': 'N21',
     'N22': 'N22',
+    'N23': 'N23',
+    'N24': 'N24',
+    'N25': 'N25',
     'N26': 'N26',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };

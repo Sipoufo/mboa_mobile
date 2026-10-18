@@ -52,7 +52,7 @@ abstract class PaymentSummary implements Built<PaymentSummary, PaymentSummaryBui
 
   @BuiltValueField(wireName: r'purpose')
   PaymentSummaryPurposeEnum? get purpose;
-  // enum purposeEnum {  SUBSCRIPTION,  FINANCE_ADDON,  };
+  // enum purposeEnum {  SUBSCRIPTION,  FINANCE_ADDON,  INVOICE,  };
 
   PaymentSummary._();
 
@@ -331,6 +331,8 @@ class PaymentSummaryPurposeEnum extends EnumClass {
   static const PaymentSummaryPurposeEnum SUBSCRIPTION = _$paymentSummaryPurposeEnum_SUBSCRIPTION;
   @BuiltValueEnumConst(wireName: r'FINANCE_ADDON')
   static const PaymentSummaryPurposeEnum FINANCE_ADDON = _$paymentSummaryPurposeEnum_FINANCE_ADDON;
+  @BuiltValueEnumConst(wireName: r'INVOICE')
+  static const PaymentSummaryPurposeEnum INVOICE = _$paymentSummaryPurposeEnum_INVOICE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const PaymentSummaryPurposeEnum unknownDefaultOpenApi = _$paymentSummaryPurposeEnum_unknownDefaultOpenApi;
 

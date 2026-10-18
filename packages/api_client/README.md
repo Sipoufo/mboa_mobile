@@ -203,6 +203,13 @@ Class | Method | HTTP request | Description
 [*FavorisApi*](doc/FavorisApi.md) | [**removeFavori**](doc/FavorisApi.md#removefavori) | **DELETE** /api/v1/favoris/{annonceId} | Unsave a listing; unsaving one that is not saved is not an error
 [*FinanceAddOnApi*](doc/FinanceAddOnApi.md) | [**getFinanceAddon**](doc/FinanceAddOnApi.md#getfinanceaddon) | **GET** /api/v1/addons/finance | My finance add-on: active, until when, and its price
 [*FinanceAddOnApi*](doc/FinanceAddOnApi.md) | [**subscribeFinanceAddon**](doc/FinanceAddOnApi.md#subscribefinanceaddon) | **POST** /api/v1/addons/finance/subscribe | Buy 30 days of the add-on — added after the running period; same payment flow as a tier
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**cancelInvoice**](doc/FinanceInvoicesOwnerApi.md#cancelinvoice) | **POST** /api/v1/finance/invoices/{id}/cancel | Cancel an open invoice
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**createInvoice**](doc/FinanceInvoicesOwnerApi.md#createinvoice) | **POST** /api/v1/finance/invoices | Bill the tenant of a running Mboa contract — water, electricity or another charge (RM-M24-02)
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**getOwnerInvoice**](doc/FinanceInvoicesOwnerApi.md#getownerinvoice) | **GET** /api/v1/finance/invoices/{id} | One of my invoices
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**listOwnerInvoices**](doc/FinanceInvoicesOwnerApi.md#listownerinvoices) | **GET** /api/v1/finance/invoices | My invoices, latest due first, optionally on one contract
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**markInvoicePaid**](doc/FinanceInvoicesOwnerApi.md#markinvoicepaid) | **POST** /api/v1/finance/invoices/{id}/mark-paid | Declare an invoice paid — unchecked by Mboa, in force at once (RM-M24-05)
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**reopenInvoice**](doc/FinanceInvoicesOwnerApi.md#reopeninvoice) | **POST** /api/v1/finance/invoices/{id}/reopen | Withdraw a payment you declared by mistake
+[*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**updateInvoice**](doc/FinanceInvoicesOwnerApi.md#updateinvoice) | **PATCH** /api/v1/finance/invoices/{id} | Correct an open invoice; a new due date re-arms the reminders
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**createLedgerEntry**](doc/FinanceLedgerApi.md#createledgerentry) | **POST** /api/v1/finance/ledger | Record an income or an expense; needs the add-on running
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**deleteLedgerEntry**](doc/FinanceLedgerApi.md#deleteledgerentry) | **DELETE** /api/v1/finance/ledger/{id} | Remove an entry and its attachment; needs the add-on running
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**exportLedger**](doc/FinanceLedgerApi.md#exportledger) | **GET** /api/v1/finance/ledger/export | The same entries as CSV, for any period (RM-M25-05)
@@ -210,8 +217,22 @@ Class | Method | HTTP request | Description
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**getLedgerSummary**](doc/FinanceLedgerApi.md#getledgersummary) | **GET** /api/v1/finance/ledger/summary | Totals in, out and net, and per category, over the same filters (RM-M25-03)
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**listLedgerEntries**](doc/FinanceLedgerApi.md#listledgerentries) | **GET** /api/v1/finance/ledger | My ledger, newest first — filter by period and by one listing, one residence or the unassigned
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**updateLedgerEntry**](doc/FinanceLedgerApi.md#updateledgerentry) | **PUT** /api/v1/finance/ledger/{id} | Replace an entry; needs the add-on running
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**addServiceProviderPayment**](doc/FinanceServiceProvidersApi.md#addserviceproviderpayment) | **POST** /api/v1/finance/providers/{id}/payments | Declare a payment; it goes into the ledger as Sortie · Prestataires (RM-M26-04)
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**archiveServiceProvider**](doc/FinanceServiceProvidersApi.md#archiveserviceprovider) | **POST** /api/v1/finance/providers/{id}/archive | Hide an intervenant from pickers; history kept
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**createServiceProvider**](doc/FinanceServiceProvidersApi.md#createserviceprovider) | **POST** /api/v1/finance/providers | Add an intervenant — a free entry, or linked to a messaging contact (RM-M26-01)
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**deleteServiceProvider**](doc/FinanceServiceProvidersApi.md#deleteserviceprovider) | **DELETE** /api/v1/finance/providers/{id} | Delete an intervenant with no payments; archive the others
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**deleteServiceProviderPayment**](doc/FinanceServiceProvidersApi.md#deleteserviceproviderpayment) | **DELETE** /api/v1/finance/providers/{id}/payments/{paymentId} | Remove a payment and its ledger line
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**getServiceProvider**](doc/FinanceServiceProvidersApi.md#getserviceprovider) | **GET** /api/v1/finance/providers/{id} | One intervenant
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**listServiceProviderPayments**](doc/FinanceServiceProvidersApi.md#listserviceproviderpayments) | **GET** /api/v1/finance/providers/{id}/payments | An intervenant&#39;s payments, latest first
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**listServiceProviders**](doc/FinanceServiceProvidersApi.md#listserviceproviders) | **GET** /api/v1/finance/providers | My intervenants by name, with what each was paid
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**restoreServiceProvider**](doc/FinanceServiceProvidersApi.md#restoreserviceprovider) | **POST** /api/v1/finance/providers/{id}/restore | Bring an archived intervenant back
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**updateServiceProvider**](doc/FinanceServiceProvidersApi.md#updateserviceprovider) | **PATCH** /api/v1/finance/providers/{id} | Change an intervenant&#39;s name, kind or note
+[*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**updateServiceProviderPayment**](doc/FinanceServiceProvidersApi.md#updateserviceproviderpayment) | **PUT** /api/v1/finance/providers/{id}/payments/{paymentId} | Correct a payment; its ledger line follows
 [*HistoriqueApi*](doc/HistoriqueApi.md) | [**clearMyHistorique**](doc/HistoriqueApi.md#clearmyhistorique) | **DELETE** /api/v1/historique | Reset the consultation history (RM-M06-05)
 [*HistoriqueApi*](doc/HistoriqueApi.md) | [**listMyHistorique**](doc/HistoriqueApi.md#listmyhistorique) | **GET** /api/v1/historique | The 30 most recently consulted listings, newest first
+[*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**getMyInvoice**](doc/InvoicesTenantApi.md#getmyinvoice) | **GET** /api/v1/invoices/{id} | One of my invoices
+[*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**listMyInvoices**](doc/InvoicesTenantApi.md#listmyinvoices) | **GET** /api/v1/invoices | My invoices, current and past, latest due first (RM-M24-06)
+[*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**payInvoice**](doc/InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app — same flow as a subscription payment (RM-M24-04)
 [*KYCApi*](doc/KYCApi.md) | [**getMyKycStatus**](doc/KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
 [*KYCApi*](doc/KYCApi.md) | [**submitKyc**](doc/KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
 [*LocationsApi*](doc/LocationsApi.md) | [**listCities**](doc/LocationsApi.md#listcities) | **GET** /api/v1/locations/cities | List cities (optionally filtered by region)
@@ -339,6 +360,7 @@ Class | Method | HTTP request | Description
  - [CountryResponse](doc/CountryResponse.md)
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
  - [CreateContractRequest](doc/CreateContractRequest.md)
+ - [CreateInvoiceRequest](doc/CreateInvoiceRequest.md)
  - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
  - [CreateSignalementRequest](doc/CreateSignalementRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
@@ -360,6 +382,7 @@ Class | Method | HTTP request | Description
  - [HistorySectionAdminContractLine](doc/HistorySectionAdminContractLine.md)
  - [HistorySectionAdminReportLine](doc/HistorySectionAdminReportLine.md)
  - [HistorySectionAdminVisitLine](doc/HistorySectionAdminVisitLine.md)
+ - [InvoiceResponse](doc/InvoiceResponse.md)
  - [KpiDashboardResponse](doc/KpiDashboardResponse.md)
  - [KpiDayResponse](doc/KpiDayResponse.md)
  - [KycReviewItem](doc/KycReviewItem.md)
@@ -373,6 +396,7 @@ Class | Method | HTTP request | Description
  - [LoginOtpRequest](doc/LoginOtpRequest.md)
  - [LoginRequest](doc/LoginRequest.md)
  - [LogoutRequest](doc/LogoutRequest.md)
+ - [MarkInvoicePaidRequest](doc/MarkInvoicePaidRequest.md)
  - [MboaScoreResponse](doc/MboaScoreResponse.md)
  - [MeResponse](doc/MeResponse.md)
  - [MessageResponse](doc/MessageResponse.md)
@@ -390,6 +414,7 @@ Class | Method | HTTP request | Description
  - [PageResponseDashboardItem](doc/PageResponseDashboardItem.md)
  - [PageResponseFavoriResponse](doc/PageResponseFavoriResponse.md)
  - [PageResponseHistoriqueResponse](doc/PageResponseHistoriqueResponse.md)
+ - [PageResponseInvoiceResponse](doc/PageResponseInvoiceResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
  - [PageResponseLedgerEntryResponse](doc/PageResponseLedgerEntryResponse.md)
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
@@ -402,6 +427,7 @@ Class | Method | HTTP request | Description
  - [PageResponseVisiteResponse](doc/PageResponseVisiteResponse.md)
  - [Pageable](doc/Pageable.md)
  - [ParticipantSummary](doc/ParticipantSummary.md)
+ - [PayInvoiceRequest](doc/PayInvoiceRequest.md)
  - [PaymentInitiatedResponse](doc/PaymentInitiatedResponse.md)
  - [PaymentSummary](doc/PaymentSummary.md)
  - [PaymentWebhookRequest](doc/PaymentWebhookRequest.md)
@@ -449,6 +475,10 @@ Class | Method | HTTP request | Description
  - [SearchResultItem](doc/SearchResultItem.md)
  - [SendMessageRequest](doc/SendMessageRequest.md)
  - [SendOtpRequest](doc/SendOtpRequest.md)
+ - [ServiceProviderPaymentRequest](doc/ServiceProviderPaymentRequest.md)
+ - [ServiceProviderPaymentResponse](doc/ServiceProviderPaymentResponse.md)
+ - [ServiceProviderRequest](doc/ServiceProviderRequest.md)
+ - [ServiceProviderResponse](doc/ServiceProviderResponse.md)
  - [SignContractRequest](doc/SignContractRequest.md)
  - [SignalementResponse](doc/SignalementResponse.md)
  - [SignatureResponse](doc/SignatureResponse.md)
@@ -479,10 +509,12 @@ Class | Method | HTTP request | Description
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
  - [UpdateAvailabilityRequest](doc/UpdateAvailabilityRequest.md)
  - [UpdateContractRequest](doc/UpdateContractRequest.md)
+ - [UpdateInvoiceRequest](doc/UpdateInvoiceRequest.md)
  - [UpdatePlanRequest](doc/UpdatePlanRequest.md)
  - [UpdatePrestataireProfileRequest](doc/UpdatePrestataireProfileRequest.md)
  - [UpdateResidenceRequest](doc/UpdateResidenceRequest.md)
  - [UpdateSavedSearchRequest](doc/UpdateSavedSearchRequest.md)
+ - [UpdateServiceProviderRequest](doc/UpdateServiceProviderRequest.md)
  - [UpdateUserProfileRequest](doc/UpdateUserProfileRequest.md)
  - [UpdateUserSettingsRequest](doc/UpdateUserSettingsRequest.md)
  - [UpdateZonesRequest](doc/UpdateZonesRequest.md)

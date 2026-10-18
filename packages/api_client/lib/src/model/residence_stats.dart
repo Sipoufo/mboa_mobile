@@ -5,6 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:api_client/src/model/dashboard_figures.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/dashboard_metric.dart';
 import 'package:api_client/src/model/listing_stats.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -19,6 +20,7 @@ part 'residence_stats.g.dart';
 /// * [unitCount] 
 /// * [totals] 
 /// * [units] 
+/// * [averagePosition] 
 @BuiltValue()
 abstract class ResidenceStats implements Built<ResidenceStats, ResidenceStatsBuilder> {
   @BuiltValueField(wireName: r'residenceId')
@@ -35,6 +37,9 @@ abstract class ResidenceStats implements Built<ResidenceStats, ResidenceStatsBui
 
   @BuiltValueField(wireName: r'units')
   BuiltList<ListingStats>? get units;
+
+  @BuiltValueField(wireName: r'averagePosition')
+  DashboardMetric? get averagePosition;
 
   ResidenceStats._();
 
@@ -92,6 +97,13 @@ class _$ResidenceStatsSerializer implements PrimitiveSerializer<ResidenceStats> 
       yield serializers.serialize(
         object.units,
         specifiedType: const FullType(BuiltList, [FullType(ListingStats)]),
+      );
+    }
+    if (object.averagePosition != null) {
+      yield r'averagePosition';
+      yield serializers.serialize(
+        object.averagePosition,
+        specifiedType: const FullType(DashboardMetric),
       );
     }
   }
@@ -156,6 +168,14 @@ class _$ResidenceStatsSerializer implements PrimitiveSerializer<ResidenceStats> 
           ) as BuiltList<ListingStats>?;
           if (valueDes == null) continue;
           result.units.replace(valueDes);
+          break;
+        case r'averagePosition':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DashboardMetric),
+          ) as DashboardMetric?;
+          if (valueDes == null) continue;
+          result.averagePosition.replace(valueDes);
           break;
         default:
           unhandled.add(key);

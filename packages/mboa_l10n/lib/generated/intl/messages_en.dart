@@ -1222,6 +1222,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifPrefN21": MessageLookupByLibrary.simpleMessage(
       "Replies to my reviews",
     ),
+    "notifPrefN23": MessageLookupByLibrary.simpleMessage("Invoice reminders"),
+    "notifPrefN25": MessageLookupByLibrary.simpleMessage("Paid invoices"),
     "notifPrefN26": MessageLookupByLibrary.simpleMessage(
       "Finance add-on ending",
     ),

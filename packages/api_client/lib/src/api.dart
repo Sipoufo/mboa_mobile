@@ -34,8 +34,11 @@ import 'package:api_client/src/api/contrats_api.dart';
 import 'package:api_client/src/api/current_user_api.dart';
 import 'package:api_client/src/api/favoris_api.dart';
 import 'package:api_client/src/api/finance_add_on_api.dart';
+import 'package:api_client/src/api/finance_invoices_owner_api.dart';
 import 'package:api_client/src/api/finance_ledger_api.dart';
+import 'package:api_client/src/api/finance_service_providers_api.dart';
 import 'package:api_client/src/api/historique_api.dart';
+import 'package:api_client/src/api/invoices_tenant_api.dart';
 import 'package:api_client/src/api/kyc_api.dart';
 import 'package:api_client/src/api/locations_api.dart';
 import 'package:api_client/src/api/mboa_score_api.dart';
@@ -302,16 +305,34 @@ class ApiClient {
     return FinanceAddOnApi(dio, serializers);
   }
 
+  /// Get FinanceInvoicesOwnerApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  FinanceInvoicesOwnerApi getFinanceInvoicesOwnerApi() {
+    return FinanceInvoicesOwnerApi(dio, serializers);
+  }
+
   /// Get FinanceLedgerApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   FinanceLedgerApi getFinanceLedgerApi() {
     return FinanceLedgerApi(dio, serializers);
   }
 
+  /// Get FinanceServiceProvidersApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  FinanceServiceProvidersApi getFinanceServiceProvidersApi() {
+    return FinanceServiceProvidersApi(dio, serializers);
+  }
+
   /// Get HistoriqueApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   HistoriqueApi getHistoriqueApi() {
     return HistoriqueApi(dio, serializers);
+  }
+
+  /// Get InvoicesTenantApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  InvoicesTenantApi getInvoicesTenantApi() {
+    return InvoicesTenantApi(dio, serializers);
   }
 
   /// Get KYCApi instance, base route and serializer can be overridden by a given but be careful,

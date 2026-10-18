@@ -8835,6 +8835,26 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Rappels de facture`
+  String get notifPrefN23 {
+    return Intl.message(
+      'Rappels de facture',
+      name: 'notifPrefN23',
+      desc: 'N-23 — an invoice is due in 3 days (tenant).',
+      args: [],
+    );
+  }
+
+  /// `Factures payées`
+  String get notifPrefN25 {
+    return Intl.message(
+      'Factures payées',
+      name: 'notifPrefN25',
+      desc: 'N-25 — a tenant paid an invoice in the app (owner).',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -73,6 +73,7 @@ doc/Conversion.md
 doc/CountryResponse.md
 doc/CreateAnnonceRequest.md
 doc/CreateContractRequest.md
+doc/CreateInvoiceRequest.md
 doc/CreateResidenceRequest.md
 doc/CreateSignalementRequest.md
 doc/CreateUploadRequest.md
@@ -90,7 +91,9 @@ doc/FavorisApi.md
 doc/FieldError.md
 doc/FinanceAddOnApi.md
 doc/FinanceAddonResponse.md
+doc/FinanceInvoicesOwnerApi.md
 doc/FinanceLedgerApi.md
+doc/FinanceServiceProvidersApi.md
 doc/ForgotPasswordRequest.md
 doc/GrantAddonRequest.md
 doc/GrantSubscriptionRequest.md
@@ -99,6 +102,8 @@ doc/HistoriqueResponse.md
 doc/HistorySectionAdminContractLine.md
 doc/HistorySectionAdminReportLine.md
 doc/HistorySectionAdminVisitLine.md
+doc/InvoiceResponse.md
+doc/InvoicesTenantApi.md
 doc/KYCApi.md
 doc/KpiDashboardResponse.md
 doc/KpiDayResponse.md
@@ -114,6 +119,7 @@ doc/LocationsApi.md
 doc/LoginOtpRequest.md
 doc/LoginRequest.md
 doc/LogoutRequest.md
+doc/MarkInvoicePaidRequest.md
 doc/MboaScoreApi.md
 doc/MboaScoreResponse.md
 doc/MeResponse.md
@@ -135,6 +141,7 @@ doc/PageResponseConversationResponse.md
 doc/PageResponseDashboardItem.md
 doc/PageResponseFavoriResponse.md
 doc/PageResponseHistoriqueResponse.md
+doc/PageResponseInvoiceResponse.md
 doc/PageResponseKycReviewItem.md
 doc/PageResponseLedgerEntryResponse.md
 doc/PageResponseMessageResponse.md
@@ -148,6 +155,7 @@ doc/PageResponseVisiteResponse.md
 doc/Pageable.md
 doc/ParticipantSummary.md
 doc/PasswordApi.md
+doc/PayInvoiceRequest.md
 doc/PaymentInitiatedResponse.md
 doc/PaymentSummary.md
 doc/PaymentWebhookRequest.md
@@ -202,6 +210,10 @@ doc/SearchResult.md
 doc/SearchResultItem.md
 doc/SendMessageRequest.md
 doc/SendOtpRequest.md
+doc/ServiceProviderPaymentRequest.md
+doc/ServiceProviderPaymentResponse.md
+doc/ServiceProviderRequest.md
+doc/ServiceProviderResponse.md
 doc/SignContractRequest.md
 doc/SignalementResponse.md
 doc/SignalementsApi.md
@@ -234,10 +246,12 @@ doc/UpdateAgentProfileRequest.md
 doc/UpdateAnnonceRequest.md
 doc/UpdateAvailabilityRequest.md
 doc/UpdateContractRequest.md
+doc/UpdateInvoiceRequest.md
 doc/UpdatePlanRequest.md
 doc/UpdatePrestataireProfileRequest.md
 doc/UpdateResidenceRequest.md
 doc/UpdateSavedSearchRequest.md
+doc/UpdateServiceProviderRequest.md
 doc/UpdateUserProfileRequest.md
 doc/UpdateUserSettingsRequest.md
 doc/UpdateZonesRequest.md
@@ -281,8 +295,11 @@ lib/src/api/contrats_api.dart
 lib/src/api/current_user_api.dart
 lib/src/api/favoris_api.dart
 lib/src/api/finance_add_on_api.dart
+lib/src/api/finance_invoices_owner_api.dart
 lib/src/api/finance_ledger_api.dart
+lib/src/api/finance_service_providers_api.dart
 lib/src/api/historique_api.dart
+lib/src/api/invoices_tenant_api.dart
 lib/src/api/kyc_api.dart
 lib/src/api/locations_api.dart
 lib/src/api/mboa_score_api.dart
@@ -362,6 +379,7 @@ lib/src/model/conversion.dart
 lib/src/model/country_response.dart
 lib/src/model/create_annonce_request.dart
 lib/src/model/create_contract_request.dart
+lib/src/model/create_invoice_request.dart
 lib/src/model/create_residence_request.dart
 lib/src/model/create_signalement_request.dart
 lib/src/model/create_upload_request.dart
@@ -384,6 +402,7 @@ lib/src/model/historique_response.dart
 lib/src/model/history_section_admin_contract_line.dart
 lib/src/model/history_section_admin_report_line.dart
 lib/src/model/history_section_admin_visit_line.dart
+lib/src/model/invoice_response.dart
 lib/src/model/kpi_dashboard_response.dart
 lib/src/model/kpi_day_response.dart
 lib/src/model/kyc_review_item.dart
@@ -397,6 +416,7 @@ lib/src/model/location_option.dart
 lib/src/model/login_otp_request.dart
 lib/src/model/login_request.dart
 lib/src/model/logout_request.dart
+lib/src/model/mark_invoice_paid_request.dart
 lib/src/model/mboa_score_response.dart
 lib/src/model/me_response.dart
 lib/src/model/message_response.dart
@@ -414,6 +434,7 @@ lib/src/model/page_response_conversation_response.dart
 lib/src/model/page_response_dashboard_item.dart
 lib/src/model/page_response_favori_response.dart
 lib/src/model/page_response_historique_response.dart
+lib/src/model/page_response_invoice_response.dart
 lib/src/model/page_response_kyc_review_item.dart
 lib/src/model/page_response_ledger_entry_response.dart
 lib/src/model/page_response_message_response.dart
@@ -426,6 +447,7 @@ lib/src/model/page_response_type_change_review_item.dart
 lib/src/model/page_response_visite_response.dart
 lib/src/model/pageable.dart
 lib/src/model/participant_summary.dart
+lib/src/model/pay_invoice_request.dart
 lib/src/model/payment_initiated_response.dart
 lib/src/model/payment_summary.dart
 lib/src/model/payment_webhook_request.dart
@@ -473,6 +495,10 @@ lib/src/model/search_result.dart
 lib/src/model/search_result_item.dart
 lib/src/model/send_message_request.dart
 lib/src/model/send_otp_request.dart
+lib/src/model/service_provider_payment_request.dart
+lib/src/model/service_provider_payment_response.dart
+lib/src/model/service_provider_request.dart
+lib/src/model/service_provider_response.dart
 lib/src/model/sign_contract_request.dart
 lib/src/model/signalement_response.dart
 lib/src/model/signature_response.dart
@@ -503,10 +529,12 @@ lib/src/model/update_agent_profile_request.dart
 lib/src/model/update_annonce_request.dart
 lib/src/model/update_availability_request.dart
 lib/src/model/update_contract_request.dart
+lib/src/model/update_invoice_request.dart
 lib/src/model/update_plan_request.dart
 lib/src/model/update_prestataire_profile_request.dart
 lib/src/model/update_residence_request.dart
 lib/src/model/update_saved_search_request.dart
+lib/src/model/update_service_provider_request.dart
 lib/src/model/update_user_profile_request.dart
 lib/src/model/update_user_settings_request.dart
 lib/src/model/update_zones_request.dart
@@ -592,6 +620,7 @@ test/conversion_test.dart
 test/country_response_test.dart
 test/create_annonce_request_test.dart
 test/create_contract_request_test.dart
+test/create_invoice_request_test.dart
 test/create_residence_request_test.dart
 test/create_signalement_request_test.dart
 test/create_upload_request_test.dart
@@ -609,7 +638,9 @@ test/favoris_api_test.dart
 test/field_error_test.dart
 test/finance_add_on_api_test.dart
 test/finance_addon_response_test.dart
+test/finance_invoices_owner_api_test.dart
 test/finance_ledger_api_test.dart
+test/finance_service_providers_api_test.dart
 test/forgot_password_request_test.dart
 test/grant_addon_request_test.dart
 test/grant_subscription_request_test.dart
@@ -618,6 +649,8 @@ test/historique_response_test.dart
 test/history_section_admin_contract_line_test.dart
 test/history_section_admin_report_line_test.dart
 test/history_section_admin_visit_line_test.dart
+test/invoice_response_test.dart
+test/invoices_tenant_api_test.dart
 test/kpi_dashboard_response_test.dart
 test/kpi_day_response_test.dart
 test/kyc_api_test.dart
@@ -633,6 +666,7 @@ test/locations_api_test.dart
 test/login_otp_request_test.dart
 test/login_request_test.dart
 test/logout_request_test.dart
+test/mark_invoice_paid_request_test.dart
 test/mboa_score_api_test.dart
 test/mboa_score_response_test.dart
 test/me_response_test.dart
@@ -654,6 +688,7 @@ test/page_response_conversation_response_test.dart
 test/page_response_dashboard_item_test.dart
 test/page_response_favori_response_test.dart
 test/page_response_historique_response_test.dart
+test/page_response_invoice_response_test.dart
 test/page_response_kyc_review_item_test.dart
 test/page_response_ledger_entry_response_test.dart
 test/page_response_message_response_test.dart
@@ -667,6 +702,7 @@ test/page_response_visite_response_test.dart
 test/pageable_test.dart
 test/participant_summary_test.dart
 test/password_api_test.dart
+test/pay_invoice_request_test.dart
 test/payment_initiated_response_test.dart
 test/payment_summary_test.dart
 test/payment_webhook_request_test.dart
@@ -721,6 +757,10 @@ test/search_result_item_test.dart
 test/search_result_test.dart
 test/send_message_request_test.dart
 test/send_otp_request_test.dart
+test/service_provider_payment_request_test.dart
+test/service_provider_payment_response_test.dart
+test/service_provider_request_test.dart
+test/service_provider_response_test.dart
 test/sign_contract_request_test.dart
 test/signalement_response_test.dart
 test/signalements_api_test.dart
@@ -753,10 +793,12 @@ test/update_agent_profile_request_test.dart
 test/update_annonce_request_test.dart
 test/update_availability_request_test.dart
 test/update_contract_request_test.dart
+test/update_invoice_request_test.dart
 test/update_plan_request_test.dart
 test/update_prestataire_profile_request_test.dart
 test/update_residence_request_test.dart
 test/update_saved_search_request_test.dart
+test/update_service_provider_request_test.dart
 test/update_user_profile_request_test.dart
 test/update_user_settings_request_test.dart
 test/update_zones_request_test.dart

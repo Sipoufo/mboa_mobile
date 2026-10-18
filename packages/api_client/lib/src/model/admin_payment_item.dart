@@ -68,7 +68,7 @@ abstract class AdminPaymentItem implements Built<AdminPaymentItem, AdminPaymentI
 
   @BuiltValueField(wireName: r'purpose')
   AdminPaymentItemPurposeEnum? get purpose;
-  // enum purposeEnum {  SUBSCRIPTION,  FINANCE_ADDON,  };
+  // enum purposeEnum {  SUBSCRIPTION,  FINANCE_ADDON,  INVOICE,  };
 
   AdminPaymentItem._();
 
@@ -407,6 +407,8 @@ class AdminPaymentItemPurposeEnum extends EnumClass {
   static const AdminPaymentItemPurposeEnum SUBSCRIPTION = _$adminPaymentItemPurposeEnum_SUBSCRIPTION;
   @BuiltValueEnumConst(wireName: r'FINANCE_ADDON')
   static const AdminPaymentItemPurposeEnum FINANCE_ADDON = _$adminPaymentItemPurposeEnum_FINANCE_ADDON;
+  @BuiltValueEnumConst(wireName: r'INVOICE')
+  static const AdminPaymentItemPurposeEnum INVOICE = _$adminPaymentItemPurposeEnum_INVOICE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const AdminPaymentItemPurposeEnum unknownDefaultOpenApi = _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi;
 

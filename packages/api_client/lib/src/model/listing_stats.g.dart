@@ -108,12 +108,19 @@ class _$ListingStats extends ListingStats {
   final ListingStatsStatusEnum? status;
   @override
   final DashboardFigures? figures;
+  @override
+  final DashboardMetric? averagePosition;
 
   factory _$ListingStats([void Function(ListingStatsBuilder)? updates]) =>
       (ListingStatsBuilder()..update(updates))._build();
 
-  _$ListingStats._({this.annonceId, this.title, this.status, this.figures})
-    : super._();
+  _$ListingStats._({
+    this.annonceId,
+    this.title,
+    this.status,
+    this.figures,
+    this.averagePosition,
+  }) : super._();
   @override
   ListingStats rebuild(void Function(ListingStatsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -128,7 +135,8 @@ class _$ListingStats extends ListingStats {
         annonceId == other.annonceId &&
         title == other.title &&
         status == other.status &&
-        figures == other.figures;
+        figures == other.figures &&
+        averagePosition == other.averagePosition;
   }
 
   @override
@@ -138,6 +146,7 @@ class _$ListingStats extends ListingStats {
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, figures.hashCode);
+    _$hash = $jc(_$hash, averagePosition.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -148,7 +157,8 @@ class _$ListingStats extends ListingStats {
           ..add('annonceId', annonceId)
           ..add('title', title)
           ..add('status', status)
-          ..add('figures', figures))
+          ..add('figures', figures)
+          ..add('averagePosition', averagePosition))
         .toString();
   }
 }
@@ -174,6 +184,12 @@ class ListingStatsBuilder
       _$this._figures ??= DashboardFiguresBuilder();
   set figures(DashboardFiguresBuilder? figures) => _$this._figures = figures;
 
+  DashboardMetricBuilder? _averagePosition;
+  DashboardMetricBuilder get averagePosition =>
+      _$this._averagePosition ??= DashboardMetricBuilder();
+  set averagePosition(DashboardMetricBuilder? averagePosition) =>
+      _$this._averagePosition = averagePosition;
+
   ListingStatsBuilder() {
     ListingStats._defaults(this);
   }
@@ -185,6 +201,7 @@ class ListingStatsBuilder
       _title = $v.title;
       _status = $v.status;
       _figures = $v.figures?.toBuilder();
+      _averagePosition = $v.averagePosition?.toBuilder();
       _$v = null;
     }
     return this;
@@ -213,12 +230,15 @@ class ListingStatsBuilder
             title: title,
             status: status,
             figures: _figures?.build(),
+            averagePosition: _averagePosition?.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'figures';
         _figures?.build();
+        _$failedField = 'averagePosition';
+        _averagePosition?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'ListingStats',

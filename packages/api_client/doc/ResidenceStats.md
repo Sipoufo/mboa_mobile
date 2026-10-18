@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **unitCount** | **int** |  | [optional] 
 **totals** | [**DashboardFigures**](DashboardFigures.md) |  | [optional] 
 **units** | [**BuiltList&lt;ListingStats&gt;**](ListingStats.md) |  | [optional] 
+**averagePosition** | [**DashboardMetric**](DashboardMetric.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

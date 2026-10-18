@@ -5,6 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:api_client/src/model/dashboard_figures.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/dashboard_metric.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -17,6 +18,7 @@ part 'listing_stats.g.dart';
 /// * [title] 
 /// * [status] 
 /// * [figures] 
+/// * [averagePosition] 
 @BuiltValue()
 abstract class ListingStats implements Built<ListingStats, ListingStatsBuilder> {
   @BuiltValueField(wireName: r'annonceId')
@@ -31,6 +33,9 @@ abstract class ListingStats implements Built<ListingStats, ListingStatsBuilder> 
 
   @BuiltValueField(wireName: r'figures')
   DashboardFigures? get figures;
+
+  @BuiltValueField(wireName: r'averagePosition')
+  DashboardMetric? get averagePosition;
 
   ListingStats._();
 
@@ -81,6 +86,13 @@ class _$ListingStatsSerializer implements PrimitiveSerializer<ListingStats> {
       yield serializers.serialize(
         object.figures,
         specifiedType: const FullType(DashboardFigures),
+      );
+    }
+    if (object.averagePosition != null) {
+      yield r'averagePosition';
+      yield serializers.serialize(
+        object.averagePosition,
+        specifiedType: const FullType(DashboardMetric),
       );
     }
   }
@@ -137,6 +149,14 @@ class _$ListingStatsSerializer implements PrimitiveSerializer<ListingStats> {
           ) as DashboardFigures?;
           if (valueDes == null) continue;
           result.figures.replace(valueDes);
+          break;
+        case r'averagePosition':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DashboardMetric),
+          ) as DashboardMetric?;
+          if (valueDes == null) continue;
+          result.averagePosition.replace(valueDes);
           break;
         default:
           unhandled.add(key);

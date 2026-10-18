@@ -17,6 +17,8 @@ class _$ResidenceStats extends ResidenceStats {
   final DashboardFigures? totals;
   @override
   final BuiltList<ListingStats>? units;
+  @override
+  final DashboardMetric? averagePosition;
 
   factory _$ResidenceStats([void Function(ResidenceStatsBuilder)? updates]) =>
       (ResidenceStatsBuilder()..update(updates))._build();
@@ -27,6 +29,7 @@ class _$ResidenceStats extends ResidenceStats {
     this.unitCount,
     this.totals,
     this.units,
+    this.averagePosition,
   }) : super._();
   @override
   ResidenceStats rebuild(void Function(ResidenceStatsBuilder) updates) =>
@@ -43,7 +46,8 @@ class _$ResidenceStats extends ResidenceStats {
         name == other.name &&
         unitCount == other.unitCount &&
         totals == other.totals &&
-        units == other.units;
+        units == other.units &&
+        averagePosition == other.averagePosition;
   }
 
   @override
@@ -54,6 +58,7 @@ class _$ResidenceStats extends ResidenceStats {
     _$hash = $jc(_$hash, unitCount.hashCode);
     _$hash = $jc(_$hash, totals.hashCode);
     _$hash = $jc(_$hash, units.hashCode);
+    _$hash = $jc(_$hash, averagePosition.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -65,7 +70,8 @@ class _$ResidenceStats extends ResidenceStats {
           ..add('name', name)
           ..add('unitCount', unitCount)
           ..add('totals', totals)
-          ..add('units', units))
+          ..add('units', units)
+          ..add('averagePosition', averagePosition))
         .toString();
   }
 }
@@ -96,6 +102,12 @@ class ResidenceStatsBuilder
       _$this._units ??= ListBuilder<ListingStats>();
   set units(ListBuilder<ListingStats>? units) => _$this._units = units;
 
+  DashboardMetricBuilder? _averagePosition;
+  DashboardMetricBuilder get averagePosition =>
+      _$this._averagePosition ??= DashboardMetricBuilder();
+  set averagePosition(DashboardMetricBuilder? averagePosition) =>
+      _$this._averagePosition = averagePosition;
+
   ResidenceStatsBuilder() {
     ResidenceStats._defaults(this);
   }
@@ -108,6 +120,7 @@ class ResidenceStatsBuilder
       _unitCount = $v.unitCount;
       _totals = $v.totals?.toBuilder();
       _units = $v.units?.toBuilder();
+      _averagePosition = $v.averagePosition?.toBuilder();
       _$v = null;
     }
     return this;
@@ -137,6 +150,7 @@ class ResidenceStatsBuilder
             unitCount: unitCount,
             totals: _totals?.build(),
             units: _units?.build(),
+            averagePosition: _averagePosition?.build(),
           );
     } catch (_) {
       late String _$failedField;
@@ -145,6 +159,8 @@ class ResidenceStatsBuilder
         _totals?.build();
         _$failedField = 'units';
         _units?.build();
+        _$failedField = 'averagePosition';
+        _averagePosition?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'ResidenceStats',
