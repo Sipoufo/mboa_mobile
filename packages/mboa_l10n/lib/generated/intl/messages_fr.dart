@@ -1781,6 +1781,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitCancelTooLate": MessageLookupByLibrary.simpleMessage(
       "L\'annulation n\'est plus possible : préviens le visiteur directement.",
     ),
+    "visitCancelledAgentRemoved": MessageLookupByLibrary.simpleMessage(
+      "L\'agent ne s\'occupe plus de ce bien.",
+    ),
+    "visitCancelledAgentUnavailable": MessageLookupByLibrary.simpleMessage(
+      "L\'agent n\'est plus disponible pour cette visite.",
+    ),
+    "visitCancelledByClient": MessageLookupByLibrary.simpleMessage(
+      "Tu as annulé cette visite.",
+    ),
+    "visitCancelledByVisitor": MessageLookupByLibrary.simpleMessage(
+      "Le visiteur a annulé cette visite.",
+    ),
+    "visitCancelledListingUnavailable": MessageLookupByLibrary.simpleMessage(
+      "L\'annonce n\'est plus en ligne.",
+    ),
     "visitConfirmPresence": MessageLookupByLibrary.simpleMessage(
       "Je suis sur place",
     ),
@@ -1834,6 +1849,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitRequestedTitle": MessageLookupByLibrary.simpleMessage(
       "Demande envoyée",
+    ),
+    "visitSearchAgain": MessageLookupByLibrary.simpleMessage(
+      "Chercher un autre logement",
     ),
     "visitSeeListing": MessageLookupByLibrary.simpleMessage("Voir le bien"),
     "visitSeeNextWeek": MessageLookupByLibrary.simpleMessage(
@@ -1890,6 +1908,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsCancel": MessageLookupByLibrary.simpleMessage("Annuler la visite"),
     "visitsCancelConfirm": MessageLookupByLibrary.simpleMessage(
       "Possible jusqu\'à 1 heure avant le créneau. Le locataire sera prévenu.",
+    ),
+    "visitsCancelledAgentRemoved": MessageLookupByLibrary.simpleMessage(
+      "Agent retiré du bien",
+    ),
+    "visitsCancelledAgentUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Agent plus disponible",
+    ),
+    "visitsCancelledByClient": MessageLookupByLibrary.simpleMessage(
+      "Annulée par le locataire",
+    ),
+    "visitsCancelledByVisitor": MessageLookupByLibrary.simpleMessage(
+      "Annulée par le visiteur",
+    ),
+    "visitsCancelledListingUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Annonce retirée du marché",
     ),
     "visitsCompletedBody": MessageLookupByLibrary.simpleMessage(
       "Les deux présences ont été confirmées. Le locataire peut désormais publier son avis sur le bien.",

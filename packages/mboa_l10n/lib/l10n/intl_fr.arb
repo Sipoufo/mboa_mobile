@@ -3017,5 +3017,49 @@
   "visitsActionFailed": "Action impossible pour le moment.",
   "@visitsActionFailed": {
     "description": "Generic failure on the visits screens."
+  },
+  "visitCancelledByClient": "Tu as annulé cette visite.",
+  "@visitCancelledByClient": {
+    "description": "M07 \u2014 cancellationReason BY_USER."
+  },
+  "visitCancelledByVisitor": "Le visiteur a annulé cette visite.",
+  "@visitCancelledByVisitor": {
+    "description": "M07 \u2014 cancellationReason BY_AGENT: the agent or owner who was to show the property."
+  },
+  "visitCancelledAgentUnavailable": "L'agent n'est plus disponible pour cette visite.",
+  "@visitCancelledAgentUnavailable": {
+    "description": "M07 \u2014 cancellationReason AGENT_UNAVAILABLE (assignment revoked)."
+  },
+  "visitCancelledAgentRemoved": "L'agent ne s'occupe plus de ce bien.",
+  "@visitCancelledAgentRemoved": {
+    "description": "M07 \u2014 cancellationReason AGENT_REMOVED (withdrawal or resignation)."
+  },
+  "visitCancelledListingUnavailable": "L'annonce n'est plus en ligne.",
+  "@visitCancelledListingUnavailable": {
+    "description": "CE-M07-04 \u2014 cancellationReason LISTING_UNAVAILABLE; wording from the backend."
+  },
+  "visitSearchAgain": "Chercher un autre logement",
+  "@visitSearchAgain": {
+    "description": "CE-M07-04 \u2014 offered instead of rebooking a listing that left the market."
+  },
+  "visitsCancelledByClient": "Annulée par le locataire",
+  "@visitsCancelledByClient": {
+    "description": "Pro agenda \u2014 cancellationReason BY_USER."
+  },
+  "visitsCancelledByVisitor": "Annulée par le visiteur",
+  "@visitsCancelledByVisitor": {
+    "description": "Pro agenda \u2014 cancellationReason BY_AGENT (agent or owner)."
+  },
+  "visitsCancelledAgentUnavailable": "Agent plus disponible",
+  "@visitsCancelledAgentUnavailable": {
+    "description": "Pro agenda \u2014 cancellationReason AGENT_UNAVAILABLE."
+  },
+  "visitsCancelledAgentRemoved": "Agent retiré du bien",
+  "@visitsCancelledAgentRemoved": {
+    "description": "Pro agenda \u2014 cancellationReason AGENT_REMOVED."
+  },
+  "visitsCancelledListingUnavailable": "Annonce retirée du marché",
+  "@visitsCancelledListingUnavailable": {
+    "description": "Pro agenda \u2014 cancellationReason LISTING_UNAVAILABLE."
   }
 }

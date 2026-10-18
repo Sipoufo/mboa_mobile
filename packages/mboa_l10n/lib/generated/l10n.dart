@@ -8464,6 +8464,120 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Tu as annulé cette visite.`
+  String get visitCancelledByClient {
+    return Intl.message(
+      'Tu as annulé cette visite.',
+      name: 'visitCancelledByClient',
+      desc: 'M07 — cancellationReason BY_USER.',
+      args: [],
+    );
+  }
+
+  /// `Le visiteur a annulé cette visite.`
+  String get visitCancelledByVisitor {
+    return Intl.message(
+      'Le visiteur a annulé cette visite.',
+      name: 'visitCancelledByVisitor',
+      desc:
+          'M07 — cancellationReason BY_AGENT: the agent or owner who was to show the property.',
+      args: [],
+    );
+  }
+
+  /// `L'agent n'est plus disponible pour cette visite.`
+  String get visitCancelledAgentUnavailable {
+    return Intl.message(
+      'L\'agent n\'est plus disponible pour cette visite.',
+      name: 'visitCancelledAgentUnavailable',
+      desc: 'M07 — cancellationReason AGENT_UNAVAILABLE (assignment revoked).',
+      args: [],
+    );
+  }
+
+  /// `L'agent ne s'occupe plus de ce bien.`
+  String get visitCancelledAgentRemoved {
+    return Intl.message(
+      'L\'agent ne s\'occupe plus de ce bien.',
+      name: 'visitCancelledAgentRemoved',
+      desc:
+          'M07 — cancellationReason AGENT_REMOVED (withdrawal or resignation).',
+      args: [],
+    );
+  }
+
+  /// `L'annonce n'est plus en ligne.`
+  String get visitCancelledListingUnavailable {
+    return Intl.message(
+      'L\'annonce n\'est plus en ligne.',
+      name: 'visitCancelledListingUnavailable',
+      desc:
+          'CE-M07-04 — cancellationReason LISTING_UNAVAILABLE; wording from the backend.',
+      args: [],
+    );
+  }
+
+  /// `Chercher un autre logement`
+  String get visitSearchAgain {
+    return Intl.message(
+      'Chercher un autre logement',
+      name: 'visitSearchAgain',
+      desc:
+          'CE-M07-04 — offered instead of rebooking a listing that left the market.',
+      args: [],
+    );
+  }
+
+  /// `Annulée par le locataire`
+  String get visitsCancelledByClient {
+    return Intl.message(
+      'Annulée par le locataire',
+      name: 'visitsCancelledByClient',
+      desc: 'Pro agenda — cancellationReason BY_USER.',
+      args: [],
+    );
+  }
+
+  /// `Annulée par le visiteur`
+  String get visitsCancelledByVisitor {
+    return Intl.message(
+      'Annulée par le visiteur',
+      name: 'visitsCancelledByVisitor',
+      desc: 'Pro agenda — cancellationReason BY_AGENT (agent or owner).',
+      args: [],
+    );
+  }
+
+  /// `Agent plus disponible`
+  String get visitsCancelledAgentUnavailable {
+    return Intl.message(
+      'Agent plus disponible',
+      name: 'visitsCancelledAgentUnavailable',
+      desc: 'Pro agenda — cancellationReason AGENT_UNAVAILABLE.',
+      args: [],
+    );
+  }
+
+  /// `Agent retiré du bien`
+  String get visitsCancelledAgentRemoved {
+    return Intl.message(
+      'Agent retiré du bien',
+      name: 'visitsCancelledAgentRemoved',
+      desc: 'Pro agenda — cancellationReason AGENT_REMOVED.',
+      args: [],
+    );
+  }
+
+  /// `Annonce retirée du marché`
+  String get visitsCancelledListingUnavailable {
+    return Intl.message(
+      'Annonce retirée du marché',
+      name: 'visitsCancelledListingUnavailable',
+      desc: 'Pro agenda — cancellationReason LISTING_UNAVAILABLE.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -44,6 +44,7 @@ void main() {
     DateTime? at,
     VisitorKind kind = VisitorKind.agent,
     DateTime? clientConfirmedAt,
+    VisitCancellationReason? reason,
   }) =>
       Visit(
         id: 'v-1',
@@ -53,6 +54,7 @@ void main() {
         scheduledAt: at,
         visitorKind: kind,
         clientConfirmedAt: clientConfirmedAt,
+        cancellationReason: reason,
       );
 
   setUpAll(loadBrandFonts);
@@ -231,6 +233,40 @@ void main() {
       expect(find.text('Annuler la visite'), findsNothing);
       // Nor should it claim it is too late to cancel what is already gone.
       expect(find.textContaining('n\'est plus possible'), findsNothing);
+    });
+
+    testWidgets('a cancellation the tenant did not make says who made it',
+        (tester) async {
+      await pump(
+        tester,
+        VisitCard(
+          visit: visit(
+            status: VisitStatus.cancelled,
+            at: later,
+            reason: VisitCancellationReason.agentRemoved,
+          ),
+        ),
+      );
+
+      expect(find.text('L\'agent ne s\'occupe plus de ce bien.'), findsOneWidget);
+      expect(find.text('Chercher un autre logement'), findsNothing);
+    });
+
+    testWidgets('CE-M07-04 — a listing gone off-market offers a new search',
+        (tester) async {
+      await pump(
+        tester,
+        VisitCard(
+          visit: visit(
+            status: VisitStatus.cancelled,
+            at: later,
+            reason: VisitCancellationReason.listingUnavailable,
+          ),
+        ),
+      );
+
+      expect(find.text('L\'annonce n\'est plus en ligne.'), findsOneWidget);
+      expect(find.text('Chercher un autre logement'), findsOneWidget);
     });
   });
 

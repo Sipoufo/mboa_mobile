@@ -46,6 +46,35 @@ enum VisitStatus {
       this == VisitStatus.scheduled;
 }
 
+/// Why a visit was called off — `cancellationReason`, append-only.
+///
+/// [byVisitor] is the wire's `BY_AGENT`: the name predates owner-visitors and
+/// now means "by whoever was showing the property", agent or owner.
+/// [listingUnavailable] is the listing leaving the market (archived, rented or
+/// suspended, CE-M07-04): rebooking it is pointless, so the screen offers to
+/// search again instead.
+enum VisitCancellationReason {
+  byClient,
+  byVisitor,
+  agentUnavailable,
+  agentRemoved,
+  listingUnavailable,
+  unknown;
+
+  static VisitCancellationReason? fromResponse(
+    VisiteResponseCancellationReasonEnum? value,
+  ) =>
+      switch (value) {
+        null => null,
+        VisiteResponseCancellationReasonEnum.BY_USER => VisitCancellationReason.byClient,
+        VisiteResponseCancellationReasonEnum.BY_AGENT => VisitCancellationReason.byVisitor,
+        VisiteResponseCancellationReasonEnum.AGENT_UNAVAILABLE => VisitCancellationReason.agentUnavailable,
+        VisiteResponseCancellationReasonEnum.AGENT_REMOVED => VisitCancellationReason.agentRemoved,
+        VisiteResponseCancellationReasonEnum.LISTING_UNAVAILABLE => VisitCancellationReason.listingUnavailable,
+        _ => VisitCancellationReason.unknown,
+      };
+}
+
 /// One visit in a list, whoever is looking.
 ///
 /// The same `VisiteResponse` is served to the client (`GET /visites`), the
@@ -65,6 +94,7 @@ class Visit extends Equatable {
     this.clientConfirmedAt,
     this.agentRating,
     this.visitorPhone,
+    this.cancellationReason,
   });
 
   final String id;
@@ -92,6 +122,10 @@ class Visit extends Equatable {
   /// of the time (CA-M12-02), so its presence is the whole rule: show a call
   /// button when it is there, and nothing to work out when it is not.
   final String? visitorPhone;
+
+  /// Null unless [status] is cancelled — and on a visit cancelled before the
+  /// server recorded reasons.
+  final VisitCancellationReason? cancellationReason;
 
   bool get isRated => agentRating != null;
 
@@ -125,6 +159,7 @@ class Visit extends Equatable {
         visitorPhone: (response.visitorPhone?.trim().isEmpty ?? true)
             ? null
             : response.visitorPhone!.trim(),
+        cancellationReason: VisitCancellationReason.fromResponse(response.cancellationReason),
       );
 
   @override
@@ -140,5 +175,6 @@ class Visit extends Equatable {
         clientConfirmedAt,
         agentRating,
         visitorPhone,
+        cancellationReason,
       ];
 }

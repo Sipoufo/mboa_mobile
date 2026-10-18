@@ -44,7 +44,12 @@ class VisitRowTile extends StatelessWidget {
                 visit.annonceTitle ?? '',
                 style: context.mboaText.label.copyWith(fontWeight: FontWeight.w600),
               ),
-              subtitle: Text(at == null ? '' : DateFormat.Hm().format(at)),
+              subtitle: Text(
+                [
+                  if (at != null) DateFormat.Hm().format(at),
+                  ?_cancellation(I18n.of(context)),
+                ].join(' · '),
+              ),
               trailing: VisitStatusChip(status: visit.status),
               onTap: isBusy ? null : onTap,
             ),
@@ -62,6 +67,20 @@ class VisitRowTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Why a cancelled visit fell through. Null for every other status, and for
+  /// a cancellation recorded before the server kept reasons.
+  String? _cancellation(I18n l10n) {
+    if (visit.status != VisitStatus.cancelled) return null;
+    return switch (visit.cancellationReason) {
+      VisitCancellationReason.byClient => l10n.visitsCancelledByClient,
+      VisitCancellationReason.byVisitor => l10n.visitsCancelledByVisitor,
+      VisitCancellationReason.agentUnavailable => l10n.visitsCancelledAgentUnavailable,
+      VisitCancellationReason.agentRemoved => l10n.visitsCancelledAgentRemoved,
+      VisitCancellationReason.listingUnavailable => l10n.visitsCancelledListingUnavailable,
+      VisitCancellationReason.unknown || null => null,
+    };
   }
 }
 

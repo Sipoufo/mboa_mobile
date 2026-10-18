@@ -169,6 +169,10 @@ class VisitActions extends StatelessWidget {
       return _Note(icon: LucideIcons.clock, text: l10n.visitWaitingVisitor);
     }
 
+    if (visit.status == VisitStatus.cancelled) {
+      return _Cancelled(reason: visit.cancellationReason);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -292,6 +296,48 @@ class _Rating extends StatelessWidget {
               ),
           ],
         ),
+      ],
+    );
+  }
+}
+
+/// Why the visit fell through — so a cancellation the tenant did not ask for
+/// is not a mystery.
+///
+/// CE-M07-04 — when the listing left the market, rebooking it is pointless:
+/// the way forward is another listing, so that is what is offered.
+class _Cancelled extends StatelessWidget {
+  const _Cancelled({required this.reason});
+
+  final VisitCancellationReason? reason;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    final text = switch (reason) {
+      VisitCancellationReason.byClient => l10n.visitCancelledByClient,
+      VisitCancellationReason.byVisitor => l10n.visitCancelledByVisitor,
+      VisitCancellationReason.agentUnavailable => l10n.visitCancelledAgentUnavailable,
+      VisitCancellationReason.agentRemoved => l10n.visitCancelledAgentRemoved,
+      VisitCancellationReason.listingUnavailable => l10n.visitCancelledListingUnavailable,
+      VisitCancellationReason.unknown || null => null,
+    };
+    if (text == null) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _Note(icon: LucideIcons.info, text: text),
+        if (reason == VisitCancellationReason.listingUnavailable) ...[
+          const SizedBox(height: Dimens.spacingSm),
+          Button.outline(
+            title: l10n.visitSearchAgain,
+            onPressed: () => context.router.root.navigate(
+              const UserShellRoute(children: [SearchRoute()]),
+            ),
+          ),
+        ],
       ],
     );
   }

@@ -1666,6 +1666,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitCancelTooLate": MessageLookupByLibrary.simpleMessage(
       "Cancelling is no longer possible: let the visitor know directly.",
     ),
+    "visitCancelledAgentRemoved": MessageLookupByLibrary.simpleMessage(
+      "The agent no longer handles this property.",
+    ),
+    "visitCancelledAgentUnavailable": MessageLookupByLibrary.simpleMessage(
+      "The agent is no longer available for this visit.",
+    ),
+    "visitCancelledByClient": MessageLookupByLibrary.simpleMessage(
+      "You cancelled this visit.",
+    ),
+    "visitCancelledByVisitor": MessageLookupByLibrary.simpleMessage(
+      "The visitor cancelled this visit.",
+    ),
+    "visitCancelledListingUnavailable": MessageLookupByLibrary.simpleMessage(
+      "The listing is no longer online.",
+    ),
     "visitConfirmPresence": MessageLookupByLibrary.simpleMessage("I\'m here"),
     "visitDetailTitle": MessageLookupByLibrary.simpleMessage("Visit details"),
     "visitNoSlotAvailability": MessageLookupByLibrary.simpleMessage(
@@ -1714,6 +1729,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "The owner still has to confirm the proposed time. You will get a notification.",
     ),
     "visitRequestedTitle": MessageLookupByLibrary.simpleMessage("Request sent"),
+    "visitSearchAgain": MessageLookupByLibrary.simpleMessage(
+      "Look for another place",
+    ),
     "visitSeeListing": MessageLookupByLibrary.simpleMessage("See the property"),
     "visitSeeNextWeek": MessageLookupByLibrary.simpleMessage("See next week"),
     "visitStatusCancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
@@ -1765,6 +1783,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsCancel": MessageLookupByLibrary.simpleMessage("Cancel the visit"),
     "visitsCancelConfirm": MessageLookupByLibrary.simpleMessage(
       "Possible up to 1 hour before the slot. The tenant will be notified.",
+    ),
+    "visitsCancelledAgentRemoved": MessageLookupByLibrary.simpleMessage(
+      "Agent removed from the property",
+    ),
+    "visitsCancelledAgentUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Agent no longer available",
+    ),
+    "visitsCancelledByClient": MessageLookupByLibrary.simpleMessage(
+      "Cancelled by the tenant",
+    ),
+    "visitsCancelledByVisitor": MessageLookupByLibrary.simpleMessage(
+      "Cancelled by the visitor",
+    ),
+    "visitsCancelledListingUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Listing taken off the market",
     ),
     "visitsCompletedBody": MessageLookupByLibrary.simpleMessage(
       "Both presences were confirmed. The tenant can now publish their review of the property.",
