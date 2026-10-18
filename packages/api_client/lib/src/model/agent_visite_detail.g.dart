@@ -126,6 +126,8 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
   final DateTime? clientConfirmedAt;
   @override
   final bool? canConfirm;
+  @override
+  final String? userAccountId;
 
   factory _$AgentVisiteDetail([
     void Function(AgentVisiteDetailBuilder)? updates,
@@ -147,6 +149,7 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
     this.visitorConfirmedAt,
     this.clientConfirmedAt,
     this.canConfirm,
+    this.userAccountId,
   }) : super._();
   @override
   AgentVisiteDetail rebuild(void Function(AgentVisiteDetailBuilder) updates) =>
@@ -174,7 +177,8 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
         prestatairePhone == other.prestatairePhone &&
         visitorConfirmedAt == other.visitorConfirmedAt &&
         clientConfirmedAt == other.clientConfirmedAt &&
-        canConfirm == other.canConfirm;
+        canConfirm == other.canConfirm &&
+        userAccountId == other.userAccountId;
   }
 
   @override
@@ -195,6 +199,7 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
     _$hash = $jc(_$hash, visitorConfirmedAt.hashCode);
     _$hash = $jc(_$hash, clientConfirmedAt.hashCode);
     _$hash = $jc(_$hash, canConfirm.hashCode);
+    _$hash = $jc(_$hash, userAccountId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -216,7 +221,8 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
           ..add('prestatairePhone', prestatairePhone)
           ..add('visitorConfirmedAt', visitorConfirmedAt)
           ..add('clientConfirmedAt', clientConfirmedAt)
-          ..add('canConfirm', canConfirm))
+          ..add('canConfirm', canConfirm)
+          ..add('userAccountId', userAccountId))
         .toString();
   }
 }
@@ -289,6 +295,11 @@ class AgentVisiteDetailBuilder
   bool? get canConfirm => _$this._canConfirm;
   set canConfirm(bool? canConfirm) => _$this._canConfirm = canConfirm;
 
+  String? _userAccountId;
+  String? get userAccountId => _$this._userAccountId;
+  set userAccountId(String? userAccountId) =>
+      _$this._userAccountId = userAccountId;
+
   AgentVisiteDetailBuilder() {
     AgentVisiteDetail._defaults(this);
   }
@@ -311,6 +322,7 @@ class AgentVisiteDetailBuilder
       _visitorConfirmedAt = $v.visitorConfirmedAt;
       _clientConfirmedAt = $v.clientConfirmedAt;
       _canConfirm = $v.canConfirm;
+      _userAccountId = $v.userAccountId;
       _$v = null;
     }
     return this;
@@ -348,6 +360,7 @@ class AgentVisiteDetailBuilder
           visitorConfirmedAt: visitorConfirmedAt,
           clientConfirmedAt: clientConfirmedAt,
           canConfirm: canConfirm,
+          userAccountId: userAccountId,
         );
     replace(_$result);
     return _$result;

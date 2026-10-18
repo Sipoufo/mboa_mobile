@@ -35,6 +35,7 @@ Name | Type | Description | Notes
 **canPlanVisit** | **bool** |  | [optional] 
 **rating** | [**PropertyRating**](PropertyRating.md) |  | [optional] 
 **viewCount** | **int** |  | [optional] 
+**exactLocation** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -27,6 +27,7 @@ part 'agent_visite_detail.g.dart';
 /// * [visitorConfirmedAt] 
 /// * [clientConfirmedAt] 
 /// * [canConfirm] 
+/// * [userAccountId] 
 @BuiltValue()
 abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisiteDetailBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -74,6 +75,9 @@ abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisite
 
   @BuiltValueField(wireName: r'canConfirm')
   bool? get canConfirm;
+
+  @BuiltValueField(wireName: r'userAccountId')
+  String? get userAccountId;
 
   AgentVisiteDetail._();
 
@@ -201,6 +205,13 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
       yield serializers.serialize(
         object.canConfirm,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.userAccountId != null) {
+      yield r'userAccountId';
+      yield serializers.serialize(
+        object.userAccountId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -345,6 +356,14 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
           ) as bool?;
           if (valueDes == null) continue;
           result.canConfirm = valueDes;
+          break;
+        case r'userAccountId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.userAccountId = valueDes;
           break;
         default:
           unhandled.add(key);

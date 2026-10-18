@@ -415,6 +415,8 @@ class _$SearchResultItem extends SearchResultItem {
   final Date? availableFrom;
   @override
   final BuiltList<SearchResultItemBadgesEnum>? badges;
+  @override
+  final bool? exactLocation;
 
   factory _$SearchResultItem([
     void Function(SearchResultItemBuilder)? updates,
@@ -439,6 +441,7 @@ class _$SearchResultItem extends SearchResultItem {
     this.longitude,
     this.availableFrom,
     this.badges,
+    this.exactLocation,
   }) : super._();
   @override
   SearchResultItem rebuild(void Function(SearchResultItemBuilder) updates) =>
@@ -469,7 +472,8 @@ class _$SearchResultItem extends SearchResultItem {
         latitude == other.latitude &&
         longitude == other.longitude &&
         availableFrom == other.availableFrom &&
-        badges == other.badges;
+        badges == other.badges &&
+        exactLocation == other.exactLocation;
   }
 
   @override
@@ -493,6 +497,7 @@ class _$SearchResultItem extends SearchResultItem {
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, availableFrom.hashCode);
     _$hash = $jc(_$hash, badges.hashCode);
+    _$hash = $jc(_$hash, exactLocation.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -517,7 +522,8 @@ class _$SearchResultItem extends SearchResultItem {
           ..add('latitude', latitude)
           ..add('longitude', longitude)
           ..add('availableFrom', availableFrom)
-          ..add('badges', badges))
+          ..add('badges', badges)
+          ..add('exactLocation', exactLocation))
         .toString();
   }
 }
@@ -604,6 +610,11 @@ class SearchResultItemBuilder
   set badges(ListBuilder<SearchResultItemBadgesEnum>? badges) =>
       _$this._badges = badges;
 
+  bool? _exactLocation;
+  bool? get exactLocation => _$this._exactLocation;
+  set exactLocation(bool? exactLocation) =>
+      _$this._exactLocation = exactLocation;
+
   SearchResultItemBuilder() {
     SearchResultItem._defaults(this);
   }
@@ -629,6 +640,7 @@ class SearchResultItemBuilder
       _longitude = $v.longitude;
       _availableFrom = $v.availableFrom;
       _badges = $v.badges?.toBuilder();
+      _exactLocation = $v.exactLocation;
       _$v = null;
     }
     return this;
@@ -671,6 +683,7 @@ class SearchResultItemBuilder
             longitude: longitude,
             availableFrom: availableFrom,
             badges: _badges?.build(),
+            exactLocation: exactLocation,
           );
     } catch (_) {
       late String _$failedField;

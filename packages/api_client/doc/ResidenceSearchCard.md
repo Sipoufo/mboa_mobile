@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **latitude** | **double** |  | [optional] 
 **longitude** | **double** |  | [optional] 
 **badges** | **BuiltList&lt;String&gt;** |  | [optional] 
+**exactLocation** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

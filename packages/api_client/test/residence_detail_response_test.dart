@@ -52,5 +52,10 @@ void main() {
       // TODO
     });
 
+    // bool exactLocation
+    test('to test the property `exactLocation`', () async {
+      // TODO
+    });
+
   });
 }

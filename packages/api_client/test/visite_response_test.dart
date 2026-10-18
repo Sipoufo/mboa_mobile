@@ -72,5 +72,10 @@ void main() {
       // TODO
     });
 
+    // String userAccountId
+    test('to test the property `userAccountId`', () async {
+      // TODO
+    });
+
   });
 }

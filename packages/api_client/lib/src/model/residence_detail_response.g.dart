@@ -25,6 +25,8 @@ class _$ResidenceDetailResponse extends ResidenceDetailResponse {
   final double? longitude;
   @override
   final BuiltList<SearchResultItem>? units;
+  @override
+  final bool? exactLocation;
 
   factory _$ResidenceDetailResponse([
     void Function(ResidenceDetailResponseBuilder)? updates,
@@ -40,6 +42,7 @@ class _$ResidenceDetailResponse extends ResidenceDetailResponse {
     this.latitude,
     this.longitude,
     this.units,
+    this.exactLocation,
   }) : super._();
   @override
   ResidenceDetailResponse rebuild(
@@ -62,7 +65,8 @@ class _$ResidenceDetailResponse extends ResidenceDetailResponse {
         photoKeys == other.photoKeys &&
         latitude == other.latitude &&
         longitude == other.longitude &&
-        units == other.units;
+        units == other.units &&
+        exactLocation == other.exactLocation;
   }
 
   @override
@@ -77,6 +81,7 @@ class _$ResidenceDetailResponse extends ResidenceDetailResponse {
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, units.hashCode);
+    _$hash = $jc(_$hash, exactLocation.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -92,7 +97,8 @@ class _$ResidenceDetailResponse extends ResidenceDetailResponse {
           ..add('photoKeys', photoKeys)
           ..add('latitude', latitude)
           ..add('longitude', longitude)
-          ..add('units', units))
+          ..add('units', units)
+          ..add('exactLocation', exactLocation))
         .toString();
   }
 }
@@ -141,6 +147,11 @@ class ResidenceDetailResponseBuilder
       _$this._units ??= ListBuilder<SearchResultItem>();
   set units(ListBuilder<SearchResultItem>? units) => _$this._units = units;
 
+  bool? _exactLocation;
+  bool? get exactLocation => _$this._exactLocation;
+  set exactLocation(bool? exactLocation) =>
+      _$this._exactLocation = exactLocation;
+
   ResidenceDetailResponseBuilder() {
     ResidenceDetailResponse._defaults(this);
   }
@@ -157,6 +168,7 @@ class ResidenceDetailResponseBuilder
       _latitude = $v.latitude;
       _longitude = $v.longitude;
       _units = $v.units?.toBuilder();
+      _exactLocation = $v.exactLocation;
       _$v = null;
     }
     return this;
@@ -190,6 +202,7 @@ class ResidenceDetailResponseBuilder
             latitude: latitude,
             longitude: longitude,
             units: _units?.build(),
+            exactLocation: exactLocation,
           );
     } catch (_) {
       late String _$failedField;

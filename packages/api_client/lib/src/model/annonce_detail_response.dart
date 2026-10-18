@@ -42,6 +42,7 @@ part 'annonce_detail_response.g.dart';
 /// * [canPlanVisit] 
 /// * [rating] 
 /// * [viewCount] 
+/// * [exactLocation] 
 @BuiltValue()
 abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, AnnonceDetailResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -128,6 +129,9 @@ abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, Ann
 
   @BuiltValueField(wireName: r'viewCount')
   int? get viewCount;
+
+  @BuiltValueField(wireName: r'exactLocation')
+  bool? get exactLocation;
 
   AnnonceDetailResponse._();
 
@@ -339,6 +343,13 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
       yield serializers.serialize(
         object.viewCount,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.exactLocation != null) {
+      yield r'exactLocation';
+      yield serializers.serialize(
+        object.exactLocation,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -579,6 +590,14 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
           ) as int?;
           if (valueDes == null) continue;
           result.viewCount = valueDes;
+          break;
+        case r'exactLocation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.exactLocation = valueDes;
           break;
         default:
           unhandled.add(key);

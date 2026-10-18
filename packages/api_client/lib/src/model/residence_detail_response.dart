@@ -22,6 +22,7 @@ part 'residence_detail_response.g.dart';
 /// * [latitude] 
 /// * [longitude] 
 /// * [units] 
+/// * [exactLocation] 
 @BuiltValue()
 abstract class ResidenceDetailResponse implements Built<ResidenceDetailResponse, ResidenceDetailResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -50,6 +51,9 @@ abstract class ResidenceDetailResponse implements Built<ResidenceDetailResponse,
 
   @BuiltValueField(wireName: r'units')
   BuiltList<SearchResultItem>? get units;
+
+  @BuiltValueField(wireName: r'exactLocation')
+  bool? get exactLocation;
 
   ResidenceDetailResponse._();
 
@@ -135,6 +139,13 @@ class _$ResidenceDetailResponseSerializer implements PrimitiveSerializer<Residen
       yield serializers.serialize(
         object.units,
         specifiedType: const FullType(BuiltList, [FullType(SearchResultItem)]),
+      );
+    }
+    if (object.exactLocation != null) {
+      yield r'exactLocation';
+      yield serializers.serialize(
+        object.exactLocation,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -231,6 +242,14 @@ class _$ResidenceDetailResponseSerializer implements PrimitiveSerializer<Residen
           ) as BuiltList<SearchResultItem>?;
           if (valueDes == null) continue;
           result.units.replace(valueDes);
+          break;
+        case r'exactLocation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.exactLocation = valueDes;
           break;
         default:
           unhandled.add(key);

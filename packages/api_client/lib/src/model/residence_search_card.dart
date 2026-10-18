@@ -26,6 +26,7 @@ part 'residence_search_card.g.dart';
 /// * [latitude] 
 /// * [longitude] 
 /// * [badges] 
+/// * [exactLocation] 
 @BuiltValue()
 abstract class ResidenceSearchCard implements Built<ResidenceSearchCard, ResidenceSearchCardBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -67,6 +68,9 @@ abstract class ResidenceSearchCard implements Built<ResidenceSearchCard, Residen
   @BuiltValueField(wireName: r'badges')
   BuiltList<ResidenceSearchCardBadgesEnum>? get badges;
   // enum badgesEnum {  TRUSTED,  RECERTIFIED,  IDENTITY_VERIFIED,  PHOTOS_VERIFIED,  };
+
+  @BuiltValueField(wireName: r'exactLocation')
+  bool? get exactLocation;
 
   ResidenceSearchCard._();
 
@@ -180,6 +184,13 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
       yield serializers.serialize(
         object.badges,
         specifiedType: const FullType(BuiltList, [FullType(ResidenceSearchCardBadgesEnum)]),
+      );
+    }
+    if (object.exactLocation != null) {
+      yield r'exactLocation';
+      yield serializers.serialize(
+        object.exactLocation,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -308,6 +319,14 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
           ) as BuiltList<ResidenceSearchCardBadgesEnum>?;
           if (valueDes == null) continue;
           result.badges.replace(valueDes);
+          break;
+        case r'exactLocation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.exactLocation = valueDes;
           break;
         default:
           unhandled.add(key);

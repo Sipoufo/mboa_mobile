@@ -474,6 +474,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
   final PropertyRating? rating;
   @override
   final int? viewCount;
+  @override
+  final bool? exactLocation;
 
   factory _$AnnonceDetailResponse([
     void Function(AnnonceDetailResponseBuilder)? updates,
@@ -507,6 +509,7 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     this.canPlanVisit,
     this.rating,
     this.viewCount,
+    this.exactLocation,
   }) : super._();
   @override
   AnnonceDetailResponse rebuild(
@@ -547,7 +550,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
         canContact == other.canContact &&
         canPlanVisit == other.canPlanVisit &&
         rating == other.rating &&
-        viewCount == other.viewCount;
+        viewCount == other.viewCount &&
+        exactLocation == other.exactLocation;
   }
 
   @override
@@ -580,6 +584,7 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     _$hash = $jc(_$hash, canPlanVisit.hashCode);
     _$hash = $jc(_$hash, rating.hashCode);
     _$hash = $jc(_$hash, viewCount.hashCode);
+    _$hash = $jc(_$hash, exactLocation.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -613,7 +618,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
           ..add('canContact', canContact)
           ..add('canPlanVisit', canPlanVisit)
           ..add('rating', rating)
-          ..add('viewCount', viewCount))
+          ..add('viewCount', viewCount)
+          ..add('exactLocation', exactLocation))
         .toString();
   }
 }
@@ -745,6 +751,11 @@ class AnnonceDetailResponseBuilder
   int? get viewCount => _$this._viewCount;
   set viewCount(int? viewCount) => _$this._viewCount = viewCount;
 
+  bool? _exactLocation;
+  bool? get exactLocation => _$this._exactLocation;
+  set exactLocation(bool? exactLocation) =>
+      _$this._exactLocation = exactLocation;
+
   AnnonceDetailResponseBuilder() {
     AnnonceDetailResponse._defaults(this);
   }
@@ -779,6 +790,7 @@ class AnnonceDetailResponseBuilder
       _canPlanVisit = $v.canPlanVisit;
       _rating = $v.rating?.toBuilder();
       _viewCount = $v.viewCount;
+      _exactLocation = $v.exactLocation;
       _$v = null;
     }
     return this;
@@ -830,6 +842,7 @@ class AnnonceDetailResponseBuilder
             canPlanVisit: canPlanVisit,
             rating: _rating?.build(),
             viewCount: viewCount,
+            exactLocation: exactLocation,
           );
     } catch (_) {
       late String _$failedField;

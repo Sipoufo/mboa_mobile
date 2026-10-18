@@ -25,6 +25,7 @@ part 'visite_response.g.dart';
 /// * [createdAt] 
 /// * [agentRating] 
 /// * [visitorPhone] 
+/// * [userAccountId] 
 @BuiltValue()
 abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -68,6 +69,9 @@ abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBui
 
   @BuiltValueField(wireName: r'visitorPhone')
   String? get visitorPhone;
+
+  @BuiltValueField(wireName: r'userAccountId')
+  String? get userAccountId;
 
   VisiteResponse._();
 
@@ -180,6 +184,13 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
       yield r'visitorPhone';
       yield serializers.serialize(
         object.visitorPhone,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.userAccountId != null) {
+      yield r'userAccountId';
+      yield serializers.serialize(
+        object.userAccountId,
         specifiedType: const FullType(String),
       );
     }
@@ -309,6 +320,14 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
           ) as String?;
           if (valueDes == null) continue;
           result.visitorPhone = valueDes;
+          break;
+        case r'userAccountId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.userAccountId = valueDes;
           break;
         default:
           unhandled.add(key);

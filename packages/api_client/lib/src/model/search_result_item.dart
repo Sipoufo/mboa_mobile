@@ -31,6 +31,7 @@ part 'search_result_item.g.dart';
 /// * [longitude] 
 /// * [availableFrom] 
 /// * [badges] 
+/// * [exactLocation] 
 @BuiltValue()
 abstract class SearchResultItem implements Built<SearchResultItem, SearchResultItemBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -90,6 +91,9 @@ abstract class SearchResultItem implements Built<SearchResultItem, SearchResultI
   @BuiltValueField(wireName: r'badges')
   BuiltList<SearchResultItemBadgesEnum>? get badges;
   // enum badgesEnum {  TRUSTED,  RECERTIFIED,  IDENTITY_VERIFIED,  PHOTOS_VERIFIED,  };
+
+  @BuiltValueField(wireName: r'exactLocation')
+  bool? get exactLocation;
 
   SearchResultItem._();
 
@@ -238,6 +242,13 @@ class _$SearchResultItemSerializer implements PrimitiveSerializer<SearchResultIt
       yield serializers.serialize(
         object.badges,
         specifiedType: const FullType(BuiltList, [FullType(SearchResultItemBadgesEnum)]),
+      );
+    }
+    if (object.exactLocation != null) {
+      yield r'exactLocation';
+      yield serializers.serialize(
+        object.exactLocation,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -406,6 +417,14 @@ class _$SearchResultItemSerializer implements PrimitiveSerializer<SearchResultIt
           ) as BuiltList<SearchResultItemBadgesEnum>?;
           if (valueDes == null) continue;
           result.badges.replace(valueDes);
+          break;
+        case r'exactLocation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.exactLocation = valueDes;
           break;
         default:
           unhandled.add(key);

@@ -121,6 +121,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
   final double? longitude;
   @override
   final BuiltList<ResidenceSearchCardBadgesEnum>? badges;
+  @override
+  final bool? exactLocation;
 
   factory _$ResidenceSearchCard([
     void Function(ResidenceSearchCardBuilder)? updates,
@@ -140,6 +142,7 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
     this.latitude,
     this.longitude,
     this.badges,
+    this.exactLocation,
   }) : super._();
   @override
   ResidenceSearchCard rebuild(
@@ -166,7 +169,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
         fromMonthlyRent == other.fromMonthlyRent &&
         latitude == other.latitude &&
         longitude == other.longitude &&
-        badges == other.badges;
+        badges == other.badges &&
+        exactLocation == other.exactLocation;
   }
 
   @override
@@ -185,6 +189,7 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, badges.hashCode);
+    _$hash = $jc(_$hash, exactLocation.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -204,7 +209,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
           ..add('fromMonthlyRent', fromMonthlyRent)
           ..add('latitude', latitude)
           ..add('longitude', longitude)
-          ..add('badges', badges))
+          ..add('badges', badges)
+          ..add('exactLocation', exactLocation))
         .toString();
   }
 }
@@ -273,6 +279,11 @@ class ResidenceSearchCardBuilder
   set badges(ListBuilder<ResidenceSearchCardBadgesEnum>? badges) =>
       _$this._badges = badges;
 
+  bool? _exactLocation;
+  bool? get exactLocation => _$this._exactLocation;
+  set exactLocation(bool? exactLocation) =>
+      _$this._exactLocation = exactLocation;
+
   ResidenceSearchCardBuilder() {
     ResidenceSearchCard._defaults(this);
   }
@@ -293,6 +304,7 @@ class ResidenceSearchCardBuilder
       _latitude = $v.latitude;
       _longitude = $v.longitude;
       _badges = $v.badges?.toBuilder();
+      _exactLocation = $v.exactLocation;
       _$v = null;
     }
     return this;
@@ -330,6 +342,7 @@ class ResidenceSearchCardBuilder
             latitude: latitude,
             longitude: longitude,
             badges: _badges?.build(),
+            exactLocation: exactLocation,
           );
     } catch (_) {
       late String _$failedField;

@@ -288,6 +288,8 @@ class _$VisiteResponse extends VisiteResponse {
   final int? agentRating;
   @override
   final String? visitorPhone;
+  @override
+  final String? userAccountId;
 
   factory _$VisiteResponse([void Function(VisiteResponseBuilder)? updates]) =>
       (VisiteResponseBuilder()..update(updates))._build();
@@ -306,6 +308,7 @@ class _$VisiteResponse extends VisiteResponse {
     this.createdAt,
     this.agentRating,
     this.visitorPhone,
+    this.userAccountId,
   }) : super._();
   @override
   VisiteResponse rebuild(void Function(VisiteResponseBuilder) updates) =>
@@ -330,7 +333,8 @@ class _$VisiteResponse extends VisiteResponse {
         cancellationReason == other.cancellationReason &&
         createdAt == other.createdAt &&
         agentRating == other.agentRating &&
-        visitorPhone == other.visitorPhone;
+        visitorPhone == other.visitorPhone &&
+        userAccountId == other.userAccountId;
   }
 
   @override
@@ -349,6 +353,7 @@ class _$VisiteResponse extends VisiteResponse {
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, agentRating.hashCode);
     _$hash = $jc(_$hash, visitorPhone.hashCode);
+    _$hash = $jc(_$hash, userAccountId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -368,7 +373,8 @@ class _$VisiteResponse extends VisiteResponse {
           ..add('cancellationReason', cancellationReason)
           ..add('createdAt', createdAt)
           ..add('agentRating', agentRating)
-          ..add('visitorPhone', visitorPhone))
+          ..add('visitorPhone', visitorPhone)
+          ..add('userAccountId', userAccountId))
         .toString();
   }
 }
@@ -436,6 +442,11 @@ class VisiteResponseBuilder
   String? get visitorPhone => _$this._visitorPhone;
   set visitorPhone(String? visitorPhone) => _$this._visitorPhone = visitorPhone;
 
+  String? _userAccountId;
+  String? get userAccountId => _$this._userAccountId;
+  set userAccountId(String? userAccountId) =>
+      _$this._userAccountId = userAccountId;
+
   VisiteResponseBuilder() {
     VisiteResponse._defaults(this);
   }
@@ -456,6 +467,7 @@ class VisiteResponseBuilder
       _createdAt = $v.createdAt;
       _agentRating = $v.agentRating;
       _visitorPhone = $v.visitorPhone;
+      _userAccountId = $v.userAccountId;
       _$v = null;
     }
     return this;
@@ -491,6 +503,7 @@ class VisiteResponseBuilder
           createdAt: createdAt,
           agentRating: agentRating,
           visitorPhone: visitorPhone,
+          userAccountId: userAccountId,
         );
     replace(_$result);
     return _$result;
