@@ -3102,5 +3102,69 @@
   "annonceCardPlanLimit": "Limite de formule",
   "@annonceCardPlanLimit": {
     "description": "Listing card \u2014 archivedReason PLAN_LIMIT."
+  },
+  "settingsNotifications": "Notifications",
+  "@settingsNotifications": {
+    "description": "Param\u00e8tres \u2014 entry to the notification switches (RM-M03-01)."
+  },
+  "notifPrefsTitle": "Notifications",
+  "@notifPrefsTitle": {
+    "description": "Notification preferences screen title."
+  },
+  "notifPrefsMandatoryNote": "Les alertes essentielles (contrats, paiements, modération, badges) restent toujours actives.",
+  "@notifPrefsMandatoryNote": {
+    "description": "RM-M03-01 \u2014 the mandatory types get no switch; this line says so."
+  },
+  "notifPrefsLoadFailed": "Impossible de charger tes réglages. Vérifie ta connexion.",
+  "@notifPrefsLoadFailed": {
+    "description": "Notification preferences could not be loaded (offline or server error)."
+  },
+  "notifPrefsSaveFailed": "Ce réglage n'a pas été enregistré. Réessaie.",
+  "@notifPrefsSaveFailed": {
+    "description": "A switch was put back because the save failed."
+  },
+  "notifPrefsMandatoryRefused": "Cette notification ne peut pas être coupée.",
+  "@notifPrefsMandatoryRefused": {
+    "description": "Server answered NOTIFICATION_MANDATORY."
+  },
+  "notifPrefN01": "Nouvelles annonces pour mes recherches",
+  "@notifPrefN01": {
+    "description": "N-01 \u2014 a saved search has new matches."
+  },
+  "notifPrefN02": "Nouveaux contacts sur mes annonces",
+  "@notifPrefN02": {
+    "description": "N-02 \u2014 a user contacted a listing."
+  },
+  "notifPrefN03": "Visites confirmées",
+  "@notifPrefN03": {
+    "description": "N-03 \u2014 a visit request sent, or a visit confirmed / scheduled."
+  },
+  "notifPrefN04": "Nouvelles demandes de visite",
+  "@notifPrefN04": {
+    "description": "N-04 \u2014 a new visit request (owner) or a new visit (agent)."
+  },
+  "notifPrefN05": "Visites annulées",
+  "@notifPrefN05": {
+    "description": "N-05 \u2014 a visit cancelled, declined or withdrawn."
+  },
+  "notifPrefN10": "Annonces bientôt expirées",
+  "@notifPrefN10": {
+    "description": "N-10 \u2014 a Free listing expires in 5 days."
+  },
+  "notifPrefN15": "Attributions d'agents",
+  "@notifPrefN15": {
+    "description": "N-15 \u2014 an agent assignment offered, declined, withdrawn or revoked."
+  },
+  "notifPrefN18": "Rappel pour laisser un avis",
+  "@notifPrefN18": {
+    "description": "N-18 \u2014 the day-after nudge to review a visit."
+  },
+  "notifPrefN21": "Réponses à mes avis",
+  "@notifPrefN21": {
+    "description": "N-21 \u2014 an answer was published under the user's review (label asked for by the backend)."
+  },
+  "notifPrefN26": "Fin de l'option Gestion financière",
+  "@notifPrefN26": {
+    "description": "N-26 \u2014 the finance add-on ends in 7 days."
   }
 }

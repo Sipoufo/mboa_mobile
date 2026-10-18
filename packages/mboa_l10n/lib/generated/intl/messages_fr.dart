@@ -1288,6 +1288,43 @@ class MessageLookup extends MessageLookupByLibrary {
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "navMessages": MessageLookupByLibrary.simpleMessage("Messages"),
     "navSearch": MessageLookupByLibrary.simpleMessage("Recherche"),
+    "notifPrefN01": MessageLookupByLibrary.simpleMessage(
+      "Nouvelles annonces pour mes recherches",
+    ),
+    "notifPrefN02": MessageLookupByLibrary.simpleMessage(
+      "Nouveaux contacts sur mes annonces",
+    ),
+    "notifPrefN03": MessageLookupByLibrary.simpleMessage("Visites confirmées"),
+    "notifPrefN04": MessageLookupByLibrary.simpleMessage(
+      "Nouvelles demandes de visite",
+    ),
+    "notifPrefN05": MessageLookupByLibrary.simpleMessage("Visites annulées"),
+    "notifPrefN10": MessageLookupByLibrary.simpleMessage(
+      "Annonces bientôt expirées",
+    ),
+    "notifPrefN15": MessageLookupByLibrary.simpleMessage(
+      "Attributions d\'agents",
+    ),
+    "notifPrefN18": MessageLookupByLibrary.simpleMessage(
+      "Rappel pour laisser un avis",
+    ),
+    "notifPrefN21": MessageLookupByLibrary.simpleMessage("Réponses à mes avis"),
+    "notifPrefN26": MessageLookupByLibrary.simpleMessage(
+      "Fin de l\'option Gestion financière",
+    ),
+    "notifPrefsLoadFailed": MessageLookupByLibrary.simpleMessage(
+      "Impossible de charger tes réglages. Vérifie ta connexion.",
+    ),
+    "notifPrefsMandatoryNote": MessageLookupByLibrary.simpleMessage(
+      "Les alertes essentielles (contrats, paiements, modération, badges) restent toujours actives.",
+    ),
+    "notifPrefsMandatoryRefused": MessageLookupByLibrary.simpleMessage(
+      "Cette notification ne peut pas être coupée.",
+    ),
+    "notifPrefsSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "Ce réglage n\'a pas été enregistré. Réessaie.",
+    ),
+    "notifPrefsTitle": MessageLookupByLibrary.simpleMessage("Notifications"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
     "otpCodeSentTo": m34,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
@@ -1728,6 +1765,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsLanguage": MessageLookupByLibrary.simpleMessage("Langue"),
     "settingsLogout": MessageLookupByLibrary.simpleMessage("Déconnexion"),
     "settingsMenuTitle": MessageLookupByLibrary.simpleMessage("Paramètres"),
+    "settingsNotifications": MessageLookupByLibrary.simpleMessage(
+      "Notifications",
+    ),
     "settingsProfileCard": MessageLookupByLibrary.simpleMessage("Profil"),
     "settingsTitle": MessageLookupByLibrary.simpleMessage("Profil"),
     "subscriptionChangePlan": MessageLookupByLibrary.simpleMessage(

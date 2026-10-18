@@ -95,6 +95,7 @@ class AppRouter extends RootStackRouter {
             ),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
+            AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),
             AutoRoute(page: DeleteAccountRoute.page, path: 'settings/delete'),
           ],

@@ -15,6 +15,7 @@ class SettingsMenuView extends StatelessWidget {
   const SettingsMenuView({
     required this.localeController,
     required this.onDeleteAccount,
+    this.onNotifications,
     this.onChangePhone,
     this.onChangePassword,
     super.key,
@@ -22,6 +23,7 @@ class SettingsMenuView extends StatelessWidget {
 
   final LocaleController localeController;
   final VoidCallback onDeleteAccount;
+  final VoidCallback? onNotifications;
   final VoidCallback? onChangePhone;
   final VoidCallback? onChangePassword;
 
@@ -66,6 +68,14 @@ class SettingsMenuView extends StatelessWidget {
                       );
                     },
                   ),
+                  if (onNotifications != null) ...[
+                    const SizedBox(height: Dimens.spacingLg),
+                    MboaTileCard(
+                      icon: LucideIcons.bell,
+                      title: l10n.settingsNotifications,
+                      onTap: onNotifications,
+                    ),
+                  ],
                   if (onChangePhone != null) ...[
                     const SizedBox(height: Dimens.spacingLg),
                     MboaTileCard(

@@ -138,6 +138,12 @@ void registerAppModule() {
   getIt.registerLazySingleton<AppSettingsRepository>(
     () => AppSettingsRepository(dioClient: getIt<DioClient>()),
   );
+  getIt.registerFactoryParam<NotificationPreferencesBloc, NotificationAudience, void>(
+    (audience, _) => NotificationPreferencesBloc(
+      repository: getIt<AppSettingsRepository>(),
+      audience: audience,
+    ),
+  );
   getIt.registerLazySingleton<LocaleController>(
     () => LocaleController(
       cache: getIt<HiveCache>(),

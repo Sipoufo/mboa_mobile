@@ -14,6 +14,7 @@ class SettingsMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SettingsMenuView(
         localeController: getIt<LocaleController>(),
+        onNotifications: () => context.router.push(const NotificationPreferencesRoute()),
         onChangePhone: () => context.router.push(const ChangePhoneRoute()),
         onDeleteAccount: () => context.router.push(const DeleteAccountRoute()),
       );

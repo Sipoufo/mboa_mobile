@@ -3102,5 +3102,69 @@
   "annonceCardPlanLimit": "Plan limit",
   "@annonceCardPlanLimit": {
     "description": "Listing card \u2014 archivedReason PLAN_LIMIT."
+  },
+  "settingsNotifications": "Notifications",
+  "@settingsNotifications": {
+    "description": "Param\u00e8tres \u2014 entry to the notification switches (RM-M03-01)."
+  },
+  "notifPrefsTitle": "Notifications",
+  "@notifPrefsTitle": {
+    "description": "Notification preferences screen title."
+  },
+  "notifPrefsMandatoryNote": "Essential alerts (contracts, payments, moderation, badges) always stay on.",
+  "@notifPrefsMandatoryNote": {
+    "description": "RM-M03-01 \u2014 the mandatory types get no switch; this line says so."
+  },
+  "notifPrefsLoadFailed": "Your settings could not be loaded. Check your connection.",
+  "@notifPrefsLoadFailed": {
+    "description": "Notification preferences could not be loaded (offline or server error)."
+  },
+  "notifPrefsSaveFailed": "This setting was not saved. Try again.",
+  "@notifPrefsSaveFailed": {
+    "description": "A switch was put back because the save failed."
+  },
+  "notifPrefsMandatoryRefused": "This notification cannot be turned off.",
+  "@notifPrefsMandatoryRefused": {
+    "description": "Server answered NOTIFICATION_MANDATORY."
+  },
+  "notifPrefN01": "New listings for my searches",
+  "@notifPrefN01": {
+    "description": "N-01 \u2014 a saved search has new matches."
+  },
+  "notifPrefN02": "New contacts on my listings",
+  "@notifPrefN02": {
+    "description": "N-02 \u2014 a user contacted a listing."
+  },
+  "notifPrefN03": "Confirmed visits",
+  "@notifPrefN03": {
+    "description": "N-03 \u2014 a visit request sent, or a visit confirmed / scheduled."
+  },
+  "notifPrefN04": "New visit requests",
+  "@notifPrefN04": {
+    "description": "N-04 \u2014 a new visit request (owner) or a new visit (agent)."
+  },
+  "notifPrefN05": "Cancelled visits",
+  "@notifPrefN05": {
+    "description": "N-05 \u2014 a visit cancelled, declined or withdrawn."
+  },
+  "notifPrefN10": "Listings about to expire",
+  "@notifPrefN10": {
+    "description": "N-10 \u2014 a Free listing expires in 5 days."
+  },
+  "notifPrefN15": "Agent assignments",
+  "@notifPrefN15": {
+    "description": "N-15 \u2014 an agent assignment offered, declined, withdrawn or revoked."
+  },
+  "notifPrefN18": "Reminder to leave a review",
+  "@notifPrefN18": {
+    "description": "N-18 \u2014 the day-after nudge to review a visit."
+  },
+  "notifPrefN21": "Replies to my reviews",
+  "@notifPrefN21": {
+    "description": "N-21 \u2014 an answer was published under the user's review (label asked for by the backend)."
+  },
+  "notifPrefN26": "Finance add-on ending",
+  "@notifPrefN26": {
+    "description": "N-26 \u2014 the finance add-on ends in 7 days."
   }
 }

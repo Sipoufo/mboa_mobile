@@ -8672,6 +8672,169 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Notifications`
+  String get settingsNotifications {
+    return Intl.message(
+      'Notifications',
+      name: 'settingsNotifications',
+      desc: 'Paramètres — entry to the notification switches (RM-M03-01).',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get notifPrefsTitle {
+    return Intl.message(
+      'Notifications',
+      name: 'notifPrefsTitle',
+      desc: 'Notification preferences screen title.',
+      args: [],
+    );
+  }
+
+  /// `Les alertes essentielles (contrats, paiements, modération, badges) restent toujours actives.`
+  String get notifPrefsMandatoryNote {
+    return Intl.message(
+      'Les alertes essentielles (contrats, paiements, modération, badges) restent toujours actives.',
+      name: 'notifPrefsMandatoryNote',
+      desc: 'RM-M03-01 — the mandatory types get no switch; this line says so.',
+      args: [],
+    );
+  }
+
+  /// `Impossible de charger tes réglages. Vérifie ta connexion.`
+  String get notifPrefsLoadFailed {
+    return Intl.message(
+      'Impossible de charger tes réglages. Vérifie ta connexion.',
+      name: 'notifPrefsLoadFailed',
+      desc:
+          'Notification preferences could not be loaded (offline or server error).',
+      args: [],
+    );
+  }
+
+  /// `Ce réglage n'a pas été enregistré. Réessaie.`
+  String get notifPrefsSaveFailed {
+    return Intl.message(
+      'Ce réglage n\'a pas été enregistré. Réessaie.',
+      name: 'notifPrefsSaveFailed',
+      desc: 'A switch was put back because the save failed.',
+      args: [],
+    );
+  }
+
+  /// `Cette notification ne peut pas être coupée.`
+  String get notifPrefsMandatoryRefused {
+    return Intl.message(
+      'Cette notification ne peut pas être coupée.',
+      name: 'notifPrefsMandatoryRefused',
+      desc: 'Server answered NOTIFICATION_MANDATORY.',
+      args: [],
+    );
+  }
+
+  /// `Nouvelles annonces pour mes recherches`
+  String get notifPrefN01 {
+    return Intl.message(
+      'Nouvelles annonces pour mes recherches',
+      name: 'notifPrefN01',
+      desc: 'N-01 — a saved search has new matches.',
+      args: [],
+    );
+  }
+
+  /// `Nouveaux contacts sur mes annonces`
+  String get notifPrefN02 {
+    return Intl.message(
+      'Nouveaux contacts sur mes annonces',
+      name: 'notifPrefN02',
+      desc: 'N-02 — a user contacted a listing.',
+      args: [],
+    );
+  }
+
+  /// `Visites confirmées`
+  String get notifPrefN03 {
+    return Intl.message(
+      'Visites confirmées',
+      name: 'notifPrefN03',
+      desc: 'N-03 — a visit request sent, or a visit confirmed / scheduled.',
+      args: [],
+    );
+  }
+
+  /// `Nouvelles demandes de visite`
+  String get notifPrefN04 {
+    return Intl.message(
+      'Nouvelles demandes de visite',
+      name: 'notifPrefN04',
+      desc: 'N-04 — a new visit request (owner) or a new visit (agent).',
+      args: [],
+    );
+  }
+
+  /// `Visites annulées`
+  String get notifPrefN05 {
+    return Intl.message(
+      'Visites annulées',
+      name: 'notifPrefN05',
+      desc: 'N-05 — a visit cancelled, declined or withdrawn.',
+      args: [],
+    );
+  }
+
+  /// `Annonces bientôt expirées`
+  String get notifPrefN10 {
+    return Intl.message(
+      'Annonces bientôt expirées',
+      name: 'notifPrefN10',
+      desc: 'N-10 — a Free listing expires in 5 days.',
+      args: [],
+    );
+  }
+
+  /// `Attributions d'agents`
+  String get notifPrefN15 {
+    return Intl.message(
+      'Attributions d\'agents',
+      name: 'notifPrefN15',
+      desc:
+          'N-15 — an agent assignment offered, declined, withdrawn or revoked.',
+      args: [],
+    );
+  }
+
+  /// `Rappel pour laisser un avis`
+  String get notifPrefN18 {
+    return Intl.message(
+      'Rappel pour laisser un avis',
+      name: 'notifPrefN18',
+      desc: 'N-18 — the day-after nudge to review a visit.',
+      args: [],
+    );
+  }
+
+  /// `Réponses à mes avis`
+  String get notifPrefN21 {
+    return Intl.message(
+      'Réponses à mes avis',
+      name: 'notifPrefN21',
+      desc:
+          'N-21 — an answer was published under the user\'s review (label asked for by the backend).',
+      args: [],
+    );
+  }
+
+  /// `Fin de l'option Gestion financière`
+  String get notifPrefN26 {
+    return Intl.message(
+      'Fin de l\'option Gestion financière',
+      name: 'notifPrefN26',
+      desc: 'N-26 — the finance add-on ends in 7 days.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

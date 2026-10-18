@@ -1203,6 +1203,41 @@ class MessageLookup extends MessageLookupByLibrary {
     "navMenu": MessageLookupByLibrary.simpleMessage("Menu"),
     "navMessages": MessageLookupByLibrary.simpleMessage("Messages"),
     "navSearch": MessageLookupByLibrary.simpleMessage("Search"),
+    "notifPrefN01": MessageLookupByLibrary.simpleMessage(
+      "New listings for my searches",
+    ),
+    "notifPrefN02": MessageLookupByLibrary.simpleMessage(
+      "New contacts on my listings",
+    ),
+    "notifPrefN03": MessageLookupByLibrary.simpleMessage("Confirmed visits"),
+    "notifPrefN04": MessageLookupByLibrary.simpleMessage("New visit requests"),
+    "notifPrefN05": MessageLookupByLibrary.simpleMessage("Cancelled visits"),
+    "notifPrefN10": MessageLookupByLibrary.simpleMessage(
+      "Listings about to expire",
+    ),
+    "notifPrefN15": MessageLookupByLibrary.simpleMessage("Agent assignments"),
+    "notifPrefN18": MessageLookupByLibrary.simpleMessage(
+      "Reminder to leave a review",
+    ),
+    "notifPrefN21": MessageLookupByLibrary.simpleMessage(
+      "Replies to my reviews",
+    ),
+    "notifPrefN26": MessageLookupByLibrary.simpleMessage(
+      "Finance add-on ending",
+    ),
+    "notifPrefsLoadFailed": MessageLookupByLibrary.simpleMessage(
+      "Your settings could not be loaded. Check your connection.",
+    ),
+    "notifPrefsMandatoryNote": MessageLookupByLibrary.simpleMessage(
+      "Essential alerts (contracts, payments, moderation, badges) always stay on.",
+    ),
+    "notifPrefsMandatoryRefused": MessageLookupByLibrary.simpleMessage(
+      "This notification cannot be turned off.",
+    ),
+    "notifPrefsSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "This setting was not saved. Try again.",
+    ),
+    "notifPrefsTitle": MessageLookupByLibrary.simpleMessage("Notifications"),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("6-digit code"),
     "otpCodeSentTo": m34,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(
@@ -1615,6 +1650,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsLanguage": MessageLookupByLibrary.simpleMessage("Language"),
     "settingsLogout": MessageLookupByLibrary.simpleMessage("Log out"),
     "settingsMenuTitle": MessageLookupByLibrary.simpleMessage("Settings"),
+    "settingsNotifications": MessageLookupByLibrary.simpleMessage(
+      "Notifications",
+    ),
     "settingsProfileCard": MessageLookupByLibrary.simpleMessage("Profile"),
     "settingsTitle": MessageLookupByLibrary.simpleMessage("Profile"),
     "subscriptionChangePlan": MessageLookupByLibrary.simpleMessage(

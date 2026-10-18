@@ -80,9 +80,12 @@ export 'src/features/settings/logic/change_password_cubit.dart';
 export 'src/features/settings/logic/change_phone_bloc.dart';
 export 'src/features/settings/logic/delete_account_cubit.dart';
 export 'src/features/settings/logic/locale_controller.dart';
+export 'src/features/settings/logic/notification_preferences_bloc.dart';
+export 'src/features/settings/models/notification_preference.dart';
 export 'src/features/settings/ui/change_password_view.dart';
 export 'src/features/settings/ui/change_phone_view.dart';
 export 'src/features/settings/ui/delete_account_view.dart';
+export 'src/features/settings/ui/notification_preferences_view.dart';
 export 'src/features/settings/ui/settings_menu_view.dart';
 
 // Locations — cities catalogue + city picker (shared).
