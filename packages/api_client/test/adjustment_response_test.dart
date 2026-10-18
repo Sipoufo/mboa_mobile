@@ -52,5 +52,10 @@ void main() {
       // TODO
     });
 
+    // String product
+    test('to test the property `product`', () async {
+      // TODO
+    });
+
   });
 }

@@ -20,6 +20,7 @@ part 'payment_summary.g.dart';
 /// * [hasReceipt] 
 /// * [paidAt] 
 /// * [createdAt] 
+/// * [purpose] 
 @BuiltValue()
 abstract class PaymentSummary implements Built<PaymentSummary, PaymentSummaryBuilder> {
   @BuiltValueField(wireName: r'paymentId')
@@ -48,6 +49,10 @@ abstract class PaymentSummary implements Built<PaymentSummary, PaymentSummaryBui
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
+
+  @BuiltValueField(wireName: r'purpose')
+  PaymentSummaryPurposeEnum? get purpose;
+  // enum purposeEnum {  SUBSCRIPTION,  FINANCE_ADDON,  };
 
   PaymentSummary._();
 
@@ -126,6 +131,13 @@ class _$PaymentSummarySerializer implements PrimitiveSerializer<PaymentSummary> 
       yield serializers.serialize(
         object.createdAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.purpose != null) {
+      yield r'purpose';
+      yield serializers.serialize(
+        object.purpose,
+        specifiedType: const FullType(PaymentSummaryPurposeEnum),
       );
     }
   }
@@ -215,6 +227,14 @@ class _$PaymentSummarySerializer implements PrimitiveSerializer<PaymentSummary> 
           if (valueDes == null) continue;
           result.createdAt = valueDes;
           break;
+        case r'purpose':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(PaymentSummaryPurposeEnum),
+          ) as PaymentSummaryPurposeEnum?;
+          if (valueDes == null) continue;
+          result.purpose = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -303,5 +323,22 @@ class PaymentSummaryStatusEnum extends EnumClass {
 
   static BuiltSet<PaymentSummaryStatusEnum> get values => _$paymentSummaryStatusEnumValues;
   static PaymentSummaryStatusEnum valueOf(String name) => _$paymentSummaryStatusEnumValueOf(name);
+}
+
+class PaymentSummaryPurposeEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'SUBSCRIPTION')
+  static const PaymentSummaryPurposeEnum SUBSCRIPTION = _$paymentSummaryPurposeEnum_SUBSCRIPTION;
+  @BuiltValueEnumConst(wireName: r'FINANCE_ADDON')
+  static const PaymentSummaryPurposeEnum FINANCE_ADDON = _$paymentSummaryPurposeEnum_FINANCE_ADDON;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const PaymentSummaryPurposeEnum unknownDefaultOpenApi = _$paymentSummaryPurposeEnum_unknownDefaultOpenApi;
+
+  static Serializer<PaymentSummaryPurposeEnum> get serializer => _$paymentSummaryPurposeEnumSerializer;
+
+  const PaymentSummaryPurposeEnum._(String name): super(name);
+
+  static BuiltSet<PaymentSummaryPurposeEnum> get values => _$paymentSummaryPurposeEnumValues;
+  static PaymentSummaryPurposeEnum valueOf(String name) => _$paymentSummaryPurposeEnumValueOf(name);
 }
 

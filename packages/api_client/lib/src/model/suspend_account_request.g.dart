@@ -9,12 +9,14 @@ part of 'suspend_account_request.dart';
 class _$SuspendAccountRequest extends SuspendAccountRequest {
   @override
   final String reason;
+  @override
+  final int? days;
 
   factory _$SuspendAccountRequest([
     void Function(SuspendAccountRequestBuilder)? updates,
   ]) => (SuspendAccountRequestBuilder()..update(updates))._build();
 
-  _$SuspendAccountRequest._({required this.reason}) : super._();
+  _$SuspendAccountRequest._({required this.reason, this.days}) : super._();
   @override
   SuspendAccountRequest rebuild(
     void Function(SuspendAccountRequestBuilder) updates,
@@ -27,22 +29,26 @@ class _$SuspendAccountRequest extends SuspendAccountRequest {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SuspendAccountRequest && reason == other.reason;
+    return other is SuspendAccountRequest &&
+        reason == other.reason &&
+        days == other.days;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, reason.hashCode);
+    _$hash = $jc(_$hash, days.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(
-      r'SuspendAccountRequest',
-    )..add('reason', reason)).toString();
+    return (newBuiltValueToStringHelper(r'SuspendAccountRequest')
+          ..add('reason', reason)
+          ..add('days', days))
+        .toString();
   }
 }
 
@@ -54,6 +60,10 @@ class SuspendAccountRequestBuilder
   String? get reason => _$this._reason;
   set reason(String? reason) => _$this._reason = reason;
 
+  int? _days;
+  int? get days => _$this._days;
+  set days(int? days) => _$this._days = days;
+
   SuspendAccountRequestBuilder() {
     SuspendAccountRequest._defaults(this);
   }
@@ -62,6 +72,7 @@ class SuspendAccountRequestBuilder
     final $v = _$v;
     if ($v != null) {
       _reason = $v.reason;
+      _days = $v.days;
       _$v = null;
     }
     return this;
@@ -89,6 +100,7 @@ class SuspendAccountRequestBuilder
             r'SuspendAccountRequest',
             'reason',
           ),
+          days: days,
         );
     replace(_$result);
     return _$result;

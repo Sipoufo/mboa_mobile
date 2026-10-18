@@ -12,10 +12,14 @@ part 'suspend_account_request.g.dart';
 ///
 /// Properties:
 /// * [reason] 
+/// * [days] 
 @BuiltValue()
 abstract class SuspendAccountRequest implements Built<SuspendAccountRequest, SuspendAccountRequestBuilder> {
   @BuiltValueField(wireName: r'reason')
   String get reason;
+
+  @BuiltValueField(wireName: r'days')
+  int? get days;
 
   SuspendAccountRequest._();
 
@@ -45,6 +49,13 @@ class _$SuspendAccountRequestSerializer implements PrimitiveSerializer<SuspendAc
       object.reason,
       specifiedType: const FullType(String),
     );
+    if (object.days != null) {
+      yield r'days';
+      yield serializers.serialize(
+        object.days,
+        specifiedType: const FullType(int),
+      );
+    }
   }
 
   @override
@@ -74,6 +85,14 @@ class _$SuspendAccountRequestSerializer implements PrimitiveSerializer<SuspendAc
             specifiedType: const FullType(String),
           ) as String;
           result.reason = valueDes;
+          break;
+        case r'days':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.days = valueDes;
           break;
         default:
           unhandled.add(key);

@@ -17,6 +17,8 @@ class _$SubscriptionRecapResponse extends SubscriptionRecapResponse {
   final BuiltList<Line>? tiers;
   @override
   final Line? total;
+  @override
+  final Line? addon;
 
   factory _$SubscriptionRecapResponse([
     void Function(SubscriptionRecapResponseBuilder)? updates,
@@ -28,6 +30,7 @@ class _$SubscriptionRecapResponse extends SubscriptionRecapResponse {
     this.snapshotTakenAt,
     this.tiers,
     this.total,
+    this.addon,
   }) : super._();
   @override
   SubscriptionRecapResponse rebuild(
@@ -46,7 +49,8 @@ class _$SubscriptionRecapResponse extends SubscriptionRecapResponse {
         live == other.live &&
         snapshotTakenAt == other.snapshotTakenAt &&
         tiers == other.tiers &&
-        total == other.total;
+        total == other.total &&
+        addon == other.addon;
   }
 
   @override
@@ -57,6 +61,7 @@ class _$SubscriptionRecapResponse extends SubscriptionRecapResponse {
     _$hash = $jc(_$hash, snapshotTakenAt.hashCode);
     _$hash = $jc(_$hash, tiers.hashCode);
     _$hash = $jc(_$hash, total.hashCode);
+    _$hash = $jc(_$hash, addon.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -68,7 +73,8 @@ class _$SubscriptionRecapResponse extends SubscriptionRecapResponse {
           ..add('live', live)
           ..add('snapshotTakenAt', snapshotTakenAt)
           ..add('tiers', tiers)
-          ..add('total', total))
+          ..add('total', total)
+          ..add('addon', addon))
         .toString();
   }
 }
@@ -99,6 +105,10 @@ class SubscriptionRecapResponseBuilder
   LineBuilder get total => _$this._total ??= LineBuilder();
   set total(LineBuilder? total) => _$this._total = total;
 
+  LineBuilder? _addon;
+  LineBuilder get addon => _$this._addon ??= LineBuilder();
+  set addon(LineBuilder? addon) => _$this._addon = addon;
+
   SubscriptionRecapResponseBuilder() {
     SubscriptionRecapResponse._defaults(this);
   }
@@ -111,6 +121,7 @@ class SubscriptionRecapResponseBuilder
       _snapshotTakenAt = $v.snapshotTakenAt;
       _tiers = $v.tiers?.toBuilder();
       _total = $v.total?.toBuilder();
+      _addon = $v.addon?.toBuilder();
       _$v = null;
     }
     return this;
@@ -140,6 +151,7 @@ class SubscriptionRecapResponseBuilder
             snapshotTakenAt: snapshotTakenAt,
             tiers: _tiers?.build(),
             total: _total?.build(),
+            addon: _addon?.build(),
           );
     } catch (_) {
       late String _$failedField;
@@ -148,6 +160,8 @@ class SubscriptionRecapResponseBuilder
         _tiers?.build();
         _$failedField = 'total';
         _total?.build();
+        _$failedField = 'addon';
+        _addon?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'SubscriptionRecapResponse',

@@ -47,5 +47,10 @@ void main() {
       // TODO
     });
 
+    // String purpose
+    test('to test the property `purpose`', () async {
+      // TODO
+    });
+
   });
 }

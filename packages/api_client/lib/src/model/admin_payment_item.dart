@@ -24,6 +24,7 @@ part 'admin_payment_item.g.dart';
 /// * [refundedAt] 
 /// * [refundedBy] 
 /// * [refundReason] 
+/// * [purpose] 
 @BuiltValue()
 abstract class AdminPaymentItem implements Built<AdminPaymentItem, AdminPaymentItemBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -64,6 +65,10 @@ abstract class AdminPaymentItem implements Built<AdminPaymentItem, AdminPaymentI
 
   @BuiltValueField(wireName: r'refundReason')
   String? get refundReason;
+
+  @BuiltValueField(wireName: r'purpose')
+  AdminPaymentItemPurposeEnum? get purpose;
+  // enum purposeEnum {  SUBSCRIPTION,  FINANCE_ADDON,  };
 
   AdminPaymentItem._();
 
@@ -170,6 +175,13 @@ class _$AdminPaymentItemSerializer implements PrimitiveSerializer<AdminPaymentIt
       yield serializers.serialize(
         object.refundReason,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.purpose != null) {
+      yield r'purpose';
+      yield serializers.serialize(
+        object.purpose,
+        specifiedType: const FullType(AdminPaymentItemPurposeEnum),
       );
     }
   }
@@ -291,6 +303,14 @@ class _$AdminPaymentItemSerializer implements PrimitiveSerializer<AdminPaymentIt
           if (valueDes == null) continue;
           result.refundReason = valueDes;
           break;
+        case r'purpose':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(AdminPaymentItemPurposeEnum),
+          ) as AdminPaymentItemPurposeEnum?;
+          if (valueDes == null) continue;
+          result.purpose = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -379,5 +399,22 @@ class AdminPaymentItemStatusEnum extends EnumClass {
 
   static BuiltSet<AdminPaymentItemStatusEnum> get values => _$adminPaymentItemStatusEnumValues;
   static AdminPaymentItemStatusEnum valueOf(String name) => _$adminPaymentItemStatusEnumValueOf(name);
+}
+
+class AdminPaymentItemPurposeEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'SUBSCRIPTION')
+  static const AdminPaymentItemPurposeEnum SUBSCRIPTION = _$adminPaymentItemPurposeEnum_SUBSCRIPTION;
+  @BuiltValueEnumConst(wireName: r'FINANCE_ADDON')
+  static const AdminPaymentItemPurposeEnum FINANCE_ADDON = _$adminPaymentItemPurposeEnum_FINANCE_ADDON;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const AdminPaymentItemPurposeEnum unknownDefaultOpenApi = _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi;
+
+  static Serializer<AdminPaymentItemPurposeEnum> get serializer => _$adminPaymentItemPurposeEnumSerializer;
+
+  const AdminPaymentItemPurposeEnum._(String name): super(name);
+
+  static BuiltSet<AdminPaymentItemPurposeEnum> get values => _$adminPaymentItemPurposeEnumValues;
+  static AdminPaymentItemPurposeEnum valueOf(String name) => _$adminPaymentItemPurposeEnumValueOf(name);
 }
 

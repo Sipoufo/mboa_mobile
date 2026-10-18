@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **periodEndBefore** | [**DateTime**](DateTime.md) |  | [optional] 
 **periodEndAfter** | [**DateTime**](DateTime.md) |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**product** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

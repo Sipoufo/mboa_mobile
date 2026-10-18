@@ -115,12 +115,44 @@ final BuiltSet<AdminPaymentItemStatusEnum> _$adminPaymentItemStatusEnumValues =
       _$adminPaymentItemStatusEnum_unknownDefaultOpenApi,
     ]);
 
+const AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnum_SUBSCRIPTION =
+    const AdminPaymentItemPurposeEnum._('SUBSCRIPTION');
+const AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnum_FINANCE_ADDON =
+    const AdminPaymentItemPurposeEnum._('FINANCE_ADDON');
+const AdminPaymentItemPurposeEnum
+_$adminPaymentItemPurposeEnum_unknownDefaultOpenApi =
+    const AdminPaymentItemPurposeEnum._('unknownDefaultOpenApi');
+
+AdminPaymentItemPurposeEnum _$adminPaymentItemPurposeEnumValueOf(String name) {
+  switch (name) {
+    case 'SUBSCRIPTION':
+      return _$adminPaymentItemPurposeEnum_SUBSCRIPTION;
+    case 'FINANCE_ADDON':
+      return _$adminPaymentItemPurposeEnum_FINANCE_ADDON;
+    case 'unknownDefaultOpenApi':
+      return _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi;
+    default:
+      return _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<AdminPaymentItemPurposeEnum>
+_$adminPaymentItemPurposeEnumValues =
+    BuiltSet<AdminPaymentItemPurposeEnum>(const <AdminPaymentItemPurposeEnum>[
+      _$adminPaymentItemPurposeEnum_SUBSCRIPTION,
+      _$adminPaymentItemPurposeEnum_FINANCE_ADDON,
+      _$adminPaymentItemPurposeEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<AdminPaymentItemTierEnum> _$adminPaymentItemTierEnumSerializer =
     _$AdminPaymentItemTierEnumSerializer();
 Serializer<AdminPaymentItemMethodEnum> _$adminPaymentItemMethodEnumSerializer =
     _$AdminPaymentItemMethodEnumSerializer();
 Serializer<AdminPaymentItemStatusEnum> _$adminPaymentItemStatusEnumSerializer =
     _$AdminPaymentItemStatusEnumSerializer();
+Serializer<AdminPaymentItemPurposeEnum>
+_$adminPaymentItemPurposeEnumSerializer =
+    _$AdminPaymentItemPurposeEnumSerializer();
 
 class _$AdminPaymentItemTierEnumSerializer
     implements PrimitiveSerializer<AdminPaymentItemTierEnum> {
@@ -237,6 +269,41 @@ class _$AdminPaymentItemStatusEnumSerializer
   );
 }
 
+class _$AdminPaymentItemPurposeEnumSerializer
+    implements PrimitiveSerializer<AdminPaymentItemPurposeEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'SUBSCRIPTION': 'SUBSCRIPTION',
+    'FINANCE_ADDON': 'FINANCE_ADDON',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'SUBSCRIPTION': 'SUBSCRIPTION',
+    'FINANCE_ADDON': 'FINANCE_ADDON',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[AdminPaymentItemPurposeEnum];
+  @override
+  final String wireName = 'AdminPaymentItemPurposeEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AdminPaymentItemPurposeEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  AdminPaymentItemPurposeEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AdminPaymentItemPurposeEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$AdminPaymentItem extends AdminPaymentItem {
   @override
   final String? id;
@@ -262,6 +329,8 @@ class _$AdminPaymentItem extends AdminPaymentItem {
   final String? refundedBy;
   @override
   final String? refundReason;
+  @override
+  final AdminPaymentItemPurposeEnum? purpose;
 
   factory _$AdminPaymentItem([
     void Function(AdminPaymentItemBuilder)? updates,
@@ -280,6 +349,7 @@ class _$AdminPaymentItem extends AdminPaymentItem {
     this.refundedAt,
     this.refundedBy,
     this.refundReason,
+    this.purpose,
   }) : super._();
   @override
   AdminPaymentItem rebuild(void Function(AdminPaymentItemBuilder) updates) =>
@@ -304,7 +374,8 @@ class _$AdminPaymentItem extends AdminPaymentItem {
         confirmedAt == other.confirmedAt &&
         refundedAt == other.refundedAt &&
         refundedBy == other.refundedBy &&
-        refundReason == other.refundReason;
+        refundReason == other.refundReason &&
+        purpose == other.purpose;
   }
 
   @override
@@ -322,6 +393,7 @@ class _$AdminPaymentItem extends AdminPaymentItem {
     _$hash = $jc(_$hash, refundedAt.hashCode);
     _$hash = $jc(_$hash, refundedBy.hashCode);
     _$hash = $jc(_$hash, refundReason.hashCode);
+    _$hash = $jc(_$hash, purpose.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -340,7 +412,8 @@ class _$AdminPaymentItem extends AdminPaymentItem {
           ..add('confirmedAt', confirmedAt)
           ..add('refundedAt', refundedAt)
           ..add('refundedBy', refundedBy)
-          ..add('refundReason', refundReason))
+          ..add('refundReason', refundReason)
+          ..add('purpose', purpose))
         .toString();
   }
 }
@@ -397,6 +470,11 @@ class AdminPaymentItemBuilder
   String? get refundReason => _$this._refundReason;
   set refundReason(String? refundReason) => _$this._refundReason = refundReason;
 
+  AdminPaymentItemPurposeEnum? _purpose;
+  AdminPaymentItemPurposeEnum? get purpose => _$this._purpose;
+  set purpose(AdminPaymentItemPurposeEnum? purpose) =>
+      _$this._purpose = purpose;
+
   AdminPaymentItemBuilder() {
     AdminPaymentItem._defaults(this);
   }
@@ -416,6 +494,7 @@ class AdminPaymentItemBuilder
       _refundedAt = $v.refundedAt;
       _refundedBy = $v.refundedBy;
       _refundReason = $v.refundReason;
+      _purpose = $v.purpose;
       _$v = null;
     }
     return this;
@@ -450,6 +529,7 @@ class AdminPaymentItemBuilder
           refundedAt: refundedAt,
           refundedBy: refundedBy,
           refundReason: refundReason,
+          purpose: purpose,
         );
     replace(_$result);
     return _$result;

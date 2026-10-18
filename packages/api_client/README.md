@@ -80,6 +80,9 @@ Class | Method | HTTP request | Description
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminGetContractPdf**](doc/AdminContratsApi.md#admingetcontractpdf) | **GET** /api/v1/admin/contracts/{id}/pdf | A short-lived URL to download its PDF
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminListContracts**](doc/AdminContratsApi.md#adminlistcontracts) | **GET** /api/v1/admin/contracts | The contract archive, filterable by status
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminRegenerateContractPdf**](doc/AdminContratsApi.md#adminregeneratecontractpdf) | **POST** /api/v1/admin/contracts/{id}/pdf | Try again to produce a document that never arrived (CE-M08-02)
+[*AdminKPIsApi*](doc/AdminKPIsApi.md) | [**exportAdminKpis**](doc/AdminKPIsApi.md#exportadminkpis) | **GET** /api/v1/admin/kpis/export | The daily series as CSV for any period up to 366 days (RM-M22-02)
+[*AdminKPIsApi*](doc/AdminKPIsApi.md) | [**getAdminKpis**](doc/AdminKPIsApi.md#getadminkpis) | **GET** /api/v1/admin/kpis | The KPI dashboard as of now: each figure with its 7/30-day windows and its target
+[*AdminKPIsApi*](doc/AdminKPIsApi.md) | [**listAdminKpiDays**](doc/AdminKPIsApi.md#listadminkpidays) | **GET** /api/v1/admin/kpis/days | One row per day (Africa/Douala), oldest first; at most 366 days, today provisional
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**approveKycSubmission**](doc/AdminKYCApi.md#approvekycsubmission) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPendingKycSubmissions**](doc/AdminKYCApi.md#listpendingkycsubmissions) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**rejectKycSubmission**](doc/AdminKYCApi.md#rejectkycsubmission) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
@@ -92,17 +95,22 @@ Class | Method | HTTP request | Description
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**extendSubscription**](doc/AdminSubscriptionsApi.md#extendsubscription) | **POST** /api/v1/admin/subscriptions/{accountId}/extend | Add days to a subscription, same tier, with a mandatory reason (RM-M21-04)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getAdminSubscription**](doc/AdminSubscriptionsApi.md#getadminsubscription) | **GET** /api/v1/admin/subscriptions/{accountId} | One prestataire&#39;s subscription, payments and admin adjustments
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getSubscriptionRecap**](doc/AdminSubscriptionsApi.md#getsubscriptionrecap) | **GET** /api/v1/admin/subscriptions/recap | Monthly recap: revenue, refunds, active prestataires and MRR per tier, exact FCFA (RM-M21-02)
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantFinanceAddon**](doc/AdminSubscriptionsApi.md#grantfinanceaddon) | **POST** /api/v1/admin/addons/finance/{accountId}/grant | Give days of the finance add-on, onto the running period or from now, with a reason
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantSubscription**](doc/AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier without payment, with a mandatory reason; refused over a paid period (RM-M21-01)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**listAdminPayments**](doc/AdminSubscriptionsApi.md#listadminpayments) | **GET** /api/v1/admin/payments | Payment history, filtered by status, account and month
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**listAdminSubscriptions**](doc/AdminSubscriptionsApi.md#listadminsubscriptions) | **GET** /api/v1/admin/subscriptions | Subscriptions, filtered by tier and status
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**refundPayment**](doc/AdminSubscriptionsApi.md#refundpayment) | **POST** /api/v1/admin/payments/{id}/refund | Record a refund made outside the platform; access is not cut (RM-M21-03)
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updateFinanceAddonPrice**](doc/AdminSubscriptionsApi.md#updatefinanceaddonprice) | **PATCH** /api/v1/admin/addons/finance | Set the finance add-on&#39;s price for 30 days
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updatePlan**](doc/AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approveTypeChangeRequest**](doc/AdminTypeChangeApi.md#approvetypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPendingTypeChangeRequests**](doc/AdminTypeChangeApi.md#listpendingtypechangerequests) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**rejectTypeChangeRequest**](doc/AdminTypeChangeApi.md#rejecttypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/reject | Reject a type-change request with a reason
-[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**listAdminUsers**](doc/AdminUtilisateursApi.md#listadminusers) | **GET** /api/v1/admin/users | Search accounts by phone or email, with their subscription (RM-M18-01)
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**deleteAccount**](doc/AdminUtilisateursApi.md#deleteaccount) | **DELETE** /api/v1/admin/users/{id} | Step two: anonymise the account, irreversibly, with the token and a reason (RM-M18-03)
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**getAdminUser**](doc/AdminUtilisateursApi.md#getadminuser) | **GET** /api/v1/admin/users/{id} | One account&#39;s full history: moderation, visits, contracts, reports, Mboa Score (RM-M18-04)
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**listAdminUsers**](doc/AdminUtilisateursApi.md#listadminusers) | **GET** /api/v1/admin/users | Search accounts by phone, email, name or internal id, with their subscription (RM-M18-01)
 [*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**reactivateAccount**](doc/AdminUtilisateursApi.md#reactivateaccount) | **POST** /api/v1/admin/users/{id}/reactivate | Lift a suspension
-[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**suspendAccount**](doc/AdminUtilisateursApi.md#suspendaccount) | **POST** /api/v1/admin/users/{id}/suspend | Suspend an account; sessions are revoked at once (RM-M18-02)
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**requestAccountDeletion**](doc/AdminUtilisateursApi.md#requestaccountdeletion) | **POST** /api/v1/admin/users/{id}/deletion | Step one of deleting an account: a confirmation token valid 10 minutes (RM-M18-03)
+[*AdminUtilisateursApi*](doc/AdminUtilisateursApi.md) | [**suspendAccount**](doc/AdminUtilisateursApi.md#suspendaccount) | **POST** /api/v1/admin/users/{id}/suspend | Suspend an account for &#x60;days&#x60; (1–365) or until lifted; sessions are revoked at once (RM-M18-02)
 [*AgentApi*](doc/AgentApi.md) | [**blockMyAgentDay**](doc/AgentApi.md#blockmyagentday) | **POST** /api/v1/agents/me/days-off | Block a whole day off (congés — RM-M15-03)
 [*AgentApi*](doc/AgentApi.md) | [**getMyAgentAvailability**](doc/AgentApi.md#getmyagentavailability) | **GET** /api/v1/agents/me/availability | The agent&#39;s weekly working pattern, visit length and days off
 [*AgentApi*](doc/AgentApi.md) | [**getMyAgentProfile**](doc/AgentApi.md#getmyagentprofile) | **GET** /api/v1/agents/me | Get the authenticated agent&#39;s profile
@@ -193,6 +201,15 @@ Class | Method | HTTP request | Description
 [*FavorisApi*](doc/FavorisApi.md) | [**addFavori**](doc/FavorisApi.md#addfavori) | **POST** /api/v1/favoris | Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
 [*FavorisApi*](doc/FavorisApi.md) | [**listMyFavoris**](doc/FavorisApi.md#listmyfavoris) | **GET** /api/v1/favoris | List saved listings; unavailable ones stay for 30 days flagged available&#x3D;false
 [*FavorisApi*](doc/FavorisApi.md) | [**removeFavori**](doc/FavorisApi.md#removefavori) | **DELETE** /api/v1/favoris/{annonceId} | Unsave a listing; unsaving one that is not saved is not an error
+[*FinanceAddOnApi*](doc/FinanceAddOnApi.md) | [**getFinanceAddon**](doc/FinanceAddOnApi.md#getfinanceaddon) | **GET** /api/v1/addons/finance | My finance add-on: active, until when, and its price
+[*FinanceAddOnApi*](doc/FinanceAddOnApi.md) | [**subscribeFinanceAddon**](doc/FinanceAddOnApi.md#subscribefinanceaddon) | **POST** /api/v1/addons/finance/subscribe | Buy 30 days of the add-on — added after the running period; same payment flow as a tier
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**createLedgerEntry**](doc/FinanceLedgerApi.md#createledgerentry) | **POST** /api/v1/finance/ledger | Record an income or an expense; needs the add-on running
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**deleteLedgerEntry**](doc/FinanceLedgerApi.md#deleteledgerentry) | **DELETE** /api/v1/finance/ledger/{id} | Remove an entry and its attachment; needs the add-on running
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**exportLedger**](doc/FinanceLedgerApi.md#exportledger) | **GET** /api/v1/finance/ledger/export | The same entries as CSV, for any period (RM-M25-05)
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**getLedgerAttachment**](doc/FinanceLedgerApi.md#getledgerattachment) | **GET** /api/v1/finance/ledger/{id}/attachment | A short-lived link to an entry&#39;s attachment
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**getLedgerSummary**](doc/FinanceLedgerApi.md#getledgersummary) | **GET** /api/v1/finance/ledger/summary | Totals in, out and net, and per category, over the same filters (RM-M25-03)
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**listLedgerEntries**](doc/FinanceLedgerApi.md#listledgerentries) | **GET** /api/v1/finance/ledger | My ledger, newest first — filter by period and by one listing, one residence or the unassigned
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**updateLedgerEntry**](doc/FinanceLedgerApi.md#updateledgerentry) | **PUT** /api/v1/finance/ledger/{id} | Replace an entry; needs the add-on running
 [*HistoriqueApi*](doc/HistoriqueApi.md) | [**clearMyHistorique**](doc/HistoriqueApi.md#clearmyhistorique) | **DELETE** /api/v1/historique | Reset the consultation history (RM-M06-05)
 [*HistoriqueApi*](doc/HistoriqueApi.md) | [**listMyHistorique**](doc/HistoriqueApi.md#listmyhistorique) | **GET** /api/v1/historique | The 30 most recently consulted listings, newest first
 [*KYCApi*](doc/KYCApi.md) | [**getMyKycStatus**](doc/KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
@@ -234,6 +251,11 @@ Class | Method | HTTP request | Description
 [*ResidencesApi*](doc/ResidencesApi.md) | [**reserveResidenceUnits**](doc/ResidencesApi.md#reserveresidenceunits) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**unarchiveResidenceUnits**](doc/ResidencesApi.md#unarchiveresidenceunits) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
 [*ResidencesApi*](doc/ResidencesApi.md) | [**updateResidence**](doc/ResidencesApi.md#updateresidence) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
+[*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**deleteSavedSearch**](doc/SavedSearchesApi.md#deletesavedsearch) | **DELETE** /api/v1/saved-searches/{id} | Forget a saved search
+[*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**getSavedSearchResults**](doc/SavedSearchesApi.md#getsavedsearchresults) | **GET** /api/v1/saved-searches/{id}/results | Run a saved search — the same cards as /search; resets its count of new results
+[*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**listSavedSearches**](doc/SavedSearchesApi.md#listsavedsearches) | **GET** /api/v1/saved-searches | My saved searches, each with its count of new results
+[*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**saveSearch**](doc/SavedSearchesApi.md#savesearch) | **POST** /api/v1/saved-searches | Keep a search — three at most; N-01 when new listings match (RM-M04-07)
+[*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**updateSavedSearch**](doc/SavedSearchesApi.md#updatesavedsearch) | **PATCH** /api/v1/saved-searches/{id} | Rename a saved search or switch its alerts
 [*SearchApi*](doc/SearchApi.md) | [**getAgentPublicProfile**](doc/SearchApi.md#getagentpublicprofile) | **GET** /api/v1/search/agents/{id} | Public profile of an Agent Mboa (M15)
 [*SearchApi*](doc/SearchApi.md) | [**getAnnonceDetail**](doc/SearchApi.md#getannoncedetail) | **GET** /api/v1/search/annonces/{id} | Public fiche of a listing (M05)
 [*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
@@ -266,15 +288,23 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AccountContractHistory](doc/AccountContractHistory.md)
+ - [AccountModerationEntry](doc/AccountModerationEntry.md)
+ - [AccountReportHistory](doc/AccountReportHistory.md)
+ - [AccountVisitHistory](doc/AccountVisitHistory.md)
  - [AddFavoriRequest](doc/AddFavoriRequest.md)
  - [AdjustmentResponse](doc/AdjustmentResponse.md)
+ - [AdminContractLine](doc/AdminContractLine.md)
  - [AdminMboaScoreResponse](doc/AdminMboaScoreResponse.md)
  - [AdminPaymentItem](doc/AdminPaymentItem.md)
  - [AdminPhotoVerificationItem](doc/AdminPhotoVerificationItem.md)
  - [AdminPrestataireBadgesResponse](doc/AdminPrestataireBadgesResponse.md)
+ - [AdminReportLine](doc/AdminReportLine.md)
  - [AdminSubscriptionDetail](doc/AdminSubscriptionDetail.md)
  - [AdminSubscriptionItem](doc/AdminSubscriptionItem.md)
+ - [AdminUserDetail](doc/AdminUserDetail.md)
  - [AdminUserSummary](doc/AdminUserSummary.md)
+ - [AdminVisitLine](doc/AdminVisitLine.md)
  - [AgentCandidate](doc/AgentCandidate.md)
  - [AgentOpportunity](doc/AgentOpportunity.md)
  - [AgentProfileResponse](doc/AgentProfileResponse.md)
@@ -294,14 +324,18 @@ Class | Method | HTTP request | Description
  - [BlockDayRequest](doc/BlockDayRequest.md)
  - [BookVisiteRequest](doc/BookVisiteRequest.md)
  - [BookableSlot](doc/BookableSlot.md)
+ - [CategoryTotal](doc/CategoryTotal.md)
  - [ChangePasswordRequest](doc/ChangePasswordRequest.md)
  - [ChangeRequestResponse](doc/ChangeRequestResponse.md)
+ - [Churn](doc/Churn.md)
+ - [Cohort](doc/Cohort.md)
  - [Comment](doc/Comment.md)
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
  - [ContractPdfResponse](doc/ContractPdfResponse.md)
  - [ContractResponse](doc/ContractResponse.md)
  - [ContractVerification](doc/ContractVerification.md)
  - [ConversationResponse](doc/ConversationResponse.md)
+ - [Conversion](doc/Conversion.md)
  - [CountryResponse](doc/CountryResponse.md)
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
  - [CreateContractRequest](doc/CreateContractRequest.md)
@@ -312,15 +346,27 @@ Class | Method | HTTP request | Description
  - [DashboardItem](doc/DashboardItem.md)
  - [DashboardMetric](doc/DashboardMetric.md)
  - [DashboardSummaryResponse](doc/DashboardSummaryResponse.md)
+ - [DeleteAccountRequest](doc/DeleteAccountRequest.md)
+ - [DeletionChallengeResponse](doc/DeletionChallengeResponse.md)
  - [ErrorResponse](doc/ErrorResponse.md)
  - [ExtendSubscriptionRequest](doc/ExtendSubscriptionRequest.md)
  - [FavoriResponse](doc/FavoriResponse.md)
  - [FieldError](doc/FieldError.md)
+ - [FinanceAddonResponse](doc/FinanceAddonResponse.md)
  - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
+ - [GrantAddonRequest](doc/GrantAddonRequest.md)
  - [GrantSubscriptionRequest](doc/GrantSubscriptionRequest.md)
  - [HistoriqueResponse](doc/HistoriqueResponse.md)
+ - [HistorySectionAdminContractLine](doc/HistorySectionAdminContractLine.md)
+ - [HistorySectionAdminReportLine](doc/HistorySectionAdminReportLine.md)
+ - [HistorySectionAdminVisitLine](doc/HistorySectionAdminVisitLine.md)
+ - [KpiDashboardResponse](doc/KpiDashboardResponse.md)
+ - [KpiDayResponse](doc/KpiDayResponse.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
+ - [LedgerEntryRequest](doc/LedgerEntryRequest.md)
+ - [LedgerEntryResponse](doc/LedgerEntryResponse.md)
+ - [LedgerSummaryResponse](doc/LedgerSummaryResponse.md)
  - [Line](doc/Line.md)
  - [ListingStats](doc/ListingStats.md)
  - [LocationOption](doc/LocationOption.md)
@@ -345,6 +391,7 @@ Class | Method | HTTP request | Description
  - [PageResponseFavoriResponse](doc/PageResponseFavoriResponse.md)
  - [PageResponseHistoriqueResponse](doc/PageResponseHistoriqueResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
+ - [PageResponseLedgerEntryResponse](doc/PageResponseLedgerEntryResponse.md)
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
  - [PageResponsePaymentSummary](doc/PageResponsePaymentSummary.md)
  - [PageResponsePropertyReview](doc/PageResponsePropertyReview.md)
@@ -360,6 +407,7 @@ Class | Method | HTTP request | Description
  - [PaymentWebhookRequest](doc/PaymentWebhookRequest.md)
  - [PhoneChangeResponse](doc/PhoneChangeResponse.md)
  - [PhotoVerificationResponse](doc/PhotoVerificationResponse.md)
+ - [PresignedDownload](doc/PresignedDownload.md)
  - [PresignedUpload](doc/PresignedUpload.md)
  - [PrestataireProfileResponse](doc/PrestataireProfileResponse.md)
  - [PropertyRating](doc/PropertyRating.md)
@@ -391,9 +439,12 @@ Class | Method | HTTP request | Description
  - [ReviewCommentRequest](doc/ReviewCommentRequest.md)
  - [ReviewResponse](doc/ReviewResponse.md)
  - [ReviewSignalementRequest](doc/ReviewSignalementRequest.md)
+ - [SaveSearchRequest](doc/SaveSearchRequest.md)
+ - [SavedSearchResponse](doc/SavedSearchResponse.md)
  - [ScoreAdjustmentRequest](doc/ScoreAdjustmentRequest.md)
  - [ScoreAdjustmentResponse](doc/ScoreAdjustmentResponse.md)
  - [ScoreSignal](doc/ScoreSignal.md)
+ - [SearchCriteria](doc/SearchCriteria.md)
  - [SearchResult](doc/SearchResult.md)
  - [SearchResultItem](doc/SearchResultItem.md)
  - [SendMessageRequest](doc/SendMessageRequest.md)
@@ -408,11 +459,14 @@ Class | Method | HTTP request | Description
  - [SubmitKycRequest](doc/SubmitKycRequest.md)
  - [SubmitResidentReviewRequest](doc/SubmitResidentReviewRequest.md)
  - [SubmitReviewRequest](doc/SubmitReviewRequest.md)
+ - [SubscribeAddonRequest](doc/SubscribeAddonRequest.md)
  - [SubscribeRequest](doc/SubscribeRequest.md)
  - [SubscriptionRecapResponse](doc/SubscriptionRecapResponse.md)
  - [SubscriptionResponse](doc/SubscriptionResponse.md)
  - [SuspendAccountRequest](doc/SuspendAccountRequest.md)
  - [SuspendAnnonceRequest](doc/SuspendAnnonceRequest.md)
+ - [Targets](doc/Targets.md)
+ - [TierCount](doc/TierCount.md)
  - [TierInfo](doc/TierInfo.md)
  - [TypeChangeResult](doc/TypeChangeResult.md)
  - [TypeChangeReviewItem](doc/TypeChangeReviewItem.md)
@@ -420,6 +474,7 @@ Class | Method | HTTP request | Description
  - [TypeCount](doc/TypeCount.md)
  - [UnitGroup](doc/UnitGroup.md)
  - [UnitSummary](doc/UnitSummary.md)
+ - [UpdateAddonPriceRequest](doc/UpdateAddonPriceRequest.md)
  - [UpdateAgentProfileRequest](doc/UpdateAgentProfileRequest.md)
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
  - [UpdateAvailabilityRequest](doc/UpdateAvailabilityRequest.md)
@@ -427,6 +482,7 @@ Class | Method | HTTP request | Description
  - [UpdatePlanRequest](doc/UpdatePlanRequest.md)
  - [UpdatePrestataireProfileRequest](doc/UpdatePrestataireProfileRequest.md)
  - [UpdateResidenceRequest](doc/UpdateResidenceRequest.md)
+ - [UpdateSavedSearchRequest](doc/UpdateSavedSearchRequest.md)
  - [UpdateUserProfileRequest](doc/UpdateUserProfileRequest.md)
  - [UpdateUserSettingsRequest](doc/UpdateUserSettingsRequest.md)
  - [UpdateZonesRequest](doc/UpdateZonesRequest.md)
@@ -435,6 +491,7 @@ Class | Method | HTTP request | Description
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
  - [VisiteResponse](doc/VisiteResponse.md)
  - [VisitorSlots](doc/VisitorSlots.md)
+ - [Window](doc/Window.md)
  - [Zone](doc/Zone.md)
  - [ZoneResponse](doc/ZoneResponse.md)
 

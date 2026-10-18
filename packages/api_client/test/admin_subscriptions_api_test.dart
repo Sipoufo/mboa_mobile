@@ -28,6 +28,13 @@ void main() {
       // TODO
     });
 
+    // Give days of the finance add-on, onto the running period or from now, with a reason
+    //
+    //Future<FinanceAddonResponse> grantFinanceAddon(String accountId, GrantAddonRequest grantAddonRequest) async
+    test('test grantFinanceAddon', () async {
+      // TODO
+    });
+
     // Grant a tier without payment, with a mandatory reason; refused over a paid period (RM-M21-01)
     //
     //Future<AdminSubscriptionItem> grantSubscription(GrantSubscriptionRequest grantSubscriptionRequest) async
@@ -53,6 +60,13 @@ void main() {
     //
     //Future<AdminPaymentItem> refundPayment(String id, RefundPaymentRequest refundPaymentRequest) async
     test('test refundPayment', () async {
+      // TODO
+    });
+
+    // Set the finance add-on's price for 30 days
+    //
+    //Future<UpdateAddonPriceRequest> updateFinanceAddonPrice(UpdateAddonPriceRequest updateAddonPriceRequest) async
+    test('test updateFinanceAddonPrice', () async {
       // TODO
     });
 

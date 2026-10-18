@@ -46,8 +46,12 @@ const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N19 =
     const NotificationSettingTypeEnum._('N19');
 const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N20 =
     const NotificationSettingTypeEnum._('N20');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N21 =
+    const NotificationSettingTypeEnum._('N21');
 const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N22 =
     const NotificationSettingTypeEnum._('N22');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N26 =
+    const NotificationSettingTypeEnum._('N26');
 const NotificationSettingTypeEnum
 _$notificationSettingTypeEnum_unknownDefaultOpenApi =
     const NotificationSettingTypeEnum._('unknownDefaultOpenApi');
@@ -94,8 +98,12 @@ NotificationSettingTypeEnum _$notificationSettingTypeEnumValueOf(String name) {
       return _$notificationSettingTypeEnum_N19;
     case 'N20':
       return _$notificationSettingTypeEnum_N20;
+    case 'N21':
+      return _$notificationSettingTypeEnum_N21;
     case 'N22':
       return _$notificationSettingTypeEnum_N22;
+    case 'N26':
+      return _$notificationSettingTypeEnum_N26;
     case 'unknownDefaultOpenApi':
       return _$notificationSettingTypeEnum_unknownDefaultOpenApi;
     default:
@@ -126,7 +134,9 @@ _$notificationSettingTypeEnumValues =
       _$notificationSettingTypeEnum_N18,
       _$notificationSettingTypeEnum_N19,
       _$notificationSettingTypeEnum_N20,
+      _$notificationSettingTypeEnum_N21,
       _$notificationSettingTypeEnum_N22,
+      _$notificationSettingTypeEnum_N26,
       _$notificationSettingTypeEnum_unknownDefaultOpenApi,
     ]);
 
@@ -157,7 +167,9 @@ class _$NotificationSettingTypeEnumSerializer
     'N18': 'N18',
     'N19': 'N19',
     'N20': 'N20',
+    'N21': 'N21',
     'N22': 'N22',
+    'N26': 'N26',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -181,7 +193,9 @@ class _$NotificationSettingTypeEnumSerializer
     'N18': 'N18',
     'N19': 'N19',
     'N20': 'N20',
+    'N21': 'N21',
     'N22': 'N22',
+    'N26': 'N26',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

@@ -21,6 +21,7 @@ part 'adjustment_response.g.dart';
 /// * [periodEndBefore] 
 /// * [periodEndAfter] 
 /// * [createdAt] 
+/// * [product] 
 @BuiltValue()
 abstract class AdjustmentResponse implements Built<AdjustmentResponse, AdjustmentResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -51,6 +52,10 @@ abstract class AdjustmentResponse implements Built<AdjustmentResponse, Adjustmen
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
+
+  @BuiltValueField(wireName: r'product')
+  AdjustmentResponseProductEnum? get product;
+  // enum productEnum {  TIER,  FINANCE_ADDON,  };
 
   AdjustmentResponse._();
 
@@ -136,6 +141,13 @@ class _$AdjustmentResponseSerializer implements PrimitiveSerializer<AdjustmentRe
       yield serializers.serialize(
         object.createdAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.product != null) {
+      yield r'product';
+      yield serializers.serialize(
+        object.product,
+        specifiedType: const FullType(AdjustmentResponseProductEnum),
       );
     }
   }
@@ -233,6 +245,14 @@ class _$AdjustmentResponseSerializer implements PrimitiveSerializer<AdjustmentRe
           if (valueDes == null) continue;
           result.createdAt = valueDes;
           break;
+        case r'product':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(AdjustmentResponseProductEnum),
+          ) as AdjustmentResponseProductEnum?;
+          if (valueDes == null) continue;
+          result.product = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -298,5 +318,22 @@ class AdjustmentResponseTierEnum extends EnumClass {
 
   static BuiltSet<AdjustmentResponseTierEnum> get values => _$adjustmentResponseTierEnumValues;
   static AdjustmentResponseTierEnum valueOf(String name) => _$adjustmentResponseTierEnumValueOf(name);
+}
+
+class AdjustmentResponseProductEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'TIER')
+  static const AdjustmentResponseProductEnum TIER = _$adjustmentResponseProductEnum_TIER;
+  @BuiltValueEnumConst(wireName: r'FINANCE_ADDON')
+  static const AdjustmentResponseProductEnum FINANCE_ADDON = _$adjustmentResponseProductEnum_FINANCE_ADDON;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const AdjustmentResponseProductEnum unknownDefaultOpenApi = _$adjustmentResponseProductEnum_unknownDefaultOpenApi;
+
+  static Serializer<AdjustmentResponseProductEnum> get serializer => _$adjustmentResponseProductEnumSerializer;
+
+  const AdjustmentResponseProductEnum._(String name): super(name);
+
+  static BuiltSet<AdjustmentResponseProductEnum> get values => _$adjustmentResponseProductEnumValues;
+  static AdjustmentResponseProductEnum valueOf(String name) => _$adjustmentResponseProductEnumValueOf(name);
 }
 

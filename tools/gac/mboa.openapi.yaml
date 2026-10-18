@@ -32,6 +32,10 @@ tags:
     description: Direct-to-R2 uploads via pre-signed URLs
   - name: Search
     description: Public listing search
+  - name: Finance — Ledger
+    description: "Manual income and expenses, summary and CSV (M25)"
+  - name: Saved searches
+    description: Up to three kept searches and their alerts (M04)
   - name: Assignation agent
     description: Assign an Agent Mboa to a listing
   - name: Password
@@ -52,6 +56,8 @@ tags:
     description: The authenticated account's identity
   - name: Visites — présence
     description: Confirming presence on site
+  - name: Admin — KPIs
+    description: "Key figures, daily series and CSV export (M22)"
   - name: Prestataire Dashboard
     description: How the prestataire's listings are doing
   - name: Agent — candidatures
@@ -82,6 +88,8 @@ tags:
     description: Conversations between a user and a prestataire about a listing
   - name: Admin — Type Change
     description: Review prestataire type-change requests
+  - name: Finance add-on
+    description: The paid add-on that opens M24–M26 (RM-M13-09)
   - name: Prestataire Profile
     description: Profile of the App Mboa Pro service provider
   - name: Contrats
@@ -111,6 +119,121 @@ tags:
   - name: Account
     description: Account-wide operations (any role)
 paths:
+  /api/v1/finance/ledger/{id}:
+    put:
+      tags:
+        - Finance — Ledger
+      summary: Replace an entry; needs the add-on running
+      operationId: updateLedgerEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LedgerEntryRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/LedgerEntryResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - Finance — Ledger
+      summary: Remove an entry and its attachment; needs the add-on running
+      operationId: deleteLedgerEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/contracts/{id}/changes/{changeId}:
     put:
       tags:
@@ -1277,6 +1400,113 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SignalementResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/saved-searches:
+    get:
+      tags:
+        - Saved searches
+      summary: "My saved searches, each with its count of new results"
+      operationId: listSavedSearches
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SavedSearchResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Saved searches
+      summary: Keep a search — three at most; N-01 when new listings match (RM-M04-07)
+      operationId: saveSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveSearchRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SavedSearchResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -2496,6 +2726,148 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/KycStatusResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/finance/ledger:
+    get:
+      tags:
+        - Finance — Ledger
+      summary: "My ledger, newest first — filter by period and by one listing, one\
+        \ residence or the unassigned"
+      operationId: listLedgerEntries
+      parameters:
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: annonceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: residenceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: unassigned
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseLedgerEntryResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Finance — Ledger
+      summary: Record an income or an expense; needs the add-on running
+      operationId: createLedgerEntry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LedgerEntryRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/LedgerEntryResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -5466,7 +5838,8 @@ paths:
     post:
       tags:
         - Admin — utilisateurs
-      summary: Suspend an account; sessions are revoked at once (RM-M18-02)
+      summary: Suspend an account for `days` (1–365) or until lifted; sessions are
+        revoked at once (RM-M18-02)
       operationId: suspendAccount
       parameters:
         - name: id
@@ -5537,6 +5910,64 @@ paths:
       responses:
         "204":
           description: No Content
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/users/{id}/deletion:
+    post:
+      tags:
+        - Admin — utilisateurs
+      summary: "Step one of deleting an account: a confirmation token valid 10 minutes\
+        \ (RM-M18-03)"
+      operationId: requestAccountDeletion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DeletionChallengeResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -6714,6 +7145,133 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/addons/finance/{accountId}/grant:
+    post:
+      tags:
+        - Admin — Subscriptions
+      summary: "Give days of the finance add-on, onto the running period or from now,\
+        \ with a reason"
+      operationId: grantFinanceAddon
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrantAddonRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/FinanceAddonResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/addons/finance/subscribe:
+    post:
+      tags:
+        - Finance add-on
+      summary: Buy 30 days of the add-on — added after the running period; same payment
+        flow as a tier
+      operationId: subscribeFinanceAddon
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeAddonRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PaymentInitiatedResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/account/phone/verify:
     post:
       tags:
@@ -7047,6 +7605,121 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/UserSettingsResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/saved-searches/{id}:
+    delete:
+      tags:
+        - Saved searches
+      summary: Forget a saved search
+      operationId: deleteSavedSearch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      tags:
+        - Saved searches
+      summary: Rename a saved search or switch its alerts
+      operationId: updateSavedSearch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSavedSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SavedSearchResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -7938,6 +8611,62 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/addons/finance:
+    patch:
+      tags:
+        - Admin — Subscriptions
+      summary: Set the finance add-on's price for 30 days
+      operationId: updateFinanceAddonPrice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAddonPriceRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UpdateAddonPriceRequest"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/visites/{visiteId}/review/pdf:
     get:
       tags:
@@ -8790,6 +9519,78 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AgentPublicProfile"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/saved-searches/{id}/results:
+    get:
+      tags:
+        - Saved searches
+      summary: Run a saved search — the same cards as /search; resets its count of
+        new results
+      operationId: getSavedSearchResults
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageResponseSearchResult"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -9733,6 +10534,228 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/finance/ledger/{id}/attachment:
+    get:
+      tags:
+        - Finance — Ledger
+      summary: A short-lived link to an entry's attachment
+      operationId: getLedgerAttachment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PresignedDownload"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/finance/ledger/summary:
+    get:
+      tags:
+        - Finance — Ledger
+      summary: "Totals in, out and net, and per category, over the same filters (RM-M25-03)"
+      operationId: getLedgerSummary
+      parameters:
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: annonceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: residenceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: unassigned
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/LedgerSummaryResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/finance/ledger/export:
+    get:
+      tags:
+        - Finance — Ledger
+      summary: "The same entries as CSV, for any period (RM-M25-05)"
+      description: '`;`-separated with a UTF-8 BOM so Excel in French opens it as
+        is.'
+      operationId: exportLedger
+      parameters:
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: annonceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: residenceId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: unassigned
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: byte
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/contracts/{id}/pdf:
     get:
       tags:
@@ -10449,7 +11472,8 @@ paths:
     get:
       tags:
         - Admin — utilisateurs
-      summary: "Search accounts by phone or email, with their subscription (RM-M18-01)"
+      summary: "Search accounts by phone, email, name or internal id, with their subscription\
+        \ (RM-M18-01)"
       operationId: listAdminUsers
       parameters:
         - name: query
@@ -10546,6 +11570,123 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/AdminMboaScoreResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/users/{id}:
+    get:
+      tags:
+        - Admin — utilisateurs
+      summary: "One account's full history: moderation, visits, contracts, reports,\
+        \ Mboa Score (RM-M18-04)"
+      operationId: getAdminUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AdminUserDetail"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - Admin — utilisateurs
+      summary: "Step two: anonymise the account, irreversibly, with the token and\
+        \ a reason (RM-M18-03)"
+      operationId: deleteAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteAccountRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -10964,6 +12105,191 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/kpis:
+    get:
+      tags:
+        - Admin — KPIs
+      summary: "The KPI dashboard as of now: each figure with its 7/30-day windows\
+        \ and its target"
+      operationId: getAdminKpis
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/KpiDashboardResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/kpis/export:
+    get:
+      tags:
+        - Admin — KPIs
+      summary: The daily series as CSV for any period up to 366 days (RM-M22-02)
+      description: '`;`-separated with a UTF-8 BOM so Excel in French opens it as
+        is; an empty cell is a figure that was not recorded that day.'
+      operationId: exportAdminKpis
+      parameters:
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: byte
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/admin/kpis/days:
+    get:
+      tags:
+        - Admin — KPIs
+      summary: "One row per day (Africa/Douala), oldest first; at most 366 days, today\
+        \ provisional"
+      operationId: listAdminKpiDays
+      parameters:
+        - name: from
+          in: query
+          description: "First day, ISO date; default 29 days before `to`"
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          description: "Last day, ISO date; default today"
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KpiDayResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/v1/admin/contracts:
     get:
       tags:
@@ -11251,6 +12577,56 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageResponseAnnonceResponse"
+        "403":
+          description: Authenticated but not allowed to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: "Missing, expired or invalid access token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid request or a violated business rule — see the `error`
+            code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicts with the current state — see the `error` code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: "The resource does not exist, or is not the caller's"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/addons/finance:
+    get:
+      tags:
+        - Finance add-on
+      summary: "My finance add-on: active, until when, and its price"
+      operationId: getFinanceAddon
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/FinanceAddonResponse"
         "403":
           description: Authenticated but not allowed to perform this action
           content:
@@ -11781,6 +13157,90 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
+    LedgerEntryRequest:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+            - INCOME
+            - EXPENSE
+        category:
+          type: string
+          enum:
+            - RENT
+            - CHARGES
+            - WORKS
+            - PROPERTY_TAX
+            - SERVICE_PROVIDERS
+            - OTHER
+        amount:
+          type: integer
+          format: int64
+          maximum: 100000000000
+        date:
+          type: string
+          format: date
+        annonceId:
+          type: string
+          format: uuid
+        residenceId:
+          type: string
+          format: uuid
+        note:
+          type: string
+          maxLength: 500
+          minLength: 0
+        attachmentKey:
+          type: string
+          maxLength: 512
+          minLength: 0
+      required:
+        - amount
+        - category
+        - date
+        - direction
+    LedgerEntryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        direction:
+          type: string
+          enum:
+            - INCOME
+            - EXPENSE
+        category:
+          type: string
+          enum:
+            - RENT
+            - CHARGES
+            - WORKS
+            - PROPERTY_TAX
+            - SERVICE_PROVIDERS
+            - OTHER
+        amount:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+        annonceId:
+          type: string
+          format: uuid
+        residenceId:
+          type: string
+          format: uuid
+        propertyLabel:
+          type: string
+        note:
+          type: string
+        hasAttachment:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
     RequestChangesRequest:
       type: object
       properties:
@@ -12232,6 +13692,7 @@ components:
             - BY_AGENT
             - AGENT_UNAVAILABLE
             - AGENT_REMOVED
+            - LISTING_UNAVAILABLE
         createdAt:
           type: string
           format: date-time
@@ -12507,6 +13968,114 @@ components:
           format: date-time
         reviewNote:
           type: string
+        createdAt:
+          type: string
+          format: date-time
+    SaveSearchRequest:
+      type: object
+      properties:
+        criteria:
+          $ref: "#/components/schemas/SearchCriteria"
+        name:
+          type: string
+          maxLength: 60
+          minLength: 0
+        alertsEnabled:
+          type: boolean
+      required:
+        - criteria
+    SearchCriteria:
+      type: object
+      properties:
+        cityId:
+          type: string
+          format: uuid
+        districtIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        propertyTypes:
+          type: array
+          items:
+            type: string
+            enum:
+              - APARTMENT
+              - STUDIO
+              - VILLA
+              - ROOM
+              - OFFICE
+              - COMMERCIAL_SPACE
+        rentalPeriods:
+          type: array
+          items:
+            type: string
+            enum:
+              - DAY
+              - WEEK
+              - MONTH
+              - QUARTER
+              - YEAR
+        rentMin:
+          type: integer
+          format: int32
+        rentMax:
+          type: integer
+          format: int32
+        roomsMin:
+          type: integer
+          format: int32
+        surfaceMin:
+          type: integer
+          format: int32
+        surfaceMax:
+          type: integer
+          format: int32
+        furnished:
+          type: boolean
+        availableNow:
+          type: boolean
+        badges:
+          type: array
+          items:
+            type: string
+            enum:
+              - TRUSTED
+              - RECERTIFIED
+              - IDENTITY_VERIFIED
+              - PHOTOS_VERIFIED
+        amenities:
+          type: array
+          items:
+            type: string
+            enum:
+              - AIR_CONDITIONING
+              - HOT_WATER
+              - GENERATOR
+              - SECURITY_GUARD
+              - PARKING
+              - WIFI
+    SavedSearchResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        criteria:
+          $ref: "#/components/schemas/SearchCriteria"
+        alertsEnabled:
+          type: boolean
+        newMatchCount:
+          type: integer
+          format: int64
+        lastViewedAt:
+          type: string
+          format: date-time
+        lastAlertAt:
+          type: string
+          format: date-time
         createdAt:
           type: string
           format: date-time
@@ -12862,6 +14431,7 @@ components:
             - VISIT_REPORT
             - RECEIPT
             - CONTRACT
+            - FINANCE_ATTACHMENT
         contentType:
           type: string
           minLength: 1
@@ -13611,8 +15181,21 @@ components:
           type: string
           maxLength: 300
           minLength: 0
+        days:
+          type: integer
+          format: int32
+          maximum: 365
+          minimum: 1
       required:
         - reason
+    DeletionChallengeResponse:
+      type: object
+      properties:
+        confirmationToken:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
     RejectTypeChangeRequest:
       type: object
       properties:
@@ -13785,6 +15368,11 @@ components:
           format: uuid
         refundReason:
           type: string
+        purpose:
+          type: string
+          enum:
+            - SUBSCRIPTION
+            - FINANCE_ADDON
     RejectKycRequest:
       type: object
       properties:
@@ -13812,6 +15400,45 @@ components:
           minLength: 0
       required:
         - reason
+    GrantAddonRequest:
+      type: object
+      properties:
+        days:
+          type: integer
+          format: int32
+          maximum: 365
+          minimum: 1
+        reason:
+          type: string
+          maxLength: 300
+          minLength: 0
+      required:
+        - reason
+    FinanceAddonResponse:
+      type: object
+      properties:
+        active:
+          type: boolean
+        periodEnd:
+          type: string
+          format: date-time
+        everSubscribed:
+          type: boolean
+        paid:
+          type: boolean
+        monthlyPrice:
+          type: integer
+          format: int32
+    SubscribeAddonRequest:
+      type: object
+      properties:
+        method:
+          type: string
+          enum:
+            - MTN_MOMO
+            - ORANGE_MONEY
+      required:
+        - method
     ConfirmPhoneChangeRequest:
       type: object
       properties:
@@ -13939,7 +15566,9 @@ components:
               - N18
               - N19
               - N20
+              - N21
               - N22
+              - N26
           uniqueItems: true
     NotificationSetting:
       type: object
@@ -13967,7 +15596,9 @@ components:
             - N18
             - N19
             - N20
+            - N21
             - N22
+            - N26
         enabled:
           type: boolean
         mandatory:
@@ -13986,6 +15617,16 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/NotificationSetting"
+    UpdateSavedSearchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 60
+          minLength: 0
+          pattern: .*\S.*
+        alertsEnabled:
+          type: boolean
     UpdateResidenceRequest:
       type: object
       properties:
@@ -14252,6 +15893,14 @@ components:
           type: object
           additionalProperties:
             type: string
+    UpdateAddonPriceRequest:
+      type: object
+      properties:
+        monthlyPrice:
+          type: integer
+          format: int32
+          maximum: 1000000
+          minimum: 0
     Pageable:
       type: object
       properties:
@@ -14394,6 +16043,11 @@ components:
         createdAt:
           type: string
           format: date-time
+        purpose:
+          type: string
+          enum:
+            - SUBSCRIPTION
+            - FINANCE_ADDON
     ReceiptResponse:
       type: object
       properties:
@@ -15168,6 +16822,77 @@ components:
           format: int32
         last:
           type: boolean
+    PageResponseLedgerEntryResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/LedgerEntryResponse"
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+    PresignedDownload:
+      type: object
+      properties:
+        downloadUrl:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+    CategoryTotal:
+      type: object
+      properties:
+        direction:
+          type: string
+          enum:
+            - INCOME
+            - EXPENSE
+        category:
+          type: string
+          enum:
+            - RENT
+            - CHARGES
+            - WORKS
+            - PROPERTY_TAX
+            - SERVICE_PROVIDERS
+            - OTHER
+        total:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+    LedgerSummaryResponse:
+      type: object
+      properties:
+        income:
+          type: integer
+          format: int64
+        expense:
+          type: integer
+          format: int64
+        net:
+          type: integer
+          format: int64
+        entryCount:
+          type: integer
+          format: int64
+        byCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryTotal"
     PageResponseFavoriResponse:
       type: object
       properties:
@@ -15503,6 +17228,228 @@ components:
           format: int32
         last:
           type: boolean
+    AccountContractHistory:
+      type: object
+      properties:
+        asTenant:
+          $ref: "#/components/schemas/HistorySectionAdminContractLine"
+        asOwner:
+          $ref: "#/components/schemas/HistorySectionAdminContractLine"
+    AccountModerationEntry:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+            - SUSPEND
+            - REACTIVATE
+            - DELETE
+        reason:
+          type: string
+        adminAccountId:
+          type: string
+          format: uuid
+        suspendedUntil:
+          type: string
+          format: date-time
+        liftedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    AccountReportHistory:
+      type: object
+      properties:
+        emitted:
+          $ref: "#/components/schemas/HistorySectionAdminReportLine"
+        received:
+          $ref: "#/components/schemas/HistorySectionAdminReportLine"
+    AccountVisitHistory:
+      type: object
+      properties:
+        asClient:
+          $ref: "#/components/schemas/HistorySectionAdminVisitLine"
+        asVisitor:
+          $ref: "#/components/schemas/HistorySectionAdminVisitLine"
+        onOwnListings:
+          $ref: "#/components/schemas/HistorySectionAdminVisitLine"
+    AdminContractLine:
+      type: object
+      properties:
+        contractId:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        annonceTitle:
+          type: string
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - SENT
+            - CHANGES_REQUESTED
+            - ACCEPTED
+            - SIGNED
+            - CANCELLED
+        startDate:
+          type: string
+          format: date
+        durationUnits:
+          type: integer
+          format: int32
+        rentalPeriod:
+          type: string
+          enum:
+            - DAY
+            - WEEK
+            - MONTH
+            - QUARTER
+            - YEAR
+        signedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    AdminReportLine:
+      type: object
+      properties:
+        reportId:
+          type: string
+          format: uuid
+        targetType:
+          type: string
+          enum:
+            - ANNONCE
+            - MESSAGE
+            - REVIEW
+        targetId:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          enum:
+            - FRAUDULENT_LISTING
+            - ABNORMAL_PRICE
+            - INAPPROPRIATE_CONTENT
+            - HARASSMENT
+        status:
+          type: string
+          enum:
+            - PENDING
+            - VALIDATED
+            - REJECTED
+        createdAt:
+          type: string
+          format: date-time
+        reviewedAt:
+          type: string
+          format: date-time
+    AdminUserDetail:
+      type: object
+      properties:
+        account:
+          $ref: "#/components/schemas/AdminUserSummary"
+        firstSignInAt:
+          type: string
+          format: date-time
+        kyc:
+          $ref: "#/components/schemas/KycStatusResponse"
+        moderation:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountModerationEntry"
+        visits:
+          $ref: "#/components/schemas/AccountVisitHistory"
+        contracts:
+          $ref: "#/components/schemas/AccountContractHistory"
+        reports:
+          $ref: "#/components/schemas/AccountReportHistory"
+        mboaScore:
+          $ref: "#/components/schemas/AdminMboaScoreResponse"
+    AdminVisitLine:
+      type: object
+      properties:
+        visiteId:
+          type: string
+          format: uuid
+        annonceId:
+          type: string
+          format: uuid
+        annonceTitle:
+          type: string
+        scheduledAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - REQUESTED
+            - SCHEDULED
+            - CANCELLED
+            - COMPLETED
+            - NOT_FULFILLED
+        cancellationReason:
+          type: string
+          enum:
+            - BY_USER
+            - BY_AGENT
+            - AGENT_UNAVAILABLE
+            - AGENT_REMOVED
+            - LISTING_UNAVAILABLE
+        visitorKind:
+          type: string
+          enum:
+            - AGENT
+            - OWNER
+    HistorySectionAdminContractLine:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        byStatus:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        recent:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminContractLine"
+    HistorySectionAdminReportLine:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        byStatus:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        recent:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminReportLine"
+    HistorySectionAdminVisitLine:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        byStatus:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        recent:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminVisitLine"
     PageResponseTypeChangeReviewItem:
       type: object
       properties:
@@ -15606,6 +17553,11 @@ components:
         createdAt:
           type: string
           format: date-time
+        product:
+          type: string
+          enum:
+            - TIER
+            - FINANCE_ADDON
     AdminSubscriptionDetail:
       type: object
       properties:
@@ -15665,6 +17617,8 @@ components:
           items:
             $ref: "#/components/schemas/Line"
         total:
+          $ref: "#/components/schemas/Line"
+        addon:
           $ref: "#/components/schemas/Line"
     PageResponseSignalementResponse:
       type: object
@@ -15763,6 +17717,182 @@ components:
           format: int32
         last:
           type: boolean
+    Churn:
+      type: object
+      properties:
+        month:
+          type: string
+        provisional:
+          type: boolean
+        paidAtStart:
+          type: integer
+          format: int32
+        lost:
+          type: integer
+          format: int64
+        rate:
+          type: number
+          format: double
+    Cohort:
+      type: object
+      properties:
+        registered:
+          type: integer
+          format: int64
+        converted:
+          type: integer
+          format: int64
+        rate:
+          type: number
+          format: double
+    Conversion:
+      type: object
+      properties:
+        last90Days:
+          $ref: "#/components/schemas/Cohort"
+        allTime:
+          $ref: "#/components/schemas/Cohort"
+    KpiDashboardResponse:
+      type: object
+      properties:
+        asOf:
+          type: string
+          format: date-time
+        activeListings:
+          type: integer
+          format: int64
+        prestatairesByTier:
+          type: array
+          items:
+            $ref: "#/components/schemas/TierCount"
+        paidPrestataires:
+          type: integer
+          format: int32
+        mrr:
+          type: integer
+          format: int64
+        addonSubscribers:
+          type: integer
+          format: int32
+        addonMrr:
+          type: integer
+          format: int64
+        newPrestataires:
+          $ref: "#/components/schemas/Window"
+        agentVisitsCompleted:
+          $ref: "#/components/schemas/Window"
+        contractsSigned:
+          $ref: "#/components/schemas/Window"
+        conversion:
+          $ref: "#/components/schemas/Conversion"
+        churnThisMonth:
+          $ref: "#/components/schemas/Churn"
+        churnLastMonth:
+          $ref: "#/components/schemas/Churn"
+        targets:
+          $ref: "#/components/schemas/Targets"
+    Targets:
+      type: object
+      properties:
+        activeListings:
+          type: integer
+          format: int64
+        paidPrestataires:
+          type: integer
+          format: int32
+        newPrestatairesPer30Days:
+          type: integer
+          format: int32
+        conversionRate:
+          type: number
+          format: double
+        mrr:
+          type: integer
+          format: int64
+        monthlyChurn:
+          type: number
+          format: double
+    TierCount:
+      type: object
+      properties:
+        tier:
+          type: string
+          enum:
+            - FREE
+            - BASIC_PLUS
+            - PRO
+            - PRO_PLUS
+        active:
+          type: integer
+          format: int32
+        paid:
+          type: integer
+          format: int32
+        unpaid:
+          type: integer
+          format: int32
+    Window:
+      type: object
+      properties:
+        last7Days:
+          type: integer
+          format: int64
+        last30Days:
+          type: integer
+          format: int64
+    KpiDayResponse:
+      type: object
+      properties:
+        day:
+          type: string
+          format: date
+        provisional:
+          type: boolean
+        newPrestataires:
+          type: integer
+          format: int32
+        converted:
+          type: integer
+          format: int32
+        agentVisitsCompleted:
+          type: integer
+          format: int32
+        contractsSigned:
+          type: integer
+          format: int32
+        paidLost:
+          type: integer
+          format: int32
+        activeListings:
+          type: integer
+          format: int32
+        prestatairesFree:
+          type: integer
+          format: int32
+        basicPlusPaid:
+          type: integer
+          format: int32
+        basicPlusUnpaid:
+          type: integer
+          format: int32
+        proPaid:
+          type: integer
+          format: int32
+        proUnpaid:
+          type: integer
+          format: int32
+        proPlusPaid:
+          type: integer
+          format: int32
+        proPlusUnpaid:
+          type: integer
+          format: int32
+        mrr:
+          type: integer
+          format: int64
+        snapshotTakenAt:
+          type: string
+          format: date-time
     AdminPrestataireBadgesResponse:
       type: object
       properties:
@@ -15872,6 +18002,19 @@ components:
           format: int32
         last:
           type: boolean
+    DeleteAccountRequest:
+      type: object
+      properties:
+        confirmationToken:
+          type: string
+          minLength: 1
+        reason:
+          type: string
+          maxLength: 300
+          minLength: 0
+      required:
+        - confirmationToken
+        - reason
     ErrorResponse:
       description: Standard error payload returned by every failing endpoint
       properties:

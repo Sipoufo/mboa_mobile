@@ -94,6 +94,9 @@ const VisiteResponseCancellationReasonEnum
 _$visiteResponseCancellationReasonEnum_AGENT_REMOVED =
     const VisiteResponseCancellationReasonEnum._('AGENT_REMOVED');
 const VisiteResponseCancellationReasonEnum
+_$visiteResponseCancellationReasonEnum_LISTING_UNAVAILABLE =
+    const VisiteResponseCancellationReasonEnum._('LISTING_UNAVAILABLE');
+const VisiteResponseCancellationReasonEnum
 _$visiteResponseCancellationReasonEnum_unknownDefaultOpenApi =
     const VisiteResponseCancellationReasonEnum._('unknownDefaultOpenApi');
 
@@ -108,6 +111,8 @@ _$visiteResponseCancellationReasonEnumValueOf(String name) {
       return _$visiteResponseCancellationReasonEnum_AGENT_UNAVAILABLE;
     case 'AGENT_REMOVED':
       return _$visiteResponseCancellationReasonEnum_AGENT_REMOVED;
+    case 'LISTING_UNAVAILABLE':
+      return _$visiteResponseCancellationReasonEnum_LISTING_UNAVAILABLE;
     case 'unknownDefaultOpenApi':
       return _$visiteResponseCancellationReasonEnum_unknownDefaultOpenApi;
     default:
@@ -123,6 +128,7 @@ _$visiteResponseCancellationReasonEnumValues =
         _$visiteResponseCancellationReasonEnum_BY_AGENT,
         _$visiteResponseCancellationReasonEnum_AGENT_UNAVAILABLE,
         _$visiteResponseCancellationReasonEnum_AGENT_REMOVED,
+        _$visiteResponseCancellationReasonEnum_LISTING_UNAVAILABLE,
         _$visiteResponseCancellationReasonEnum_unknownDefaultOpenApi,
       ],
     );
@@ -219,6 +225,7 @@ class _$VisiteResponseCancellationReasonEnumSerializer
     'BY_AGENT': 'BY_AGENT',
     'AGENT_UNAVAILABLE': 'AGENT_UNAVAILABLE',
     'AGENT_REMOVED': 'AGENT_REMOVED',
+    'LISTING_UNAVAILABLE': 'LISTING_UNAVAILABLE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -226,6 +233,7 @@ class _$VisiteResponseCancellationReasonEnumSerializer
     'BY_AGENT': 'BY_AGENT',
     'AGENT_UNAVAILABLE': 'AGENT_UNAVAILABLE',
     'AGENT_REMOVED': 'AGENT_REMOVED',
+    'LISTING_UNAVAILABLE': 'LISTING_UNAVAILABLE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

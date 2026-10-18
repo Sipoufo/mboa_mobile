@@ -8,13 +8,23 @@ part of 'serializers.dart';
 
 Serializers _$serializers =
     (Serializers().toBuilder()
+          ..add(AccountContractHistory.serializer)
+          ..add(AccountModerationEntry.serializer)
+          ..add(AccountModerationEntryActionEnum.serializer)
+          ..add(AccountReportHistory.serializer)
+          ..add(AccountVisitHistory.serializer)
           ..add(AddFavoriRequest.serializer)
           ..add(AdjustmentResponse.serializer)
           ..add(AdjustmentResponseKindEnum.serializer)
+          ..add(AdjustmentResponseProductEnum.serializer)
           ..add(AdjustmentResponseTierEnum.serializer)
+          ..add(AdminContractLine.serializer)
+          ..add(AdminContractLineRentalPeriodEnum.serializer)
+          ..add(AdminContractLineStatusEnum.serializer)
           ..add(AdminMboaScoreResponse.serializer)
           ..add(AdminPaymentItem.serializer)
           ..add(AdminPaymentItemMethodEnum.serializer)
+          ..add(AdminPaymentItemPurposeEnum.serializer)
           ..add(AdminPaymentItemStatusEnum.serializer)
           ..add(AdminPaymentItemTierEnum.serializer)
           ..add(AdminPhotoVerificationItem.serializer)
@@ -22,15 +32,24 @@ Serializers _$serializers =
           ..add(AdminPhotoVerificationItemTargetEnum.serializer)
           ..add(AdminPrestataireBadgesResponse.serializer)
           ..add(AdminPrestataireBadgesResponseBadgesEnum.serializer)
+          ..add(AdminReportLine.serializer)
+          ..add(AdminReportLineReasonEnum.serializer)
+          ..add(AdminReportLineStatusEnum.serializer)
+          ..add(AdminReportLineTargetTypeEnum.serializer)
           ..add(AdminSubscriptionDetail.serializer)
           ..add(AdminSubscriptionItem.serializer)
           ..add(AdminSubscriptionItemEffectiveTierEnum.serializer)
           ..add(AdminSubscriptionItemStatusEnum.serializer)
           ..add(AdminSubscriptionItemTierEnum.serializer)
+          ..add(AdminUserDetail.serializer)
           ..add(AdminUserSummary.serializer)
           ..add(AdminUserSummaryRoleEnum.serializer)
           ..add(AdminUserSummaryStatusEnum.serializer)
           ..add(AdminUserSummaryTierEnum.serializer)
+          ..add(AdminVisitLine.serializer)
+          ..add(AdminVisitLineCancellationReasonEnum.serializer)
+          ..add(AdminVisitLineStatusEnum.serializer)
+          ..add(AdminVisitLineVisitorKindEnum.serializer)
           ..add(AgentCandidate.serializer)
           ..add(AgentOpportunity.serializer)
           ..add(AgentOpportunityRentalPeriodEnum.serializer)
@@ -66,9 +85,14 @@ Serializers _$serializers =
           ..add(BlockDayRequest.serializer)
           ..add(BookVisiteRequest.serializer)
           ..add(BookableSlot.serializer)
+          ..add(CategoryTotal.serializer)
+          ..add(CategoryTotalCategoryEnum.serializer)
+          ..add(CategoryTotalDirectionEnum.serializer)
           ..add(ChangePasswordRequest.serializer)
           ..add(ChangeRequestResponse.serializer)
           ..add(ChangeRequestResponseContestedTermsEnum.serializer)
+          ..add(Churn.serializer)
+          ..add(Cohort.serializer)
           ..add(Comment.serializer)
           ..add(ConfirmPhoneChangeRequest.serializer)
           ..add(ContractPdfResponse.serializer)
@@ -78,6 +102,7 @@ Serializers _$serializers =
           ..add(ContractResponseStatusEnum.serializer)
           ..add(ContractVerification.serializer)
           ..add(ConversationResponse.serializer)
+          ..add(Conversion.serializer)
           ..add(CountryResponse.serializer)
           ..add(CreateAnnonceRequest.serializer)
           ..add(CreateAnnonceRequestAmenitiesEnum.serializer)
@@ -98,19 +123,35 @@ Serializers _$serializers =
           ..add(DashboardMetricRequiredTierEnum.serializer)
           ..add(DashboardSummaryResponse.serializer)
           ..add(DashboardSummaryResponseTierEnum.serializer)
+          ..add(DeleteAccountRequest.serializer)
+          ..add(DeletionChallengeResponse.serializer)
           ..add(ErrorResponse.serializer)
           ..add(ExtendSubscriptionRequest.serializer)
           ..add(FavoriResponse.serializer)
           ..add(FavoriResponseRentalPeriodEnum.serializer)
           ..add(FieldError.serializer)
+          ..add(FinanceAddonResponse.serializer)
           ..add(ForgotPasswordRequest.serializer)
+          ..add(GrantAddonRequest.serializer)
           ..add(GrantSubscriptionRequest.serializer)
           ..add(GrantSubscriptionRequestTierEnum.serializer)
           ..add(HistoriqueResponse.serializer)
           ..add(HistoriqueResponseRentalPeriodEnum.serializer)
+          ..add(HistorySectionAdminContractLine.serializer)
+          ..add(HistorySectionAdminReportLine.serializer)
+          ..add(HistorySectionAdminVisitLine.serializer)
+          ..add(KpiDashboardResponse.serializer)
+          ..add(KpiDayResponse.serializer)
           ..add(KycReviewItem.serializer)
           ..add(KycReviewItemRoleEnum.serializer)
           ..add(KycStatusResponse.serializer)
+          ..add(LedgerEntryRequest.serializer)
+          ..add(LedgerEntryRequestCategoryEnum.serializer)
+          ..add(LedgerEntryRequestDirectionEnum.serializer)
+          ..add(LedgerEntryResponse.serializer)
+          ..add(LedgerEntryResponseCategoryEnum.serializer)
+          ..add(LedgerEntryResponseDirectionEnum.serializer)
+          ..add(LedgerSummaryResponse.serializer)
           ..add(Line.serializer)
           ..add(LineTierEnum.serializer)
           ..add(ListingStats.serializer)
@@ -144,6 +185,7 @@ Serializers _$serializers =
           ..add(PageResponseFavoriResponse.serializer)
           ..add(PageResponseHistoriqueResponse.serializer)
           ..add(PageResponseKycReviewItem.serializer)
+          ..add(PageResponseLedgerEntryResponse.serializer)
           ..add(PageResponseMessageResponse.serializer)
           ..add(PageResponsePaymentSummary.serializer)
           ..add(PageResponsePropertyReview.serializer)
@@ -158,6 +200,7 @@ Serializers _$serializers =
           ..add(PaymentInitiatedResponseStatusEnum.serializer)
           ..add(PaymentSummary.serializer)
           ..add(PaymentSummaryMethodEnum.serializer)
+          ..add(PaymentSummaryPurposeEnum.serializer)
           ..add(PaymentSummaryStatusEnum.serializer)
           ..add(PaymentSummaryTierEnum.serializer)
           ..add(PaymentWebhookRequest.serializer)
@@ -166,6 +209,7 @@ Serializers _$serializers =
           ..add(PhotoVerificationResponse.serializer)
           ..add(PhotoVerificationResponseStatusEnum.serializer)
           ..add(PhotoVerificationResponseTargetEnum.serializer)
+          ..add(PresignedDownload.serializer)
           ..add(PresignedUpload.serializer)
           ..add(PrestataireProfileResponse.serializer)
           ..add(PrestataireProfileResponseTypeEnum.serializer)
@@ -211,10 +255,17 @@ Serializers _$serializers =
           ..add(ReviewCommentRequest.serializer)
           ..add(ReviewResponse.serializer)
           ..add(ReviewSignalementRequest.serializer)
+          ..add(SaveSearchRequest.serializer)
+          ..add(SavedSearchResponse.serializer)
           ..add(ScoreAdjustmentRequest.serializer)
           ..add(ScoreAdjustmentResponse.serializer)
           ..add(ScoreSignal.serializer)
           ..add(ScoreSignalCodeEnum.serializer)
+          ..add(SearchCriteria.serializer)
+          ..add(SearchCriteriaAmenitiesEnum.serializer)
+          ..add(SearchCriteriaBadgesEnum.serializer)
+          ..add(SearchCriteriaPropertyTypesEnum.serializer)
+          ..add(SearchCriteriaRentalPeriodsEnum.serializer)
           ..add(SearchResult.serializer)
           ..add(SearchResultItem.serializer)
           ..add(SearchResultItemBadgesEnum.serializer)
@@ -238,6 +289,8 @@ Serializers _$serializers =
           ..add(SubmitKycRequest.serializer)
           ..add(SubmitResidentReviewRequest.serializer)
           ..add(SubmitReviewRequest.serializer)
+          ..add(SubscribeAddonRequest.serializer)
+          ..add(SubscribeAddonRequestMethodEnum.serializer)
           ..add(SubscribeRequest.serializer)
           ..add(SubscribeRequestMethodEnum.serializer)
           ..add(SubscribeRequestTierEnum.serializer)
@@ -246,6 +299,9 @@ Serializers _$serializers =
           ..add(SubscriptionResponseTierEnum.serializer)
           ..add(SuspendAccountRequest.serializer)
           ..add(SuspendAnnonceRequest.serializer)
+          ..add(Targets.serializer)
+          ..add(TierCount.serializer)
+          ..add(TierCountTierEnum.serializer)
           ..add(TierInfo.serializer)
           ..add(TierInfoTierEnum.serializer)
           ..add(TypeChangeResult.serializer)
@@ -266,6 +322,7 @@ Serializers _$serializers =
           ..add(UnitSummaryPropertyTypeEnum.serializer)
           ..add(UnitSummaryRentalPeriodEnum.serializer)
           ..add(UnitSummaryStatusEnum.serializer)
+          ..add(UpdateAddonPriceRequest.serializer)
           ..add(UpdateAgentProfileRequest.serializer)
           ..add(UpdateAnnonceRequest.serializer)
           ..add(UpdateAnnonceRequestAmenitiesEnum.serializer)
@@ -278,6 +335,7 @@ Serializers _$serializers =
           ..add(UpdatePrestataireProfileRequest.serializer)
           ..add(UpdatePrestataireProfileRequestTypeEnum.serializer)
           ..add(UpdateResidenceRequest.serializer)
+          ..add(UpdateSavedSearchRequest.serializer)
           ..add(UpdateUserProfileRequest.serializer)
           ..add(UpdateUserSettingsRequest.serializer)
           ..add(UpdateUserSettingsRequestDisabledNotificationsEnum.serializer)
@@ -295,8 +353,15 @@ Serializers _$serializers =
           ..add(VisitorSlotsModeEnum.serializer)
           ..add(VisitorSlotsReasonEnum.serializer)
           ..add(VisitorSlotsVisitorKindEnum.serializer)
+          ..add(Window.serializer)
           ..add(Zone.serializer)
           ..add(ZoneResponse.serializer)
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AccountModerationEntry),
+            ]),
+            () => ListBuilder<AccountModerationEntry>(),
+          )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(AdminPaymentItem)]),
             () => ListBuilder<AdminPaymentItem>(),
@@ -374,6 +439,10 @@ Serializers _$serializers =
             () => ListBuilder<BookableSlot>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(CategoryTotal)]),
+            () => ListBuilder<CategoryTotal>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(ChangeRequestResponseContestedTermsEnum),
             ]),
@@ -410,6 +479,12 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(KycReviewItem)]),
             () => ListBuilder<KycReviewItem>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(LedgerEntryResponse),
+            ]),
+            () => ListBuilder<LedgerEntryResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(Line)]),
@@ -538,6 +613,34 @@ Serializers _$serializers =
             () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(SearchCriteriaPropertyTypesEnum),
+            ]),
+            () => ListBuilder<SearchCriteriaPropertyTypesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(SearchCriteriaRentalPeriodsEnum),
+            ]),
+            () => ListBuilder<SearchCriteriaRentalPeriodsEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(SearchCriteriaBadgesEnum),
+            ]),
+            () => ListBuilder<SearchCriteriaBadgesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(SearchCriteriaAmenitiesEnum),
+            ]),
+            () => ListBuilder<SearchCriteriaAmenitiesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(SearchResultItem)]),
             () => ListBuilder<SearchResultItem>(),
           )
@@ -648,6 +751,10 @@ Serializers _$serializers =
             () => SetBuilder<UpdateAnnonceRequestAmenitiesEnum>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(TierCount)]),
+            () => ListBuilder<TierCount>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(TypeChangeReviewItem),
             ]),
@@ -685,6 +792,41 @@ Serializers _$serializers =
               const FullType(String),
             ]),
             () => MapBuilder<String, String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(int),
+            ]),
+            () => MapBuilder<String, int>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(AdminContractLine),
+            ]),
+            () => ListBuilder<AdminContractLine>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(int),
+            ]),
+            () => MapBuilder<String, int>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(AdminReportLine)]),
+            () => ListBuilder<AdminReportLine>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(int),
+            ]),
+            () => MapBuilder<String, int>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(AdminVisitLine)]),
+            () => ListBuilder<AdminVisitLine>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [

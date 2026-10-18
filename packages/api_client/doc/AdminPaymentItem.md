@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **refundedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **refundedBy** | **String** |  | [optional] 
 **refundReason** | **String** |  | [optional] 
+**purpose** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -58,7 +58,7 @@ abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBui
 
   @BuiltValueField(wireName: r'cancellationReason')
   VisiteResponseCancellationReasonEnum? get cancellationReason;
-  // enum cancellationReasonEnum {  BY_USER,  BY_AGENT,  AGENT_UNAVAILABLE,  AGENT_REMOVED,  };
+  // enum cancellationReasonEnum {  BY_USER,  BY_AGENT,  AGENT_UNAVAILABLE,  AGENT_REMOVED,  LISTING_UNAVAILABLE,  };
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
@@ -389,6 +389,8 @@ class VisiteResponseCancellationReasonEnum extends EnumClass {
   static const VisiteResponseCancellationReasonEnum AGENT_UNAVAILABLE = _$visiteResponseCancellationReasonEnum_AGENT_UNAVAILABLE;
   @BuiltValueEnumConst(wireName: r'AGENT_REMOVED')
   static const VisiteResponseCancellationReasonEnum AGENT_REMOVED = _$visiteResponseCancellationReasonEnum_AGENT_REMOVED;
+  @BuiltValueEnumConst(wireName: r'LISTING_UNAVAILABLE')
+  static const VisiteResponseCancellationReasonEnum LISTING_UNAVAILABLE = _$visiteResponseCancellationReasonEnum_LISTING_UNAVAILABLE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const VisiteResponseCancellationReasonEnum unknownDefaultOpenApi = _$visiteResponseCancellationReasonEnum_unknownDefaultOpenApi;
 

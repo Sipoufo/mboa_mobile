@@ -12,5 +12,10 @@ void main() {
       // TODO
     });
 
+    // int days
+    test('to test the property `days`', () async {
+      // TODO
+    });
+
   });
 }

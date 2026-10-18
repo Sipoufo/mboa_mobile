@@ -72,10 +72,46 @@ final BuiltSet<AdjustmentResponseTierEnum> _$adjustmentResponseTierEnumValues =
       _$adjustmentResponseTierEnum_unknownDefaultOpenApi,
     ]);
 
+const AdjustmentResponseProductEnum _$adjustmentResponseProductEnum_TIER =
+    const AdjustmentResponseProductEnum._('TIER');
+const AdjustmentResponseProductEnum
+_$adjustmentResponseProductEnum_FINANCE_ADDON =
+    const AdjustmentResponseProductEnum._('FINANCE_ADDON');
+const AdjustmentResponseProductEnum
+_$adjustmentResponseProductEnum_unknownDefaultOpenApi =
+    const AdjustmentResponseProductEnum._('unknownDefaultOpenApi');
+
+AdjustmentResponseProductEnum _$adjustmentResponseProductEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'TIER':
+      return _$adjustmentResponseProductEnum_TIER;
+    case 'FINANCE_ADDON':
+      return _$adjustmentResponseProductEnum_FINANCE_ADDON;
+    case 'unknownDefaultOpenApi':
+      return _$adjustmentResponseProductEnum_unknownDefaultOpenApi;
+    default:
+      return _$adjustmentResponseProductEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<AdjustmentResponseProductEnum>
+_$adjustmentResponseProductEnumValues = BuiltSet<AdjustmentResponseProductEnum>(
+  const <AdjustmentResponseProductEnum>[
+    _$adjustmentResponseProductEnum_TIER,
+    _$adjustmentResponseProductEnum_FINANCE_ADDON,
+    _$adjustmentResponseProductEnum_unknownDefaultOpenApi,
+  ],
+);
+
 Serializer<AdjustmentResponseKindEnum> _$adjustmentResponseKindEnumSerializer =
     _$AdjustmentResponseKindEnumSerializer();
 Serializer<AdjustmentResponseTierEnum> _$adjustmentResponseTierEnumSerializer =
     _$AdjustmentResponseTierEnumSerializer();
+Serializer<AdjustmentResponseProductEnum>
+_$adjustmentResponseProductEnumSerializer =
+    _$AdjustmentResponseProductEnumSerializer();
 
 class _$AdjustmentResponseKindEnumSerializer
     implements PrimitiveSerializer<AdjustmentResponseKindEnum> {
@@ -151,6 +187,41 @@ class _$AdjustmentResponseTierEnumSerializer
   );
 }
 
+class _$AdjustmentResponseProductEnumSerializer
+    implements PrimitiveSerializer<AdjustmentResponseProductEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'TIER': 'TIER',
+    'FINANCE_ADDON': 'FINANCE_ADDON',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'TIER': 'TIER',
+    'FINANCE_ADDON': 'FINANCE_ADDON',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[AdjustmentResponseProductEnum];
+  @override
+  final String wireName = 'AdjustmentResponseProductEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AdjustmentResponseProductEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  AdjustmentResponseProductEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AdjustmentResponseProductEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$AdjustmentResponse extends AdjustmentResponse {
   @override
   final String? id;
@@ -170,6 +241,8 @@ class _$AdjustmentResponse extends AdjustmentResponse {
   final DateTime? periodEndAfter;
   @override
   final DateTime? createdAt;
+  @override
+  final AdjustmentResponseProductEnum? product;
 
   factory _$AdjustmentResponse([
     void Function(AdjustmentResponseBuilder)? updates,
@@ -185,6 +258,7 @@ class _$AdjustmentResponse extends AdjustmentResponse {
     this.periodEndBefore,
     this.periodEndAfter,
     this.createdAt,
+    this.product,
   }) : super._();
   @override
   AdjustmentResponse rebuild(
@@ -207,7 +281,8 @@ class _$AdjustmentResponse extends AdjustmentResponse {
         adminAccountId == other.adminAccountId &&
         periodEndBefore == other.periodEndBefore &&
         periodEndAfter == other.periodEndAfter &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        product == other.product;
   }
 
   @override
@@ -222,6 +297,7 @@ class _$AdjustmentResponse extends AdjustmentResponse {
     _$hash = $jc(_$hash, periodEndBefore.hashCode);
     _$hash = $jc(_$hash, periodEndAfter.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, product.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -237,7 +313,8 @@ class _$AdjustmentResponse extends AdjustmentResponse {
           ..add('adminAccountId', adminAccountId)
           ..add('periodEndBefore', periodEndBefore)
           ..add('periodEndAfter', periodEndAfter)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('product', product))
         .toString();
   }
 }
@@ -285,6 +362,11 @@ class AdjustmentResponseBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  AdjustmentResponseProductEnum? _product;
+  AdjustmentResponseProductEnum? get product => _$this._product;
+  set product(AdjustmentResponseProductEnum? product) =>
+      _$this._product = product;
+
   AdjustmentResponseBuilder() {
     AdjustmentResponse._defaults(this);
   }
@@ -301,6 +383,7 @@ class AdjustmentResponseBuilder
       _periodEndBefore = $v.periodEndBefore;
       _periodEndAfter = $v.periodEndAfter;
       _createdAt = $v.createdAt;
+      _product = $v.product;
       _$v = null;
     }
     return this;
@@ -332,6 +415,7 @@ class AdjustmentResponseBuilder
           periodEndBefore: periodEndBefore,
           periodEndAfter: periodEndAfter,
           createdAt: createdAt,
+          product: product,
         );
     replace(_$result);
     return _$result;

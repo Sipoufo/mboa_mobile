@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **snapshotTakenAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **tiers** | [**BuiltList&lt;Line&gt;**](Line.md) |  | [optional] 
 **total** | [**Line**](Line.md) |  | [optional] 
+**addon** | [**Line**](Line.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

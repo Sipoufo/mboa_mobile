@@ -14,6 +14,8 @@ import 'package:api_client/src/model/admin_subscription_detail.dart';
 import 'package:api_client/src/model/admin_subscription_item.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/extend_subscription_request.dart';
+import 'package:api_client/src/model/finance_addon_response.dart';
+import 'package:api_client/src/model/grant_addon_request.dart';
 import 'package:api_client/src/model/grant_subscription_request.dart';
 import 'package:api_client/src/model/page_response_admin_payment_item.dart';
 import 'package:api_client/src/model/page_response_admin_subscription_item.dart';
@@ -21,6 +23,7 @@ import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/refund_payment_request.dart';
 import 'package:api_client/src/model/subscription_recap_response.dart';
 import 'package:api_client/src/model/tier_info.dart';
+import 'package:api_client/src/model/update_addon_price_request.dart';
 import 'package:api_client/src/model/update_plan_request.dart';
 
 class AdminSubscriptionsApi {
@@ -290,6 +293,109 @@ class AdminSubscriptionsApi {
     }
 
     return Response<SubscriptionRecapResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// Give days of the finance add-on, onto the running period or from now, with a reason
+  /// 
+  ///
+  /// Parameters:
+  /// * [accountId] 
+  /// * [grantAddonRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [FinanceAddonResponse] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<FinanceAddonResponse>> grantFinanceAddon({ 
+    required String accountId,
+    required GrantAddonRequest grantAddonRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/admin/addons/finance/{accountId}/grant'.replaceAll('{' r'accountId' '}', encodeQueryParameter(_serializers, accountId, const FullType(String)).toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(GrantAddonRequest);
+      _bodyData = _serializers.serialize(grantAddonRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    FinanceAddonResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(FinanceAddonResponse),
+      ) as FinanceAddonResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<FinanceAddonResponse>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -681,6 +787,107 @@ class AdminSubscriptionsApi {
     }
 
     return Response<AdminPaymentItem>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// Set the finance add-on&#39;s price for 30 days
+  /// 
+  ///
+  /// Parameters:
+  /// * [updateAddonPriceRequest] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [UpdateAddonPriceRequest] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<UpdateAddonPriceRequest>> updateFinanceAddonPrice({ 
+    required UpdateAddonPriceRequest updateAddonPriceRequest,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/admin/addons/finance';
+    final _options = Options(
+      method: r'PATCH',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(UpdateAddonPriceRequest);
+      _bodyData = _serializers.serialize(updateAddonPriceRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    UpdateAddonPriceRequest? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(UpdateAddonPriceRequest),
+      ) as UpdateAddonPriceRequest;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<UpdateAddonPriceRequest>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

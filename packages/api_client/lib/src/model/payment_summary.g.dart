@@ -114,12 +114,42 @@ final BuiltSet<PaymentSummaryStatusEnum> _$paymentSummaryStatusEnumValues =
       _$paymentSummaryStatusEnum_unknownDefaultOpenApi,
     ]);
 
+const PaymentSummaryPurposeEnum _$paymentSummaryPurposeEnum_SUBSCRIPTION =
+    const PaymentSummaryPurposeEnum._('SUBSCRIPTION');
+const PaymentSummaryPurposeEnum _$paymentSummaryPurposeEnum_FINANCE_ADDON =
+    const PaymentSummaryPurposeEnum._('FINANCE_ADDON');
+const PaymentSummaryPurposeEnum
+_$paymentSummaryPurposeEnum_unknownDefaultOpenApi =
+    const PaymentSummaryPurposeEnum._('unknownDefaultOpenApi');
+
+PaymentSummaryPurposeEnum _$paymentSummaryPurposeEnumValueOf(String name) {
+  switch (name) {
+    case 'SUBSCRIPTION':
+      return _$paymentSummaryPurposeEnum_SUBSCRIPTION;
+    case 'FINANCE_ADDON':
+      return _$paymentSummaryPurposeEnum_FINANCE_ADDON;
+    case 'unknownDefaultOpenApi':
+      return _$paymentSummaryPurposeEnum_unknownDefaultOpenApi;
+    default:
+      return _$paymentSummaryPurposeEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<PaymentSummaryPurposeEnum> _$paymentSummaryPurposeEnumValues =
+    BuiltSet<PaymentSummaryPurposeEnum>(const <PaymentSummaryPurposeEnum>[
+      _$paymentSummaryPurposeEnum_SUBSCRIPTION,
+      _$paymentSummaryPurposeEnum_FINANCE_ADDON,
+      _$paymentSummaryPurposeEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<PaymentSummaryTierEnum> _$paymentSummaryTierEnumSerializer =
     _$PaymentSummaryTierEnumSerializer();
 Serializer<PaymentSummaryMethodEnum> _$paymentSummaryMethodEnumSerializer =
     _$PaymentSummaryMethodEnumSerializer();
 Serializer<PaymentSummaryStatusEnum> _$paymentSummaryStatusEnumSerializer =
     _$PaymentSummaryStatusEnumSerializer();
+Serializer<PaymentSummaryPurposeEnum> _$paymentSummaryPurposeEnumSerializer =
+    _$PaymentSummaryPurposeEnumSerializer();
 
 class _$PaymentSummaryTierEnumSerializer
     implements PrimitiveSerializer<PaymentSummaryTierEnum> {
@@ -236,6 +266,41 @@ class _$PaymentSummaryStatusEnumSerializer
   );
 }
 
+class _$PaymentSummaryPurposeEnumSerializer
+    implements PrimitiveSerializer<PaymentSummaryPurposeEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'SUBSCRIPTION': 'SUBSCRIPTION',
+    'FINANCE_ADDON': 'FINANCE_ADDON',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'SUBSCRIPTION': 'SUBSCRIPTION',
+    'FINANCE_ADDON': 'FINANCE_ADDON',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[PaymentSummaryPurposeEnum];
+  @override
+  final String wireName = 'PaymentSummaryPurposeEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    PaymentSummaryPurposeEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  PaymentSummaryPurposeEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => PaymentSummaryPurposeEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$PaymentSummary extends PaymentSummary {
   @override
   final String? paymentId;
@@ -253,6 +318,8 @@ class _$PaymentSummary extends PaymentSummary {
   final DateTime? paidAt;
   @override
   final DateTime? createdAt;
+  @override
+  final PaymentSummaryPurposeEnum? purpose;
 
   factory _$PaymentSummary([void Function(PaymentSummaryBuilder)? updates]) =>
       (PaymentSummaryBuilder()..update(updates))._build();
@@ -266,6 +333,7 @@ class _$PaymentSummary extends PaymentSummary {
     this.hasReceipt,
     this.paidAt,
     this.createdAt,
+    this.purpose,
   }) : super._();
   @override
   PaymentSummary rebuild(void Function(PaymentSummaryBuilder) updates) =>
@@ -285,7 +353,8 @@ class _$PaymentSummary extends PaymentSummary {
         status == other.status &&
         hasReceipt == other.hasReceipt &&
         paidAt == other.paidAt &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        purpose == other.purpose;
   }
 
   @override
@@ -299,6 +368,7 @@ class _$PaymentSummary extends PaymentSummary {
     _$hash = $jc(_$hash, hasReceipt.hashCode);
     _$hash = $jc(_$hash, paidAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, purpose.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -313,7 +383,8 @@ class _$PaymentSummary extends PaymentSummary {
           ..add('status', status)
           ..add('hasReceipt', hasReceipt)
           ..add('paidAt', paidAt)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('purpose', purpose))
         .toString();
   }
 }
@@ -354,6 +425,10 @@ class PaymentSummaryBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  PaymentSummaryPurposeEnum? _purpose;
+  PaymentSummaryPurposeEnum? get purpose => _$this._purpose;
+  set purpose(PaymentSummaryPurposeEnum? purpose) => _$this._purpose = purpose;
+
   PaymentSummaryBuilder() {
     PaymentSummary._defaults(this);
   }
@@ -369,6 +444,7 @@ class PaymentSummaryBuilder
       _hasReceipt = $v.hasReceipt;
       _paidAt = $v.paidAt;
       _createdAt = $v.createdAt;
+      _purpose = $v.purpose;
       _$v = null;
     }
     return this;
@@ -399,6 +475,7 @@ class PaymentSummaryBuilder
           hasReceipt: hasReceipt,
           paidAt: paidAt,
           createdAt: createdAt,
+          purpose: purpose,
         );
     replace(_$result);
     return _$result;

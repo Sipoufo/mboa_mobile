@@ -9,15 +9,101 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**listAdminUsers**](AdminUtilisateursApi.md#listadminusers) | **GET** /api/v1/admin/users | Search accounts by phone or email, with their subscription (RM-M18-01)
+[**deleteAccount**](AdminUtilisateursApi.md#deleteaccount) | **DELETE** /api/v1/admin/users/{id} | Step two: anonymise the account, irreversibly, with the token and a reason (RM-M18-03)
+[**getAdminUser**](AdminUtilisateursApi.md#getadminuser) | **GET** /api/v1/admin/users/{id} | One account&#39;s full history: moderation, visits, contracts, reports, Mboa Score (RM-M18-04)
+[**listAdminUsers**](AdminUtilisateursApi.md#listadminusers) | **GET** /api/v1/admin/users | Search accounts by phone, email, name or internal id, with their subscription (RM-M18-01)
 [**reactivateAccount**](AdminUtilisateursApi.md#reactivateaccount) | **POST** /api/v1/admin/users/{id}/reactivate | Lift a suspension
-[**suspendAccount**](AdminUtilisateursApi.md#suspendaccount) | **POST** /api/v1/admin/users/{id}/suspend | Suspend an account; sessions are revoked at once (RM-M18-02)
+[**requestAccountDeletion**](AdminUtilisateursApi.md#requestaccountdeletion) | **POST** /api/v1/admin/users/{id}/deletion | Step one of deleting an account: a confirmation token valid 10 minutes (RM-M18-03)
+[**suspendAccount**](AdminUtilisateursApi.md#suspendaccount) | **POST** /api/v1/admin/users/{id}/suspend | Suspend an account for &#x60;days&#x60; (1–365) or until lifted; sessions are revoked at once (RM-M18-02)
 
+
+# **deleteAccount**
+> deleteAccount(id, deleteAccountRequest)
+
+Step two: anonymise the account, irreversibly, with the token and a reason (RM-M18-03)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAdminUtilisateursApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final DeleteAccountRequest deleteAccountRequest = ; // DeleteAccountRequest | 
+
+try {
+    api.deleteAccount(id, deleteAccountRequest);
+} on DioException catch (e) {
+    print('Exception when calling AdminUtilisateursApi->deleteAccount: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+ **deleteAccountRequest** | [**DeleteAccountRequest**](DeleteAccountRequest.md)|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAdminUser**
+> AdminUserDetail getAdminUser(id)
+
+One account's full history: moderation, visits, contracts, reports, Mboa Score (RM-M18-04)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAdminUtilisateursApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.getAdminUser(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling AdminUtilisateursApi->getAdminUser: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**AdminUserDetail**](AdminUserDetail.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listAdminUsers**
 > PageResponseAdminUserSummary listAdminUsers(pageable, query, role, status)
 
-Search accounts by phone or email, with their subscription (RM-M18-01)
+Search accounts by phone, email, name or internal id, with their subscription (RM-M18-01)
 
 ### Example
 ```dart
@@ -101,10 +187,51 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **requestAccountDeletion**
+> DeletionChallengeResponse requestAccountDeletion(id)
+
+Step one of deleting an account: a confirmation token valid 10 minutes (RM-M18-03)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAdminUtilisateursApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.requestAccountDeletion(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling AdminUtilisateursApi->requestAccountDeletion: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**DeletionChallengeResponse**](DeletionChallengeResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **suspendAccount**
 > suspendAccount(id, suspendAccountRequest)
 
-Suspend an account; sessions are revoked at once (RM-M18-02)
+Suspend an account for `days` (1–365) or until lifted; sessions are revoked at once (RM-M18-02)
 
 ### Example
 ```dart
