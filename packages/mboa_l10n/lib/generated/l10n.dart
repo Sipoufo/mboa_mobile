@@ -9147,6 +9147,442 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mboa Score`
+  String get scoreTitle {
+    return Intl.message(
+      'Mboa Score',
+      name: 'scoreTitle',
+      desc: 'M09 — title.',
+      args: [],
+    );
+  }
+
+  /// `Mon Mboa Score`
+  String get scoreMine {
+    return Intl.message(
+      'Mon Mboa Score',
+      name: 'scoreMine',
+      desc: 'Compte tile (RM-M09-03).',
+      args: [],
+    );
+  }
+
+  /// `Ton score de fiabilité, en détail`
+  String get scoreMineSubtitle {
+    return Intl.message(
+      'Ton score de fiabilité, en détail',
+      name: 'scoreMineSubtitle',
+      desc: 'Compte tile subtitle.',
+      args: [],
+    );
+  }
+
+  /// `Voir son Mboa Score`
+  String get scoreOpen {
+    return Intl.message(
+      'Voir son Mboa Score',
+      name: 'scoreOpen',
+      desc: 'Pro thread action tooltip (RM-M09-04).',
+      args: [],
+    );
+  }
+
+  /// `Fermer`
+  String get scoreClose {
+    return Intl.message(
+      'Fermer',
+      name: 'scoreClose',
+      desc: 'Closes the score sheet.',
+      args: [],
+    );
+  }
+
+  /// `sur {max}`
+  String scoreOutOf(int max) {
+    return Intl.message(
+      'sur $max',
+      name: 'scoreOutOf',
+      desc: 'Under the number in the ring.',
+      args: [max],
+    );
+  }
+
+  /// `Mboa Score : {score} sur {max}`
+  String scoreA11y(int score, int max) {
+    return Intl.message(
+      'Mboa Score : $score sur $max',
+      name: 'scoreA11y',
+      desc: 'Screen-reader label of the ring.',
+      args: [score, max],
+    );
+  }
+
+  /// `Ton Mboa Score montre aux propriétaires que tu es un locataire fiable.`
+  String get scoreIntroSelf {
+    return Intl.message(
+      'Ton Mboa Score montre aux propriétaires que tu es un locataire fiable.',
+      name: 'scoreIntroSelf',
+      desc: 'Own score — intro.',
+      args: [],
+    );
+  }
+
+  /// `Il n'est jamais public : seuls les propriétaires que tu contactes le voient.`
+  String get scorePrivateSelf {
+    return Intl.message(
+      'Il n\'est jamais public : seuls les propriétaires que tu contactes le voient.',
+      name: 'scorePrivateSelf',
+      desc: 'RM-M09-04/05 — who sees it.',
+      args: [],
+    );
+  }
+
+  /// `{max}, c'est le maximum. Le score parfait n'existe pas : il reste toujours une marge.`
+  String scoreMaxNote(int max) {
+    return Intl.message(
+      '$max, c\'est le maximum. Le score parfait n\'existe pas : il reste toujours une marge.',
+      name: 'scoreMaxNote',
+      desc: 'Doc 10 M09 — 90 is the ceiling on purpose.',
+      args: [max],
+    );
+  }
+
+  /// `Ce qui compte dans ton score`
+  String get scoreSectionSelf {
+    return Intl.message(
+      'Ce qui compte dans ton score',
+      name: 'scoreSectionSelf',
+      desc: 'Own score — breakdown title.',
+      args: [],
+    );
+  }
+
+  /// `Ton score se met à jour tout seul dès que quelque chose change.`
+  String get scoreFooterSelf {
+    return Intl.message(
+      'Ton score se met à jour tout seul dès que quelque chose change.',
+      name: 'scoreFooterSelf',
+      desc: 'RM-M09-02 — recomputed live.',
+      args: [],
+    );
+  }
+
+  /// `La fiabilité de ce locataire, calculée par Mboa à partir de son activité.`
+  String get scoreIntroTenant {
+    return Intl.message(
+      'La fiabilité de ce locataire, calculée par Mboa à partir de son activité.',
+      name: 'scoreIntroTenant',
+      desc: 'Prestataire sheet — intro.',
+      args: [],
+    );
+  }
+
+  /// `Privé : rien que pour ta décision.`
+  String get scorePrivateTenant {
+    return Intl.message(
+      'Privé : rien que pour ta décision.',
+      name: 'scorePrivateTenant',
+      desc: 'RM-M09-05.',
+      args: [],
+    );
+  }
+
+  /// `Une aide à la décision, pas un verdict.`
+  String get scoreFooterTenant {
+    return Intl.message(
+      'Une aide à la décision, pas un verdict.',
+      name: 'scoreFooterTenant',
+      desc: 'Prestataire sheet — footnote.',
+      args: [],
+    );
+  }
+
+  /// `Profil complet (photo, prénom, nom)`
+  String get scoreSignalProfile {
+    return Intl.message(
+      'Profil complet (photo, prénom, nom)',
+      name: 'scoreSignalProfile',
+      desc: 'PROFILE_COMPLETE.',
+      args: [],
+    );
+  }
+
+  /// `Identité vérifiée`
+  String get scoreSignalIdentity {
+    return Intl.message(
+      'Identité vérifiée',
+      name: 'scoreSignalIdentity',
+      desc: 'IDENTITY_VERIFIED.',
+      args: [],
+    );
+  }
+
+  /// `Membre depuis plus de 6 mois`
+  String get scoreSignalSeniority {
+    return Intl.message(
+      'Membre depuis plus de 6 mois',
+      name: 'scoreSignalSeniority',
+      desc: 'ACCOUNT_SENIORITY.',
+      args: [],
+    );
+  }
+
+  /// `Contrats Mboa signés`
+  String get scoreSignalContracts {
+    return Intl.message(
+      'Contrats Mboa signés',
+      name: 'scoreSignalContracts',
+      desc: 'SIGNED_CONTRACTS.',
+      args: [],
+    );
+  }
+
+  /// `Note des propriétaires`
+  String get scoreSignalRating {
+    return Intl.message(
+      'Note des propriétaires',
+      name: 'scoreSignalRating',
+      desc: 'PROVIDER_RATING (not computed yet).',
+      args: [],
+    );
+  }
+
+  /// `Signalements retenus`
+  String get scoreSignalReports {
+    return Intl.message(
+      'Signalements retenus',
+      name: 'scoreSignalReports',
+      desc: 'VALIDATED_REPORTS.',
+      args: [],
+    );
+  }
+
+  /// `Ajustement par l'équipe Mboa`
+  String get scoreSignalAdjustment {
+    return Intl.message(
+      'Ajustement par l\'équipe Mboa',
+      name: 'scoreSignalAdjustment',
+      desc: 'ADMIN_ADJUSTMENT (hidden at 0).',
+      args: [],
+    );
+  }
+
+  /// `Autre`
+  String get scoreSignalOther {
+    return Intl.message(
+      'Autre',
+      name: 'scoreSignalOther',
+      desc: 'A signal newer than this build.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Aucun contrat signé pour l'instant} =1{1 contrat signé} other{{count} contrats signés}}`
+  String scoreContractsCount(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucun contrat signé pour l\'instant',
+      one: '1 contrat signé',
+      other: '$count contrats signés',
+      name: 'scoreContractsCount',
+      desc: 'SIGNED_CONTRACTS count.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =0{Aucun signalement retenu} =1{1 signalement retenu} other{{count} signalements retenus}}`
+  String scoreReportsCount(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucun signalement retenu',
+      one: '1 signalement retenu',
+      other: '$count signalements retenus',
+      name: 'scoreReportsCount',
+      desc: 'VALIDATED_REPORTS count.',
+      args: [count],
+    );
+  }
+
+  /// `Bientôt`
+  String get scoreSoon {
+    return Intl.message(
+      'Bientôt',
+      name: 'scoreSoon',
+      desc: 'A signal not computed yet — not a zero.',
+      args: [],
+    );
+  }
+
+  /// `Complète ton profil pour booster ton Mboa Score.`
+  String get scoreHintProfile {
+    return Intl.message(
+      'Complète ton profil pour booster ton Mboa Score.',
+      name: 'scoreHintProfile',
+      desc: 'Own score hint (charter §9.2 wording).',
+      args: [],
+    );
+  }
+
+  /// `Ta pièce d'identité, vérifiée par l'équipe Mboa.`
+  String get scoreHintIdentity {
+    return Intl.message(
+      'Ta pièce d\'identité, vérifiée par l\'équipe Mboa.',
+      name: 'scoreHintIdentity',
+      desc: 'Own score hint.',
+      args: [],
+    );
+  }
+
+  /// `Celui-là vient tout seul, avec le temps.`
+  String get scoreHintSeniority {
+    return Intl.message(
+      'Celui-là vient tout seul, avec le temps.',
+      name: 'scoreHintSeniority',
+      desc: 'Own score hint.',
+      args: [],
+    );
+  }
+
+  /// `Chaque contrat signé sur Mboa compte, jusqu'à {max} points.`
+  String scoreHintContracts(int max) {
+    return Intl.message(
+      'Chaque contrat signé sur Mboa compte, jusqu\'à $max points.',
+      name: 'scoreHintContracts',
+      desc: 'Own score hint — the ceiling comes from the server (maxPoints).',
+      args: [max],
+    );
+  }
+
+  /// `Les propriétaires pourront bientôt te noter.`
+  String get scoreHintRating {
+    return Intl.message(
+      'Les propriétaires pourront bientôt te noter.',
+      name: 'scoreHintRating',
+      desc: 'Own score hint.',
+      args: [],
+    );
+  }
+
+  /// `Un message ou un avis signalé et retenu par l'équipe Mboa fait baisser ton score.`
+  String get scoreHintReports {
+    return Intl.message(
+      'Un message ou un avis signalé et retenu par l\'équipe Mboa fait baisser ton score.',
+      name: 'scoreHintReports',
+      desc: 'Own score hint.',
+      args: [],
+    );
+  }
+
+  /// `plus {points} points sur {max}`
+  String scoreA11yEarned(int points, int max) {
+    return Intl.message(
+      'plus $points points sur $max',
+      name: 'scoreA11yEarned',
+      desc: 'Screen reader, earned line.',
+      args: [points, max],
+    );
+  }
+
+  /// `0 point sur {max}`
+  String scoreA11yZero(int max) {
+    return Intl.message(
+      '0 point sur $max',
+      name: 'scoreA11yZero',
+      desc: 'Screen reader, nothing yet on the line.',
+      args: [max],
+    );
+  }
+
+  /// `moins {points} points`
+  String scoreA11yPenalty(int points) {
+    return Intl.message(
+      'moins $points points',
+      name: 'scoreA11yPenalty',
+      desc: 'Screen reader, a penalty.',
+      args: [points],
+    );
+  }
+
+  /// `{points} points`
+  String scoreA11yPoints(int points) {
+    return Intl.message(
+      '$points points',
+      name: 'scoreA11yPoints',
+      desc: 'Screen reader, a line without a ceiling.',
+      args: [points],
+    );
+  }
+
+  /// `bientôt disponible`
+  String get scoreA11ySoon {
+    return Intl.message(
+      'bientôt disponible',
+      name: 'scoreA11ySoon',
+      desc: 'Screen reader, not computed yet.',
+      args: [],
+    );
+  }
+
+  /// `Le score n'a pas pu se charger`
+  String get scoreLoadFailedTitle {
+    return Intl.message(
+      'Le score n\'a pas pu se charger',
+      name: 'scoreLoadFailedTitle',
+      desc: 'Offline or server error.',
+      args: [],
+    );
+  }
+
+  /// `Vérifie ta connexion, puis réessaie.`
+  String get scoreLoadFailedBody {
+    return Intl.message(
+      'Vérifie ta connexion, puis réessaie.',
+      name: 'scoreLoadFailedBody',
+      desc: 'Offline or server error.',
+      args: [],
+    );
+  }
+
+  /// `Pas encore visible`
+  String get scoreNotContactedTitle {
+    return Intl.message(
+      'Pas encore visible',
+      name: 'scoreNotContactedTitle',
+      desc: '403 SCORE_NOT_ACCESSIBLE.',
+      args: [],
+    );
+  }
+
+  /// `Tu verras son score dès que ce locataire t'aura écrit ou demandé une visite.`
+  String get scoreNotContactedBody {
+    return Intl.message(
+      'Tu verras son score dès que ce locataire t\'aura écrit ou demandé une visite.',
+      name: 'scoreNotContactedBody',
+      desc: '403 SCORE_NOT_ACCESSIBLE (RM-M09-04).',
+      args: [],
+    );
+  }
+
+  /// `Pas de score pour ce compte`
+  String get scoreNoneTitle {
+    return Intl.message(
+      'Pas de score pour ce compte',
+      name: 'scoreNoneTitle',
+      desc: '404 SCORE_NOT_APPLICABLE.',
+      args: [],
+    );
+  }
+
+  /// `Seuls les comptes locataires ont un Mboa Score.`
+  String get scoreNoneBody {
+    return Intl.message(
+      'Seuls les comptes locataires ont un Mboa Score.',
+      name: 'scoreNoneBody',
+      desc: '404 SCORE_NOT_APPLICABLE.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

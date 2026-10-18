@@ -3308,5 +3308,233 @@
   "saveSearchFailed": "The search was not saved. Try again.",
   "@saveSearchFailed": {
     "description": "Save failed."
+  },
+  "scoreTitle": "Mboa Score",
+  "@scoreTitle": {
+    "description": "M09 — title."
+  },
+  "scoreMine": "My Mboa Score",
+  "@scoreMine": {
+    "description": "Compte tile (RM-M09-03)."
+  },
+  "scoreMineSubtitle": "Your reliability score, in detail",
+  "@scoreMineSubtitle": {
+    "description": "Compte tile subtitle."
+  },
+  "scoreOpen": "See their Mboa Score",
+  "@scoreOpen": {
+    "description": "Pro thread action tooltip (RM-M09-04)."
+  },
+  "scoreClose": "Close",
+  "@scoreClose": {
+    "description": "Closes the score sheet."
+  },
+  "scoreOutOf": "out of {max}",
+  "@scoreOutOf": {
+    "description": "Under the number in the ring.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11y": "Mboa Score: {score} out of {max}",
+  "@scoreA11y": {
+    "description": "Screen-reader label of the ring.",
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreIntroSelf": "Your Mboa Score shows landlords you're a tenant they can trust.",
+  "@scoreIntroSelf": {
+    "description": "Own score — intro."
+  },
+  "scorePrivateSelf": "It's never public: only landlords you contact can see it.",
+  "@scorePrivateSelf": {
+    "description": "RM-M09-04/05 — who sees it."
+  },
+  "scoreMaxNote": "{max} is the top. There's no perfect score: there's always room to grow.",
+  "@scoreMaxNote": {
+    "description": "Doc 10 M09 — 90 is the ceiling on purpose.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreSectionSelf": "What goes into your score",
+  "@scoreSectionSelf": {
+    "description": "Own score — breakdown title."
+  },
+  "scoreFooterSelf": "Your score updates on its own whenever something changes.",
+  "@scoreFooterSelf": {
+    "description": "RM-M09-02 — recomputed live."
+  },
+  "scoreIntroTenant": "This tenant's reliability, worked out by Mboa from their activity.",
+  "@scoreIntroTenant": {
+    "description": "Prestataire sheet — intro."
+  },
+  "scorePrivateTenant": "Private: for your decision only.",
+  "@scorePrivateTenant": {
+    "description": "RM-M09-05."
+  },
+  "scoreFooterTenant": "A decision aid, not a verdict.",
+  "@scoreFooterTenant": {
+    "description": "Prestataire sheet — footnote."
+  },
+  "scoreSignalProfile": "Complete profile (photo, first and last name)",
+  "@scoreSignalProfile": {
+    "description": "PROFILE_COMPLETE."
+  },
+  "scoreSignalIdentity": "Verified identity",
+  "@scoreSignalIdentity": {
+    "description": "IDENTITY_VERIFIED."
+  },
+  "scoreSignalSeniority": "Member for over 6 months",
+  "@scoreSignalSeniority": {
+    "description": "ACCOUNT_SENIORITY."
+  },
+  "scoreSignalContracts": "Mboa contracts signed",
+  "@scoreSignalContracts": {
+    "description": "SIGNED_CONTRACTS."
+  },
+  "scoreSignalRating": "Landlord rating",
+  "@scoreSignalRating": {
+    "description": "PROVIDER_RATING (not computed yet)."
+  },
+  "scoreSignalReports": "Upheld reports",
+  "@scoreSignalReports": {
+    "description": "VALIDATED_REPORTS."
+  },
+  "scoreSignalAdjustment": "Adjustment by the Mboa team",
+  "@scoreSignalAdjustment": {
+    "description": "ADMIN_ADJUSTMENT (hidden at 0)."
+  },
+  "scoreSignalOther": "Other",
+  "@scoreSignalOther": {
+    "description": "A signal newer than this build."
+  },
+  "scoreContractsCount": "{count, plural, =0{No signed contract yet} =1{1 signed contract} other{{count} signed contracts}}",
+  "@scoreContractsCount": {
+    "description": "SIGNED_CONTRACTS count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreReportsCount": "{count, plural, =0{No upheld report} =1{1 upheld report} other{{count} upheld reports}}",
+  "@scoreReportsCount": {
+    "description": "VALIDATED_REPORTS count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreSoon": "Coming soon",
+  "@scoreSoon": {
+    "description": "A signal not computed yet — not a zero."
+  },
+  "scoreHintProfile": "Complete your profile to boost your Mboa Score.",
+  "@scoreHintProfile": {
+    "description": "Own score hint (charter §9.2 wording)."
+  },
+  "scoreHintIdentity": "Your ID, checked by the Mboa team.",
+  "@scoreHintIdentity": {
+    "description": "Own score hint."
+  },
+  "scoreHintSeniority": "This one comes with time.",
+  "@scoreHintSeniority": {
+    "description": "Own score hint."
+  },
+  "scoreHintContracts": "Each contract signed on Mboa counts, up to {max} points.",
+  "@scoreHintContracts": {
+    "description": "Own score hint — the ceiling comes from the server (maxPoints).",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreHintRating": "Landlords will soon be able to rate you.",
+  "@scoreHintRating": {
+    "description": "Own score hint."
+  },
+  "scoreHintReports": "A message or review reported and upheld by the Mboa team lowers your score.",
+  "@scoreHintReports": {
+    "description": "Own score hint."
+  },
+  "scoreA11yEarned": "plus {points} of {max} points",
+  "@scoreA11yEarned": {
+    "description": "Screen reader, earned line.",
+    "placeholders": {
+      "points": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11yZero": "0 of {max} points",
+  "@scoreA11yZero": {
+    "description": "Screen reader, nothing yet on the line.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11yPenalty": "minus {points} points",
+  "@scoreA11yPenalty": {
+    "description": "Screen reader, a penalty.",
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11yPoints": "{points} points",
+  "@scoreA11yPoints": {
+    "description": "Screen reader, a line without a ceiling.",
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11ySoon": "coming soon",
+  "@scoreA11ySoon": {
+    "description": "Screen reader, not computed yet."
+  },
+  "scoreLoadFailedTitle": "The score couldn't load",
+  "@scoreLoadFailedTitle": {
+    "description": "Offline or server error."
+  },
+  "scoreLoadFailedBody": "Check your connection, then try again.",
+  "@scoreLoadFailedBody": {
+    "description": "Offline or server error."
+  },
+  "scoreNotContactedTitle": "Not visible yet",
+  "@scoreNotContactedTitle": {
+    "description": "403 SCORE_NOT_ACCESSIBLE."
+  },
+  "scoreNotContactedBody": "You'll see their score once this tenant has messaged you or asked for a visit.",
+  "@scoreNotContactedBody": {
+    "description": "403 SCORE_NOT_ACCESSIBLE (RM-M09-04)."
+  },
+  "scoreNoneTitle": "No score for this account",
+  "@scoreNoneTitle": {
+    "description": "404 SCORE_NOT_APPLICABLE."
+  },
+  "scoreNoneBody": "Only tenant accounts have a Mboa Score.",
+  "@scoreNoneBody": {
+    "description": "404 SCORE_NOT_APPLICABLE."
   }
 }

@@ -74,6 +74,10 @@ export 'src/features/session/models/session_result.dart';
 export 'src/features/session/session_module.dart';
 
 // Settings / account — language, deletion (phone & password changes to follow).
+export 'src/features/score/bloc/mboa_score_bloc.dart';
+export 'src/features/score/data/mboa_score_repository.dart';
+export 'src/features/score/models/mboa_score.dart';
+export 'src/features/score/ui/mboa_score_view.dart';
 export 'src/features/settings/data/account_repository.dart';
 export 'src/features/settings/data/app_settings_repository.dart';
 export 'src/features/settings/logic/change_password_cubit.dart';

@@ -144,29 +144,53 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m54(count, limit) => "${count} of ${limit}";
 
-  static String m55(price) => "From ${price}";
+  static String m55(score, max) => "Mboa Score: ${score} out of ${max}";
 
-  static String m56(count) =>
+  static String m56(points, max) => "plus ${points} of ${max} points";
+
+  static String m57(points) => "minus ${points} points";
+
+  static String m58(points) => "${points} points";
+
+  static String m59(max) => "0 of ${max} points";
+
+  static String m60(count) =>
+      "${Intl.plural(count, zero: 'No signed contract yet', one: '1 signed contract', other: '${count} signed contracts')}";
+
+  static String m61(max) =>
+      "Each contract signed on Mboa counts, up to ${max} points.";
+
+  static String m62(max) =>
+      "${max} is the top. There\'s no perfect score: there\'s always room to grow.";
+
+  static String m63(max) => "out of ${max}";
+
+  static String m64(count) =>
+      "${Intl.plural(count, zero: 'No upheld report', one: '1 upheld report', other: '${count} upheld reports')}";
+
+  static String m65(price) => "From ${price}";
+
+  static String m66(count) =>
       "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
 
-  static String m57(count) =>
+  static String m67(count) =>
       "${Intl.plural(count, zero: 'No property', one: '1 property', other: '${count} properties')}";
 
-  static String m58(count) => "${count}+";
+  static String m68(count) => "${count}+";
 
-  static String m59(count) =>
+  static String m69(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m60(date) => "Valid until ${date}";
+  static String m70(date) => "Valid until ${date}";
 
-  static String m61(count) =>
+  static String m71(count) =>
       "${Intl.plural(count, zero: 'No visits', one: '1 visit', other: '${count} visits')}";
 
-  static String m62(from, to) => "${from} to ${to}";
+  static String m72(from, to) => "${from} to ${to}";
 
-  static String m63(time) => "Confirmed at ${time}";
+  static String m73(time) => "Confirmed at ${time}";
 
-  static String m64(distance) =>
+  static String m74(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1647,6 +1671,101 @@ class MessageLookup extends MessageLookupByLibrary {
     "savedSearchesTitle": MessageLookupByLibrary.simpleMessage(
       "Saved searches",
     ),
+    "scoreA11y": m55,
+    "scoreA11yEarned": m56,
+    "scoreA11yPenalty": m57,
+    "scoreA11yPoints": m58,
+    "scoreA11ySoon": MessageLookupByLibrary.simpleMessage("coming soon"),
+    "scoreA11yZero": m59,
+    "scoreClose": MessageLookupByLibrary.simpleMessage("Close"),
+    "scoreContractsCount": m60,
+    "scoreFooterSelf": MessageLookupByLibrary.simpleMessage(
+      "Your score updates on its own whenever something changes.",
+    ),
+    "scoreFooterTenant": MessageLookupByLibrary.simpleMessage(
+      "A decision aid, not a verdict.",
+    ),
+    "scoreHintContracts": m61,
+    "scoreHintIdentity": MessageLookupByLibrary.simpleMessage(
+      "Your ID, checked by the Mboa team.",
+    ),
+    "scoreHintProfile": MessageLookupByLibrary.simpleMessage(
+      "Complete your profile to boost your Mboa Score.",
+    ),
+    "scoreHintRating": MessageLookupByLibrary.simpleMessage(
+      "Landlords will soon be able to rate you.",
+    ),
+    "scoreHintReports": MessageLookupByLibrary.simpleMessage(
+      "A message or review reported and upheld by the Mboa team lowers your score.",
+    ),
+    "scoreHintSeniority": MessageLookupByLibrary.simpleMessage(
+      "This one comes with time.",
+    ),
+    "scoreIntroSelf": MessageLookupByLibrary.simpleMessage(
+      "Your Mboa Score shows landlords you\'re a tenant they can trust.",
+    ),
+    "scoreIntroTenant": MessageLookupByLibrary.simpleMessage(
+      "This tenant\'s reliability, worked out by Mboa from their activity.",
+    ),
+    "scoreLoadFailedBody": MessageLookupByLibrary.simpleMessage(
+      "Check your connection, then try again.",
+    ),
+    "scoreLoadFailedTitle": MessageLookupByLibrary.simpleMessage(
+      "The score couldn\'t load",
+    ),
+    "scoreMaxNote": m62,
+    "scoreMine": MessageLookupByLibrary.simpleMessage("My Mboa Score"),
+    "scoreMineSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Your reliability score, in detail",
+    ),
+    "scoreNoneBody": MessageLookupByLibrary.simpleMessage(
+      "Only tenant accounts have a Mboa Score.",
+    ),
+    "scoreNoneTitle": MessageLookupByLibrary.simpleMessage(
+      "No score for this account",
+    ),
+    "scoreNotContactedBody": MessageLookupByLibrary.simpleMessage(
+      "You\'ll see their score once this tenant has messaged you or asked for a visit.",
+    ),
+    "scoreNotContactedTitle": MessageLookupByLibrary.simpleMessage(
+      "Not visible yet",
+    ),
+    "scoreOpen": MessageLookupByLibrary.simpleMessage("See their Mboa Score"),
+    "scoreOutOf": m63,
+    "scorePrivateSelf": MessageLookupByLibrary.simpleMessage(
+      "It\'s never public: only landlords you contact can see it.",
+    ),
+    "scorePrivateTenant": MessageLookupByLibrary.simpleMessage(
+      "Private: for your decision only.",
+    ),
+    "scoreReportsCount": m64,
+    "scoreSectionSelf": MessageLookupByLibrary.simpleMessage(
+      "What goes into your score",
+    ),
+    "scoreSignalAdjustment": MessageLookupByLibrary.simpleMessage(
+      "Adjustment by the Mboa team",
+    ),
+    "scoreSignalContracts": MessageLookupByLibrary.simpleMessage(
+      "Mboa contracts signed",
+    ),
+    "scoreSignalIdentity": MessageLookupByLibrary.simpleMessage(
+      "Verified identity",
+    ),
+    "scoreSignalOther": MessageLookupByLibrary.simpleMessage("Other"),
+    "scoreSignalProfile": MessageLookupByLibrary.simpleMessage(
+      "Complete profile (photo, first and last name)",
+    ),
+    "scoreSignalRating": MessageLookupByLibrary.simpleMessage(
+      "Landlord rating",
+    ),
+    "scoreSignalReports": MessageLookupByLibrary.simpleMessage(
+      "Upheld reports",
+    ),
+    "scoreSignalSeniority": MessageLookupByLibrary.simpleMessage(
+      "Member for over 6 months",
+    ),
+    "scoreSoon": MessageLookupByLibrary.simpleMessage("Coming soon"),
+    "scoreTitle": MessageLookupByLibrary.simpleMessage("Mboa Score"),
     "searchAmenities": MessageLookupByLibrary.simpleMessage("Amenities"),
     "searchAny": MessageLookupByLibrary.simpleMessage("Any"),
     "searchApply": MessageLookupByLibrary.simpleMessage("See results"),
@@ -1695,11 +1814,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "searchRentRange": MessageLookupByLibrary.simpleMessage("Rent (FCFA)"),
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Residence"),
-    "searchResidenceFrom": m55,
-    "searchResidenceUnits": m56,
-    "searchResultCount": m57,
+    "searchResidenceFrom": m65,
+    "searchResidenceUnits": m66,
+    "searchResultCount": m67,
     "searchRoomsMin": MessageLookupByLibrary.simpleMessage("Minimum rooms"),
-    "searchRoomsPlus": m58,
+    "searchRoomsPlus": m68,
     "searchStaleBanner": MessageLookupByLibrary.simpleMessage(
       "Results not refreshed — the server did not answer.",
     ),
@@ -1741,7 +1860,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m59,
+    "subscriptionListingLimit": m69,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -1756,7 +1875,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m60,
+    "subscriptionRenewsOn": m70,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
@@ -1885,13 +2004,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitVisitorAgent": MessageLookupByLibrary.simpleMessage("Mboa agent"),
     "visitVisitorOwner": MessageLookupByLibrary.simpleMessage("The owner"),
-    "visitVisitorRecord": m61,
+    "visitVisitorRecord": m71,
     "visitWaitingVisitor": MessageLookupByLibrary.simpleMessage(
       "You are confirmed on site. Waiting for the visitor.",
     ),
     "visitWeekNext": MessageLookupByLibrary.simpleMessage("Next week"),
     "visitWeekPrev": MessageLookupByLibrary.simpleMessage("Previous week"),
-    "visitWeekRange": m62,
+    "visitWeekRange": m72,
     "visitWithdraw": MessageLookupByLibrary.simpleMessage(
       "Withdraw my request",
     ),
@@ -1991,7 +2110,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsPast": MessageLookupByLibrary.simpleMessage("Past"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m63,
+    "visitsPresenceConfirmedAt": m73,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -2026,7 +2145,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m64,
+    "visitsTooFarBody": m74,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

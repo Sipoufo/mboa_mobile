@@ -209,6 +209,13 @@ void registerAppModule() {
   getIt.registerLazySingleton<AppSettingsRepository>(
     () => AppSettingsRepository(dioClient: getIt<DioClient>()),
   );
+  // M09 — the Mboa Score, read live and never cached.
+  getIt.registerLazySingleton<MboaScoreRepository>(
+    () => MboaScoreRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactoryParam<MboaScoreBloc, ScoreSource, void>(
+    (source, _) => MboaScoreBloc(repository: getIt<MboaScoreRepository>(), source: source),
+  );
   getIt.registerFactoryParam<NotificationPreferencesBloc, NotificationAudience, void>(
     (audience, _) => NotificationPreferencesBloc(
       repository: getIt<AppSettingsRepository>(),

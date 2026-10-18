@@ -80,6 +80,8 @@ void main() {
     await pump(tester);
 
     expect(find.text('Profil'), findsOneWidget);
+    // RM-M09-03 — the tenant's own score, private: here and nowhere public.
+    expect(find.text('Mon Mboa Score'), findsOneWidget);
     expect(find.text('Recherches sauvegardées'), findsOneWidget);
     expect(find.text('Mes visites'), findsOneWidget);
     // Below the fold on a test-sized screen: the list builds what it shows.

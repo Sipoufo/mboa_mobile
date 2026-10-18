@@ -17,6 +17,10 @@ class MockLocationsApi extends Mock implements LocationsApi {}
 
 class MockUserSettingsApi extends Mock implements UserSettingsApi {}
 
+class MockMboaScoreApi extends Mock implements MboaScoreApi {}
+
+class MockMboaScoreRepository extends Mock implements MboaScoreRepository {}
+
 class MockAppSettingsRepository extends Mock implements AppSettingsRepository {}
 
 class MockAccountRepository extends Mock implements AccountRepository {}

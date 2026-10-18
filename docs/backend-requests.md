@@ -838,3 +838,34 @@ to forget.
 
 **Also minor:** the endpoint's summary still reads *"Report a listing or a
 message"*. Reviews are missing from it.
+
+---
+
+## §26 — M09: the prestataire cannot reach the score from a visit request
+
+**Raised 2026-10-18**, building M09 in App Mboa Pro.
+
+Your 2026-09-30 note says to show the tenant's score *"on the conversation and
+on the visit request, where the prestataire already has the user's id"*. On
+the conversation he does: `ConversationResponse.peerAccountId` is exactly the
+`{userId}` that `GET /prestataires/me/tenants/{userId}/score` takes, and the
+app now opens the score from the thread.
+
+On a visit request he does not. Neither `VisiteResponse` (the agenda and the
+requests to confirm) nor `AgentVisiteDetail` (the new
+`GET /prestataires/me/visites/{id}`, §14) carries the client's account id —
+only `userName` and `userPhone` on the detail. `VisiteParties.userAccountId`
+exists server-side and is what `hasRequestBetween` checks, so the gate already
+lets him in; the app just has nothing to ask with.
+
+**Ask:** `userAccountId` on `VisiteResponse` when the caller is the
+prestataire (and on the prestataire's `AgentVisiteDetail`). It is the moment
+the score is most useful — deciding whether to confirm a proposed time
+(RM-M15-06) — and the one RM-M09-04 names alongside messaging.
+
+**Not needed for agents**: the score route is `PRESTATAIRE` only, so an agent's
+visit does not need the field.
+
+**What the app does meanwhile:** the score is reachable from the conversation
+only. Nothing is drawn on the visit request, rather than a button that cannot
+work.

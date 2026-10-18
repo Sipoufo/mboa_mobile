@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -67,6 +68,18 @@ class ThreadPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
+        actions: [
+          // RM-M09-04 — a thread is the contact that opens the score; only a
+          // prestataire may read it (agents get none), and only a person
+          // with an account id has one.
+          if (getIt<SessionSnapshot>().role?.isPrestataire ?? false)
+            if (conversation.peerAccountId case final peer?)
+              IconButton(
+                tooltip: I18n.of(context).scoreOpen,
+                icon: Icon(LucideIcons.gauge, color: colors.primary),
+                onPressed: () => showTenantScoreSheet(context, userAccountId: peer, name: conversation.peerName),
+              ),
+        ],
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

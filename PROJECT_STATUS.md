@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**907 tests green, analyze clean.** `mboa_user` 230 · `mboa_pro` 439 ·
-`mboa_core` 17 · `mboa_shared` 193 · `mboa_ui` 21 · `mboa_l10n` 7.
+**945 tests green, analyze clean.** `mboa_user` 230 · `mboa_pro` 443 ·
+`mboa_core` 17 · `mboa_shared` 227 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -60,6 +60,7 @@
 | M27 resident review | ✅ write + revise (tenant), reply once (landlord), report either kind · §24 open |
 | M08 Contrat Mboa — tenant half | ✅ list, detail, accept, contest, sign, PDF — the shared views, routed in both apps |
 | M23 signalements | ✅ listing + review from the app · admin queue is out of scope here |
+| M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread · not from a visit request yet (§26) |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -1054,15 +1055,15 @@ Updated 2026-10-18. The client was regenerated from the export carrying M24
 (invoices) and M26 (payments to contractors), `eb848cd`.
 
 Ready to build (the API exists, nothing in the apps):
-- **M09 Mboa Score** (both) — `GET /users/me/score` for the tenant,
-  `GET /prestataires/me/tenants/{userId}/score` for a prestataire. Never started.
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **Prestataire visit cancellation** — §14 is half answered:
-  `POST /prestataires/me/visites/{id}/cancel`, up to one hour before the slot
-  (`409 CANCELLATION_TOO_LATE` after). Read the answer in
-  `docs/backend/backend-response.md` before building.
+- **Prestataire visit detail + cancellation** — §14 is answered in full:
+  `GET /prestataires/me/visites/{id}` (`AgentVisiteDetail`: client name and
+  phone, address, `canConfirm`) and `POST /prestataires/me/visites/{id}/cancel`,
+  up to one hour before the slot (`409 CANCELLATION_TOO_LATE` after).
+- **M09 from a visit request** — waits on §26 (`userAccountId` on the
+  prestataire's visit); the thread already opens the score.
 - Password reset in Pro (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
 - Settings: the `searchable` toggle is still unwired.
 

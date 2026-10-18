@@ -3308,5 +3308,233 @@
   "saveSearchFailed": "La recherche n'a pas été sauvegardée. Réessaie.",
   "@saveSearchFailed": {
     "description": "Save failed."
+  },
+  "scoreTitle": "Mboa Score",
+  "@scoreTitle": {
+    "description": "M09 — title."
+  },
+  "scoreMine": "Mon Mboa Score",
+  "@scoreMine": {
+    "description": "Compte tile (RM-M09-03)."
+  },
+  "scoreMineSubtitle": "Ton score de fiabilité, en détail",
+  "@scoreMineSubtitle": {
+    "description": "Compte tile subtitle."
+  },
+  "scoreOpen": "Voir son Mboa Score",
+  "@scoreOpen": {
+    "description": "Pro thread action tooltip (RM-M09-04)."
+  },
+  "scoreClose": "Fermer",
+  "@scoreClose": {
+    "description": "Closes the score sheet."
+  },
+  "scoreOutOf": "sur {max}",
+  "@scoreOutOf": {
+    "description": "Under the number in the ring.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11y": "Mboa Score : {score} sur {max}",
+  "@scoreA11y": {
+    "description": "Screen-reader label of the ring.",
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreIntroSelf": "Ton Mboa Score montre aux propriétaires que tu es un locataire fiable.",
+  "@scoreIntroSelf": {
+    "description": "Own score — intro."
+  },
+  "scorePrivateSelf": "Il n'est jamais public : seuls les propriétaires que tu contactes le voient.",
+  "@scorePrivateSelf": {
+    "description": "RM-M09-04/05 — who sees it."
+  },
+  "scoreMaxNote": "{max}, c'est le maximum. Le score parfait n'existe pas : il reste toujours une marge.",
+  "@scoreMaxNote": {
+    "description": "Doc 10 M09 — 90 is the ceiling on purpose.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreSectionSelf": "Ce qui compte dans ton score",
+  "@scoreSectionSelf": {
+    "description": "Own score — breakdown title."
+  },
+  "scoreFooterSelf": "Ton score se met à jour tout seul dès que quelque chose change.",
+  "@scoreFooterSelf": {
+    "description": "RM-M09-02 — recomputed live."
+  },
+  "scoreIntroTenant": "La fiabilité de ce locataire, calculée par Mboa à partir de son activité.",
+  "@scoreIntroTenant": {
+    "description": "Prestataire sheet — intro."
+  },
+  "scorePrivateTenant": "Privé : rien que pour ta décision.",
+  "@scorePrivateTenant": {
+    "description": "RM-M09-05."
+  },
+  "scoreFooterTenant": "Une aide à la décision, pas un verdict.",
+  "@scoreFooterTenant": {
+    "description": "Prestataire sheet — footnote."
+  },
+  "scoreSignalProfile": "Profil complet (photo, prénom, nom)",
+  "@scoreSignalProfile": {
+    "description": "PROFILE_COMPLETE."
+  },
+  "scoreSignalIdentity": "Identité vérifiée",
+  "@scoreSignalIdentity": {
+    "description": "IDENTITY_VERIFIED."
+  },
+  "scoreSignalSeniority": "Membre depuis plus de 6 mois",
+  "@scoreSignalSeniority": {
+    "description": "ACCOUNT_SENIORITY."
+  },
+  "scoreSignalContracts": "Contrats Mboa signés",
+  "@scoreSignalContracts": {
+    "description": "SIGNED_CONTRACTS."
+  },
+  "scoreSignalRating": "Note des propriétaires",
+  "@scoreSignalRating": {
+    "description": "PROVIDER_RATING (not computed yet)."
+  },
+  "scoreSignalReports": "Signalements retenus",
+  "@scoreSignalReports": {
+    "description": "VALIDATED_REPORTS."
+  },
+  "scoreSignalAdjustment": "Ajustement par l'équipe Mboa",
+  "@scoreSignalAdjustment": {
+    "description": "ADMIN_ADJUSTMENT (hidden at 0)."
+  },
+  "scoreSignalOther": "Autre",
+  "@scoreSignalOther": {
+    "description": "A signal newer than this build."
+  },
+  "scoreContractsCount": "{count, plural, =0{Aucun contrat signé pour l'instant} =1{1 contrat signé} other{{count} contrats signés}}",
+  "@scoreContractsCount": {
+    "description": "SIGNED_CONTRACTS count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreReportsCount": "{count, plural, =0{Aucun signalement retenu} =1{1 signalement retenu} other{{count} signalements retenus}}",
+  "@scoreReportsCount": {
+    "description": "VALIDATED_REPORTS count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreSoon": "Bientôt",
+  "@scoreSoon": {
+    "description": "A signal not computed yet — not a zero."
+  },
+  "scoreHintProfile": "Complète ton profil pour booster ton Mboa Score.",
+  "@scoreHintProfile": {
+    "description": "Own score hint (charter §9.2 wording)."
+  },
+  "scoreHintIdentity": "Ta pièce d'identité, vérifiée par l'équipe Mboa.",
+  "@scoreHintIdentity": {
+    "description": "Own score hint."
+  },
+  "scoreHintSeniority": "Celui-là vient tout seul, avec le temps.",
+  "@scoreHintSeniority": {
+    "description": "Own score hint."
+  },
+  "scoreHintContracts": "Chaque contrat signé sur Mboa compte, jusqu'à {max} points.",
+  "@scoreHintContracts": {
+    "description": "Own score hint — the ceiling comes from the server (maxPoints).",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreHintRating": "Les propriétaires pourront bientôt te noter.",
+  "@scoreHintRating": {
+    "description": "Own score hint."
+  },
+  "scoreHintReports": "Un message ou un avis signalé et retenu par l'équipe Mboa fait baisser ton score.",
+  "@scoreHintReports": {
+    "description": "Own score hint."
+  },
+  "scoreA11yEarned": "plus {points} points sur {max}",
+  "@scoreA11yEarned": {
+    "description": "Screen reader, earned line.",
+    "placeholders": {
+      "points": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11yZero": "0 point sur {max}",
+  "@scoreA11yZero": {
+    "description": "Screen reader, nothing yet on the line.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11yPenalty": "moins {points} points",
+  "@scoreA11yPenalty": {
+    "description": "Screen reader, a penalty.",
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11yPoints": "{points} points",
+  "@scoreA11yPoints": {
+    "description": "Screen reader, a line without a ceiling.",
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "scoreA11ySoon": "bientôt disponible",
+  "@scoreA11ySoon": {
+    "description": "Screen reader, not computed yet."
+  },
+  "scoreLoadFailedTitle": "Le score n'a pas pu se charger",
+  "@scoreLoadFailedTitle": {
+    "description": "Offline or server error."
+  },
+  "scoreLoadFailedBody": "Vérifie ta connexion, puis réessaie.",
+  "@scoreLoadFailedBody": {
+    "description": "Offline or server error."
+  },
+  "scoreNotContactedTitle": "Pas encore visible",
+  "@scoreNotContactedTitle": {
+    "description": "403 SCORE_NOT_ACCESSIBLE."
+  },
+  "scoreNotContactedBody": "Tu verras son score dès que ce locataire t'aura écrit ou demandé une visite.",
+  "@scoreNotContactedBody": {
+    "description": "403 SCORE_NOT_ACCESSIBLE (RM-M09-04)."
+  },
+  "scoreNoneTitle": "Pas de score pour ce compte",
+  "@scoreNoneTitle": {
+    "description": "404 SCORE_NOT_APPLICABLE."
+  },
+  "scoreNoneBody": "Seuls les comptes locataires ont un Mboa Score.",
+  "@scoreNoneBody": {
+    "description": "404 SCORE_NOT_APPLICABLE."
   }
 }

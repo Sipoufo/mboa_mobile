@@ -100,6 +100,16 @@ class _SignedInState extends State<_SignedIn> {
                     ),
                   ),
                   const SizedBox(height: Dimens.spacingMd),
+                  // RM-M09-03 — private: only here, never on a public profile.
+                  MboaTileCard(
+                    icon: LucideIcons.gauge,
+                    title: l10n.scoreMine,
+                    subtitle: l10n.scoreMineSubtitle,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [MyScoreRoute()]),
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacingMd),
                   // RM-M04-07 — the searches N-01 watches.
                   MboaTileCard(
                     icon: LucideIcons.bookmark,
