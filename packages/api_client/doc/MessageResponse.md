@@ -15,6 +15,9 @@ Name | Type | Description | Notes
 **attachmentKeys** | **BuiltList&lt;String&gt;** |  | [optional] 
 **sentAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **readAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**kind** | **String** |  | [optional] 
+**systemEvent** | **String** |  | [optional] 
+**reservation** | [**ReservationRequestSnapshot**](ReservationRequestSnapshot.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

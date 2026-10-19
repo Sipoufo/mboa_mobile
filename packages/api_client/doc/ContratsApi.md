@@ -11,7 +11,9 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**acceptContract**](ContratsApi.md#acceptcontract) | **POST** /api/v1/contracts/{id}/accept | Accept the terms; signing opens for both parties
 [**cancelContract**](ContratsApi.md#cancelcontract) | **DELETE** /api/v1/contracts/{id} | Call the contract off — either party, up to the second signature
+[**confirmContractTermination**](ContratsApi.md#confirmcontracttermination) | **POST** /api/v1/contracts/{id}/termination/confirm | Agree to the termination the other party proposed — it becomes binding
 [**createContract**](ContratsApi.md#createcontract) | **POST** /api/v1/contracts | Draw up a contract on one of your listings (RM-M08-01)
+[**declineContractTermination**](ContratsApi.md#declinecontracttermination) | **POST** /api/v1/contracts/{id}/termination/decline | Refuse the termination the other party proposed — the contract runs on
 [**getContract**](ContratsApi.md#getcontract) | **GET** /api/v1/contracts/{id} | One contract; its exact address appears only once signed (CA-M08-02)
 [**getContractPdf**](ContratsApi.md#getcontractpdf) | **GET** /api/v1/contracts/{id}/pdf | A short-lived URL to download the signed contract&#39;s PDF (CA-M08-01)
 [**listMyContracts**](ContratsApi.md#listmycontracts) | **GET** /api/v1/contracts | Your contracts, as landlord or as tenant
@@ -19,10 +21,12 @@ Method | HTTP request | Description
 [**respondToContractChange**](ContratsApi.md#respondtocontractchange) | **POST** /api/v1/contracts/{id}/changes/{changeId}/response | Answer one objection — whether or not you amend the terms (CE-M08-03)
 [**sendContract**](ContratsApi.md#sendcontract) | **POST** /api/v1/contracts/{id}/send | Send the draft to the tenant for signature (N-07)
 [**signContract**](ContratsApi.md#signcontract) | **POST** /api/v1/contracts/{id}/sign | Sign; the second signature locks the contract for good (RM-M08-03)
+[**terminateContract**](ContratsApi.md#terminatecontract) | **POST** /api/v1/contracts/{id}/termination | End a signed contract: notified alone with one rent period&#39;s notice (3 months at most), or proposed to the other party (RM-M08-11)
 [**updateContract**](ContratsApi.md#updatecontract) | **PATCH** /api/v1/contracts/{id} | Amend terms nobody has accepted or signed yet (RM-M08-03)
 [**updateContractChange**](ContratsApi.md#updatecontractchange) | **PUT** /api/v1/contracts/{id}/changes/{changeId} | Correct your own objection while it is still unanswered
 [**verifyContract**](ContratsApi.md#verifycontract) | **GET** /api/v1/contracts/verify/{id} | Check a printed contract is genuine — public, needs the code on the document (RM-M08-04)
 [**withdrawContractChange**](ContratsApi.md#withdrawcontractchange) | **DELETE** /api/v1/contracts/{id}/changes/{changeId} | Take your objection back; the last one returns the contract to you
+[**withdrawContractTermination**](ContratsApi.md#withdrawcontracttermination) | **DELETE** /api/v1/contracts/{id}/termination | Withdraw your own proposed termination before it is answered (one notified alone is final)
 
 
 # **acceptContract**
@@ -106,6 +110,47 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **confirmContractTermination**
+> ContractResponse confirmContractTermination(id)
+
+Agree to the termination the other party proposed — it becomes binding
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getContratsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.confirmContractTermination(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ContratsApi->confirmContractTermination: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**ContractResponse**](ContractResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **createContract**
 > ContractResponse createContract(createContractRequest)
 
@@ -143,6 +188,47 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **declineContractTermination**
+> ContractResponse declineContractTermination(id)
+
+Refuse the termination the other party proposed — the contract runs on
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getContratsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.declineContractTermination(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ContratsApi->declineContractTermination: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**ContractResponse**](ContractResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -444,6 +530,49 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **terminateContract**
+> ContractResponse terminateContract(id, terminateContractRequest)
+
+End a signed contract: notified alone with one rent period's notice (3 months at most), or proposed to the other party (RM-M08-11)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getContratsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final TerminateContractRequest terminateContractRequest = ; // TerminateContractRequest | 
+
+try {
+    final response = api.terminateContract(id, terminateContractRequest);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ContratsApi->terminateContract: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+ **terminateContractRequest** | [**TerminateContractRequest**](TerminateContractRequest.md)|  | 
+
+### Return type
+
+[**ContractResponse**](ContractResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **updateContract**
 > ContractResponse updateContract(id, updateContractRequest)
 
@@ -602,6 +731,47 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
  **changeId** | **String**|  | 
+
+### Return type
+
+[**ContractResponse**](ContractResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **withdrawContractTermination**
+> ContractResponse withdrawContractTermination(id)
+
+Withdraw your own proposed termination before it is answered (one notified alone is final)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getContratsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.withdrawContractTermination(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ContratsApi->withdrawContractTermination: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
 
 ### Return type
 

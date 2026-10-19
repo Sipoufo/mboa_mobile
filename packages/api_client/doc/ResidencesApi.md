@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**rentResidenceUnits**](ResidencesApi.md#rentresidenceunits) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
 [**reserveResidenceUnits**](ResidencesApi.md#reserveresidenceunits) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
 [**unarchiveResidenceUnits**](ResidencesApi.md#unarchiveresidenceunits) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
+[**unreserveResidenceUnits**](ResidencesApi.md#unreserveresidenceunits) | **POST** /api/v1/residences/{id}/unreserve | Lift every reservation set by hand at once; units a client&#39;s request holds stay reserved
 [**updateResidence**](ResidencesApi.md#updateresidence) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
 
 
@@ -365,6 +366,47 @@ try {
     print(response);
 } on DioException catch (e) {
     print('Exception when calling ResidencesApi->unarchiveResidenceUnits: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**ResidenceResponse**](ResidenceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **unreserveResidenceUnits**
+> ResidenceResponse unreserveResidenceUnits(id)
+
+Lift every reservation set by hand at once; units a client's request holds stay reserved
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getResidencesApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.unreserveResidenceUnits(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ResidencesApi->unreserveResidenceUnits: $e\n');
 }
 ```
 

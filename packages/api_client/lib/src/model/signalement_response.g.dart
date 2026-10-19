@@ -59,6 +59,9 @@ _$signalementResponseReasonEnum_INAPPROPRIATE_CONTENT =
 const SignalementResponseReasonEnum _$signalementResponseReasonEnum_HARASSMENT =
     const SignalementResponseReasonEnum._('HARASSMENT');
 const SignalementResponseReasonEnum
+_$signalementResponseReasonEnum_ASKED_FOR_MONEY =
+    const SignalementResponseReasonEnum._('ASKED_FOR_MONEY');
+const SignalementResponseReasonEnum
 _$signalementResponseReasonEnum_unknownDefaultOpenApi =
     const SignalementResponseReasonEnum._('unknownDefaultOpenApi');
 
@@ -74,6 +77,8 @@ SignalementResponseReasonEnum _$signalementResponseReasonEnumValueOf(
       return _$signalementResponseReasonEnum_INAPPROPRIATE_CONTENT;
     case 'HARASSMENT':
       return _$signalementResponseReasonEnum_HARASSMENT;
+    case 'ASKED_FOR_MONEY':
+      return _$signalementResponseReasonEnum_ASKED_FOR_MONEY;
     case 'unknownDefaultOpenApi':
       return _$signalementResponseReasonEnum_unknownDefaultOpenApi;
     default:
@@ -88,6 +93,7 @@ _$signalementResponseReasonEnumValues = BuiltSet<SignalementResponseReasonEnum>(
     _$signalementResponseReasonEnum_ABNORMAL_PRICE,
     _$signalementResponseReasonEnum_INAPPROPRIATE_CONTENT,
     _$signalementResponseReasonEnum_HARASSMENT,
+    _$signalementResponseReasonEnum_ASKED_FOR_MONEY,
     _$signalementResponseReasonEnum_unknownDefaultOpenApi,
   ],
 );
@@ -183,6 +189,7 @@ class _$SignalementResponseReasonEnumSerializer
     'ABNORMAL_PRICE': 'ABNORMAL_PRICE',
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
+    'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -190,6 +197,7 @@ class _$SignalementResponseReasonEnumSerializer
     'ABNORMAL_PRICE': 'ABNORMAL_PRICE',
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
+    'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

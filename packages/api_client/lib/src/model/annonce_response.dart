@@ -46,6 +46,8 @@ part 'annonce_response.g.dart';
 /// * [expiresAt] 
 /// * [createdAt] 
 /// * [archivedReason] 
+/// * [reservationRequestId] 
+/// * [reservedUntil] 
 @BuiltValue()
 abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -151,6 +153,12 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
   @BuiltValueField(wireName: r'archivedReason')
   AnnonceResponseArchivedReasonEnum? get archivedReason;
   // enum archivedReasonEnum {  OWNER,  EXPIRED,  PLAN_LIMIT,  };
+
+  @BuiltValueField(wireName: r'reservationRequestId')
+  String? get reservationRequestId;
+
+  @BuiltValueField(wireName: r'reservedUntil')
+  DateTime? get reservedUntil;
 
   AnnonceResponse._();
 
@@ -404,6 +412,20 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
       yield serializers.serialize(
         object.archivedReason,
         specifiedType: const FullType(AnnonceResponseArchivedReasonEnum),
+      );
+    }
+    if (object.reservationRequestId != null) {
+      yield r'reservationRequestId';
+      yield serializers.serialize(
+        object.reservationRequestId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.reservedUntil != null) {
+      yield r'reservedUntil';
+      yield serializers.serialize(
+        object.reservedUntil,
+        specifiedType: const FullType(DateTime),
       );
     }
   }
@@ -692,6 +714,22 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           ) as AnnonceResponseArchivedReasonEnum?;
           if (valueDes == null) continue;
           result.archivedReason = valueDes;
+          break;
+        case r'reservationRequestId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.reservationRequestId = valueDes;
+          break;
+        case r'reservedUntil':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(DateTime),
+          ) as DateTime?;
+          if (valueDes == null) continue;
+          result.reservedUntil = valueDes;
           break;
         default:
           unhandled.add(key);

@@ -43,6 +43,8 @@ part 'annonce_detail_response.g.dart';
 /// * [rating] 
 /// * [viewCount] 
 /// * [exactLocation] 
+/// * [canRequestReservation] 
+/// * [myReservationRequestId] 
 @BuiltValue()
 abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, AnnonceDetailResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -132,6 +134,12 @@ abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, Ann
 
   @BuiltValueField(wireName: r'exactLocation')
   bool? get exactLocation;
+
+  @BuiltValueField(wireName: r'canRequestReservation')
+  bool? get canRequestReservation;
+
+  @BuiltValueField(wireName: r'myReservationRequestId')
+  String? get myReservationRequestId;
 
   AnnonceDetailResponse._();
 
@@ -350,6 +358,20 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
       yield serializers.serialize(
         object.exactLocation,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.canRequestReservation != null) {
+      yield r'canRequestReservation';
+      yield serializers.serialize(
+        object.canRequestReservation,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.myReservationRequestId != null) {
+      yield r'myReservationRequestId';
+      yield serializers.serialize(
+        object.myReservationRequestId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -598,6 +620,22 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
           ) as bool?;
           if (valueDes == null) continue;
           result.exactLocation = valueDes;
+          break;
+        case r'canRequestReservation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.canRequestReservation = valueDes;
+          break;
+        case r'myReservationRequestId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.myReservationRequestId = valueDes;
           break;
         default:
           unhandled.add(key);

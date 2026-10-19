@@ -58,6 +58,12 @@ const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N25 =
     const NotificationSettingTypeEnum._('N25');
 const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N26 =
     const NotificationSettingTypeEnum._('N26');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N32 =
+    const NotificationSettingTypeEnum._('N32');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N33 =
+    const NotificationSettingTypeEnum._('N33');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N34 =
+    const NotificationSettingTypeEnum._('N34');
 const NotificationSettingTypeEnum
 _$notificationSettingTypeEnum_unknownDefaultOpenApi =
     const NotificationSettingTypeEnum._('unknownDefaultOpenApi');
@@ -116,6 +122,12 @@ NotificationSettingTypeEnum _$notificationSettingTypeEnumValueOf(String name) {
       return _$notificationSettingTypeEnum_N25;
     case 'N26':
       return _$notificationSettingTypeEnum_N26;
+    case 'N32':
+      return _$notificationSettingTypeEnum_N32;
+    case 'N33':
+      return _$notificationSettingTypeEnum_N33;
+    case 'N34':
+      return _$notificationSettingTypeEnum_N34;
     case 'unknownDefaultOpenApi':
       return _$notificationSettingTypeEnum_unknownDefaultOpenApi;
     default:
@@ -152,6 +164,9 @@ _$notificationSettingTypeEnumValues =
       _$notificationSettingTypeEnum_N24,
       _$notificationSettingTypeEnum_N25,
       _$notificationSettingTypeEnum_N26,
+      _$notificationSettingTypeEnum_N32,
+      _$notificationSettingTypeEnum_N33,
+      _$notificationSettingTypeEnum_N34,
       _$notificationSettingTypeEnum_unknownDefaultOpenApi,
     ]);
 
@@ -188,6 +203,9 @@ class _$NotificationSettingTypeEnumSerializer
     'N24': 'N24',
     'N25': 'N25',
     'N26': 'N26',
+    'N32': 'N32',
+    'N33': 'N33',
+    'N34': 'N34',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -217,6 +235,9 @@ class _$NotificationSettingTypeEnumSerializer
     'N24': 'N24',
     'N25': 'N25',
     'N26': 'N26',
+    'N32': 'N32',
+    'N33': 'N33',
+    'N34': 'N34',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

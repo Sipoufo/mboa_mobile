@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**publishAnnonce**](AnnoncesApi.md#publishannonce) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
 [**reserveAnnonce**](AnnoncesApi.md#reserveannonce) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
 [**unarchiveAnnonce**](AnnoncesApi.md#unarchiveannonce) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
+[**unreserveAnnonce**](AnnoncesApi.md#unreserveannonce) | **POST** /api/v1/annonces/{id}/unreserve | Lift a reservation you set by hand — one a client&#39;s request holds is cancelled instead (RM-M10-10)
 [**updateAnnonce**](AnnoncesApi.md#updateannonce) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
 
 
@@ -369,6 +370,47 @@ try {
     print(response);
 } on DioException catch (e) {
     print('Exception when calling AnnoncesApi->unarchiveAnnonce: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**AnnonceResponse**](AnnonceResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **unreserveAnnonce**
+> AnnonceResponse unreserveAnnonce(id)
+
+Lift a reservation you set by hand — one a client's request holds is cancelled instead (RM-M10-10)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAnnoncesApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.unreserveAnnonce(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling AnnoncesApi->unreserveAnnonce: $e\n');
 }
 ```
 

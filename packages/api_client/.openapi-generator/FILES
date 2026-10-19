@@ -4,6 +4,7 @@ doc/AccountApi.md
 doc/AccountContractHistory.md
 doc/AccountModerationEntry.md
 doc/AccountReportHistory.md
+doc/AccountReservationHistory.md
 doc/AccountVisitHistory.md
 doc/AddFavoriRequest.md
 doc/AdjustmentResponse.md
@@ -66,6 +67,7 @@ doc/Comment.md
 doc/ConfirmPhoneChangeRequest.md
 doc/ContractPdfResponse.md
 doc/ContractResponse.md
+doc/ContractTenancyResponse.md
 doc/ContractVerification.md
 doc/ContratsApi.md
 doc/ConversationResponse.md
@@ -74,6 +76,7 @@ doc/CountryResponse.md
 doc/CreateAnnonceRequest.md
 doc/CreateContractRequest.md
 doc/CreateInvoiceRequest.md
+doc/CreateReservationRequest.md
 doc/CreateResidenceRequest.md
 doc/CreateSignalementRequest.md
 doc/CreateUploadRequest.md
@@ -130,6 +133,7 @@ doc/MyBadgesResponse.md
 doc/NotificationDevicesApi.md
 doc/NotificationSetting.md
 doc/OpportunityItem.md
+doc/OwnerDecisionRequest.md
 doc/PageResponseAdminPaymentItem.md
 doc/PageResponseAdminPhotoVerificationItem.md
 doc/PageResponseAdminSubscriptionItem.md
@@ -147,6 +151,7 @@ doc/PageResponseLedgerEntryResponse.md
 doc/PageResponseMessageResponse.md
 doc/PageResponsePaymentSummary.md
 doc/PageResponsePropertyReview.md
+doc/PageResponseReservationResponse.md
 doc/PageResponseResidenceResponse.md
 doc/PageResponseSearchResult.md
 doc/PageResponseSignalementResponse.md
@@ -184,6 +189,8 @@ doc/ReplyRequest.md
 doc/RequestChangesRequest.md
 doc/RequestPhoneChangeRequest.md
 doc/RequestTypeChangeRequest.md
+doc/ReservationRequestSnapshot.md
+doc/ReservationResponse.md
 doc/ResetPasswordRequest.md
 doc/ResidenceApplicationSummary.md
 doc/ResidenceAssignmentResult.md
@@ -198,6 +205,8 @@ doc/RespondToChangeRequest.md
 doc/ReviewCommentRequest.md
 doc/ReviewResponse.md
 doc/ReviewSignalementRequest.md
+doc/RservationsApi.md
+doc/RservationsPrestataireApi.md
 doc/SaveSearchRequest.md
 doc/SavedSearchResponse.md
 doc/SavedSearchesApi.md
@@ -233,6 +242,8 @@ doc/SubscriptionsApi.md
 doc/SuspendAccountRequest.md
 doc/SuspendAnnonceRequest.md
 doc/Targets.md
+doc/TerminateContractRequest.md
+doc/TerminationResponse.md
 doc/TierCount.md
 doc/TierInfo.md
 doc/TypeChangeResult.md
@@ -312,6 +323,8 @@ lib/src/api/prestataire_dashboard_api.dart
 lib/src/api/prestataire_profile_api.dart
 lib/src/api/prestataire_visites_api.dart
 lib/src/api/residences_api.dart
+lib/src/api/rservations_api.dart
+lib/src/api/rservations_prestataire_api.dart
 lib/src/api/saved_searches_api.dart
 lib/src/api/search_api.dart
 lib/src/api/signalements_api.dart
@@ -331,6 +344,7 @@ lib/src/date_serializer.dart
 lib/src/model/account_contract_history.dart
 lib/src/model/account_moderation_entry.dart
 lib/src/model/account_report_history.dart
+lib/src/model/account_reservation_history.dart
 lib/src/model/account_visit_history.dart
 lib/src/model/add_favori_request.dart
 lib/src/model/adjustment_response.dart
@@ -373,6 +387,7 @@ lib/src/model/comment.dart
 lib/src/model/confirm_phone_change_request.dart
 lib/src/model/contract_pdf_response.dart
 lib/src/model/contract_response.dart
+lib/src/model/contract_tenancy_response.dart
 lib/src/model/contract_verification.dart
 lib/src/model/conversation_response.dart
 lib/src/model/conversion.dart
@@ -380,6 +395,7 @@ lib/src/model/country_response.dart
 lib/src/model/create_annonce_request.dart
 lib/src/model/create_contract_request.dart
 lib/src/model/create_invoice_request.dart
+lib/src/model/create_reservation_request.dart
 lib/src/model/create_residence_request.dart
 lib/src/model/create_signalement_request.dart
 lib/src/model/create_upload_request.dart
@@ -423,6 +439,7 @@ lib/src/model/message_response.dart
 lib/src/model/my_badges_response.dart
 lib/src/model/notification_setting.dart
 lib/src/model/opportunity_item.dart
+lib/src/model/owner_decision_request.dart
 lib/src/model/page_response_admin_payment_item.dart
 lib/src/model/page_response_admin_photo_verification_item.dart
 lib/src/model/page_response_admin_subscription_item.dart
@@ -440,6 +457,7 @@ lib/src/model/page_response_ledger_entry_response.dart
 lib/src/model/page_response_message_response.dart
 lib/src/model/page_response_payment_summary.dart
 lib/src/model/page_response_property_review.dart
+lib/src/model/page_response_reservation_response.dart
 lib/src/model/page_response_residence_response.dart
 lib/src/model/page_response_search_result.dart
 lib/src/model/page_response_signalement_response.dart
@@ -472,6 +490,8 @@ lib/src/model/reply_request.dart
 lib/src/model/request_changes_request.dart
 lib/src/model/request_phone_change_request.dart
 lib/src/model/request_type_change_request.dart
+lib/src/model/reservation_request_snapshot.dart
+lib/src/model/reservation_response.dart
 lib/src/model/reset_password_request.dart
 lib/src/model/residence_application_summary.dart
 lib/src/model/residence_assignment_result.dart
@@ -516,6 +536,8 @@ lib/src/model/subscription_response.dart
 lib/src/model/suspend_account_request.dart
 lib/src/model/suspend_annonce_request.dart
 lib/src/model/targets.dart
+lib/src/model/terminate_contract_request.dart
+lib/src/model/termination_response.dart
 lib/src/model/tier_count.dart
 lib/src/model/tier_info.dart
 lib/src/model/type_change_result.dart
@@ -551,6 +573,7 @@ test/account_api_test.dart
 test/account_contract_history_test.dart
 test/account_moderation_entry_test.dart
 test/account_report_history_test.dart
+test/account_reservation_history_test.dart
 test/account_visit_history_test.dart
 test/add_favori_request_test.dart
 test/adjustment_response_test.dart
@@ -613,6 +636,7 @@ test/comment_test.dart
 test/confirm_phone_change_request_test.dart
 test/contract_pdf_response_test.dart
 test/contract_response_test.dart
+test/contract_tenancy_response_test.dart
 test/contract_verification_test.dart
 test/contrats_api_test.dart
 test/conversation_response_test.dart
@@ -621,6 +645,7 @@ test/country_response_test.dart
 test/create_annonce_request_test.dart
 test/create_contract_request_test.dart
 test/create_invoice_request_test.dart
+test/create_reservation_request_test.dart
 test/create_residence_request_test.dart
 test/create_signalement_request_test.dart
 test/create_upload_request_test.dart
@@ -677,6 +702,7 @@ test/my_badges_response_test.dart
 test/notification_devices_api_test.dart
 test/notification_setting_test.dart
 test/opportunity_item_test.dart
+test/owner_decision_request_test.dart
 test/page_response_admin_payment_item_test.dart
 test/page_response_admin_photo_verification_item_test.dart
 test/page_response_admin_subscription_item_test.dart
@@ -694,6 +720,7 @@ test/page_response_ledger_entry_response_test.dart
 test/page_response_message_response_test.dart
 test/page_response_payment_summary_test.dart
 test/page_response_property_review_test.dart
+test/page_response_reservation_response_test.dart
 test/page_response_residence_response_test.dart
 test/page_response_search_result_test.dart
 test/page_response_signalement_response_test.dart
@@ -731,6 +758,8 @@ test/reply_test.dart
 test/request_changes_request_test.dart
 test/request_phone_change_request_test.dart
 test/request_type_change_request_test.dart
+test/reservation_request_snapshot_test.dart
+test/reservation_response_test.dart
 test/reset_password_request_test.dart
 test/residence_application_summary_test.dart
 test/residence_assignment_result_test.dart
@@ -745,6 +774,8 @@ test/respond_to_change_request_test.dart
 test/review_comment_request_test.dart
 test/review_response_test.dart
 test/review_signalement_request_test.dart
+test/rservations_api_test.dart
+test/rservations_prestataire_api_test.dart
 test/save_search_request_test.dart
 test/saved_search_response_test.dart
 test/saved_searches_api_test.dart
@@ -780,6 +811,8 @@ test/subscriptions_api_test.dart
 test/suspend_account_request_test.dart
 test/suspend_annonce_request_test.dart
 test/targets_test.dart
+test/terminate_contract_request_test.dart
+test/termination_response_test.dart
 test/tier_count_test.dart
 test/tier_info_test.dart
 test/type_change_result_test.dart

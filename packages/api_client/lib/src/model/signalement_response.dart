@@ -40,7 +40,7 @@ abstract class SignalementResponse implements Built<SignalementResponse, Signale
 
   @BuiltValueField(wireName: r'reason')
   SignalementResponseReasonEnum? get reason;
-  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  };
+  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  };
 
   @BuiltValueField(wireName: r'comment')
   String? get comment;
@@ -387,6 +387,8 @@ class SignalementResponseReasonEnum extends EnumClass {
   static const SignalementResponseReasonEnum INAPPROPRIATE_CONTENT = _$signalementResponseReasonEnum_INAPPROPRIATE_CONTENT;
   @BuiltValueEnumConst(wireName: r'HARASSMENT')
   static const SignalementResponseReasonEnum HARASSMENT = _$signalementResponseReasonEnum_HARASSMENT;
+  @BuiltValueEnumConst(wireName: r'ASKED_FOR_MONEY')
+  static const SignalementResponseReasonEnum ASKED_FOR_MONEY = _$signalementResponseReasonEnum_ASKED_FOR_MONEY;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const SignalementResponseReasonEnum unknownDefaultOpenApi = _$signalementResponseReasonEnum_unknownDefaultOpenApi;
 

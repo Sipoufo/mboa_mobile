@@ -51,6 +51,8 @@ import 'package:api_client/src/api/prestataire_dashboard_api.dart';
 import 'package:api_client/src/api/prestataire_profile_api.dart';
 import 'package:api_client/src/api/prestataire_visites_api.dart';
 import 'package:api_client/src/api/residences_api.dart';
+import 'package:api_client/src/api/rservations_api.dart';
+import 'package:api_client/src/api/rservations_prestataire_api.dart';
 import 'package:api_client/src/api/saved_searches_api.dart';
 import 'package:api_client/src/api/search_api.dart';
 import 'package:api_client/src/api/signalements_api.dart';
@@ -405,6 +407,18 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   ResidencesApi getResidencesApi() {
     return ResidencesApi(dio, serializers);
+  }
+
+  /// Get RservationsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  RservationsApi getRservationsApi() {
+    return RservationsApi(dio, serializers);
+  }
+
+  /// Get RservationsPrestataireApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  RservationsPrestataireApi getRservationsPrestataireApi() {
+    return RservationsPrestataireApi(dio, serializers);
   }
 
   /// Get SavedSearchesApi instance, base route and serializer can be overridden by a given but be careful,

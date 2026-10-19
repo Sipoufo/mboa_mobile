@@ -147,5 +147,15 @@ void main() {
       // TODO
     });
 
+    // bool canRequestReservation
+    test('to test the property `canRequestReservation`', () async {
+      // TODO
+    });
+
+    // String myReservationRequestId
+    test('to test the property `myReservationRequestId`', () async {
+      // TODO
+    });
+
   });
 }

@@ -33,7 +33,7 @@ abstract class AdminReportLine implements Built<AdminReportLine, AdminReportLine
 
   @BuiltValueField(wireName: r'reason')
   AdminReportLineReasonEnum? get reason;
-  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  };
+  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  };
 
   @BuiltValueField(wireName: r'status')
   AdminReportLineStatusEnum? get status;
@@ -254,6 +254,8 @@ class AdminReportLineReasonEnum extends EnumClass {
   static const AdminReportLineReasonEnum INAPPROPRIATE_CONTENT = _$adminReportLineReasonEnum_INAPPROPRIATE_CONTENT;
   @BuiltValueEnumConst(wireName: r'HARASSMENT')
   static const AdminReportLineReasonEnum HARASSMENT = _$adminReportLineReasonEnum_HARASSMENT;
+  @BuiltValueEnumConst(wireName: r'ASKED_FOR_MONEY')
+  static const AdminReportLineReasonEnum ASKED_FOR_MONEY = _$adminReportLineReasonEnum_ASKED_FOR_MONEY;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const AdminReportLineReasonEnum unknownDefaultOpenApi = _$adminReportLineReasonEnum_unknownDefaultOpenApi;
 

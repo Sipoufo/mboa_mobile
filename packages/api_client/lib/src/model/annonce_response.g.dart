@@ -541,6 +541,10 @@ class _$AnnonceResponse extends AnnonceResponse {
   final DateTime? createdAt;
   @override
   final AnnonceResponseArchivedReasonEnum? archivedReason;
+  @override
+  final String? reservationRequestId;
+  @override
+  final DateTime? reservedUntil;
 
   factory _$AnnonceResponse([void Function(AnnonceResponseBuilder)? updates]) =>
       (AnnonceResponseBuilder()..update(updates))._build();
@@ -579,6 +583,8 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.expiresAt,
     this.createdAt,
     this.archivedReason,
+    this.reservationRequestId,
+    this.reservedUntil,
   }) : super._();
   @override
   AnnonceResponse rebuild(void Function(AnnonceResponseBuilder) updates) =>
@@ -623,7 +629,9 @@ class _$AnnonceResponse extends AnnonceResponse {
         publishedAt == other.publishedAt &&
         expiresAt == other.expiresAt &&
         createdAt == other.createdAt &&
-        archivedReason == other.archivedReason;
+        archivedReason == other.archivedReason &&
+        reservationRequestId == other.reservationRequestId &&
+        reservedUntil == other.reservedUntil;
   }
 
   @override
@@ -662,6 +670,8 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, expiresAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, archivedReason.hashCode);
+    _$hash = $jc(_$hash, reservationRequestId.hashCode);
+    _$hash = $jc(_$hash, reservedUntil.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -701,7 +711,9 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('publishedAt', publishedAt)
           ..add('expiresAt', expiresAt)
           ..add('createdAt', createdAt)
-          ..add('archivedReason', archivedReason))
+          ..add('archivedReason', archivedReason)
+          ..add('reservationRequestId', reservationRequestId)
+          ..add('reservedUntil', reservedUntil))
         .toString();
   }
 }
@@ -856,6 +868,16 @@ class AnnonceResponseBuilder
   set archivedReason(AnnonceResponseArchivedReasonEnum? archivedReason) =>
       _$this._archivedReason = archivedReason;
 
+  String? _reservationRequestId;
+  String? get reservationRequestId => _$this._reservationRequestId;
+  set reservationRequestId(String? reservationRequestId) =>
+      _$this._reservationRequestId = reservationRequestId;
+
+  DateTime? _reservedUntil;
+  DateTime? get reservedUntil => _$this._reservedUntil;
+  set reservedUntil(DateTime? reservedUntil) =>
+      _$this._reservedUntil = reservedUntil;
+
   AnnonceResponseBuilder() {
     AnnonceResponse._defaults(this);
   }
@@ -896,6 +918,8 @@ class AnnonceResponseBuilder
       _expiresAt = $v.expiresAt;
       _createdAt = $v.createdAt;
       _archivedReason = $v.archivedReason;
+      _reservationRequestId = $v.reservationRequestId;
+      _reservedUntil = $v.reservedUntil;
       _$v = null;
     }
     return this;
@@ -953,6 +977,8 @@ class AnnonceResponseBuilder
             expiresAt: expiresAt,
             createdAt: createdAt,
             archivedReason: archivedReason,
+            reservationRequestId: reservationRequestId,
+            reservedUntil: reservedUntil,
           );
     } catch (_) {
       late String _$failedField;

@@ -7,6 +7,7 @@ import 'package:api_client/src/model/account_contract_history.dart';
 import 'package:api_client/src/model/account_report_history.dart';
 import 'package:api_client/src/model/admin_user_summary.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/account_reservation_history.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
 import 'package:api_client/src/model/account_visit_history.dart';
 import 'package:api_client/src/model/account_moderation_entry.dart';
@@ -27,6 +28,7 @@ part 'admin_user_detail.g.dart';
 /// * [contracts] 
 /// * [reports] 
 /// * [mboaScore] 
+/// * [reservations] 
 @BuiltValue()
 abstract class AdminUserDetail implements Built<AdminUserDetail, AdminUserDetailBuilder> {
   @BuiltValueField(wireName: r'account')
@@ -52,6 +54,9 @@ abstract class AdminUserDetail implements Built<AdminUserDetail, AdminUserDetail
 
   @BuiltValueField(wireName: r'mboaScore')
   AdminMboaScoreResponse? get mboaScore;
+
+  @BuiltValueField(wireName: r'reservations')
+  AccountReservationHistory? get reservations;
 
   AdminUserDetail._();
 
@@ -130,6 +135,13 @@ class _$AdminUserDetailSerializer implements PrimitiveSerializer<AdminUserDetail
       yield serializers.serialize(
         object.mboaScore,
         specifiedType: const FullType(AdminMboaScoreResponse),
+      );
+    }
+    if (object.reservations != null) {
+      yield r'reservations';
+      yield serializers.serialize(
+        object.reservations,
+        specifiedType: const FullType(AccountReservationHistory),
       );
     }
   }
@@ -218,6 +230,14 @@ class _$AdminUserDetailSerializer implements PrimitiveSerializer<AdminUserDetail
           ) as AdminMboaScoreResponse?;
           if (valueDes == null) continue;
           result.mboaScore.replace(valueDes);
+          break;
+        case r'reservations':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(AccountReservationHistory),
+          ) as AccountReservationHistory?;
+          if (valueDes == null) continue;
+          result.reservations.replace(valueDes);
           break;
         default:
           unhandled.add(key);

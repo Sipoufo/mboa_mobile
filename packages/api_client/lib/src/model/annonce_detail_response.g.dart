@@ -476,6 +476,10 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
   final int? viewCount;
   @override
   final bool? exactLocation;
+  @override
+  final bool? canRequestReservation;
+  @override
+  final String? myReservationRequestId;
 
   factory _$AnnonceDetailResponse([
     void Function(AnnonceDetailResponseBuilder)? updates,
@@ -510,6 +514,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     this.rating,
     this.viewCount,
     this.exactLocation,
+    this.canRequestReservation,
+    this.myReservationRequestId,
   }) : super._();
   @override
   AnnonceDetailResponse rebuild(
@@ -551,7 +557,9 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
         canPlanVisit == other.canPlanVisit &&
         rating == other.rating &&
         viewCount == other.viewCount &&
-        exactLocation == other.exactLocation;
+        exactLocation == other.exactLocation &&
+        canRequestReservation == other.canRequestReservation &&
+        myReservationRequestId == other.myReservationRequestId;
   }
 
   @override
@@ -585,6 +593,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     _$hash = $jc(_$hash, rating.hashCode);
     _$hash = $jc(_$hash, viewCount.hashCode);
     _$hash = $jc(_$hash, exactLocation.hashCode);
+    _$hash = $jc(_$hash, canRequestReservation.hashCode);
+    _$hash = $jc(_$hash, myReservationRequestId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -619,7 +629,9 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
           ..add('canPlanVisit', canPlanVisit)
           ..add('rating', rating)
           ..add('viewCount', viewCount)
-          ..add('exactLocation', exactLocation))
+          ..add('exactLocation', exactLocation)
+          ..add('canRequestReservation', canRequestReservation)
+          ..add('myReservationRequestId', myReservationRequestId))
         .toString();
   }
 }
@@ -756,6 +768,16 @@ class AnnonceDetailResponseBuilder
   set exactLocation(bool? exactLocation) =>
       _$this._exactLocation = exactLocation;
 
+  bool? _canRequestReservation;
+  bool? get canRequestReservation => _$this._canRequestReservation;
+  set canRequestReservation(bool? canRequestReservation) =>
+      _$this._canRequestReservation = canRequestReservation;
+
+  String? _myReservationRequestId;
+  String? get myReservationRequestId => _$this._myReservationRequestId;
+  set myReservationRequestId(String? myReservationRequestId) =>
+      _$this._myReservationRequestId = myReservationRequestId;
+
   AnnonceDetailResponseBuilder() {
     AnnonceDetailResponse._defaults(this);
   }
@@ -791,6 +813,8 @@ class AnnonceDetailResponseBuilder
       _rating = $v.rating?.toBuilder();
       _viewCount = $v.viewCount;
       _exactLocation = $v.exactLocation;
+      _canRequestReservation = $v.canRequestReservation;
+      _myReservationRequestId = $v.myReservationRequestId;
       _$v = null;
     }
     return this;
@@ -843,6 +867,8 @@ class AnnonceDetailResponseBuilder
             rating: _rating?.build(),
             viewCount: viewCount,
             exactLocation: exactLocation,
+            canRequestReservation: canRequestReservation,
+            myReservationRequestId: myReservationRequestId,
           );
     } catch (_) {
       late String _$failedField;

@@ -113,19 +113,21 @@ class _$CreateContractRequest extends CreateContractRequest {
   @override
   final String? tenantPhone;
   @override
-  final int price;
+  final int? price;
   @override
-  final CreateContractRequestRentalPeriodEnum rentalPeriod;
+  final CreateContractRequestRentalPeriodEnum? rentalPeriod;
   @override
   final int depositAmount;
   @override
   final bool? chargesIncluded;
   @override
-  final Date startDate;
+  final Date? startDate;
   @override
-  final int durationUnits;
+  final int? durationUnits;
   @override
   final bool? tacitRenewal;
+  @override
+  final String? reservationRequestId;
 
   factory _$CreateContractRequest([
     void Function(CreateContractRequestBuilder)? updates,
@@ -135,13 +137,14 @@ class _$CreateContractRequest extends CreateContractRequest {
     required this.annonceId,
     this.tenantAccountId,
     this.tenantPhone,
-    required this.price,
-    required this.rentalPeriod,
+    this.price,
+    this.rentalPeriod,
     required this.depositAmount,
     this.chargesIncluded,
-    required this.startDate,
-    required this.durationUnits,
+    this.startDate,
+    this.durationUnits,
     this.tacitRenewal,
+    this.reservationRequestId,
   }) : super._();
   @override
   CreateContractRequest rebuild(
@@ -165,7 +168,8 @@ class _$CreateContractRequest extends CreateContractRequest {
         chargesIncluded == other.chargesIncluded &&
         startDate == other.startDate &&
         durationUnits == other.durationUnits &&
-        tacitRenewal == other.tacitRenewal;
+        tacitRenewal == other.tacitRenewal &&
+        reservationRequestId == other.reservationRequestId;
   }
 
   @override
@@ -181,6 +185,7 @@ class _$CreateContractRequest extends CreateContractRequest {
     _$hash = $jc(_$hash, startDate.hashCode);
     _$hash = $jc(_$hash, durationUnits.hashCode);
     _$hash = $jc(_$hash, tacitRenewal.hashCode);
+    _$hash = $jc(_$hash, reservationRequestId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -197,7 +202,8 @@ class _$CreateContractRequest extends CreateContractRequest {
           ..add('chargesIncluded', chargesIncluded)
           ..add('startDate', startDate)
           ..add('durationUnits', durationUnits)
-          ..add('tacitRenewal', tacitRenewal))
+          ..add('tacitRenewal', tacitRenewal)
+          ..add('reservationRequestId', reservationRequestId))
         .toString();
   }
 }
@@ -252,6 +258,11 @@ class CreateContractRequestBuilder
   bool? get tacitRenewal => _$this._tacitRenewal;
   set tacitRenewal(bool? tacitRenewal) => _$this._tacitRenewal = tacitRenewal;
 
+  String? _reservationRequestId;
+  String? get reservationRequestId => _$this._reservationRequestId;
+  set reservationRequestId(String? reservationRequestId) =>
+      _$this._reservationRequestId = reservationRequestId;
+
   CreateContractRequestBuilder() {
     CreateContractRequest._defaults(this);
   }
@@ -269,6 +280,7 @@ class CreateContractRequestBuilder
       _startDate = $v.startDate;
       _durationUnits = $v.durationUnits;
       _tacitRenewal = $v.tacitRenewal;
+      _reservationRequestId = $v.reservationRequestId;
       _$v = null;
     }
     return this;
@@ -298,33 +310,18 @@ class CreateContractRequestBuilder
           ),
           tenantAccountId: tenantAccountId,
           tenantPhone: tenantPhone,
-          price: BuiltValueNullFieldError.checkNotNull(
-            price,
-            r'CreateContractRequest',
-            'price',
-          ),
-          rentalPeriod: BuiltValueNullFieldError.checkNotNull(
-            rentalPeriod,
-            r'CreateContractRequest',
-            'rentalPeriod',
-          ),
+          price: price,
+          rentalPeriod: rentalPeriod,
           depositAmount: BuiltValueNullFieldError.checkNotNull(
             depositAmount,
             r'CreateContractRequest',
             'depositAmount',
           ),
           chargesIncluded: chargesIncluded,
-          startDate: BuiltValueNullFieldError.checkNotNull(
-            startDate,
-            r'CreateContractRequest',
-            'startDate',
-          ),
-          durationUnits: BuiltValueNullFieldError.checkNotNull(
-            durationUnits,
-            r'CreateContractRequest',
-            'durationUnits',
-          ),
+          startDate: startDate,
+          durationUnits: durationUnits,
           tacitRenewal: tacitRenewal,
+          reservationRequestId: reservationRequestId,
         );
     replace(_$result);
     return _$result;

@@ -21,10 +21,24 @@ void main() {
       // TODO
     });
 
+    // Agree to the termination the other party proposed — it becomes binding
+    //
+    //Future<ContractResponse> confirmContractTermination(String id) async
+    test('test confirmContractTermination', () async {
+      // TODO
+    });
+
     // Draw up a contract on one of your listings (RM-M08-01)
     //
     //Future<ContractResponse> createContract(CreateContractRequest createContractRequest) async
     test('test createContract', () async {
+      // TODO
+    });
+
+    // Refuse the termination the other party proposed — the contract runs on
+    //
+    //Future<ContractResponse> declineContractTermination(String id) async
+    test('test declineContractTermination', () async {
       // TODO
     });
 
@@ -77,6 +91,13 @@ void main() {
       // TODO
     });
 
+    // End a signed contract: notified alone with one rent period's notice (3 months at most), or proposed to the other party (RM-M08-11)
+    //
+    //Future<ContractResponse> terminateContract(String id, TerminateContractRequest terminateContractRequest) async
+    test('test terminateContract', () async {
+      // TODO
+    });
+
     // Amend terms nobody has accepted or signed yet (RM-M08-03)
     //
     //Future<ContractResponse> updateContract(String id, UpdateContractRequest updateContractRequest) async
@@ -102,6 +123,13 @@ void main() {
     //
     //Future<ContractResponse> withdrawContractChange(String id, String changeId) async
     test('test withdrawContractChange', () async {
+      // TODO
+    });
+
+    // Withdraw your own proposed termination before it is answered (one notified alone is final)
+    //
+    //Future<ContractResponse> withdrawContractTermination(String id) async
+    test('test withdrawContractTermination', () async {
       // TODO
     });
 

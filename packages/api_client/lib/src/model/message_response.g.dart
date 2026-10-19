@@ -6,6 +6,136 @@ part of 'message_response.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const MessageResponseKindEnum _$messageResponseKindEnum_USER =
+    const MessageResponseKindEnum._('USER');
+const MessageResponseKindEnum _$messageResponseKindEnum_SYSTEM =
+    const MessageResponseKindEnum._('SYSTEM');
+const MessageResponseKindEnum _$messageResponseKindEnum_unknownDefaultOpenApi =
+    const MessageResponseKindEnum._('unknownDefaultOpenApi');
+
+MessageResponseKindEnum _$messageResponseKindEnumValueOf(String name) {
+  switch (name) {
+    case 'USER':
+      return _$messageResponseKindEnum_USER;
+    case 'SYSTEM':
+      return _$messageResponseKindEnum_SYSTEM;
+    case 'unknownDefaultOpenApi':
+      return _$messageResponseKindEnum_unknownDefaultOpenApi;
+    default:
+      return _$messageResponseKindEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<MessageResponseKindEnum> _$messageResponseKindEnumValues =
+    BuiltSet<MessageResponseKindEnum>(const <MessageResponseKindEnum>[
+      _$messageResponseKindEnum_USER,
+      _$messageResponseKindEnum_SYSTEM,
+      _$messageResponseKindEnum_unknownDefaultOpenApi,
+    ]);
+
+const MessageResponseSystemEventEnum
+_$messageResponseSystemEventEnum_RESERVATION_REQUESTED =
+    const MessageResponseSystemEventEnum._('RESERVATION_REQUESTED');
+const MessageResponseSystemEventEnum
+_$messageResponseSystemEventEnum_unknownDefaultOpenApi =
+    const MessageResponseSystemEventEnum._('unknownDefaultOpenApi');
+
+MessageResponseSystemEventEnum _$messageResponseSystemEventEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'RESERVATION_REQUESTED':
+      return _$messageResponseSystemEventEnum_RESERVATION_REQUESTED;
+    case 'unknownDefaultOpenApi':
+      return _$messageResponseSystemEventEnum_unknownDefaultOpenApi;
+    default:
+      return _$messageResponseSystemEventEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<MessageResponseSystemEventEnum>
+_$messageResponseSystemEventEnumValues =
+    BuiltSet<MessageResponseSystemEventEnum>(
+      const <MessageResponseSystemEventEnum>[
+        _$messageResponseSystemEventEnum_RESERVATION_REQUESTED,
+        _$messageResponseSystemEventEnum_unknownDefaultOpenApi,
+      ],
+    );
+
+Serializer<MessageResponseKindEnum> _$messageResponseKindEnumSerializer =
+    _$MessageResponseKindEnumSerializer();
+Serializer<MessageResponseSystemEventEnum>
+_$messageResponseSystemEventEnumSerializer =
+    _$MessageResponseSystemEventEnumSerializer();
+
+class _$MessageResponseKindEnumSerializer
+    implements PrimitiveSerializer<MessageResponseKindEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'USER': 'USER',
+    'SYSTEM': 'SYSTEM',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'USER': 'USER',
+    'SYSTEM': 'SYSTEM',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[MessageResponseKindEnum];
+  @override
+  final String wireName = 'MessageResponseKindEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    MessageResponseKindEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  MessageResponseKindEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => MessageResponseKindEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
+class _$MessageResponseSystemEventEnumSerializer
+    implements PrimitiveSerializer<MessageResponseSystemEventEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'RESERVATION_REQUESTED': 'RESERVATION_REQUESTED',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'RESERVATION_REQUESTED': 'RESERVATION_REQUESTED',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[MessageResponseSystemEventEnum];
+  @override
+  final String wireName = 'MessageResponseSystemEventEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    MessageResponseSystemEventEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  MessageResponseSystemEventEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => MessageResponseSystemEventEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$MessageResponse extends MessageResponse {
   @override
   final String? id;
@@ -21,6 +151,12 @@ class _$MessageResponse extends MessageResponse {
   final DateTime? sentAt;
   @override
   final DateTime? readAt;
+  @override
+  final MessageResponseKindEnum? kind;
+  @override
+  final MessageResponseSystemEventEnum? systemEvent;
+  @override
+  final ReservationRequestSnapshot? reservation;
 
   factory _$MessageResponse([void Function(MessageResponseBuilder)? updates]) =>
       (MessageResponseBuilder()..update(updates))._build();
@@ -33,6 +169,9 @@ class _$MessageResponse extends MessageResponse {
     this.attachmentKeys,
     this.sentAt,
     this.readAt,
+    this.kind,
+    this.systemEvent,
+    this.reservation,
   }) : super._();
   @override
   MessageResponse rebuild(void Function(MessageResponseBuilder) updates) =>
@@ -51,7 +190,10 @@ class _$MessageResponse extends MessageResponse {
         body == other.body &&
         attachmentKeys == other.attachmentKeys &&
         sentAt == other.sentAt &&
-        readAt == other.readAt;
+        readAt == other.readAt &&
+        kind == other.kind &&
+        systemEvent == other.systemEvent &&
+        reservation == other.reservation;
   }
 
   @override
@@ -64,6 +206,9 @@ class _$MessageResponse extends MessageResponse {
     _$hash = $jc(_$hash, attachmentKeys.hashCode);
     _$hash = $jc(_$hash, sentAt.hashCode);
     _$hash = $jc(_$hash, readAt.hashCode);
+    _$hash = $jc(_$hash, kind.hashCode);
+    _$hash = $jc(_$hash, systemEvent.hashCode);
+    _$hash = $jc(_$hash, reservation.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -77,7 +222,10 @@ class _$MessageResponse extends MessageResponse {
           ..add('body', body)
           ..add('attachmentKeys', attachmentKeys)
           ..add('sentAt', sentAt)
-          ..add('readAt', readAt))
+          ..add('readAt', readAt)
+          ..add('kind', kind)
+          ..add('systemEvent', systemEvent)
+          ..add('reservation', reservation))
         .toString();
   }
 }
@@ -117,6 +265,21 @@ class MessageResponseBuilder
   DateTime? get readAt => _$this._readAt;
   set readAt(DateTime? readAt) => _$this._readAt = readAt;
 
+  MessageResponseKindEnum? _kind;
+  MessageResponseKindEnum? get kind => _$this._kind;
+  set kind(MessageResponseKindEnum? kind) => _$this._kind = kind;
+
+  MessageResponseSystemEventEnum? _systemEvent;
+  MessageResponseSystemEventEnum? get systemEvent => _$this._systemEvent;
+  set systemEvent(MessageResponseSystemEventEnum? systemEvent) =>
+      _$this._systemEvent = systemEvent;
+
+  ReservationRequestSnapshotBuilder? _reservation;
+  ReservationRequestSnapshotBuilder get reservation =>
+      _$this._reservation ??= ReservationRequestSnapshotBuilder();
+  set reservation(ReservationRequestSnapshotBuilder? reservation) =>
+      _$this._reservation = reservation;
+
   MessageResponseBuilder() {
     MessageResponse._defaults(this);
   }
@@ -131,6 +294,9 @@ class MessageResponseBuilder
       _attachmentKeys = $v.attachmentKeys?.toBuilder();
       _sentAt = $v.sentAt;
       _readAt = $v.readAt;
+      _kind = $v.kind;
+      _systemEvent = $v.systemEvent;
+      _reservation = $v.reservation?.toBuilder();
       _$v = null;
     }
     return this;
@@ -162,12 +328,18 @@ class MessageResponseBuilder
             attachmentKeys: _attachmentKeys?.build(),
             sentAt: sentAt,
             readAt: readAt,
+            kind: kind,
+            systemEvent: systemEvent,
+            reservation: _reservation?.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'attachmentKeys';
         _attachmentKeys?.build();
+
+        _$failedField = 'reservation';
+        _reservation?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'MessageResponse',

@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **contracts** | [**AccountContractHistory**](AccountContractHistory.md) |  | [optional] 
 **reports** | [**AccountReportHistory**](AccountReportHistory.md) |  | [optional] 
 **mboaScore** | [**AdminMboaScoreResponse**](AdminMboaScoreResponse.md) |  | [optional] 
+**reservations** | [**AccountReservationHistory**](AccountReservationHistory.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

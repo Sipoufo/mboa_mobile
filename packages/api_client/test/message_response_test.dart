@@ -42,5 +42,20 @@ void main() {
       // TODO
     });
 
+    // String kind
+    test('to test the property `kind`', () async {
+      // TODO
+    });
+
+    // String systemEvent
+    test('to test the property `systemEvent`', () async {
+      // TODO
+    });
+
+    // ReservationRequestSnapshot reservation
+    test('to test the property `reservation`', () async {
+      // TODO
+    });
+
   });
 }

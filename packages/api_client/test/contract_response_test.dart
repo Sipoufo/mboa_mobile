@@ -147,5 +147,15 @@ void main() {
       // TODO
     });
 
+    // ContractTenancyResponse tenancy
+    test('to test the property `tenancy`', () async {
+      // TODO
+    });
+
+    // String reservationRequestId
+    test('to test the property `reservationRequestId`', () async {
+      // TODO
+    });
+
   });
 }

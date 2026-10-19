@@ -12,6 +12,7 @@ Serializers _$serializers =
           ..add(AccountModerationEntry.serializer)
           ..add(AccountModerationEntryActionEnum.serializer)
           ..add(AccountReportHistory.serializer)
+          ..add(AccountReservationHistory.serializer)
           ..add(AccountVisitHistory.serializer)
           ..add(AddFavoriRequest.serializer)
           ..add(AdjustmentResponse.serializer)
@@ -100,6 +101,8 @@ Serializers _$serializers =
           ..add(ContractResponseAwaitingEnum.serializer)
           ..add(ContractResponseRentalPeriodEnum.serializer)
           ..add(ContractResponseStatusEnum.serializer)
+          ..add(ContractTenancyResponse.serializer)
+          ..add(ContractTenancyResponseStateEnum.serializer)
           ..add(ContractVerification.serializer)
           ..add(ConversationResponse.serializer)
           ..add(Conversion.serializer)
@@ -113,6 +116,7 @@ Serializers _$serializers =
           ..add(CreateInvoiceRequest.serializer)
           ..add(CreateInvoiceRequestKindEnum.serializer)
           ..add(CreateInvoiceRequestSettlementEnum.serializer)
+          ..add(CreateReservationRequest.serializer)
           ..add(CreateResidenceRequest.serializer)
           ..add(CreateSignalementRequest.serializer)
           ..add(CreateSignalementRequestReasonEnum.serializer)
@@ -176,12 +180,16 @@ Serializers _$serializers =
           ..add(MeResponseStatusEnum.serializer)
           ..add(MeResponseTierEnum.serializer)
           ..add(MessageResponse.serializer)
+          ..add(MessageResponseKindEnum.serializer)
+          ..add(MessageResponseSystemEventEnum.serializer)
           ..add(MyBadgesResponse.serializer)
           ..add(MyBadgesResponseBadgesEnum.serializer)
           ..add(NotificationSetting.serializer)
           ..add(NotificationSettingTypeEnum.serializer)
           ..add(OpportunityItem.serializer)
           ..add(OpportunityItemTypeEnum.serializer)
+          ..add(OwnerDecisionRequest.serializer)
+          ..add(OwnerDecisionRequestReasonEnum.serializer)
           ..add(PageResponseAdminPaymentItem.serializer)
           ..add(PageResponseAdminPhotoVerificationItem.serializer)
           ..add(PageResponseAdminSubscriptionItem.serializer)
@@ -199,6 +207,7 @@ Serializers _$serializers =
           ..add(PageResponseMessageResponse.serializer)
           ..add(PageResponsePaymentSummary.serializer)
           ..add(PageResponsePropertyReview.serializer)
+          ..add(PageResponseReservationResponse.serializer)
           ..add(PageResponseResidenceResponse.serializer)
           ..add(PageResponseSearchResult.serializer)
           ..add(PageResponseSignalementResponse.serializer)
@@ -249,6 +258,13 @@ Serializers _$serializers =
           ..add(RequestPhoneChangeRequest.serializer)
           ..add(RequestTypeChangeRequest.serializer)
           ..add(RequestTypeChangeRequestNewTypeEnum.serializer)
+          ..add(ReservationRequestSnapshot.serializer)
+          ..add(ReservationRequestSnapshotRentalPeriodEnum.serializer)
+          ..add(ReservationResponse.serializer)
+          ..add(ReservationResponseCancelledByEnum.serializer)
+          ..add(ReservationResponseOwnerReasonEnum.serializer)
+          ..add(ReservationResponseRentalPeriodEnum.serializer)
+          ..add(ReservationResponseStatusEnum.serializer)
           ..add(ResetPasswordRequest.serializer)
           ..add(ResidenceApplicationSummary.serializer)
           ..add(ResidenceAssignmentResult.serializer)
@@ -318,6 +334,10 @@ Serializers _$serializers =
           ..add(SuspendAccountRequest.serializer)
           ..add(SuspendAnnonceRequest.serializer)
           ..add(Targets.serializer)
+          ..add(TerminateContractRequest.serializer)
+          ..add(TerminationResponse.serializer)
+          ..add(TerminationResponseRequestedByEnum.serializer)
+          ..add(TerminationResponseStatusEnum.serializer)
           ..add(TierCount.serializer)
           ..add(TierCountTierEnum.serializer)
           ..add(TierInfo.serializer)
@@ -560,6 +580,12 @@ Serializers _$serializers =
               const FullType(RequestChangesRequestContestedTermsEnum),
             ]),
             () => ListBuilder<RequestChangesRequestContestedTermsEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ReservationResponse),
+            ]),
+            () => ListBuilder<ReservationResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
@@ -852,6 +878,20 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(AdminVisitLine)]),
             () => ListBuilder<AdminVisitLine>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(int),
+            ]),
+            () => MapBuilder<String, int>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(int),
+            ]),
+            () => MapBuilder<String, int>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [

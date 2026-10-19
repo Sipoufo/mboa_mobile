@@ -23,6 +23,7 @@ part 'create_contract_request.g.dart';
 /// * [startDate] 
 /// * [durationUnits] 
 /// * [tacitRenewal] 
+/// * [reservationRequestId] 
 @BuiltValue()
 abstract class CreateContractRequest implements Built<CreateContractRequest, CreateContractRequestBuilder> {
   @BuiltValueField(wireName: r'annonceId')
@@ -35,10 +36,10 @@ abstract class CreateContractRequest implements Built<CreateContractRequest, Cre
   String? get tenantPhone;
 
   @BuiltValueField(wireName: r'price')
-  int get price;
+  int? get price;
 
   @BuiltValueField(wireName: r'rentalPeriod')
-  CreateContractRequestRentalPeriodEnum get rentalPeriod;
+  CreateContractRequestRentalPeriodEnum? get rentalPeriod;
   // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'depositAmount')
@@ -48,13 +49,16 @@ abstract class CreateContractRequest implements Built<CreateContractRequest, Cre
   bool? get chargesIncluded;
 
   @BuiltValueField(wireName: r'startDate')
-  Date get startDate;
+  Date? get startDate;
 
   @BuiltValueField(wireName: r'durationUnits')
-  int get durationUnits;
+  int? get durationUnits;
 
   @BuiltValueField(wireName: r'tacitRenewal')
   bool? get tacitRenewal;
+
+  @BuiltValueField(wireName: r'reservationRequestId')
+  String? get reservationRequestId;
 
   CreateContractRequest._();
 
@@ -98,16 +102,20 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
         specifiedType: const FullType(String),
       );
     }
-    yield r'price';
-    yield serializers.serialize(
-      object.price,
-      specifiedType: const FullType(int),
-    );
-    yield r'rentalPeriod';
-    yield serializers.serialize(
-      object.rentalPeriod,
-      specifiedType: const FullType(CreateContractRequestRentalPeriodEnum),
-    );
+    if (object.price != null) {
+      yield r'price';
+      yield serializers.serialize(
+        object.price,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.rentalPeriod != null) {
+      yield r'rentalPeriod';
+      yield serializers.serialize(
+        object.rentalPeriod,
+        specifiedType: const FullType(CreateContractRequestRentalPeriodEnum),
+      );
+    }
     yield r'depositAmount';
     yield serializers.serialize(
       object.depositAmount,
@@ -120,21 +128,32 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
         specifiedType: const FullType(bool),
       );
     }
-    yield r'startDate';
-    yield serializers.serialize(
-      object.startDate,
-      specifiedType: const FullType(Date),
-    );
-    yield r'durationUnits';
-    yield serializers.serialize(
-      object.durationUnits,
-      specifiedType: const FullType(int),
-    );
+    if (object.startDate != null) {
+      yield r'startDate';
+      yield serializers.serialize(
+        object.startDate,
+        specifiedType: const FullType(Date),
+      );
+    }
+    if (object.durationUnits != null) {
+      yield r'durationUnits';
+      yield serializers.serialize(
+        object.durationUnits,
+        specifiedType: const FullType(int),
+      );
+    }
     if (object.tacitRenewal != null) {
       yield r'tacitRenewal';
       yield serializers.serialize(
         object.tacitRenewal,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.reservationRequestId != null) {
+      yield r'reservationRequestId';
+      yield serializers.serialize(
+        object.reservationRequestId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -186,15 +205,17 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
         case r'price':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
           result.price = valueDes;
           break;
         case r'rentalPeriod':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(CreateContractRequestRentalPeriodEnum),
-          ) as CreateContractRequestRentalPeriodEnum;
+            specifiedType: const FullType.nullable(CreateContractRequestRentalPeriodEnum),
+          ) as CreateContractRequestRentalPeriodEnum?;
+          if (valueDes == null) continue;
           result.rentalPeriod = valueDes;
           break;
         case r'depositAmount':
@@ -215,15 +236,17 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
         case r'startDate':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(Date),
-          ) as Date;
+            specifiedType: const FullType.nullable(Date),
+          ) as Date?;
+          if (valueDes == null) continue;
           result.startDate = valueDes;
           break;
         case r'durationUnits':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
           result.durationUnits = valueDes;
           break;
         case r'tacitRenewal':
@@ -233,6 +256,14 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
           ) as bool?;
           if (valueDes == null) continue;
           result.tacitRenewal = valueDes;
+          break;
+        case r'reservationRequestId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.reservationRequestId = valueDes;
           break;
         default:
           unhandled.add(key);

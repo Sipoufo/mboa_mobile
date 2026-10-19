@@ -47,5 +47,10 @@ void main() {
       // TODO
     });
 
+    // AccountReservationHistory reservations
+    test('to test the property `reservations`', () async {
+      // TODO
+    });
+
   });
 }

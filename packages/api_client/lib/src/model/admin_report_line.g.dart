@@ -52,6 +52,8 @@ _$adminReportLineReasonEnum_INAPPROPRIATE_CONTENT =
     const AdminReportLineReasonEnum._('INAPPROPRIATE_CONTENT');
 const AdminReportLineReasonEnum _$adminReportLineReasonEnum_HARASSMENT =
     const AdminReportLineReasonEnum._('HARASSMENT');
+const AdminReportLineReasonEnum _$adminReportLineReasonEnum_ASKED_FOR_MONEY =
+    const AdminReportLineReasonEnum._('ASKED_FOR_MONEY');
 const AdminReportLineReasonEnum
 _$adminReportLineReasonEnum_unknownDefaultOpenApi =
     const AdminReportLineReasonEnum._('unknownDefaultOpenApi');
@@ -66,6 +68,8 @@ AdminReportLineReasonEnum _$adminReportLineReasonEnumValueOf(String name) {
       return _$adminReportLineReasonEnum_INAPPROPRIATE_CONTENT;
     case 'HARASSMENT':
       return _$adminReportLineReasonEnum_HARASSMENT;
+    case 'ASKED_FOR_MONEY':
+      return _$adminReportLineReasonEnum_ASKED_FOR_MONEY;
     case 'unknownDefaultOpenApi':
       return _$adminReportLineReasonEnum_unknownDefaultOpenApi;
     default:
@@ -79,6 +83,7 @@ final BuiltSet<AdminReportLineReasonEnum> _$adminReportLineReasonEnumValues =
       _$adminReportLineReasonEnum_ABNORMAL_PRICE,
       _$adminReportLineReasonEnum_INAPPROPRIATE_CONTENT,
       _$adminReportLineReasonEnum_HARASSMENT,
+      _$adminReportLineReasonEnum_ASKED_FOR_MONEY,
       _$adminReportLineReasonEnum_unknownDefaultOpenApi,
     ]);
 
@@ -167,6 +172,7 @@ class _$AdminReportLineReasonEnumSerializer
     'ABNORMAL_PRICE': 'ABNORMAL_PRICE',
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
+    'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -174,6 +180,7 @@ class _$AdminReportLineReasonEnumSerializer
     'ABNORMAL_PRICE': 'ABNORMAL_PRICE',
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
+    'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

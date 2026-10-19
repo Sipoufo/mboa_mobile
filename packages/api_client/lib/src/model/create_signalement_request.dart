@@ -27,7 +27,7 @@ abstract class CreateSignalementRequest implements Built<CreateSignalementReques
 
   @BuiltValueField(wireName: r'reason')
   CreateSignalementRequestReasonEnum get reason;
-  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  };
+  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  };
 
   @BuiltValueField(wireName: r'comment')
   String? get comment;
@@ -187,6 +187,8 @@ class CreateSignalementRequestReasonEnum extends EnumClass {
   static const CreateSignalementRequestReasonEnum INAPPROPRIATE_CONTENT = _$createSignalementRequestReasonEnum_INAPPROPRIATE_CONTENT;
   @BuiltValueEnumConst(wireName: r'HARASSMENT')
   static const CreateSignalementRequestReasonEnum HARASSMENT = _$createSignalementRequestReasonEnum_HARASSMENT;
+  @BuiltValueEnumConst(wireName: r'ASKED_FOR_MONEY')
+  static const CreateSignalementRequestReasonEnum ASKED_FOR_MONEY = _$createSignalementRequestReasonEnum_ASKED_FOR_MONEY;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateSignalementRequestReasonEnum unknownDefaultOpenApi = _$createSignalementRequestReasonEnum_unknownDefaultOpenApi;
 

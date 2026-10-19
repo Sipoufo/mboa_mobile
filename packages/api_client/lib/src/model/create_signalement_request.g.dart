@@ -59,6 +59,9 @@ const CreateSignalementRequestReasonEnum
 _$createSignalementRequestReasonEnum_HARASSMENT =
     const CreateSignalementRequestReasonEnum._('HARASSMENT');
 const CreateSignalementRequestReasonEnum
+_$createSignalementRequestReasonEnum_ASKED_FOR_MONEY =
+    const CreateSignalementRequestReasonEnum._('ASKED_FOR_MONEY');
+const CreateSignalementRequestReasonEnum
 _$createSignalementRequestReasonEnum_unknownDefaultOpenApi =
     const CreateSignalementRequestReasonEnum._('unknownDefaultOpenApi');
 
@@ -74,6 +77,8 @@ CreateSignalementRequestReasonEnum _$createSignalementRequestReasonEnumValueOf(
       return _$createSignalementRequestReasonEnum_INAPPROPRIATE_CONTENT;
     case 'HARASSMENT':
       return _$createSignalementRequestReasonEnum_HARASSMENT;
+    case 'ASKED_FOR_MONEY':
+      return _$createSignalementRequestReasonEnum_ASKED_FOR_MONEY;
     case 'unknownDefaultOpenApi':
       return _$createSignalementRequestReasonEnum_unknownDefaultOpenApi;
     default:
@@ -89,6 +94,7 @@ _$createSignalementRequestReasonEnumValues =
         _$createSignalementRequestReasonEnum_ABNORMAL_PRICE,
         _$createSignalementRequestReasonEnum_INAPPROPRIATE_CONTENT,
         _$createSignalementRequestReasonEnum_HARASSMENT,
+        _$createSignalementRequestReasonEnum_ASKED_FOR_MONEY,
         _$createSignalementRequestReasonEnum_unknownDefaultOpenApi,
       ],
     );
@@ -146,6 +152,7 @@ class _$CreateSignalementRequestReasonEnumSerializer
     'ABNORMAL_PRICE': 'ABNORMAL_PRICE',
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
+    'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -153,6 +160,7 @@ class _$CreateSignalementRequestReasonEnumSerializer
     'ABNORMAL_PRICE': 'ABNORMAL_PRICE',
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
+    'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

@@ -335,6 +335,10 @@ class _$ContractResponse extends ContractResponse {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
+  @override
+  final ContractTenancyResponse? tenancy;
+  @override
+  final String? reservationRequestId;
 
   factory _$ContractResponse([
     void Function(ContractResponseBuilder)? updates,
@@ -369,6 +373,8 @@ class _$ContractResponse extends ContractResponse {
     this.lockedAt,
     this.createdAt,
     this.updatedAt,
+    this.tenancy,
+    this.reservationRequestId,
   }) : super._();
   @override
   ContractResponse rebuild(void Function(ContractResponseBuilder) updates) =>
@@ -409,7 +415,9 @@ class _$ContractResponse extends ContractResponse {
         residentReviewEligible == other.residentReviewEligible &&
         lockedAt == other.lockedAt &&
         createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        updatedAt == other.updatedAt &&
+        tenancy == other.tenancy &&
+        reservationRequestId == other.reservationRequestId;
   }
 
   @override
@@ -443,6 +451,8 @@ class _$ContractResponse extends ContractResponse {
     _$hash = $jc(_$hash, lockedAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, tenancy.hashCode);
+    _$hash = $jc(_$hash, reservationRequestId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -477,7 +487,9 @@ class _$ContractResponse extends ContractResponse {
           ..add('residentReviewEligible', residentReviewEligible)
           ..add('lockedAt', lockedAt)
           ..add('createdAt', createdAt)
-          ..add('updatedAt', updatedAt))
+          ..add('updatedAt', updatedAt)
+          ..add('tenancy', tenancy)
+          ..add('reservationRequestId', reservationRequestId))
         .toString();
   }
 }
@@ -612,6 +624,17 @@ class ContractResponseBuilder
   DateTime? get updatedAt => _$this._updatedAt;
   set updatedAt(DateTime? updatedAt) => _$this._updatedAt = updatedAt;
 
+  ContractTenancyResponseBuilder? _tenancy;
+  ContractTenancyResponseBuilder get tenancy =>
+      _$this._tenancy ??= ContractTenancyResponseBuilder();
+  set tenancy(ContractTenancyResponseBuilder? tenancy) =>
+      _$this._tenancy = tenancy;
+
+  String? _reservationRequestId;
+  String? get reservationRequestId => _$this._reservationRequestId;
+  set reservationRequestId(String? reservationRequestId) =>
+      _$this._reservationRequestId = reservationRequestId;
+
   ContractResponseBuilder() {
     ContractResponse._defaults(this);
   }
@@ -647,6 +670,8 @@ class ContractResponseBuilder
       _lockedAt = $v.lockedAt;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
+      _tenancy = $v.tenancy?.toBuilder();
+      _reservationRequestId = $v.reservationRequestId;
       _$v = null;
     }
     return this;
@@ -699,6 +724,8 @@ class ContractResponseBuilder
             lockedAt: lockedAt,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            tenancy: _tenancy?.build(),
+            reservationRequestId: reservationRequestId,
           );
     } catch (_) {
       late String _$failedField;
@@ -714,6 +741,9 @@ class ContractResponseBuilder
         _signatures?.build();
         _$failedField = 'changeRequests';
         _changeRequests?.build();
+
+        _$failedField = 'tenancy';
+        _tenancy?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'ContractResponse',

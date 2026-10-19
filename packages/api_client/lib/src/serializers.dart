@@ -17,6 +17,7 @@ import 'package:api_client/src/model/date.dart';
 import 'package:api_client/src/model/account_contract_history.dart';
 import 'package:api_client/src/model/account_moderation_entry.dart';
 import 'package:api_client/src/model/account_report_history.dart';
+import 'package:api_client/src/model/account_reservation_history.dart';
 import 'package:api_client/src/model/account_visit_history.dart';
 import 'package:api_client/src/model/add_favori_request.dart';
 import 'package:api_client/src/model/adjustment_response.dart';
@@ -59,6 +60,7 @@ import 'package:api_client/src/model/comment.dart';
 import 'package:api_client/src/model/confirm_phone_change_request.dart';
 import 'package:api_client/src/model/contract_pdf_response.dart';
 import 'package:api_client/src/model/contract_response.dart';
+import 'package:api_client/src/model/contract_tenancy_response.dart';
 import 'package:api_client/src/model/contract_verification.dart';
 import 'package:api_client/src/model/conversation_response.dart';
 import 'package:api_client/src/model/conversion.dart';
@@ -66,6 +68,7 @@ import 'package:api_client/src/model/country_response.dart';
 import 'package:api_client/src/model/create_annonce_request.dart';
 import 'package:api_client/src/model/create_contract_request.dart';
 import 'package:api_client/src/model/create_invoice_request.dart';
+import 'package:api_client/src/model/create_reservation_request.dart';
 import 'package:api_client/src/model/create_residence_request.dart';
 import 'package:api_client/src/model/create_signalement_request.dart';
 import 'package:api_client/src/model/create_upload_request.dart';
@@ -108,6 +111,7 @@ import 'package:api_client/src/model/message_response.dart';
 import 'package:api_client/src/model/my_badges_response.dart';
 import 'package:api_client/src/model/notification_setting.dart';
 import 'package:api_client/src/model/opportunity_item.dart';
+import 'package:api_client/src/model/owner_decision_request.dart';
 import 'package:api_client/src/model/page_response_admin_payment_item.dart';
 import 'package:api_client/src/model/page_response_admin_photo_verification_item.dart';
 import 'package:api_client/src/model/page_response_admin_subscription_item.dart';
@@ -125,6 +129,7 @@ import 'package:api_client/src/model/page_response_ledger_entry_response.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';
 import 'package:api_client/src/model/page_response_payment_summary.dart';
 import 'package:api_client/src/model/page_response_property_review.dart';
+import 'package:api_client/src/model/page_response_reservation_response.dart';
 import 'package:api_client/src/model/page_response_residence_response.dart';
 import 'package:api_client/src/model/page_response_search_result.dart';
 import 'package:api_client/src/model/page_response_signalement_response.dart';
@@ -157,6 +162,8 @@ import 'package:api_client/src/model/reply_request.dart';
 import 'package:api_client/src/model/request_changes_request.dart';
 import 'package:api_client/src/model/request_phone_change_request.dart';
 import 'package:api_client/src/model/request_type_change_request.dart';
+import 'package:api_client/src/model/reservation_request_snapshot.dart';
+import 'package:api_client/src/model/reservation_response.dart';
 import 'package:api_client/src/model/reset_password_request.dart';
 import 'package:api_client/src/model/residence_application_summary.dart';
 import 'package:api_client/src/model/residence_assignment_result.dart';
@@ -201,6 +208,8 @@ import 'package:api_client/src/model/subscription_response.dart';
 import 'package:api_client/src/model/suspend_account_request.dart';
 import 'package:api_client/src/model/suspend_annonce_request.dart';
 import 'package:api_client/src/model/targets.dart';
+import 'package:api_client/src/model/terminate_contract_request.dart';
+import 'package:api_client/src/model/termination_response.dart';
 import 'package:api_client/src/model/tier_count.dart';
 import 'package:api_client/src/model/tier_info.dart';
 import 'package:api_client/src/model/type_change_result.dart';
@@ -238,6 +247,7 @@ part 'serializers.g.dart';
   AccountContractHistory,
   AccountModerationEntry,
   AccountReportHistory,
+  AccountReservationHistory,
   AccountVisitHistory,
   AddFavoriRequest,
   AdjustmentResponse,
@@ -280,6 +290,7 @@ part 'serializers.g.dart';
   ConfirmPhoneChangeRequest,
   ContractPdfResponse,
   ContractResponse,
+  ContractTenancyResponse,
   ContractVerification,
   ConversationResponse,
   Conversion,
@@ -287,6 +298,7 @@ part 'serializers.g.dart';
   CreateAnnonceRequest,
   CreateContractRequest,
   CreateInvoiceRequest,
+  CreateReservationRequest,
   CreateResidenceRequest,
   CreateSignalementRequest,
   CreateUploadRequest,
@@ -329,6 +341,7 @@ part 'serializers.g.dart';
   MyBadgesResponse,
   NotificationSetting,
   OpportunityItem,
+  OwnerDecisionRequest,
   PageResponseAdminPaymentItem,
   PageResponseAdminPhotoVerificationItem,
   PageResponseAdminSubscriptionItem,
@@ -346,6 +359,7 @@ part 'serializers.g.dart';
   PageResponseMessageResponse,
   PageResponsePaymentSummary,
   PageResponsePropertyReview,
+  PageResponseReservationResponse,
   PageResponseResidenceResponse,
   PageResponseSearchResult,
   PageResponseSignalementResponse,
@@ -378,6 +392,8 @@ part 'serializers.g.dart';
   RequestChangesRequest,
   RequestPhoneChangeRequest,
   RequestTypeChangeRequest,
+  ReservationRequestSnapshot,
+  ReservationResponse,
   ResetPasswordRequest,
   ResidenceApplicationSummary,
   ResidenceAssignmentResult,
@@ -422,6 +438,8 @@ part 'serializers.g.dart';
   SuspendAccountRequest,
   SuspendAnnonceRequest,
   Targets,
+  TerminateContractRequest,
+  TerminationResponse,
   TierCount,
   TierInfo,
   TypeChangeResult,
@@ -477,6 +495,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(KycReviewItem)]),
         () => ListBuilder<KycReviewItem>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(ReservationResponse)]),
+        () => ListBuilder<ReservationResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(MessageResponse)]),

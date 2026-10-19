@@ -172,5 +172,15 @@ void main() {
       // TODO
     });
 
+    // String reservationRequestId
+    test('to test the property `reservationRequestId`', () async {
+      // TODO
+    });
+
+    // DateTime reservedUntil
+    test('to test the property `reservedUntil`', () async {
+      // TODO
+    });
+
   });
 }

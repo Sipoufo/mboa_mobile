@@ -6,6 +6,7 @@
 import 'package:api_client/src/model/change_request_response.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:api_client/src/model/participant_summary.dart';
+import 'package:api_client/src/model/contract_tenancy_response.dart';
 import 'package:api_client/src/model/signature_response.dart';
 import 'package:api_client/src/model/date.dart';
 import 'package:built_value/built_value.dart';
@@ -44,6 +45,8 @@ part 'contract_response.g.dart';
 /// * [lockedAt] 
 /// * [createdAt] 
 /// * [updatedAt] 
+/// * [tenancy] 
+/// * [reservationRequestId] 
 @BuiltValue()
 abstract class ContractResponse implements Built<ContractResponse, ContractResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -132,6 +135,12 @@ abstract class ContractResponse implements Built<ContractResponse, ContractRespo
 
   @BuiltValueField(wireName: r'updatedAt')
   DateTime? get updatedAt;
+
+  @BuiltValueField(wireName: r'tenancy')
+  ContractTenancyResponse? get tenancy;
+
+  @BuiltValueField(wireName: r'reservationRequestId')
+  String? get reservationRequestId;
 
   ContractResponse._();
 
@@ -350,6 +359,20 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
       yield serializers.serialize(
         object.updatedAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.tenancy != null) {
+      yield r'tenancy';
+      yield serializers.serialize(
+        object.tenancy,
+        specifiedType: const FullType(ContractTenancyResponse),
+      );
+    }
+    if (object.reservationRequestId != null) {
+      yield r'reservationRequestId';
+      yield serializers.serialize(
+        object.reservationRequestId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -598,6 +621,22 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
           ) as DateTime?;
           if (valueDes == null) continue;
           result.updatedAt = valueDes;
+          break;
+        case r'tenancy':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(ContractTenancyResponse),
+          ) as ContractTenancyResponse?;
+          if (valueDes == null) continue;
+          result.tenancy.replace(valueDes);
+          break;
+        case r'reservationRequestId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.reservationRequestId = valueDes;
           break;
         default:
           unhandled.add(key);

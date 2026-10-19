@@ -70,6 +70,13 @@ void main() {
       // TODO
     });
 
+    // Lift a reservation you set by hand — one a client's request holds is cancelled instead (RM-M10-10)
+    //
+    //Future<AnnonceResponse> unreserveAnnonce(String id) async
+    test('test unreserveAnnonce', () async {
+      // TODO
+    });
+
     // Partially update one of the authenticated prestataire's listings
     //
     //Future<AnnonceResponse> updateAnnonce(String id, UpdateAnnonceRequest updateAnnonceRequest) async

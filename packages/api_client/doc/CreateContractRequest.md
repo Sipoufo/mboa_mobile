@@ -11,13 +11,14 @@ Name | Type | Description | Notes
 **annonceId** | **String** |  | 
 **tenantAccountId** | **String** |  | [optional] 
 **tenantPhone** | **String** |  | [optional] 
-**price** | **int** |  | 
-**rentalPeriod** | **String** |  | 
+**price** | **int** |  | [optional] 
+**rentalPeriod** | **String** |  | [optional] 
 **depositAmount** | **int** |  | 
 **chargesIncluded** | **bool** |  | [optional] 
-**startDate** | [**Date**](Date.md) |  | 
-**durationUnits** | **int** |  | 
+**startDate** | [**Date**](Date.md) |  | [optional] 
+**durationUnits** | **int** |  | [optional] 
 **tacitRenewal** | **bool** |  | [optional] 
+**reservationRequestId** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -23,6 +23,8 @@ class _$AdminUserDetail extends AdminUserDetail {
   final AccountReportHistory? reports;
   @override
   final AdminMboaScoreResponse? mboaScore;
+  @override
+  final AccountReservationHistory? reservations;
 
   factory _$AdminUserDetail([void Function(AdminUserDetailBuilder)? updates]) =>
       (AdminUserDetailBuilder()..update(updates))._build();
@@ -36,6 +38,7 @@ class _$AdminUserDetail extends AdminUserDetail {
     this.contracts,
     this.reports,
     this.mboaScore,
+    this.reservations,
   }) : super._();
   @override
   AdminUserDetail rebuild(void Function(AdminUserDetailBuilder) updates) =>
@@ -55,7 +58,8 @@ class _$AdminUserDetail extends AdminUserDetail {
         visits == other.visits &&
         contracts == other.contracts &&
         reports == other.reports &&
-        mboaScore == other.mboaScore;
+        mboaScore == other.mboaScore &&
+        reservations == other.reservations;
   }
 
   @override
@@ -69,6 +73,7 @@ class _$AdminUserDetail extends AdminUserDetail {
     _$hash = $jc(_$hash, contracts.hashCode);
     _$hash = $jc(_$hash, reports.hashCode);
     _$hash = $jc(_$hash, mboaScore.hashCode);
+    _$hash = $jc(_$hash, reservations.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -83,7 +88,8 @@ class _$AdminUserDetail extends AdminUserDetail {
           ..add('visits', visits)
           ..add('contracts', contracts)
           ..add('reports', reports)
-          ..add('mboaScore', mboaScore))
+          ..add('mboaScore', mboaScore)
+          ..add('reservations', reservations))
         .toString();
   }
 }
@@ -136,6 +142,12 @@ class AdminUserDetailBuilder
   set mboaScore(AdminMboaScoreResponseBuilder? mboaScore) =>
       _$this._mboaScore = mboaScore;
 
+  AccountReservationHistoryBuilder? _reservations;
+  AccountReservationHistoryBuilder get reservations =>
+      _$this._reservations ??= AccountReservationHistoryBuilder();
+  set reservations(AccountReservationHistoryBuilder? reservations) =>
+      _$this._reservations = reservations;
+
   AdminUserDetailBuilder() {
     AdminUserDetail._defaults(this);
   }
@@ -151,6 +163,7 @@ class AdminUserDetailBuilder
       _contracts = $v.contracts?.toBuilder();
       _reports = $v.reports?.toBuilder();
       _mboaScore = $v.mboaScore?.toBuilder();
+      _reservations = $v.reservations?.toBuilder();
       _$v = null;
     }
     return this;
@@ -183,6 +196,7 @@ class AdminUserDetailBuilder
             contracts: _contracts?.build(),
             reports: _reports?.build(),
             mboaScore: _mboaScore?.build(),
+            reservations: _reservations?.build(),
           );
     } catch (_) {
       late String _$failedField;
@@ -202,6 +216,8 @@ class AdminUserDetailBuilder
         _reports?.build();
         _$failedField = 'mboaScore';
         _mboaScore?.build();
+        _$failedField = 'reservations';
+        _reservations?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'AdminUserDetail',

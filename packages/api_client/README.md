@@ -146,6 +146,7 @@ Class | Method | HTTP request | Description
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**publishAnnonce**](doc/AnnoncesApi.md#publishannonce) | **POST** /api/v1/annonces/{id}/publish | Publish a draft listing (profile complete + ≥3 photos + tier limit)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**reserveAnnonce**](doc/AnnoncesApi.md#reserveannonce) | **POST** /api/v1/annonces/{id}/reserve | Reserve a published listing (temporary hold)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**unarchiveAnnonce**](doc/AnnoncesApi.md#unarchiveannonce) | **POST** /api/v1/annonces/{id}/unarchive | Return an archived listing to draft so it can be published again (RM-M10-08)
+[*AnnoncesApi*](doc/AnnoncesApi.md) | [**unreserveAnnonce**](doc/AnnoncesApi.md#unreserveannonce) | **POST** /api/v1/annonces/{id}/unreserve | Lift a reservation you set by hand — one a client&#39;s request holds is cancelled instead (RM-M10-10)
 [*AnnoncesApi*](doc/AnnoncesApi.md) | [**updateAnnonce**](doc/AnnoncesApi.md#updateannonce) | **PATCH** /api/v1/annonces/{id} | Partially update one of the authenticated prestataire&#39;s listings
 [*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**acceptAnnonceApplication**](doc/AssignationAgentApi.md#acceptannonceapplication) | **POST** /api/v1/annonces/{annonceId}/agent/applications/{applicationId}/accept | Accept an application; the other applicants stay open — the listing holds a pool (RM-M11-07)
 [*AssignationAgentApi*](doc/AssignationAgentApi.md) | [**assignAgent**](doc/AssignationAgentApi.md#assignagent) | **POST** /api/v1/annonces/{annonceId}/agent | Offer the listing to an agent (RM-M11-04)
@@ -185,7 +186,9 @@ Class | Method | HTTP request | Description
 [*BadgesApi*](doc/BadgesApi.md) | [**requestResidencePhotoVerification**](doc/BadgesApi.md#requestresidencephotoverification) | **POST** /api/v1/residences/{id}/photo-verification | Ask for a residence&#39;s shared photos to be verified
 [*ContratsApi*](doc/ContratsApi.md) | [**acceptContract**](doc/ContratsApi.md#acceptcontract) | **POST** /api/v1/contracts/{id}/accept | Accept the terms; signing opens for both parties
 [*ContratsApi*](doc/ContratsApi.md) | [**cancelContract**](doc/ContratsApi.md#cancelcontract) | **DELETE** /api/v1/contracts/{id} | Call the contract off — either party, up to the second signature
+[*ContratsApi*](doc/ContratsApi.md) | [**confirmContractTermination**](doc/ContratsApi.md#confirmcontracttermination) | **POST** /api/v1/contracts/{id}/termination/confirm | Agree to the termination the other party proposed — it becomes binding
 [*ContratsApi*](doc/ContratsApi.md) | [**createContract**](doc/ContratsApi.md#createcontract) | **POST** /api/v1/contracts | Draw up a contract on one of your listings (RM-M08-01)
+[*ContratsApi*](doc/ContratsApi.md) | [**declineContractTermination**](doc/ContratsApi.md#declinecontracttermination) | **POST** /api/v1/contracts/{id}/termination/decline | Refuse the termination the other party proposed — the contract runs on
 [*ContratsApi*](doc/ContratsApi.md) | [**getContract**](doc/ContratsApi.md#getcontract) | **GET** /api/v1/contracts/{id} | One contract; its exact address appears only once signed (CA-M08-02)
 [*ContratsApi*](doc/ContratsApi.md) | [**getContractPdf**](doc/ContratsApi.md#getcontractpdf) | **GET** /api/v1/contracts/{id}/pdf | A short-lived URL to download the signed contract&#39;s PDF (CA-M08-01)
 [*ContratsApi*](doc/ContratsApi.md) | [**listMyContracts**](doc/ContratsApi.md#listmycontracts) | **GET** /api/v1/contracts | Your contracts, as landlord or as tenant
@@ -193,10 +196,12 @@ Class | Method | HTTP request | Description
 [*ContratsApi*](doc/ContratsApi.md) | [**respondToContractChange**](doc/ContratsApi.md#respondtocontractchange) | **POST** /api/v1/contracts/{id}/changes/{changeId}/response | Answer one objection — whether or not you amend the terms (CE-M08-03)
 [*ContratsApi*](doc/ContratsApi.md) | [**sendContract**](doc/ContratsApi.md#sendcontract) | **POST** /api/v1/contracts/{id}/send | Send the draft to the tenant for signature (N-07)
 [*ContratsApi*](doc/ContratsApi.md) | [**signContract**](doc/ContratsApi.md#signcontract) | **POST** /api/v1/contracts/{id}/sign | Sign; the second signature locks the contract for good (RM-M08-03)
+[*ContratsApi*](doc/ContratsApi.md) | [**terminateContract**](doc/ContratsApi.md#terminatecontract) | **POST** /api/v1/contracts/{id}/termination | End a signed contract: notified alone with one rent period&#39;s notice (3 months at most), or proposed to the other party (RM-M08-11)
 [*ContratsApi*](doc/ContratsApi.md) | [**updateContract**](doc/ContratsApi.md#updatecontract) | **PATCH** /api/v1/contracts/{id} | Amend terms nobody has accepted or signed yet (RM-M08-03)
 [*ContratsApi*](doc/ContratsApi.md) | [**updateContractChange**](doc/ContratsApi.md#updatecontractchange) | **PUT** /api/v1/contracts/{id}/changes/{changeId} | Correct your own objection while it is still unanswered
 [*ContratsApi*](doc/ContratsApi.md) | [**verifyContract**](doc/ContratsApi.md#verifycontract) | **GET** /api/v1/contracts/verify/{id} | Check a printed contract is genuine — public, needs the code on the document (RM-M08-04)
 [*ContratsApi*](doc/ContratsApi.md) | [**withdrawContractChange**](doc/ContratsApi.md#withdrawcontractchange) | **DELETE** /api/v1/contracts/{id}/changes/{changeId} | Take your objection back; the last one returns the contract to you
+[*ContratsApi*](doc/ContratsApi.md) | [**withdrawContractTermination**](doc/ContratsApi.md#withdrawcontracttermination) | **DELETE** /api/v1/contracts/{id}/termination | Withdraw your own proposed termination before it is answered (one notified alone is final)
 [*CurrentUserApi*](doc/CurrentUserApi.md) | [**getMe**](doc/CurrentUserApi.md#getme) | **GET** /api/v1/me | Get the currently authenticated account
 [*FavorisApi*](doc/FavorisApi.md) | [**addFavori**](doc/FavorisApi.md#addfavori) | **POST** /api/v1/favoris | Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
 [*FavorisApi*](doc/FavorisApi.md) | [**listMyFavoris**](doc/FavorisApi.md#listmyfavoris) | **GET** /api/v1/favoris | List saved listings; unavailable ones stay for 30 days flagged available&#x3D;false
@@ -271,7 +276,18 @@ Class | Method | HTTP request | Description
 [*ResidencesApi*](doc/ResidencesApi.md) | [**rentResidenceUnits**](doc/ResidencesApi.md#rentresidenceunits) | **POST** /api/v1/residences/{id}/rented | Mark all live units (published or reserved) as rented at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**reserveResidenceUnits**](doc/ResidencesApi.md#reserveresidenceunits) | **POST** /api/v1/residences/{id}/reserve | Reserve all published units at once
 [*ResidencesApi*](doc/ResidencesApi.md) | [**unarchiveResidenceUnits**](doc/ResidencesApi.md#unarchiveresidenceunits) | **POST** /api/v1/residences/{id}/unarchive | Return all archived units to draft so the residence can be published again (RM-M10-08)
+[*ResidencesApi*](doc/ResidencesApi.md) | [**unreserveResidenceUnits**](doc/ResidencesApi.md#unreserveresidenceunits) | **POST** /api/v1/residences/{id}/unreserve | Lift every reservation set by hand at once; units a client&#39;s request holds stay reserved
 [*ResidencesApi*](doc/ResidencesApi.md) | [**updateResidence**](doc/ResidencesApi.md#updateresidence) | **PATCH** /api/v1/residences/{id} | Update the residence&#39;s shared attributes (cascades to units)
+[*RservationsApi*](doc/RservationsApi.md) | [**cancelMyReservation**](doc/RservationsApi.md#cancelmyreservation) | **POST** /api/v1/reservations/{id}/cancel | Withdraw a request, or cancel an accepted reservation — free before signature (RM-M29-08)
+[*RservationsApi*](doc/RservationsApi.md) | [**getMyReservation**](doc/RservationsApi.md#getmyreservation) | **GET** /api/v1/reservations/{id} | One of my reservation requests
+[*RservationsApi*](doc/RservationsApi.md) | [**listMyReservations**](doc/RservationsApi.md#listmyreservations) | **GET** /api/v1/reservations | My reservation requests, newest first
+[*RservationsApi*](doc/RservationsApi.md) | [**requestReservation**](doc/RservationsApi.md#requestreservation) | **POST** /api/v1/reservations | Ask to reserve a published listing: move-in day, duration, a word (RM-M29-01)
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**acceptReservation**](doc/RservationsPrestataireApi.md#acceptreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/accept | Accept: the listing is reserved for this client 7 days; the others are not retained (RM-M29-04/07)
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**cancelIncomingReservation**](doc/RservationsPrestataireApi.md#cancelincomingreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/cancel | Cancel an accepted reservation, with a reason — counted for the admin (RM-M29-08)
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**extendReservation**](doc/RservationsPrestataireApi.md#extendreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/extend | Extend an accepted reservation by 7 days, once (RM-M29-07)
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**getIncomingReservation**](doc/RservationsPrestataireApi.md#getincomingreservation) | **GET** /api/v1/prestataires/me/reservations/{id} | One request on my listings
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**listIncomingReservations**](doc/RservationsPrestataireApi.md#listincomingreservations) | **GET** /api/v1/prestataires/me/reservations | Requests on my listings, newest first — status&#x3D;PENDING&#39;s totalElements is the home counter
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**refuseReservation**](doc/RservationsPrestataireApi.md#refusereservation) | **POST** /api/v1/prestataires/me/reservations/{id}/refuse | Refuse, with a reason — never public (RM-M29-06)
 [*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**deleteSavedSearch**](doc/SavedSearchesApi.md#deletesavedsearch) | **DELETE** /api/v1/saved-searches/{id} | Forget a saved search
 [*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**getSavedSearchResults**](doc/SavedSearchesApi.md#getsavedsearchresults) | **GET** /api/v1/saved-searches/{id}/results | Run a saved search — the same cards as /search; resets its count of new results
 [*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**listSavedSearches**](doc/SavedSearchesApi.md#listsavedsearches) | **GET** /api/v1/saved-searches | My saved searches, each with its count of new results
@@ -312,6 +328,7 @@ Class | Method | HTTP request | Description
  - [AccountContractHistory](doc/AccountContractHistory.md)
  - [AccountModerationEntry](doc/AccountModerationEntry.md)
  - [AccountReportHistory](doc/AccountReportHistory.md)
+ - [AccountReservationHistory](doc/AccountReservationHistory.md)
  - [AccountVisitHistory](doc/AccountVisitHistory.md)
  - [AddFavoriRequest](doc/AddFavoriRequest.md)
  - [AdjustmentResponse](doc/AdjustmentResponse.md)
@@ -354,6 +371,7 @@ Class | Method | HTTP request | Description
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
  - [ContractPdfResponse](doc/ContractPdfResponse.md)
  - [ContractResponse](doc/ContractResponse.md)
+ - [ContractTenancyResponse](doc/ContractTenancyResponse.md)
  - [ContractVerification](doc/ContractVerification.md)
  - [ConversationResponse](doc/ConversationResponse.md)
  - [Conversion](doc/Conversion.md)
@@ -361,6 +379,7 @@ Class | Method | HTTP request | Description
  - [CreateAnnonceRequest](doc/CreateAnnonceRequest.md)
  - [CreateContractRequest](doc/CreateContractRequest.md)
  - [CreateInvoiceRequest](doc/CreateInvoiceRequest.md)
+ - [CreateReservationRequest](doc/CreateReservationRequest.md)
  - [CreateResidenceRequest](doc/CreateResidenceRequest.md)
  - [CreateSignalementRequest](doc/CreateSignalementRequest.md)
  - [CreateUploadRequest](doc/CreateUploadRequest.md)
@@ -403,6 +422,7 @@ Class | Method | HTTP request | Description
  - [MyBadgesResponse](doc/MyBadgesResponse.md)
  - [NotificationSetting](doc/NotificationSetting.md)
  - [OpportunityItem](doc/OpportunityItem.md)
+ - [OwnerDecisionRequest](doc/OwnerDecisionRequest.md)
  - [PageResponseAdminPaymentItem](doc/PageResponseAdminPaymentItem.md)
  - [PageResponseAdminPhotoVerificationItem](doc/PageResponseAdminPhotoVerificationItem.md)
  - [PageResponseAdminSubscriptionItem](doc/PageResponseAdminSubscriptionItem.md)
@@ -420,6 +440,7 @@ Class | Method | HTTP request | Description
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
  - [PageResponsePaymentSummary](doc/PageResponsePaymentSummary.md)
  - [PageResponsePropertyReview](doc/PageResponsePropertyReview.md)
+ - [PageResponseReservationResponse](doc/PageResponseReservationResponse.md)
  - [PageResponseResidenceResponse](doc/PageResponseResidenceResponse.md)
  - [PageResponseSearchResult](doc/PageResponseSearchResult.md)
  - [PageResponseSignalementResponse](doc/PageResponseSignalementResponse.md)
@@ -452,6 +473,8 @@ Class | Method | HTTP request | Description
  - [RequestChangesRequest](doc/RequestChangesRequest.md)
  - [RequestPhoneChangeRequest](doc/RequestPhoneChangeRequest.md)
  - [RequestTypeChangeRequest](doc/RequestTypeChangeRequest.md)
+ - [ReservationRequestSnapshot](doc/ReservationRequestSnapshot.md)
+ - [ReservationResponse](doc/ReservationResponse.md)
  - [ResetPasswordRequest](doc/ResetPasswordRequest.md)
  - [ResidenceApplicationSummary](doc/ResidenceApplicationSummary.md)
  - [ResidenceAssignmentResult](doc/ResidenceAssignmentResult.md)
@@ -496,6 +519,8 @@ Class | Method | HTTP request | Description
  - [SuspendAccountRequest](doc/SuspendAccountRequest.md)
  - [SuspendAnnonceRequest](doc/SuspendAnnonceRequest.md)
  - [Targets](doc/Targets.md)
+ - [TerminateContractRequest](doc/TerminateContractRequest.md)
+ - [TerminationResponse](doc/TerminationResponse.md)
  - [TierCount](doc/TierCount.md)
  - [TierInfo](doc/TierInfo.md)
  - [TypeChangeResult](doc/TypeChangeResult.md)

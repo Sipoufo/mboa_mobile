@@ -70,6 +70,13 @@ void main() {
       // TODO
     });
 
+    // Lift every reservation set by hand at once; units a client's request holds stay reserved
+    //
+    //Future<ResidenceResponse> unreserveResidenceUnits(String id) async
+    test('test unreserveResidenceUnits', () async {
+      // TODO
+    });
+
     // Update the residence's shared attributes (cascades to units)
     //
     //Future<ResidenceResponse> updateResidence(String id, UpdateResidenceRequest updateResidenceRequest) async
