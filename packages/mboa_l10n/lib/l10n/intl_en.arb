@@ -1413,7 +1413,7 @@
   "@navFinance": {},
   "navMenu": "Menu",
   "@navMenu": {},
-  "menuGreeting": "Hi",
+  "menuGreeting": "Hi, ",
   "@menuGreeting": {},
   "menuProfile": "Profile",
   "@menuProfile": {},

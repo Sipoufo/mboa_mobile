@@ -1183,7 +1183,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "menuBookmarks": MessageLookupByLibrary.simpleMessage("Bookmarks"),
     "menuClose": MessageLookupByLibrary.simpleMessage("Close menu"),
     "menuExplore": MessageLookupByLibrary.simpleMessage("Explore"),
-    "menuGreeting": MessageLookupByLibrary.simpleMessage("Hi"),
+    "menuGreeting": MessageLookupByLibrary.simpleMessage("Hi, "),
     "menuMessages": MessageLookupByLibrary.simpleMessage("Messages"),
     "menuNotifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "menuOther": MessageLookupByLibrary.simpleMessage("More"),

@@ -53,13 +53,6 @@ class ProMenuPage extends StatelessWidget {
                     onTap: () => context.router.maybePop(),
                   ),
                   _MenuEntry(
-                    icon: LucideIcons.user,
-                    label: l10n.menuProfile,
-                    // The hub, not the edit form — it is the entry point to
-                    // edit, certifications and password.
-                    onTap: () => _go(context, const SettingsRoute()),
-                  ),
-                  _MenuEntry(
                     icon: LucideIcons.bell,
                     label: l10n.menuNotifications,
                     onTap: () => _comingSoon(context),
@@ -101,6 +94,13 @@ class ProMenuPage extends StatelessWidget {
                     icon: LucideIcons.bookmark,
                     label: l10n.menuBookmarks,
                     onTap: () => _comingSoon(context),
+                  ),
+                  _MenuEntry(
+                    icon: LucideIcons.user,
+                    label: l10n.menuProfile,
+                    // The hub, not the edit form — it is the entry point to
+                    // edit, certifications and password.
+                    onTap: () => _go(context, const SettingsRoute()),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.settings,

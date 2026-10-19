@@ -49,7 +49,6 @@ class HomeCtaCard extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(child: MboaDecorDiscs(color: colors.onBrand, opacity: 0.12)),
-              Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.08, scale: 0.85)),
               Padding(
                 padding: const EdgeInsets.all(Dimens.spacing),
                 child: Column(

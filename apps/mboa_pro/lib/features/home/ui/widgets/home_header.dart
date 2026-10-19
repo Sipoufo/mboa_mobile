@@ -25,30 +25,6 @@ class HomeHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            // Notifications (M03) and messaging (M12) aren't built — the
-            // affordances stay visible and explain themselves when tapped.
-            _HeaderIcon(
-              icon: LucideIcons.bell,
-              tooltip: l10n.menuNotifications,
-              onPressed: () => _comingSoon(context),
-            ),
-            const SizedBox(width: Dimens.spacingSm),
-            _HeaderIcon(
-              icon: LucideIcons.messageSquare,
-              tooltip: l10n.menuMessages,
-              onPressed: () => _comingSoon(context),
-            ),
-            const Spacer(),
-            _HeaderIcon(
-              icon: LucideIcons.menu,
-              tooltip: l10n.navMenu,
-              onPressed: () => context.router.push(const ProMenuRoute()),
-            ),
-          ],
-        ),
-        const SizedBox(height: Dimens.spacing),
         BlocBuilder<ProProfileBloc, ProfileState>(
           builder: (context, state) {
             final profile = state is ProProfileReady ? state.data : null;
@@ -56,16 +32,69 @@ class HomeHeader extends StatelessWidget {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Expanded(
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         l10n.homeLocationLabel,
+                //         style: context.mboaText.label,
+                //       ),
+                //       const SizedBox(height: Dimens.spacingXs),
+                //       Row(
+                //         children: [
+                //           Icon(
+                //             LucideIcons.mapPin,
+                //             size: Dimens.iconSm,
+                //             color: colors.primary,
+                //           ),
+                //           const SizedBox(width: Dimens.spacingXs),
+                //           Flexible(
+                //             child: Text(
+                //               profile?.mainCity ??
+                //                   profile?.searchCity ??
+                //                   l10n.homeLocationEmpty,
+                //               style: context.mboaText.caption
+                //                   .copyWith(color: colors.textSecondary),
+                //               maxLines: 1,
+                //               overflow: TextOverflow.ellipsis,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        l10n.homeLocationLabel,
-                        style: context.mboaText.label,
+                      // One line that gives way: a long name ends in an
+                      // ellipsis rather than pushing the icons off a small
+                      // phone.
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            l10n.menuGreeting,
+                            style: context.mboaText.h3
+                                .copyWith(color: colors.primary),
+                          ),
+                          if (profile != null && profile.fullName.isNotEmpty)
+                            Flexible(
+                              child: Text(
+                                profile.displayName ?? profile.fullName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: profile.displayName != null ? context.mboaText.h3
+                                    .copyWith(color: colors.primary) : context.mboaText.caption
+                                    .copyWith(color: colors.textSecondary),
+                              ),
+                            ),
+                        ],
                       ),
                       const SizedBox(height: Dimens.spacingXs),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
                             LucideIcons.mapPin,
@@ -73,11 +102,11 @@ class HomeHeader extends StatelessWidget {
                             color: colors.primary,
                           ),
                           const SizedBox(width: Dimens.spacingXs),
+                          // Label and city as one line, so the pair gives way
+                          // together on a small phone.
                           Flexible(
                             child: Text(
-                              profile?.mainCity ??
-                                  profile?.searchCity ??
-                                  l10n.homeLocationEmpty,
+                              '${l10n.homeLocationLabel} ${profile?.mainCity ?? profile?.searchCity ?? l10n.homeLocationEmpty}',
                               style: context.mboaText.caption
                                   .copyWith(color: colors.textSecondary),
                               maxLines: 1,
@@ -89,23 +118,18 @@ class HomeHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      l10n.menuGreeting,
-                      style: context.mboaText.h3
-                          .copyWith(color: colors.primary),
-                    ),
-                    if (profile != null && profile.fullName.isNotEmpty)
-                      Text(
-                        profile.fullName,
-                        style: context.mboaText.caption
-                            .copyWith(color: colors.textSecondary),
-                      ),
-                  ],
+                _HeaderIcon(
+                  icon: LucideIcons.bell,
+                  tooltip: l10n.menuNotifications,
+                  onPressed: () => _comingSoon(context),
                 ),
-                const SizedBox(width: Dimens.spacingMd),
+                const SizedBox(width: Dimens.spacingSm),
+                _HeaderIcon(
+                  icon: LucideIcons.messageSquare,
+                  tooltip: l10n.menuMessages,
+                  onPressed: () => _comingSoon(context),
+                ),
+                const SizedBox(width: Dimens.spacingSm),
                 MboaAvatar(
                   imageUrl: profile?.avatarUrl,
                   initials: profile?.initials,

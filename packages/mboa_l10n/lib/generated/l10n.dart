@@ -4040,9 +4040,9 @@ class I18n {
     return Intl.message('Menu', name: 'navMenu', desc: '', args: []);
   }
 
-  /// `Salut`
+  /// `Salut, `
   String get menuGreeting {
-    return Intl.message('Salut', name: 'menuGreeting', desc: '', args: []);
+    return Intl.message('Salut, ', name: 'menuGreeting', desc: '', args: []);
   }
 
   /// `Profil`

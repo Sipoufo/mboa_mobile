@@ -7,6 +7,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_pro/features/home/bloc/home_bloc.dart';
 import 'package:mboa_pro/features/home/models/dashboard_stats.dart';
 import 'package:mboa_pro/features/home/ui/home_page.dart';
+import 'package:mboa_pro/features/home/ui/widgets/metric_tile.dart';
 import 'package:mboa_pro/features/kyc/logic/kyc_cubit.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
@@ -112,7 +113,7 @@ void main() {
     await pump(tester, const HomeReady(stats));
 
     expect(find.text('Inesse Kiawantio'), findsOneWidget);
-    expect(find.text('Douala'), findsOneWidget);
+    expect(find.textContaining('Douala'), findsOneWidget);
     expect(find.textContaining('Gère tes biens'), findsOneWidget);
 
     expect(find.text('Mes biens'), findsOneWidget);
@@ -151,7 +152,14 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await pump(tester, const HomeReady(stats));
+    expect(tester.takeException(), isNull);
 
+    // All the way down: a lazy list builds only what is on screen, so the
+    // stats' tiles were never laid out here while the header was taller —
+    // and their overflow went unseen.
+    await tester.drag(find.byType(ListView).first, const Offset(0, -2000));
+    await tester.pumpAndSettle();
+    expect(find.byType(MetricTile), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 

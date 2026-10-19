@@ -271,7 +271,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     padding: const EdgeInsets.all(Dimens.spacingLg),
                     child: Button.primary(
                       title: l10n.profileSave,
-                      icon: const Icon(LucideIcons.save, size: Dimens.icon),
+                      icon: Icon(LucideIcons.save, size: Dimens.icon, color: context.mboaColors.surface,),
                       iconAlignment: IconAlignment.start,
                       isCenter: true,
                       isLoading: saving,

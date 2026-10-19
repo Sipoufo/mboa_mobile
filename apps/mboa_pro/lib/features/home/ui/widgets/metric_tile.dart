@@ -51,10 +51,18 @@ class MetricTile extends StatelessWidget {
             child: Text('••', style: context.mboaText.h3),
           )
         else
-          Text(
-            shown ?? l10n.homeStatsNoData,
-            style: context.mboaText.h3.copyWith(
-              color: figure?.value == null ? colors.textTertiary : colors.ink,
+          // One line, always: the tile's height is fixed, and "Bientôt" in H3
+          // wrapped on a 320-wide phone and overflowed it. Shrunk to fit
+          // rather than cut — a figure is not to be read half.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              shown ?? l10n.homeStatsNoData,
+              maxLines: 1,
+              style: context.mboaText.h3.copyWith(
+                color: figure?.value == null ? colors.textTertiary : colors.ink,
+              ),
             ),
           ),
         const SizedBox(height: Dimens.spacingXs),
