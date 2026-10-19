@@ -48,4 +48,5 @@ export 'src/ui/layouts/views/stacked_loader_view.dart';
 export 'src/ui/overlays/toast/mboa_toast.dart';
 
 // Misc
+export 'src/ui/misc/brand_pattern.dart';
 export 'src/ui/misc/or_divider.dart';

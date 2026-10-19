@@ -6,6 +6,10 @@ enum HomeCtaTone { light, dark }
 
 /// A brand call-to-action card from the Pro home design: tinted panel, floating
 /// decorative discs, glyph, copy, and an outlined pill action.
+///
+/// Under the copy, the splash's monogram texture ([MboaBrandPattern]) and the
+/// mockup's soft discs ([MboaDecorDiscs]), both faint: they give the brand
+/// surface depth without competing with the words on it.
 class HomeCtaCard extends StatelessWidget {
   const HomeCtaCard({
     super.key,
@@ -44,6 +48,8 @@ class HomeCtaCard extends StatelessWidget {
           onTap: onPressed,
           child: Stack(
             children: [
+              Positioned.fill(child: MboaDecorDiscs(color: colors.onBrand, opacity: 0.12)),
+              Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.08, scale: 0.85)),
               Padding(
                 padding: const EdgeInsets.all(Dimens.spacing),
                 child: Column(

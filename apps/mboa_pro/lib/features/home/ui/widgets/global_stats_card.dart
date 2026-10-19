@@ -46,7 +46,8 @@ class GlobalStatsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surface,
         borderRadius: BorderRadius.circular(Dimens.radiusMd),
-        border: Border.all(color: colors.border),
+        // §6.2: a card is lifted by its shadow, not outlined.
+        boxShadow: MboaShadows.card,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -183,12 +183,18 @@ class _Identity extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(
               bottom: Radius.circular(Dimens.radiusLg),
             ),
+            // The splash's texture and the Pro home's discs, drawn rather than
+            // loaded: crisp at any width, and the same brand ground as the
+            // prestataire's cards.
             child: ColoredBox(
               color: colors.primary,
-              child: Image.asset(
-                'assets/images/illustrations/brand_pattern.png',
-                package: 'mboa_ui',
-                fit: BoxFit.cover,
+              child: Stack(
+                children: [
+                  // Fainter than on the Pro cards: a short band with a name
+                  // on it, where the texture must stay behind the words.
+                  Positioned.fill(child: MboaDecorDiscs(color: colors.onBrand, opacity: 0.06)),
+                  Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.06, scale: 0.65)),
+                ],
               ),
             ),
           ),
@@ -204,10 +210,18 @@ class _Identity extends StatelessWidget {
             ),
             child: Row(
               children: [
-                MboaAvatar(
-                  imageUrl: data?.photoUrl,
-                  initials: data?.initials,
-                  size: 72,
+                // A light ring lifts the photo off the brand ground.
+                Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: colors.onBrand.withValues(alpha: 0.85),
+                    borderRadius: BorderRadius.circular(Dimens.radiusMd + 3),
+                  ),
+                  child: MboaAvatar(
+                    imageUrl: data?.photoUrl,
+                    initials: data?.initials,
+                    size: 72,
+                  ),
                 ),
                 const SizedBox(width: Dimens.spacing),
                 Expanded(
