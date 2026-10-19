@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**973 tests green, analyze clean.** `mboa_user` 236 · `mboa_pro` 463 ·
+**991 tests green, analyze clean.** `mboa_user` 241 · `mboa_pro` 476 ·
 `mboa_core` 19 · `mboa_shared` 227 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
@@ -37,15 +37,15 @@
 | Module | State |
 |---|---|
 | M01 auth (user phone-OTP, pro credential + 2FA) | ✅ |
-| M02 profile & settings (language, phone, password, deletion, notification switches) | ✅ |
+| M02 profile & settings (language, phone, password, deletion, notification switches, **Pro forgotten password**) | ✅ · `searchable` toggle unwired |
 | M01bis KYC / certifications (pro) | ✅ |
 | Media upload (compress → R2 presigned PUT) | ✅ |
 | Locations (cities, districts, pickers) | ✅ |
-| M14 Pro home dashboard | ✅ shell real, **views now real, 5 metrics still unsourced** |
+| M14 Pro home dashboard | ✅ the six figures from `/prestataires/me/dashboard`, locked by the server (CA-M14-02) · per-listing figures unused |
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps**, every `PushTarget` routed (CA-M03-02) · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
-| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache, **saved searches + N-01** (read-only offline) |
+| M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache, saved searches + N-01 (read-only offline), **exact point once contacted (RM-M04-06)** |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
 | M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur, motif d'annulation |
@@ -1076,11 +1076,10 @@ Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **RM-M04-06 `exactLocation`** (tenant) — search cards and fiches now say
-  when their coordinates are the property's own point (contact established):
-  drop the 200 m circle for a pin then. Needs the token on `/search` and the
-  residence fiche too.
-- Password reset in Pro (`auth/password/forgot` + `/reset`) — endpoints exist, unwired.
+- **M29 lot 1** (reservation, termination, system messages) — waits on the
+  backend's lot 1 plan (§27 items 2 to 7); M30/M31 after it.
+- **M14 per-listing figures** — `/prestataires/me/dashboard/annonces` could
+  fill the empty "Statistiques" card of the Pro listing detail.
 - Settings: the `searchable` toggle is still unwired.
 
 - **M24 tenant invoices** (both apps: the owner issues, the tenant pays or it
