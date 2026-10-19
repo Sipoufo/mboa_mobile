@@ -12,24 +12,29 @@ import '../bloc/credential_login_bloc.dart';
 /// App Mboa Pro login — email + password, then an email OTP. A single screen
 /// with two steps driven by [CredentialLoginBloc]'s state.
 class LoginView extends StatelessWidget {
-  const LoginView({super.key, this.onRegister});
+  const LoginView({super.key, this.onRegister, this.onForgotPassword});
 
   /// Navigate to the registration screen (footer link).
   final VoidCallback? onRegister;
+
+  /// "Mot de passe oublié ?" — given what is in the email field, so it need
+  /// not be typed twice.
+  final ValueChanged<String>? onForgotPassword;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CredentialLoginBloc>(
       create: (_) => getIt<CredentialLoginBloc>(),
-      child: _LoginFlow(onRegister: onRegister),
+      child: _LoginFlow(onRegister: onRegister, onForgotPassword: onForgotPassword),
     );
   }
 }
 
 class _LoginFlow extends StatelessWidget {
-  const _LoginFlow({this.onRegister});
+  const _LoginFlow({this.onRegister, this.onForgotPassword});
 
   final VoidCallback? onRegister;
+  final ValueChanged<String>? onForgotPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,7 @@ class _LoginFlow extends StatelessWidget {
                 : null,
             child: switch (state) {
               CredentialLoginEnterOtp(:final email) => _OtpStep(email: email, loading: loading),
-              _ => _CredentialsStep(loading: loading, onRegister: onRegister),
+              _ => _CredentialsStep(loading: loading, onRegister: onRegister, onForgotPassword: onForgotPassword),
             },
           ),
         );
@@ -89,10 +94,11 @@ class _LoginFlow extends StatelessWidget {
 }
 
 class _CredentialsStep extends StatefulWidget {
-  const _CredentialsStep({required this.loading, this.onRegister});
+  const _CredentialsStep({required this.loading, this.onRegister, this.onForgotPassword});
 
   final bool loading;
   final VoidCallback? onRegister;
+  final ValueChanged<String>? onForgotPassword;
 
   @override
   State<_CredentialsStep> createState() => _CredentialsStepState();
@@ -163,6 +169,14 @@ class _CredentialsStepState extends State<_CredentialsStep> {
             validator: (value) =>
                 (value == null || value.isEmpty) ? l10n.authPasswordRequired : null,
           ),
+          if (widget.onForgotPassword case final onForgot?)
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: widget.loading ? null : () => onForgot(_emailController.text.trim()),
+                child: Text(l10n.pwdResetLink),
+              ),
+            ),
           const SizedBox(height: Dimens.spacingXl),
           Button.primary(
             title: l10n.authLoginButton,

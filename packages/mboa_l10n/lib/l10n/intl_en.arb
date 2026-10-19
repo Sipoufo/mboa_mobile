@@ -3548,5 +3548,68 @@
   "homeStatsNoData": "—",
   "@homeStatsNoData": {
     "description": "M14 — a figure the tier can see, with nothing to measure yet (no views, never shown in search). Never 0."
+  },
+  "pwdResetLink": "Forgot password?",
+  "@pwdResetLink": {
+    "description": "Pro login — link to the reset flow."
+  },
+  "pwdResetTitle": "Forgot password",
+  "@pwdResetTitle": {
+    "description": "Reset flow title."
+  },
+  "pwdResetEmailBody": "Enter your account's email. A code will be sent by SMS to the number on the account.",
+  "@pwdResetEmailBody": {
+    "description": "Reset step 1 — the code goes by SMS to the account's phone, not by email."
+  },
+  "pwdResetSendCode": "Send the code",
+  "@pwdResetSendCode": {
+    "description": "Reset step 1 button."
+  },
+  "pwdResetCodeBody": "If an account matches {email}, a code was sent by SMS to the number on it.",
+  "@pwdResetCodeBody": {
+    "description": "Reset step 2 — said the same whether or not the email has an account (the server never says).",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "pwdResetSubmit": "Change password",
+  "@pwdResetSubmit": {
+    "description": "Reset step 2 button."
+  },
+  "pwdResetTooShort": "At least {min} characters.",
+  "@pwdResetTooShort": {
+    "description": "New password too short (server: 8).",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "pwdResetTooLong": "At most {max} characters.",
+  "@pwdResetTooLong": {
+    "description": "New password too long (server: 72).",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "pwdResetCodeExpired": "This code is no longer valid. Ask for a new one.",
+  "@pwdResetCodeExpired": {
+    "description": "OTP_INVALID_OR_EXPIRED."
+  },
+  "pwdResetTooManyAttempts": "Too many attempts. Ask for a new code.",
+  "@pwdResetTooManyAttempts": {
+    "description": "OTP_MAX_ATTEMPTS."
+  },
+  "pwdResetDoneTitle": "Password changed",
+  "@pwdResetDoneTitle": {
+    "description": "Reset succeeded."
+  },
+  "pwdResetDoneBody": "Sign in with your new password. Your other sessions were closed.",
+  "@pwdResetDoneBody": {
+    "description": "Reset succeeded — the server revokes every session."
   }
 }

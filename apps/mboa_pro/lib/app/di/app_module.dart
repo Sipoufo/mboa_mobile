@@ -1,6 +1,8 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/password_reset/bloc/password_reset_bloc.dart';
+import '../../features/password_reset/data/password_reset_repository.dart';
 import '../../features/agent/bloc/agent_availability_bloc.dart';
 import '../../features/assignments/bloc/agent_detail_bloc.dart';
 import '../../features/assignments/bloc/agent_missions_bloc.dart';
@@ -133,6 +135,13 @@ void registerAppModule() {
   );
   getIt.registerFactory<ChangePhoneBloc>(
     () => ChangePhoneBloc(repository: getIt<AccountRepository>()),
+  );
+  // M02 — forgotten password, before any session exists.
+  getIt.registerLazySingleton<PasswordResetRepository>(
+    () => PasswordResetRepository(dioClient: getIt<DioClient>()),
+  );
+  getIt.registerFactory<PasswordResetBloc>(
+    () => PasswordResetBloc(repository: getIt<PasswordResetRepository>()),
   );
   getIt.registerFactory<ChangePasswordCubit>(
     () => ChangePasswordCubit(repository: getIt<AccountRepository>()),

@@ -9615,6 +9615,128 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mot de passe oublié ?`
+  String get pwdResetLink {
+    return Intl.message(
+      'Mot de passe oublié ?',
+      name: 'pwdResetLink',
+      desc: 'Pro login — link to the reset flow.',
+      args: [],
+    );
+  }
+
+  /// `Mot de passe oublié`
+  String get pwdResetTitle {
+    return Intl.message(
+      'Mot de passe oublié',
+      name: 'pwdResetTitle',
+      desc: 'Reset flow title.',
+      args: [],
+    );
+  }
+
+  /// `Saisis l'email de ton compte. Un code te sera envoyé par SMS au numéro associé.`
+  String get pwdResetEmailBody {
+    return Intl.message(
+      'Saisis l\'email de ton compte. Un code te sera envoyé par SMS au numéro associé.',
+      name: 'pwdResetEmailBody',
+      desc:
+          'Reset step 1 — the code goes by SMS to the account\'s phone, not by email.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer le code`
+  String get pwdResetSendCode {
+    return Intl.message(
+      'Envoyer le code',
+      name: 'pwdResetSendCode',
+      desc: 'Reset step 1 button.',
+      args: [],
+    );
+  }
+
+  /// `Si un compte correspond à {email}, un code a été envoyé par SMS au numéro associé.`
+  String pwdResetCodeBody(String email) {
+    return Intl.message(
+      'Si un compte correspond à $email, un code a été envoyé par SMS au numéro associé.',
+      name: 'pwdResetCodeBody',
+      desc:
+          'Reset step 2 — said the same whether or not the email has an account (the server never says).',
+      args: [email],
+    );
+  }
+
+  /// `Changer le mot de passe`
+  String get pwdResetSubmit {
+    return Intl.message(
+      'Changer le mot de passe',
+      name: 'pwdResetSubmit',
+      desc: 'Reset step 2 button.',
+      args: [],
+    );
+  }
+
+  /// `{min} caractères minimum.`
+  String pwdResetTooShort(int min) {
+    return Intl.message(
+      '$min caractères minimum.',
+      name: 'pwdResetTooShort',
+      desc: 'New password too short (server: 8).',
+      args: [min],
+    );
+  }
+
+  /// `{max} caractères maximum.`
+  String pwdResetTooLong(int max) {
+    return Intl.message(
+      '$max caractères maximum.',
+      name: 'pwdResetTooLong',
+      desc: 'New password too long (server: 72).',
+      args: [max],
+    );
+  }
+
+  /// `Ce code n'est plus valable. Demande un nouveau code.`
+  String get pwdResetCodeExpired {
+    return Intl.message(
+      'Ce code n\'est plus valable. Demande un nouveau code.',
+      name: 'pwdResetCodeExpired',
+      desc: 'OTP_INVALID_OR_EXPIRED.',
+      args: [],
+    );
+  }
+
+  /// `Trop d'essais. Demande un nouveau code.`
+  String get pwdResetTooManyAttempts {
+    return Intl.message(
+      'Trop d\'essais. Demande un nouveau code.',
+      name: 'pwdResetTooManyAttempts',
+      desc: 'OTP_MAX_ATTEMPTS.',
+      args: [],
+    );
+  }
+
+  /// `Mot de passe modifié`
+  String get pwdResetDoneTitle {
+    return Intl.message(
+      'Mot de passe modifié',
+      name: 'pwdResetDoneTitle',
+      desc: 'Reset succeeded.',
+      args: [],
+    );
+  }
+
+  /// `Reconnecte-toi avec ton nouveau mot de passe. Tes autres sessions ont été fermées.`
+  String get pwdResetDoneBody {
+    return Intl.message(
+      'Reconnecte-toi avec ton nouveau mot de passe. Tes autres sessions ont été fermées.',
+      name: 'pwdResetDoneBody',
+      desc: 'Reset succeeded — the server revokes every session.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

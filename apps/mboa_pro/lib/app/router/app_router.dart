@@ -44,6 +44,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
         AutoRoute(page: LoginRoute.page, path: '/login', guards: [_guestGuard]),
         AutoRoute(page: RegisterRoute.page, path: '/register', guards: [_guestGuard]),
+        AutoRoute(page: ForgotPasswordRoute.page, path: '/login/forgot-password', guards: [_guestGuard]),
         AutoRoute(
           page: AuthenticatedRouter.page,
           path: '/app',

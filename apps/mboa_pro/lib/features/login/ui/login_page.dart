@@ -12,5 +12,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LoginView(
         onRegister: () => context.router.push(const RegisterRoute()),
+        onForgotPassword: (email) =>
+            context.router.push(ForgotPasswordRoute(email: email.isEmpty ? null : email)),
       );
 }
