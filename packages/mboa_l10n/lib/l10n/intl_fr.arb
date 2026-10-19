@@ -1525,7 +1525,7 @@
   "@homeStatsRank": {},
   "homeStatsUnavailable": "Bientôt",
   "@homeStatsUnavailable": {},
-  "homeStatsUnavailableHint": "Ces mesures s’activeront dès que le backend les exposera.",
+  "homeStatsUnavailableHint": "Certaines mesures arrivent bientôt.",
   "@homeStatsUnavailableHint": {},
   "homeStatsLockedHint": "Inclus dans {tier}",
   "@homeStatsLockedHint": {
@@ -3544,5 +3544,9 @@
   "listingLocationExactNote": "Position exacte, car tu as contacté ce prestataire. L'adresse écrite n'est communiquée qu'au contrat signé.",
   "@listingLocationExactNote": {
     "description": "RM-M04-06 / RM-M05-02 — exactLocation true on the fiche."
+  },
+  "homeStatsNoData": "—",
+  "@homeStatsNoData": {
+    "description": "M14 — a figure the tier can see, with nothing to measure yet (no views, never shown in search). Never 0."
   }
 }

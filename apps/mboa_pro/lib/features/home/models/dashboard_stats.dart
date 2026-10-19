@@ -1,16 +1,68 @@
 import 'package:equatable/equatable.dart';
+import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 /// Lifecycle state of a listing, mirrored from `AnnonceResponseStatusEnum`.
 enum AnnonceStatus { draft, published, reserved, rented, archived, unknown }
 
-/// The prestataire dashboard figures (CDC M14).
+/// One M14 figure, exactly as the server decided it (CA-M14-02).
 ///
-/// **Only what the listings endpoint can supply is real.** Total listings, the
-/// per-status breakdown and — since the 2026-08-11 spec — [views], summed from
-/// `AnnonceResponse.viewCount`. The M14 metrics table also calls for contacts,
-/// conversion, agent visits, signed contracts and average ranking; none has a
-/// source yet. Those stay nullable and render as unavailable rather than being
-/// invented; wire them up when the backend ships them.
+/// Four readings, and the screen draws each differently:
+///  * [locked] — the tier does not include it: **no value is sent**, so there
+///    is nothing to un-blur client-side; [requiredTier] says what unlocks it;
+///  * not [available] — nobody can see it yet, whatever the tier: "Bientôt";
+///  * available, unlocked, no [value] — nothing to measure yet (a conversion
+///    with no views, a position never shown in search): "—", never 0;
+///  * otherwise the [value].
+class DashboardFigure extends Equatable {
+  const DashboardFigure({this.value, this.locked = false, this.requiredTier, this.available = true});
+
+  final num? value;
+  final bool locked;
+  final SubscriptionTier? requiredTier;
+  final bool available;
+
+  static DashboardFigure? fromResponse(DashboardMetric? metric) => metric == null
+      ? null
+      : DashboardFigure(
+          value: metric.value,
+          locked: metric.locked ?? false,
+          requiredTier: switch (metric.requiredTier) {
+            DashboardMetricRequiredTierEnum.BASIC_PLUS => SubscriptionTier.basicPlus,
+            DashboardMetricRequiredTierEnum.PRO => SubscriptionTier.pro,
+            DashboardMetricRequiredTierEnum.PRO_PLUS => SubscriptionTier.proPlus,
+            _ => null,
+          },
+          available: metric.available ?? true,
+        );
+
+  Map<String, dynamic> toCache() => {
+        'value': value,
+        'locked': locked,
+        'tier': requiredTier?.name,
+        'available': available,
+      };
+
+  static DashboardFigure? fromCache(Object? raw) {
+    if (raw is! Map) return null;
+    return DashboardFigure(
+      value: raw['value'] as num?,
+      locked: raw['locked'] as bool? ?? false,
+      requiredTier: SubscriptionTier.values.where((t) => t.name == raw['tier']).firstOrNull,
+      available: raw['available'] as bool? ?? true,
+    );
+  }
+
+  @override
+  List<Object?> get props => [value, locked, requiredTier, available];
+}
+
+/// The prestataire dashboard (CDC M14).
+///
+/// Two sources. The portfolio — [totalBiens] and the per-status breakdown —
+/// comes from the listings page. The six figures come from
+/// `GET /prestataires/me/dashboard`, which also decides what the tier may see.
+/// A null figure was not loaded (an older cache): it reads as "Bientôt".
 class DashboardStats extends Equatable {
   const DashboardStats({
     required this.totalBiens,
@@ -20,7 +72,7 @@ class DashboardStats extends Equatable {
     this.conversionRate,
     this.agentVisits,
     this.signedContracts,
-    this.averageRank,
+    this.averagePosition,
   });
 
   const DashboardStats.empty() : this(totalBiens: 0);
@@ -32,16 +84,21 @@ class DashboardStats extends Equatable {
   /// Listing count per lifecycle status.
   final Map<AnnonceStatus, int> byStatus;
 
-  /// Total views across the listings on the page (`viewCount`). Null when the
-  /// backend does not send the field at all — "unknown", never "zero".
-  final int? views;
+  /// Counted views: one per viewer per 24 h, the owner's own excluded.
+  final DashboardFigure? views;
 
-  // --- No backing endpoint yet. Null means "unknown", not "zero". ---
-  final int? contacts;
-  final double? conversionRate;
-  final int? agentVisits;
-  final int? signedContracts;
-  final double? averageRank;
+  /// Threads users opened on a listing — a second message is not a second one.
+  final DashboardFigure? contacts;
+
+  /// Contacts per 100 views, one decimal — already a percentage.
+  final DashboardFigure? conversionRate;
+
+  /// Visits carried out by an agent, not those the owner did himself.
+  final DashboardFigure? agentVisits;
+  final DashboardFigure? signedContracts;
+
+  /// Where search showed his listings, on average over 30 days. 1.0 is the top.
+  final DashboardFigure? averagePosition;
 
   int countOf(AnnonceStatus status) => byStatus[status] ?? 0;
 
@@ -51,7 +108,12 @@ class DashboardStats extends Equatable {
   Map<String, dynamic> toCache() => {
         'totalBiens': totalBiens,
         'byStatus': byStatus.map((k, v) => MapEntry(k.name, v)),
-        'views': views,
+        'views': views?.toCache(),
+        'contacts': contacts?.toCache(),
+        'conversionRate': conversionRate?.toCache(),
+        'agentVisits': agentVisits?.toCache(),
+        'signedContracts': signedContracts?.toCache(),
+        'averagePosition': averagePosition?.toCache(),
       };
 
   static DashboardStats fromCache(Map<String, dynamic> json) {
@@ -60,7 +122,6 @@ class DashboardStats extends Equatable {
     );
     return DashboardStats(
       totalBiens: (json['totalBiens'] as num?)?.toInt() ?? 0,
-      views: (json['views'] as num?)?.toInt(),
       byStatus: {
         for (final entry in raw.entries)
           AnnonceStatus.values.firstWhere(
@@ -68,6 +129,12 @@ class DashboardStats extends Equatable {
             orElse: () => AnnonceStatus.unknown,
           ): (entry.value as num?)?.toInt() ?? 0,
       },
+      views: DashboardFigure.fromCache(json['views']),
+      contacts: DashboardFigure.fromCache(json['contacts']),
+      conversionRate: DashboardFigure.fromCache(json['conversionRate']),
+      agentVisits: DashboardFigure.fromCache(json['agentVisits']),
+      signedContracts: DashboardFigure.fromCache(json['signedContracts']),
+      averagePosition: DashboardFigure.fromCache(json['averagePosition']),
     );
   }
 
@@ -80,6 +147,6 @@ class DashboardStats extends Equatable {
         conversionRate,
         agentVisits,
         signedContracts,
-        averageRank,
+        averagePosition,
       ];
 }

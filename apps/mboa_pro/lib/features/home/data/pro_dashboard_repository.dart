@@ -2,12 +2,13 @@ import 'package:mboa_core/mboa_core.dart';
 
 import '../models/dashboard_stats.dart';
 
-/// Loads the prestataire dashboard counters (CDC M14).
+/// Loads the prestataire dashboard (CDC M14).
 ///
-/// There is no stats endpoint, so the figures are derived from the listings
-/// page: `totalElements` gives the headline count and the page content gives
-/// the per-status breakdown. Replace with a real aggregate endpoint when one
-/// exists — the bloc and UI won't need to change.
+/// Two reads, side by side. The listings page gives the headline count
+/// (`totalElements`) and the per-status breakdown. `GET
+/// /prestataires/me/dashboard` gives the six figures — and, with them, what
+/// the tier may see: a locked figure arrives with no value, so the gating is
+/// the server's, not the app's (CA-M14-02).
 class ProDashboardRepository {
   ProDashboardRepository({
     required DioClient dioClient,
@@ -36,36 +37,34 @@ class ProDashboardRepository {
   }
 
   Future<DashboardStats> fetch() async {
-    final response = await _dioClient.api.getAnnoncesApi().listMyAnnonces(
-          pageable: Pageable((b) => b
-            ..page = 0
-            ..size = _pageSize),
-        );
+    final (listings, dashboard) = await (
+      _dioClient.api.getAnnoncesApi().listMyAnnonces(
+            pageable: Pageable((b) => b
+              ..page = 0
+              ..size = _pageSize),
+          ),
+      _dioClient.api.getPrestataireDashboardApi().getMyDashboard(),
+    ).wait;
 
-    final page = response.data;
+    final page = listings.data;
     final content = page?.content ?? const <AnnonceResponse>[];
-
     final byStatus = <AnnonceStatus, int>{};
-    var views = 0;
-    var sawViewCount = false;
     for (final annonce in content) {
       final status = _mapStatus(annonce.status);
       byStatus[status] = (byStatus[status] ?? 0) + 1;
-      if (annonce.viewCount case final count?) {
-        views += count;
-        sawViewCount = true;
-      }
     }
 
+    final totals = dashboard.data?.totals;
     final stats = DashboardStats(
       // Prefer the server's total; it survives a portfolio bigger than a page.
       totalBiens: page?.totalElements ?? content.length,
       byStatus: byStatus,
-      // Summed from the page, like the status breakdown — so a portfolio past
-      // one page undercounts. Null, not 0, when the field is absent everywhere:
-      // an older backend must keep reading as "no data" and render "Bientôt",
-      // not claim nobody has looked at the listings.
-      views: sawViewCount ? views : null,
+      views: DashboardFigure.fromResponse(totals?.views),
+      contacts: DashboardFigure.fromResponse(totals?.contacts),
+      conversionRate: DashboardFigure.fromResponse(totals?.conversionRate),
+      agentVisits: DashboardFigure.fromResponse(totals?.agentVisits),
+      signedContracts: DashboardFigure.fromResponse(totals?.signedContracts),
+      averagePosition: DashboardFigure.fromResponse(dashboard.data?.averagePosition),
     );
 
     await _cache.put(StorageKeys.dashboardBox, _cacheKey, stats.toCache());

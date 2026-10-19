@@ -4,23 +4,49 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_pro/features/home/data/pro_dashboard_repository.dart';
 import 'package:mboa_pro/features/home/models/dashboard_stats.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../_helpers/mocks/mocks.dart';
 
 class MockAnnoncesApi extends Mock implements AnnoncesApi {}
 
-AnnonceResponse annonce(AnnonceResponseStatusEnum status) =>
-    AnnonceResponse((b) => b
-      ..id = 'a-${status.name}'
-      ..status = status);
+class MockPrestataireDashboardApi extends Mock implements PrestataireDashboardApi {}
+
+DashboardMetric metric({
+  num? value,
+  bool locked = false,
+  DashboardMetricRequiredTierEnum? tier,
+  bool available = true,
+}) => DashboardMetric(
+  (b) => b
+    ..value = value
+    ..locked = locked
+    ..requiredTier = tier
+    ..available = available,
+);
+
+AnnonceResponse annonce(AnnonceResponseStatusEnum status) => AnnonceResponse(
+  (b) => b
+    ..id = 'a-${status.name}'
+    ..status = status,
+);
 
 void main() {
   late MockDioClient dioClient;
   late MockApiClient apiClient;
   late MockAnnoncesApi annoncesApi;
+  late MockPrestataireDashboardApi dashboardApi;
   late MockHiveCache cache;
   late ProDashboardRepository repository;
+
+  void stubDashboard(DashboardSummaryResponse summary) => when(() => dashboardApi.getMyDashboard()).thenAnswer(
+    (_) async => Response(
+      data: summary,
+      requestOptions: RequestOptions(path: '/api/v1/prestataires/me/dashboard'),
+      statusCode: 200,
+    ),
+  );
 
   setUpAll(() => registerFallbackValue(Pageable()));
 
@@ -28,10 +54,13 @@ void main() {
     dioClient = MockDioClient();
     apiClient = MockApiClient();
     annoncesApi = MockAnnoncesApi();
+    dashboardApi = MockPrestataireDashboardApi();
     cache = MockHiveCache();
 
     when(() => dioClient.api).thenReturn(apiClient);
     when(apiClient.getAnnoncesApi).thenReturn(annoncesApi);
+    when(apiClient.getPrestataireDashboardApi).thenReturn(dashboardApi);
+    stubDashboard(DashboardSummaryResponse());
     when(() => cache.put(any(), any(), any())).thenAnswer((_) async {});
 
     repository = ProDashboardRepository(dioClient: dioClient, cache: cache);
@@ -41,12 +70,13 @@ void main() {
     required List<AnnonceResponse> content,
     int? totalElements,
   }) {
-    final page = PageResponseAnnonceResponse((b) => b
-      ..content = ListBuilder(content)
-      ..totalElements = totalElements ?? content.length);
+    final page = PageResponseAnnonceResponse(
+      (b) => b
+        ..content = ListBuilder(content)
+        ..totalElements = totalElements ?? content.length,
+    );
 
-    when(() => annoncesApi.listMyAnnonces(pageable: any(named: 'pageable')))
-        .thenAnswer(
+    when(() => annoncesApi.listMyAnnonces(pageable: any(named: 'pageable'))).thenAnswer(
       (_) async => Response(
         data: page,
         requestOptions: RequestOptions(path: '/api/v1/annonces'),
@@ -77,17 +107,62 @@ void main() {
       expect(stats.countOf(AnnonceStatus.reserved), 0);
     });
 
-    test('leaves the metrics with no endpoint null, not zero', () async {
+    test('the six figures are the dashboard endpoint\'s, as it sent them', () async {
       stubPage(content: [annonce(AnnonceResponseStatusEnum.PUBLISHED)]);
+      stubDashboard(
+        DashboardSummaryResponse(
+          (b) => b
+            ..totals.views.replace(metric(value: 42))
+            ..totals.contacts.replace(metric(value: 3))
+            // Unlocked, nothing to measure yet: no value, and not a zero.
+            ..totals.conversionRate.replace(metric(tier: DashboardMetricRequiredTierEnum.BASIC_PLUS))
+            ..totals.agentVisits.replace(metric(locked: true, tier: DashboardMetricRequiredTierEnum.BASIC_PLUS))
+            ..totals.signedContracts.replace(metric(value: 1))
+            ..averagePosition.replace(
+              metric(locked: true, tier: DashboardMetricRequiredTierEnum.PRO_PLUS, available: false),
+            ),
+        ),
+      );
 
       final stats = await repository.fetch();
 
-      expect(stats.views, isNull);
-      expect(stats.contacts, isNull);
-      expect(stats.conversionRate, isNull);
-      expect(stats.agentVisits, isNull);
-      expect(stats.signedContracts, isNull);
-      expect(stats.averageRank, isNull);
+      expect(stats.views, const DashboardFigure(value: 42));
+      expect(stats.contacts?.value, 3);
+      expect(stats.conversionRate, const DashboardFigure(requiredTier: SubscriptionTier.basicPlus));
+      expect(
+        stats.agentVisits,
+        const DashboardFigure(locked: true, requiredTier: SubscriptionTier.basicPlus),
+      );
+      expect(stats.signedContracts?.value, 1);
+      expect(
+        stats.averagePosition,
+        const DashboardFigure(locked: true, requiredTier: SubscriptionTier.proPlus, available: false),
+      );
+    });
+
+    test('views are the server\'s count, not a sum of the listings\' viewCount', () async {
+      stubPage(
+        content: [
+          AnnonceResponse(
+            (b) => b
+              ..id = 'a'
+              ..status = AnnonceResponseStatusEnum.PUBLISHED
+              ..viewCount = 999,
+          ),
+        ],
+      );
+      stubDashboard(DashboardSummaryResponse((b) => b..totals.views.replace(metric(value: 42))));
+
+      expect((await repository.fetch()).views?.value, 42);
+    });
+
+    test('a dashboard failure fails the load, so the bloc falls back to the cache', () async {
+      stubPage(content: const []);
+      when(() => dashboardApi.getMyDashboard()).thenThrow(
+        DioException(requestOptions: RequestOptions(path: '/api/v1/prestataires/me/dashboard')),
+      );
+
+      expect(repository.fetch, throwsA(isA<DioException>()));
     });
 
     test('maps an unrecognised status defensively', () async {
@@ -117,15 +192,16 @@ void main() {
 
       await repository.fetch();
 
-      final captured = verify(
-        () => cache.put(StorageKeys.dashboardBox, 'stats', captureAny()),
-      ).captured.single as Map<String, dynamic>;
+      final captured =
+          verify(
+                () => cache.put(StorageKeys.dashboardBox, 'stats', captureAny()),
+              ).captured.single
+              as Map<String, dynamic>;
       expect(captured['totalBiens'], 3);
     });
 
     test('propagates a network failure so the bloc can fall back', () async {
-      when(() => annoncesApi.listMyAnnonces(pageable: any(named: 'pageable')))
-          .thenThrow(
+      when(() => annoncesApi.listMyAnnonces(pageable: any(named: 'pageable'))).thenThrow(
         DioException(requestOptions: RequestOptions(path: '/api/v1/annonces')),
       );
 
@@ -135,8 +211,7 @@ void main() {
 
   group('cached', () {
     test('returns null when the cache is empty or stale', () {
-      when(() => cache.get(any(), any(), ttl: any(named: 'ttl')))
-          .thenReturn(null);
+      when(() => cache.get(any(), any(), ttl: any(named: 'ttl'))).thenReturn(null);
 
       expect(repository.cached(), isNull);
     });
@@ -162,8 +237,10 @@ void main() {
     });
 
     test('survives a cache entry written by an older build', () {
-      when(() => cache.get(any(), any(), ttl: any(named: 'ttl')))
-          .thenReturn({'totalBiens': 4, 'byStatus': {'retired': 2}});
+      when(() => cache.get(any(), any(), ttl: any(named: 'ttl'))).thenReturn({
+        'totalBiens': 4,
+        'byStatus': {'retired': 2},
+      });
 
       final stats = repository.cached();
 
@@ -172,52 +249,16 @@ void main() {
     });
   });
 
-  group('views (M14)', () {
-    AnnonceResponse viewed(String id, int? count) => AnnonceResponse((b) => b
-      ..id = id
-      ..status = AnnonceResponseStatusEnum.PUBLISHED
-      ..viewCount = count);
+  test('figures survive the cache round trip, a missing one stays missing', () {
+    const stats = DashboardStats(
+      totalBiens: 3,
+      views: DashboardFigure(value: 42),
+      averagePosition: DashboardFigure(locked: true, requiredTier: SubscriptionTier.proPlus),
+    );
 
-    test('sums viewCount across the listings', () async {
-      // The 2026-08-11 spec put viewCount on AnnonceResponse, so the first of
-      // M14's six missing metrics finally has a source.
-      stubPage(content: [viewed('a', 12), viewed('b', 30), viewed('c', 0)]);
+    final back = DashboardStats.fromCache(stats.toCache());
 
-      final stats = await repository.fetch();
-
-      expect(stats.views, 42);
-    });
-
-    test('stays null when no listing carries the field', () async {
-      // An older backend must keep reading as "unknown" so the dashboard shows
-      // "Bientôt" — claiming zero views would be a lie the prestataire acts on.
-      stubPage(content: [viewed('a', null), viewed('b', null)]);
-
-      final stats = await repository.fetch();
-
-      expect(stats.views, isNull);
-    });
-
-    test('counts the listings that do report, ignoring those that do not',
-        () async {
-      stubPage(content: [viewed('a', 7), viewed('b', null)]);
-
-      final stats = await repository.fetch();
-
-      expect(stats.views, 7);
-    });
-
-    test('survives the cache round trip', () {
-      const stats = DashboardStats(totalBiens: 3, views: 42);
-
-      expect(DashboardStats.fromCache(stats.toCache()).views, 42);
-      // Null must not come back as zero.
-      expect(
-        DashboardStats.fromCache(const DashboardStats(totalBiens: 3).toCache())
-            .views,
-        isNull,
-      );
-    });
+    expect(back, stats);
+    expect(back.contacts, isNull);
   });
-
 }

@@ -6,21 +6,25 @@ import 'package:mboa_pro/features/home/ui/widgets/global_stats_card.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+/// CA-M14-02 — the figures, locked or not as the server decided.
 void main() {
+  // A Basic+ account: views, contacts and contracts are open; conversion and
+  // agent visits too; the average position is Pro+.
   const stats = DashboardStats(
     totalBiens: 17,
     byStatus: {
       AnnonceStatus.published: 12,
       AnnonceStatus.rented: 5,
     },
+    views: DashboardFigure(value: 340),
+    contacts: DashboardFigure(value: 12),
+    conversionRate: DashboardFigure(value: 3.5, requiredTier: SubscriptionTier.basicPlus),
+    agentVisits: DashboardFigure(value: 4, requiredTier: SubscriptionTier.basicPlus),
+    signedContracts: DashboardFigure(value: 2),
+    averagePosition: DashboardFigure(locked: true, requiredTier: SubscriptionTier.proPlus),
   );
 
-  Future<void> pump(
-    WidgetTester tester, {
-    DashboardStats data = stats,
-    SubscriptionTier tier = SubscriptionTier.gratuit,
-    VoidCallback? onUpgrade,
-  }) async {
+  Future<void> pump(WidgetTester tester, {DashboardStats data = stats, VoidCallback? onUpgrade}) async {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('fr'),
@@ -29,15 +33,7 @@ void main() {
         supportedLocales: MboaLocalizations.supportedLocales,
         home: Scaffold(
           body: SingleChildScrollView(
-            child: GlobalStatsCard(
-              stats: data,
-              access: AccessContext(
-                role: AccountRole.prestataire,
-                isKycApproved: true,
-                tier: tier,
-              ),
-              onUpgrade: onUpgrade,
-            ),
+            child: GlobalStatsCard(stats: data, onUpgrade: onUpgrade),
           ),
         ),
       ),
@@ -58,38 +54,59 @@ void main() {
 
     expect(find.text('0'), findsOneWidget);
     expect(find.textContaining('aucun bien'), findsOneWidget);
-    // The status pills are meaningless with nothing to break down.
     expect(find.textContaining('Publiés'), findsNothing);
   });
 
-  testWidgets('marks the metrics with no endpoint as unavailable', (tester) async {
+  testWidgets('the open figures are shown as the server counted them', (tester) async {
     await pump(tester);
 
-    // Views and contacts are free on Gratuit per M14, but nothing serves them.
-    expect(find.text('Vues'), findsOneWidget);
-    expect(find.text('Contacts'), findsOneWidget);
-    expect(find.text('Bientôt'), findsWidgets);
+    expect(find.text('340'), findsOneWidget);
+    expect(find.text('12'), findsOneWidget);
+    // Contacts per 100 views, already a percentage on the wire.
+    expect(find.text('3.5 %'), findsOneWidget);
+    expect(find.text('4'), findsOneWidget);
   });
 
-  testWidgets('offers a single upgrade CTA for the cheapest locked tier', (tester) async {
+  testWidgets('a locked figure is blurred, and the CTA names the tier the server asked for', (tester) async {
     var upgrades = 0;
     await pump(tester, onUpgrade: () => upgrades++);
 
-    // Conversion + visites need Basic+, position needs Pro+ — the CTA points at
-    // the cheapest of them.
-    final cta = find.text('Passer à Basic+');
+    // Only the position is locked here, so the CTA is Pro+ — not Basic+, which
+    // a client-side rule would have guessed from the conversion tile.
+    final cta = find.text('Passer à Pro+');
     expect(cta, findsOneWidget);
-    expect(find.text('Passer à Pro+'), findsNothing);
+    expect(find.text('Passer à Basic+'), findsNothing);
 
     await tester.tap(cta);
     expect(upgrades, 1);
   });
 
-  testWidgets('drops the CTA once every metric is unlocked', (tester) async {
-    await pump(tester, tier: SubscriptionTier.proPlus);
+  testWidgets('nothing to measure yet reads "—", never a made-up 0', (tester) async {
+    await pump(
+      tester,
+      data: const DashboardStats(
+        totalBiens: 1,
+        conversionRate: DashboardFigure(),
+        averagePosition: DashboardFigure(),
+      ),
+    );
 
+    expect(find.text('—'), findsNWidgets(2));
+    expect(find.text('0.0 %'), findsNothing);
+  });
+
+  testWidgets('a figure nobody can see yet is "Bientôt", without an upgrade', (tester) async {
+    await pump(
+      tester,
+      data: const DashboardStats(
+        totalBiens: 1,
+        views: DashboardFigure(value: 3),
+        averagePosition: DashboardFigure(available: false),
+      ),
+    );
+
+    expect(find.text('Bientôt'), findsWidgets);
     expect(find.textContaining('Passer à'), findsNothing);
-    // Still honest that the figures themselves aren't served yet.
-    expect(find.textContaining('backend'), findsOneWidget);
+    expect(find.textContaining('arrivent bientôt'), findsOneWidget);
   });
 }

@@ -1003,6 +1003,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeStatsContracts": MessageLookupByLibrary.simpleMessage("Contracts"),
     "homeStatsConversion": MessageLookupByLibrary.simpleMessage("Conversion"),
     "homeStatsLockedHint": m27,
+    "homeStatsNoData": MessageLookupByLibrary.simpleMessage("—"),
     "homeStatsPublished": MessageLookupByLibrary.simpleMessage("Published"),
     "homeStatsRank": MessageLookupByLibrary.simpleMessage("Ranking"),
     "homeStatsRented": MessageLookupByLibrary.simpleMessage("Rented"),
@@ -1010,7 +1011,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeStatsTitle": MessageLookupByLibrary.simpleMessage("Global statistics"),
     "homeStatsUnavailable": MessageLookupByLibrary.simpleMessage("Soon"),
     "homeStatsUnavailableHint": MessageLookupByLibrary.simpleMessage(
-      "These metrics activate as soon as the backend exposes them.",
+      "Some figures are coming soon.",
     ),
     "homeStatsViews": MessageLookupByLibrary.simpleMessage("Views"),
     "homeStatsVisits": MessageLookupByLibrary.simpleMessage("Visits"),

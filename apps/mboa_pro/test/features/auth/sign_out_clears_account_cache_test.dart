@@ -80,7 +80,7 @@ void main() {
     await cache.put(
       StorageKeys.dashboardBox,
       'stats',
-      const DashboardStats(totalBiens: 7, views: 120).toCache(),
+      const DashboardStats(totalBiens: 7, views: DashboardFigure(value: 120)).toCache(),
     );
     await MessagingRepository(dioClient: MockDioClient(), cache: cache).enqueue(
       QueuedMessage(

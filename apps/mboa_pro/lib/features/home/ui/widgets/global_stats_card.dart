@@ -8,24 +8,19 @@ import 'metric_tile.dart';
 
 /// "Statistiques Globales" — the M14 dashboard card.
 ///
-/// The headline count and the status breakdown are real (derived from the
-/// listings endpoint). The rest of the M14 table has no backing endpoint yet
-/// and renders as unavailable; tier-gated metrics render blurred with a single
-/// upgrade CTA (CA-M14-02).
+/// The headline count and the status breakdown come from the listings; the
+/// six figures from the dashboard endpoint, **locked or not as the server
+/// says** (CA-M14-02): it sends no value for what the tier does not include,
+/// so the app has nothing to decide and nothing to un-blur. One upgrade CTA,
+/// towards the cheapest tier that unlocks something.
 class GlobalStatsCard extends StatelessWidget {
   const GlobalStatsCard({
     super.key,
     required this.stats,
-    required this.access,
-    this.policy = const AccessPolicy(),
     this.onUpgrade,
   });
 
   final DashboardStats stats;
-
-  /// Account facts the gating decisions are made from.
-  final AccessContext access;
-  final AccessPolicy policy;
   final VoidCallback? onUpgrade;
 
   @override
@@ -33,24 +28,17 @@ class GlobalStatsCard extends StatelessWidget {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
 
-    final metrics = <(FeatureKey, String, String?)>[
-      (FeatureKey.statsVues, l10n.homeStatsViews, _asCount(stats.views)),
-      (FeatureKey.statsContacts, l10n.homeStatsContacts, _asCount(stats.contacts)),
-      (
-        FeatureKey.statsConversion,
-        l10n.homeStatsConversion,
-        _asPercent(stats.conversionRate),
-      ),
-      (FeatureKey.statsVisites, l10n.homeStatsVisits, _asCount(stats.agentVisits)),
-      (
-        FeatureKey.statsContrats,
-        l10n.homeStatsContracts,
-        _asCount(stats.signedContracts),
-      ),
-      (FeatureKey.statsPosition, l10n.homeStatsRank, _asRank(stats.averageRank)),
+    final metrics = <(String, DashboardFigure?, String Function(num))>[
+      (l10n.homeStatsViews, stats.views, _count),
+      (l10n.homeStatsContacts, stats.contacts, _count),
+      (l10n.homeStatsConversion, stats.conversionRate, _percent),
+      (l10n.homeStatsVisits, stats.agentVisits, _count),
+      (l10n.homeStatsContracts, stats.signedContracts, _count),
+      (l10n.homeStatsRank, stats.averagePosition, _rank),
     ];
-
-    final lockedTier = _lowestLockedTier(metrics.map((m) => m.$1));
+    final figures = metrics.map((m) => m.$2).nonNulls;
+    final lockedTier = _cheapest(figures.where((f) => f.locked).map((f) => f.requiredTier).nonNulls);
+    final somethingSoon = metrics.any((m) => m.$2 == null || !m.$2!.available);
 
     return Container(
       width: double.infinity,
@@ -65,8 +53,6 @@ class GlobalStatsCard extends StatelessWidget {
         children: [
           Text(l10n.homeStatsTitle, style: context.mboaText.h3),
           const SizedBox(height: Dimens.spacing),
-
-          // Headline: the one figure that is genuinely available today.
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -76,9 +62,7 @@ class GlobalStatsCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: Dimens.spacingXs),
                 child: Text(
                   l10n.homeStatsBiens,
-                  style: context.mboaText.h3.copyWith(
-                    color: colors.textSecondary,
-                  ),
+                  style: context.mboaText.h3.copyWith(color: colors.textSecondary),
                 ),
               ),
             ],
@@ -87,16 +71,13 @@ class GlobalStatsCard extends StatelessWidget {
             const SizedBox(height: Dimens.spacingSm),
             Text(
               l10n.homeEmptyBiens,
-              style: context.mboaText.caption
-                  .copyWith(color: colors.textSecondary),
+              style: context.mboaText.caption.copyWith(color: colors.textSecondary),
             ),
           ] else ...[
             const SizedBox(height: Dimens.spacingSm),
             _StatusBreakdown(stats: stats),
           ],
-
           const Divider(height: Dimens.spacingXl),
-
           GridView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -109,15 +90,10 @@ class GlobalStatsCard extends StatelessWidget {
               crossAxisSpacing: Dimens.spacingMd,
             ),
             children: [
-              for (final (feature, label, value) in metrics)
-                MetricTile(
-                  label: label,
-                  value: value,
-                  decision: policy.check(feature, access),
-                ),
+              for (final (label, figure, format) in metrics)
+                MetricTile(label: label, figure: figure, format: format),
             ],
           ),
-
           if (lockedTier != null) ...[
             const SizedBox(height: Dimens.spacingMd),
             Align(
@@ -127,12 +103,11 @@ class GlobalStatsCard extends StatelessWidget {
                 child: Text(l10n.accessUpgradeCta(lockedTier.label)),
               ),
             ),
-          ] else if (metrics.any((m) => m.$3 == null)) ...[
+          ] else if (somethingSoon) ...[
             const SizedBox(height: Dimens.spacingSm),
             Text(
               l10n.homeStatsUnavailableHint,
-              style: context.mboaText.micro
-                  .copyWith(color: colors.textTertiary),
+              style: context.mboaText.micro.copyWith(color: colors.textTertiary),
             ),
           ],
         ],
@@ -140,27 +115,17 @@ class GlobalStatsCard extends StatelessWidget {
     );
   }
 
-  /// The cheapest tier that would unlock something currently locked — that's
-  /// what the single CTA should point at.
-  SubscriptionTier? _lowestLockedTier(Iterable<FeatureKey> features) {
-    SubscriptionTier? lowest;
-    for (final feature in features) {
-      final decision = policy.check(feature, access);
-      if (decision is! AccessDenied) continue;
-      final required = decision.requiredTier;
-      if (required == null) continue;
-      if (lowest == null || required.index < lowest.index) lowest = required;
-    }
-    return lowest;
-  }
+  /// The cheapest tier that unlocks something — what the single CTA offers.
+  static SubscriptionTier? _cheapest(Iterable<SubscriptionTier> tiers) =>
+      tiers.isEmpty ? null : tiers.reduce((a, b) => a.index <= b.index ? a : b);
 
-  static String? _asCount(int? value) => value?.toString();
+  static String _count(num value) => value.toInt().toString();
 
-  static String? _asPercent(double? value) =>
-      value == null ? null : '${(value * 100).toStringAsFixed(1)}%';
+  /// Already a percentage on the wire (contacts per 100 views, one decimal).
+  static String _percent(num value) => '${value.toStringAsFixed(1)} %';
 
-  static String? _asRank(double? value) =>
-      value == null ? null : '#${value.toStringAsFixed(1)}';
+  /// 1.0 is always at the top of search.
+  static String _rank(num value) => '#${value.toStringAsFixed(1)}';
 }
 
 class _StatusBreakdown extends StatelessWidget {

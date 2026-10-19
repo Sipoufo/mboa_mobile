@@ -44,9 +44,18 @@ void main() {
     mainCity: 'Douala',
   );
 
+  // What the server sends a Gratuit account (CA-M14-02): views, contacts and
+  // contracts open; conversion and agent visits locked to Basic+; the
+  // position locked to Pro+ — with no value for any locked figure.
   const stats = DashboardStats(
     totalBiens: 17,
     byStatus: {AnnonceStatus.published: 12, AnnonceStatus.rented: 5},
+    views: DashboardFigure(value: 340),
+    contacts: DashboardFigure(value: 12),
+    conversionRate: DashboardFigure(locked: true, requiredTier: SubscriptionTier.basicPlus),
+    agentVisits: DashboardFigure(locked: true, requiredTier: SubscriptionTier.basicPlus),
+    signedContracts: DashboardFigure(value: 2),
+    averagePosition: DashboardFigure(locked: true, requiredTier: SubscriptionTier.proPlus),
   );
 
   setUpAll(loadBrandFonts);
@@ -62,7 +71,7 @@ void main() {
     when(() => kycCubit.state).thenReturn(
       const KycReady(KycStatusData(status: KycStatus.approved), KycDraft()),
     );
-    // Gratuit, so the M14 tier-gated metrics render locked.
+    // Gratuit; the figures above are locked by the server, not by this state.
     when(() => subscriptionBloc.state)
         .thenReturn(const SubscriptionReady(SubscriptionPlan.free()));
 

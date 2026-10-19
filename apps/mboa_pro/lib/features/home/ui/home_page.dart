@@ -156,8 +156,6 @@ class _StatsSection extends StatelessWidget {
               ],
               GlobalStatsCard(
                 stats: stats,
-                access: _accessOf(context),
-                policy: getIt<AccessPolicy>(),
                 // Straight to the plans — the explainer would be a detour now
                 // that there is somewhere real to send them.
                 onUpgrade: () => context.router.push(const PlansRoute()),

@@ -112,10 +112,7 @@ class _Stats extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) => switch (state) {
-        HomeReady(:final stats) => GlobalStatsCard(
-            stats: stats,
-            access: const AccessContext.unknown(),
-          ),
+        HomeReady(:final stats) => GlobalStatsCard(stats: stats),
         _ => const SizedBox.shrink(),
       },
     );

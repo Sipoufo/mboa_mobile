@@ -4470,10 +4470,10 @@ class I18n {
     );
   }
 
-  /// `Ces mesures s’activeront dès que le backend les exposera.`
+  /// `Certaines mesures arrivent bientôt.`
   String get homeStatsUnavailableHint {
     return Intl.message(
-      'Ces mesures s’activeront dès que le backend les exposera.',
+      'Certaines mesures arrivent bientôt.',
       name: 'homeStatsUnavailableHint',
       desc: '',
       args: [],
@@ -9601,6 +9601,17 @@ class I18n {
       'Position exacte, car tu as contacté ce prestataire. L\'adresse écrite n\'est communiquée qu\'au contrat signé.',
       name: 'listingLocationExactNote',
       desc: 'RM-M04-06 / RM-M05-02 — exactLocation true on the fiche.',
+      args: [],
+    );
+  }
+
+  /// `—`
+  String get homeStatsNoData {
+    return Intl.message(
+      '—',
+      name: 'homeStatsNoData',
+      desc:
+          'M14 — a figure the tier can see, with nothing to measure yet (no views, never shown in search). Never 0.',
       args: [],
     );
   }
