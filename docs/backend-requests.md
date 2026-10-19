@@ -1019,3 +1019,12 @@ through the termination flow (before the start date, a termination counts as a
 cancellation, RM-M08-11), never as a bare status change. If the server allows
 `PUBLISHED` from `RENTED` with a signed, not-yet-started contract, please refuse
 it with a code instead.
+
+**Decided 2026-10-19 (product):** N-37 (rent reminder at J-3) is **mandatory**,
+as RM-M03-01 lists it; N-23 (the invoice reminder) stays opt-out. Please create
+`N37` with `mandatory: true` — the apps' settings screen shows opt-out types
+only, so it will not appear there.
+
+**§27.1 ✅ answered 2026-10-18:** `INVOICE_IN_APP_DISABLED` on invoice creation
+and `/invoices/{id}/pay`, `payableInApp` always false; the parties' thread stays
+writable under a signed contract. Items 2 to 7 go into the lot 1 plan.
