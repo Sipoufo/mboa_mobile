@@ -2,7 +2,33 @@ import 'package:built_collection/built_collection.dart';
 import 'package:dio/dio.dart';
 import 'package:mboa_core/mboa_core.dart';
 
+import '../../../api/api_error.dart';
 import '../models/contract.dart';
+
+/// Why the server turned a termination down — the cases the screen words.
+enum TerminationRefusal {
+  /// Alone, the last day must leave the notice (`earliestNoticeDate`).
+  noticeTooShort,
+  datePast,
+
+  /// After the contract's own end: nothing to terminate.
+  afterTerm,
+
+  /// One is already proposed and waiting.
+  pending,
+  alreadyTerminated,
+  ended,
+
+  /// The termination moved on (answered, withdrawn, notified alone) or the
+  /// reader may not act on it — reload and show it as it stands.
+  closed,
+}
+
+class ContractTerminationRefused implements Exception {
+  const ContractTerminationRefused(this.reason);
+
+  final TerminationRefusal reason;
+}
 
 /// The Contrat Mboa (CDC M08), from either side.
 ///
@@ -152,6 +178,65 @@ class ContractRepository {
     final url = response.data?.downloadUrl;
     if (url == null || url.isEmpty) throw StateError('no PDF for $id');
     return url;
+  }
+
+  /// RM-M08-11 — ask to end a signed contract on [lastDay]: [mutual] proposes
+  /// it to the other party, otherwise it is notified alone and binding at once.
+  ///
+  /// Throws [ContractTerminationRefused] for the refusals the screen explains.
+  Future<Contract> terminate(
+    String id, {
+    required DateTime lastDay,
+    required String reason,
+    required bool mutual,
+  }) =>
+      _terminating(
+        () => _api.terminateContract(
+          id: id,
+          terminateContractRequest: TerminateContractRequest(
+            (b) => b
+              ..effectiveDate = lastDay.toDate()
+              ..reason = reason.trim()
+              ..mutual = mutual,
+          ),
+        ),
+        'terminate',
+      );
+
+  /// The other party agrees to a proposed termination: it becomes binding.
+  Future<Contract> confirmTermination(String id) =>
+      _terminating(() => _api.confirmContractTermination(id: id), 'confirmTermination');
+
+  /// The other party turns a proposed termination down: the tenancy goes on.
+  Future<Contract> declineTermination(String id) =>
+      _terminating(() => _api.declineContractTermination(id: id), 'declineTermination');
+
+  /// Its author takes back a proposal not yet answered.
+  Future<Contract> withdrawTermination(String id) =>
+      _terminating(() => _api.withdrawContractTermination(id: id), 'withdrawTermination');
+
+  Future<Contract> _terminating(Future<Response<ContractResponse>> Function() call, String action) async {
+    try {
+      return _unwrap(await call(), action);
+    } catch (error) {
+      final api = ApiError.from(error);
+      for (final (code, reason) in const [
+        ('NOTICE_TOO_SHORT', TerminationRefusal.noticeTooShort),
+        ('TERMINATION_DATE_PAST', TerminationRefusal.datePast),
+        ('TERMINATION_AFTER_TERM', TerminationRefusal.afterTerm),
+        ('TERMINATION_PENDING', TerminationRefusal.pending),
+        ('CONTRACT_ALREADY_TERMINATED', TerminationRefusal.alreadyTerminated),
+        ('CONTRACT_ENDED', TerminationRefusal.ended),
+        ('TERMINATION_FINAL', TerminationRefusal.closed),
+        ('NO_PENDING_TERMINATION', TerminationRefusal.closed),
+        ('NOT_THE_AUTHOR', TerminationRefusal.closed),
+        ('CANNOT_ANSWER_OWN_TERMINATION', TerminationRefusal.closed),
+        ('CONTRACT_NOT_SIGNED', TerminationRefusal.closed),
+      ]) {
+        if (api.hasCode(code)) throw ContractTerminationRefused(reason);
+      }
+      rethrow;
+    }
   }
 
   Contract _unwrap(Response<ContractResponse> response, String action) {

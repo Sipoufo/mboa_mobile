@@ -4205,5 +4205,202 @@
   "proReservationDraftContract": "Draw up the contract",
   "@proReservationDraftContract": {
     "description": "RM-M08-10 — main action once accepted."
+  },
+  "contractTenancyTitle": "Tenancy",
+  "@contractTenancyTitle": {
+    "description": "RM-M08-12 — the signed contract's tenancy card."
+  },
+  "contractTenancyUpcoming": "Upcoming",
+  "@contractTenancyUpcoming": {
+    "description": "TenancyState UPCOMING."
+  },
+  "contractTenancyRunning": "Running",
+  "@contractTenancyRunning": {
+    "description": "TenancyState RUNNING."
+  },
+  "contractTenancyEnded": "Ended",
+  "@contractTenancyEnded": {
+    "description": "TenancyState ENDED."
+  },
+  "contractTenancyEndsOn": "Last day: {date}",
+  "@contractTenancyEndsOn": {
+    "description": "RM-M08-12 — endsOn.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTenancyTacit": "Renews tacitly: no end date",
+  "@contractTenancyTacit": {
+    "description": "RM-M08-12 — endsOn null."
+  },
+  "contractTerminate": "Terminate the contract",
+  "@contractTerminate": {
+    "description": "RM-M08-11 — behind ⋯ on a signed contract."
+  },
+  "contractTerminationProposedByYou": "You proposed ending the tenancy on {date}. Waiting for an answer.",
+  "@contractTerminationProposedByYou": {
+    "description": "RM-M08-11 — PROPOSED, author's side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationProposedToYou": "The other party proposes ending the tenancy on {date}.",
+  "@contractTerminationProposedToYou": {
+    "description": "RM-M08-11 — PROPOSED, the other side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationNotifiedByYou": "You terminated the contract: the tenancy ends on {date}.",
+  "@contractTerminationNotifiedByYou": {
+    "description": "RM-M08-11 — NOTIFIED, author's side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationNotifiedToYou": "The other party terminated the contract: the tenancy ends on {date}.",
+  "@contractTerminationNotifiedToYou": {
+    "description": "RM-M08-11 — NOTIFIED, the other side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationConfirmed": "Termination agreed: the tenancy ends on {date}.",
+  "@contractTerminationConfirmed": {
+    "description": "RM-M08-11 — CONFIRMED.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationDeclined": "The termination proposal was declined: the tenancy goes on.",
+  "@contractTerminationDeclined": {
+    "description": "RM-M08-11 — DECLINED."
+  },
+  "contractTerminationWithdrawn": "The termination proposal was withdrawn.",
+  "@contractTerminationWithdrawn": {
+    "description": "RM-M08-11 — WITHDRAWN."
+  },
+  "contractTerminationReason": "Reason: “{reason}”",
+  "@contractTerminationReason": {
+    "description": "RM-M08-11 — the reason as written.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationAccept": "Accept",
+  "@contractTerminationAccept": {
+    "description": "RM-M08-11 — confirm a proposal."
+  },
+  "contractTerminationDecline": "Decline",
+  "@contractTerminationDecline": {
+    "description": "RM-M08-11 — decline a proposal."
+  },
+  "contractTerminationWithdraw": "Withdraw my proposal",
+  "@contractTerminationWithdraw": {
+    "description": "RM-M08-11 — the author takes it back."
+  },
+  "contractTerminationAcceptConfirm": "Accept the termination? The tenancy will end on {date}.",
+  "@contractTerminationAcceptConfirm": {
+    "description": "RM-M08-11 — confirm dialog.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationDeclineConfirm": "Decline the proposal? The tenancy goes on.",
+  "@contractTerminationDeclineConfirm": {
+    "description": "RM-M08-11 — confirm dialog."
+  },
+  "contractTerminationWithdrawConfirm": "Withdraw your termination proposal?",
+  "@contractTerminationWithdrawConfirm": {
+    "description": "RM-M08-11 — confirm dialog."
+  },
+  "contractTerminationMutual": "By agreement",
+  "@contractTerminationMutual": {
+    "description": "RM-M08-11 — mutual."
+  },
+  "contractTerminationMutualBody": "You propose a date to the other party, who accepts or declines. You can withdraw it until they answer.",
+  "@contractTerminationMutualBody": {
+    "description": "RM-M08-11 — mutual."
+  },
+  "contractTerminationAlone": "With notice",
+  "@contractTerminationAlone": {
+    "description": "RM-M08-11 — notified alone."
+  },
+  "contractTerminationAloneBody": "You notify the end of the tenancy yourself, on {date} at the earliest. It's final once sent.",
+  "@contractTerminationAloneBody": {
+    "description": "RM-M08-11 — notified alone, earliestNoticeDate.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationLastDay": "Last day of the tenancy",
+  "@contractTerminationLastDay": {
+    "description": "RM-M08-11 — effectiveDate."
+  },
+  "contractTerminationReasonLabel": "Reason",
+  "@contractTerminationReasonLabel": {
+    "description": "RM-M08-11 — required, 500 max."
+  },
+  "contractTerminationReasonHint": "Say why you are ending the tenancy",
+  "@contractTerminationReasonHint": {
+    "description": "RM-M08-11."
+  },
+  "contractTerminationPropose": "Propose the termination",
+  "@contractTerminationPropose": {
+    "description": "RM-M08-11 — send, mutual."
+  },
+  "contractTerminationNotify": "Notify the termination",
+  "@contractTerminationNotify": {
+    "description": "RM-M08-11 — send, alone."
+  },
+  "contractTerminationNotifyConfirm": "Notify the termination? It's final and can't be withdrawn.",
+  "@contractTerminationNotifyConfirm": {
+    "description": "RM-M08-11 — confirm dialog, alone."
+  },
+  "contractTerminationNoticeTooShort": "The notice is too short for that date.",
+  "@contractTerminationNoticeTooShort": {
+    "description": "NOTICE_TOO_SHORT."
+  },
+  "contractTerminationDatePast": "The last day can't be in the past.",
+  "@contractTerminationDatePast": {
+    "description": "TERMINATION_DATE_PAST."
+  },
+  "contractTerminationAfterTerm": "That date is after the contract's own end.",
+  "@contractTerminationAfterTerm": {
+    "description": "TERMINATION_AFTER_TERM."
+  },
+  "contractTerminationPending": "A termination is already waiting for an answer.",
+  "@contractTerminationPending": {
+    "description": "TERMINATION_PENDING."
+  },
+  "contractTerminationAlready": "This contract is already terminated.",
+  "@contractTerminationAlready": {
+    "description": "CONTRACT_ALREADY_TERMINATED."
+  },
+  "contractTerminationEnded": "This tenancy has ended.",
+  "@contractTerminationEnded": {
+    "description": "CONTRACT_ENDED."
+  },
+  "contractTerminationClosed": "The termination changed meanwhile: here is where it stands.",
+  "@contractTerminationClosed": {
+    "description": "TERMINATION_FINAL, NO_PENDING_TERMINATION…"
   }
 }

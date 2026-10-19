@@ -8,9 +8,11 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../listings/models/rental_period.dart';
 import '../bloc/contract_detail_bloc.dart';
+import '../data/contract_repository.dart';
 import '../models/contract.dart';
 import 'widgets/contract_bits.dart';
 import 'widgets/sign_contract_sheet.dart';
+import 'widgets/termination_bits.dart';
 
 /// One Contrat Mboa, and everything either party may do to it (CDC M08).
 ///
@@ -62,13 +64,32 @@ class ContractDetailView extends StatelessWidget {
         listenWhen: (prev, curr) =>
             curr is ContractWasCancelled ||
             (curr is ContractDetailReady &&
-                (curr.lastActionFailed || curr.justActed || curr.pdfUrl != null)),
+                (curr.lastActionFailed ||
+                    curr.justActed ||
+                    curr.pdfUrl != null ||
+                    curr.terminationRefusal != null)),
         listener: (context, state) {
           if (state is ContractWasCancelled) {
             Navigator.maybeOf(context, rootNavigator: true)?.maybePop();
             return;
           }
           final ready = state as ContractDetailReady;
+          if (ready.terminationRefusal case final refusal?) {
+            MboaToast.error(
+              context: context,
+              title: l10n.commonErrorTitle,
+              description: switch (refusal) {
+                TerminationRefusal.noticeTooShort => l10n.contractTerminationNoticeTooShort,
+                TerminationRefusal.datePast => l10n.contractTerminationDatePast,
+                TerminationRefusal.afterTerm => l10n.contractTerminationAfterTerm,
+                TerminationRefusal.pending => l10n.contractTerminationPending,
+                TerminationRefusal.alreadyTerminated => l10n.contractTerminationAlready,
+                TerminationRefusal.ended => l10n.contractTerminationEnded,
+                TerminationRefusal.closed => l10n.contractTerminationClosed,
+              },
+            );
+            return;
+          }
           if (ready.lastActionFailed) {
             MboaToast.error(
               context: context,
@@ -101,7 +122,7 @@ class ContractDetailView extends StatelessWidget {
                 child: Text(l10n.commonRetry),
               ),
             ),
-          final ContractDetailReady ready => _Body(state: ready),
+          final ContractDetailReady ready => _Body(state: ready, viewer: viewer),
         },
       ),
       bottomNavigationBar: BlocBuilder<ContractDetailBloc, ContractDetailState>(
@@ -119,9 +140,10 @@ class ContractDetailView extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.state});
+  const _Body({required this.state, this.viewer = ContractParty.unknown});
 
   final ContractDetailReady state;
+  final ContractParty viewer;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +160,14 @@ class _Body extends StatelessWidget {
       children: [
         _HeaderCard(contract: contract),
         const SizedBox(height: Dimens.spacing),
+        // RM-M08-11 / RM-M08-12 — once signed, the tenancy and how it ends.
+        if (contract.tenancy != null) ...[
+          _Card(
+            title: l10n.contractTenancyTitle,
+            child: TenancyCard(contract: contract, viewer: viewer, isBusy: state.isBusy),
+          ),
+          const SizedBox(height: Dimens.spacing),
+        ],
         _Card(title: l10n.contractTermsTitle, child: _Terms(contract: contract)),
         const SizedBox(height: Dimens.spacing),
         _Card(
@@ -213,8 +243,13 @@ class _HeaderCard extends StatelessWidget {
                 [contract.district, contract.city].nonNulls.join(' · '),
             style: context.mboaText.body.copyWith(color: colors.primaryDark),
           ),
-          const SizedBox(height: Dimens.spacingSm),
-          AwaitingLine(awaiting: contract.awaiting),
+          // RM-M08-09 speaks of the signing; once signed it can only say
+          // "Rien à faire" — wrong beside a termination waiting for an answer.
+          // The "Location" card says what is left to do.
+          if (contract.tenancy == null) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            AwaitingLine(awaiting: contract.awaiting),
+          ],
           if (contract.isLocked) ...[
             const SizedBox(height: Dimens.spacingSm),
             Row(
@@ -676,48 +711,9 @@ class _ActionBar extends StatelessWidget {
         ),
       );
     } else if (contract.isSigned) {
-      children.add(
-        Button.primary(
-          title: l10n.contractPdf,
-          isLoading: state.isBusy,
-          onPressed: state.isBusy
-              ? null
-              : () => context
-                  .read<ContractDetailBloc>()
-                  .add(const ContractPdfRequested()),
-        ),
-      );
-    }
-
-    // M27 — the same door, opening on two different things.
-    //
-    // For the **tenant**, `residentReviewEligible` is the server's verdict
-    // that this caller may write one: a signature, a role and a tenancy length
-    // it has already combined, and that the app would otherwise have to work
-    // out for itself.
-    //
-    // For the **landlord** there is no such flag, and there should not be: he
-    // is not entitled to anything, he is merely allowed to read what was
-    // written about him and answer once (RM-M27-03). The door opens on a
-    // signed contract, and the screen behind it says "pas encore d'avis" when
-    // there is none — which is the ordinary case, since RM-M27-02 lets the
-    // tenant write whenever they like.
-    if (onReview != null) {
-      final label = switch (viewer) {
-        ContractParty.tenant when contract.residentReviewEligible =>
-          l10n.residentReviewCta,
-        ContractParty.prestataire when contract.isSigned =>
-          l10n.residentReviewSeeCta,
-        _ => null,
-      };
-      if (label != null) {
-        children.add(
-          Button.outline(
-            title: label,
-            onPressed: state.isBusy ? null : () => onReview!(contract),
-          ),
-        );
-      }
+      // Signed: one main action — the PDF — and "⋯" for the review and the
+      // termination (the founder's call: never a column of buttons).
+      return _SignedBar(state: state, onReview: onReview, viewer: viewer);
     }
 
     // RM-M08-08 — amendable only while nobody has accepted, and only by the
@@ -817,6 +813,124 @@ class _ActionBar extends StatelessWidget {
     );
 
     if (confirmed ?? false) bloc.add(const ContractCancelled());
+  }
+}
+
+enum _SignedMore { review, terminate }
+
+/// A signed contract's bar: the PDF, and "⋯" for the M27 review and the
+/// termination (RM-M08-11) — each where the server allows it.
+class _SignedBar extends StatelessWidget {
+  const _SignedBar({required this.state, this.onReview, this.viewer = ContractParty.unknown});
+
+  final ContractDetailReady state;
+  final void Function(Contract contract)? onReview;
+  final ContractParty viewer;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final contract = state.contract;
+
+    // M27 — the same door, opening on two different things. For the tenant,
+    // `residentReviewEligible` is the server's verdict that they may write
+    // one. For the landlord there is no such flag, and there should not be:
+    // he may read what was written about him and answer once (RM-M27-03), so
+    // the door opens on any signed contract and says "pas encore d'avis"
+    // when there is none.
+    final reviewLabel = onReview == null
+        ? null
+        : switch (viewer) {
+            ContractParty.tenant when contract.residentReviewEligible => l10n.residentReviewCta,
+            ContractParty.prestataire => l10n.residentReviewSeeCta,
+            _ => null,
+          };
+    final canTerminate = contract.tenancy?.canTerminate ?? false;
+    final hasMore = reviewLabel != null || canTerminate;
+
+    Future<void> more() async {
+      final bloc = context.read<ContractDetailBloc>();
+      final choice = await showModalBottomSheet<_SignedMore>(
+        context: context,
+        backgroundColor: colors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
+        ),
+        builder: (sheetContext) => SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (reviewLabel != null)
+                  ListTile(
+                    leading: Icon(LucideIcons.star, color: colors.primary),
+                    title: Text(reviewLabel, style: context.mboaText.label.copyWith(color: colors.ink)),
+                    onTap: () => Navigator.of(sheetContext).pop(_SignedMore.review),
+                  ),
+                if (canTerminate)
+                  ListTile(
+                    leading: Icon(LucideIcons.calendarX, color: colors.error),
+                    title: Text(l10n.contractTerminate, style: context.mboaText.label.copyWith(color: colors.error)),
+                    onTap: () => Navigator.of(sheetContext).pop(_SignedMore.terminate),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      );
+      if (choice == null || !context.mounted) return;
+      switch (choice) {
+        case _SignedMore.review:
+          onReview!(contract);
+        case _SignedMore.terminate:
+          final draft = await showTerminationSheet(context, contract: contract);
+          if (draft != null) {
+            bloc.add(ContractTerminationRequested(lastDay: draft.lastDay, reason: draft.reason, mutual: draft.mutual));
+          }
+      }
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.surface,
+        border: Border(top: BorderSide(color: colors.border)),
+      ),
+      child: SafeArea(
+        minimum: const EdgeInsets.all(Dimens.spacing),
+        child: Row(
+          children: [
+            Expanded(
+              child: Button.primary(
+                title: l10n.contractPdf,
+                isLoading: state.isBusy,
+                onPressed: state.isBusy
+                    ? null
+                    : () => context.read<ContractDetailBloc>().add(const ContractPdfRequested()),
+              ),
+            ),
+            if (hasMore) ...[
+              const SizedBox(width: Dimens.spacingSm),
+              SizedBox.square(
+                dimension: Dimens.buttonHeight,
+                child: IconButton(
+                  tooltip: l10n.listingMoreActions,
+                  onPressed: state.isBusy ? null : more,
+                  style: IconButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.radius),
+                      side: BorderSide(color: colors.primary),
+                    ),
+                  ),
+                  icon: Icon(LucideIcons.ellipsis, color: colors.primary),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
   }
 }
 

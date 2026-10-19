@@ -154,6 +154,9 @@ void main() {
     testWidgets('a signed contract may carry a review, so the door is there',
         (tester) async {
       await pumpContract(tester, ContractStatus.signed);
+      // Behind "⋯": a signed contract's bar keeps the PDF as its one button.
+      await tester.tap(find.byTooltip("Plus d'actions"));
+      await tester.pumpAndSettle();
       expect(find.text("Voir l'avis du locataire"), findsOneWidget);
       // The landlord never writes one — RM-M27-01 is the tenant's.
       expect(find.text('Laisser mon avis'), findsNothing);

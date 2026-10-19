@@ -28,6 +28,9 @@ class ContractDetailBloc
     on<ContractAmended>(_onAmended);
     on<ContractCancelled>(_onCancelled);
     on<ContractPdfRequested>(_onPdf);
+    on<ContractTerminationRequested>(_onTerminationRequested);
+    on<ContractTerminationAnswered>(_onTerminationAnswered);
+    on<ContractTerminationWithdrawn>(_onTerminationWithdrawn);
   }
 
   final ContractRepository _repository;
@@ -140,6 +143,74 @@ class ContractDetailBloc
     try {
       final url = await _repository.pdfUrl(current.contract.id);
       emit(current.copyWith(isBusy: false, pdfUrl: url));
+    } catch (_) {
+      emit(current.copyWith(isBusy: false, lastActionFailed: true));
+    }
+  }
+
+  /// RM-M08-11 — only where the server offers it (`tenancy.canTerminate`),
+  /// and never without a reason.
+  Future<void> _onTerminationRequested(
+    ContractTerminationRequested event,
+    Emitter<ContractDetailState> emit,
+  ) {
+    final current = state;
+    final reason = event.reason.trim();
+    if (current is! ContractDetailReady || !(current.contract.tenancy?.canTerminate ?? false) || reason.isEmpty) {
+      return Future.value();
+    }
+    return _terminating(
+      emit,
+      (contract) => _repository.terminate(contract.id, lastDay: event.lastDay, reason: reason, mutual: event.mutual),
+    );
+  }
+
+  Future<void> _onTerminationAnswered(
+    ContractTerminationAnswered event,
+    Emitter<ContractDetailState> emit,
+  ) {
+    final current = state;
+    if (current is! ContractDetailReady || !(current.contract.tenancy?.termination?.canAnswer ?? false)) {
+      return Future.value();
+    }
+    return _terminating(
+      emit,
+      (contract) =>
+          event.confirm ? _repository.confirmTermination(contract.id) : _repository.declineTermination(contract.id),
+    );
+  }
+
+  Future<void> _onTerminationWithdrawn(
+    ContractTerminationWithdrawn event,
+    Emitter<ContractDetailState> emit,
+  ) {
+    final current = state;
+    if (current is! ContractDetailReady || !(current.contract.tenancy?.termination?.canWithdraw ?? false)) {
+      return Future.value();
+    }
+    return _terminating(emit, (contract) => _repository.withdrawTermination(contract.id));
+  }
+
+  /// [_run], with the server's refusals said in words — and the contract read
+  /// again, since a refusal usually means it moved on.
+  Future<void> _terminating(
+    Emitter<ContractDetailState> emit,
+    Future<Contract> Function(Contract contract) action,
+  ) async {
+    final current = state;
+    if (current is! ContractDetailReady || current.isBusy) return;
+
+    emit(current.copyWith(isBusy: true));
+    try {
+      emit(ContractDetailReady(await action(current.contract), justActed: true));
+    } on ContractTerminationRefused catch (refused) {
+      Contract fresh;
+      try {
+        fresh = await _repository.one(current.contract.id);
+      } catch (_) {
+        fresh = current.contract;
+      }
+      emit(ContractDetailReady(fresh, terminationRefusal: refused.reason));
     } catch (_) {
       emit(current.copyWith(isBusy: false, lastActionFailed: true));
     }

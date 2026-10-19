@@ -193,6 +193,143 @@ class ContractParticipant extends Equatable {
   List<Object?> get props => [accountId, displayName, photoObjectKey];
 }
 
+/// Where the tenancy of a signed contract stands today (RM-M08-12).
+enum TenancyState {
+  upcoming,
+  running,
+  ended,
+  unknown;
+
+  static TenancyState fromResponse(ContractTenancyResponseStateEnum? value) => switch (value) {
+        ContractTenancyResponseStateEnum.UPCOMING => TenancyState.upcoming,
+        ContractTenancyResponseStateEnum.RUNNING => TenancyState.running,
+        ContractTenancyResponseStateEnum.ENDED => TenancyState.ended,
+        _ => TenancyState.unknown,
+      };
+}
+
+/// What became of a termination (RM-M08-11).
+enum TerminationStatus {
+  /// Proposed to the other party, who confirms or declines; its author may
+  /// withdraw it until then.
+  proposed,
+
+  /// Notified alone: binding at once, never withdrawn.
+  notified,
+
+  /// A proposal the other party agreed to: binding.
+  confirmed,
+  declined,
+  withdrawn,
+  unknown;
+
+  static TerminationStatus fromResponse(TerminationResponseStatusEnum? value) => switch (value) {
+        TerminationResponseStatusEnum.PROPOSED => TerminationStatus.proposed,
+        TerminationResponseStatusEnum.NOTIFIED => TerminationStatus.notified,
+        TerminationResponseStatusEnum.CONFIRMED => TerminationStatus.confirmed,
+        TerminationResponseStatusEnum.DECLINED => TerminationStatus.declined,
+        TerminationResponseStatusEnum.WITHDRAWN => TerminationStatus.withdrawn,
+        _ => TerminationStatus.unknown,
+      };
+
+  /// The tenancy now ends on its date.
+  bool get isBinding => this == TerminationStatus.notified || this == TerminationStatus.confirmed;
+}
+
+/// The latest termination asked of a contract, whatever became of it
+/// (RM-M08-11). What the reader may do with it is the server's `can*`.
+class Termination extends Equatable {
+  const Termination({
+    required this.status,
+    this.id,
+    this.requestedBy = ContractParty.unknown,
+    this.mutual = false,
+    this.reason,
+    this.effectiveDate,
+    this.requestedAt,
+    this.answeredAt,
+    this.canAnswer = false,
+    this.canWithdraw = false,
+  });
+
+  final String? id;
+  final TerminationStatus status;
+  final ContractParty requestedBy;
+
+  /// Proposed to the other party (true) or notified alone (false).
+  final bool mutual;
+  final String? reason;
+
+  /// The tenancy's last day it sets, or proposes.
+  final DateTime? effectiveDate;
+  final DateTime? requestedAt;
+  final DateTime? answeredAt;
+
+  /// The reader is the other party, on a proposal.
+  final bool canAnswer;
+
+  /// The reader is its author, on a proposal.
+  final bool canWithdraw;
+
+  static Termination fromResponse(TerminationResponse response) => Termination(
+        id: response.id,
+        status: TerminationStatus.fromResponse(response.status),
+        requestedBy: switch (response.requestedBy) {
+          TerminationResponseRequestedByEnum.PRESTATAIRE => ContractParty.prestataire,
+          TerminationResponseRequestedByEnum.TENANT => ContractParty.tenant,
+          _ => ContractParty.unknown,
+        },
+        mutual: response.mutual ?? false,
+        reason: response.reason,
+        effectiveDate: response.effectiveDate?.toDateTime(),
+        requestedAt: response.requestedAt?.toLocal(),
+        answeredAt: response.answeredAt?.toLocal(),
+        canAnswer: response.canAnswer ?? false,
+        canWithdraw: response.canWithdraw ?? false,
+      );
+
+  @override
+  List<Object?> get props =>
+      [id, status, requestedBy, mutual, reason, effectiveDate, requestedAt, answeredAt, canAnswer, canWithdraw];
+}
+
+/// How the tenancy of a signed contract stands, and how it can end
+/// (RM-M08-11, RM-M08-12). Only on a signed contract.
+class Tenancy extends Equatable {
+  const Tenancy({
+    this.state = TenancyState.unknown,
+    this.endsOn,
+    this.canTerminate = false,
+    this.earliestNoticeDate,
+    this.termination,
+  });
+
+  final TenancyState state;
+
+  /// Its last day — a binding termination's, else the term's. Null while it
+  /// renews itself tacitly.
+  final DateTime? endsOn;
+
+  /// Not ended, and no termination pending or binding.
+  final bool canTerminate;
+
+  /// The earliest last day a termination notified alone may set; a mutual
+  /// one may set any day from today.
+  final DateTime? earliestNoticeDate;
+  final Termination? termination;
+
+  static Tenancy fromResponse(ContractTenancyResponse response) => Tenancy(
+        state: TenancyState.fromResponse(response.state),
+        endsOn: response.endsOn?.toDateTime(),
+        canTerminate: response.canTerminate ?? false,
+        earliestNoticeDate: response.earliestNoticeDate?.toDateTime(),
+        termination: response.termination == null ? null : Termination.fromResponse(response.termination!),
+      );
+
+  @override
+  List<Object?> get props => [state, endsOn, canTerminate, earliestNoticeDate, termination];
+}
+
 /// A Contrat Mboa (CDC M08).
 ///
 /// It **copies the property it carries** (title, city, district, address) so it
@@ -225,6 +362,8 @@ class Contract extends Equatable {
     this.canSign = false,
     this.canAccept = false,
     this.residentReviewEligible = false,
+    this.tenancy,
+    this.reservationRequestId,
     this.lockedAt,
     this.createdAt,
     this.updatedAt,
@@ -281,6 +420,14 @@ class Contract extends Equatable {
   final bool canAccept;
 
   final bool residentReviewEligible;
+
+  /// RM-M08-11 / RM-M08-12 — once signed: where the tenancy stands, and how
+  /// it can end. Null before the signatures.
+  final Tenancy? tenancy;
+
+  /// RM-M08-10 — the reservation request it was drawn up from, if any.
+  final String? reservationRequestId;
+
   final DateTime? lockedAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -333,6 +480,8 @@ class Contract extends Equatable {
         canSign: response.canSign ?? false,
         canAccept: response.canAccept ?? false,
         residentReviewEligible: response.residentReviewEligible ?? false,
+        tenancy: response.tenancy == null ? null : Tenancy.fromResponse(response.tenancy!),
+        reservationRequestId: response.reservationRequestId,
         lockedAt: response.lockedAt?.toLocal(),
         createdAt: response.createdAt?.toLocal(),
         updatedAt: response.updatedAt?.toLocal(),
@@ -367,6 +516,8 @@ class Contract extends Equatable {
         canSign,
         canAccept,
         residentReviewEligible,
+        tenancy,
+        reservationRequestId,
         lockedAt,
         createdAt,
         updatedAt,

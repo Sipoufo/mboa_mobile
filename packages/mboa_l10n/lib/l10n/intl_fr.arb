@@ -4205,5 +4205,202 @@
   "proReservationDraftContract": "Établir le contrat",
   "@proReservationDraftContract": {
     "description": "RM-M08-10 — main action once accepted."
+  },
+  "contractTenancyTitle": "Location",
+  "@contractTenancyTitle": {
+    "description": "RM-M08-12 — the signed contract's tenancy card."
+  },
+  "contractTenancyUpcoming": "À venir",
+  "@contractTenancyUpcoming": {
+    "description": "TenancyState UPCOMING."
+  },
+  "contractTenancyRunning": "En cours",
+  "@contractTenancyRunning": {
+    "description": "TenancyState RUNNING."
+  },
+  "contractTenancyEnded": "Terminée",
+  "@contractTenancyEnded": {
+    "description": "TenancyState ENDED."
+  },
+  "contractTenancyEndsOn": "Dernier jour : {date}",
+  "@contractTenancyEndsOn": {
+    "description": "RM-M08-12 — endsOn.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTenancyTacit": "Reconduction tacite : pas de date de fin",
+  "@contractTenancyTacit": {
+    "description": "RM-M08-12 — endsOn null."
+  },
+  "contractTerminate": "Résilier le contrat",
+  "@contractTerminate": {
+    "description": "RM-M08-11 — behind ⋯ on a signed contract."
+  },
+  "contractTerminationProposedByYou": "Tu as proposé de terminer la location le {date}. En attente de réponse.",
+  "@contractTerminationProposedByYou": {
+    "description": "RM-M08-11 — PROPOSED, author's side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationProposedToYou": "L'autre partie propose de terminer la location le {date}.",
+  "@contractTerminationProposedToYou": {
+    "description": "RM-M08-11 — PROPOSED, the other side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationNotifiedByYou": "Tu as résilié le contrat : la location se termine le {date}.",
+  "@contractTerminationNotifiedByYou": {
+    "description": "RM-M08-11 — NOTIFIED, author's side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationNotifiedToYou": "L'autre partie a résilié le contrat : la location se termine le {date}.",
+  "@contractTerminationNotifiedToYou": {
+    "description": "RM-M08-11 — NOTIFIED, the other side.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationConfirmed": "Résiliation acceptée : la location se termine le {date}.",
+  "@contractTerminationConfirmed": {
+    "description": "RM-M08-11 — CONFIRMED.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationDeclined": "La proposition de résiliation a été refusée : la location continue.",
+  "@contractTerminationDeclined": {
+    "description": "RM-M08-11 — DECLINED."
+  },
+  "contractTerminationWithdrawn": "La proposition de résiliation a été retirée.",
+  "@contractTerminationWithdrawn": {
+    "description": "RM-M08-11 — WITHDRAWN."
+  },
+  "contractTerminationReason": "Motif : « {reason} »",
+  "@contractTerminationReason": {
+    "description": "RM-M08-11 — the reason as written.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationAccept": "Accepter",
+  "@contractTerminationAccept": {
+    "description": "RM-M08-11 — confirm a proposal."
+  },
+  "contractTerminationDecline": "Refuser",
+  "@contractTerminationDecline": {
+    "description": "RM-M08-11 — decline a proposal."
+  },
+  "contractTerminationWithdraw": "Retirer ma proposition",
+  "@contractTerminationWithdraw": {
+    "description": "RM-M08-11 — the author takes it back."
+  },
+  "contractTerminationAcceptConfirm": "Accepter la résiliation ? La location se terminera le {date}.",
+  "@contractTerminationAcceptConfirm": {
+    "description": "RM-M08-11 — confirm dialog.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationDeclineConfirm": "Refuser la proposition ? La location continue.",
+  "@contractTerminationDeclineConfirm": {
+    "description": "RM-M08-11 — confirm dialog."
+  },
+  "contractTerminationWithdrawConfirm": "Retirer ta proposition de résiliation ?",
+  "@contractTerminationWithdrawConfirm": {
+    "description": "RM-M08-11 — confirm dialog."
+  },
+  "contractTerminationMutual": "À l'amiable",
+  "@contractTerminationMutual": {
+    "description": "RM-M08-11 — mutual."
+  },
+  "contractTerminationMutualBody": "Tu proposes une date à l'autre partie, qui accepte ou refuse. Tu peux retirer ta proposition tant qu'elle n'a pas répondu.",
+  "@contractTerminationMutualBody": {
+    "description": "RM-M08-11 — mutual."
+  },
+  "contractTerminationAlone": "Avec préavis",
+  "@contractTerminationAlone": {
+    "description": "RM-M08-11 — notified alone."
+  },
+  "contractTerminationAloneBody": "Tu notifies seul la fin de la location, au plus tôt le {date}. C'est définitif dès l'envoi.",
+  "@contractTerminationAloneBody": {
+    "description": "RM-M08-11 — notified alone, earliestNoticeDate.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerminationLastDay": "Dernier jour de location",
+  "@contractTerminationLastDay": {
+    "description": "RM-M08-11 — effectiveDate."
+  },
+  "contractTerminationReasonLabel": "Motif",
+  "@contractTerminationReasonLabel": {
+    "description": "RM-M08-11 — required, 500 max."
+  },
+  "contractTerminationReasonHint": "Explique pourquoi tu mets fin à la location",
+  "@contractTerminationReasonHint": {
+    "description": "RM-M08-11."
+  },
+  "contractTerminationPropose": "Proposer la résiliation",
+  "@contractTerminationPropose": {
+    "description": "RM-M08-11 — send, mutual."
+  },
+  "contractTerminationNotify": "Notifier la résiliation",
+  "@contractTerminationNotify": {
+    "description": "RM-M08-11 — send, alone."
+  },
+  "contractTerminationNotifyConfirm": "Notifier la résiliation ? Elle est définitive et ne pourra pas être retirée.",
+  "@contractTerminationNotifyConfirm": {
+    "description": "RM-M08-11 — confirm dialog, alone."
+  },
+  "contractTerminationNoticeTooShort": "Le préavis est trop court pour cette date.",
+  "@contractTerminationNoticeTooShort": {
+    "description": "NOTICE_TOO_SHORT."
+  },
+  "contractTerminationDatePast": "Le dernier jour ne peut pas être passé.",
+  "@contractTerminationDatePast": {
+    "description": "TERMINATION_DATE_PAST."
+  },
+  "contractTerminationAfterTerm": "Cette date est après la fin prévue du contrat.",
+  "@contractTerminationAfterTerm": {
+    "description": "TERMINATION_AFTER_TERM."
+  },
+  "contractTerminationPending": "Une résiliation attend déjà une réponse.",
+  "@contractTerminationPending": {
+    "description": "TERMINATION_PENDING."
+  },
+  "contractTerminationAlready": "Ce contrat est déjà résilié.",
+  "@contractTerminationAlready": {
+    "description": "CONTRACT_ALREADY_TERMINATED."
+  },
+  "contractTerminationEnded": "Cette location est terminée.",
+  "@contractTerminationEnded": {
+    "description": "CONTRACT_ENDED."
+  },
+  "contractTerminationClosed": "La résiliation a changé entre-temps : voici où elle en est.",
+  "@contractTerminationClosed": {
+    "description": "TERMINATION_FINAL, NO_PENDING_TERMINATION…"
   }
 }

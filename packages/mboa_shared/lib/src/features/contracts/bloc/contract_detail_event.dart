@@ -75,3 +75,31 @@ class ContractCancelled extends ContractDetailEvent {
 class ContractPdfRequested extends ContractDetailEvent {
   const ContractPdfRequested();
 }
+
+/// RM-M08-11 — ask to end a signed contract: proposed to the other party
+/// ([mutual]) or notified alone, binding at once.
+class ContractTerminationRequested extends ContractDetailEvent {
+  const ContractTerminationRequested({required this.lastDay, required this.reason, required this.mutual});
+
+  final DateTime lastDay;
+  final String reason;
+  final bool mutual;
+
+  @override
+  List<Object?> get props => [lastDay, reason, mutual];
+}
+
+/// The other party's answer to a proposed termination.
+class ContractTerminationAnswered extends ContractDetailEvent {
+  const ContractTerminationAnswered({required this.confirm});
+
+  final bool confirm;
+
+  @override
+  List<Object?> get props => [confirm];
+}
+
+/// Its author takes back a proposal not yet answered.
+class ContractTerminationWithdrawn extends ContractDetailEvent {
+  const ContractTerminationWithdrawn();
+}

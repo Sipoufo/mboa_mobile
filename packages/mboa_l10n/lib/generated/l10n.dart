@@ -11092,6 +11092,386 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Location`
+  String get contractTenancyTitle {
+    return Intl.message(
+      'Location',
+      name: 'contractTenancyTitle',
+      desc: 'RM-M08-12 — the signed contract\'s tenancy card.',
+      args: [],
+    );
+  }
+
+  /// `À venir`
+  String get contractTenancyUpcoming {
+    return Intl.message(
+      'À venir',
+      name: 'contractTenancyUpcoming',
+      desc: 'TenancyState UPCOMING.',
+      args: [],
+    );
+  }
+
+  /// `En cours`
+  String get contractTenancyRunning {
+    return Intl.message(
+      'En cours',
+      name: 'contractTenancyRunning',
+      desc: 'TenancyState RUNNING.',
+      args: [],
+    );
+  }
+
+  /// `Terminée`
+  String get contractTenancyEnded {
+    return Intl.message(
+      'Terminée',
+      name: 'contractTenancyEnded',
+      desc: 'TenancyState ENDED.',
+      args: [],
+    );
+  }
+
+  /// `Dernier jour : {date}`
+  String contractTenancyEndsOn(String date) {
+    return Intl.message(
+      'Dernier jour : $date',
+      name: 'contractTenancyEndsOn',
+      desc: 'RM-M08-12 — endsOn.',
+      args: [date],
+    );
+  }
+
+  /// `Reconduction tacite : pas de date de fin`
+  String get contractTenancyTacit {
+    return Intl.message(
+      'Reconduction tacite : pas de date de fin',
+      name: 'contractTenancyTacit',
+      desc: 'RM-M08-12 — endsOn null.',
+      args: [],
+    );
+  }
+
+  /// `Résilier le contrat`
+  String get contractTerminate {
+    return Intl.message(
+      'Résilier le contrat',
+      name: 'contractTerminate',
+      desc: 'RM-M08-11 — behind ⋯ on a signed contract.',
+      args: [],
+    );
+  }
+
+  /// `Tu as proposé de terminer la location le {date}. En attente de réponse.`
+  String contractTerminationProposedByYou(String date) {
+    return Intl.message(
+      'Tu as proposé de terminer la location le $date. En attente de réponse.',
+      name: 'contractTerminationProposedByYou',
+      desc: 'RM-M08-11 — PROPOSED, author\'s side.',
+      args: [date],
+    );
+  }
+
+  /// `L'autre partie propose de terminer la location le {date}.`
+  String contractTerminationProposedToYou(String date) {
+    return Intl.message(
+      'L\'autre partie propose de terminer la location le $date.',
+      name: 'contractTerminationProposedToYou',
+      desc: 'RM-M08-11 — PROPOSED, the other side.',
+      args: [date],
+    );
+  }
+
+  /// `Tu as résilié le contrat : la location se termine le {date}.`
+  String contractTerminationNotifiedByYou(String date) {
+    return Intl.message(
+      'Tu as résilié le contrat : la location se termine le $date.',
+      name: 'contractTerminationNotifiedByYou',
+      desc: 'RM-M08-11 — NOTIFIED, author\'s side.',
+      args: [date],
+    );
+  }
+
+  /// `L'autre partie a résilié le contrat : la location se termine le {date}.`
+  String contractTerminationNotifiedToYou(String date) {
+    return Intl.message(
+      'L\'autre partie a résilié le contrat : la location se termine le $date.',
+      name: 'contractTerminationNotifiedToYou',
+      desc: 'RM-M08-11 — NOTIFIED, the other side.',
+      args: [date],
+    );
+  }
+
+  /// `Résiliation acceptée : la location se termine le {date}.`
+  String contractTerminationConfirmed(String date) {
+    return Intl.message(
+      'Résiliation acceptée : la location se termine le $date.',
+      name: 'contractTerminationConfirmed',
+      desc: 'RM-M08-11 — CONFIRMED.',
+      args: [date],
+    );
+  }
+
+  /// `La proposition de résiliation a été refusée : la location continue.`
+  String get contractTerminationDeclined {
+    return Intl.message(
+      'La proposition de résiliation a été refusée : la location continue.',
+      name: 'contractTerminationDeclined',
+      desc: 'RM-M08-11 — DECLINED.',
+      args: [],
+    );
+  }
+
+  /// `La proposition de résiliation a été retirée.`
+  String get contractTerminationWithdrawn {
+    return Intl.message(
+      'La proposition de résiliation a été retirée.',
+      name: 'contractTerminationWithdrawn',
+      desc: 'RM-M08-11 — WITHDRAWN.',
+      args: [],
+    );
+  }
+
+  /// `Motif : « {reason} »`
+  String contractTerminationReason(String reason) {
+    return Intl.message(
+      'Motif : « $reason »',
+      name: 'contractTerminationReason',
+      desc: 'RM-M08-11 — the reason as written.',
+      args: [reason],
+    );
+  }
+
+  /// `Accepter`
+  String get contractTerminationAccept {
+    return Intl.message(
+      'Accepter',
+      name: 'contractTerminationAccept',
+      desc: 'RM-M08-11 — confirm a proposal.',
+      args: [],
+    );
+  }
+
+  /// `Refuser`
+  String get contractTerminationDecline {
+    return Intl.message(
+      'Refuser',
+      name: 'contractTerminationDecline',
+      desc: 'RM-M08-11 — decline a proposal.',
+      args: [],
+    );
+  }
+
+  /// `Retirer ma proposition`
+  String get contractTerminationWithdraw {
+    return Intl.message(
+      'Retirer ma proposition',
+      name: 'contractTerminationWithdraw',
+      desc: 'RM-M08-11 — the author takes it back.',
+      args: [],
+    );
+  }
+
+  /// `Accepter la résiliation ? La location se terminera le {date}.`
+  String contractTerminationAcceptConfirm(String date) {
+    return Intl.message(
+      'Accepter la résiliation ? La location se terminera le $date.',
+      name: 'contractTerminationAcceptConfirm',
+      desc: 'RM-M08-11 — confirm dialog.',
+      args: [date],
+    );
+  }
+
+  /// `Refuser la proposition ? La location continue.`
+  String get contractTerminationDeclineConfirm {
+    return Intl.message(
+      'Refuser la proposition ? La location continue.',
+      name: 'contractTerminationDeclineConfirm',
+      desc: 'RM-M08-11 — confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `Retirer ta proposition de résiliation ?`
+  String get contractTerminationWithdrawConfirm {
+    return Intl.message(
+      'Retirer ta proposition de résiliation ?',
+      name: 'contractTerminationWithdrawConfirm',
+      desc: 'RM-M08-11 — confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `À l'amiable`
+  String get contractTerminationMutual {
+    return Intl.message(
+      'À l\'amiable',
+      name: 'contractTerminationMutual',
+      desc: 'RM-M08-11 — mutual.',
+      args: [],
+    );
+  }
+
+  /// `Tu proposes une date à l'autre partie, qui accepte ou refuse. Tu peux retirer ta proposition tant qu'elle n'a pas répondu.`
+  String get contractTerminationMutualBody {
+    return Intl.message(
+      'Tu proposes une date à l\'autre partie, qui accepte ou refuse. Tu peux retirer ta proposition tant qu\'elle n\'a pas répondu.',
+      name: 'contractTerminationMutualBody',
+      desc: 'RM-M08-11 — mutual.',
+      args: [],
+    );
+  }
+
+  /// `Avec préavis`
+  String get contractTerminationAlone {
+    return Intl.message(
+      'Avec préavis',
+      name: 'contractTerminationAlone',
+      desc: 'RM-M08-11 — notified alone.',
+      args: [],
+    );
+  }
+
+  /// `Tu notifies seul la fin de la location, au plus tôt le {date}. C'est définitif dès l'envoi.`
+  String contractTerminationAloneBody(String date) {
+    return Intl.message(
+      'Tu notifies seul la fin de la location, au plus tôt le $date. C\'est définitif dès l\'envoi.',
+      name: 'contractTerminationAloneBody',
+      desc: 'RM-M08-11 — notified alone, earliestNoticeDate.',
+      args: [date],
+    );
+  }
+
+  /// `Dernier jour de location`
+  String get contractTerminationLastDay {
+    return Intl.message(
+      'Dernier jour de location',
+      name: 'contractTerminationLastDay',
+      desc: 'RM-M08-11 — effectiveDate.',
+      args: [],
+    );
+  }
+
+  /// `Motif`
+  String get contractTerminationReasonLabel {
+    return Intl.message(
+      'Motif',
+      name: 'contractTerminationReasonLabel',
+      desc: 'RM-M08-11 — required, 500 max.',
+      args: [],
+    );
+  }
+
+  /// `Explique pourquoi tu mets fin à la location`
+  String get contractTerminationReasonHint {
+    return Intl.message(
+      'Explique pourquoi tu mets fin à la location',
+      name: 'contractTerminationReasonHint',
+      desc: 'RM-M08-11.',
+      args: [],
+    );
+  }
+
+  /// `Proposer la résiliation`
+  String get contractTerminationPropose {
+    return Intl.message(
+      'Proposer la résiliation',
+      name: 'contractTerminationPropose',
+      desc: 'RM-M08-11 — send, mutual.',
+      args: [],
+    );
+  }
+
+  /// `Notifier la résiliation`
+  String get contractTerminationNotify {
+    return Intl.message(
+      'Notifier la résiliation',
+      name: 'contractTerminationNotify',
+      desc: 'RM-M08-11 — send, alone.',
+      args: [],
+    );
+  }
+
+  /// `Notifier la résiliation ? Elle est définitive et ne pourra pas être retirée.`
+  String get contractTerminationNotifyConfirm {
+    return Intl.message(
+      'Notifier la résiliation ? Elle est définitive et ne pourra pas être retirée.',
+      name: 'contractTerminationNotifyConfirm',
+      desc: 'RM-M08-11 — confirm dialog, alone.',
+      args: [],
+    );
+  }
+
+  /// `Le préavis est trop court pour cette date.`
+  String get contractTerminationNoticeTooShort {
+    return Intl.message(
+      'Le préavis est trop court pour cette date.',
+      name: 'contractTerminationNoticeTooShort',
+      desc: 'NOTICE_TOO_SHORT.',
+      args: [],
+    );
+  }
+
+  /// `Le dernier jour ne peut pas être passé.`
+  String get contractTerminationDatePast {
+    return Intl.message(
+      'Le dernier jour ne peut pas être passé.',
+      name: 'contractTerminationDatePast',
+      desc: 'TERMINATION_DATE_PAST.',
+      args: [],
+    );
+  }
+
+  /// `Cette date est après la fin prévue du contrat.`
+  String get contractTerminationAfterTerm {
+    return Intl.message(
+      'Cette date est après la fin prévue du contrat.',
+      name: 'contractTerminationAfterTerm',
+      desc: 'TERMINATION_AFTER_TERM.',
+      args: [],
+    );
+  }
+
+  /// `Une résiliation attend déjà une réponse.`
+  String get contractTerminationPending {
+    return Intl.message(
+      'Une résiliation attend déjà une réponse.',
+      name: 'contractTerminationPending',
+      desc: 'TERMINATION_PENDING.',
+      args: [],
+    );
+  }
+
+  /// `Ce contrat est déjà résilié.`
+  String get contractTerminationAlready {
+    return Intl.message(
+      'Ce contrat est déjà résilié.',
+      name: 'contractTerminationAlready',
+      desc: 'CONTRACT_ALREADY_TERMINATED.',
+      args: [],
+    );
+  }
+
+  /// `Cette location est terminée.`
+  String get contractTerminationEnded {
+    return Intl.message(
+      'Cette location est terminée.',
+      name: 'contractTerminationEnded',
+      desc: 'CONTRACT_ENDED.',
+      args: [],
+    );
+  }
+
+  /// `La résiliation a changé entre-temps : voici où elle en est.`
+  String get contractTerminationClosed {
+    return Intl.message(
+      'La résiliation a changé entre-temps : voici où elle en est.',
+      name: 'contractTerminationClosed',
+      desc: 'TERMINATION_FINAL, NO_PENDING_TERMINATION…',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

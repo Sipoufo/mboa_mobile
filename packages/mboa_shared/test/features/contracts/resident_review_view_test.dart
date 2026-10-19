@@ -158,6 +158,9 @@ void main() {
 
     testWidgets('and offers it the moment it says so', (tester) async {
       await pumpContract(tester, eligible: true);
+      // Behind "⋯": a signed contract's bar keeps the PDF as its one button.
+      await tester.tap(find.byTooltip("Plus d'actions"));
+      await tester.pumpAndSettle();
       expect(find.text('Laisser mon avis'), findsOneWidget);
     });
   });
