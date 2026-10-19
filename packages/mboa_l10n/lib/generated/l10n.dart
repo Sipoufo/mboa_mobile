@@ -11542,6 +11542,16 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Voir le contrat`
+  String get proReservationSeeContract {
+    return Intl.message(
+      'Voir le contrat',
+      name: 'proReservationSeeContract',
+      desc: 'RM-M08-10 — the contract already drawn up from this request.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

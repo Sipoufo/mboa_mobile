@@ -4435,5 +4435,9 @@
   "annonceReservedManualBody": "You reserved this property yourself. Lift the reservation to put it back online.",
   "@annonceReservedManualBody": {
     "description": "RM-M10-10."
+  },
+  "proReservationSeeContract": "See the contract",
+  "@proReservationSeeContract": {
+    "description": "RM-M08-10 — the contract already drawn up from this request."
   }
 }

@@ -1028,3 +1028,26 @@ only, so it will not appear there.
 **§27.1 ✅ answered 2026-10-18:** `INVOICE_IN_APP_DISABLED` on invoice creation
 and `/invoices/{id}/pay`, `payableInApp` always false; the parties' thread stays
 writable under a signed contract. Items 2 to 7 go into the lot 1 plan.
+
+---
+
+## §28 — M29: `canDraftContract` stays true once the contract is drawn up
+
+**Seen on device (2026-10-20):** after an accepted request, the prestataire
+draws up the Contrat Mboa from it — and the request still offers "Établir le
+contrat". A second attempt is refused (`CONTRACT_ALREADY_EXISTS`), so nothing
+breaks, but the screen promises an action the server will not take.
+
+`ReservationService.render` computes it as `owner && accepted`: the status
+alone. Two asks:
+
+1. **`canDraftContract` false while a live contract** (DRAFT … SIGNED) carries
+   this `reservationRequestId` — the same check `cancelDrawnFromEndedReservation`
+   already runs with `findByReservationRequestIdAndStatusIn(…, live())`.
+2. **`contractId` on `ReservationResponse`** — the live contract drawn from it,
+   or null — so both parties' screens can open it ("Voir le contrat") without
+   listing every contract.
+
+**Meanwhile, in the app:** the Pro request screen lists the prestataire's
+contracts and looks for a live one with this `reservationRequestId`; when it
+finds one it offers "Voir le contrat" instead. Both go once the fields exist.

@@ -19,8 +19,10 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
   IncomingReservationBloc({
     required IncomingReservationsRepository repository,
     required AnnonceRepository annonces,
+    required ContractRepository contracts,
   })  : _repository = repository,
         _annonces = annonces,
+        _contracts = contracts,
         super(const IncomingReservationLoading()) {
     on<IncomingReservationRequested>(_onRequested);
     on<IncomingReservationAccepted>((event, emit) => _decide(
@@ -51,6 +53,7 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
 
   final IncomingReservationsRepository _repository;
   final AnnonceRepository _annonces;
+  final ContractRepository _contracts;
 
   Future<void> _onRequested(IncomingReservationRequested event, Emitter<IncomingReservationState> emit) async {
     emit(const IncomingReservationLoading());
@@ -63,14 +66,17 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
     }
 
     final annonceId = reservation.annonceId;
-    final (listing, waiting) = annonceId == null
-        ? (null, 0)
-        : await (_listing(annonceId), _waiting(annonceId)).wait;
+    final (listing, waiting, contractId) = await (
+      annonceId == null ? Future<Annonce?>.value() : _listing(annonceId),
+      annonceId == null ? Future.value(0) : _waiting(annonceId),
+      _drawnContract(reservation),
+    ).wait;
 
     emit(
       IncomingReservationReady(
         reservation,
         listing: listing,
+        contractId: contractId,
         // The others: this one, while it waits, is among them.
         otherPending: reservation.status == ReservationStatus.pending && waiting > 0 ? waiting - 1 : waiting,
       ),
@@ -80,6 +86,27 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
   Future<Annonce?> _listing(String annonceId) async {
     try {
       return await _annonces.getOne(annonceId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// The live contract already drawn up from this request, if any.
+  ///
+  /// `canDraftContract` stays true once one exists (the server reads only the
+  /// status — backend-requests §28), and a second would be refused
+  /// (`CONTRACT_ALREADY_EXISTS`); so the screen looks for it and offers it
+  /// instead. Best-effort: without it, the request still reads.
+  Future<String?> _drawnContract(Reservation reservation) async {
+    if (reservation.status != ReservationStatus.accepted && reservation.status != ReservationStatus.contracted) {
+      return null;
+    }
+    try {
+      final contracts = await _contracts.list();
+      return contracts
+          .where((c) => c.reservationRequestId == reservation.id && c.status != ContractStatus.cancelled)
+          .firstOrNull
+          ?.id;
     } catch (_) {
       return null;
     }
@@ -196,6 +223,7 @@ final class IncomingReservationReady extends IncomingReservationState {
     this.reservation, {
     this.listing,
     this.otherPending = 0,
+    this.contractId,
     this.isBusy = false,
     this.done,
     this.refusal,
@@ -209,6 +237,10 @@ final class IncomingReservationReady extends IncomingReservationState {
 
   /// Other requests waiting on the same listing.
   final int otherPending;
+
+  /// RM-M08-10 — the contract already drawn up from this request: opened,
+  /// not drawn again.
+  final String? contractId;
 
   final bool isBusy;
 
@@ -234,6 +266,7 @@ final class IncomingReservationReady extends IncomingReservationState {
         reservation ?? this.reservation,
         listing: listing,
         otherPending: otherPending ?? this.otherPending,
+        contractId: contractId,
         isBusy: isBusy,
         done: done,
         refusal: refusal,
@@ -241,5 +274,5 @@ final class IncomingReservationReady extends IncomingReservationState {
       );
 
   @override
-  List<Object?> get props => [reservation, listing, otherPending, isBusy, done, refusal, failed];
+  List<Object?> get props => [reservation, listing, otherPending, contractId, isBusy, done, refusal, failed];
 }

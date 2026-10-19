@@ -1631,6 +1631,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "proReservationScore": MessageLookupByLibrary.simpleMessage(
       "See their Mboa Score",
     ),
+    "proReservationSeeContract": MessageLookupByLibrary.simpleMessage(
+      "See the contract",
+    ),
     "proReservationStay": MessageLookupByLibrary.simpleMessage("Stay"),
     "proReservationWrite": MessageLookupByLibrary.simpleMessage(
       "Message the client",

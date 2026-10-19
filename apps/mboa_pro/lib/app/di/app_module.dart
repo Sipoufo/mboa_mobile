@@ -299,6 +299,7 @@ void registerAppModule() {
     () => IncomingReservationBloc(
       repository: getIt<IncomingReservationsRepository>(),
       annonces: getIt<AnnonceRepository>(),
+      contracts: getIt<ContractRepository>(),
     ),
   );
 

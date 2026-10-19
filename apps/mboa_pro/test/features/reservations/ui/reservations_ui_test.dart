@@ -224,6 +224,14 @@ void main() {
       expect(find.text('Refuser la demande'), findsNothing);
     });
 
+    testWidgets('a contract already drawn up from it is opened, not drawn again', (tester) async {
+      when(() => bloc.state).thenReturn(IncomingReservationReady(accepted, listing: listing, contractId: 'c-2'));
+      await pump(tester, view());
+
+      expect(find.text('Voir le contrat'), findsOneWidget);
+      expect(find.text('Établir le contrat'), findsNothing);
+    });
+
     testWidgets('closed: what happened and why — and nothing left to do', (tester) async {
       when(() => bloc.state).thenReturn(
         const IncomingReservationReady(
