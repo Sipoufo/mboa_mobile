@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-18.
+> Last updated: 2026-10-19.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**991 tests green, analyze clean.** `mboa_user` 241 · `mboa_pro` 476 ·
-`mboa_core` 19 · `mboa_shared` 227 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1135 tests green, analyze clean.** `mboa_user` 296 · `mboa_pro` 529 ·
+`mboa_core` 19 · `mboa_shared` 263 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -61,12 +61,35 @@
 | M08 Contrat Mboa — tenant half | ✅ list, detail, accept, contest, sign, PDF — the shared views, routed in both apps |
 | M23 signalements | ✅ listing + review from the app · admin queue is out of scope here |
 | M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
+| M29 réservation — lot 1 | ✅ **tenant**: "Réserver" on the fiche, request screen (stay, indicative total, no money), "Ma demande" + ticket, "Mes réservations" (offline) · **Pro**: inbox (timeline), request detail (accept / refuse with reason / extend / cancel), home counter, contract drawn up from a request (RM-M08-10), unreserve by hand (RM-M10-10) · system message in the thread · N-32/33/34 routed |
+| M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
 `mboa_shared` (login, session, profile base, media, locations, settings,
 notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 `mboa_l10n` (FR/EN ARB → generated `I18n`), `api_client` (generated).
+
+---
+
+### M29 lot 1 — what to know before touching (2026-10-19)
+
+- **One main action and "⋯"** is the founder's rule for action bars (fiche,
+  Pro request, signed contract). Never a column of three buttons.
+- **No "paiement" anywhere in a reservation** (RM-M29-09): rent and an
+  *indicative* total, and the "no money before the signed contract" notice.
+  A UI test fails on the word.
+- Every reservation action rides on the server's `can*` (`canAccept`,
+  `canRefuse`, `canExtend`, `canCancel`, `canDraftContract`); the fiche on
+  `canRequestReservation` / `myReservationRequestId`. Nothing is derived from
+  the status.
+- A listing reserved **by a request** (`reservationRequestId`) is not lifted
+  from the listing — the request is cancelled (`RESERVATION_FROM_REQUEST`).
+- A contract **from a request** names no tenant (`TENANT_FROM_RESERVATION`).
+- `ReservationTicket`, `ReservationStatusChip`, the refusal labels and the
+  termination UI live in `mboa_shared`; both apps use them.
+- Lot 2+ (Finance, fiche bien redesign) waits for the founder's mockups —
+  ask first.
 
 ---
 
