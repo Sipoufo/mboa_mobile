@@ -3536,5 +3536,13 @@
   "scoreNoneBody": "Seuls les comptes locataires ont un Mboa Score.",
   "@scoreNoneBody": {
     "description": "404 SCORE_NOT_APPLICABLE."
+  },
+  "searchMapApproxExceptContacted": "Positions approximatives à 200 m près, sauf pour les biens que tu as contactés.",
+  "@searchMapApproxExceptContacted": {
+    "description": "RM-M04-06 — some points on the map are exact (contact established)."
+  },
+  "listingLocationExactNote": "Position exacte, car tu as contacté ce prestataire. L'adresse écrite n'est communiquée qu'au contrat signé.",
+  "@listingLocationExactNote": {
+    "description": "RM-M04-06 / RM-M05-02 — exactLocation true on the fiche."
   }
 }

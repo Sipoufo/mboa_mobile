@@ -1146,6 +1146,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "listingGoneTitle": MessageLookupByLibrary.simpleMessage(
       "Ce bien n\'est plus disponible",
     ),
+    "listingLocationExactNote": MessageLookupByLibrary.simpleMessage(
+      "Position exacte, car tu as contacté ce prestataire. L\'adresse écrite n\'est communiquée qu\'au contrat signé.",
+    ),
     "listingLocationNote": MessageLookupByLibrary.simpleMessage(
       "Localisation approximative : l\'adresse exacte n\'est communiquée qu\'au contrat signé.",
     ),
@@ -1901,6 +1904,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filtres"),
     "searchMapApprox": MessageLookupByLibrary.simpleMessage(
       "Positions approximatives à 200 m près.",
+    ),
+    "searchMapApproxExceptContacted": MessageLookupByLibrary.simpleMessage(
+      "Positions approximatives à 200 m près, sauf pour les biens que tu as contactés.",
     ),
     "searchMapNoKeyBody": MessageLookupByLibrary.simpleMessage(
       "Cette version a été compilée sans clé de cartographie. Les résultats restent consultables en liste.",

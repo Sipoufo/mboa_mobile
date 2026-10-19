@@ -195,6 +195,7 @@ class ListingDetail extends Equatable {
     this.district,
     this.latitude,
     this.longitude,
+    this.exactLocation = false,
     this.surfaceArea,
     this.roomCount,
     this.bathroomCount,
@@ -230,6 +231,11 @@ class ListingDetail extends Equatable {
   final String? district;
   final double? latitude;
   final double? longitude;
+
+  /// RM-M04-06 — the server says [latitude] / [longitude] are the property's
+  /// own point (contact established, or the reader owns it). The written
+  /// address still waits for a signed contract (RM-M05-02).
+  final bool exactLocation;
   final int? surfaceArea;
   final int? roomCount;
   final int? bathroomCount;
@@ -281,6 +287,7 @@ class ListingDetail extends Equatable {
         district: response.district,
         latitude: response.latitude,
         longitude: response.longitude,
+        exactLocation: response.exactLocation ?? false,
         surfaceArea: response.surfaceArea,
         roomCount: response.roomCount,
         bathroomCount: response.bathroomCount,
@@ -318,6 +325,7 @@ class ListingDetail extends Equatable {
         district,
         latitude,
         longitude,
+        exactLocation,
         surfaceArea,
         roomCount,
         bathroomCount,
@@ -400,6 +408,7 @@ class ResidenceDetail extends Equatable {
     this.photoKeys = const [],
     this.latitude,
     this.longitude,
+    this.exactLocation = false,
     this.units = const [],
   });
 
@@ -411,6 +420,9 @@ class ResidenceDetail extends Equatable {
   final List<String> photoKeys;
   final double? latitude;
   final double? longitude;
+
+  /// RM-M04-06 — exact once the reader has contacted any of its units.
+  final bool exactLocation;
 
   /// A unit **is** a listing, so each row opens the ordinary fiche — the same
   /// identity the pro app relies on.
@@ -429,6 +441,7 @@ class ResidenceDetail extends Equatable {
         photoKeys: response.photoKeys?.toList() ?? const [],
         latitude: response.latitude,
         longitude: response.longitude,
+        exactLocation: response.exactLocation ?? false,
         units:
             response.units?.map(ListingUnit.fromResponse).toList() ?? const [],
       );
@@ -443,6 +456,7 @@ class ResidenceDetail extends Equatable {
         photoKeys,
         latitude,
         longitude,
+        exactLocation,
         units,
       ];
 }

@@ -31,6 +31,7 @@ void main() {
     bool canPlanVisit = true,
     PropertyRatingSummary rating = const PropertyRatingSummary(),
     ListingAvailability availability = ListingAvailability.available,
+    bool exactLocation = false,
   }) =>
       ListingDetail(
         id: 'a-1',
@@ -57,6 +58,7 @@ void main() {
         canPlanVisit: canPlanVisit,
         rating: rating,
         availability: availability,
+        exactLocation: exactLocation,
       );
 
   setUpAll(loadBrandFonts);
@@ -117,6 +119,17 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.textContaining('Localisation approximative'), findsOneWidget);
     expect(find.text('Bonapriso, Douala'), findsOneWidget);
+  });
+
+  testWidgets('RM-M04-06 — once contacted, the position is exact and the fiche says so',
+      (tester) async {
+    when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail(exactLocation: true)));
+    await pump(tester);
+
+    expect(find.textContaining('Position exacte'), findsOneWidget);
+    expect(find.textContaining('Localisation approximative'), findsNothing);
+    // The written address is still the contract's.
+    expect(find.textContaining('contrat signé'), findsOneWidget);
   });
 
   testWidgets('RM-M05-03 — badges come in prestige order', (tester) async {

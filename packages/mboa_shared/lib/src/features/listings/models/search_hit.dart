@@ -23,6 +23,7 @@ sealed class SearchHit extends Equatable {
     this.tierRank,
     this.latitude,
     this.longitude,
+    this.exactLocation = false,
     this.badges = const [],
   });
 
@@ -45,6 +46,12 @@ sealed class SearchHit extends Equatable {
   /// has no contact with, which is what makes the 200 m disc honest.
   final double? latitude;
   final double? longitude;
+
+  /// RM-M04-06 — **the server's verdict** that [latitude] / [longitude] are
+  /// the property's own point: the signed-in reader has contacted it (a
+  /// thread, a visit request, a reservation request) or owns it. Then the map
+  /// drops the disc for a pin. Never inferred here.
+  final bool exactLocation;
 
   /// RM-M20 — the trust badges carried by the listing, in prestige order.
   /// Shown on the card since the backend started sending them (2026-10-02).
@@ -77,6 +84,7 @@ final class ListingHit extends SearchHit {
     super.tierRank,
     super.latitude,
     super.longitude,
+    super.exactLocation,
     super.badges,
     this.propertyType = PropertyType.apartment,
     this.price,
@@ -114,6 +122,7 @@ final class ListingHit extends SearchHit {
         tierRank: item.tierRank,
         latitude: item.latitude,
         longitude: item.longitude,
+        exactLocation: item.exactLocation ?? false,
         badges: TrustBadge.sorted(
           item.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
               const <TrustBadge>[],
@@ -138,6 +147,7 @@ final class ListingHit extends SearchHit {
         tierRank,
         latitude,
         longitude,
+        exactLocation,
         badges,
         propertyType,
         price,
@@ -172,6 +182,7 @@ final class ResidenceHit extends SearchHit {
     super.tierRank,
     super.latitude,
     super.longitude,
+    super.exactLocation,
     super.badges,
     this.availableUnitCount,
     this.reservedUnitCount,
@@ -201,6 +212,7 @@ final class ResidenceHit extends SearchHit {
         tierRank: card.tierRank,
         latitude: card.latitude,
         longitude: card.longitude,
+        exactLocation: card.exactLocation ?? false,
         // A residence card is badged on its shared photos (M20b).
         badges: TrustBadge.sorted(
           card.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
@@ -230,6 +242,7 @@ final class ResidenceHit extends SearchHit {
         tierRank,
         latitude,
         longitude,
+        exactLocation,
         availableUnitCount,
         reservedUnitCount,
         breakdown,

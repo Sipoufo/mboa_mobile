@@ -414,9 +414,11 @@ class _Header extends StatelessWidget {
         ),
         const SizedBox(height: Dimens.spacingXs),
         // RM-M05-02 / CA-M05-03 — the exact address is not withheld by the UI:
-        // the API never sends it, and the coordinates are fuzzed by ~200 m.
+        // the API never sends it. The coordinates are fuzzed by ~200 m until
+        // contact (RM-M04-06); once the server says they are exact, the note
+        // says so — the written address still waits for the signed contract.
         Text(
-          l10n.listingLocationNote,
+          detail.exactLocation ? l10n.listingLocationExactNote : l10n.listingLocationNote,
           style: context.mboaText.caption.copyWith(color: colors.textTertiary),
         ),
       ],

@@ -103,8 +103,9 @@ class _Body extends StatelessWidget {
           ],
         ),
         const SizedBox(height: Dimens.spacingXs),
+        // RM-M04-06 — exact once any of its units was contacted.
         Text(
-          l10n.listingLocationNote,
+          residence.exactLocation ? l10n.listingLocationExactNote : l10n.listingLocationNote,
           style: context.mboaText.caption.copyWith(color: colors.textTertiary),
         ),
         const SizedBox(height: Dimens.spacing),

@@ -9583,6 +9583,27 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Positions approximatives à 200 m près, sauf pour les biens que tu as contactés.`
+  String get searchMapApproxExceptContacted {
+    return Intl.message(
+      'Positions approximatives à 200 m près, sauf pour les biens que tu as contactés.',
+      name: 'searchMapApproxExceptContacted',
+      desc:
+          'RM-M04-06 — some points on the map are exact (contact established).',
+      args: [],
+    );
+  }
+
+  /// `Position exacte, car tu as contacté ce prestataire. L'adresse écrite n'est communiquée qu'au contrat signé.`
+  String get listingLocationExactNote {
+    return Intl.message(
+      'Position exacte, car tu as contacté ce prestataire. L\'adresse écrite n\'est communiquée qu\'au contrat signé.',
+      name: 'listingLocationExactNote',
+      desc: 'RM-M04-06 / RM-M05-02 — exactLocation true on the fiche.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

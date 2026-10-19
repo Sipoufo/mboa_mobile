@@ -1077,6 +1077,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "listingGoneTitle": MessageLookupByLibrary.simpleMessage(
       "This property is no longer available",
     ),
+    "listingLocationExactNote": MessageLookupByLibrary.simpleMessage(
+      "Exact position, since you\'ve contacted this provider. The written address is only given in the signed contract.",
+    ),
     "listingLocationNote": MessageLookupByLibrary.simpleMessage(
       "Approximate location: the exact address is only given on a signed contract.",
     ),
@@ -1782,6 +1785,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filters"),
     "searchMapApprox": MessageLookupByLibrary.simpleMessage(
       "Positions are approximate to within 200 m.",
+    ),
+    "searchMapApproxExceptContacted": MessageLookupByLibrary.simpleMessage(
+      "Positions are approximate to within 200 m, except for places you\'ve contacted.",
     ),
     "searchMapNoKeyBody": MessageLookupByLibrary.simpleMessage(
       "This build has no map key. The results are still there in the list.",

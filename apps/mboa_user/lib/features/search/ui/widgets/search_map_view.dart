@@ -20,10 +20,12 @@ import 'search_hit_card.dart';
 /// camera, never the result set — the city picker and the filters are still
 /// what decides what is on screen.
 ///
-/// RM-M04-06 — a listing is a **disc, not a pin**. The API fuzzes positions by
-/// about 200 m until contact is established, and a pin would draw a precision
-/// neither it nor the app is allowed to claim. The disc is that uncertainty,
-/// at true scale: it grows and shrinks with the zoom because it is metres.
+/// RM-M04-06 — a listing is a **disc, not a pin**, until contact. The API
+/// fuzzes positions by about 200 m, and a pin would draw a precision neither
+/// it nor the app is allowed to claim. The disc is that uncertainty, at true
+/// scale: it grows and shrinks with the zoom because it is metres. Once the
+/// reader has contacted a property the server sends its own point and says so
+/// (`exactLocation`): that one is a pin, with no disc around it.
 class SearchMapView extends StatefulWidget {
   const SearchMapView({
     super.key,
@@ -119,6 +121,49 @@ class SearchMapView extends StatefulWidget {
         ? sorted[middle]
         : (sorted[middle - 1] + sorted[middle]) / 2;
   }
+
+  /// One point per hit, each saying whether it is the property's own
+  /// (RM-M04-06) — the point layer draws those as pins.
+  static Map<String, dynamic> pointFeatures(List<SearchHit> hits) => {
+        'type': 'FeatureCollection',
+        'features': [
+          for (final hit in hits)
+            {
+              'type': 'Feature',
+              'id': hit.id,
+              'properties': {'id': hit.id, 'tier': hit.tierRank ?? 0, 'exact': hit.exactLocation},
+              'geometry': {
+                'type': 'Point',
+                'coordinates': [hit.longitude, hit.latitude],
+              },
+            },
+        ],
+      };
+
+  /// The 200 m discs — **only for the approximate points**. A disc around an
+  /// exact point would draw an uncertainty the server says is not there.
+  static Map<String, dynamic> areaFeatures(List<SearchHit> hits) => {
+        'type': 'FeatureCollection',
+        'features': [
+          for (final hit in hits)
+            if (!hit.exactLocation)
+              {
+                'type': 'Feature',
+                'id': hit.id,
+                'properties': {'id': hit.id, 'tier': hit.tierRank ?? 0},
+                'geometry': {
+                  'type': 'Polygon',
+                  'coordinates': [
+                    approxRing(
+                      latitude: hit.latitude!,
+                      longitude: hit.longitude!,
+                      metres: approxRadiusMetres,
+                    ),
+                  ],
+                },
+              },
+        ],
+      };
 
   /// A closed ring of `[lng, lat]` pairs [metres] away from the centre.
   ///
@@ -236,8 +281,10 @@ class _SearchMapViewState extends State<SearchMapView> {
       _pointLayer,
       CircleLayerProperties(
         circleColor: _tierColourExpression(colors),
-        circleRadius: 7,
-        circleStrokeWidth: 2,
+        // An exact point is drawn as a pin: larger, with a heavier ring, and
+        // no disc under it (see [SearchMapView.areaFeatures]).
+        circleRadius: const ['case', ['get', 'exact'], 9, 7],
+        circleStrokeWidth: const ['case', ['get', 'exact'], 3, 2],
         circleStrokeColor: _hex(colors.onBrand),
       ),
     );
@@ -263,8 +310,8 @@ class _SearchMapViewState extends State<SearchMapView> {
     if (controller == null) return;
     final hits = _placeable;
 
-    await controller.setGeoJsonSource(_pointSource, _points(hits));
-    await controller.setGeoJsonSource(_areaSource, _areas(hits));
+    await controller.setGeoJsonSource(_pointSource, SearchMapView.pointFeatures(hits));
+    await controller.setGeoJsonSource(_areaSource, SearchMapView.areaFeatures(hits));
     if (recentre && hits.isNotEmpty) await _fit(controller, hits);
   }
 
@@ -352,12 +399,15 @@ class _SearchMapViewState extends State<SearchMapView> {
             rotateGesturesEnabled: false,
           ),
         ),
-        const Positioned(
-          top: Dimens.spacingSm,
-          left: Dimens.spacing,
-          right: Dimens.spacing,
-          child: MapApproxNotice(),
-        ),
+        // Said only while something on the map is approximate, and in the
+        // words of what is: all of it, or all but the properties contacted.
+        if (_placeable.any((hit) => !hit.exactLocation))
+          Positioned(
+            top: Dimens.spacingSm,
+            left: Dimens.spacing,
+            right: Dimens.spacing,
+            child: MapApproxNotice(someExact: _placeable.any((hit) => hit.exactLocation)),
+          ),
         if (selected != null)
           Positioned(
             left: Dimens.spacing,
@@ -378,44 +428,6 @@ class _SearchMapViewState extends State<SearchMapView> {
     'type': 'FeatureCollection',
     'features': <Map<String, dynamic>>[],
   };
-
-  Map<String, dynamic> _points(List<SearchHit> hits) => {
-        'type': 'FeatureCollection',
-        'features': [
-          for (final hit in hits)
-            {
-              'type': 'Feature',
-              'id': hit.id,
-              'properties': {'id': hit.id, 'tier': hit.tierRank ?? 0},
-              'geometry': {
-                'type': 'Point',
-                'coordinates': [hit.longitude, hit.latitude],
-              },
-            },
-        ],
-      };
-
-  Map<String, dynamic> _areas(List<SearchHit> hits) => {
-        'type': 'FeatureCollection',
-        'features': [
-          for (final hit in hits)
-            {
-              'type': 'Feature',
-              'id': hit.id,
-              'properties': {'id': hit.id, 'tier': hit.tierRank ?? 0},
-              'geometry': {
-                'type': 'Polygon',
-                'coordinates': [
-                  SearchMapView.approxRing(
-                    latitude: hit.latitude!,
-                    longitude: hit.longitude!,
-                    metres: SearchMapView.approxRadiusMetres,
-                  ),
-                ],
-              },
-            },
-        ],
-      };
 
   /// Pro+ → Pro → Basic+ → Gratuit, the visibility ladder of CA-M04-02, read
   /// straight off `tierRank` (3 → 0, the order of the API's own enum).
@@ -439,7 +451,11 @@ class _SearchMapViewState extends State<SearchMapView> {
 /// cannot be mounted in a widget test — `MapLibreMap` throws on dispose with no
 /// channel — so the wording is pinned here, on its own.
 class MapApproxNotice extends StatelessWidget {
-  const MapApproxNotice({super.key});
+  const MapApproxNotice({super.key, this.someExact = false});
+
+  /// Some points on the map are exact (RM-M04-06): the notice says which are
+  /// not, rather than calling every point approximate.
+  final bool someExact;
 
   @override
   Widget build(BuildContext context) {
@@ -457,7 +473,7 @@ class MapApproxNotice extends StatelessWidget {
           border: Border.all(color: colors.border),
         ),
         child: Text(
-          I18n.of(context).searchMapApprox,
+          someExact ? I18n.of(context).searchMapApproxExceptContacted : I18n.of(context).searchMapApprox,
           style: context.mboaText.caption.copyWith(color: colors.textSecondary),
         ),
       ),
