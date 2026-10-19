@@ -8,6 +8,10 @@ import '../../features/favorites/bloc/favorites_bloc.dart';
 import '../../features/favorites/data/favorites_repository.dart';
 import '../../features/listing/bloc/listing_detail_bloc.dart';
 import '../../features/listing/data/listing_repository.dart';
+import '../../features/reservations/bloc/my_reservations_bloc.dart';
+import '../../features/reservations/bloc/reservation_bloc.dart';
+import '../../features/reservations/bloc/reservation_request_bloc.dart';
+import '../../features/reservations/data/reservations_repository.dart';
 import '../../features/saved_searches/bloc/saved_search_results_bloc.dart';
 import '../../features/saved_searches/bloc/saved_searches_bloc.dart';
 import '../../features/saved_searches/data/saved_searches_repository.dart';
@@ -136,6 +140,21 @@ void registerAppModule() {
   );
   getIt.registerFactory<ContractDetailBloc>(
     () => ContractDetailBloc(repository: getIt<ContractRepository>()),
+  );
+
+  // M29 — reservation requests. Each screen gets its own bloc: the list is
+  // read again on the way back from a request, so nothing needs sharing.
+  getIt.registerLazySingleton<ReservationsRepository>(
+    () => ReservationsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactory<ReservationRequestBloc>(
+    () => ReservationRequestBloc(repository: getIt<ReservationsRepository>()),
+  );
+  getIt.registerFactory<MyReservationsBloc>(
+    () => MyReservationsBloc(repository: getIt<ReservationsRepository>()),
+  );
+  getIt.registerFactory<ReservationBloc>(
+    () => ReservationBloc(repository: getIt<ReservationsRepository>()),
   );
 
   // M27 — the resident's review, written from a signed contract.

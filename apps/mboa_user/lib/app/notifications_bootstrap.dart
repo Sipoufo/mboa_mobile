@@ -50,14 +50,17 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(AuthenticatedRouter(children: [SavedSearchResultsRoute(id: id)]));
     case PushType.savedSearch:
       router.push(const AuthenticatedRouter(children: [SavedSearchesRoute()]));
+    // N-33 / N-34 — a request's answer, or its reservation running out.
+    case PushType.reservation when id != null:
+      router.push(AuthenticatedRouter(children: [ReservationDetailRoute(id: id)]));
+    case PushType.reservation:
+      router.push(const AuthenticatedRouter(children: [MyReservationsRoute()]));
     case PushType.message:
       router.navigate(const UserShellRoute(children: [MessagesRoute()]));
     case PushType.annonce:
     case PushType.contract:
     case PushType.paymentConfirmed:
     case PushType.kyc:
-    // Routed to its screen with the reservation screens (M29 lot 1).
-    case PushType.reservation:
     case PushType.residence:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());

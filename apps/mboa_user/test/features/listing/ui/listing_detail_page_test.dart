@@ -32,6 +32,9 @@ void main() {
     PropertyRatingSummary rating = const PropertyRatingSummary(),
     ListingAvailability availability = ListingAvailability.available,
     bool exactLocation = false,
+    bool canRequestReservation = false,
+    String? myReservationRequestId,
+    List<String> photoKeys = const ['p1', 'p2', 'p3', 'p4'],
   }) =>
       ListingDetail(
         id: 'a-1',
@@ -48,7 +51,7 @@ void main() {
         chargesIncluded: false,
         description: 'Studio lumineux à deux pas du marché.',
         amenities: const [Amenity.airConditioning, Amenity.wifi],
-        photoKeys: const ['p1', 'p2', 'p3', 'p4'],
+        photoKeys: photoKeys,
         provider: const ProviderSummary(
           displayName: 'Agence Deido',
           type: PrestataireKind.agence,
@@ -59,6 +62,8 @@ void main() {
         rating: rating,
         availability: availability,
         exactLocation: exactLocation,
+        canRequestReservation: canRequestReservation,
+        myReservationRequestId: myReservationRequestId,
       );
 
   setUpAll(loadBrandFonts);
@@ -84,6 +89,12 @@ void main() {
         matching: find.byType(Scrollable),
       )
       .first;
+
+  /// "⋯" — contact, plan a visit and report live behind it.
+  Future<void> openMore(WidgetTester tester) async {
+    await tester.tap(find.byTooltip('Plus d\'actions'));
+    await tester.pumpAndSettle();
+  }
 
   Future<void> scrollTo(WidgetTester tester, Finder finder) =>
       tester.scrollUntilVisible(finder, 200, scrollable: pageList());
@@ -297,6 +308,7 @@ void main() {
     when(() => bloc.state)
         .thenReturn(ListingDetailReady(detail: detail(canPlanVisit: false)));
     await pump(tester);
+    await openMore(tester);
 
     // The button would open a booking screen with no slots in it.
     expect(find.text('Planifier une visite'), findsNothing);
@@ -309,9 +321,66 @@ void main() {
         .thenReturn(ListingDetailReady(detail: detail(canContact: false)));
     await pump(tester);
 
-    final button = tester.widget<Button>(find.byType(Button).first);
-    expect(button.onPressed, isNull);
+    await openMore(tester);
+
+    final contact = tester.widget<ListTile>(find.widgetWithText(ListTile, 'Contacter'));
+    expect(contact.enabled, isFalse);
     expect(find.textContaining('Connecte-toi'), findsOneWidget);
+  });
+
+  group('M29 — reserving from the fiche', () {
+    Button reserve(WidgetTester tester, String label) => tester.widget<Button>(find.widgetWithText(Button, label));
+
+    testWidgets('the server allows it: the rent, then "Réserver"', (tester) async {
+      getIt<SessionSnapshot>().markAuthenticated();
+      when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail(canRequestReservation: true)));
+      await pump(tester);
+
+      expect(reserve(tester, 'Réserver').onPressed, isNotNull);
+      expect(find.text('Loyer'), findsOneWidget);
+      // One main button: contacting and visiting are behind "⋯".
+      expect(find.byType(Button), findsOneWidget);
+      await openMore(tester);
+      expect(find.widgetWithText(ListTile, 'Contacter'), findsOneWidget);
+      expect(find.widgetWithText(ListTile, 'Planifier une visite'), findsOneWidget);
+      expect(find.widgetWithText(ListTile, 'Signaler'), findsOneWidget);
+    });
+
+    testWidgets('a request already sent is opened, not sent again', (tester) async {
+      getIt<SessionSnapshot>().markAuthenticated();
+      when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail(myReservationRequestId: 'r-1')));
+      await pump(tester);
+
+      expect(find.text('Demande envoyée'), findsOneWidget);
+      expect(find.text('Réserver'), findsNothing);
+    });
+
+    testWidgets('signed in and refused by the server: contacting is the main action', (tester) async {
+      getIt<SessionSnapshot>().markAuthenticated();
+      await pump(tester);
+
+      expect(find.text('Réserver'), findsNothing);
+      expect(reserve(tester, 'Contacter').onPressed, isNotNull);
+      // …so "⋯" does not offer it twice.
+      await openMore(tester);
+      expect(find.widgetWithText(ListTile, 'Contacter'), findsNothing);
+    });
+
+    testWidgets('a visitor sees the door on an available listing', (tester) async {
+      await pump(tester);
+
+      // Pressing it leads to sign-in (CA-M04-04).
+      expect(reserve(tester, 'Réserver').onPressed, isNotNull);
+    });
+
+    testWidgets('…and not on a reserved one', (tester) async {
+      when(() => bloc.state).thenReturn(
+        ListingDetailReady(detail: detail(availability: ListingAvailability.reserved)),
+      );
+      await pump(tester);
+
+      expect(find.text('Réserver'), findsNothing);
+    });
   });
 
   testWidgets('§20 — an off-market fiche says so before anything else',
@@ -361,6 +430,18 @@ void main() {
       find.byType(ListingDetailPage),
       matchesGoldenFile('goldens/listing_detail.png'),
     );
+  });
+
+  testWidgets('the fiche\'s "⋯" sheet', (tester) async {
+    getIt<SessionSnapshot>().markAuthenticated();
+    // No photos: the carousel's image cache would reach for a platform
+    // directory while the sheet settles.
+    when(() => bloc.state)
+        .thenReturn(ListingDetailReady(detail: detail(canRequestReservation: true, photoKeys: const [])));
+    await pump(tester);
+    await openMore(tester);
+
+    await expectLater(find.byType(MaterialApp), matchesGoldenFile('goldens/listing_detail_more.png'));
   });
 
   /// **The route carries its own scope.**

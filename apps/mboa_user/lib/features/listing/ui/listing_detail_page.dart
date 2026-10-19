@@ -12,6 +12,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../../favorites/bloc/favorites_bloc.dart';
 import '../../favorites/ui/widgets/favorite_heart.dart';
 import '../../messaging/ui/contact_sheet.dart';
+import '../../reservations/models/reservation_draft.dart';
 import '../../visits/ui/book_visit_sheet.dart';
 import '../bloc/listing_detail_bloc.dart';
 import 'widgets/listing_bits.dart';
@@ -835,11 +836,14 @@ class _Tag extends StatelessWidget {
   }
 }
 
-/// Contacter / Planifier / Signaler.
+/// The rent, one main action, and "⋯" for the rest.
 ///
-/// The first two are the server's to allow: `canContact` carries RM-M04-05 and
-/// `canPlanVisit` carries RM-M05-07 — a bookable visitor must exist, or the
-/// button would open an empty booking screen.
+/// The main action is reserving (M29) where the listing can be asked for,
+/// contacting otherwise; the others — contact, plan a visit, report — sit
+/// behind "⋯" so the bar never carries three buttons (the founder's call).
+/// Contacting and visiting are the server's to allow: `canContact` carries
+/// RM-M04-05 and `canPlanVisit` carries RM-M05-07 — a bookable visitor must
+/// exist, or the button would open an empty booking screen.
 class _Actions extends StatelessWidget {
   const _Actions({required this.detail});
 
@@ -884,11 +888,119 @@ class _Actions extends StatelessWidget {
     await router.push(ThreadRoute(conversation: conversation));
   }
 
+  /// M29 — asking to reserve, or opening the request already sent. The fiche
+  /// is read again on the way back: the request changes what it offers.
+  Future<void> _reserve(BuildContext context, ListingDetail detail) async {
+    final bloc = context.read<ListingDetailBloc>();
+    final router = context.router.root;
+
+    if (!getIt<SessionSnapshot>().hasSession) {
+      await router.push(const WelcomeRoute());
+      return;
+    }
+
+    final requestId = detail.myReservationRequestId;
+    await router.push(
+      AuthenticatedRouter(
+        children: [
+          if (requestId != null)
+            ReservationDetailRoute(id: requestId)
+          else
+            RequestReservationRoute(listing: ReservationListing.fromDetail(detail)),
+        ],
+      ),
+    );
+    bloc.add(ListingRequested(detail.id));
+  }
+
+  /// "⋯": what the bar does not carry. The sheet answers with a choice and
+  /// the bar acts on it, so nothing runs on a context the sheet took away.
+  Future<void> _more(BuildContext context, {required bool withContact}) async {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final signedIn = getIt<SessionSnapshot>().hasSession;
+
+    final choice = await showModalBottomSheet<_MoreAction>(
+      context: context,
+      backgroundColor: colors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
+      ),
+      builder: (sheetContext) {
+        Widget item(IconData icon, String label, _MoreAction action, {bool enabled = true}) => ListTile(
+              enabled: enabled,
+              leading: Icon(icon, color: enabled ? colors.primary : colors.textTertiary),
+              title: Text(label, style: context.mboaText.label.copyWith(color: enabled ? colors.ink : colors.textTertiary)),
+              onTap: () => Navigator.of(sheetContext).pop(action),
+            );
+
+        Widget note(String text, Color color) => Padding(
+              padding: const EdgeInsets.fromLTRB(Dimens.spacingLg, Dimens.spacingSm, Dimens.spacingLg, 0),
+              child: Text(text, textAlign: TextAlign.center, style: context.mboaText.caption.copyWith(color: color)),
+            );
+
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (withContact)
+                  item(LucideIcons.messageCircle, l10n.listingContact, _MoreAction.contact, enabled: detail.canContact),
+                if (detail.canPlanVisit) item(LucideIcons.calendarPlus, l10n.listingPlanVisit, _MoreAction.plan),
+                // RM-M05-05 — any signed-in user may report a listing.
+                item(LucideIcons.flag, l10n.listingReport, _MoreAction.report),
+                // Only where it explains something: a signed-out reader whose
+                // actions are live has nothing to be told (and the server
+                // would not return `canContact` for one anyway).
+                if (!signedIn && !detail.canContact)
+                  note(l10n.listingActionsSignIn, colors.textSecondary)
+                else if (!detail.canPlanVisit)
+                  note(l10n.listingNoVisitor, colors.textTertiary),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    if (choice == null || !context.mounted) return;
+
+    switch (choice) {
+      case _MoreAction.contact:
+        await _contact(context, detail);
+      // M07. `canPlanVisit` is the server's verdict that someone can actually
+      // show this place (RM-M07-01); the sheet then says who, and when.
+      case _MoreAction.plan:
+        await showBookVisitSheet(context, annonceId: detail.id, annonceTitle: detail.title);
+      case _MoreAction.report:
+        await _report(context, target: ReportTarget.annonce(detail.id), title: l10n.listingReport);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
     final signedIn = getIt<SessionSnapshot>().hasSession;
+    final requestId = detail.myReservationRequestId;
+    // The server's verdict for a signed-in reader; a visitor is shown the
+    // door on an available listing and sent to sign in (CA-M04-04).
+    final reservable = requestId != null ||
+        detail.canRequestReservation ||
+        (!signedIn && detail.availability == ListingAvailability.available);
+    final price = detail.displayPrice;
+
+    final main = reservable
+        ? Button.primary(
+            title: requestId != null ? l10n.listingReservationSent : l10n.listingRequestReservation,
+            onPressed: () => _reserve(context, detail),
+          )
+        : Button.primary(
+            title: l10n.listingContact,
+            // RM-M12-01 — the tenant's first word, on this listing. The gate
+            // is the server's (`canContact`).
+            onPressed: detail.canContact ? () => _contact(context, detail) : null,
+          );
 
     return Container(
       decoration: BoxDecoration(
@@ -897,72 +1009,54 @@ class _Actions extends StatelessWidget {
       ),
       child: SafeArea(
         minimum: const EdgeInsets.all(Dimens.spacing),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        // The founder's fiche: the rent on the left, the one thing this
+        // screen leads to on the right.
+        child: Row(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Button.primary(
-                    title: l10n.listingContact,
-                    // RM-M12-01 — the tenant's first word, on this listing. The
-                    // gate is the server's (`canContact`).
-                    onPressed: detail.canContact
-                        ? () => _contact(context, detail)
-                        : null,
-                  ),
-                ),
-                const SizedBox(width: Dimens.spacingSm),
-                IconButton(
-                  tooltip: l10n.listingReport,
-                  // RM-M05-05 — any signed-in user may report a listing.
-                  onPressed: () => _report(
-                    context,
-                    target: ReportTarget.annonce(detail.id),
-                    title: l10n.listingReport,
-                  ),
-                  icon: Icon(LucideIcons.flag, color: colors.textSecondary),
-                ),
-              ],
-            ),
-            if (detail.canPlanVisit) ...[
-              const SizedBox(height: Dimens.spacingSm),
-              Button.outline(
-                title: l10n.listingPlanVisit,
-                // M07. `canPlanVisit` is the server's verdict that someone can
-                // actually show this place (RM-M07-01); the sheet then says
-                // who, and when.
-                onPressed: () =>
-                    showBookVisitSheet(
-                      context,
-                      annonceId: detail.id,
-                      annonceTitle: detail.title,
+            if (price != null) ...[
+              // As wide as the rent needs, within reason: the button takes
+              // the rest.
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 170),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l10n.reservationRentTitle,
+                      style: context.mboaText.caption.copyWith(color: colors.textSecondary),
                     ),
+                    Text(
+                      detail.rentalPeriod.priceLabel(l10n, price),
+                      maxLines: 2,
+                      style: context.mboaText.label.copyWith(color: colors.primary, fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: Dimens.spacingMd),
             ],
-            // Only where it explains something: a signed-out reader whose
-            // buttons are live has nothing to be told (and the server would
-            // not return `canContact` for one anyway).
-            if (!signedIn && !detail.canContact) ...[
-              const SizedBox(height: Dimens.spacingSm),
-              Text(
-                l10n.listingActionsSignIn,
-                textAlign: TextAlign.center,
-                style:
-                    context.mboaText.caption.copyWith(color: colors.textSecondary),
+            Expanded(child: main),
+            const SizedBox(width: Dimens.spacingSm),
+            SizedBox.square(
+              dimension: Dimens.buttonHeight,
+              child: IconButton(
+                tooltip: l10n.listingMoreActions,
+                onPressed: () => _more(context, withContact: reservable),
+                style: IconButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Dimens.radius),
+                    side: BorderSide(color: colors.primary),
+                  ),
+                ),
+                icon: Icon(LucideIcons.ellipsis, color: colors.primary),
               ),
-            ] else if (!detail.canPlanVisit) ...[
-              const SizedBox(height: Dimens.spacingSm),
-              Text(
-                l10n.listingNoVisitor,
-                textAlign: TextAlign.center,
-                style:
-                    context.mboaText.caption.copyWith(color: colors.textTertiary),
-              ),
-            ],
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+enum _MoreAction { contact, plan, report }

@@ -41,6 +41,9 @@ class StorageKeys {
   // Read-only offline: they belong to an account, so they are cleared at
   // sign-out, and nothing is changed while the network is gone.
   static const String savedSearchesBox = 'savedSearchesBox';
+  // The tenant's reservation requests (M29) — read-only offline, an
+  // account's own, so emptied at sign-out.
+  static const String reservationsBox = 'reservationsBox';
 
   /// Boxes that belong to the **device**, kept across a sign-out on purpose.
   ///
@@ -77,6 +80,7 @@ class StorageKeys {
     subscriptionBox,
     visitsBox,
     savedSearchesBox,
+    reservationsBox,
   ];
 
   static const List<String> allBoxes = [

@@ -127,6 +127,15 @@ class _SignedInState extends State<_SignedIn> {
                     ),
                   ),
                   const SizedBox(height: Dimens.spacingMd),
+                  // M29 — the requests sent from a fiche, and their answers.
+                  MboaTileCard(
+                    icon: LucideIcons.calendarRange,
+                    title: l10n.reservationsTile,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [MyReservationsRoute()]),
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacingMd),
                   // M08 — where a tenancy is read, signed or contested, and
                   // where M27's resident review starts from.
                   MboaTileCard(

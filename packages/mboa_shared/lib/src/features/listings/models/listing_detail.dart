@@ -207,6 +207,8 @@ class ListingDetail extends Equatable {
     this.provider,
     this.canContact = false,
     this.canPlanVisit = false,
+    this.canRequestReservation = false,
+    this.myReservationRequestId,
     this.rating = const PropertyRatingSummary(),
     this.viewCount,
     this.availability = ListingAvailability.available,
@@ -256,6 +258,14 @@ class ListingDetail extends Equatable {
   /// booking screen that opens empty.
   final bool canPlanVisit;
 
+  /// **Server-computed.** M29 — the reader may ask to reserve: a complete
+  /// profile, a listing available or under offer, no open request of theirs.
+  final bool canRequestReservation;
+
+  /// The reader's own open request on this listing, if any — the fiche then
+  /// says "Demande envoyée" and opens it.
+  final String? myReservationRequestId;
+
   final PropertyRatingSummary rating;
 
   /// §20 — see [ListingAvailability].
@@ -303,6 +313,8 @@ class ListingDetail extends Equatable {
             : ProviderSummary.fromResponse(response.provider!),
         canContact: response.canContact ?? false,
         canPlanVisit: response.canPlanVisit ?? false,
+        canRequestReservation: response.canRequestReservation ?? false,
+        myReservationRequestId: response.myReservationRequestId,
         rating: response.rating == null
             ? const PropertyRatingSummary()
             : PropertyRatingSummary.fromResponse(response.rating!),
@@ -337,6 +349,8 @@ class ListingDetail extends Equatable {
         provider,
         canContact,
         canPlanVisit,
+        canRequestReservation,
+        myReservationRequestId,
         rating,
         viewCount,
         availability,

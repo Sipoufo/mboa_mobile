@@ -9767,6 +9767,787 @@ class I18n {
       args: [],
     );
   }
+
+  /// `En attente`
+  String get reservationStatusPending {
+    return Intl.message(
+      'En attente',
+      name: 'reservationStatusPending',
+      desc: 'M29 — PENDING: the prestataire has 48 h to answer.',
+      args: [],
+    );
+  }
+
+  /// `Réservée`
+  String get reservationStatusAccepted {
+    return Intl.message(
+      'Réservée',
+      name: 'reservationStatusAccepted',
+      desc: 'M29 — ACCEPTED: the listing is held for the client.',
+      args: [],
+    );
+  }
+
+  /// `Contrat signé`
+  String get reservationStatusContracted {
+    return Intl.message(
+      'Contrat signé',
+      name: 'reservationStatusContracted',
+      desc: 'M29 — CONTRACTED: its contract was signed by both.',
+      args: [],
+    );
+  }
+
+  /// `Refusée`
+  String get reservationStatusRefused {
+    return Intl.message(
+      'Refusée',
+      name: 'reservationStatusRefused',
+      desc: 'M29 — REFUSED.',
+      args: [],
+    );
+  }
+
+  /// `Non retenue`
+  String get reservationStatusNotRetained {
+    return Intl.message(
+      'Non retenue',
+      name: 'reservationStatusNotRetained',
+      desc: 'M29 — NOT_RETAINED: another request was accepted (RM-M29-04).',
+      args: [],
+    );
+  }
+
+  /// `Sans réponse`
+  String get reservationStatusExpired {
+    return Intl.message(
+      'Sans réponse',
+      name: 'reservationStatusExpired',
+      desc: 'M29 — EXPIRED: unanswered after 48 h.',
+      args: [],
+    );
+  }
+
+  /// `Annulée`
+  String get reservationStatusCancelled {
+    return Intl.message(
+      'Annulée',
+      name: 'reservationStatusCancelled',
+      desc: 'M29 — CANCELLED.',
+      args: [],
+    );
+  }
+
+  /// `Échue`
+  String get reservationStatusLapsed {
+    return Intl.message(
+      'Échue',
+      name: 'reservationStatusLapsed',
+      desc:
+          'M29 — LAPSED: the reservation ran out with no signed contract (RM-M29-07).',
+      args: [],
+    );
+  }
+
+  /// `Statut inconnu`
+  String get reservationStatusUnknown {
+    return Intl.message(
+      'Statut inconnu',
+      name: 'reservationStatusUnknown',
+      desc: 'M29 — a status this build predates.',
+      args: [],
+    );
+  }
+
+  /// `Ne verse aucun argent avant d'avoir signé le Contrat Mboa dans l'app. Réserver est gratuit.`
+  String get reservationNoMoney {
+    return Intl.message(
+      'Ne verse aucun argent avant d\'avoir signé le Contrat Mboa dans l\'app. Réserver est gratuit.',
+      name: 'reservationNoMoney',
+      desc: 'RM-M29-09 / CA-M29-04 — nothing is paid through a reservation.',
+      args: [],
+    );
+  }
+
+  /// `Réservation`
+  String get reservationTitle {
+    return Intl.message(
+      'Réservation',
+      name: 'reservationTitle',
+      desc: 'M29 — the request screen\'s title.',
+      args: [],
+    );
+  }
+
+  /// `Durée du séjour`
+  String get reservationStayTitle {
+    return Intl.message(
+      'Durée du séjour',
+      name: 'reservationStayTitle',
+      desc: 'M29 — step 2 of the request.',
+      args: [],
+    );
+  }
+
+  /// `Loyer`
+  String get reservationRentTitle {
+    return Intl.message(
+      'Loyer',
+      name: 'reservationRentTitle',
+      desc: 'M29 — step 3 of the request; never "payment" (RM-M29-09).',
+      args: [],
+    );
+  }
+
+  /// `Début`
+  String get reservationStart {
+    return Intl.message(
+      'Début',
+      name: 'reservationStart',
+      desc: 'M29 — move-in day.',
+      args: [],
+    );
+  }
+
+  /// `Fin`
+  String get reservationEnd {
+    return Intl.message(
+      'Fin',
+      name: 'reservationEnd',
+      desc: 'M29 — the stay\'s last day, computed.',
+      args: [],
+    );
+  }
+
+  /// `Choisir`
+  String get reservationPickDate {
+    return Intl.message(
+      'Choisir',
+      name: 'reservationPickDate',
+      desc: 'M29 — the start day before one is picked.',
+      args: [],
+    );
+  }
+
+  /// `Durée`
+  String get reservationDuration {
+    return Intl.message(
+      'Durée',
+      name: 'reservationDuration',
+      desc: 'M29 — the duration stepper\'s label.',
+      args: [],
+    );
+  }
+
+  /// `Raccourcir`
+  String get reservationDurationLess {
+    return Intl.message(
+      'Raccourcir',
+      name: 'reservationDurationLess',
+      desc: 'M29 — stepper tooltip.',
+      args: [],
+    );
+  }
+
+  /// `Allonger`
+  String get reservationDurationMore {
+    return Intl.message(
+      'Allonger',
+      name: 'reservationDurationMore',
+      desc: 'M29 — stepper tooltip.',
+      args: [],
+    );
+  }
+
+  /// `Sur la durée : {total} · indicatif`
+  String reservationIndicativeTotal(String total) {
+    return Intl.message(
+      'Sur la durée : $total · indicatif',
+      name: 'reservationIndicativeTotal',
+      desc: 'M29 — rent times duration; indicative, nothing is paid here.',
+      args: [total],
+    );
+  }
+
+  /// `Un mot pour le prestataire (facultatif)`
+  String get reservationMessageLabel {
+    return Intl.message(
+      'Un mot pour le prestataire (facultatif)',
+      name: 'reservationMessageLabel',
+      desc: 'M29 — the request\'s optional message.',
+      args: [],
+    );
+  }
+
+  /// `Présente-toi en quelques mots`
+  String get reservationMessageHint {
+    return Intl.message(
+      'Présente-toi en quelques mots',
+      name: 'reservationMessageHint',
+      desc: 'M29 — message hint.',
+      args: [],
+    );
+  }
+
+  /// `Une visite avant de réserver est recommandée. Le prestataire a 48 h pour te répondre.`
+  String get reservationVisitAdvice {
+    return Intl.message(
+      'Une visite avant de réserver est recommandée. Le prestataire a 48 h pour te répondre.',
+      name: 'reservationVisitAdvice',
+      desc: 'RM-M29-02 / RM-M29-05.',
+      args: [],
+    );
+  }
+
+  /// `Envoyer la demande`
+  String get reservationSend {
+    return Intl.message(
+      'Envoyer la demande',
+      name: 'reservationSend',
+      desc: 'M29 — submit.',
+      args: [],
+    );
+  }
+
+  /// `Demande envoyée`
+  String get reservationSentTitle {
+    return Intl.message(
+      'Demande envoyée',
+      name: 'reservationSentTitle',
+      desc: 'M29 — after sending.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire a 48 h pour te répondre.`
+  String get reservationSentBody {
+    return Intl.message(
+      'Le prestataire a 48 h pour te répondre.',
+      name: 'reservationSentBody',
+      desc: 'M29 — after sending.',
+      args: [],
+    );
+  }
+
+  /// `Complète ton profil`
+  String get reservationProfileIncompleteTitle {
+    return Intl.message(
+      'Complète ton profil',
+      name: 'reservationProfileIncompleteTitle',
+      desc: 'CE-M29-02.',
+      args: [],
+    );
+  }
+
+  /// `Ton profil doit être complet pour demander une réservation.`
+  String get reservationProfileIncompleteBody {
+    return Intl.message(
+      'Ton profil doit être complet pour demander une réservation.',
+      name: 'reservationProfileIncompleteBody',
+      desc: 'CE-M29-02 — PROFILE_INCOMPLETE.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien n'est plus réservable.`
+  String get reservationNotReservable {
+    return Intl.message(
+      'Ce bien n\'est plus réservable.',
+      name: 'reservationNotReservable',
+      desc: 'LISTING_NOT_RESERVABLE.',
+      args: [],
+    );
+  }
+
+  /// `Tu as déjà une demande en cours pour ce bien.`
+  String get reservationAlreadyActive {
+    return Intl.message(
+      'Tu as déjà une demande en cours pour ce bien.',
+      name: 'reservationAlreadyActive',
+      desc: 'RESERVATION_ALREADY_ACTIVE.',
+      args: [],
+    );
+  }
+
+  /// `Tu as trop de demandes en attente. Attends une réponse ou annule une demande.`
+  String get reservationLimitReached {
+    return Intl.message(
+      'Tu as trop de demandes en attente. Attends une réponse ou annule une demande.',
+      name: 'reservationLimitReached',
+      desc: 'CE-M29-03 — RESERVATION_LIMIT_REACHED.',
+      args: [],
+    );
+  }
+
+  /// `La date de début ne peut pas être passée.`
+  String get reservationStartPast {
+    return Intl.message(
+      'La date de début ne peut pas être passée.',
+      name: 'reservationStartPast',
+      desc: 'RESERVATION_START_PAST.',
+      args: [],
+    );
+  }
+
+  /// `La date de début doit être dans les 12 prochains mois.`
+  String get reservationStartTooFar {
+    return Intl.message(
+      'La date de début doit être dans les 12 prochains mois.',
+      name: 'reservationStartTooFar',
+      desc: 'RESERVATION_START_TOO_FAR.',
+      args: [],
+    );
+  }
+
+  /// `La demande n'est pas partie. Réessaie.`
+  String get reservationSendFailed {
+    return Intl.message(
+      'La demande n\'est pas partie. Réessaie.',
+      name: 'reservationSendFailed',
+      desc: 'M29 — network or server failure.',
+      args: [],
+    );
+  }
+
+  /// `Réserver`
+  String get listingRequestReservation {
+    return Intl.message(
+      'Réserver',
+      name: 'listingRequestReservation',
+      desc: 'M29 — the fiche\'s main action.',
+      args: [],
+    );
+  }
+
+  /// `Demande envoyée`
+  String get listingReservationSent {
+    return Intl.message(
+      'Demande envoyée',
+      name: 'listingReservationSent',
+      desc: 'M29 — the fiche when the reader has an open request; opens it.',
+      args: [],
+    );
+  }
+
+  /// `Ma demande`
+  String get reservationDetailTitle {
+    return Intl.message(
+      'Ma demande',
+      name: 'reservationDetailTitle',
+      desc: 'M29 — the tenant\'s request screen.',
+      args: [],
+    );
+  }
+
+  /// `En attente de réponse`
+  String get reservationPendingTitle {
+    return Intl.message(
+      'En attente de réponse',
+      name: 'reservationPendingTitle',
+      desc: 'M29 — PENDING card.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire a jusqu'au {date} pour te répondre.`
+  String reservationPendingUntil(String date) {
+    return Intl.message(
+      'Le prestataire a jusqu\'au $date pour te répondre.',
+      name: 'reservationPendingUntil',
+      desc: 'M29 — PENDING card, with expiresAt.',
+      args: [date],
+    );
+  }
+
+  /// `Réservation confirmée`
+  String get reservationConfirmedTitle {
+    return Intl.message(
+      'Réservation confirmée',
+      name: 'reservationConfirmedTitle',
+      desc: 'M29 — ACCEPTED: the ticket-style card.',
+      args: [],
+    );
+  }
+
+  /// `Référence`
+  String get reservationReference {
+    return Intl.message(
+      'Référence',
+      name: 'reservationReference',
+      desc: 'M29 — the request\'s short reference.',
+      args: [],
+    );
+  }
+
+  /// `Réservé jusqu'au`
+  String get reservationReservedUntil {
+    return Intl.message(
+      'Réservé jusqu\'au',
+      name: 'reservationReservedUntil',
+      desc: 'M29 — ACCEPTED: reservedUntil.',
+      args: [],
+    );
+  }
+
+  /// `Prochaine étape`
+  String get reservationNextStep {
+    return Intl.message(
+      'Prochaine étape',
+      name: 'reservationNextStep',
+      desc: 'M29 — ACCEPTED.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire prépare le Contrat Mboa. Tu le reliras et le signeras dans l'app.`
+  String get reservationNextStepBody {
+    return Intl.message(
+      'Le prestataire prépare le Contrat Mboa. Tu le reliras et le signeras dans l\'app.',
+      name: 'reservationNextStepBody',
+      desc: 'M29 — ACCEPTED: what happens next (RM-M08-10).',
+      args: [],
+    );
+  }
+
+  /// `Le Contrat Mboa est signé des deux côtés. Tu le retrouves dans Mes contrats.`
+  String get reservationContractedBody {
+    return Intl.message(
+      'Le Contrat Mboa est signé des deux côtés. Tu le retrouves dans Mes contrats.',
+      name: 'reservationContractedBody',
+      desc: 'M29 — CONTRACTED.',
+      args: [],
+    );
+  }
+
+  /// `Voir mes contrats`
+  String get reservationSeeContracts {
+    return Intl.message(
+      'Voir mes contrats',
+      name: 'reservationSeeContracts',
+      desc: 'M29 — CONTRACTED.',
+      args: [],
+    );
+  }
+
+  /// `Motif : {reason}`
+  String reservationRefusedReason(String reason) {
+    return Intl.message(
+      'Motif : $reason',
+      name: 'reservationRefusedReason',
+      desc: 'M29 — the prestataire\'s reason (RM-M29-06).',
+      args: [reason],
+    );
+  }
+
+  /// `Bien déjà réservé`
+  String get reservationRefusalReservedElsewhere {
+    return Intl.message(
+      'Bien déjà réservé',
+      name: 'reservationRefusalReservedElsewhere',
+      desc: 'RESERVED_ELSEWHERE.',
+      args: [],
+    );
+  }
+
+  /// `Profil non retenu`
+  String get reservationRefusalProfileNotRetained {
+    return Intl.message(
+      'Profil non retenu',
+      name: 'reservationRefusalProfileNotRetained',
+      desc: 'PROFILE_NOT_RETAINED.',
+      args: [],
+    );
+  }
+
+  /// `Dates incompatibles`
+  String get reservationRefusalDatesIncompatible {
+    return Intl.message(
+      'Dates incompatibles',
+      name: 'reservationRefusalDatesIncompatible',
+      desc: 'DATES_INCOMPATIBLE.',
+      args: [],
+    );
+  }
+
+  /// `Autre motif`
+  String get reservationRefusalOther {
+    return Intl.message(
+      'Autre motif',
+      name: 'reservationRefusalOther',
+      desc: 'OTHER.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire n'a pas donné suite à ta demande.`
+  String get reservationRefusedBody {
+    return Intl.message(
+      'Le prestataire n\'a pas donné suite à ta demande.',
+      name: 'reservationRefusedBody',
+      desc: 'M29 — REFUSED.',
+      args: [],
+    );
+  }
+
+  /// `Un autre dossier a été retenu pour ce bien.`
+  String get reservationNotRetainedBody {
+    return Intl.message(
+      'Un autre dossier a été retenu pour ce bien.',
+      name: 'reservationNotRetainedBody',
+      desc: 'M29 — NOT_RETAINED.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire n'a pas répondu dans les 48 h : ta demande est close.`
+  String get reservationExpiredBody {
+    return Intl.message(
+      'Le prestataire n\'a pas répondu dans les 48 h : ta demande est close.',
+      name: 'reservationExpiredBody',
+      desc: 'M29 — EXPIRED.',
+      args: [],
+    );
+  }
+
+  /// `Tu as annulé cette demande.`
+  String get reservationCancelledByYou {
+    return Intl.message(
+      'Tu as annulé cette demande.',
+      name: 'reservationCancelledByYou',
+      desc: 'M29 — CANCELLED by the client.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire a annulé la réservation.`
+  String get reservationCancelledByProvider {
+    return Intl.message(
+      'Le prestataire a annulé la réservation.',
+      name: 'reservationCancelledByProvider',
+      desc: 'M29 — CANCELLED by the prestataire.',
+      args: [],
+    );
+  }
+
+  /// `Le bien a quitté le marché : la réservation est close.`
+  String get reservationCancelledBySystem {
+    return Intl.message(
+      'Le bien a quitté le marché : la réservation est close.',
+      name: 'reservationCancelledBySystem',
+      desc: 'CE-M29-04 — CANCELLED by the system.',
+      args: [],
+    );
+  }
+
+  /// `Le délai de réservation est passé sans contrat signé.`
+  String get reservationLapsedBody {
+    return Intl.message(
+      'Le délai de réservation est passé sans contrat signé.',
+      name: 'reservationLapsedBody',
+      desc: 'RM-M29-07 — LAPSED.',
+      args: [],
+    );
+  }
+
+  /// `Mot du prestataire`
+  String get reservationProviderNote {
+    return Intl.message(
+      'Mot du prestataire',
+      name: 'reservationProviderNote',
+      desc: 'M29 — ownerNote.',
+      args: [],
+    );
+  }
+
+  /// `Ton séjour`
+  String get reservationYourStay {
+    return Intl.message(
+      'Ton séjour',
+      name: 'reservationYourStay',
+      desc: 'M29 — the request\'s dates.',
+      args: [],
+    );
+  }
+
+  /// `Ton message`
+  String get reservationYourMessage {
+    return Intl.message(
+      'Ton message',
+      name: 'reservationYourMessage',
+      desc: 'M29 — the request\'s message.',
+      args: [],
+    );
+  }
+
+  /// `Écrire au prestataire`
+  String get reservationWriteProvider {
+    return Intl.message(
+      'Écrire au prestataire',
+      name: 'reservationWriteProvider',
+      desc: 'RM-M29-14 — the thread the request opened.',
+      args: [],
+    );
+  }
+
+  /// `Voir le bien`
+  String get reservationSeeListing {
+    return Intl.message(
+      'Voir le bien',
+      name: 'reservationSeeListing',
+      desc: 'M29 — back to the fiche.',
+      args: [],
+    );
+  }
+
+  /// `Annuler ma demande`
+  String get reservationCancel {
+    return Intl.message(
+      'Annuler ma demande',
+      name: 'reservationCancel',
+      desc: 'M29 — the client withdraws.',
+      args: [],
+    );
+  }
+
+  /// `Annuler ta demande ?`
+  String get reservationCancelConfirmTitle {
+    return Intl.message(
+      'Annuler ta demande ?',
+      name: 'reservationCancelConfirmTitle',
+      desc: 'M29 — confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `Le prestataire en sera informé et le bien sera libéré.`
+  String get reservationCancelConfirmBody {
+    return Intl.message(
+      'Le prestataire en sera informé et le bien sera libéré.',
+      name: 'reservationCancelConfirmBody',
+      desc: 'M29 — confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `Oui, annuler`
+  String get reservationCancelConfirm {
+    return Intl.message(
+      'Oui, annuler',
+      name: 'reservationCancelConfirm',
+      desc: 'M29 — confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `Garder ma demande`
+  String get reservationKeep {
+    return Intl.message(
+      'Garder ma demande',
+      name: 'reservationKeep',
+      desc: 'M29 — confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `Demande annulée`
+  String get reservationCancelDone {
+    return Intl.message(
+      'Demande annulée',
+      name: 'reservationCancelDone',
+      desc: 'M29 — after cancelling.',
+      args: [],
+    );
+  }
+
+  /// `L'annulation n'a pas abouti. Réessaie.`
+  String get reservationCancelFailed {
+    return Intl.message(
+      'L\'annulation n\'a pas abouti. Réessaie.',
+      name: 'reservationCancelFailed',
+      desc: 'M29 — cancel failed.',
+      args: [],
+    );
+  }
+
+  /// `Bien`
+  String get reservationUntitled {
+    return Intl.message(
+      'Bien',
+      name: 'reservationUntitled',
+      desc: 'M29 — a request whose listing title is unknown.',
+      args: [],
+    );
+  }
+
+  /// `Mes demandes de réservation`
+  String get reservationsTitle {
+    return Intl.message(
+      'Mes demandes de réservation',
+      name: 'reservationsTitle',
+      desc: 'M29 — the list, and its Compte tile.',
+      args: [],
+    );
+  }
+
+  /// `Aucune demande`
+  String get reservationsEmptyTitle {
+    return Intl.message(
+      'Aucune demande',
+      name: 'reservationsEmptyTitle',
+      desc: 'M29 — empty list.',
+      args: [],
+    );
+  }
+
+  /// `Depuis la fiche d'un bien, demande à le réserver : le prestataire te répond sous 48 h.`
+  String get reservationsEmptyBody {
+    return Intl.message(
+      'Depuis la fiche d\'un bien, demande à le réserver : le prestataire te répond sous 48 h.',
+      name: 'reservationsEmptyBody',
+      desc: 'M29 — empty list.',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : voici tes demandes telles qu'à ta dernière connexion.`
+  String get reservationsOffline {
+    return Intl.message(
+      'Hors ligne : voici tes demandes telles qu\'à ta dernière connexion.',
+      name: 'reservationsOffline',
+      desc: 'M29 — cached list.',
+      args: [],
+    );
+  }
+
+  /// `Dès le {start} · {duration}`
+  String reservationRowStay(String start, String duration) {
+    return Intl.message(
+      'Dès le $start · $duration',
+      name: 'reservationRowStay',
+      desc: 'M29 — a list row\'s stay.',
+      args: [start, duration],
+    );
+  }
+
+  /// `Plus d'actions`
+  String get listingMoreActions {
+    return Intl.message(
+      'Plus d\'actions',
+      name: 'listingMoreActions',
+      desc: 'The fiche\'s ⋯ button: contact, plan a visit, report.',
+      args: [],
+    );
+  }
+
+  /// `Mes réservations`
+  String get reservationsTile {
+    return Intl.message(
+      'Mes réservations',
+      name: 'reservationsTile',
+      desc: 'M29 — the Compte tile; short so it holds one line.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

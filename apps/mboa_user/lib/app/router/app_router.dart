@@ -97,6 +97,12 @@ class AppRouter extends RootStackRouter {
               path: 'contracts/:contractId/review',
             ),
 
+            // M29 — asking to reserve, and following the request. The form
+            // carries the fiche's listing, so it has no deep link of its own.
+            AutoRoute(page: RequestReservationRoute.page, path: 'reservations/new'),
+            AutoRoute(page: MyReservationsRoute.page, path: 'reservations'),
+            AutoRoute(page: ReservationDetailRoute.page, path: 'reservations/:id'),
+
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),

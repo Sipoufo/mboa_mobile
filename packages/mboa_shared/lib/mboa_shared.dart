@@ -75,6 +75,7 @@ export 'src/features/session/session_module.dart';
 
 // Settings / account — language, deletion (phone & password changes to follow).
 export 'src/features/reservations/models/reservation.dart';
+export 'src/features/reservations/ui/reservation_bits.dart';
 export 'src/features/score/bloc/mboa_score_bloc.dart';
 export 'src/features/score/data/mboa_score_repository.dart';
 export 'src/features/score/models/mboa_score.dart';

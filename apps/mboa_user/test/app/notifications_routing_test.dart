@@ -50,6 +50,20 @@ void main() {
     expect((child.args! as VisitDetailRouteArgs).visitId, 'v-1');
   });
 
+  test('N-33 / N-34 open the reservation request', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.reservation, entityId: 'r-1'));
+
+    final child = pushed().initialChildren!.single;
+    expect(child.routeName, ReservationDetailRoute.name);
+    expect((child.args! as ReservationDetailRouteArgs).id, 'r-1');
+  });
+
+  test('a reservation push without an id opens the list', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.reservation));
+
+    expect(pushed().initialChildren!.single.routeName, MyReservationsRoute.name);
+  });
+
   test('a type this build does not know lands on the shell', () {
     routeNotificationTap(router, const PushMessage(type: PushType.unknown));
 

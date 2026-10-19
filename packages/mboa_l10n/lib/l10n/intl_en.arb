@@ -3631,5 +3631,340 @@
   "reportReasonAskedForMoney": "Asked for money before the contract was signed",
   "@reportReasonAskedForMoney": {
     "description": "RM-M29-09 \u2014 ASKED_FOR_MONEY."
+  },
+  "reservationStatusPending": "Pending",
+  "@reservationStatusPending": {
+    "description": "M29 — PENDING: the prestataire has 48 h to answer."
+  },
+  "reservationStatusAccepted": "Reserved",
+  "@reservationStatusAccepted": {
+    "description": "M29 — ACCEPTED: the listing is held for the client."
+  },
+  "reservationStatusContracted": "Contract signed",
+  "@reservationStatusContracted": {
+    "description": "M29 — CONTRACTED: its contract was signed by both."
+  },
+  "reservationStatusRefused": "Declined",
+  "@reservationStatusRefused": {
+    "description": "M29 — REFUSED."
+  },
+  "reservationStatusNotRetained": "Not selected",
+  "@reservationStatusNotRetained": {
+    "description": "M29 — NOT_RETAINED: another request was accepted (RM-M29-04)."
+  },
+  "reservationStatusExpired": "No answer",
+  "@reservationStatusExpired": {
+    "description": "M29 — EXPIRED: unanswered after 48 h."
+  },
+  "reservationStatusCancelled": "Cancelled",
+  "@reservationStatusCancelled": {
+    "description": "M29 — CANCELLED."
+  },
+  "reservationStatusLapsed": "Lapsed",
+  "@reservationStatusLapsed": {
+    "description": "M29 — LAPSED: the reservation ran out with no signed contract (RM-M29-07)."
+  },
+  "reservationStatusUnknown": "Unknown status",
+  "@reservationStatusUnknown": {
+    "description": "M29 — a status this build predates."
+  },
+  "reservationNoMoney": "Don't hand over any money before signing the Mboa Contract in the app. Reserving is free.",
+  "@reservationNoMoney": {
+    "description": "RM-M29-09 / CA-M29-04 — nothing is paid through a reservation."
+  },
+  "reservationTitle": "Reservation",
+  "@reservationTitle": {
+    "description": "M29 — the request screen's title."
+  },
+  "reservationStayTitle": "Length of stay",
+  "@reservationStayTitle": {
+    "description": "M29 — step 2 of the request."
+  },
+  "reservationRentTitle": "Rent",
+  "@reservationRentTitle": {
+    "description": "M29 — step 3 of the request; never \"payment\" (RM-M29-09)."
+  },
+  "reservationStart": "Start",
+  "@reservationStart": {
+    "description": "M29 — move-in day."
+  },
+  "reservationEnd": "End",
+  "@reservationEnd": {
+    "description": "M29 — the stay's last day, computed."
+  },
+  "reservationPickDate": "Choose",
+  "@reservationPickDate": {
+    "description": "M29 — the start day before one is picked."
+  },
+  "reservationDuration": "Duration",
+  "@reservationDuration": {
+    "description": "M29 — the duration stepper's label."
+  },
+  "reservationDurationLess": "Shorten",
+  "@reservationDurationLess": {
+    "description": "M29 — stepper tooltip."
+  },
+  "reservationDurationMore": "Lengthen",
+  "@reservationDurationMore": {
+    "description": "M29 — stepper tooltip."
+  },
+  "reservationIndicativeTotal": "Over the stay: {total} · indicative",
+  "@reservationIndicativeTotal": {
+    "description": "M29 — rent times duration; indicative, nothing is paid here.",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationMessageLabel": "A note for the provider (optional)",
+  "@reservationMessageLabel": {
+    "description": "M29 — the request's optional message."
+  },
+  "reservationMessageHint": "Introduce yourself in a few words",
+  "@reservationMessageHint": {
+    "description": "M29 — message hint."
+  },
+  "reservationVisitAdvice": "Visiting before you reserve is recommended. The provider has 48 hours to answer.",
+  "@reservationVisitAdvice": {
+    "description": "RM-M29-02 / RM-M29-05."
+  },
+  "reservationSend": "Send the request",
+  "@reservationSend": {
+    "description": "M29 — submit."
+  },
+  "reservationSentTitle": "Request sent",
+  "@reservationSentTitle": {
+    "description": "M29 — after sending."
+  },
+  "reservationSentBody": "The provider has 48 hours to answer.",
+  "@reservationSentBody": {
+    "description": "M29 — after sending."
+  },
+  "reservationProfileIncompleteTitle": "Complete your profile",
+  "@reservationProfileIncompleteTitle": {
+    "description": "CE-M29-02."
+  },
+  "reservationProfileIncompleteBody": "Your profile must be complete to request a reservation.",
+  "@reservationProfileIncompleteBody": {
+    "description": "CE-M29-02 — PROFILE_INCOMPLETE."
+  },
+  "reservationNotReservable": "This property can no longer be reserved.",
+  "@reservationNotReservable": {
+    "description": "LISTING_NOT_RESERVABLE."
+  },
+  "reservationAlreadyActive": "You already have an open request for this property.",
+  "@reservationAlreadyActive": {
+    "description": "RESERVATION_ALREADY_ACTIVE."
+  },
+  "reservationLimitReached": "You have too many requests waiting. Wait for an answer or cancel one.",
+  "@reservationLimitReached": {
+    "description": "CE-M29-03 — RESERVATION_LIMIT_REACHED."
+  },
+  "reservationStartPast": "The start date can't be in the past.",
+  "@reservationStartPast": {
+    "description": "RESERVATION_START_PAST."
+  },
+  "reservationStartTooFar": "The start date must be within the next 12 months.",
+  "@reservationStartTooFar": {
+    "description": "RESERVATION_START_TOO_FAR."
+  },
+  "reservationSendFailed": "The request didn't go through. Try again.",
+  "@reservationSendFailed": {
+    "description": "M29 — network or server failure."
+  },
+  "listingRequestReservation": "Reserve",
+  "@listingRequestReservation": {
+    "description": "M29 — the fiche's main action."
+  },
+  "listingReservationSent": "Request sent",
+  "@listingReservationSent": {
+    "description": "M29 — the fiche when the reader has an open request; opens it."
+  },
+  "reservationDetailTitle": "My request",
+  "@reservationDetailTitle": {
+    "description": "M29 — the tenant's request screen."
+  },
+  "reservationPendingTitle": "Awaiting an answer",
+  "@reservationPendingTitle": {
+    "description": "M29 — PENDING card."
+  },
+  "reservationPendingUntil": "The provider has until {date} to answer.",
+  "@reservationPendingUntil": {
+    "description": "M29 — PENDING card, with expiresAt.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationConfirmedTitle": "Reservation confirmed",
+  "@reservationConfirmedTitle": {
+    "description": "M29 — ACCEPTED: the ticket-style card."
+  },
+  "reservationReference": "Reference",
+  "@reservationReference": {
+    "description": "M29 — the request's short reference."
+  },
+  "reservationReservedUntil": "Reserved until",
+  "@reservationReservedUntil": {
+    "description": "M29 — ACCEPTED: reservedUntil."
+  },
+  "reservationNextStep": "Next step",
+  "@reservationNextStep": {
+    "description": "M29 — ACCEPTED."
+  },
+  "reservationNextStepBody": "The provider is drawing up the Mboa Contract. You'll read and sign it in the app.",
+  "@reservationNextStepBody": {
+    "description": "M29 — ACCEPTED: what happens next (RM-M08-10)."
+  },
+  "reservationContractedBody": "The Mboa Contract is signed by both sides. You'll find it in My contracts.",
+  "@reservationContractedBody": {
+    "description": "M29 — CONTRACTED."
+  },
+  "reservationSeeContracts": "See my contracts",
+  "@reservationSeeContracts": {
+    "description": "M29 — CONTRACTED."
+  },
+  "reservationRefusedReason": "Reason: {reason}",
+  "@reservationRefusedReason": {
+    "description": "M29 — the prestataire's reason (RM-M29-06).",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "reservationRefusalReservedElsewhere": "Already reserved",
+  "@reservationRefusalReservedElsewhere": {
+    "description": "RESERVED_ELSEWHERE."
+  },
+  "reservationRefusalProfileNotRetained": "Profile not selected",
+  "@reservationRefusalProfileNotRetained": {
+    "description": "PROFILE_NOT_RETAINED."
+  },
+  "reservationRefusalDatesIncompatible": "Dates don't work",
+  "@reservationRefusalDatesIncompatible": {
+    "description": "DATES_INCOMPATIBLE."
+  },
+  "reservationRefusalOther": "Other reason",
+  "@reservationRefusalOther": {
+    "description": "OTHER."
+  },
+  "reservationRefusedBody": "The provider declined your request.",
+  "@reservationRefusedBody": {
+    "description": "M29 — REFUSED."
+  },
+  "reservationNotRetainedBody": "Another request was chosen for this property.",
+  "@reservationNotRetainedBody": {
+    "description": "M29 — NOT_RETAINED."
+  },
+  "reservationExpiredBody": "The provider didn't answer within 48 hours: your request is closed.",
+  "@reservationExpiredBody": {
+    "description": "M29 — EXPIRED."
+  },
+  "reservationCancelledByYou": "You cancelled this request.",
+  "@reservationCancelledByYou": {
+    "description": "M29 — CANCELLED by the client."
+  },
+  "reservationCancelledByProvider": "The provider cancelled the reservation.",
+  "@reservationCancelledByProvider": {
+    "description": "M29 — CANCELLED by the prestataire."
+  },
+  "reservationCancelledBySystem": "The property left the market: the reservation is closed.",
+  "@reservationCancelledBySystem": {
+    "description": "CE-M29-04 — CANCELLED by the system."
+  },
+  "reservationLapsedBody": "The reservation ran out with no signed contract.",
+  "@reservationLapsedBody": {
+    "description": "RM-M29-07 — LAPSED."
+  },
+  "reservationProviderNote": "From the provider",
+  "@reservationProviderNote": {
+    "description": "M29 — ownerNote."
+  },
+  "reservationYourStay": "Your stay",
+  "@reservationYourStay": {
+    "description": "M29 — the request's dates."
+  },
+  "reservationYourMessage": "Your message",
+  "@reservationYourMessage": {
+    "description": "M29 — the request's message."
+  },
+  "reservationWriteProvider": "Message the provider",
+  "@reservationWriteProvider": {
+    "description": "RM-M29-14 — the thread the request opened."
+  },
+  "reservationSeeListing": "See the property",
+  "@reservationSeeListing": {
+    "description": "M29 — back to the fiche."
+  },
+  "reservationCancel": "Cancel my request",
+  "@reservationCancel": {
+    "description": "M29 — the client withdraws."
+  },
+  "reservationCancelConfirmTitle": "Cancel your request?",
+  "@reservationCancelConfirmTitle": {
+    "description": "M29 — confirm dialog."
+  },
+  "reservationCancelConfirmBody": "The provider will be told and the property released.",
+  "@reservationCancelConfirmBody": {
+    "description": "M29 — confirm dialog."
+  },
+  "reservationCancelConfirm": "Yes, cancel",
+  "@reservationCancelConfirm": {
+    "description": "M29 — confirm dialog."
+  },
+  "reservationKeep": "Keep my request",
+  "@reservationKeep": {
+    "description": "M29 — confirm dialog."
+  },
+  "reservationCancelDone": "Request cancelled",
+  "@reservationCancelDone": {
+    "description": "M29 — after cancelling."
+  },
+  "reservationCancelFailed": "Cancelling didn't go through. Try again.",
+  "@reservationCancelFailed": {
+    "description": "M29 — cancel failed."
+  },
+  "reservationUntitled": "Property",
+  "@reservationUntitled": {
+    "description": "M29 — a request whose listing title is unknown."
+  },
+  "reservationsTitle": "My reservation requests",
+  "@reservationsTitle": {
+    "description": "M29 — the list, and its Compte tile."
+  },
+  "reservationsEmptyTitle": "No requests yet",
+  "@reservationsEmptyTitle": {
+    "description": "M29 — empty list."
+  },
+  "reservationsEmptyBody": "From a property's page, ask to reserve it: the provider answers within 48 hours.",
+  "@reservationsEmptyBody": {
+    "description": "M29 — empty list."
+  },
+  "reservationsOffline": "Offline: here are your requests as of your last connection.",
+  "@reservationsOffline": {
+    "description": "M29 — cached list."
+  },
+  "reservationRowStay": "From {start} · {duration}",
+  "@reservationRowStay": {
+    "description": "M29 — a list row's stay.",
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "listingMoreActions": "More actions",
+  "@listingMoreActions": {
+    "description": "The fiche's ⋯ button: contact, plan a visit, report."
+  },
+  "reservationsTile": "My reservations",
+  "@reservationsTile": {
+    "description": "M29 — the Compte tile; short so it holds one line."
   }
 }
