@@ -168,7 +168,7 @@ class _$CreateInvoiceRequest extends CreateInvoiceRequest {
   @override
   final Date dueDate;
   @override
-  final CreateInvoiceRequestSettlementEnum settlement;
+  final CreateInvoiceRequestSettlementEnum? settlement;
 
   factory _$CreateInvoiceRequest([
     void Function(CreateInvoiceRequestBuilder)? updates,
@@ -180,7 +180,7 @@ class _$CreateInvoiceRequest extends CreateInvoiceRequest {
     this.label,
     required this.amount,
     required this.dueDate,
-    required this.settlement,
+    this.settlement,
   }) : super._();
   @override
   CreateInvoiceRequest rebuild(
@@ -314,11 +314,7 @@ class CreateInvoiceRequestBuilder
             r'CreateInvoiceRequest',
             'dueDate',
           ),
-          settlement: BuiltValueNullFieldError.checkNotNull(
-            settlement,
-            r'CreateInvoiceRequest',
-            'settlement',
-          ),
+          settlement: settlement,
         );
     replace(_$result);
     return _$result;

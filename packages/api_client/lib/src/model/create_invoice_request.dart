@@ -38,7 +38,7 @@ abstract class CreateInvoiceRequest implements Built<CreateInvoiceRequest, Creat
   Date get dueDate;
 
   @BuiltValueField(wireName: r'settlement')
-  CreateInvoiceRequestSettlementEnum get settlement;
+  CreateInvoiceRequestSettlementEnum? get settlement;
   // enum settlementEnum {  IN_APP,  MANUAL,  };
 
   CreateInvoiceRequest._();
@@ -91,11 +91,13 @@ class _$CreateInvoiceRequestSerializer implements PrimitiveSerializer<CreateInvo
       object.dueDate,
       specifiedType: const FullType(Date),
     );
-    yield r'settlement';
-    yield serializers.serialize(
-      object.settlement,
-      specifiedType: const FullType(CreateInvoiceRequestSettlementEnum),
-    );
+    if (object.settlement != null) {
+      yield r'settlement';
+      yield serializers.serialize(
+        object.settlement,
+        specifiedType: const FullType(CreateInvoiceRequestSettlementEnum),
+      );
+    }
   }
 
   @override
@@ -158,8 +160,9 @@ class _$CreateInvoiceRequestSerializer implements PrimitiveSerializer<CreateInvo
         case r'settlement':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(CreateInvoiceRequestSettlementEnum),
-          ) as CreateInvoiceRequestSettlementEnum;
+            specifiedType: const FullType.nullable(CreateInvoiceRequestSettlementEnum),
+          ) as CreateInvoiceRequestSettlementEnum?;
+          if (valueDes == null) continue;
           result.settlement = valueDes;
           break;
         default:

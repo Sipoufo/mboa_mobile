@@ -21,7 +21,7 @@ void main() {
       // TODO
     });
 
-    // Pay an invoice in the app — same flow as a subscription payment (RM-M24-04)
+    // Pay an invoice in the app (RM-M24-04) — 409 INVOICE_IN_APP_DISABLED while that is shut, as at the MVP
     //
     //Future<PaymentInitiatedResponse> payInvoice(String id, PayInvoiceRequest payInvoiceRequest, { String idempotencyKey }) async
     test('test payInvoice', () async {

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getMyInvoice**](InvoicesTenantApi.md#getmyinvoice) | **GET** /api/v1/invoices/{id} | One of my invoices
 [**listMyInvoices**](InvoicesTenantApi.md#listmyinvoices) | **GET** /api/v1/invoices | My invoices, current and past, latest due first (RM-M24-06)
-[**payInvoice**](InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app — same flow as a subscription payment (RM-M24-04)
+[**payInvoice**](InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app (RM-M24-04) — 409 INVOICE_IN_APP_DISABLED while that is shut, as at the MVP
 
 
 # **getMyInvoice**
@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 # **payInvoice**
 > PaymentInitiatedResponse payInvoice(id, payInvoiceRequest, idempotencyKey)
 
-Pay an invoice in the app — same flow as a subscription payment (RM-M24-04)
+Pay an invoice in the app (RM-M24-04) — 409 INVOICE_IN_APP_DISABLED while that is shut, as at the MVP
 
 ### Example
 ```dart

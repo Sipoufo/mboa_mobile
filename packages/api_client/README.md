@@ -232,7 +232,7 @@ Class | Method | HTTP request | Description
 [*HistoriqueApi*](doc/HistoriqueApi.md) | [**listMyHistorique**](doc/HistoriqueApi.md#listmyhistorique) | **GET** /api/v1/historique | The 30 most recently consulted listings, newest first
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**getMyInvoice**](doc/InvoicesTenantApi.md#getmyinvoice) | **GET** /api/v1/invoices/{id} | One of my invoices
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**listMyInvoices**](doc/InvoicesTenantApi.md#listmyinvoices) | **GET** /api/v1/invoices | My invoices, current and past, latest due first (RM-M24-06)
-[*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**payInvoice**](doc/InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app — same flow as a subscription payment (RM-M24-04)
+[*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**payInvoice**](doc/InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app (RM-M24-04) — 409 INVOICE_IN_APP_DISABLED while that is shut, as at the MVP
 [*KYCApi*](doc/KYCApi.md) | [**getMyKycStatus**](doc/KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
 [*KYCApi*](doc/KYCApi.md) | [**submitKyc**](doc/KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
 [*LocationsApi*](doc/LocationsApi.md) | [**listCities**](doc/LocationsApi.md#listcities) | **GET** /api/v1/locations/cities | List cities (optionally filtered by region)
