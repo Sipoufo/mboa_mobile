@@ -4402,5 +4402,38 @@
   "contractTerminationClosed": "La résiliation a changé entre-temps : voici où elle en est.",
   "@contractTerminationClosed": {
     "description": "TERMINATION_FINAL, NO_PENDING_TERMINATION…"
+  },
+  "annonceActionUnreserve": "Lever la réservation",
+  "@annonceActionUnreserve": {
+    "description": "RM-M10-10 — a reservation set by hand."
+  },
+  "annonceReservedByRequestTitle": "Réservée pour un client",
+  "@annonceReservedByRequestTitle": {
+    "description": "M29 — held by an accepted request."
+  },
+  "annonceReservedByRequestUntil": "Jusqu'au {date}, le temps d'établir le Contrat Mboa. Cette réservation s'annule depuis la demande.",
+  "@annonceReservedByRequestUntil": {
+    "description": "M29 — reservedUntil.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceReservedByRequestBody": "Une demande acceptée réserve ce bien : gère la réservation depuis la demande.",
+  "@annonceReservedByRequestBody": {
+    "description": "RESERVATION_FROM_REQUEST."
+  },
+  "annonceSeeRequest": "Voir la demande",
+  "@annonceSeeRequest": {
+    "description": "M29 — open the holding request."
+  },
+  "annonceReservedManualTitle": "Réservée",
+  "@annonceReservedManualTitle": {
+    "description": "RM-M10-10 — set by hand."
+  },
+  "annonceReservedManualBody": "Tu as réservé ce bien toi-même. Lève la réservation pour le remettre en ligne.",
+  "@annonceReservedManualBody": {
+    "description": "RM-M10-10."
   }
 }

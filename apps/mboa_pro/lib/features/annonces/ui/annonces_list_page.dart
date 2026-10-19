@@ -49,11 +49,13 @@ class _AnnoncesListPageState extends State<AnnoncesListPage> {
       ),
       body: BlocConsumer<AnnoncesBloc, AnnoncesState>(
         listenWhen: (prev, curr) =>
-            curr is AnnoncesReady && curr.lastActionFailed,
+            curr is AnnoncesReady && (curr.lastActionFailed || curr.heldByRequest),
         listener: (context, state) => MboaToast.error(
           context: context,
           title: l10n.commonErrorTitle,
-          description: l10n.annonceActionFailed,
+          description: (state as AnnoncesReady).heldByRequest
+              ? l10n.annonceReservedByRequestBody
+              : l10n.annonceActionFailed,
         ),
         builder: (context, state) => switch (state) {
           AnnoncesInitial() || AnnoncesLoadInProgress() =>

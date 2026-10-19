@@ -25,6 +25,7 @@ final class AnnoncesReady extends AnnoncesState {
     required this.filter,
     this.mutatingId,
     this.lastActionFailed = false,
+    this.heldByRequest = false,
   });
 
   /// Every listing, unfiltered — [visible] applies the tab.
@@ -37,6 +38,10 @@ final class AnnoncesReady extends AnnoncesState {
 
   /// Set for one emission after a failed transition/delete, for a toast.
   final bool lastActionFailed;
+
+  /// Set for one emission when a reservation could not be lifted because a
+  /// client's accepted request holds it (`RESERVATION_FROM_REQUEST`).
+  final bool heldByRequest;
 
   /// Standalone listings only — `items` may also hold a residence unit fetched
   /// for its detail screen, and those belong to the residence, not this list.
@@ -60,14 +65,16 @@ final class AnnoncesReady extends AnnoncesState {
     String? mutatingId,
     bool clearMutating = false,
     bool lastActionFailed = false,
+    bool heldByRequest = false,
   }) =>
       AnnoncesReady(
         items: items ?? this.items,
         filter: filter ?? this.filter,
         mutatingId: clearMutating ? null : (mutatingId ?? this.mutatingId),
         lastActionFailed: lastActionFailed,
+        heldByRequest: heldByRequest,
       );
 
   @override
-  List<Object?> get props => [items, filter, mutatingId, lastActionFailed];
+  List<Object?> get props => [items, filter, mutatingId, lastActionFailed, heldByRequest];
 }

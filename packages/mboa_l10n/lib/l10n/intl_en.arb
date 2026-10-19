@@ -4402,5 +4402,38 @@
   "contractTerminationClosed": "The termination changed meanwhile: here is where it stands.",
   "@contractTerminationClosed": {
     "description": "TERMINATION_FINAL, NO_PENDING_TERMINATION…"
+  },
+  "annonceActionUnreserve": "Lift the reservation",
+  "@annonceActionUnreserve": {
+    "description": "RM-M10-10 — a reservation set by hand."
+  },
+  "annonceReservedByRequestTitle": "Reserved for a client",
+  "@annonceReservedByRequestTitle": {
+    "description": "M29 — held by an accepted request."
+  },
+  "annonceReservedByRequestUntil": "Until {date}, while the Mboa Contract is drawn up. This reservation is cancelled from the request.",
+  "@annonceReservedByRequestUntil": {
+    "description": "M29 — reservedUntil.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceReservedByRequestBody": "An accepted request holds this property: manage the reservation from the request.",
+  "@annonceReservedByRequestBody": {
+    "description": "RESERVATION_FROM_REQUEST."
+  },
+  "annonceSeeRequest": "See the request",
+  "@annonceSeeRequest": {
+    "description": "M29 — open the holding request."
+  },
+  "annonceReservedManualTitle": "Reserved",
+  "@annonceReservedManualTitle": {
+    "description": "RM-M10-10 — set by hand."
+  },
+  "annonceReservedManualBody": "You reserved this property yourself. Lift the reservation to put it back online.",
+  "@annonceReservedManualBody": {
+    "description": "RM-M10-10."
   }
 }

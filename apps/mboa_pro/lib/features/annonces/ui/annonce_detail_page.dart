@@ -11,6 +11,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../../assignments/models/assignment.dart';
 import '../bloc/annonces_bloc.dart';
 import '../models/annonce.dart';
+import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';
 import 'widgets/lifecycle_notice.dart';
 import 'widgets/status_actions_menu.dart';
@@ -60,6 +61,7 @@ class _AnnonceDetailPageState extends State<AnnonceDetailPage> {
               if (annonce != null && state is AnnoncesReady)
                 StatusActionsMenu(
                   status: annonce.status,
+                  reservedByRequest: annonce.isReservedByRequest,
                   photoCount: annonce.photoKeys.length,
                   activeCount: state.activeCount,
                   enabled: state.mutatingId != annonce.id,
@@ -111,6 +113,11 @@ class _Body extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: _Tag(label: l10n.annonceDetailUnitOfResidence),
           ),
+        ],
+        // M29 / RM-M10-10 — reserved: for whom, until when, and the way out.
+        if (annonce.status == AnnonceStatus.reserved) ...[
+          const SizedBox(height: Dimens.spacing),
+          _ReservedNotice(annonce: annonce, isBusy: isBusy),
         ],
         ...switch (LifecycleNotice.of(annonce)) {
           final notice? => [
@@ -492,6 +499,80 @@ class _ContractCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Reserved by a client's accepted request — until when, and the request
+/// it is managed from — or by hand, with the way to lift it.
+class _ReservedNotice extends StatelessWidget {
+  const _ReservedNotice({required this.annonce, this.isBusy = false});
+
+  final Annonce annonce;
+  final bool isBusy;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final requestId = annonce.reservationRequestId;
+    final until = annonce.reservedUntil;
+
+    final (title, body, action) = requestId != null
+        ? (
+            l10n.annonceReservedByRequestTitle,
+            until == null
+                ? l10n.annonceReservedByRequestBody
+                : l10n.annonceReservedByRequestUntil(DateFormat.yMMMMd(locale).format(until)),
+            Button.outline(
+              title: l10n.annonceSeeRequest,
+              onPressed: () => context.router.push(IncomingReservationRoute(id: requestId)),
+            ),
+          )
+        : (
+            l10n.annonceReservedManualTitle,
+            l10n.annonceReservedManualBody,
+            Button.outline(
+              title: l10n.annonceActionUnreserve,
+              isLoading: isBusy,
+              onPressed: () => context.read<AnnoncesBloc>().add(
+                    AnnonceStatusChangeRequested(annonce.id, AnnonceTransition.unreserve),
+                  ),
+            ),
+          );
+
+    return Container(
+      padding: const EdgeInsets.all(Dimens.spacing),
+      decoration: BoxDecoration(
+        color: colors.primaryPale,
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
+        border: Border.all(color: colors.primary.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(LucideIcons.ticketCheck, size: Dimens.iconSm, color: colors.primary),
+              const SizedBox(width: Dimens.spacingSm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: context.mboaText.label.copyWith(color: colors.ink)),
+                    const SizedBox(height: Dimens.spacingXs),
+                    Text(body, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: Dimens.spacingMd),
+          action,
+        ],
       ),
     );
   }

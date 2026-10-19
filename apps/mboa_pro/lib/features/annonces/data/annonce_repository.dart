@@ -134,6 +134,7 @@ class AnnonceRepository {
     final response = await switch (transition) {
       AnnonceTransition.publish => _api.publishAnnonce(id: id),
       AnnonceTransition.reserve => _api.reserveAnnonce(id: id),
+      AnnonceTransition.unreserve => _api.unreserveAnnonce(id: id),
       AnnonceTransition.markRented => _api.markAnnonceRented(id: id),
       AnnonceTransition.archive => _api.archiveAnnonce(id: id),
       // Not `publish`: that rejects anything but DRAFT with 409. Unarchive

@@ -75,6 +75,7 @@ class AnnonceCard extends StatelessWidget {
                     Expanded(child: _Summary(annonce: annonce)),
                     StatusActionsMenu(
                       status: annonce.status,
+                      reservedByRequest: annonce.isReservedByRequest,
                       photoCount: annonce.photoKeys.length,
                       activeCount: activeCount,
                       enabled: !isBusy,

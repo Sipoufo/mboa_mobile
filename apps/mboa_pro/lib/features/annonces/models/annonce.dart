@@ -37,6 +37,8 @@ class Annonce extends Equatable {
     this.expiresAt,
     this.archivedReason,
     this.ownerVisitsEnabled = false,
+    this.reservationRequestId,
+    this.reservedUntil,
   });
 
   final String id;
@@ -111,6 +113,16 @@ class Annonce extends Equatable {
   /// confirmation (RM-M15-06).
   final bool ownerVisitsEnabled;
 
+  /// M29 / RM-M10-10 (a) — the accepted request holding it, while reserved
+  /// for a client. Such a reservation is not lifted from the listing: the
+  /// request is cancelled (`RESERVATION_FROM_REQUEST`).
+  final String? reservationRequestId;
+
+  /// When a reservation from a request runs out without a signed contract.
+  final DateTime? reservedUntil;
+
+  bool get isReservedByRequest => status == AnnonceStatus.reserved && reservationRequestId != null;
+
   /// What to show as the rent. Falls back to the derived monthly figure for
   /// listings created before RM-M10-09, which have no [price] — those really
   /// were monthly, so [rentalPeriod] defaulting to month reads correctly.
@@ -150,6 +162,8 @@ class Annonce extends Equatable {
     expiresAt: response.expiresAt,
     archivedReason: ArchivedReason.fromResponse(response.archivedReason),
     ownerVisitsEnabled: response.ownerVisitsEnabled ?? false,
+    reservationRequestId: response.reservationRequestId,
+    reservedUntil: response.reservedUntil?.toLocal(),
   );
 
   // Every field: a partial props list makes an edit that only touched, say, the
@@ -186,5 +200,7 @@ class Annonce extends Equatable {
     residenceId,
     expiresAt,
     archivedReason,
+    reservationRequestId,
+    reservedUntil,
   ];
 }

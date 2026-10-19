@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 import '../data/annonce_repository.dart';
 import '../models/annonce.dart';
@@ -111,7 +112,24 @@ class AnnoncesBloc extends Bloc<AnnoncesEvent, AnnoncesState> {
           clearMutating: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
+      // M29 — a request took the listing meanwhile: say so, and show it as
+      // it now stands (its reservation is cancelled from the request).
+      if (ApiError.from(error).hasCode('RESERVATION_FROM_REQUEST')) {
+        try {
+          final fresh = await _repository.getOne(event.id);
+          emit(
+            current.copyWith(
+              items: [for (final item in current.items) if (item.id == fresh.id) fresh else item],
+              clearMutating: true,
+              heldByRequest: true,
+            ),
+          );
+          return;
+        } catch (_) {
+          // Fall through to the plain failure.
+        }
+      }
       emit(current.copyWith(clearMutating: true, lastActionFailed: true));
     }
   }

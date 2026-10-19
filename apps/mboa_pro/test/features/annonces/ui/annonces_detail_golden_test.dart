@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_pro/features/annonces/bloc/annonces_bloc.dart';
 import 'package:mboa_pro/features/annonces/bloc/residences_bloc.dart';
@@ -143,6 +144,62 @@ void main() {
       find.byType(AnnonceDetailPage),
       matchesGoldenFile('goldens/annonce_detail.png'),
     );
+  });
+
+  group('M29 / RM-M10-10 — reserved', () {
+    Annonce reserved({String? requestId}) => Annonce(
+          id: 'a1',
+          title: 'Appartement à louer',
+          status: AnnonceStatus.reserved,
+          propertyType: PropertyType.apartment,
+          city: 'Douala',
+          district: 'Deido',
+          price: 110000,
+          rentalPeriod: RentalPeriod.month,
+          reservationRequestId: requestId,
+          reservedUntil: requestId == null ? null : DateTime(2026, 10, 26, 18),
+        );
+
+    testWidgets('by a request: until when, and the request it is managed from', (tester) async {
+      when(() => annonces.state).thenReturn(
+        AnnoncesReady(items: [reserved(requestId: 'r-1')], filter: AnnonceFilter.occupied),
+      );
+      await pump(tester, const AnnonceDetailPage(id: 'a1'));
+
+      expect(find.text('Réservée pour un client'), findsOneWidget);
+      expect(find.textContaining('26 octobre 2026'), findsOneWidget);
+      expect(find.text('Voir la demande'), findsOneWidget);
+
+      // Not lifted from the listing's menu either.
+      await tester.tap(find.byIcon(LucideIcons.ellipsisVertical));
+      await tester.pumpAndSettle();
+      expect(find.text('Lever la réservation'), findsNothing);
+    });
+
+    testWidgets('by hand: lifted from the notice', (tester) async {
+      when(() => annonces.state).thenReturn(
+        AnnoncesReady(items: [reserved()], filter: AnnonceFilter.occupied),
+      );
+      await pump(tester, const AnnonceDetailPage(id: 'a1'));
+
+      expect(find.text('Réservée'), findsWidgets);
+      await tester.tap(find.widgetWithText(Button, 'Lever la réservation'));
+      await tester.pump();
+
+      verify(() => annonces.add(const AnnonceStatusChangeRequested('a1', AnnonceTransition.unreserve))).called(1);
+    });
+
+    testWidgets('the listing, reserved by a request', (tester) async {
+      when(() => annonces.state).thenReturn(
+        AnnoncesReady(items: [reserved(requestId: 'r-1')], filter: AnnonceFilter.occupied),
+      );
+      await pump(tester, const AnnonceDetailPage(id: 'a1'));
+
+      await expectLater(
+        find.byType(AnnonceDetailPage),
+        matchesGoldenFile('goldens/annonce_detail_reserved.png'),
+      );
+    });
   });
 
   testWidgets('the residence detail', (tester) async {

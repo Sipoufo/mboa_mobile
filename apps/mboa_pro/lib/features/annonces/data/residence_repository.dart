@@ -70,6 +70,9 @@ class ResidenceRepository {
     final response = await switch (transition) {
       AnnonceTransition.publish => _api.publishResidenceUnits(id: id),
       AnnonceTransition.reserve => _api.reserveResidenceUnits(id: id),
+      // Lifts the reservations set by hand; a unit a request holds is left
+      // alone by the server.
+      AnnonceTransition.unreserve => _api.unreserveResidenceUnits(id: id),
       AnnonceTransition.markRented => _api.rentResidenceUnits(id: id),
       AnnonceTransition.archive => _api.archiveResidenceUnits(id: id),
       // Not `publishResidenceUnits`: that rejects anything but DRAFT with a 409. Unarchive

@@ -1,4 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dio/dio.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_pro/features/annonces/bloc/annonces_bloc.dart';
@@ -223,5 +225,59 @@ void main() {
         );
       },
     );
+  });
+
+  group('M29 — a reservation a request holds', () {
+    final held = Annonce(
+      id: 'd',
+      title: 'Bien d',
+      status: AnnonceStatus.reserved,
+      propertyType: PropertyType.apartment,
+      reservationRequestId: 'r-1',
+      reservedUntil: DateTime(2026, 10, 26),
+    );
+
+    blocTest<AnnoncesBloc, AnnoncesState>(
+      'lifting it is refused: said once, and the listing shown as it now stands',
+      setUp: () {
+        when(() => repository.transition('d', AnnonceTransition.unreserve)).thenThrow(
+          DioException(
+            requestOptions: RequestOptions(path: '/annonces/d/unreserve'),
+            response: Response(
+              requestOptions: RequestOptions(path: '/annonces/d/unreserve'),
+              statusCode: 409,
+              data: {'error': 'RESERVATION_FROM_REQUEST'},
+            ),
+          ),
+        );
+        when(() => repository.getOne('d')).thenAnswer((_) async => held);
+      },
+      build: build,
+      seed: () => AnnoncesReady(items: all, filter: AnnonceFilter.occupied),
+      act: (bloc) => bloc.add(const AnnonceStatusChangeRequested('d', AnnonceTransition.unreserve)),
+      expect: () => [
+        AnnoncesReady(items: all, filter: AnnonceFilter.occupied, mutatingId: 'd'),
+        AnnoncesReady(
+          items: [published, draft, rented, held, archived],
+          filter: AnnonceFilter.occupied,
+          heldByRequest: true,
+        ),
+      ],
+    );
+
+    test('it reads from the server, and says it is the request\'s', () {
+      final annonce = Annonce.fromResponse(
+        AnnonceResponse(
+          (b) => b
+            ..id = 'd'
+            ..status = AnnonceResponseStatusEnum.RESERVED
+            ..reservationRequestId = 'r-1'
+            ..reservedUntil = DateTime.utc(2026, 10, 26, 17),
+        ),
+      );
+
+      expect(annonce.isReservedByRequest, isTrue);
+      expect(annonce.reservedUntil, isNotNull);
+    });
   });
 }

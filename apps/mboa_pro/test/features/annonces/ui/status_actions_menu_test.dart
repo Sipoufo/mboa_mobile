@@ -114,6 +114,20 @@ void main() {
       );
     });
 
+    test('RM-M10-10 — a reservation set by hand can be lifted', () {
+      expect(
+        StatusActionsMenu.transitionsFor(AnnonceStatus.reserved),
+        [AnnonceTransition.unreserve, AnnonceTransition.markRented, AnnonceTransition.archive],
+      );
+    });
+
+    test('M29 — one a request holds is not: it is cancelled from the request', () {
+      expect(
+        StatusActionsMenu.transitionsFor(AnnonceStatus.reserved, reservedByRequest: true),
+        isNot(contains(AnnonceTransition.unreserve)),
+      );
+    });
+
     test('an unknown status offers nothing', () {
       expect(StatusActionsMenu.transitionsFor(AnnonceStatus.unknown), isEmpty);
     });

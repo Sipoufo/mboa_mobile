@@ -42,6 +42,7 @@ class StatusActionsMenu extends StatelessWidget {
     this.onDelete,
     this.enabled = true,
     this.isResidenceUnit = false,
+    this.reservedByRequest = false,
   });
 
   final AnnonceStatus status;
@@ -61,7 +62,12 @@ class StatusActionsMenu extends StatelessWidget {
   /// tier limit must not be applied a second time here.
   final bool isResidenceUnit;
 
-  static List<AnnonceTransition> transitionsFor(AnnonceStatus status) => switch (status) {
+  /// M29 — a client's accepted request holds it: the reservation is
+  /// cancelled from the request, so it is not offered to lift here.
+  final bool reservedByRequest;
+
+  static List<AnnonceTransition> transitionsFor(AnnonceStatus status, {bool reservedByRequest = false}) =>
+      switch (status) {
     AnnonceStatus.draft => [
       AnnonceTransition.publish,
       AnnonceTransition.archive,
@@ -72,6 +78,7 @@ class StatusActionsMenu extends StatelessWidget {
       AnnonceTransition.archive,
     ],
     AnnonceStatus.reserved => [
+      if (!reservedByRequest) AnnonceTransition.unreserve,
       AnnonceTransition.markRented,
       AnnonceTransition.archive,
     ],
@@ -85,7 +92,7 @@ class StatusActionsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
-    final transitions = transitionsFor(status);
+    final transitions = transitionsFor(status, reservedByRequest: reservedByRequest);
     if (transitions.isEmpty && onDelete == null) return const SizedBox.shrink();
 
     return PopupMenuButton<_MenuAction>(
@@ -112,6 +119,7 @@ class StatusActionsMenu extends StatelessWidget {
                 // Republishing an archived listing reads as "unarchive".
                 AnnonceTransition.publish => l10n.annonceActionPublish,
                 AnnonceTransition.reserve => l10n.annonceActionReserve,
+                AnnonceTransition.unreserve => l10n.annonceActionUnreserve,
                 AnnonceTransition.markRented => l10n.annonceActionMarkRented,
                 AnnonceTransition.archive => l10n.annonceActionArchive,
                 AnnonceTransition.unarchive => l10n.annonceActionUnarchive,

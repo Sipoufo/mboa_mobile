@@ -11472,6 +11472,76 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Lever la réservation`
+  String get annonceActionUnreserve {
+    return Intl.message(
+      'Lever la réservation',
+      name: 'annonceActionUnreserve',
+      desc: 'RM-M10-10 — a reservation set by hand.',
+      args: [],
+    );
+  }
+
+  /// `Réservée pour un client`
+  String get annonceReservedByRequestTitle {
+    return Intl.message(
+      'Réservée pour un client',
+      name: 'annonceReservedByRequestTitle',
+      desc: 'M29 — held by an accepted request.',
+      args: [],
+    );
+  }
+
+  /// `Jusqu'au {date}, le temps d'établir le Contrat Mboa. Cette réservation s'annule depuis la demande.`
+  String annonceReservedByRequestUntil(String date) {
+    return Intl.message(
+      'Jusqu\'au $date, le temps d\'établir le Contrat Mboa. Cette réservation s\'annule depuis la demande.',
+      name: 'annonceReservedByRequestUntil',
+      desc: 'M29 — reservedUntil.',
+      args: [date],
+    );
+  }
+
+  /// `Une demande acceptée réserve ce bien : gère la réservation depuis la demande.`
+  String get annonceReservedByRequestBody {
+    return Intl.message(
+      'Une demande acceptée réserve ce bien : gère la réservation depuis la demande.',
+      name: 'annonceReservedByRequestBody',
+      desc: 'RESERVATION_FROM_REQUEST.',
+      args: [],
+    );
+  }
+
+  /// `Voir la demande`
+  String get annonceSeeRequest {
+    return Intl.message(
+      'Voir la demande',
+      name: 'annonceSeeRequest',
+      desc: 'M29 — open the holding request.',
+      args: [],
+    );
+  }
+
+  /// `Réservée`
+  String get annonceReservedManualTitle {
+    return Intl.message(
+      'Réservée',
+      name: 'annonceReservedManualTitle',
+      desc: 'RM-M10-10 — set by hand.',
+      args: [],
+    );
+  }
+
+  /// `Tu as réservé ce bien toi-même. Lève la réservation pour le remettre en ligne.`
+  String get annonceReservedManualBody {
+    return Intl.message(
+      'Tu as réservé ce bien toi-même. Lève la réservation pour le remettre en ligne.',
+      name: 'annonceReservedManualBody',
+      desc: 'RM-M10-10.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

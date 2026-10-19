@@ -86,4 +86,7 @@ enum AnnonceFilter {
 }
 
 /// A status change the prestataire can trigger from the list or detail.
-enum AnnonceTransition { publish, reserve, markRented, archive, unarchive }
+///
+/// [unreserve] lifts a reservation set by hand (RM-M10-10); one a client's
+/// accepted request holds is cancelled from the request instead.
+enum AnnonceTransition { publish, reserve, unreserve, markRented, archive, unarchive }
