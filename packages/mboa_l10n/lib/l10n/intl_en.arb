@@ -3966,5 +3966,244 @@
   "reservationsTile": "My reservations",
   "@reservationsTile": {
     "description": "M29 — the Compte tile; short so it holds one line."
+  },
+  "proReservationsTitle": "Reservation requests",
+  "@proReservationsTitle": {
+    "description": "M29 — the prestataire's inbox."
+  },
+  "proReservationsFilterPending": "Waiting",
+  "@proReservationsFilterPending": {
+    "description": "M29 — inbox tab."
+  },
+  "proReservationsFilterAll": "All",
+  "@proReservationsFilterAll": {
+    "description": "M29 — inbox tab."
+  },
+  "proReservationsEmptyPending": "No request is waiting for your answer.",
+  "@proReservationsEmptyPending": {
+    "description": "M29 — empty tab."
+  },
+  "proReservationsEmptyAll": "No reservation requests yet.",
+  "@proReservationsEmptyAll": {
+    "description": "M29 — empty inbox."
+  },
+  "proReservationsOffline": "Offline: requests as of your last connection.",
+  "@proReservationsOffline": {
+    "description": "M29 — cached inbox."
+  },
+  "proReservationRowBody": "{name} · {listing}",
+  "@proReservationRowBody": {
+    "description": "M29 — an inbox row: the client and the listing.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "listing": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationClient": "A client",
+  "@proReservationClient": {
+    "description": "M29 — a client with no name."
+  },
+  "proReservationDetailTitle": "Reservation request",
+  "@proReservationDetailTitle": {
+    "description": "M29 — the request's screen."
+  },
+  "proReservationRequester": "Requester",
+  "@proReservationRequester": {
+    "description": "M29 — the client block."
+  },
+  "proReservationScore": "See their Mboa Score",
+  "@proReservationScore": {
+    "description": "RM-M09-04 — the client's score."
+  },
+  "proReservationWrite": "Message the client",
+  "@proReservationWrite": {
+    "description": "RM-M29-14 — the request's thread."
+  },
+  "proReservationStay": "Stay",
+  "@proReservationStay": {
+    "description": "M29 — the request's dates."
+  },
+  "proReservationClientMessage": "Their message",
+  "@proReservationClientMessage": {
+    "description": "M29 — the client's words."
+  },
+  "proReservationOthers": "{count, plural, =1{1 other request for this property} other{{count} other requests for this property}}",
+  "@proReservationOthers": {
+    "description": "M29 — other requests waiting on the same listing.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "proReservationAnswerBy": "Answer before {date}: unanswered, the request expires.",
+  "@proReservationAnswerBy": {
+    "description": "RM-M29-05 — the 48 h.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAccept": "Accept the request",
+  "@proReservationAccept": {
+    "description": "M29 — main action while pending."
+  },
+  "proReservationAcceptConfirmTitle": "Accept this request?",
+  "@proReservationAcceptConfirmTitle": {
+    "description": "M29 — confirm."
+  },
+  "proReservationAcceptConfirmBody": "The property will be held for this client while you draw up the Mboa Contract. The other waiting requests won't be selected.",
+  "@proReservationAcceptConfirmBody": {
+    "description": "RM-M29-04 / RM-M29-07."
+  },
+  "proReservationAcceptConfirm": "Accept",
+  "@proReservationAcceptConfirm": {
+    "description": "M29 — confirm."
+  },
+  "proReservationRefuse": "Decline the request",
+  "@proReservationRefuse": {
+    "description": "M29 — behind ⋯ while pending."
+  },
+  "proReservationRefuseTitle": "Why are you declining?",
+  "@proReservationRefuseTitle": {
+    "description": "RM-M29-06 — the reason sheet."
+  },
+  "proReservationReasonHint": "The client will see this reason. It's never public.",
+  "@proReservationReasonHint": {
+    "description": "RM-M29-06."
+  },
+  "proReservationNoteLabel": "A note for the client (optional)",
+  "@proReservationNoteLabel": {
+    "description": "M29 — ownerNote, 500 max."
+  },
+  "proReservationExtend": "Extend the reservation",
+  "@proReservationExtend": {
+    "description": "RM-M29-07 — once."
+  },
+  "proReservationExtendConfirmTitle": "Extend the reservation?",
+  "@proReservationExtendConfirmTitle": {
+    "description": "RM-M29-07."
+  },
+  "proReservationExtendConfirmBody": "The property stays held for this client a few more days. You can only extend once.",
+  "@proReservationExtendConfirmBody": {
+    "description": "RM-M29-07."
+  },
+  "proReservationExtendConfirm": "Extend",
+  "@proReservationExtendConfirm": {
+    "description": "RM-M29-07."
+  },
+  "proReservationCancel": "Cancel the reservation",
+  "@proReservationCancel": {
+    "description": "RM-M29-08."
+  },
+  "proReservationCancelTitle": "Why are you cancelling?",
+  "@proReservationCancelTitle": {
+    "description": "RM-M29-08 — the reason sheet."
+  },
+  "proReservationCancelHint": "The property becomes available again and the client is told. Cancellations are tracked by Mboa.",
+  "@proReservationCancelHint": {
+    "description": "RM-M29-08 — counted for the admin."
+  },
+  "proReservationNextStep": "Draw up the Mboa Contract with the client before the reservation ends. Without a signed contract, the property becomes available again.",
+  "@proReservationNextStep": {
+    "description": "M29 — ACCEPTED, the prestataire's next step."
+  },
+  "proReservationExtendedTag": "Extended",
+  "@proReservationExtendedTag": {
+    "description": "RM-M29-07 — already extended."
+  },
+  "proReservationAcceptedToast": "Request accepted: the property is held.",
+  "@proReservationAcceptedToast": {
+    "description": "M29."
+  },
+  "proReservationRefusedToast": "Request declined.",
+  "@proReservationRefusedToast": {
+    "description": "M29."
+  },
+  "proReservationExtendedToast": "Reservation extended.",
+  "@proReservationExtendedToast": {
+    "description": "M29."
+  },
+  "proReservationCancelledToast": "Reservation cancelled.",
+  "@proReservationCancelledToast": {
+    "description": "M29."
+  },
+  "proReservationClosed": "This request is no longer waiting for an answer.",
+  "@proReservationClosed": {
+    "description": "RESERVATION_CLOSED."
+  },
+  "proReservationNotReservable": "This property is no longer published: it can't be reserved.",
+  "@proReservationNotReservable": {
+    "description": "LISTING_NOT_RESERVABLE."
+  },
+  "proReservationAlreadyExtended": "This reservation was already extended.",
+  "@proReservationAlreadyExtended": {
+    "description": "RESERVATION_ALREADY_EXTENDED."
+  },
+  "proReservationNotAccepted": "This reservation is no longer active.",
+  "@proReservationNotAccepted": {
+    "description": "RESERVATION_NOT_ACCEPTED."
+  },
+  "proReservationFailed": "Your answer didn't go through. Try again.",
+  "@proReservationFailed": {
+    "description": "M29 — network failure."
+  },
+  "proReservationRefusedBody": "You declined this request.",
+  "@proReservationRefusedBody": {
+    "description": "M29 — REFUSED."
+  },
+  "proReservationNotRetainedBody": "Another request was accepted for this property.",
+  "@proReservationNotRetainedBody": {
+    "description": "M29 — NOT_RETAINED."
+  },
+  "proReservationExpiredBody": "Unanswered within 48 hours, the request expired.",
+  "@proReservationExpiredBody": {
+    "description": "M29 — EXPIRED."
+  },
+  "proReservationCancelledByClient": "The client cancelled their request.",
+  "@proReservationCancelledByClient": {
+    "description": "M29 — CANCELLED by the client."
+  },
+  "proReservationCancelledByYou": "You cancelled this reservation.",
+  "@proReservationCancelledByYou": {
+    "description": "M29 — CANCELLED by the prestataire."
+  },
+  "proReservationContractedBody": "The Mboa Contract is signed: the property is let.",
+  "@proReservationContractedBody": {
+    "description": "M29 — CONTRACTED."
+  },
+  "proReservationsPending": "{count, plural, =1{1 reservation request is waiting for you} other{{count} reservation requests are waiting for you}}",
+  "@proReservationsPending": {
+    "description": "M29 — the home's counter.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "proReservationsPendingAction": "Answer",
+  "@proReservationsPendingAction": {
+    "description": "M29 — the home's counter."
+  },
+  "proReservationsSeeAll": "See the requests",
+  "@proReservationsSeeAll": {
+    "description": "M29 — the listing's card."
+  },
+  "contractFormTenantFromReservation": "The tenant is the client of the accepted reservation request.",
+  "@contractFormTenantFromReservation": {
+    "description": "RM-M08-10 — contract from a reservation."
+  },
+  "contractListingReserved": "This property is held for a request: draw up the contract from that request.",
+  "@contractListingReserved": {
+    "description": "LISTING_RESERVED."
+  },
+  "proReservationDraftContract": "Draw up the contract",
+  "@proReservationDraftContract": {
+    "description": "RM-M08-10 — main action once accepted."
   }
 }

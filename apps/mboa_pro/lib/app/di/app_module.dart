@@ -37,6 +37,10 @@ import '../../features/kyc/logic/kyc_cubit.dart';
 import '../../features/profile/data/profile_repository.dart';
 import '../../features/profile/profile_types.dart';
 import '../../features/register/bloc/register_bloc.dart';
+import '../../features/reservations/bloc/incoming_reservation_bloc.dart';
+import '../../features/reservations/bloc/incoming_reservations_bloc.dart';
+import '../../features/reservations/bloc/pending_reservations_bloc.dart';
+import '../../features/reservations/data/incoming_reservations_repository.dart';
 import '../../features/register/data/register_repository.dart';
 import '../../features/splash/logic/splash_cubit.dart';
 import '../../features/subscription/bloc/subscribe_bloc.dart';
@@ -279,6 +283,25 @@ void registerAppModule() {
     () => ContractFormBloc(repository: getIt<ContractRepository>()),
   );
 
+  // M29 — the requests on his listings. The home's counter is a singleton
+  // (the wrapper provides it, the detail tells it by event); the list and
+  // the detail are built per screen.
+  getIt.registerLazySingleton<IncomingReservationsRepository>(
+    () => IncomingReservationsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<PendingReservationsBloc>(
+    () => PendingReservationsBloc(repository: getIt<IncomingReservationsRepository>()),
+  );
+  getIt.registerFactoryParam<IncomingReservationsBloc, String?, void>(
+    (annonceId, _) => IncomingReservationsBloc(repository: getIt<IncomingReservationsRepository>(), annonceId: annonceId),
+  );
+  getIt.registerFactory<IncomingReservationBloc>(
+    () => IncomingReservationBloc(
+      repository: getIt<IncomingReservationsRepository>(),
+      annonces: getIt<AnnonceRepository>(),
+    ),
+  );
+
   // M27 — he does not write a resident review; he answers one, once.
   getIt.registerLazySingleton<ResidentReviewRepository>(
     () => ResidentReviewRepository(dioClient: getIt<DioClient>()),
@@ -396,6 +419,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<MyAgentsBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<PendingReservationsBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<KycCubit>(

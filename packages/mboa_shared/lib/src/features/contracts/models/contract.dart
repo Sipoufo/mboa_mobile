@@ -386,6 +386,7 @@ class ContractTerms extends Equatable {
     this.startDate,
     this.durationUnits,
     this.tacitRenewal = false,
+    this.reservationRequestId,
   });
 
   final String? annonceId;
@@ -403,10 +404,15 @@ class ContractTerms extends Equatable {
   final int? durationUnits;
   final bool tacitRenewal;
 
+  /// RM-M08-10 — drawn up from an accepted reservation request: the tenant is
+  /// the request's client, so none is named (the server refuses one,
+  /// `TENANT_FROM_RESERVATION`).
+  final String? reservationRequestId;
+
   /// What `POST /contracts` requires, before the server is asked.
   bool get isComplete =>
       annonceId != null &&
-      (tenantAccountId != null || (tenantPhone?.isNotEmpty ?? false)) &&
+      (reservationRequestId != null || tenantAccountId != null || (tenantPhone?.isNotEmpty ?? false)) &&
       (price ?? 0) > 0 &&
       depositAmount != null &&
       startDate != null &&
@@ -447,6 +453,7 @@ class ContractTerms extends Equatable {
         startDate: startDate ?? this.startDate,
         durationUnits: durationUnits ?? this.durationUnits,
         tacitRenewal: tacitRenewal ?? this.tacitRenewal,
+        reservationRequestId: reservationRequestId,
       );
 
   @override
@@ -461,5 +468,6 @@ class ContractTerms extends Equatable {
         startDate,
         durationUnits,
         tacitRenewal,
+        reservationRequestId,
       ];
 }

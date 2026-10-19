@@ -6,6 +6,12 @@ enum ContractFormFailure {
   /// contract was deliberately not created.
   tenantHasNoAccount,
 
+  /// RM-M08-10 — the reservation it was drawn from is no longer accepted.
+  reservationClosed,
+
+  /// The listing is held for a request: the contract starts from it.
+  listingReserved,
+
   refused,
 }
 

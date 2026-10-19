@@ -44,12 +44,17 @@ class ContractRepository {
   /// CE-M08-01: when the tenant has no Mboa account the server sends an SMS
   /// invitation and **refuses to create the contract**, so a failure here can
   /// be an invitation rather than an error — the screen reads the error code.
+  ///
+  /// From an accepted reservation (RM-M08-10) the request names the tenant,
+  /// so none is sent.
   Future<Contract> create(ContractTerms terms) async {
+    final fromReservation = terms.reservationRequestId != null;
     final response = await _api.createContract(
       createContractRequest: CreateContractRequest((b) => b
         ..annonceId = terms.annonceId
-        ..tenantAccountId = terms.tenantAccountId
-        ..tenantPhone = terms.tenantPhone
+        ..reservationRequestId = terms.reservationRequestId
+        ..tenantAccountId = fromReservation ? null : terms.tenantAccountId
+        ..tenantPhone = fromReservation ? null : terms.tenantPhone
         ..price = terms.price
         ..rentalPeriod = terms.rentalPeriod.asContractCreate
         ..depositAmount = terms.depositAmount

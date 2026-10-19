@@ -21,9 +21,14 @@ class ContractFormPage extends StatefulWidget implements AutoRouteWrapper {
     super.key,
     required this.annonceId,
     this.contractId,
+    this.reservation,
   });
 
   final String annonceId;
+
+  /// RM-M08-10 — drawn up from this accepted request: its client is the
+  /// tenant, its start and duration the opening terms.
+  final Reservation? reservation;
 
   /// Set when amending an existing contract (RM-M08-08).
   final String? contractId;
@@ -66,12 +71,17 @@ class _ContractFormPageState extends State<ContractFormPage> {
         ? state.items.where((a) => a.id == widget.annonceId).firstOrNull
         : null;
 
+    final reservation = widget.reservation;
     final terms = ContractTerms(
       annonceId: widget.annonceId,
       price: annonce?.displayPrice,
-      rentalPeriod: annonce?.rentalPeriod ?? RentalPeriod.month,
+      rentalPeriod: reservation?.rentalPeriod ?? annonce?.rentalPeriod ?? RentalPeriod.month,
+      reservationRequestId: reservation?.id,
+      startDate: reservation?.desiredStartDate,
+      durationUnits: reservation?.durationUnits,
     );
     _price.text = terms.price?.toString() ?? '';
+    _duration.text = terms.durationUnits?.toString() ?? '';
     context.read<ContractFormBloc>().add(ContractFormStarted(terms));
     _seeded = true;
   }
@@ -119,6 +129,8 @@ class _ContractFormPageState extends State<ContractFormPage> {
             // CE-M08-01 — the invitation went out; the contract is drawn up
             // once the tenant has joined, which is a wait, not a failure.
             ContractFormFailure.tenantHasNoAccount => l10n.contractTenantInvited,
+            ContractFormFailure.reservationClosed => l10n.proReservationNotAccepted,
+            ContractFormFailure.listingReserved => l10n.contractListingReserved,
             ContractFormFailure.refused => l10n.contractActionFailed,
           },
         );
@@ -129,6 +141,7 @@ class _ContractFormPageState extends State<ContractFormPage> {
         deposit: _deposit,
         duration: _duration,
         phone: _phone,
+        tenantName: widget.reservation?.client?.name,
         onChanged: _update,
       ),
     );
@@ -163,9 +176,13 @@ class _Form extends StatelessWidget {
     required this.duration,
     required this.phone,
     required this.onChanged,
+    this.tenantName,
   });
 
   final ContractFormState state;
+
+  /// The request's client, when drawn up from a reservation.
+  final String? tenantName;
   final TextEditingController price;
   final TextEditingController deposit;
   final TextEditingController duration;
@@ -184,7 +201,18 @@ class _Form extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(Dimens.spacingLg),
             children: [
-              if (!state.isAmending) ...[
+              if (!state.isAmending && terms.reservationRequestId != null) ...[
+                // RM-M08-10 — the tenant is the request's client, not typed.
+                Text(l10n.contractFormTenantTitle, style: context.mboaText.h3),
+                const SizedBox(height: Dimens.spacingSm),
+                Text(tenantName ?? l10n.proReservationClient, style: context.mboaText.label.copyWith(color: colors.ink)),
+                const SizedBox(height: Dimens.spacingXs),
+                Text(
+                  l10n.contractFormTenantFromReservation,
+                  style: context.mboaText.caption.copyWith(color: colors.textTertiary),
+                ),
+                const SizedBox(height: Dimens.spacingXl),
+              ] else if (!state.isAmending) ...[
                 Text(l10n.contractFormTenantTitle, style: context.mboaText.h3),
                 const SizedBox(height: Dimens.spacingSm),
                 Input(

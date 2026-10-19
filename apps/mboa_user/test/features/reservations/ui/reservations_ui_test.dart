@@ -50,8 +50,8 @@ void main() {
     canCancel: true,
   );
 
-  setUpAll(() {
-    loadBrandFonts();
+  setUpAll(() async {
+    await loadBrandFonts();
     registerFallbackValue(const ReservationCancelRequested());
     registerFallbackValue(ReservationRequestSubmitted(annonceId: 'x', start: DateTime(2026), units: 1));
   });

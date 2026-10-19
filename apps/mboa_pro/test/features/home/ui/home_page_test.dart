@@ -12,6 +12,7 @@ import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
+import 'package:mboa_pro/features/reservations/bloc/pending_reservations_bloc.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -19,6 +20,9 @@ import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHomeBloc extends MockBloc<HomeEvent, HomeState> implements HomeBloc {}
+
+class MockPendingReservationsBloc extends MockBloc<PendingReservationsEvent, PendingReservationsState>
+    implements PendingReservationsBloc {}
 
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
@@ -31,6 +35,7 @@ class MockSubscriptionBloc
 
 void main() {
   late MockHomeBloc homeBloc;
+  late MockPendingReservationsBloc pendingBloc;
   late MockProProfileBloc profileBloc;
   late MockKycCubit kycCubit;
   late MockSubscriptionBloc subscriptionBloc;
@@ -49,6 +54,8 @@ void main() {
 
   setUp(() {
     homeBloc = MockHomeBloc();
+    pendingBloc = MockPendingReservationsBloc();
+    when(() => pendingBloc.state).thenReturn(const PendingReservationsUnknown());
     profileBloc = MockProProfileBloc();
     kycCubit = MockKycCubit();
     subscriptionBloc = MockSubscriptionBloc();
@@ -88,6 +95,7 @@ void main() {
             BlocProvider<KycCubit>.value(value: kycCubit),
             BlocProvider<SubscriptionBloc>.value(value: subscriptionBloc),
             BlocProvider<HomeBloc>.value(value: homeBloc),
+            BlocProvider<PendingReservationsBloc>.value(value: pendingBloc),
           ],
           child: const HomePage(),
         ),
@@ -113,6 +121,27 @@ void main() {
 
     expect(find.text('17'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('M29 — waiting requests are said on the home, and opened from it', (tester) async {
+    when(() => pendingBloc.state).thenReturn(const PendingReservationsCounted(3));
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.text('3 demandes de réservation attendent ta réponse'), findsOneWidget);
+    expect(find.text('Répondre'), findsOneWidget);
+  });
+
+  testWidgets('M29 — nothing waiting, nothing said', (tester) async {
+    when(() => pendingBloc.state).thenReturn(const PendingReservationsCounted(0));
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.textContaining('attend'), findsNothing);
+  });
+
+  testWidgets('M29 — the count is read on first show', (tester) async {
+    await pump(tester, const HomeReady(stats));
+
+    verify(() => pendingBloc.add(const PendingReservationsRequested())).called(1);
   });
 
   testWidgets('lays out without overflow on a small phone', (tester) async {

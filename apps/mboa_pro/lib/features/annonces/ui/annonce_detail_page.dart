@@ -129,6 +129,10 @@ class _Body extends StatelessWidget {
         _FactsCard(annonce: annonce),
         const SizedBox(height: Dimens.spacing),
 
+        // M29 — the requests on this listing, where they are answered.
+        _ReservationsCard(annonce: annonce),
+        const SizedBox(height: Dimens.spacing),
+
         // RM-M08-01 — only a prestataire initiates, and always from a bien:
         // the contract copies the property it carries (RM-M08-05), so this is
         // where one starts.
@@ -486,6 +490,41 @@ class _ContractCard extends StatelessWidget {
               size: Dimens.icon,
               color: colors.textTertiary,
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ReservationsCard extends StatelessWidget {
+  const _ReservationsCard({required this.annonce});
+
+  final Annonce annonce;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return _SectionCard(
+      title: l10n.proReservationsTitle,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.radius),
+        onTap: () => context.router.push(
+          IncomingReservationsRoute(annonceId: annonce.id, annonceTitle: annonce.title),
+        ),
+        child: Row(
+          children: [
+            Icon(LucideIcons.ticket, size: Dimens.icon, color: colors.primary),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: Text(
+                l10n.proReservationsSeeAll,
+                style: context.mboaText.label.copyWith(color: colors.ink),
+              ),
+            ),
+            Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
           ],
         ),
       ),

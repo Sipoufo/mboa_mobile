@@ -55,9 +55,12 @@ class ContractFormBloc extends Bloc<ContractFormEvent, ContractFormState> {
       emit(
         state.copyWith(
           isSaving: false,
-          failure: api.statusCode == 404
-              ? ContractFormFailure.tenantHasNoAccount
-              : ContractFormFailure.refused,
+          failure: switch (api) {
+            _ when api.hasCode('RESERVATION_NOT_ACCEPTED') => ContractFormFailure.reservationClosed,
+            _ when api.hasCode('LISTING_RESERVED') => ContractFormFailure.listingReserved,
+            _ when api.statusCode == 404 => ContractFormFailure.tenantHasNoAccount,
+            _ => ContractFormFailure.refused,
+          },
         ),
       );
     }

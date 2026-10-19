@@ -93,6 +93,9 @@ class AppRouter extends RootStackRouter {
             // Contrat Mboa (M08). The list is a shell tab — the menu entry
             // points at that tab rather than pushing a second copy of it.
             AutoRoute(page: ContractFormRoute.page, path: 'contracts/form'),
+            // M29 — the requests on the prestataire's listings.
+            AutoRoute(page: IncomingReservationsRoute.page, path: 'reservations'),
+            AutoRoute(page: IncomingReservationRoute.page, path: 'reservations/:id'),
             AutoRoute(page: ContractDetailRoute.page, path: 'contracts/:id'),
             // M27 — the review hangs off the contract, so its route does too.
             AutoRoute(

@@ -87,4 +87,49 @@ void main() {
       },
     );
   });
+
+  group('RM-M08-10 — from an accepted reservation', () {
+    ContractFormBloc build() => ContractFormBloc(repository: repository);
+
+    final fromRequest = ContractTerms(
+      annonceId: 'a-1',
+      reservationRequestId: 'r-1',
+      price: 110000,
+      depositAmount: 220000,
+      startDate: DateTime(2026, 11, 1),
+      durationUnits: 6,
+    );
+
+    DioException refused(String code) => DioException(
+          requestOptions: RequestOptions(path: '/contracts'),
+          response: Response(
+            requestOptions: RequestOptions(path: '/contracts'),
+            statusCode: 409,
+            data: {'error': code},
+          ),
+        );
+
+    test('the request names the tenant, so none needs typing', () {
+      expect(fromRequest.isComplete, isTrue);
+      expect(fromRequest.copyWith(price: 120000).reservationRequestId, 'r-1');
+    });
+
+    blocTest<ContractFormBloc, ContractFormState>(
+      'a reservation no longer accepted is said as such',
+      setUp: () => when(() => repository.create(any())).thenThrow(refused('RESERVATION_NOT_ACCEPTED')),
+      build: build,
+      seed: () => ContractFormState(terms: fromRequest),
+      act: (bloc) => bloc.add(const ContractFormSubmitted()),
+      verify: (bloc) => expect(bloc.state.failure, ContractFormFailure.reservationClosed),
+    );
+
+    blocTest<ContractFormBloc, ContractFormState>(
+      'a listing held for a request sends the prestataire to that request',
+      setUp: () => when(() => repository.create(any())).thenThrow(refused('LISTING_RESERVED')),
+      build: build,
+      seed: () => ContractFormState(terms: fromRequest.copyWith()),
+      act: (bloc) => bloc.add(const ContractFormSubmitted()),
+      verify: (bloc) => expect(bloc.state.failure, ContractFormFailure.listingReserved),
+    );
+  });
 }

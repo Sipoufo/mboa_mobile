@@ -10548,6 +10548,550 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Demandes de réservation`
+  String get proReservationsTitle {
+    return Intl.message(
+      'Demandes de réservation',
+      name: 'proReservationsTitle',
+      desc: 'M29 — the prestataire\'s inbox.',
+      args: [],
+    );
+  }
+
+  /// `En attente`
+  String get proReservationsFilterPending {
+    return Intl.message(
+      'En attente',
+      name: 'proReservationsFilterPending',
+      desc: 'M29 — inbox tab.',
+      args: [],
+    );
+  }
+
+  /// `Toutes`
+  String get proReservationsFilterAll {
+    return Intl.message(
+      'Toutes',
+      name: 'proReservationsFilterAll',
+      desc: 'M29 — inbox tab.',
+      args: [],
+    );
+  }
+
+  /// `Aucune demande n'attend ta réponse.`
+  String get proReservationsEmptyPending {
+    return Intl.message(
+      'Aucune demande n\'attend ta réponse.',
+      name: 'proReservationsEmptyPending',
+      desc: 'M29 — empty tab.',
+      args: [],
+    );
+  }
+
+  /// `Aucune demande de réservation pour l'instant.`
+  String get proReservationsEmptyAll {
+    return Intl.message(
+      'Aucune demande de réservation pour l\'instant.',
+      name: 'proReservationsEmptyAll',
+      desc: 'M29 — empty inbox.',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : les demandes telles qu'à ta dernière connexion.`
+  String get proReservationsOffline {
+    return Intl.message(
+      'Hors ligne : les demandes telles qu\'à ta dernière connexion.',
+      name: 'proReservationsOffline',
+      desc: 'M29 — cached inbox.',
+      args: [],
+    );
+  }
+
+  /// `{name} · {listing}`
+  String proReservationRowBody(String name, String listing) {
+    return Intl.message(
+      '$name · $listing',
+      name: 'proReservationRowBody',
+      desc: 'M29 — an inbox row: the client and the listing.',
+      args: [name, listing],
+    );
+  }
+
+  /// `Un client`
+  String get proReservationClient {
+    return Intl.message(
+      'Un client',
+      name: 'proReservationClient',
+      desc: 'M29 — a client with no name.',
+      args: [],
+    );
+  }
+
+  /// `Demande de réservation`
+  String get proReservationDetailTitle {
+    return Intl.message(
+      'Demande de réservation',
+      name: 'proReservationDetailTitle',
+      desc: 'M29 — the request\'s screen.',
+      args: [],
+    );
+  }
+
+  /// `Profil du demandeur`
+  String get proReservationRequester {
+    return Intl.message(
+      'Profil du demandeur',
+      name: 'proReservationRequester',
+      desc: 'M29 — the client block.',
+      args: [],
+    );
+  }
+
+  /// `Voir son Mboa Score`
+  String get proReservationScore {
+    return Intl.message(
+      'Voir son Mboa Score',
+      name: 'proReservationScore',
+      desc: 'RM-M09-04 — the client\'s score.',
+      args: [],
+    );
+  }
+
+  /// `Écrire au client`
+  String get proReservationWrite {
+    return Intl.message(
+      'Écrire au client',
+      name: 'proReservationWrite',
+      desc: 'RM-M29-14 — the request\'s thread.',
+      args: [],
+    );
+  }
+
+  /// `Séjour`
+  String get proReservationStay {
+    return Intl.message(
+      'Séjour',
+      name: 'proReservationStay',
+      desc: 'M29 — the request\'s dates.',
+      args: [],
+    );
+  }
+
+  /// `Son message`
+  String get proReservationClientMessage {
+    return Intl.message(
+      'Son message',
+      name: 'proReservationClientMessage',
+      desc: 'M29 — the client\'s words.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 autre demande pour ce bien} other{{count} autres demandes pour ce bien}}`
+  String proReservationOthers(int count) {
+    return Intl.plural(
+      count,
+      one: '1 autre demande pour ce bien',
+      other: '$count autres demandes pour ce bien',
+      name: 'proReservationOthers',
+      desc: 'M29 — other requests waiting on the same listing.',
+      args: [count],
+    );
+  }
+
+  /// `À traiter avant le {date} : sans réponse, la demande expire.`
+  String proReservationAnswerBy(String date) {
+    return Intl.message(
+      'À traiter avant le $date : sans réponse, la demande expire.',
+      name: 'proReservationAnswerBy',
+      desc: 'RM-M29-05 — the 48 h.',
+      args: [date],
+    );
+  }
+
+  /// `Accepter la demande`
+  String get proReservationAccept {
+    return Intl.message(
+      'Accepter la demande',
+      name: 'proReservationAccept',
+      desc: 'M29 — main action while pending.',
+      args: [],
+    );
+  }
+
+  /// `Accepter cette demande ?`
+  String get proReservationAcceptConfirmTitle {
+    return Intl.message(
+      'Accepter cette demande ?',
+      name: 'proReservationAcceptConfirmTitle',
+      desc: 'M29 — confirm.',
+      args: [],
+    );
+  }
+
+  /// `Le bien sera réservé pour ce client le temps d'établir le Contrat Mboa. Les autres demandes en attente ne seront pas retenues.`
+  String get proReservationAcceptConfirmBody {
+    return Intl.message(
+      'Le bien sera réservé pour ce client le temps d\'établir le Contrat Mboa. Les autres demandes en attente ne seront pas retenues.',
+      name: 'proReservationAcceptConfirmBody',
+      desc: 'RM-M29-04 / RM-M29-07.',
+      args: [],
+    );
+  }
+
+  /// `Accepter`
+  String get proReservationAcceptConfirm {
+    return Intl.message(
+      'Accepter',
+      name: 'proReservationAcceptConfirm',
+      desc: 'M29 — confirm.',
+      args: [],
+    );
+  }
+
+  /// `Refuser la demande`
+  String get proReservationRefuse {
+    return Intl.message(
+      'Refuser la demande',
+      name: 'proReservationRefuse',
+      desc: 'M29 — behind ⋯ while pending.',
+      args: [],
+    );
+  }
+
+  /// `Motif du refus`
+  String get proReservationRefuseTitle {
+    return Intl.message(
+      'Motif du refus',
+      name: 'proReservationRefuseTitle',
+      desc: 'RM-M29-06 — the reason sheet.',
+      args: [],
+    );
+  }
+
+  /// `Le client verra ce motif. Il n'est jamais public.`
+  String get proReservationReasonHint {
+    return Intl.message(
+      'Le client verra ce motif. Il n\'est jamais public.',
+      name: 'proReservationReasonHint',
+      desc: 'RM-M29-06.',
+      args: [],
+    );
+  }
+
+  /// `Un mot pour le client (facultatif)`
+  String get proReservationNoteLabel {
+    return Intl.message(
+      'Un mot pour le client (facultatif)',
+      name: 'proReservationNoteLabel',
+      desc: 'M29 — ownerNote, 500 max.',
+      args: [],
+    );
+  }
+
+  /// `Prolonger la réservation`
+  String get proReservationExtend {
+    return Intl.message(
+      'Prolonger la réservation',
+      name: 'proReservationExtend',
+      desc: 'RM-M29-07 — once.',
+      args: [],
+    );
+  }
+
+  /// `Prolonger la réservation ?`
+  String get proReservationExtendConfirmTitle {
+    return Intl.message(
+      'Prolonger la réservation ?',
+      name: 'proReservationExtendConfirmTitle',
+      desc: 'RM-M29-07.',
+      args: [],
+    );
+  }
+
+  /// `Le bien reste réservé pour ce client quelques jours de plus. Tu ne peux prolonger qu'une fois.`
+  String get proReservationExtendConfirmBody {
+    return Intl.message(
+      'Le bien reste réservé pour ce client quelques jours de plus. Tu ne peux prolonger qu\'une fois.',
+      name: 'proReservationExtendConfirmBody',
+      desc: 'RM-M29-07.',
+      args: [],
+    );
+  }
+
+  /// `Prolonger`
+  String get proReservationExtendConfirm {
+    return Intl.message(
+      'Prolonger',
+      name: 'proReservationExtendConfirm',
+      desc: 'RM-M29-07.',
+      args: [],
+    );
+  }
+
+  /// `Annuler la réservation`
+  String get proReservationCancel {
+    return Intl.message(
+      'Annuler la réservation',
+      name: 'proReservationCancel',
+      desc: 'RM-M29-08.',
+      args: [],
+    );
+  }
+
+  /// `Motif de l'annulation`
+  String get proReservationCancelTitle {
+    return Intl.message(
+      'Motif de l\'annulation',
+      name: 'proReservationCancelTitle',
+      desc: 'RM-M29-08 — the reason sheet.',
+      args: [],
+    );
+  }
+
+  /// `Le bien redevient disponible et le client est prévenu. Les annulations sont suivies par Mboa.`
+  String get proReservationCancelHint {
+    return Intl.message(
+      'Le bien redevient disponible et le client est prévenu. Les annulations sont suivies par Mboa.',
+      name: 'proReservationCancelHint',
+      desc: 'RM-M29-08 — counted for the admin.',
+      args: [],
+    );
+  }
+
+  /// `Établis le Contrat Mboa avec le client avant la fin de la réservation. Sans contrat signé, le bien redevient disponible.`
+  String get proReservationNextStep {
+    return Intl.message(
+      'Établis le Contrat Mboa avec le client avant la fin de la réservation. Sans contrat signé, le bien redevient disponible.',
+      name: 'proReservationNextStep',
+      desc: 'M29 — ACCEPTED, the prestataire\'s next step.',
+      args: [],
+    );
+  }
+
+  /// `Prolongée`
+  String get proReservationExtendedTag {
+    return Intl.message(
+      'Prolongée',
+      name: 'proReservationExtendedTag',
+      desc: 'RM-M29-07 — already extended.',
+      args: [],
+    );
+  }
+
+  /// `Demande acceptée : le bien est réservé.`
+  String get proReservationAcceptedToast {
+    return Intl.message(
+      'Demande acceptée : le bien est réservé.',
+      name: 'proReservationAcceptedToast',
+      desc: 'M29.',
+      args: [],
+    );
+  }
+
+  /// `Demande refusée.`
+  String get proReservationRefusedToast {
+    return Intl.message(
+      'Demande refusée.',
+      name: 'proReservationRefusedToast',
+      desc: 'M29.',
+      args: [],
+    );
+  }
+
+  /// `Réservation prolongée.`
+  String get proReservationExtendedToast {
+    return Intl.message(
+      'Réservation prolongée.',
+      name: 'proReservationExtendedToast',
+      desc: 'M29.',
+      args: [],
+    );
+  }
+
+  /// `Réservation annulée.`
+  String get proReservationCancelledToast {
+    return Intl.message(
+      'Réservation annulée.',
+      name: 'proReservationCancelledToast',
+      desc: 'M29.',
+      args: [],
+    );
+  }
+
+  /// `Cette demande n'attend plus de réponse.`
+  String get proReservationClosed {
+    return Intl.message(
+      'Cette demande n\'attend plus de réponse.',
+      name: 'proReservationClosed',
+      desc: 'RESERVATION_CLOSED.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien n'est plus publié : il ne peut pas être réservé.`
+  String get proReservationNotReservable {
+    return Intl.message(
+      'Ce bien n\'est plus publié : il ne peut pas être réservé.',
+      name: 'proReservationNotReservable',
+      desc: 'LISTING_NOT_RESERVABLE.',
+      args: [],
+    );
+  }
+
+  /// `Cette réservation a déjà été prolongée.`
+  String get proReservationAlreadyExtended {
+    return Intl.message(
+      'Cette réservation a déjà été prolongée.',
+      name: 'proReservationAlreadyExtended',
+      desc: 'RESERVATION_ALREADY_EXTENDED.',
+      args: [],
+    );
+  }
+
+  /// `Cette réservation n'est plus active.`
+  String get proReservationNotAccepted {
+    return Intl.message(
+      'Cette réservation n\'est plus active.',
+      name: 'proReservationNotAccepted',
+      desc: 'RESERVATION_NOT_ACCEPTED.',
+      args: [],
+    );
+  }
+
+  /// `La réponse n'est pas partie. Réessaie.`
+  String get proReservationFailed {
+    return Intl.message(
+      'La réponse n\'est pas partie. Réessaie.',
+      name: 'proReservationFailed',
+      desc: 'M29 — network failure.',
+      args: [],
+    );
+  }
+
+  /// `Tu as refusé cette demande.`
+  String get proReservationRefusedBody {
+    return Intl.message(
+      'Tu as refusé cette demande.',
+      name: 'proReservationRefusedBody',
+      desc: 'M29 — REFUSED.',
+      args: [],
+    );
+  }
+
+  /// `Une autre demande a été acceptée pour ce bien.`
+  String get proReservationNotRetainedBody {
+    return Intl.message(
+      'Une autre demande a été acceptée pour ce bien.',
+      name: 'proReservationNotRetainedBody',
+      desc: 'M29 — NOT_RETAINED.',
+      args: [],
+    );
+  }
+
+  /// `Sans réponse sous 48 h, la demande a expiré.`
+  String get proReservationExpiredBody {
+    return Intl.message(
+      'Sans réponse sous 48 h, la demande a expiré.',
+      name: 'proReservationExpiredBody',
+      desc: 'M29 — EXPIRED.',
+      args: [],
+    );
+  }
+
+  /// `Le client a annulé sa demande.`
+  String get proReservationCancelledByClient {
+    return Intl.message(
+      'Le client a annulé sa demande.',
+      name: 'proReservationCancelledByClient',
+      desc: 'M29 — CANCELLED by the client.',
+      args: [],
+    );
+  }
+
+  /// `Tu as annulé cette réservation.`
+  String get proReservationCancelledByYou {
+    return Intl.message(
+      'Tu as annulé cette réservation.',
+      name: 'proReservationCancelledByYou',
+      desc: 'M29 — CANCELLED by the prestataire.',
+      args: [],
+    );
+  }
+
+  /// `Le Contrat Mboa est signé : le bien est loué.`
+  String get proReservationContractedBody {
+    return Intl.message(
+      'Le Contrat Mboa est signé : le bien est loué.',
+      name: 'proReservationContractedBody',
+      desc: 'M29 — CONTRACTED.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 demande de réservation attend ta réponse} other{{count} demandes de réservation attendent ta réponse}}`
+  String proReservationsPending(int count) {
+    return Intl.plural(
+      count,
+      one: '1 demande de réservation attend ta réponse',
+      other: '$count demandes de réservation attendent ta réponse',
+      name: 'proReservationsPending',
+      desc: 'M29 — the home\'s counter.',
+      args: [count],
+    );
+  }
+
+  /// `Répondre`
+  String get proReservationsPendingAction {
+    return Intl.message(
+      'Répondre',
+      name: 'proReservationsPendingAction',
+      desc: 'M29 — the home\'s counter.',
+      args: [],
+    );
+  }
+
+  /// `Voir les demandes`
+  String get proReservationsSeeAll {
+    return Intl.message(
+      'Voir les demandes',
+      name: 'proReservationsSeeAll',
+      desc: 'M29 — the listing\'s card.',
+      args: [],
+    );
+  }
+
+  /// `Le locataire est le client de la demande de réservation acceptée.`
+  String get contractFormTenantFromReservation {
+    return Intl.message(
+      'Le locataire est le client de la demande de réservation acceptée.',
+      name: 'contractFormTenantFromReservation',
+      desc: 'RM-M08-10 — contract from a reservation.',
+      args: [],
+    );
+  }
+
+  /// `Ce bien est réservé pour une demande : établis le contrat depuis cette demande.`
+  String get contractListingReserved {
+    return Intl.message(
+      'Ce bien est réservé pour une demande : établis le contrat depuis cette demande.',
+      name: 'contractListingReserved',
+      desc: 'LISTING_RESERVED.',
+      args: [],
+    );
+  }
+
+  /// `Établir le contrat`
+  String get proReservationDraftContract {
+    return Intl.message(
+      'Établir le contrat',
+      name: 'proReservationDraftContract',
+      desc: 'RM-M08-10 — main action once accepted.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

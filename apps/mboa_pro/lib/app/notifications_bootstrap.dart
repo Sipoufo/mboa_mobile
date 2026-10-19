@@ -65,12 +65,17 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       );
     case PushType.residence:
       router.navigate(const AgentShellRoute(children: [AgentMissionsRoute()]));
+    // N-32 to N-34 — a new request, its 24 h reminder, a client's
+    // cancellation, a reservation running out.
+    case PushType.reservation when id != null && !isAgent:
+      router.push(IncomingReservationRoute(id: id));
+    case PushType.reservation when !isAgent:
+      router.push(IncomingReservationsRoute());
     case PushType.message:
       // No endpoint reads one conversation by id; the inbox lists it first.
       router.push(const MessagesRoute());
     case PushType.annonce:
     case PushType.contract:
-    // Routed to its screen with the reservation screens (M29 lot 1).
     case PushType.reservation:
     case PushType.savedSearch:
     case PushType.unknown:

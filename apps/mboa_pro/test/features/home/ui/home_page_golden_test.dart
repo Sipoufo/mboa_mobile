@@ -12,6 +12,7 @@ import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
+import 'package:mboa_pro/features/reservations/bloc/pending_reservations_bloc.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -21,6 +22,9 @@ import 'package:mocktail/mocktail.dart';
 import '../../../_helpers/load_brand_fonts.dart';
 
 class MockHomeBloc extends MockBloc<HomeEvent, HomeState> implements HomeBloc {}
+
+class MockPendingReservationsBloc extends MockBloc<PendingReservationsEvent, PendingReservationsState>
+    implements PendingReservationsBloc {}
 
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
@@ -33,6 +37,7 @@ class MockSubscriptionBloc
 
 void main() {
   late MockHomeBloc homeBloc;
+  late MockPendingReservationsBloc pendingBloc;
   late MockProProfileBloc profileBloc;
   late MockKycCubit kycCubit;
   late MockSubscriptionBloc subscriptionBloc;
@@ -62,6 +67,8 @@ void main() {
 
   setUp(() {
     homeBloc = MockHomeBloc();
+    pendingBloc = MockPendingReservationsBloc();
+    when(() => pendingBloc.state).thenReturn(const PendingReservationsUnknown());
     profileBloc = MockProProfileBloc();
     kycCubit = MockKycCubit();
     subscriptionBloc = MockSubscriptionBloc();
@@ -100,6 +107,7 @@ void main() {
             BlocProvider<KycCubit>.value(value: kycCubit),
             BlocProvider<SubscriptionBloc>.value(value: subscriptionBloc),
             BlocProvider<HomeBloc>.value(value: homeBloc),
+            BlocProvider<PendingReservationsBloc>.value(value: pendingBloc),
           ],
           child: const HomePage(),
         ),

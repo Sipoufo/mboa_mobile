@@ -208,9 +208,11 @@ class Reservation extends Equatable {
         canDraftContract: response.canDraftContract ?? false,
       );
 
-  /// Only what a list row draws, for the offline copy of "mes demandes".
+  /// Only what a list row draws, for the offline copy of either list.
   Map<String, dynamic> toCache() => {
         'id': id,
+        'client': client?.name,
+        'createdAt': createdAt?.toIso8601String(),
         'status': status.name,
         'annonceId': annonceId,
         'title': annonceTitle,
@@ -230,6 +232,8 @@ class Reservation extends Equatable {
       status: ReservationStatus.values.where((s) => s.name == json['status']).firstOrNull ?? ReservationStatus.unknown,
       annonceId: json['annonceId'] as String?,
       annonceTitle: json['title'] as String?,
+      client: json['client'] is String ? ReservationParty(name: json['client'] as String) : null,
+      createdAt: date(json['createdAt']),
       desiredStartDate: date(json['start']),
       durationUnits: json['units'] as int?,
       rentalPeriod: RentalPeriod.values.where((p) => p.name == json['period']).firstOrNull ?? RentalPeriod.fallback,

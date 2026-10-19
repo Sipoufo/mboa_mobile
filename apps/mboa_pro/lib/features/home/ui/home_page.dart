@@ -11,6 +11,8 @@ import '../../../app/router/app_router.gr.dart';
 import '../../kyc/logic/kyc_cubit.dart';
 import '../../kyc/models/kyc_status.dart';
 import '../../profile/profile_types.dart';
+import '../../reservations/bloc/pending_reservations_bloc.dart';
+import '../../reservations/ui/widgets/pending_reservations_card.dart';
 import '../../subscription/bloc/subscription_bloc.dart';
 import '../bloc/home_bloc.dart';
 import 'widgets/global_stats_card.dart';
@@ -30,8 +32,10 @@ class HomePage extends StatelessWidget {
       backgroundColor: context.mboaColors.background,
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () async =>
-              context.read<HomeBloc>().add(const HomeRefreshRequested()),
+          onRefresh: () async {
+            context.read<HomeBloc>().add(const HomeRefreshRequested());
+            context.read<PendingReservationsBloc>().add(const PendingReservationsRequested());
+          },
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
             children: [
@@ -49,6 +53,11 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: Dimens.spacing),
               const _CtaCarousel(),
               const SizedBox(height: Dimens.spacingLg),
+              // M29 — requests waiting for an answer, when there are any.
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
+                child: PendingReservationsCard(),
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
                 child: _StatsSection(),

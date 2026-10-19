@@ -11,6 +11,7 @@ import '../../../features/annonces/bloc/residences_bloc.dart';
 import '../../../features/home/bloc/home_bloc.dart';
 import '../../../features/kyc/logic/kyc_cubit.dart';
 import '../../../features/profile/profile_types.dart';
+import '../../../features/reservations/bloc/pending_reservations_bloc.dart';
 import '../../../features/subscription/bloc/subscription_bloc.dart';
 
 /// Hosts every authenticated route and the blocs scoped to a signed-in session.
@@ -53,6 +54,9 @@ class AuthenticatedWrapper extends StatelessWidget implements AutoRouteWrapper {
         // Read by Mes agents and by the agent detail, which are siblings under
         // `/app` — so it cannot live on either one's route.
         BlocProvider<MyAgentsBloc>.value(value: getIt<MyAgentsBloc>()),
+        // M29 — the home's count of waiting requests; read by the home only,
+        // so an agent session never asks.
+        BlocProvider<PendingReservationsBloc>.value(value: getIt<PendingReservationsBloc>()),
       ],
       child: this,
     );
