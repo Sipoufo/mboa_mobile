@@ -85,6 +85,9 @@ enum PushType {
   /// `entityId` = the saved search (M04, N-01).
   savedSearch,
 
+  /// `entityId` = the reservation request (M29: N-32, N-33, N-34).
+  reservation,
+
   unknown;
 
   static PushType parse(String? raw) =>
@@ -97,6 +100,7 @@ enum PushType {
         'CONTRACT' => PushType.contract,
         'RESIDENCE' => PushType.residence,
         'SAVED_SEARCH' => PushType.savedSearch,
+        'RESERVATION' => PushType.reservation,
         _ => PushType.unknown,
       };
 }

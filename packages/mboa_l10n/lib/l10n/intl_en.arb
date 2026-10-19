@@ -3611,5 +3611,25 @@
   "pwdResetDoneBody": "Sign in with your new password. Your other sessions were closed.",
   "@pwdResetDoneBody": {
     "description": "Reset succeeded — the server revokes every session."
+  },
+  "messageSystemReservationTitle": "Reservation request",
+  "@messageSystemReservationTitle": {
+    "description": "RM-M29-14 — the system message a request opens the thread with."
+  },
+  "messageSystemReservationStay": "From {date} · {duration}",
+  "@messageSystemReservationStay": {
+    "description": "The requested stay in the system message.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "reportReasonAskedForMoney": "Asked for money before the contract was signed",
+  "@reportReasonAskedForMoney": {
+    "description": "RM-M29-09 \u2014 ASKED_FOR_MONEY."
   }
 }

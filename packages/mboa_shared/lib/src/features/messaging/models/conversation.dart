@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
 
+import '../../listings/models/rental_period.dart';
 import '../../profile/models/base_profile.dart';
 
 /// One thread, attached to one listing (CDC M12).
@@ -81,6 +82,34 @@ class Conversation extends Equatable {
 /// thread must be able to draw one that the server has never seen.
 enum MessageStatus { sent, pending, failed }
 
+/// The request a system message announces (RM-M29-14), structured so the
+/// date reads in the reader's own locale.
+class ReservationSnapshot extends Equatable {
+  const ReservationSnapshot({
+    this.reservationId,
+    this.desiredStartDate,
+    this.durationUnits,
+    this.rentalPeriod = RentalPeriod.fallback,
+  });
+
+  final String? reservationId;
+  final DateTime? desiredStartDate;
+  final int? durationUnits;
+  final RentalPeriod rentalPeriod;
+
+  static ReservationSnapshot? fromResponse(ReservationRequestSnapshot? snapshot) => snapshot == null
+      ? null
+      : ReservationSnapshot(
+          reservationId: snapshot.reservationRequestId,
+          desiredStartDate: snapshot.desiredStartDate?.toDateTime(),
+          durationUnits: snapshot.durationUnits,
+          rentalPeriod: RentalPeriod.fromWire(snapshot.rentalPeriod?.name),
+        );
+
+  @override
+  List<Object?> get props => [reservationId, desiredStartDate, durationUnits, rentalPeriod];
+}
+
 /// One message in a thread (CDC M12).
 class Message extends Equatable {
   const Message({
@@ -92,6 +121,8 @@ class Message extends Equatable {
     this.sentAt,
     this.readAt,
     this.status = MessageStatus.sent,
+    this.isSystem = false,
+    this.reservation,
   });
 
   /// A local id for a queued message, so the thread can replace it with the
@@ -104,7 +135,9 @@ class Message extends Equatable {
     this.status = MessageStatus.pending,
   })  : senderAccountId = null,
         isMine = true,
-        readAt = null;
+        readAt = null,
+        isSystem = false,
+        reservation = null;
 
   final String id;
   final String? senderAccountId;
@@ -119,6 +152,13 @@ class Message extends Equatable {
   final DateTime? readAt;
   final MessageStatus status;
 
+  /// Written by Mboa, not by either party (`kind: SYSTEM`): no sender, on
+  /// neither side of the thread, and not reportable.
+  final bool isSystem;
+
+  /// What a system message announces — today, a reservation request.
+  final ReservationSnapshot? reservation;
+
   List<String> get attachmentUrls =>
       attachmentKeys.map(BaseProfile.mediaUrl).nonNulls.toList();
 
@@ -132,6 +172,8 @@ class Message extends Equatable {
         attachmentKeys: response.attachmentKeys?.toList() ?? const [],
         sentAt: response.sentAt?.toLocal(),
         readAt: response.readAt?.toLocal(),
+        isSystem: response.kind?.name == 'SYSTEM',
+        reservation: ReservationSnapshot.fromResponse(response.reservation),
       );
 
   Message copyWith({MessageStatus? status}) => Message(
@@ -143,6 +185,8 @@ class Message extends Equatable {
         sentAt: sentAt,
         readAt: readAt,
         status: status ?? this.status,
+        isSystem: isSystem,
+        reservation: reservation,
       );
 
   @override
@@ -155,5 +199,7 @@ class Message extends Equatable {
         sentAt,
         readAt,
         status,
+        isSystem,
+        reservation,
       ];
 }

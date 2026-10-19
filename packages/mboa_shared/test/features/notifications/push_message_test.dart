@@ -12,6 +12,7 @@ void main() {
       expect(PushType.parse('CONTRACT'), PushType.contract);
       expect(PushType.parse('RESIDENCE'), PushType.residence);
       expect(PushType.parse('SAVED_SEARCH'), PushType.savedSearch);
+      expect(PushType.parse('RESERVATION'), PushType.reservation);
     });
 
     test('is tolerant of casing and whitespace, not of vocabulary', () {

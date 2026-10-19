@@ -27,6 +27,39 @@ enum RentalPeriod {
   /// Existing listings pre-date the field, and a month is what they all were.
   static const RentalPeriod fallback = RentalPeriod.month;
 
+  /// From any generated enum's wire name (`DAY` … `YEAR`) — the API repeats
+  /// the same five values on a dozen DTOs.
+  static RentalPeriod fromWire(String? name) => switch (name) {
+        'DAY' => RentalPeriod.day,
+        'WEEK' => RentalPeriod.week,
+        'MONTH' => RentalPeriod.month,
+        'QUARTER' => RentalPeriod.quarter,
+        'YEAR' => RentalPeriod.year,
+        _ => fallback,
+      };
+
+  /// The last day of a stay of [units] periods starting on [start] — the
+  /// day before the same date [units] periods later, which is what a "Fin"
+  /// shows. Calendar months: a start on the 31st is clamped to the target
+  /// month's last day. **Indicative**: the contract's own end is the server's.
+  DateTime lastDay(DateTime start, int units) {
+    final from = DateTime(start.year, start.month, start.day);
+    final next = switch (this) {
+      RentalPeriod.day => DateTime(from.year, from.month, from.day + units),
+      RentalPeriod.week => DateTime(from.year, from.month, from.day + 7 * units),
+      RentalPeriod.month => _addMonths(from, units),
+      RentalPeriod.quarter => _addMonths(from, 3 * units),
+      RentalPeriod.year => _addMonths(from, 12 * units),
+    };
+    return DateTime(next.year, next.month, next.day - 1);
+  }
+
+  static DateTime _addMonths(DateTime from, int months) {
+    final target = DateTime(from.year, from.month + months);
+    final lastOfTarget = DateTime(target.year, target.month + 1, 0).day;
+    return DateTime(target.year, target.month, from.day > lastOfTarget ? lastOfTarget : from.day);
+  }
+
   /// Every known value is mapped explicitly. The fallback is for a value this
   /// build predates or an absent field — never for one the enum already has, or
   /// a listing at 5 000 F/day would read "5 000 FCFA / mois".

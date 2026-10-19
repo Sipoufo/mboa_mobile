@@ -9737,6 +9737,36 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Demande de réservation`
+  String get messageSystemReservationTitle {
+    return Intl.message(
+      'Demande de réservation',
+      name: 'messageSystemReservationTitle',
+      desc: 'RM-M29-14 — the system message a request opens the thread with.',
+      args: [],
+    );
+  }
+
+  /// `À partir du {date} · {duration}`
+  String messageSystemReservationStay(String date, String duration) {
+    return Intl.message(
+      'À partir du $date · $duration',
+      name: 'messageSystemReservationStay',
+      desc: 'The requested stay in the system message.',
+      args: [date, duration],
+    );
+  }
+
+  /// `Demande d'argent avant la signature du contrat`
+  String get reportReasonAskedForMoney {
+    return Intl.message(
+      'Demande d\'argent avant la signature du contrat',
+      name: 'reportReasonAskedForMoney',
+      desc: 'RM-M29-09 — ASKED_FOR_MONEY.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

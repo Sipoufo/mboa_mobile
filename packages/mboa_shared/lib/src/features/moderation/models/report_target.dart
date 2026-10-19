@@ -33,7 +33,11 @@ enum ReportReason {
   fraudulentListing,
   abnormalPrice,
   inappropriateContent,
-  harassment;
+  harassment,
+
+  /// RM-M29-09 — money asked before the Mboa Contract is signed: Mboa takes
+  /// none at reservation, and nobody else should either.
+  askedForMoney;
 
   CreateSignalementRequestReasonEnum get wire => switch (this) {
         ReportReason.fraudulentListing =>
@@ -43,6 +47,7 @@ enum ReportReason {
         ReportReason.inappropriateContent =>
           CreateSignalementRequestReasonEnum.INAPPROPRIATE_CONTENT,
         ReportReason.harassment => CreateSignalementRequestReasonEnum.HARASSMENT,
+        ReportReason.askedForMoney => CreateSignalementRequestReasonEnum.ASKED_FOR_MONEY,
       };
 }
 
@@ -67,6 +72,7 @@ class ReportTarget extends Equatable {
         ReportTargetKind.annonce => const [
             ReportReason.fraudulentListing,
             ReportReason.abnormalPrice,
+            ReportReason.askedForMoney,
             ReportReason.inappropriateContent,
           ],
         // RM-M27-06 — a review is somebody's account of living somewhere. It
@@ -76,6 +82,7 @@ class ReportTarget extends Equatable {
             ReportReason.harassment,
           ],
         ReportTargetKind.message => const [
+            ReportReason.askedForMoney,
             ReportReason.inappropriateContent,
             ReportReason.harassment,
           ],

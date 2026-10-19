@@ -64,6 +64,7 @@ class _ReportSheetState extends State<_ReportSheet> {
         ReportReason.abnormalPrice => l10n.reportReasonPrice,
         ReportReason.inappropriateContent => l10n.reportReasonContent,
         ReportReason.harassment => l10n.reportReasonHarassment,
+        ReportReason.askedForMoney => l10n.reportReasonAskedForMoney,
       };
 
   @override

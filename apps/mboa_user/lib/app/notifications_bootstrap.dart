@@ -56,6 +56,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.contract:
     case PushType.paymentConfirmed:
     case PushType.kyc:
+    // Routed to its screen with the reservation screens (M29 lot 1).
+    case PushType.reservation:
     case PushType.residence:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());

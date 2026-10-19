@@ -3611,5 +3611,25 @@
   "pwdResetDoneBody": "Reconnecte-toi avec ton nouveau mot de passe. Tes autres sessions ont été fermées.",
   "@pwdResetDoneBody": {
     "description": "Reset succeeded — the server revokes every session."
+  },
+  "messageSystemReservationTitle": "Demande de réservation",
+  "@messageSystemReservationTitle": {
+    "description": "RM-M29-14 — the system message a request opens the thread with."
+  },
+  "messageSystemReservationStay": "À partir du {date} · {duration}",
+  "@messageSystemReservationStay": {
+    "description": "The requested stay in the system message.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "reportReasonAskedForMoney": "Demande d'argent avant la signature du contrat",
+  "@reportReasonAskedForMoney": {
+    "description": "RM-M29-09 \u2014 ASKED_FOR_MONEY."
   }
 }

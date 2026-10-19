@@ -170,5 +170,31 @@ void main() {
 
     verify(() => thread.add(const ThreadMessageSent('Bonjour'))).called(1);
   });
-}
 
+  testWidgets('RM-M29-14 — a request opens the thread with Mboa\'s own card, on neither side', (tester) async {
+    when(() => thread.state).thenReturn(
+      ThreadReady(
+        conversation: conversation(),
+        messages: [
+          Message(
+            id: 's-1',
+            isSystem: true,
+            body: 'Je peux visiter samedi ?',
+            sentAt: DateTime(2026, 10, 19, 9),
+            reservation: ReservationSnapshot(
+              reservationId: 'r-1',
+              desiredStartDate: DateTime(2026, 11),
+              durationUnits: 6,
+            ),
+          ),
+        ],
+      ),
+    );
+    await pump(tester, ThreadView(uploader: uploader));
+
+    expect(find.text('Demande de réservation'), findsOneWidget);
+    expect(find.textContaining('À partir du 1 novembre 2026'), findsOneWidget);
+    expect(find.textContaining('6 mois'), findsOneWidget);
+    expect(find.text('« Je peux visiter samedi ? »'), findsOneWidget);
+  });
+}

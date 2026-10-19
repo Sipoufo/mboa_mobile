@@ -6,6 +6,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../contracts/ui/widgets/contract_bits.dart';
 import '../../media/capture_source_sheet.dart';
 import '../../media/media_uploader.dart';
 import '../bloc/thread_bloc.dart';
@@ -106,8 +107,11 @@ class _ThreadViewState extends State<ThreadView> {
                         controller: _scroll,
                         padding: const EdgeInsets.all(Dimens.spacing),
                         itemCount: ready.visible.length,
-                        itemBuilder: (context, index) =>
-                            _Bubble(message: ready.visible[index]),
+                        itemBuilder: (context, index) => switch (ready.visible[index]) {
+                          // RM-M29-14 — Mboa's own line, on neither side.
+                          final Message m when m.isSystem => _SystemCard(message: m),
+                          final Message m => _Bubble(message: m),
+                        },
                       ),
               ),
               if (ready.canWrite)
@@ -251,6 +255,71 @@ class _Bubble extends StatelessWidget {
                 ],
               ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A system message: what a reservation request asked for, written by Mboa
+/// and centred — it belongs to neither party, and cannot be reported.
+class _SystemCard extends StatelessWidget {
+  const _SystemCard({required this.message});
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final request = message.reservation;
+    final start = request?.desiredStartDate;
+    final units = request?.durationUnits;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Dimens.spacingSm, horizontal: Dimens.spacingLg),
+      child: Container(
+        padding: const EdgeInsets.all(Dimens.spacing),
+        decoration: BoxDecoration(
+          color: colors.primaryPale,
+          borderRadius: BorderRadius.circular(Dimens.radiusMd),
+          border: Border.all(color: colors.primary.withValues(alpha: 0.18)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(LucideIcons.calendarCheck, size: Dimens.iconSm, color: colors.primary),
+                const SizedBox(width: Dimens.spacingSm),
+                Expanded(
+                  child: Text(
+                    l10n.messageSystemReservationTitle,
+                    style: context.mboaText.label.copyWith(color: colors.primary, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ],
+            ),
+            if (start != null && units != null) ...[
+              const SizedBox(height: Dimens.spacingXs),
+              Text(
+                l10n.messageSystemReservationStay(
+                  DateFormat.yMMMMd(locale).format(start),
+                  durationLabel(l10n, units, request!.rentalPeriod),
+                ),
+                style: context.mboaText.body.copyWith(color: colors.ink),
+              ),
+            ],
+            // The client's own words, if they wrote any.
+            if (message.body case final body? when body.trim().isNotEmpty) ...[
+              const SizedBox(height: Dimens.spacingSm),
+              Text(
+                '« ${body.trim()} »',
+                style: context.mboaText.body.copyWith(color: colors.textSecondary, fontStyle: FontStyle.italic),
+              ),
+            ],
           ],
         ),
       ),
