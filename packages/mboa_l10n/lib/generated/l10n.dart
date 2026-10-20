@@ -11710,6 +11710,450 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mon logement`
+  String get myHomeTitle {
+    return Intl.message(
+      'Mon logement',
+      name: 'myHomeTitle',
+      desc: 'M30 — the space, and its Compte tile.',
+      args: [],
+    );
+  }
+
+  /// `Mes logements`
+  String get myHomesTitle {
+    return Intl.message(
+      'Mes logements',
+      name: 'myHomesTitle',
+      desc: 'M30 — the list when there are several.',
+      args: [],
+    );
+  }
+
+  /// `Pas encore de logement`
+  String get myHomesEmptyTitle {
+    return Intl.message(
+      'Pas encore de logement',
+      name: 'myHomesEmptyTitle',
+      desc: 'M30 — no signed contract.',
+      args: [],
+    );
+  }
+
+  /// `Ton espace s'ouvre dès que ton Contrat Mboa est signé par les deux parties.`
+  String get myHomesEmptyBody {
+    return Intl.message(
+      'Ton espace s\'ouvre dès que ton Contrat Mboa est signé par les deux parties.',
+      name: 'myHomesEmptyBody',
+      desc: 'RM-M30-01.',
+      args: [],
+    );
+  }
+
+  /// `Prochain loyer`
+  String get myHomeNextRent {
+    return Intl.message(
+      'Prochain loyer',
+      name: 'myHomeNextRent',
+      desc: 'M30 — the header, an échéance to pay.',
+      args: [],
+    );
+  }
+
+  /// `En retard`
+  String get myHomeOverdue {
+    return Intl.message(
+      'En retard',
+      name: 'myHomeOverdue',
+      desc: 'M30 — the header, échéances late.',
+      args: [],
+    );
+  }
+
+  /// `À venir`
+  String get myHomeUpcomingState {
+    return Intl.message(
+      'À venir',
+      name: 'myHomeUpcomingState',
+      desc: 'RM-M30-01 — before the move-in day.',
+      args: [],
+    );
+  }
+
+  /// `Tout est à jour`
+  String get myHomeUpToDate {
+    return Intl.message(
+      'Tout est à jour',
+      name: 'myHomeUpToDate',
+      desc: 'M30 — nothing to pay.',
+      args: [],
+    );
+  }
+
+  /// `Location terminée`
+  String get myHomeEnded {
+    return Intl.message(
+      'Location terminée',
+      name: 'myHomeEnded',
+      desc: 'RM-M30-16 — read only.',
+      args: [],
+    );
+  }
+
+  /// `À payer le {date}`
+  String myHomeDueOn(String date) {
+    return Intl.message(
+      'À payer le $date',
+      name: 'myHomeDueOn',
+      desc: 'M30 — the header.',
+      args: [date],
+    );
+  }
+
+  /// `{count, plural, =1{1 échéance en retard} other{{count} échéances en retard}}`
+  String myHomeOverdueCount(int count) {
+    return Intl.plural(
+      count,
+      one: '1 échéance en retard',
+      other: '$count échéances en retard',
+      name: 'myHomeOverdueCount',
+      desc: 'M30 — the header.',
+      args: [count],
+    );
+  }
+
+  /// `Entrée le {date}`
+  String myHomeStartsOn(String date) {
+    return Intl.message(
+      'Entrée le $date',
+      name: 'myHomeStartsOn',
+      desc: 'M30 — an upcoming space.',
+      args: [date],
+    );
+  }
+
+  /// `Déclarer un paiement`
+  String get myHomeDeclare {
+    return Intl.message(
+      'Déclarer un paiement',
+      name: 'myHomeDeclare',
+      desc: 'RM-M30-03 — the tenant\'s round button.',
+      args: [],
+    );
+  }
+
+  /// `Caution`
+  String get myHomeDeposit {
+    return Intl.message(
+      'Caution',
+      name: 'myHomeDeposit',
+      desc: 'M30 — the deposit button and label.',
+      args: [],
+    );
+  }
+
+  /// `Confirmé`
+  String get myHomeConfirmedTotal {
+    return Intl.message(
+      'Confirmé',
+      name: 'myHomeConfirmedTotal',
+      desc: 'M30 — totals.',
+      args: [],
+    );
+  }
+
+  /// `En attente`
+  String get myHomeDeclaredTotal {
+    return Intl.message(
+      'En attente',
+      name: 'myHomeDeclaredTotal',
+      desc: 'M30 — totals.',
+      args: [],
+    );
+  }
+
+  /// `Contesté`
+  String get myHomeContestedTotal {
+    return Intl.message(
+      'Contesté',
+      name: 'myHomeContestedTotal',
+      desc: 'M30 — totals.',
+      args: [],
+    );
+  }
+
+  /// `Échéancier`
+  String get myHomeScheduleTitle {
+    return Intl.message(
+      'Échéancier',
+      name: 'myHomeScheduleTitle',
+      desc: 'RM-M30-02.',
+      args: [],
+    );
+  }
+
+  /// `Échéances plus anciennes`
+  String get myHomeOlder {
+    return Intl.message(
+      'Échéances plus anciennes',
+      name: 'myHomeOlder',
+      desc: 'M30 — paging back.',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : ton espace tel qu'à ta dernière connexion.`
+  String get myHomeOffline {
+    return Intl.message(
+      'Hors ligne : ton espace tel qu\'à ta dernière connexion.',
+      name: 'myHomeOffline',
+      desc: 'M30 — the cached space.',
+      args: [],
+    );
+  }
+
+  /// `Les loyers se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.`
+  String get myHomeNoMoney {
+    return Intl.message(
+      'Les loyers se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.',
+      name: 'myHomeNoMoney',
+      desc: 'RM-M30-06.',
+      args: [],
+    );
+  }
+
+  /// `À venir`
+  String get dueUpcoming {
+    return Intl.message(
+      'À venir',
+      name: 'dueUpcoming',
+      desc: 'Due status.',
+      args: [],
+    );
+  }
+
+  /// `À payer`
+  String get dueDue {
+    return Intl.message(
+      'À payer',
+      name: 'dueDue',
+      desc: 'Due status.',
+      args: [],
+    );
+  }
+
+  /// `En retard`
+  String get dueLate {
+    return Intl.message(
+      'En retard',
+      name: 'dueLate',
+      desc: 'Due status.',
+      args: [],
+    );
+  }
+
+  /// `Déclaré, en attente`
+  String get dueDeclared {
+    return Intl.message(
+      'Déclaré, en attente',
+      name: 'dueDeclared',
+      desc: 'Due status.',
+      args: [],
+    );
+  }
+
+  /// `Déclaré, non confirmé`
+  String get dueUnconfirmed {
+    return Intl.message(
+      'Déclaré, non confirmé',
+      name: 'dueUnconfirmed',
+      desc: 'Due status — 7 days without an answer.',
+      args: [],
+    );
+  }
+
+  /// `Payé`
+  String get dueConfirmed {
+    return Intl.message(
+      'Payé',
+      name: 'dueConfirmed',
+      desc: 'Due status.',
+      args: [],
+    );
+  }
+
+  /// `Contesté`
+  String get dueContested {
+    return Intl.message(
+      'Contesté',
+      name: 'dueContested',
+      desc: 'Due status.',
+      args: [],
+    );
+  }
+
+  /// `Avant le suivi Mboa`
+  String get dueUntracked {
+    return Intl.message(
+      'Avant le suivi Mboa',
+      name: 'dueUntracked',
+      desc: 'Due status — UNTRACKED.',
+      args: [],
+    );
+  }
+
+  /// `{paid} sur {total}`
+  String duePartial(String paid, String total) {
+    return Intl.message(
+      '$paid sur $total',
+      name: 'duePartial',
+      desc: 'A partly paid échéance.',
+      args: [paid, total],
+    );
+  }
+
+  /// `{from} – {to}`
+  String myHomePeriod(String from, String to) {
+    return Intl.message(
+      '$from – $to',
+      name: 'myHomePeriod',
+      desc: 'An échéance\'s period.',
+      args: [from, to],
+    );
+  }
+
+  /// `Déclarations`
+  String get myHomeDeclarationsTitle {
+    return Intl.message(
+      'Déclarations',
+      name: 'myHomeDeclarationsTitle',
+      desc: 'M30 — the declarations section.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{Loyer · 1 échéance} other{Loyer · {count} échéances}}`
+  String declarationRentCount(int count) {
+    return Intl.plural(
+      count,
+      one: 'Loyer · 1 échéance',
+      other: 'Loyer · $count échéances',
+      name: 'declarationRentCount',
+      desc: 'A declaration row.',
+      args: [count],
+    );
+  }
+
+  /// `En attente`
+  String get declStatusDeclared {
+    return Intl.message(
+      'En attente',
+      name: 'declStatusDeclared',
+      desc: 'Declaration status.',
+      args: [],
+    );
+  }
+
+  /// `Non confirmé`
+  String get declStatusUnconfirmed {
+    return Intl.message(
+      'Non confirmé',
+      name: 'declStatusUnconfirmed',
+      desc: 'Declaration status.',
+      args: [],
+    );
+  }
+
+  /// `Confirmé`
+  String get declStatusConfirmed {
+    return Intl.message(
+      'Confirmé',
+      name: 'declStatusConfirmed',
+      desc: 'Declaration status.',
+      args: [],
+    );
+  }
+
+  /// `Contesté`
+  String get declStatusContested {
+    return Intl.message(
+      'Contesté',
+      name: 'declStatusContested',
+      desc: 'Declaration status.',
+      args: [],
+    );
+  }
+
+  /// `MTN Mobile Money`
+  String get methodMobileMoney {
+    return Intl.message(
+      'MTN Mobile Money',
+      name: 'methodMobileMoney',
+      desc: 'Payment method.',
+      args: [],
+    );
+  }
+
+  /// `Orange Money`
+  String get methodOrangeMoney {
+    return Intl.message(
+      'Orange Money',
+      name: 'methodOrangeMoney',
+      desc: 'Payment method.',
+      args: [],
+    );
+  }
+
+  /// `Espèces`
+  String get methodCash {
+    return Intl.message(
+      'Espèces',
+      name: 'methodCash',
+      desc: 'Payment method.',
+      args: [],
+    );
+  }
+
+  /// `Virement`
+  String get methodTransfer {
+    return Intl.message(
+      'Virement',
+      name: 'methodTransfer',
+      desc: 'Payment method.',
+      args: [],
+    );
+  }
+
+  /// `Autre`
+  String get methodOther {
+    return Intl.message(
+      'Autre',
+      name: 'methodOther',
+      desc: 'Payment method.',
+      args: [],
+    );
+  }
+
+  /// `Sans justificatif`
+  String get myHomeNoProof {
+    return Intl.message(
+      'Sans justificatif',
+      name: 'myHomeNoProof',
+      desc: 'RM-M30-03 — declared without proof.',
+      args: [],
+    );
+  }
+
+  /// `Déclarer`
+  String get myHomeDeclareShort {
+    return Intl.message(
+      'Déclarer',
+      name: 'myHomeDeclareShort',
+      desc: 'M30 — the round button, one word like the mockup.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

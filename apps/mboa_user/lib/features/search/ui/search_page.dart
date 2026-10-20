@@ -10,6 +10,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../my_home/ui/widgets/next_rent_banner.dart';
 import '../../saved_searches/bloc/saved_searches_bloc.dart';
 import '../../saved_searches/ui/widgets/save_search_sheet.dart';
 import '../bloc/search_bloc.dart';
@@ -168,6 +169,8 @@ class _SearchPageState extends State<SearchPage> {
                   onPickCity: _pickCity,
                   onOpenFilters: _openFilters,
                 ),
+                // M30 — the next rent, while a space is active.
+                const NextRentBanner(),
                 if (ready.cachedBecause case final reason?)
                   _CacheBanner(
                     reason: reason,

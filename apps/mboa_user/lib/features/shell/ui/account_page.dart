@@ -127,6 +127,15 @@ class _SignedInState extends State<_SignedIn> {
                     ),
                   ),
                   const SizedBox(height: Dimens.spacingMd),
+                  // M30 — the spaces of signed contracts: rent, declarations.
+                  MboaTileCard(
+                    icon: LucideIcons.house,
+                    title: l10n.myHomeTitle,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [MyHomesRoute()]),
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacingMd),
                   // M29 — the requests sent from a fiche, and their answers.
                   MboaTileCard(
                     icon: LucideIcons.calendarRange,

@@ -12,7 +12,7 @@ import '../../profile/models/base_profile.dart';
 /// work out a lateness or add up a list (RM-M30-02, RM-M30-08).
 
 /// Where the space stands (RM-M30-01, RM-M30-16).
-enum HomeSpaceState {
+enum HomeStage {
   /// Signed, before the move-in day: "À venir".
   upcoming,
   active,
@@ -21,11 +21,11 @@ enum HomeSpaceState {
   readOnly,
   unknown;
 
-  static HomeSpaceState fromWire(String? name) => switch (name) {
-        'UPCOMING' => HomeSpaceState.upcoming,
-        'ACTIVE' => HomeSpaceState.active,
-        'READ_ONLY' => HomeSpaceState.readOnly,
-        _ => HomeSpaceState.unknown,
+  static HomeStage fromWire(String? name) => switch (name) {
+        'UPCOMING' => HomeStage.upcoming,
+        'ACTIVE' => HomeStage.active,
+        'READ_ONLY' => HomeStage.readOnly,
+        _ => HomeStage.unknown,
       };
 }
 
@@ -206,7 +206,7 @@ class Home extends Equatable {
     this.coverPhotoKey,
     this.prestataire,
     this.tenant,
-    this.state = HomeSpaceState.unknown,
+    this.state = HomeStage.unknown,
     this.rent = 0,
     this.rentalPeriod = RentalPeriod.fallback,
     this.chargesIncluded,
@@ -231,7 +231,7 @@ class Home extends Equatable {
   final String? coverPhotoKey;
   final ContractParticipant? prestataire;
   final ContractParticipant? tenant;
-  final HomeSpaceState state;
+  final HomeStage state;
   final int rent;
   final RentalPeriod rentalPeriod;
   final bool? chargesIncluded;
@@ -253,7 +253,7 @@ class Home extends Equatable {
 
   /// The tenant may still declare (the server refuses otherwise:
   /// `HOME_READ_ONLY`, beyond 7 days after the end).
-  bool get isWritable => state == HomeSpaceState.active || state == HomeSpaceState.upcoming;
+  bool get isWritable => state == HomeStage.active || state == HomeStage.upcoming;
 
   static Home fromResponse(HomeSummary response) => Home(
         contractId: response.contractId ?? '',
@@ -265,7 +265,7 @@ class Home extends Equatable {
         coverPhotoKey: response.coverPhotoKey,
         prestataire: response.prestataire == null ? null : ContractParticipant.fromResponse(response.prestataire!),
         tenant: response.tenant == null ? null : ContractParticipant.fromResponse(response.tenant!),
-        state: HomeSpaceState.fromWire(response.state?.name),
+        state: HomeStage.fromWire(response.state?.name),
         rent: response.rent ?? 0,
         rentalPeriod: RentalPeriod.fromWire(response.rentalPeriod?.name),
         chargesIncluded: response.chargesIncluded,
@@ -321,7 +321,7 @@ class Home extends Equatable {
       coverPhotoKey: json['coverPhotoKey'] as String?,
       prestataire: party(json['prestataire']),
       tenant: party(json['tenant']),
-      state: HomeSpaceState.values.where((s) => s.name == json['state']).firstOrNull ?? HomeSpaceState.unknown,
+      state: HomeStage.values.where((s) => s.name == json['state']).firstOrNull ?? HomeStage.unknown,
       rent: json['rent'] as int? ?? 0,
       rentalPeriod: RentalPeriod.values.where((p) => p.name == json['rentalPeriod']).firstOrNull ?? RentalPeriod.fallback,
       chargesIncluded: json['chargesIncluded'] as bool?,

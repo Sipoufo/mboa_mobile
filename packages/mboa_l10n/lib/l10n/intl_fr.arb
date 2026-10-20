@@ -4527,5 +4527,217 @@
   "listingMapTitle": "Localisation du bien",
   "@listingMapTitle": {
     "description": "The full-screen map from the fiche."
+  },
+  "myHomeTitle": "Mon logement",
+  "@myHomeTitle": {
+    "description": "M30 — the space, and its Compte tile."
+  },
+  "myHomesTitle": "Mes logements",
+  "@myHomesTitle": {
+    "description": "M30 — the list when there are several."
+  },
+  "myHomesEmptyTitle": "Pas encore de logement",
+  "@myHomesEmptyTitle": {
+    "description": "M30 — no signed contract."
+  },
+  "myHomesEmptyBody": "Ton espace s'ouvre dès que ton Contrat Mboa est signé par les deux parties.",
+  "@myHomesEmptyBody": {
+    "description": "RM-M30-01."
+  },
+  "myHomeNextRent": "Prochain loyer",
+  "@myHomeNextRent": {
+    "description": "M30 — the header, an échéance to pay."
+  },
+  "myHomeOverdue": "En retard",
+  "@myHomeOverdue": {
+    "description": "M30 — the header, échéances late."
+  },
+  "myHomeUpcomingState": "À venir",
+  "@myHomeUpcomingState": {
+    "description": "RM-M30-01 — before the move-in day."
+  },
+  "myHomeUpToDate": "Tout est à jour",
+  "@myHomeUpToDate": {
+    "description": "M30 — nothing to pay."
+  },
+  "myHomeEnded": "Location terminée",
+  "@myHomeEnded": {
+    "description": "RM-M30-16 — read only."
+  },
+  "myHomeDueOn": "À payer le {date}",
+  "@myHomeDueOn": {
+    "description": "M30 — the header.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomeOverdueCount": "{count, plural, =1{1 échéance en retard} other{{count} échéances en retard}}",
+  "@myHomeOverdueCount": {
+    "description": "M30 — the header.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "myHomeStartsOn": "Entrée le {date}",
+  "@myHomeStartsOn": {
+    "description": "M30 — an upcoming space.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomeDeclare": "Déclarer un paiement",
+  "@myHomeDeclare": {
+    "description": "RM-M30-03 — the tenant's round button."
+  },
+  "myHomeDeposit": "Caution",
+  "@myHomeDeposit": {
+    "description": "M30 — the deposit button and label."
+  },
+  "myHomeConfirmedTotal": "Confirmé",
+  "@myHomeConfirmedTotal": {
+    "description": "M30 — totals."
+  },
+  "myHomeDeclaredTotal": "En attente",
+  "@myHomeDeclaredTotal": {
+    "description": "M30 — totals."
+  },
+  "myHomeContestedTotal": "Contesté",
+  "@myHomeContestedTotal": {
+    "description": "M30 — totals."
+  },
+  "myHomeScheduleTitle": "Échéancier",
+  "@myHomeScheduleTitle": {
+    "description": "RM-M30-02."
+  },
+  "myHomeOlder": "Échéances plus anciennes",
+  "@myHomeOlder": {
+    "description": "M30 — paging back."
+  },
+  "myHomeOffline": "Hors ligne : ton espace tel qu'à ta dernière connexion.",
+  "@myHomeOffline": {
+    "description": "M30 — the cached space."
+  },
+  "myHomeNoMoney": "Les loyers se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.",
+  "@myHomeNoMoney": {
+    "description": "RM-M30-06."
+  },
+  "dueUpcoming": "À venir",
+  "@dueUpcoming": {
+    "description": "Due status."
+  },
+  "dueDue": "À payer",
+  "@dueDue": {
+    "description": "Due status."
+  },
+  "dueLate": "En retard",
+  "@dueLate": {
+    "description": "Due status."
+  },
+  "dueDeclared": "Déclaré, en attente",
+  "@dueDeclared": {
+    "description": "Due status."
+  },
+  "dueUnconfirmed": "Déclaré, non confirmé",
+  "@dueUnconfirmed": {
+    "description": "Due status — 7 days without an answer."
+  },
+  "dueConfirmed": "Payé",
+  "@dueConfirmed": {
+    "description": "Due status."
+  },
+  "dueContested": "Contesté",
+  "@dueContested": {
+    "description": "Due status."
+  },
+  "dueUntracked": "Avant le suivi Mboa",
+  "@dueUntracked": {
+    "description": "Due status — UNTRACKED."
+  },
+  "duePartial": "{paid} sur {total}",
+  "@duePartial": {
+    "description": "A partly paid échéance.",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomePeriod": "{from} – {to}",
+  "@myHomePeriod": {
+    "description": "An échéance's period.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomeDeclarationsTitle": "Déclarations",
+  "@myHomeDeclarationsTitle": {
+    "description": "M30 — the declarations section."
+  },
+  "declarationRentCount": "{count, plural, =1{Loyer · 1 échéance} other{Loyer · {count} échéances}}",
+  "@declarationRentCount": {
+    "description": "A declaration row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "declStatusDeclared": "En attente",
+  "@declStatusDeclared": {
+    "description": "Declaration status."
+  },
+  "declStatusUnconfirmed": "Non confirmé",
+  "@declStatusUnconfirmed": {
+    "description": "Declaration status."
+  },
+  "declStatusConfirmed": "Confirmé",
+  "@declStatusConfirmed": {
+    "description": "Declaration status."
+  },
+  "declStatusContested": "Contesté",
+  "@declStatusContested": {
+    "description": "Declaration status."
+  },
+  "methodMobileMoney": "MTN Mobile Money",
+  "@methodMobileMoney": {
+    "description": "Payment method."
+  },
+  "methodOrangeMoney": "Orange Money",
+  "@methodOrangeMoney": {
+    "description": "Payment method."
+  },
+  "methodCash": "Espèces",
+  "@methodCash": {
+    "description": "Payment method."
+  },
+  "methodTransfer": "Virement",
+  "@methodTransfer": {
+    "description": "Payment method."
+  },
+  "methodOther": "Autre",
+  "@methodOther": {
+    "description": "Payment method."
+  },
+  "myHomeNoProof": "Sans justificatif",
+  "@myHomeNoProof": {
+    "description": "RM-M30-03 — declared without proof."
+  },
+  "myHomeDeclareShort": "Déclarer",
+  "@myHomeDeclareShort": {
+    "description": "M30 — the round button, one word like the mockup."
   }
 }

@@ -78,7 +78,7 @@ void main() {
     test('a space reads the server\'s verdicts — lateness, partial payment, the deposit', () {
       final home = Home.fromResponse(_summary());
 
-      expect(home.state, HomeSpaceState.active);
+      expect(home.state, HomeStage.active);
       expect(home.rentalPeriod, RentalPeriod.month);
       expect(home.deposit.status, DepositStatus.contested);
       expect(home.deposit.status.isOpen, isTrue);

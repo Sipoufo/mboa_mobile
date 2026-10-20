@@ -3,6 +3,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
+import '../../features/my_home/bloc/my_homes_bloc.dart';
 import '../../features/profile/profile_types.dart';
 import '../../features/favorites/bloc/favorites_bloc.dart';
 import '../../features/favorites/data/favorites_repository.dart';
@@ -157,6 +158,19 @@ void registerAppModule() {
     () => ReservationBloc(repository: getIt<ReservationsRepository>()),
   );
 
+  // M30 — "Mon Logement". The list is a session singleton (the Compte list
+  // and the search tab's "Prochain loyer" read one instance); a space is
+  // read per screen.
+  getIt.registerLazySingleton<HomesRepository>(
+    () => HomesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<MyHomesBloc>(
+    () => MyHomesBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactory<HomeSpaceBloc>(
+    () => HomeSpaceBloc(repository: getIt<HomesRepository>()),
+  );
+
   // M27 — the resident's review, written from a signed contract.
   getIt.registerLazySingleton<ResidentReviewRepository>(
     () => ResidentReviewRepository(dioClient: getIt<DioClient>()),
@@ -268,6 +282,7 @@ void loadSessionScopedBlocs() {
   getIt<FavoritesBloc>().add(const FavoritesLoadRequested());
   getIt<ConversationsBloc>().add(const ConversationsLoadRequested());
   getIt<SavedSearchesBloc>().add(const SavedSearchesRequested());
+  getIt<MyHomesBloc>().add(const MyHomesRequested());
 }
 
 /// Drops the blocs that belong to a signed-in account.
@@ -287,6 +302,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<SavedSearchesBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<MyHomesBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
 }

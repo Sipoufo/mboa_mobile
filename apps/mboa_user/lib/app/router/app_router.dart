@@ -105,6 +105,10 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: MyReservationsRoute.page, path: 'reservations'),
             AutoRoute(page: ReservationDetailRoute.page, path: 'reservations/:id'),
 
+            // M30 — "Mon Logement": a space per signed contract.
+            AutoRoute(page: MyHomesRoute.page, path: 'homes'),
+            AutoRoute(page: MyHomeRoute.page, path: 'homes/:contractId'),
+
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),
             AutoRoute(page: ChangePhoneRoute.page, path: 'settings/phone'),

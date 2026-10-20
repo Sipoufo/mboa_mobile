@@ -4527,5 +4527,217 @@
   "listingMapTitle": "Where it is",
   "@listingMapTitle": {
     "description": "The full-screen map from the fiche."
+  },
+  "myHomeTitle": "My home",
+  "@myHomeTitle": {
+    "description": "M30 — the space, and its Compte tile."
+  },
+  "myHomesTitle": "My homes",
+  "@myHomesTitle": {
+    "description": "M30 — the list when there are several."
+  },
+  "myHomesEmptyTitle": "No home yet",
+  "@myHomesEmptyTitle": {
+    "description": "M30 — no signed contract."
+  },
+  "myHomesEmptyBody": "Your space opens as soon as your Mboa Contract is signed by both parties.",
+  "@myHomesEmptyBody": {
+    "description": "RM-M30-01."
+  },
+  "myHomeNextRent": "Next rent",
+  "@myHomeNextRent": {
+    "description": "M30 — the header, an échéance to pay."
+  },
+  "myHomeOverdue": "Overdue",
+  "@myHomeOverdue": {
+    "description": "M30 — the header, échéances late."
+  },
+  "myHomeUpcomingState": "Upcoming",
+  "@myHomeUpcomingState": {
+    "description": "RM-M30-01 — before the move-in day."
+  },
+  "myHomeUpToDate": "All up to date",
+  "@myHomeUpToDate": {
+    "description": "M30 — nothing to pay."
+  },
+  "myHomeEnded": "Tenancy over",
+  "@myHomeEnded": {
+    "description": "RM-M30-16 — read only."
+  },
+  "myHomeDueOn": "Due on {date}",
+  "@myHomeDueOn": {
+    "description": "M30 — the header.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomeOverdueCount": "{count, plural, =1{1 payment overdue} other{{count} payments overdue}}",
+  "@myHomeOverdueCount": {
+    "description": "M30 — the header.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "myHomeStartsOn": "Moving in on {date}",
+  "@myHomeStartsOn": {
+    "description": "M30 — an upcoming space.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomeDeclare": "Declare a payment",
+  "@myHomeDeclare": {
+    "description": "RM-M30-03 — the tenant's round button."
+  },
+  "myHomeDeposit": "Deposit",
+  "@myHomeDeposit": {
+    "description": "M30 — the deposit button and label."
+  },
+  "myHomeConfirmedTotal": "Confirmed",
+  "@myHomeConfirmedTotal": {
+    "description": "M30 — totals."
+  },
+  "myHomeDeclaredTotal": "Waiting",
+  "@myHomeDeclaredTotal": {
+    "description": "M30 — totals."
+  },
+  "myHomeContestedTotal": "Contested",
+  "@myHomeContestedTotal": {
+    "description": "M30 — totals."
+  },
+  "myHomeScheduleTitle": "Schedule",
+  "@myHomeScheduleTitle": {
+    "description": "RM-M30-02."
+  },
+  "myHomeOlder": "Older payments",
+  "@myHomeOlder": {
+    "description": "M30 — paging back."
+  },
+  "myHomeOffline": "Offline: your space as of your last connection.",
+  "@myHomeOffline": {
+    "description": "M30 — the cached space."
+  },
+  "myHomeNoMoney": "Rent is paid outside Mboa: you declare it here, your landlord confirms it.",
+  "@myHomeNoMoney": {
+    "description": "RM-M30-06."
+  },
+  "dueUpcoming": "Upcoming",
+  "@dueUpcoming": {
+    "description": "Due status."
+  },
+  "dueDue": "To pay",
+  "@dueDue": {
+    "description": "Due status."
+  },
+  "dueLate": "Overdue",
+  "@dueLate": {
+    "description": "Due status."
+  },
+  "dueDeclared": "Declared, waiting",
+  "@dueDeclared": {
+    "description": "Due status."
+  },
+  "dueUnconfirmed": "Declared, unconfirmed",
+  "@dueUnconfirmed": {
+    "description": "Due status — 7 days without an answer."
+  },
+  "dueConfirmed": "Paid",
+  "@dueConfirmed": {
+    "description": "Due status."
+  },
+  "dueContested": "Contested",
+  "@dueContested": {
+    "description": "Due status."
+  },
+  "dueUntracked": "Before Mboa tracking",
+  "@dueUntracked": {
+    "description": "Due status — UNTRACKED."
+  },
+  "duePartial": "{paid} of {total}",
+  "@duePartial": {
+    "description": "A partly paid échéance.",
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomePeriod": "{from} – {to}",
+  "@myHomePeriod": {
+    "description": "An échéance's period.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "myHomeDeclarationsTitle": "Declarations",
+  "@myHomeDeclarationsTitle": {
+    "description": "M30 — the declarations section."
+  },
+  "declarationRentCount": "{count, plural, =1{Rent · 1 payment} other{Rent · {count} payments}}",
+  "@declarationRentCount": {
+    "description": "A declaration row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "declStatusDeclared": "Waiting",
+  "@declStatusDeclared": {
+    "description": "Declaration status."
+  },
+  "declStatusUnconfirmed": "Unconfirmed",
+  "@declStatusUnconfirmed": {
+    "description": "Declaration status."
+  },
+  "declStatusConfirmed": "Confirmed",
+  "@declStatusConfirmed": {
+    "description": "Declaration status."
+  },
+  "declStatusContested": "Contested",
+  "@declStatusContested": {
+    "description": "Declaration status."
+  },
+  "methodMobileMoney": "MTN Mobile Money",
+  "@methodMobileMoney": {
+    "description": "Payment method."
+  },
+  "methodOrangeMoney": "Orange Money",
+  "@methodOrangeMoney": {
+    "description": "Payment method."
+  },
+  "methodCash": "Cash",
+  "@methodCash": {
+    "description": "Payment method."
+  },
+  "methodTransfer": "Bank transfer",
+  "@methodTransfer": {
+    "description": "Payment method."
+  },
+  "methodOther": "Other",
+  "@methodOther": {
+    "description": "Payment method."
+  },
+  "myHomeNoProof": "No proof",
+  "@myHomeNoProof": {
+    "description": "RM-M30-03 — declared without proof."
+  },
+  "myHomeDeclareShort": "Declare",
+  "@myHomeDeclareShort": {
+    "description": "M30 — the round button, one word like the mockup."
   }
 }
