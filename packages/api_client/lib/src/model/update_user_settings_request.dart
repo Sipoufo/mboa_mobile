@@ -26,7 +26,7 @@ abstract class UpdateUserSettingsRequest implements Built<UpdateUserSettingsRequ
 
   @BuiltValueField(wireName: r'disabledNotifications')
   BuiltSet<UpdateUserSettingsRequestDisabledNotificationsEnum>? get disabledNotifications;
-  // enum disabledNotificationsEnum {  N01,  N02,  N03,  N04,  N05,  N06,  N07,  N08,  N09,  N10,  N11,  N12,  N13,  N14,  N15,  N16,  N17,  N18,  N19,  N20,  N21,  N22,  N23,  N24,  N25,  N26,  N32,  N33,  N34,  };
+  // enum disabledNotificationsEnum {  N01,  N02,  N03,  N04,  N05,  N06,  N07,  N08,  N09,  N10,  N11,  N12,  N13,  N14,  N15,  N16,  N17,  N18,  N19,  N20,  N21,  N22,  N23,  N24,  N25,  N26,  N32,  N33,  N34,  N35,  N36,  };
 
   UpdateUserSettingsRequest._();
 
@@ -225,6 +225,10 @@ class UpdateUserSettingsRequestDisabledNotificationsEnum extends EnumClass {
   static const UpdateUserSettingsRequestDisabledNotificationsEnum N33 = _$updateUserSettingsRequestDisabledNotificationsEnum_N33;
   @BuiltValueEnumConst(wireName: r'N34')
   static const UpdateUserSettingsRequestDisabledNotificationsEnum N34 = _$updateUserSettingsRequestDisabledNotificationsEnum_N34;
+  @BuiltValueEnumConst(wireName: r'N35')
+  static const UpdateUserSettingsRequestDisabledNotificationsEnum N35 = _$updateUserSettingsRequestDisabledNotificationsEnum_N35;
+  @BuiltValueEnumConst(wireName: r'N36')
+  static const UpdateUserSettingsRequestDisabledNotificationsEnum N36 = _$updateUserSettingsRequestDisabledNotificationsEnum_N36;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const UpdateUserSettingsRequestDisabledNotificationsEnum unknownDefaultOpenApi = _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi;
 

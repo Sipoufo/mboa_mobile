@@ -14,6 +14,7 @@ part 'register_device_request.g.dart';
 /// Properties:
 /// * [token] 
 /// * [platform] 
+/// * [pushEnabled] 
 @BuiltValue()
 abstract class RegisterDeviceRequest implements Built<RegisterDeviceRequest, RegisterDeviceRequestBuilder> {
   @BuiltValueField(wireName: r'token')
@@ -22,6 +23,9 @@ abstract class RegisterDeviceRequest implements Built<RegisterDeviceRequest, Reg
   @BuiltValueField(wireName: r'platform')
   RegisterDeviceRequestPlatformEnum get platform;
   // enum platformEnum {  ANDROID,  IOS,  WEB,  };
+
+  @BuiltValueField(wireName: r'pushEnabled')
+  bool? get pushEnabled;
 
   RegisterDeviceRequest._();
 
@@ -56,6 +60,13 @@ class _$RegisterDeviceRequestSerializer implements PrimitiveSerializer<RegisterD
       object.platform,
       specifiedType: const FullType(RegisterDeviceRequestPlatformEnum),
     );
+    if (object.pushEnabled != null) {
+      yield r'pushEnabled';
+      yield serializers.serialize(
+        object.pushEnabled,
+        specifiedType: const FullType(bool),
+      );
+    }
   }
 
   @override
@@ -92,6 +103,14 @@ class _$RegisterDeviceRequestSerializer implements PrimitiveSerializer<RegisterD
             specifiedType: const FullType(RegisterDeviceRequestPlatformEnum),
           ) as RegisterDeviceRequestPlatformEnum;
           result.platform = valueDes;
+          break;
+        case r'pushEnabled':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.pushEnabled = valueDes;
           break;
         default:
           unhandled.add(key);

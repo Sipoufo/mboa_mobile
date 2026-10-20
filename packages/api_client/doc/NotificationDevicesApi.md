@@ -9,14 +9,14 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**registerDevice**](NotificationDevicesApi.md#registerdevice) | **POST** /api/v1/notifications/devices | Register or refresh a device push token
+[**registerDevice**](NotificationDevicesApi.md#registerdevice) | **POST** /api/v1/notifications/devices | Register or refresh a device push token, with whether the phone shows notifications (RM-M03-02)
 [**unregisterDevice**](NotificationDevicesApi.md#unregisterdevice) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
 
 
 # **registerDevice**
 > registerDevice(registerDeviceRequest)
 
-Register or refresh a device push token
+Register or refresh a device push token, with whether the phone shows notifications (RM-M03-02)
 
 ### Example
 ```dart

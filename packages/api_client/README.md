@@ -252,7 +252,20 @@ Class | Method | HTTP request | Description
 [*MessagerieApi*](doc/MessagerieApi.md) | [**markConversationRead**](doc/MessagerieApi.md#markconversationread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
 [*MessagerieApi*](doc/MessagerieApi.md) | [**sendMessage**](doc/MessagerieApi.md#sendmessage) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
 [*MessagerieApi*](doc/MessagerieApi.md) | [**startConversation**](doc/MessagerieApi.md#startconversation) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
-[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**registerDevice**](doc/NotificationDevicesApi.md#registerdevice) | **POST** /api/v1/notifications/devices | Register or refresh a device push token
+[*MonLogementApi*](doc/MonLogementApi.md) | [**confirmDeclaration**](doc/MonLogementApi.md#confirmdeclaration) | **POST** /api/v1/prestataires/me/declarations/{declarationId}/confirm | Confirm a declared payment: it now pays its échéances (RM-M30-04, RM-M30-08)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**contestDeclaration**](doc/MonLogementApi.md#contestdeclaration) | **POST** /api/v1/prestataires/me/declarations/{declarationId}/contest | Contest a declared payment, with a reason the tenant sees (RM-M30-04, RM-M30-07)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**declarePayment**](doc/MonLogementApi.md#declarepayment) | **POST** /api/v1/homes/{contractId}/declarations | Declare a payment made outside Mboa: rent (one or more échéances) or deposit, proofs optional (RM-M30-03)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**getDeclarationProofs**](doc/MonLogementApi.md#getdeclarationproofs) | **GET** /api/v1/homes/{contractId}/declarations/{declarationId}/proofs | Short-lived links to a declaration&#39;s proofs — the two parties only
+[*MonLogementApi*](doc/MonLogementApi.md) | [**getHome**](doc/MonLogementApi.md#gethome) | **GET** /api/v1/homes/{contractId} | One home, tenant or landlord: the summary and its échéancier up to the next 12 (RM-M30-01/02)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**getHomeDeclaration**](doc/MonLogementApi.md#gethomedeclaration) | **GET** /api/v1/homes/{contractId}/declarations/{declarationId} | One declared payment of a home
+[*MonLogementApi*](doc/MonLogementApi.md) | [**getHomeFinanceSummary**](doc/MonLogementApi.md#gethomefinancesummary) | **GET** /api/v1/homes/{contractId}/summary | A home&#39;s totals — confirmed, waiting, contested; only confirmed counts as paid (RM-M30-08)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**getHomeSchedule**](doc/MonLogementApi.md#gethomeschedule) | **GET** /api/v1/homes/{contractId}/schedule | A window of a home&#39;s échéancier, computed from the contract — at most the next 12, 100 per answer (RM-M30-02)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**getMyReceivedDeclaration**](doc/MonLogementApi.md#getmyreceiveddeclaration) | **GET** /api/v1/prestataires/me/declarations/{declarationId} | One declared payment on my homes — what N-35 opens
+[*MonLogementApi*](doc/MonLogementApi.md) | [**listHomeDeclarations**](doc/MonLogementApi.md#listhomedeclarations) | **GET** /api/v1/homes/{contractId}/declarations | A home&#39;s declared payments, newest first
+[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyHomes**](doc/MonLogementApi.md#listmyhomes) | **GET** /api/v1/homes | My homes — one per signed contract, active first, then to come, then ended (RM-M30-01)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyReceivedDeclarations**](doc/MonLogementApi.md#listmyreceiveddeclarations) | **GET** /api/v1/prestataires/me/declarations | Declared payments on my homes, oldest first — status&#x3D;DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyTenantHomes**](doc/MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first (RM-M30-14: mine only)
+[*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**registerDevice**](doc/NotificationDevicesApi.md#registerdevice) | **POST** /api/v1/notifications/devices | Register or refresh a device push token, with whether the phone shows notifications (RM-M03-02)
 [*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**unregisterDevice**](doc/NotificationDevicesApi.md#unregisterdevice) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
 [*PasswordApi*](doc/PasswordApi.md) | [**changePassword**](doc/PasswordApi.md#changepassword) | **POST** /api/v1/account/password | Change the password (revokes other sessions)
 [*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**confirmPhoneChange**](doc/PhoneChangeApi.md#confirmphonechange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
@@ -369,6 +382,7 @@ Class | Method | HTTP request | Description
  - [Cohort](doc/Cohort.md)
  - [Comment](doc/Comment.md)
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
+ - [ContestDeclarationRequest](doc/ContestDeclarationRequest.md)
  - [ContractPdfResponse](doc/ContractPdfResponse.md)
  - [ContractResponse](doc/ContractResponse.md)
  - [ContractTenancyResponse](doc/ContractTenancyResponse.md)
@@ -387,8 +401,11 @@ Class | Method | HTTP request | Description
  - [DashboardItem](doc/DashboardItem.md)
  - [DashboardMetric](doc/DashboardMetric.md)
  - [DashboardSummaryResponse](doc/DashboardSummaryResponse.md)
+ - [DeclarationResponse](doc/DeclarationResponse.md)
+ - [DeclarePaymentRequest](doc/DeclarePaymentRequest.md)
  - [DeleteAccountRequest](doc/DeleteAccountRequest.md)
  - [DeletionChallengeResponse](doc/DeletionChallengeResponse.md)
+ - [Due](doc/Due.md)
  - [ErrorResponse](doc/ErrorResponse.md)
  - [ExtendSubscriptionRequest](doc/ExtendSubscriptionRequest.md)
  - [FavoriResponse](doc/FavoriResponse.md)
@@ -401,6 +418,11 @@ Class | Method | HTTP request | Description
  - [HistorySectionAdminContractLine](doc/HistorySectionAdminContractLine.md)
  - [HistorySectionAdminReportLine](doc/HistorySectionAdminReportLine.md)
  - [HistorySectionAdminVisitLine](doc/HistorySectionAdminVisitLine.md)
+ - [HomeDeposit](doc/HomeDeposit.md)
+ - [HomeDetail](doc/HomeDetail.md)
+ - [HomeFinanceSummary](doc/HomeFinanceSummary.md)
+ - [HomeSchedule](doc/HomeSchedule.md)
+ - [HomeSummary](doc/HomeSummary.md)
  - [InvoiceResponse](doc/InvoiceResponse.md)
  - [KpiDashboardResponse](doc/KpiDashboardResponse.md)
  - [KpiDayResponse](doc/KpiDayResponse.md)
@@ -432,8 +454,10 @@ Class | Method | HTTP request | Description
  - [PageResponseContractResponse](doc/PageResponseContractResponse.md)
  - [PageResponseConversationResponse](doc/PageResponseConversationResponse.md)
  - [PageResponseDashboardItem](doc/PageResponseDashboardItem.md)
+ - [PageResponseDeclarationResponse](doc/PageResponseDeclarationResponse.md)
  - [PageResponseFavoriResponse](doc/PageResponseFavoriResponse.md)
  - [PageResponseHistoriqueResponse](doc/PageResponseHistoriqueResponse.md)
+ - [PageResponseHomeSummary](doc/PageResponseHomeSummary.md)
  - [PageResponseInvoiceResponse](doc/PageResponseInvoiceResponse.md)
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
  - [PageResponseLedgerEntryResponse](doc/PageResponseLedgerEntryResponse.md)

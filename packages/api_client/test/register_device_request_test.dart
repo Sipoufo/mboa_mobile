@@ -17,5 +17,10 @@ void main() {
       // TODO
     });
 
+    // bool pushEnabled
+    test('to test the property `pushEnabled`', () async {
+      // TODO
+    });
+
   });
 }

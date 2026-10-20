@@ -7,7 +7,7 @@ void main() {
   final instance = ApiClient().getNotificationDevicesApi();
 
   group(NotificationDevicesApi, () {
-    // Register or refresh a device push token
+    // Register or refresh a device push token, with whether the phone shows notifications (RM-M03-02)
     //
     //Future registerDevice(RegisterDeviceRequest registerDeviceRequest) async
     test('test registerDevice', () async {

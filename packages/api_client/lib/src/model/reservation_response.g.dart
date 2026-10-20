@@ -439,6 +439,8 @@ class _$ReservationResponse extends ReservationResponse {
   final bool? canCancel;
   @override
   final bool? canDraftContract;
+  @override
+  final String? contractId;
 
   factory _$ReservationResponse([
     void Function(ReservationResponseBuilder)? updates,
@@ -470,6 +472,7 @@ class _$ReservationResponse extends ReservationResponse {
     this.canExtend,
     this.canCancel,
     this.canDraftContract,
+    this.contractId,
   }) : super._();
   @override
   ReservationResponse rebuild(
@@ -508,7 +511,8 @@ class _$ReservationResponse extends ReservationResponse {
         canRefuse == other.canRefuse &&
         canExtend == other.canExtend &&
         canCancel == other.canCancel &&
-        canDraftContract == other.canDraftContract;
+        canDraftContract == other.canDraftContract &&
+        contractId == other.contractId;
   }
 
   @override
@@ -539,6 +543,7 @@ class _$ReservationResponse extends ReservationResponse {
     _$hash = $jc(_$hash, canExtend.hashCode);
     _$hash = $jc(_$hash, canCancel.hashCode);
     _$hash = $jc(_$hash, canDraftContract.hashCode);
+    _$hash = $jc(_$hash, contractId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -570,7 +575,8 @@ class _$ReservationResponse extends ReservationResponse {
           ..add('canRefuse', canRefuse)
           ..add('canExtend', canExtend)
           ..add('canCancel', canCancel)
-          ..add('canDraftContract', canDraftContract))
+          ..add('canDraftContract', canDraftContract)
+          ..add('contractId', contractId))
         .toString();
   }
 }
@@ -691,6 +697,10 @@ class ReservationResponseBuilder
   set canDraftContract(bool? canDraftContract) =>
       _$this._canDraftContract = canDraftContract;
 
+  String? _contractId;
+  String? get contractId => _$this._contractId;
+  set contractId(String? contractId) => _$this._contractId = contractId;
+
   ReservationResponseBuilder() {
     ReservationResponse._defaults(this);
   }
@@ -723,6 +733,7 @@ class ReservationResponseBuilder
       _canExtend = $v.canExtend;
       _canCancel = $v.canCancel;
       _canDraftContract = $v.canDraftContract;
+      _contractId = $v.contractId;
       _$v = null;
     }
     return this;
@@ -772,6 +783,7 @@ class ReservationResponseBuilder
             canExtend: canExtend,
             canCancel: canCancel,
             canDraftContract: canDraftContract,
+            contractId: contractId,
           );
     } catch (_) {
       late String _$failedField;

@@ -128,6 +128,12 @@ const UpdateUserSettingsRequestDisabledNotificationsEnum
 _$updateUserSettingsRequestDisabledNotificationsEnum_N34 =
     const UpdateUserSettingsRequestDisabledNotificationsEnum._('N34');
 const UpdateUserSettingsRequestDisabledNotificationsEnum
+_$updateUserSettingsRequestDisabledNotificationsEnum_N35 =
+    const UpdateUserSettingsRequestDisabledNotificationsEnum._('N35');
+const UpdateUserSettingsRequestDisabledNotificationsEnum
+_$updateUserSettingsRequestDisabledNotificationsEnum_N36 =
+    const UpdateUserSettingsRequestDisabledNotificationsEnum._('N36');
+const UpdateUserSettingsRequestDisabledNotificationsEnum
 _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi =
     const UpdateUserSettingsRequestDisabledNotificationsEnum._(
       'unknownDefaultOpenApi',
@@ -194,6 +200,10 @@ _$updateUserSettingsRequestDisabledNotificationsEnumValueOf(String name) {
       return _$updateUserSettingsRequestDisabledNotificationsEnum_N33;
     case 'N34':
       return _$updateUserSettingsRequestDisabledNotificationsEnum_N34;
+    case 'N35':
+      return _$updateUserSettingsRequestDisabledNotificationsEnum_N35;
+    case 'N36':
+      return _$updateUserSettingsRequestDisabledNotificationsEnum_N36;
     case 'unknownDefaultOpenApi':
       return _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi;
     default:
@@ -235,6 +245,8 @@ _$updateUserSettingsRequestDisabledNotificationsEnumValues =
       _$updateUserSettingsRequestDisabledNotificationsEnum_N32,
       _$updateUserSettingsRequestDisabledNotificationsEnum_N33,
       _$updateUserSettingsRequestDisabledNotificationsEnum_N34,
+      _$updateUserSettingsRequestDisabledNotificationsEnum_N35,
+      _$updateUserSettingsRequestDisabledNotificationsEnum_N36,
       _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi,
     ]);
 
@@ -317,6 +329,8 @@ class _$UpdateUserSettingsRequestDisabledNotificationsEnumSerializer
     'N32': 'N32',
     'N33': 'N33',
     'N34': 'N34',
+    'N35': 'N35',
+    'N36': 'N36',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -349,6 +363,8 @@ class _$UpdateUserSettingsRequestDisabledNotificationsEnumSerializer
     'N32': 'N32',
     'N33': 'N33',
     'N34': 'N34',
+    'N35': 'N35',
+    'N36': 'N36',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

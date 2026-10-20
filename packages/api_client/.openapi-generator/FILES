@@ -65,6 +65,7 @@ doc/Churn.md
 doc/Cohort.md
 doc/Comment.md
 doc/ConfirmPhoneChangeRequest.md
+doc/ContestDeclarationRequest.md
 doc/ContractPdfResponse.md
 doc/ContractResponse.md
 doc/ContractTenancyResponse.md
@@ -85,8 +86,11 @@ doc/DashboardFigures.md
 doc/DashboardItem.md
 doc/DashboardMetric.md
 doc/DashboardSummaryResponse.md
+doc/DeclarationResponse.md
+doc/DeclarePaymentRequest.md
 doc/DeleteAccountRequest.md
 doc/DeletionChallengeResponse.md
+doc/Due.md
 doc/ErrorResponse.md
 doc/ExtendSubscriptionRequest.md
 doc/FavoriResponse.md
@@ -105,6 +109,11 @@ doc/HistoriqueResponse.md
 doc/HistorySectionAdminContractLine.md
 doc/HistorySectionAdminReportLine.md
 doc/HistorySectionAdminVisitLine.md
+doc/HomeDeposit.md
+doc/HomeDetail.md
+doc/HomeFinanceSummary.md
+doc/HomeSchedule.md
+doc/HomeSummary.md
 doc/InvoiceResponse.md
 doc/InvoicesTenantApi.md
 doc/KYCApi.md
@@ -129,6 +138,7 @@ doc/MeResponse.md
 doc/MediaApi.md
 doc/MessageResponse.md
 doc/MessagerieApi.md
+doc/MonLogementApi.md
 doc/MyBadgesResponse.md
 doc/NotificationDevicesApi.md
 doc/NotificationSetting.md
@@ -143,8 +153,10 @@ doc/PageResponseAssignmentItem.md
 doc/PageResponseContractResponse.md
 doc/PageResponseConversationResponse.md
 doc/PageResponseDashboardItem.md
+doc/PageResponseDeclarationResponse.md
 doc/PageResponseFavoriResponse.md
 doc/PageResponseHistoriqueResponse.md
+doc/PageResponseHomeSummary.md
 doc/PageResponseInvoiceResponse.md
 doc/PageResponseKycReviewItem.md
 doc/PageResponseLedgerEntryResponse.md
@@ -316,6 +328,7 @@ lib/src/api/locations_api.dart
 lib/src/api/mboa_score_api.dart
 lib/src/api/media_api.dart
 lib/src/api/messagerie_api.dart
+lib/src/api/mon_logement_api.dart
 lib/src/api/notification_devices_api.dart
 lib/src/api/password_api.dart
 lib/src/api/phone_change_api.dart
@@ -385,6 +398,7 @@ lib/src/model/churn.dart
 lib/src/model/cohort.dart
 lib/src/model/comment.dart
 lib/src/model/confirm_phone_change_request.dart
+lib/src/model/contest_declaration_request.dart
 lib/src/model/contract_pdf_response.dart
 lib/src/model/contract_response.dart
 lib/src/model/contract_tenancy_response.dart
@@ -404,8 +418,11 @@ lib/src/model/dashboard_item.dart
 lib/src/model/dashboard_metric.dart
 lib/src/model/dashboard_summary_response.dart
 lib/src/model/date.dart
+lib/src/model/declaration_response.dart
+lib/src/model/declare_payment_request.dart
 lib/src/model/delete_account_request.dart
 lib/src/model/deletion_challenge_response.dart
+lib/src/model/due.dart
 lib/src/model/error_response.dart
 lib/src/model/extend_subscription_request.dart
 lib/src/model/favori_response.dart
@@ -418,6 +435,11 @@ lib/src/model/historique_response.dart
 lib/src/model/history_section_admin_contract_line.dart
 lib/src/model/history_section_admin_report_line.dart
 lib/src/model/history_section_admin_visit_line.dart
+lib/src/model/home_deposit.dart
+lib/src/model/home_detail.dart
+lib/src/model/home_finance_summary.dart
+lib/src/model/home_schedule.dart
+lib/src/model/home_summary.dart
 lib/src/model/invoice_response.dart
 lib/src/model/kpi_dashboard_response.dart
 lib/src/model/kpi_day_response.dart
@@ -449,8 +471,10 @@ lib/src/model/page_response_assignment_item.dart
 lib/src/model/page_response_contract_response.dart
 lib/src/model/page_response_conversation_response.dart
 lib/src/model/page_response_dashboard_item.dart
+lib/src/model/page_response_declaration_response.dart
 lib/src/model/page_response_favori_response.dart
 lib/src/model/page_response_historique_response.dart
+lib/src/model/page_response_home_summary.dart
 lib/src/model/page_response_invoice_response.dart
 lib/src/model/page_response_kyc_review_item.dart
 lib/src/model/page_response_ledger_entry_response.dart
@@ -634,6 +658,7 @@ test/churn_test.dart
 test/cohort_test.dart
 test/comment_test.dart
 test/confirm_phone_change_request_test.dart
+test/contest_declaration_request_test.dart
 test/contract_pdf_response_test.dart
 test/contract_response_test.dart
 test/contract_tenancy_response_test.dart
@@ -654,8 +679,11 @@ test/dashboard_figures_test.dart
 test/dashboard_item_test.dart
 test/dashboard_metric_test.dart
 test/dashboard_summary_response_test.dart
+test/declaration_response_test.dart
+test/declare_payment_request_test.dart
 test/delete_account_request_test.dart
 test/deletion_challenge_response_test.dart
+test/due_test.dart
 test/error_response_test.dart
 test/extend_subscription_request_test.dart
 test/favori_response_test.dart
@@ -674,6 +702,11 @@ test/historique_response_test.dart
 test/history_section_admin_contract_line_test.dart
 test/history_section_admin_report_line_test.dart
 test/history_section_admin_visit_line_test.dart
+test/home_deposit_test.dart
+test/home_detail_test.dart
+test/home_finance_summary_test.dart
+test/home_schedule_test.dart
+test/home_summary_test.dart
 test/invoice_response_test.dart
 test/invoices_tenant_api_test.dart
 test/kpi_dashboard_response_test.dart
@@ -698,6 +731,7 @@ test/me_response_test.dart
 test/media_api_test.dart
 test/message_response_test.dart
 test/messagerie_api_test.dart
+test/mon_logement_api_test.dart
 test/my_badges_response_test.dart
 test/notification_devices_api_test.dart
 test/notification_setting_test.dart
@@ -712,8 +746,10 @@ test/page_response_assignment_item_test.dart
 test/page_response_contract_response_test.dart
 test/page_response_conversation_response_test.dart
 test/page_response_dashboard_item_test.dart
+test/page_response_declaration_response_test.dart
 test/page_response_favori_response_test.dart
 test/page_response_historique_response_test.dart
+test/page_response_home_summary_test.dart
 test/page_response_invoice_response_test.dart
 test/page_response_kyc_review_item_test.dart
 test/page_response_ledger_entry_response_test.dart

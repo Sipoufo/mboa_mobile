@@ -20,7 +20,7 @@ class NotificationDevicesApi {
 
   const NotificationDevicesApi(this._dio, this._serializers);
 
-  /// Register or refresh a device push token
+  /// Register or refresh a device push token, with whether the phone shows notifications (RM-M03-02)
   /// 
   ///
   /// Parameters:

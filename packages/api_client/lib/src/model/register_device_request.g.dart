@@ -93,13 +93,18 @@ class _$RegisterDeviceRequest extends RegisterDeviceRequest {
   final String token;
   @override
   final RegisterDeviceRequestPlatformEnum platform;
+  @override
+  final bool? pushEnabled;
 
   factory _$RegisterDeviceRequest([
     void Function(RegisterDeviceRequestBuilder)? updates,
   ]) => (RegisterDeviceRequestBuilder()..update(updates))._build();
 
-  _$RegisterDeviceRequest._({required this.token, required this.platform})
-    : super._();
+  _$RegisterDeviceRequest._({
+    required this.token,
+    required this.platform,
+    this.pushEnabled,
+  }) : super._();
   @override
   RegisterDeviceRequest rebuild(
     void Function(RegisterDeviceRequestBuilder) updates,
@@ -114,7 +119,8 @@ class _$RegisterDeviceRequest extends RegisterDeviceRequest {
     if (identical(other, this)) return true;
     return other is RegisterDeviceRequest &&
         token == other.token &&
-        platform == other.platform;
+        platform == other.platform &&
+        pushEnabled == other.pushEnabled;
   }
 
   @override
@@ -122,6 +128,7 @@ class _$RegisterDeviceRequest extends RegisterDeviceRequest {
     var _$hash = 0;
     _$hash = $jc(_$hash, token.hashCode);
     _$hash = $jc(_$hash, platform.hashCode);
+    _$hash = $jc(_$hash, pushEnabled.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -130,7 +137,8 @@ class _$RegisterDeviceRequest extends RegisterDeviceRequest {
   String toString() {
     return (newBuiltValueToStringHelper(r'RegisterDeviceRequest')
           ..add('token', token)
-          ..add('platform', platform))
+          ..add('platform', platform)
+          ..add('pushEnabled', pushEnabled))
         .toString();
   }
 }
@@ -148,6 +156,10 @@ class RegisterDeviceRequestBuilder
   set platform(RegisterDeviceRequestPlatformEnum? platform) =>
       _$this._platform = platform;
 
+  bool? _pushEnabled;
+  bool? get pushEnabled => _$this._pushEnabled;
+  set pushEnabled(bool? pushEnabled) => _$this._pushEnabled = pushEnabled;
+
   RegisterDeviceRequestBuilder() {
     RegisterDeviceRequest._defaults(this);
   }
@@ -157,6 +169,7 @@ class RegisterDeviceRequestBuilder
     if ($v != null) {
       _token = $v.token;
       _platform = $v.platform;
+      _pushEnabled = $v.pushEnabled;
       _$v = null;
     }
     return this;
@@ -189,6 +202,7 @@ class RegisterDeviceRequestBuilder
             r'RegisterDeviceRequest',
             'platform',
           ),
+          pushEnabled: pushEnabled,
         );
     replace(_$result);
     return _$result;

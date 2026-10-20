@@ -132,5 +132,10 @@ void main() {
       // TODO
     });
 
+    // String contractId
+    test('to test the property `contractId`', () async {
+      // TODO
+    });
+
   });
 }

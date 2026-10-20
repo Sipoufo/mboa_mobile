@@ -58,6 +58,7 @@ import 'package:api_client/src/model/churn.dart';
 import 'package:api_client/src/model/cohort.dart';
 import 'package:api_client/src/model/comment.dart';
 import 'package:api_client/src/model/confirm_phone_change_request.dart';
+import 'package:api_client/src/model/contest_declaration_request.dart';
 import 'package:api_client/src/model/contract_pdf_response.dart';
 import 'package:api_client/src/model/contract_response.dart';
 import 'package:api_client/src/model/contract_tenancy_response.dart';
@@ -76,8 +77,11 @@ import 'package:api_client/src/model/dashboard_figures.dart';
 import 'package:api_client/src/model/dashboard_item.dart';
 import 'package:api_client/src/model/dashboard_metric.dart';
 import 'package:api_client/src/model/dashboard_summary_response.dart';
+import 'package:api_client/src/model/declaration_response.dart';
+import 'package:api_client/src/model/declare_payment_request.dart';
 import 'package:api_client/src/model/delete_account_request.dart';
 import 'package:api_client/src/model/deletion_challenge_response.dart';
+import 'package:api_client/src/model/due.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/extend_subscription_request.dart';
 import 'package:api_client/src/model/favori_response.dart';
@@ -90,6 +94,11 @@ import 'package:api_client/src/model/historique_response.dart';
 import 'package:api_client/src/model/history_section_admin_contract_line.dart';
 import 'package:api_client/src/model/history_section_admin_report_line.dart';
 import 'package:api_client/src/model/history_section_admin_visit_line.dart';
+import 'package:api_client/src/model/home_deposit.dart';
+import 'package:api_client/src/model/home_detail.dart';
+import 'package:api_client/src/model/home_finance_summary.dart';
+import 'package:api_client/src/model/home_schedule.dart';
+import 'package:api_client/src/model/home_summary.dart';
 import 'package:api_client/src/model/invoice_response.dart';
 import 'package:api_client/src/model/kpi_dashboard_response.dart';
 import 'package:api_client/src/model/kpi_day_response.dart';
@@ -121,8 +130,10 @@ import 'package:api_client/src/model/page_response_assignment_item.dart';
 import 'package:api_client/src/model/page_response_contract_response.dart';
 import 'package:api_client/src/model/page_response_conversation_response.dart';
 import 'package:api_client/src/model/page_response_dashboard_item.dart';
+import 'package:api_client/src/model/page_response_declaration_response.dart';
 import 'package:api_client/src/model/page_response_favori_response.dart';
 import 'package:api_client/src/model/page_response_historique_response.dart';
+import 'package:api_client/src/model/page_response_home_summary.dart';
 import 'package:api_client/src/model/page_response_invoice_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
 import 'package:api_client/src/model/page_response_ledger_entry_response.dart';
@@ -288,6 +299,7 @@ part 'serializers.g.dart';
   Cohort,
   Comment,
   ConfirmPhoneChangeRequest,
+  ContestDeclarationRequest,
   ContractPdfResponse,
   ContractResponse,
   ContractTenancyResponse,
@@ -306,8 +318,11 @@ part 'serializers.g.dart';
   DashboardItem,
   DashboardMetric,
   DashboardSummaryResponse,
+  DeclarationResponse,
+  DeclarePaymentRequest,
   DeleteAccountRequest,
   DeletionChallengeResponse,
+  Due,
   ErrorResponse,
   ExtendSubscriptionRequest,
   FavoriResponse,
@@ -320,6 +335,11 @@ part 'serializers.g.dart';
   HistorySectionAdminContractLine,
   HistorySectionAdminReportLine,
   HistorySectionAdminVisitLine,
+  HomeDeposit,
+  HomeDetail,
+  HomeFinanceSummary,
+  HomeSchedule,
+  HomeSummary,
   InvoiceResponse,
   KpiDashboardResponse,
   KpiDayResponse,
@@ -351,8 +371,10 @@ part 'serializers.g.dart';
   PageResponseContractResponse,
   PageResponseConversationResponse,
   PageResponseDashboardItem,
+  PageResponseDeclarationResponse,
   PageResponseFavoriResponse,
   PageResponseHistoriqueResponse,
+  PageResponseHomeSummary,
   PageResponseInvoiceResponse,
   PageResponseKycReviewItem,
   PageResponseLedgerEntryResponse,
@@ -513,6 +535,10 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<Line>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(Due)]),
+        () => ListBuilder<Due>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(VisitorSlots)]),
         () => ListBuilder<VisitorSlots>(),
       )
@@ -665,6 +691,14 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<AgentCandidate>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(HomeSummary)]),
+        () => ListBuilder<HomeSummary>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(DeclarationResponse)]),
+        () => ListBuilder<DeclarationResponse>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(UnitSummary)]),
         () => ListBuilder<UnitSummary>(),
       )
@@ -705,6 +739,10 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<AdminContractLine>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(int)]),
+        () => ListBuilder<int>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(TypeChangeReviewItem)]),
         () => ListBuilder<TypeChangeReviewItem>(),
       )
@@ -739,6 +777,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(PropertyReview)]),
         () => ListBuilder<PropertyReview>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(PresignedDownload)]),
+        () => ListBuilder<PresignedDownload>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(SavedSearchResponse)]),

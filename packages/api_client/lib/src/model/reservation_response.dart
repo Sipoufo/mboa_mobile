@@ -39,6 +39,7 @@ part 'reservation_response.g.dart';
 /// * [canExtend] 
 /// * [canCancel] 
 /// * [canDraftContract] 
+/// * [contractId] 
 @BuiltValue()
 abstract class ReservationResponse implements Built<ReservationResponse, ReservationResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -119,6 +120,9 @@ abstract class ReservationResponse implements Built<ReservationResponse, Reserva
 
   @BuiltValueField(wireName: r'canDraftContract')
   bool? get canDraftContract;
+
+  @BuiltValueField(wireName: r'contractId')
+  String? get contractId;
 
   ReservationResponse._();
 
@@ -316,6 +320,13 @@ class _$ReservationResponseSerializer implements PrimitiveSerializer<Reservation
       yield serializers.serialize(
         object.canDraftContract,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.contractId != null) {
+      yield r'contractId';
+      yield serializers.serialize(
+        object.contractId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -540,6 +551,14 @@ class _$ReservationResponseSerializer implements PrimitiveSerializer<Reservation
           ) as bool?;
           if (valueDes == null) continue;
           result.canDraftContract = valueDes;
+          break;
+        case r'contractId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.contractId = valueDes;
           break;
         default:
           unhandled.add(key);

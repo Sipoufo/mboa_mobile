@@ -96,6 +96,7 @@ Serializers _$serializers =
           ..add(Cohort.serializer)
           ..add(Comment.serializer)
           ..add(ConfirmPhoneChangeRequest.serializer)
+          ..add(ContestDeclarationRequest.serializer)
           ..add(ContractPdfResponse.serializer)
           ..add(ContractResponse.serializer)
           ..add(ContractResponseAwaitingEnum.serializer)
@@ -130,8 +131,17 @@ Serializers _$serializers =
           ..add(DashboardMetricRequiredTierEnum.serializer)
           ..add(DashboardSummaryResponse.serializer)
           ..add(DashboardSummaryResponseTierEnum.serializer)
+          ..add(DeclarationResponse.serializer)
+          ..add(DeclarationResponseKindEnum.serializer)
+          ..add(DeclarationResponseMethodEnum.serializer)
+          ..add(DeclarationResponseStatusEnum.serializer)
+          ..add(DeclarePaymentRequest.serializer)
+          ..add(DeclarePaymentRequestKindEnum.serializer)
+          ..add(DeclarePaymentRequestMethodEnum.serializer)
           ..add(DeleteAccountRequest.serializer)
           ..add(DeletionChallengeResponse.serializer)
+          ..add(Due.serializer)
+          ..add(DueStatusEnum.serializer)
           ..add(ErrorResponse.serializer)
           ..add(ExtendSubscriptionRequest.serializer)
           ..add(FavoriResponse.serializer)
@@ -147,6 +157,14 @@ Serializers _$serializers =
           ..add(HistorySectionAdminContractLine.serializer)
           ..add(HistorySectionAdminReportLine.serializer)
           ..add(HistorySectionAdminVisitLine.serializer)
+          ..add(HomeDeposit.serializer)
+          ..add(HomeDepositStatusEnum.serializer)
+          ..add(HomeDetail.serializer)
+          ..add(HomeFinanceSummary.serializer)
+          ..add(HomeSchedule.serializer)
+          ..add(HomeSummary.serializer)
+          ..add(HomeSummaryRentalPeriodEnum.serializer)
+          ..add(HomeSummaryStateEnum.serializer)
           ..add(InvoiceResponse.serializer)
           ..add(InvoiceResponseKindEnum.serializer)
           ..add(InvoiceResponsePaidViaEnum.serializer)
@@ -199,8 +217,10 @@ Serializers _$serializers =
           ..add(PageResponseContractResponse.serializer)
           ..add(PageResponseConversationResponse.serializer)
           ..add(PageResponseDashboardItem.serializer)
+          ..add(PageResponseDeclarationResponse.serializer)
           ..add(PageResponseFavoriResponse.serializer)
           ..add(PageResponseHistoriqueResponse.serializer)
+          ..add(PageResponseHomeSummary.serializer)
           ..add(PageResponseInvoiceResponse.serializer)
           ..add(PageResponseKycReviewItem.serializer)
           ..add(PageResponseLedgerEntryResponse.serializer)
@@ -504,6 +524,16 @@ Serializers _$serializers =
             () => ListBuilder<DashboardItem>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(DeclarationResponse),
+            ]),
+            () => ListBuilder<DeclarationResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(Due)]),
+            () => ListBuilder<Due>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(FavoriResponse)]),
             () => ListBuilder<FavoriResponse>(),
           )
@@ -516,6 +546,10 @@ Serializers _$serializers =
               const FullType(HistoriqueResponse),
             ]),
             () => ListBuilder<HistoriqueResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(HomeSummary)]),
+            () => ListBuilder<HomeSummary>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(InvoiceResponse)]),
@@ -634,6 +668,10 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(SkippedUnit)]),
             () => ListBuilder<SkippedUnit>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
@@ -836,6 +874,22 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ZoneResponse)]),
             () => ListBuilder<ZoneResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(int)]),
+            () => ListBuilder<int>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(int)]),
+            () => ListBuilder<int>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
