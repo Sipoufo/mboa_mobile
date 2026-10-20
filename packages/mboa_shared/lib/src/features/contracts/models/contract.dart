@@ -152,24 +152,29 @@ class ChangeRequest extends Equatable {
       ];
 }
 
-/// One party's signature. [isMine] is the server's `current` flag — the app
-/// never compares account ids to decide whose it is.
+/// One party's signature.
+///
+/// The server's `current` is **not** "mine": it says whether the signature
+/// covers the terms as they stand now — one given before an amendment is
+/// shown, but no longer counts. Reading it as "mine" made the second party
+/// see "Tu as signé" the moment the first one signed, and they could not sign.
+/// Whose signature it is comes from [Contract.signerOf].
 class ContractSignature extends Equatable {
-  const ContractSignature({this.signerAccountId, this.signedAt, this.isMine = false});
+  const ContractSignature({this.signerAccountId, this.signedAt, this.coversCurrentTerms = true});
 
   final String? signerAccountId;
   final DateTime? signedAt;
-  final bool isMine;
+  final bool coversCurrentTerms;
 
   static ContractSignature fromResponse(SignatureResponse response) =>
       ContractSignature(
         signerAccountId: response.signerAccountId,
         signedAt: response.signedAt?.toLocal(),
-        isMine: response.current ?? false,
+        coversCurrentTerms: response.current ?? true,
       );
 
   @override
-  List<Object?> get props => [signerAccountId, signedAt, isMine];
+  List<Object?> get props => [signerAccountId, signedAt, coversCurrentTerms];
 }
 
 /// A party to the contract, as the other side sees them.
@@ -437,7 +442,14 @@ class Contract extends Equatable {
   /// RM-M08-03 — locked for good; not even an admin may change it.
   bool get isLocked => lockedAt != null || isSigned;
 
-  bool get hasSignedMyself => signatures.any((s) => s.isMine);
+  /// Which party gave [signature] — matched against the two participants'
+  /// accounts, which the contract carries; unknown if neither matches.
+  ContractParty signerOf(ContractSignature signature) => switch (signature.signerAccountId) {
+        null => ContractParty.unknown,
+        final id when id == tenant?.accountId => ContractParty.tenant,
+        final id when id == prestataire?.accountId => ContractParty.prestataire,
+        _ => ContractParty.unknown,
+      };
 
   /// CE-M08-03 — objections still owed an answer. The landlord cannot move on
   /// while one stands.

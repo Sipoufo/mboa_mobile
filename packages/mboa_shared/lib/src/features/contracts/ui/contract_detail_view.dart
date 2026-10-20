@@ -185,7 +185,7 @@ class _Body extends StatelessWidget {
           const SizedBox(height: Dimens.spacing),
           _Card(
             title: l10n.contractSignaturesTitle,
-            child: _Signatures(contract: contract),
+            child: _Signatures(contract: contract, viewer: viewer),
           ),
         ],
       ],
@@ -596,9 +596,12 @@ class _AnswerDialogState extends State<_AnswerDialog> {
 }
 
 class _Signatures extends StatelessWidget {
-  const _Signatures({required this.contract});
+  const _Signatures({required this.contract, this.viewer = ContractParty.unknown});
 
   final Contract contract;
+
+  /// Which side the reader is on — "Ta signature" is theirs.
+  final ContractParty viewer;
 
   @override
   Widget build(BuildContext context) {
@@ -613,17 +616,30 @@ class _Signatures extends StatelessWidget {
             child: Row(
               children: [
                 Icon(
-                  LucideIcons.circleCheck,
+                  signature.coversCurrentTerms ? LucideIcons.circleCheck : LucideIcons.circleAlert,
                   size: Dimens.icon,
-                  color: colors.success,
+                  color: signature.coversCurrentTerms ? colors.success : colors.warning,
                 ),
                 const SizedBox(width: Dimens.spacingMd),
                 Expanded(
-                  child: Text(
-                    signature.isMine
-                        ? l10n.contractSignatureMine
-                        : l10n.contractSignatureOther,
-                    style: context.mboaText.body.copyWith(color: colors.ink),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        switch (contract.signerOf(signature)) {
+                          final party when party == viewer && viewer != ContractParty.unknown =>
+                            l10n.contractSignatureMine,
+                          ContractParty.prestataire => l10n.contractSignatureProvider,
+                          _ => l10n.contractSignatureOther,
+                        },
+                        style: context.mboaText.body.copyWith(color: colors.ink),
+                      ),
+                      if (!signature.coversCurrentTerms)
+                        Text(
+                          l10n.contractSignatureSuperseded,
+                          style: context.mboaText.caption.copyWith(color: colors.warning),
+                        ),
+                    ],
                   ),
                 ),
                 if (signature.signedAt case final at?)
@@ -699,15 +715,14 @@ class _ActionBar extends StatelessWidget {
         ),
       );
     } else if (contract.canSign) {
+      // `canSign` is the server's verdict for this reader: the contract is
+      // accepted and they have not signed it yet. Once they have, it is false
+      // and the button goes — the header says who is still awaited.
       children.add(
         Button.primary(
-          title: contract.hasSignedMyself
-              ? l10n.contractSignedByYou
-              : l10n.contractSign,
+          title: l10n.contractSign,
           isLoading: state.isBusy,
-          onPressed: state.isBusy || contract.hasSignedMyself
-              ? null
-              : () => _sign(context, contract),
+          onPressed: state.isBusy ? null : () => _sign(context, contract),
         ),
       );
     } else if (contract.isSigned) {

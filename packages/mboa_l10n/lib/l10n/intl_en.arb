@@ -4439,5 +4439,93 @@
   "proReservationSeeContract": "See the contract",
   "@proReservationSeeContract": {
     "description": "RM-M08-10 — the contract already drawn up from this request."
+  },
+  "contractSignatureProvider": "The provider's signature",
+  "@contractSignatureProvider": {
+    "description": "A signature by the prestataire, read by the tenant."
+  },
+  "contractSignatureSuperseded": "On terms changed since: it no longer counts.",
+  "@contractSignatureSuperseded": {
+    "description": "SignatureResponse.current false — a signature against superseded terms."
+  },
+  "listingAllPhotos": "See every photo",
+  "@listingAllPhotos": {
+    "description": "RM-M05-01 — the hero's gallery button."
+  },
+  "listingGalleryPosition": "{index} / {count}",
+  "@listingGalleryPosition": {
+    "description": "Full-screen gallery counter.",
+    "placeholders": {
+      "index": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "listingLocationCard": "Location",
+  "@listingLocationCard": {
+    "description": "The fiche's map card, after the mockup."
+  },
+  "listingReviewsCard": "Reviews",
+  "@listingReviewsCard": {
+    "description": "The fiche's reviews card, after the mockup."
+  },
+  "listingReviewsCount": "{count, plural, =0{No reviews yet} =1{1 review} other{{count} reviews}}",
+  "@listingReviewsCount": {
+    "description": "Under the average on the reviews card.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingFactRooms": "{count, plural, =1{1 room} other{{count} rooms}}",
+  "@listingFactRooms": {
+    "description": "Fact chip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingFactBathrooms": "{count, plural, =1{1 bathroom} other{{count} bathrooms}}",
+  "@listingFactBathrooms": {
+    "description": "Fact chip.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingFactFurnished": "Furnished",
+  "@listingFactFurnished": {
+    "description": "Fact chip."
+  },
+  "listingFactUnfurnished": "Unfurnished",
+  "@listingFactUnfurnished": {
+    "description": "Fact chip."
+  },
+  "listingFactChargesIncluded": "Charges included",
+  "@listingFactChargesIncluded": {
+    "description": "Fact chip."
+  },
+  "listingFactChargesExtra": "Charges extra",
+  "@listingFactChargesExtra": {
+    "description": "Fact chip."
+  },
+  "listingFactAvailableFrom": "Free from {date}",
+  "@listingFactAvailableFrom": {
+    "description": "Fact chip.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "listingMapTitle": "Where it is",
+  "@listingMapTitle": {
+    "description": "The full-screen map from the fiche."
   }
 }

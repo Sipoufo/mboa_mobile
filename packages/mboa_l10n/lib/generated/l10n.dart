@@ -11552,6 +11552,164 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Signature du prestataire`
+  String get contractSignatureProvider {
+    return Intl.message(
+      'Signature du prestataire',
+      name: 'contractSignatureProvider',
+      desc: 'A signature by the prestataire, read by the tenant.',
+      args: [],
+    );
+  }
+
+  /// `Sur des termes modifiés depuis : elle ne compte plus.`
+  String get contractSignatureSuperseded {
+    return Intl.message(
+      'Sur des termes modifiés depuis : elle ne compte plus.',
+      name: 'contractSignatureSuperseded',
+      desc:
+          'SignatureResponse.current false — a signature against superseded terms.',
+      args: [],
+    );
+  }
+
+  /// `Voir toutes les photos`
+  String get listingAllPhotos {
+    return Intl.message(
+      'Voir toutes les photos',
+      name: 'listingAllPhotos',
+      desc: 'RM-M05-01 — the hero\'s gallery button.',
+      args: [],
+    );
+  }
+
+  /// `{index} / {count}`
+  String listingGalleryPosition(String index, String count) {
+    return Intl.message(
+      '$index / $count',
+      name: 'listingGalleryPosition',
+      desc: 'Full-screen gallery counter.',
+      args: [index, count],
+    );
+  }
+
+  /// `Localisation`
+  String get listingLocationCard {
+    return Intl.message(
+      'Localisation',
+      name: 'listingLocationCard',
+      desc: 'The fiche\'s map card, after the mockup.',
+      args: [],
+    );
+  }
+
+  /// `Avis`
+  String get listingReviewsCard {
+    return Intl.message(
+      'Avis',
+      name: 'listingReviewsCard',
+      desc: 'The fiche\'s reviews card, after the mockup.',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Pas encore d'avis} =1{1 avis} other{{count} avis}}`
+  String listingReviewsCount(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Pas encore d\'avis',
+      one: '1 avis',
+      other: '$count avis',
+      name: 'listingReviewsCount',
+      desc: 'Under the average on the reviews card.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{1 pièce} other{{count} pièces}}`
+  String listingFactRooms(int count) {
+    return Intl.plural(
+      count,
+      one: '1 pièce',
+      other: '$count pièces',
+      name: 'listingFactRooms',
+      desc: 'Fact chip.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{1 salle de bain} other{{count} salles de bain}}`
+  String listingFactBathrooms(int count) {
+    return Intl.plural(
+      count,
+      one: '1 salle de bain',
+      other: '$count salles de bain',
+      name: 'listingFactBathrooms',
+      desc: 'Fact chip.',
+      args: [count],
+    );
+  }
+
+  /// `Meublé`
+  String get listingFactFurnished {
+    return Intl.message(
+      'Meublé',
+      name: 'listingFactFurnished',
+      desc: 'Fact chip.',
+      args: [],
+    );
+  }
+
+  /// `Non meublé`
+  String get listingFactUnfurnished {
+    return Intl.message(
+      'Non meublé',
+      name: 'listingFactUnfurnished',
+      desc: 'Fact chip.',
+      args: [],
+    );
+  }
+
+  /// `Charges incluses`
+  String get listingFactChargesIncluded {
+    return Intl.message(
+      'Charges incluses',
+      name: 'listingFactChargesIncluded',
+      desc: 'Fact chip.',
+      args: [],
+    );
+  }
+
+  /// `Charges en sus`
+  String get listingFactChargesExtra {
+    return Intl.message(
+      'Charges en sus',
+      name: 'listingFactChargesExtra',
+      desc: 'Fact chip.',
+      args: [],
+    );
+  }
+
+  /// `Libre dès le {date}`
+  String listingFactAvailableFrom(String date) {
+    return Intl.message(
+      'Libre dès le $date',
+      name: 'listingFactAvailableFrom',
+      desc: 'Fact chip.',
+      args: [date],
+    );
+  }
+
+  /// `Localisation du bien`
+  String get listingMapTitle {
+    return Intl.message(
+      'Localisation du bien',
+      name: 'listingMapTitle',
+      desc: 'The full-screen map from the fiche.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {
