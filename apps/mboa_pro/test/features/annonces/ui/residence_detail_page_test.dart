@@ -82,6 +82,12 @@ void main() {
     String id = 'r1',
     bool settle = true,
   }) async {
+    // A phone, not the test's default 800×600 window.
+    tester.view.physicalSize = const Size(390 * 3, 844 * 3);
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('fr'),
@@ -141,6 +147,12 @@ void main() {
     expect(find.text('Publiées'), findsOneWidget);
     expect(find.text('Occupées'), findsOneWidget);
     expect(find.text('2'), findsOneWidget);
+  });
+
+  testWidgets('M29 — the units\' reservation requests are a tap away', (tester) async {
+    await pump(tester);
+
+    expect(find.text('Demandes de réservation'), findsOneWidget);
   });
 
   testWidgets('every unit row is tappable and offers an edit', (tester) async {

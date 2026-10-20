@@ -650,12 +650,12 @@ class _Actions extends StatelessWidget {
           isLoading: state.isBusy,
           onPressed: () => unawaited(_accept(context)),
         ),
-      // Already drawn up from this request: opened, not drawn again.
-      _ when state.contractId != null => Button.primary(
+      // §28 — already drawn up from this request: opened, not drawn again.
+      _ when r.contractId != null => Button.primary(
           title: l10n.proReservationSeeContract,
           onPressed: () async {
             final bloc = context.read<IncomingReservationBloc>();
-            await context.router.push(ContractDetailRoute(id: state.contractId!));
+            await context.router.push(ContractDetailRoute(id: r.contractId!));
             bloc.add(IncomingReservationRequested(r.id));
           },
         ),

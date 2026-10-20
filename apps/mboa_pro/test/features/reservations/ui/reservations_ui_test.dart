@@ -224,8 +224,20 @@ void main() {
       expect(find.text('Refuser la demande'), findsNothing);
     });
 
-    testWidgets('a contract already drawn up from it is opened, not drawn again', (tester) async {
-      when(() => bloc.state).thenReturn(IncomingReservationReady(accepted, listing: listing, contractId: 'c-2'));
+    testWidgets('§28 — a contract already drawn up from it is opened, not drawn again', (tester) async {
+      // The server's own answer: canDraftContract false, and the contract's id.
+      final drawn = Reservation(
+        id: accepted.id,
+        status: ReservationStatus.accepted,
+        annonceId: 'a-1',
+        annonceTitle: accepted.annonceTitle,
+        client: client,
+        reservedUntil: accepted.reservedUntil,
+        canExtend: true,
+        canCancel: true,
+        contractId: 'c-2',
+      );
+      when(() => bloc.state).thenReturn(IncomingReservationReady(drawn, listing: listing));
       await pump(tester, view());
 
       expect(find.text('Voir le contrat'), findsOneWidget);

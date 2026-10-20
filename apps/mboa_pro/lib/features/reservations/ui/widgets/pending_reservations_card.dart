@@ -22,11 +22,22 @@ class PendingReservationsCard extends StatefulWidget {
 }
 
 class _PendingReservationsCardState extends State<PendingReservationsCard> {
+  late final AppLifecycleListener _lifecycle;
+
   @override
   void initState() {
     super.initState();
     final bloc = context.read<PendingReservationsBloc>();
     if (bloc.state is PendingReservationsUnknown) bloc.add(const PendingReservationsRequested());
+    // Back in the app: a request may have come in meanwhile (seen on device —
+    // the count read at sign-in stayed at 0 and the card never appeared).
+    _lifecycle = AppLifecycleListener(onResume: () => bloc.add(const PendingReservationsRequested()));
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    super.dispose();
   }
 
   @override

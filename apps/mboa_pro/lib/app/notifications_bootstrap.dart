@@ -3,6 +3,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../features/reservations/bloc/pending_reservations_bloc.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
 
@@ -22,6 +23,11 @@ Future<void> startNotifications({
 
 /// Foreground messages aren't drawn by the OS, so surface them in-app.
 void _showInApp(BuildContext context, PushMessage message) {
+  // N-32 — a new request: the home's counter is read again, by event.
+  if (message.type == PushType.reservation && getIt.isRegistered<PendingReservationsBloc>()) {
+    getIt<PendingReservationsBloc>().add(const PendingReservationsRequested());
+  }
+
   final title = message.title;
   if (title == null || title.isEmpty) return;
 

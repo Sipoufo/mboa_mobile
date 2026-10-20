@@ -150,7 +150,15 @@ class _Body extends StatelessWidget {
           ),
         ],
         const SizedBox(height: Dimens.spacingLg),
-        if (r.status == ReservationStatus.contracted) ...[
+        // §28 — the contract drawn up from this request, once it is sent:
+        // opened directly (to read, contest or sign it).
+        if (r.contractId case final contractId?) ...[
+          Button.primary(
+            title: l10n.proReservationSeeContract,
+            onPressed: () => context.router.push(MyContractDetailRoute(id: contractId)),
+          ),
+          const SizedBox(height: Dimens.spacingSm),
+        ] else if (r.status == ReservationStatus.contracted) ...[
           Button.primary(
             title: l10n.reservationSeeContracts,
             onPressed: () => context.router.push(const MyContractsRoute()),

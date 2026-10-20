@@ -67,6 +67,12 @@ class ProMenuPage extends StatelessWidget {
                     label: l10n.mesBiensTitle,
                     onTap: () => _go(context, const MesBiensRoute()),
                   ),
+                  // M29 — always reachable, not only from the home's counter.
+                  _MenuEntry(
+                    icon: LucideIcons.ticket,
+                    label: l10n.proReservationsTitle,
+                    onTap: () => _go(context, IncomingReservationsRoute()),
+                  ),
                   _MenuEntry(
                     icon: LucideIcons.calendarCheck,
                     label: l10n.visitsMineTitle,

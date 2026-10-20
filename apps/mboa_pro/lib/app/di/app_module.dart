@@ -292,14 +292,17 @@ void registerAppModule() {
   getIt.registerLazySingleton<PendingReservationsBloc>(
     () => PendingReservationsBloc(repository: getIt<IncomingReservationsRepository>()),
   );
-  getIt.registerFactoryParam<IncomingReservationsBloc, String?, void>(
-    (annonceId, _) => IncomingReservationsBloc(repository: getIt<IncomingReservationsRepository>(), annonceId: annonceId),
+  getIt.registerFactoryParam<IncomingReservationsBloc, String?, Set<String>?>(
+    (annonceId, unitIds) => IncomingReservationsBloc(
+      repository: getIt<IncomingReservationsRepository>(),
+      annonceId: annonceId,
+      unitIds: unitIds,
+    ),
   );
   getIt.registerFactory<IncomingReservationBloc>(
     () => IncomingReservationBloc(
       repository: getIt<IncomingReservationsRepository>(),
       annonces: getIt<AnnonceRepository>(),
-      contracts: getIt<ContractRepository>(),
     ),
   );
 

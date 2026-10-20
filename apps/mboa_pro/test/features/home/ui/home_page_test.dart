@@ -145,6 +145,20 @@ void main() {
     verify(() => pendingBloc.add(const PendingReservationsRequested())).called(1);
   });
 
+  testWidgets('M29 — and again on coming back to the app', (tester) async {
+    await pump(tester, const HomeReady(stats));
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+
+    // Seen on device: read once at sign-in, the count missed a later request.
+    verify(() => pendingBloc.add(const PendingReservationsRequested())).called(2);
+  });
+
   testWidgets('lays out without overflow on a small phone', (tester) async {
     tester.view.physicalSize = const Size(320 * 3, 568 * 3);
     tester.view.devicePixelRatio = 3;

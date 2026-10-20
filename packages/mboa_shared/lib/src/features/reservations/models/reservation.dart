@@ -123,6 +123,7 @@ class Reservation extends Equatable {
     this.canExtend = false,
     this.canCancel = false,
     this.canDraftContract = false,
+    this.contractId,
   });
 
   final String id;
@@ -163,6 +164,10 @@ class Reservation extends Equatable {
   final bool canExtend;
   final bool canCancel;
   final bool canDraftContract;
+
+  /// §28 — the Mboa Contract drawn up from this request and not called off.
+  /// The client gets it once it is sent (a draft is the owner's alone).
+  final String? contractId;
 
   /// The stay's last day, indicative — the contract's end is the server's.
   DateTime? get lastDay {
@@ -206,6 +211,7 @@ class Reservation extends Equatable {
         canExtend: response.canExtend ?? false,
         canCancel: response.canCancel ?? false,
         canDraftContract: response.canDraftContract ?? false,
+        contractId: response.contractId,
       );
 
   /// Only what a list row draws, for the offline copy of either list.
@@ -269,5 +275,6 @@ class Reservation extends Equatable {
         canExtend,
         canCancel,
         canDraftContract,
+        contractId,
       ];
 }

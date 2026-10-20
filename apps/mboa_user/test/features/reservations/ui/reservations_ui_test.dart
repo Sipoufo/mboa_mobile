@@ -222,6 +222,25 @@ void main() {
       verify(() => bloc.add(const ReservationCancelRequested())).called(1);
     });
 
+    testWidgets('§28 — the contract sent from it is one tap away', (tester) async {
+      when(() => bloc.state).thenReturn(
+        ReservationReady(
+          Reservation(
+            id: accepted.id,
+            status: ReservationStatus.accepted,
+            annonceId: 'a-1',
+            annonceTitle: accepted.annonceTitle,
+            reservedUntil: accepted.reservedUntil,
+            contractId: 'c-2',
+          ),
+        ),
+      );
+      await pump(tester, view());
+
+      await tester.scrollUntilVisible(find.text('Voir le contrat'), 200);
+      expect(find.text('Voir le contrat'), findsOneWidget);
+    });
+
     testWidgets('kept: nothing is sent', (tester) async {
       when(() => bloc.state).thenReturn(ReservationReady(accepted));
       await pump(tester, view());

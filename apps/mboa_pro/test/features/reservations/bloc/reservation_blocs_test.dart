@@ -14,13 +14,10 @@ class MockIncomingReservationsRepository extends Mock implements IncomingReserva
 
 class MockAnnonceRepository extends Mock implements AnnonceRepository {}
 
-class MockContractRepository extends Mock implements ContractRepository {}
-
 /// CDC M29 — the prestataire's side, bloc by bloc.
 void main() {
   late MockIncomingReservationsRepository repository;
   late MockAnnonceRepository annonces;
-  late MockContractRepository contracts;
 
   const pending = Reservation(
     id: 'r-1',
@@ -54,8 +51,6 @@ void main() {
   setUp(() {
     repository = MockIncomingReservationsRepository();
     annonces = MockAnnonceRepository();
-    contracts = MockContractRepository();
-    when(() => contracts.list()).thenAnswer((_) async => const []);
   });
 
   group('IncomingReservationsBloc', () {
@@ -70,6 +65,19 @@ void main() {
         IncomingReservationsReady(items: [pending, refused]),
       ],
       verify: (bloc) => expect((bloc.state as IncomingReservationsReady).pending, [pending]),
+    );
+
+    blocTest<IncomingReservationsBloc, IncomingReservationsState>(
+      'a residence\'s: its units\' requests only, the others left out',
+      setUp: () => when(() => repository.list()).thenAnswer(
+        (_) async => const IncomingReservations([
+          pending,
+          Reservation(id: 'r-9', status: ReservationStatus.pending, annonceId: 'elsewhere'),
+        ]),
+      ),
+      build: () => IncomingReservationsBloc(repository: repository, unitIds: const {'a-1', 'a-2'}),
+      act: (bloc) => bloc.add(const IncomingReservationsRequested()),
+      expect: () => const [IncomingReservationsLoading(), IncomingReservationsReady(items: [pending])],
     );
 
     blocTest<IncomingReservationsBloc, IncomingReservationsState>(
@@ -111,7 +119,7 @@ void main() {
 
   group('IncomingReservationBloc', () {
     IncomingReservationBloc build() =>
-        IncomingReservationBloc(repository: repository, annonces: annonces, contracts: contracts);
+        IncomingReservationBloc(repository: repository, annonces: annonces);
 
     blocTest<IncomingReservationBloc, IncomingReservationState>(
       'reads the request, its listing and the others waiting on it',
@@ -139,41 +147,6 @@ void main() {
       build: build,
       act: (bloc) => bloc.add(const IncomingReservationRequested('r-1')),
       expect: () => const [IncomingReservationLoading(), IncomingReservationReady(pending)],
-    );
-
-    blocTest<IncomingReservationBloc, IncomingReservationState>(
-      'RM-M08-10 — a contract already drawn up from it is found, to be opened rather than drawn again',
-      setUp: () {
-        when(() => repository.get('r-1')).thenAnswer((_) async => accepted);
-        when(() => annonces.getOne('a-1')).thenAnswer((_) async => listing);
-        when(() => repository.pendingCount(annonceId: 'a-1')).thenAnswer((_) async => 0);
-        when(() => contracts.list()).thenAnswer(
-          (_) async => const [
-            // Another request's, and a cancelled one of this request's: neither.
-            Contract(id: 'c-0', status: ContractStatus.draft, reservationRequestId: 'r-9'),
-            Contract(id: 'c-1', status: ContractStatus.cancelled, reservationRequestId: 'r-1'),
-            Contract(id: 'c-2', status: ContractStatus.draft, reservationRequestId: 'r-1'),
-          ],
-        );
-      },
-      build: build,
-      act: (bloc) => bloc.add(const IncomingReservationRequested('r-1')),
-      expect: () => const [
-        IncomingReservationLoading(),
-        IncomingReservationReady(accepted, listing: listing, contractId: 'c-2'),
-      ],
-    );
-
-    blocTest<IncomingReservationBloc, IncomingReservationState>(
-      'a waiting request has no contract to look for',
-      setUp: () {
-        when(() => repository.get('r-1')).thenAnswer((_) async => pending);
-        when(() => annonces.getOne('a-1')).thenAnswer((_) async => listing);
-        when(() => repository.pendingCount(annonceId: 'a-1')).thenAnswer((_) async => 1);
-      },
-      build: build,
-      act: (bloc) => bloc.add(const IncomingReservationRequested('r-1')),
-      verify: (_) => verifyNever(() => contracts.list()),
     );
 
     blocTest<IncomingReservationBloc, IncomingReservationState>(

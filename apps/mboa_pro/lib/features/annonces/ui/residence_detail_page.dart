@@ -110,6 +110,17 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                 _Header(residence: residence),
                 const SizedBox(height: Dimens.spacing),
                 _Counts(residence: residence),
+                const SizedBox(height: Dimens.spacing),
+                // M29 — a request is made on one unit; the residence is where
+                // the prestataire looks for it.
+                _ReservationsLink(
+                  onTap: () => context.router.push(
+                    IncomingReservationsRoute(
+                      annonceTitle: residence.name,
+                      unitIds: [for (final unit in residence.units) unit.id],
+                    ),
+                  ),
+                ),
                 const SizedBox(height: Dimens.spacingLg),
                 Row(
                   children: [
@@ -212,6 +223,40 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _ReservationsLink extends StatelessWidget {
+  const _ReservationsLink({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(Dimens.radiusMd),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.spacing),
+          child: Row(
+            children: [
+              Icon(LucideIcons.ticket, size: Dimens.icon, color: colors.primary),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: Text(l10n.proReservationsTitle, style: context.mboaText.label.copyWith(color: colors.ink)),
+              ),
+              Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+            ],
+          ),
+        ),
       ),
     );
   }

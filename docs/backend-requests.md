@@ -1169,3 +1169,22 @@ declaration). N-37 `mandatory: true` as decided on 2026-10-19.
 
 Requests (RM-M30-09/10), photo proofs (RM-M30-11/12) and useful contacts
 (RM-M30-13) are lot 3; M31 is lot 4. No route of lot 2 should depend on them.
+
+---
+
+## §30 — M29: a request on a residence unit does not say which residence
+
+**Seen on device (2026-10-20):** a client reserved a studio of a residence; the
+prestataire could not find it in Mboa Pro. The request was there — the inbox
+row read « Hector · Studio 2 », and nothing said it was a unit of « Résidence
+Deido ». A prestataire with several residences cannot tell two « Studio 2 »
+apart.
+
+Asked: **`residenceId` and `residenceName`** on `ReservationResponse` (null for
+a standalone listing), and the inbox filter **`residenceId`** on
+`GET /prestataires/me/reservations` (today only `annonceId`).
+
+**Meanwhile, in the app:** the residence's screen opens the inbox narrowed to
+its units (the full list read and filtered by the units' ids), the menu has a
+permanent « Demandes de réservation » entry, and the home's counter is read
+again on returning to the app and on an N-32 in the foreground.
