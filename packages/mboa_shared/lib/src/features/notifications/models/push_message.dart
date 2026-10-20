@@ -88,6 +88,11 @@ enum PushType {
   /// `entityId` = the reservation request (M29: N-32, N-33, N-34).
   reservation,
 
+  /// M30 — `entityId` = the declaration for the landlord (N-35), the
+  /// contract (the space) for the tenant (N-36, N-37). Absent on a merged
+  /// push: the list opens.
+  home,
+
   unknown;
 
   static PushType parse(String? raw) =>
@@ -100,6 +105,7 @@ enum PushType {
         'CONTRACT' => PushType.contract,
         'RESIDENCE' => PushType.residence,
         'SAVED_SEARCH' => PushType.savedSearch,
+        'HOME' => PushType.home,
         'RESERVATION' => PushType.reservation,
         _ => PushType.unknown,
       };

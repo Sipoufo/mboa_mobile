@@ -44,6 +44,9 @@ class StorageKeys {
   // The tenant's reservation requests (M29) — read-only offline, an
   // account's own, so emptied at sign-out.
   static const String reservationsBox = 'reservationsBox';
+  // "Mon Logement" (M30) — the spaces, their schedule and declarations, on
+  // both sides: read-only offline, an account's own, emptied at sign-out.
+  static const String homesBox = 'homesBox';
 
   /// Boxes that belong to the **device**, kept across a sign-out on purpose.
   ///
@@ -81,6 +84,7 @@ class StorageKeys {
     visitsBox,
     savedSearchesBox,
     reservationsBox,
+    homesBox,
   ];
 
   static const List<String> allBoxes = [

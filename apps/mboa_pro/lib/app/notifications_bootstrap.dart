@@ -84,6 +84,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.contract:
     case PushType.reservation:
     case PushType.savedSearch:
+    // M30 — routed to its screens with "Mon Logement" (lot 2, commit 5).
+    case PushType.home:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

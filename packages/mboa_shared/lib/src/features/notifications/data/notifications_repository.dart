@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart' show AppLifecycleListener;
 import 'package:mboa_core/mboa_core.dart';
 
 import '../models/push_message.dart';
@@ -35,6 +36,15 @@ class NotificationsRepository {
   /// what was registered.
   String? _registeredToken;
 
+  /// Whether the phone lets the app show notifications — sent at every
+  /// registration (M03, RM-M03-02): when no device of an account shows them,
+  /// the contract pushes N-07 / N-08 also go out by SMS.
+  bool? _pushEnabled;
+
+  /// Re-reads the permission when the app comes back: it may have been
+  /// switched off (or on) in the phone's settings meanwhile.
+  AppLifecycleListener? _lifecycle;
+
   /// Starts intake and registers this device. Call **after** authentication —
   /// the register endpoint is authenticated, and a token registered before
   /// login can't be attributed to a user.
@@ -45,7 +55,7 @@ class NotificationsRepository {
     void Function(PushMessage message)? onOpened,
   }) async {
     try {
-      await _messaging.requestPermission();
+      _pushEnabled = _shows(await _messaging.requestPermission());
 
       final token = await _messaging.getToken();
       if (token != null && token.isNotEmpty) {
@@ -64,6 +74,8 @@ class NotificationsRepository {
       _openedSub = FirebaseMessaging.onMessageOpenedApp.listen((message) {
         onOpened?.call(_toPush(message));
       });
+
+      _lifecycle ??= AppLifecycleListener(onResume: () => unawaited(syncPermission()));
 
       // The app may have been launched *by* a notification.
       final initial = await _messaging.getInitialMessage();
@@ -91,6 +103,9 @@ class NotificationsRepository {
       }
     }
 
+    _lifecycle?.dispose();
+    _lifecycle = null;
+    _pushEnabled = null;
     await _tokenRefreshSub?.cancel();
     await _foregroundSub?.cancel();
     await _openedSub?.cancel();
@@ -99,12 +114,33 @@ class NotificationsRepository {
     _openedSub = null;
   }
 
+  /// The permission read again; the same token re-registered when it changed
+  /// (M03 — "whenever the permission changes").
+  @visibleForTesting
+  Future<void> syncPermission() async {
+    final token = _registeredToken;
+    if (token == null) return;
+    try {
+      final enabled = _shows(await _messaging.getNotificationSettings());
+      if (enabled == _pushEnabled) return;
+      _pushEnabled = enabled;
+      await _register(token);
+    } catch (error, stack) {
+      _log('permission sync failed', error, stack);
+    }
+  }
+
+  static bool _shows(NotificationSettings settings) =>
+      settings.authorizationStatus == AuthorizationStatus.authorized ||
+      settings.authorizationStatus == AuthorizationStatus.provisional;
+
   Future<void> _register(String token) async {
     try {
       await _dioClient.api.getNotificationDevicesApi().registerDevice(
             registerDeviceRequest: RegisterDeviceRequest((b) => b
               ..token = token
-              ..platform = _platform),
+              ..platform = _platform
+              ..pushEnabled = _pushEnabled),
           );
       _registeredToken = token;
     } catch (error, stack) {

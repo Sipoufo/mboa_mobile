@@ -62,6 +62,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.paymentConfirmed:
     case PushType.kyc:
     case PushType.residence:
+    // M30 — routed to its screens with "Mon Logement" (lot 2, commit 5).
+    case PushType.home:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }
