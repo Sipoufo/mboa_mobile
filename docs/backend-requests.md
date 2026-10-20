@@ -1051,3 +1051,121 @@ alone. Two asks:
 **Meanwhile, in the app:** the Pro request screen lists the prestataire's
 contracts and looks for a live one with this `reservationRequestId`; when it
 finds one it offers "Voir le contrat" instead. Both go once the fields exist.
+
+---
+
+## §29 — M30 lot 2 ("Mon Logement", cœur financier): the API the apps need
+
+**Raised 2026-10-20**, before the mobile plan for lot 2 (brief M28–M31, lot 2;
+Doc 10 RM-M30-01 to 08, 15, 16; CE-M30-02 to 04; CA-M30-01 to 03, 06; N-35 to
+N-37). Nothing of M30 exists in the API yet. The founder's mockups ("Porte
+feuille") are being adapted **without** any balance, top-up or transfer —
+RM-M30-06 / CA-M30-03: Mboa holds and moves no money. What follows is the
+contract the apps will be built against; names are suggestions, the shapes
+are what matters. §27.7 (what one declaration pays) is answered below as a
+proposal — please confirm or correct before building.
+
+### 1. The space — one per signed contract (RM-M30-01, RM-M30-16)
+
+`GET /api/v1/homes` (USER) — the tenant's spaces, active first:
+
+```
+HomeSummary {
+  contractId, annonceId, annonceTitle, city, district, coverPhotoKey,
+  prestataire: ParticipantSummary,
+  state: UPCOMING | ACTIVE | READ_ONLY,   // RM-M30-01 « À venir », RM-M30-16
+  rent, rentalPeriod,                     // the contract's
+  nextDue: Due?,                          // the next échéance not confirmed
+  overdueCount, overdueAmount             // RM-M30-02: + 5 days
+}
+```
+
+`GET /api/v1/homes/{contractId}` — the same, plus the schedule (§2).
+Prestataire side: `GET /api/v1/prestataires/me/homes` with the same shape and
+`tenant` instead of `prestataire`, filterable by `annonceId`.
+
+### 2. The schedule — computed, never stored (RM-M30-02)
+
+`GET /api/v1/homes/{contractId}/schedule?from=&to=` (both parties):
+
+```
+Due {
+  index,                 // stable within the contract: 0, 1, 2…
+  periodStart, periodEnd, dueDate, amount,
+  status: UPCOMING | DUE | PASSED | LATE | DECLARED | UNCONFIRMED | CONFIRMED | CONTESTED,
+  declarationIds: [uuid]
+}
+```
+
+- `PASSED` = past its date, inside the 5 days; `LATE` = + 5 days without a
+  confirmed payment; `UNCONFIRMED` = declared, 7 days without an answer
+  (RM-M30-04). The server says it — the apps never compute a lateness.
+- Tacit renewal (RM-M08-12) continues the list; please cap one page of the
+  future at the next 12 échéances so a daily rent does not return 365 rows.
+
+### 3. A declaration (RM-M30-03, CE-M30-02, §27.7)
+
+`POST /api/v1/homes/{contractId}/declarations` (USER, the tenant):
+
+```
+{ dueIndex, amount, paidOn, method: MOBILE_MONEY | ORANGE_MONEY | CASH | TRANSFER | OTHER,
+  reference?, note?, proofKeys: [string] }   // FINANCE_ATTACHMENT uploads, ≤ 3
+```
+
+- **§27.7, proposed:** one declaration = one échéance. A partial payment is a
+  declaration for less than the amount; the échéance stays `DUE`/`LATE` until
+  the confirmed total covers it (and says so: `confirmedTotal` on `Due`). A
+  transfer covering several échéances is declared once per échéance. The
+  deposit is not an échéance at the MVP: out of lot 2. Please say if you
+  prefer otherwise — the declaration screen depends on it.
+- CE-M30-02 is the app's to warn about (zero, > 10× the rent); the server
+  only refuses `amount <= 0` (`DECLARATION_AMOUNT_INVALID`).
+- Codes: `HOME_READ_ONLY` (contract ended, beyond the 7 days of CE-M30-04),
+  `DUE_ALREADY_CONFIRMED`, `PROOF_LIMIT`.
+
+```
+Declaration {
+  id, contractId, dueIndex, amount, paidOn, method, reference, note,
+  proofKeys, hasProof,                          // RM-M30-03 « signalé comme tel »
+  status: DECLARED | UNCONFIRMED | CONFIRMED | CONTESTED,
+  contestReason?, declaredAt, answeredAt?,
+  receiptId?,                                   // once confirmed (§5)
+  canConfirm, canContest                        // the prestataire's, server-computed
+}
+```
+
+`GET /api/v1/homes/{contractId}/declarations` (both parties) — newest first.
+
+### 4. The answer (RM-M30-04, RM-M30-15)
+
+`POST /api/v1/prestataires/me/declarations/{id}/confirm` and
+`…/contest { reason }` (PRESTATAIRE, **no add-on required** — CA-M30-06).
+`GET /api/v1/prestataires/me/declarations?status=DECLARED,UNCONFIRMED` for the
+Pro inbox; its `totalElements` is the home's counter. Codes:
+`DECLARATION_ANSWERED`, `CONTEST_REASON_REQUIRED`. An `UNCONFIRMED` one stays
+answerable (RM-M30-04 keeps it visible; please confirm it stays confirmable).
+
+### 5. The receipt (RM-M30-05, CA-M30-02)
+
+`GET /api/v1/receipts/{id}/pdf` → `{ downloadUrl }` (both parties), and the
+public check `GET /api/v1/receipts/verify/{code}` like `/contracts/verify/{id}`.
+`GET /api/v1/homes/{contractId}/receipts` lists them. The PDF within 30 s of
+the confirmation — if it is generated asynchronously, `receiptId` with a
+`ready` flag lets the app say "Quittance en préparation".
+
+### 6. The tenant's financial history (lot 2) and M25 (RM-M30-08)
+
+`GET /api/v1/homes/{contractId}/summary` → `{ confirmedTotal, declaredTotal,
+contestedTotal, lastConfirmedAt }` — "une seule donnée, deux vues": the apps
+show these, never sum the list themselves.
+
+### 7. Pushes
+
+`PushType` value `HOME` (append-only, like §27.3), `entityId` = the
+`contractId` for N-37 and N-36, the declaration id for N-35 (the Pro opens the
+declaration). N-37 `mandatory: true` as decided on 2026-10-19.
+
+### 8. Not in lot 2
+
+Requests (RM-M30-09/10), photo proofs (RM-M30-11/12) and useful contacts
+(RM-M30-13) are lot 3; M31 is lot 4. No route of lot 2 should depend on them.
