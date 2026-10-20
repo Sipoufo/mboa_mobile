@@ -10,11 +10,11 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../../favorites/bloc/favorites_bloc.dart';
-import '../../favorites/ui/widgets/favorite_heart.dart';
 import '../../messaging/ui/contact_sheet.dart';
 import '../../reservations/models/reservation_draft.dart';
 import '../../visits/ui/book_visit_sheet.dart';
 import '../bloc/listing_detail_bloc.dart';
+import 'widgets/fiche_sections.dart';
 import 'widgets/listing_bits.dart';
 
 /// The public fiche of a listing (CDC M05).
@@ -117,15 +117,29 @@ class _Gone extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+/// The founder's fiche: the photo with what it is laid over, who rents it
+/// out, what it is as pills, the description, then where it is and what
+/// people say side by side — and the reviews themselves below.
+class _Body extends StatefulWidget {
   const _Body({required this.state});
 
   final ListingDetailReady state;
 
   @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  /// Where the "Avis" card scrolls to.
+  final _reviewsKey = GlobalKey();
+
+  @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final state = widget.state;
     final detail = state.detail;
+    final hasReviews = detail.rating.hasRating || state.reviews.isNotEmpty;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(
@@ -140,39 +154,52 @@ class _Body extends StatelessWidget {
         // fiche; it says so before anything else on it.
         if (detail.availability != ListingAvailability.available)
           _AvailabilityBanner(availability: detail.availability),
-        _Gallery(detail: detail),
+        ListingHero(detail: detail),
+        const SizedBox(height: Dimens.spacingSm),
+        // RM-M05-02 / CA-M05-03 — the exact address is not withheld by the UI:
+        // the API never sends it. The coordinates are fuzzed by ~200 m until
+        // contact (RM-M04-06); once the server says they are exact, the note
+        // says so — the written address still waits for the signed contract.
+        Text(
+          detail.exactLocation ? l10n.listingLocationExactNote : l10n.listingLocationNote,
+          style: context.mboaText.caption.copyWith(color: colors.textTertiary),
+        ),
+        if (detail.provider case final provider?) ...[
+          const SizedBox(height: Dimens.spacing),
+          ListingProviderRow(provider: provider),
+        ],
         const SizedBox(height: Dimens.spacing),
-        _Header(detail: detail),
-        const SizedBox(height: Dimens.spacing),
-        _Facts(detail: detail),
-        if (detail.amenities.isNotEmpty)
-          ListingSection(
-            title: l10n.listingAmenities,
-            child: Wrap(
-              spacing: Dimens.spacingSm,
-              runSpacing: Dimens.spacingSm,
-              children: [
-                for (final amenity in detail.amenities)
-                  _Tag(label: amenity.label(l10n)),
-              ],
+        ListingFactChips(detail: detail),
+        if (detail.description case final description? when description.trim().isNotEmpty) ...[
+          const SizedBox(height: Dimens.spacingLg),
+          Text(l10n.listingDescription, style: context.mboaText.h3.copyWith(color: colors.primaryDark)),
+          const SizedBox(height: Dimens.spacingSm),
+          Text(description, style: context.mboaText.body.copyWith(color: colors.ink)),
+        ],
+        const SizedBox(height: Dimens.spacingLg),
+        ListingCardsRow(
+          detail: detail,
+          onOpenMap: () => context.router.push(
+            ListingMapRoute(
+              latitude: detail.latitude!,
+              longitude: detail.longitude!,
+              exact: detail.exactLocation,
+              title: detail.title,
             ),
           ),
-        if (detail.description case final description?
-            when description.trim().isNotEmpty)
-          ListingSection(
-            title: l10n.listingDescription,
-            child: Text(
-              description,
-              style: context.mboaText.body
-                  .copyWith(color: context.mboaColors.ink),
-            ),
-          ),
-        if (detail.provider case final provider?)
-          _Provider(provider: provider),
+          onOpenReviews: () {
+            final target = _reviewsKey.currentContext;
+            if (target != null) {
+              Scrollable.ensureVisible(target, duration: const Duration(milliseconds: 350), curve: Curves.easeOut);
+            }
+          },
+        ),
         // RM-M05-08 — no review, no block: a "0/5" reads as a bad property
         // rather than an unrated one.
-        if (detail.rating.hasRating || state.reviews.isNotEmpty)
-          _Reviews(state: state),
+        if (hasReviews) ...[
+          const SizedBox(height: Dimens.spacing),
+          KeyedSubtree(key: _reviewsKey, child: _Reviews(state: state)),
+        ],
       ],
     );
   }
@@ -247,286 +274,6 @@ class _OfflineBanner extends StatelessWidget {
               style: context.mboaText.caption.copyWith(color: colors.warning),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-/// RM-M05-01 — three photos in the carousel, the rest behind the gallery.
-class _Gallery extends StatefulWidget {
-  const _Gallery({required this.detail});
-
-  final ListingDetail detail;
-
-  @override
-  State<_Gallery> createState() => _GalleryState();
-}
-
-class _GalleryState extends State<_Gallery> {
-  final _controller = PageController();
-  int _page = 0;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-    final urls = widget.detail.photoUrls;
-    final shown = urls.take(ListingDetail.carouselPhotos).toList();
-
-    Widget placeholder() => ColoredBox(
-          color: colors.primaryPale,
-          child: Center(
-            child: Icon(LucideIcons.image, color: colors.primary),
-          ),
-        );
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(Dimens.radiusLg),
-      child: SizedBox(
-        height: 240,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: shown.isEmpty
-                  ? placeholder()
-                  : PageView.builder(
-                      controller: _controller,
-                      onPageChanged: (page) => setState(() => _page = page),
-                      itemCount: shown.length,
-                      // CE-M05-02 — a placeholder, never a broken frame.
-                      // Cached: swiping back and forth must not re-download.
-                      itemBuilder: (context, index) => MboaNetworkImage(
-                        url: shown[index],
-                        placeholder: placeholder(),
-                      ),
-                    ),
-            ),
-            Positioned(
-              top: Dimens.spacingSm,
-              right: Dimens.spacingSm,
-              child: FavoriteHeart(
-                annonceId: widget.detail.id,
-                background: true,
-                optimistic: optimisticFavorite(
-                  annonceId: widget.detail.id,
-                  title: widget.detail.title,
-                  photoKey: widget.detail.photoKeys.firstOrNull,
-                  price: widget.detail.displayPrice,
-                  rentalPeriod: widget.detail.rentalPeriod,
-                  city: widget.detail.city,
-                  district: widget.detail.district,
-                ),
-              ),
-            ),
-            if (shown.length > 1)
-              Positioned(
-                bottom: Dimens.spacingSm,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (var i = 0; i < shown.length; i++)
-                      Container(
-                        width: 6,
-                        height: 6,
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: 3),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: i == _page
-                              ? colors.onBrand
-                              : colors.onBrand.withValues(alpha: 0.4),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            if (urls.length > ListingDetail.carouselPhotos)
-              Positioned(
-                bottom: Dimens.spacingSm,
-                right: Dimens.spacingSm,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Dimens.spacingSm,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colors.ink.withValues(alpha: 0.6),
-                    borderRadius: BorderRadius.circular(Dimens.radiusFull),
-                  ),
-                  child: Text(
-                    l10n.listingPhotosCount(urls.length),
-                    style:
-                        context.mboaText.caption.copyWith(color: colors.onBrand),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({required this.detail});
-
-  final ListingDetail detail;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (detail.displayPrice case final price?)
-          Text(
-            detail.rentalPeriod.priceLabel(l10n, price),
-            style: context.mboaText.h2.copyWith(color: colors.action),
-          ),
-        const SizedBox(height: Dimens.spacingXs),
-        Text(
-          detail.title ?? '',
-          style: context.mboaText.h3.copyWith(color: colors.ink),
-        ),
-        const SizedBox(height: Dimens.spacingXs),
-        Row(
-          children: [
-            Icon(LucideIcons.mapPin, size: Dimens.iconSm, color: colors.primary),
-            const SizedBox(width: Dimens.spacingXs),
-            Expanded(
-              child: Text(
-                [detail.district, detail.city].nonNulls.join(', '),
-                style: context.mboaText.label
-                    .copyWith(color: colors.textSecondary),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: Dimens.spacingXs),
-        // RM-M05-02 / CA-M05-03 — the exact address is not withheld by the UI:
-        // the API never sends it. The coordinates are fuzzed by ~200 m until
-        // contact (RM-M04-06); once the server says they are exact, the note
-        // says so — the written address still waits for the signed contract.
-        Text(
-          detail.exactLocation ? l10n.listingLocationExactNote : l10n.listingLocationNote,
-          style: context.mboaText.caption.copyWith(color: colors.textTertiary),
-        ),
-      ],
-    );
-  }
-}
-
-class _Facts extends StatelessWidget {
-  const _Facts({required this.detail});
-
-  final ListingDetail detail;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-
-    final facts = <(String, String)>[
-      (l10n.annonceFormFieldType, detail.propertyType.label(l10n)),
-      if (detail.surfaceArea case final surface?)
-        (l10n.annonceFormFieldSurface, l10n.annoncesSurface('$surface')),
-      if (detail.roomCount case final rooms?)
-        (l10n.annonceFormFieldRooms, '$rooms'),
-      if (detail.bathroomCount case final baths?)
-        (l10n.annonceFormFieldBathrooms, '$baths'),
-      if (detail.furnished case final furnished?)
-        (
-          l10n.annonceFormFieldFurnished,
-          furnished ? l10n.commonYes : l10n.commonNo,
-        ),
-      if (detail.chargesIncluded case final included?)
-        (
-          l10n.annonceDetailCharges,
-          included
-              ? l10n.annonceDetailChargesIncluded
-              : l10n.annonceDetailChargesExtra,
-        ),
-      if (detail.availableFrom case final from?)
-        (l10n.annonceFormFieldAvailability, DateFormat.yMMMMd().format(from)),
-    ];
-
-    return ListingSection(
-      title: l10n.listingCharacteristics,
-      child: Column(
-        children: [
-          for (final (label, value) in facts)
-            FactRow(label: label, value: value),
-        ],
-      ),
-    );
-  }
-}
-
-class _Provider extends StatelessWidget {
-  const _Provider({required this.provider});
-
-  final ProviderSummary provider;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    return ListingSection(
-      title: l10n.listingProvider,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              MboaAvatar(
-                imageUrl: provider.logoUrl,
-                initials: (provider.displayName ?? '').isEmpty
-                    ? ''
-                    : provider.displayName![0].toUpperCase(),
-                size: Dimens.avatar,
-              ),
-              const SizedBox(width: Dimens.spacingMd),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      provider.displayName ?? '',
-                      style: context.mboaText.label.copyWith(color: colors.ink),
-                    ),
-                    if (provider.type case final type?)
-                      Text(
-                        prestataireKindLabel(l10n, type),
-                        style: context.mboaText.caption
-                            .copyWith(color: colors.textTertiary),
-                      ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          if (provider.badges.isNotEmpty) ...[
-            const SizedBox(height: Dimens.spacing),
-            Wrap(
-              spacing: Dimens.spacingSm,
-              runSpacing: Dimens.spacingSm,
-              children: [
-                for (final badge in provider.badges)
-                  TrustBadgeChip(badge: badge),
-              ],
-            ),
-          ],
         ],
       ),
     );
@@ -806,32 +553,6 @@ class _ReviewPoint extends StatelessWidget {
           style: context.mboaText.caption.copyWith(color: colors.textSecondary),
         ),
       ],
-    );
-  }
-}
-
-class _Tag extends StatelessWidget {
-  const _Tag({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Dimens.spacingMd,
-        vertical: Dimens.spacingXs,
-      ),
-      decoration: BoxDecoration(
-        color: colors.primaryPale,
-        borderRadius: BorderRadius.circular(Dimens.radiusFull),
-      ),
-      child: Text(
-        label,
-        style: context.mboaText.caption.copyWith(color: colors.primaryDark),
-      ),
     );
   }
 }

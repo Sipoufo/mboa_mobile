@@ -35,6 +35,8 @@ void main() {
     bool canRequestReservation = false,
     String? myReservationRequestId,
     List<String> photoKeys = const ['p1', 'p2', 'p3', 'p4'],
+    double? latitude,
+    double? longitude,
   }) =>
       ListingDetail(
         id: 'a-1',
@@ -52,6 +54,8 @@ void main() {
         description: 'Studio lumineux à deux pas du marché.',
         amenities: const [Amenity.airConditioning, Amenity.wifi],
         photoKeys: photoKeys,
+        latitude: latitude,
+        longitude: longitude,
         provider: const ProviderSummary(
           displayName: 'Agence Deido',
           type: PrestataireKind.agence,
@@ -158,6 +162,84 @@ void main() {
     );
   });
 
+  testWidgets('the photo carries the title, the place and the rent', (tester) async {
+    await pump(tester);
+
+    expect(find.text('Studio meublé — Bonapriso'), findsOneWidget);
+    expect(find.text('Bonapriso, Douala'), findsOneWidget);
+    expect(find.textContaining('110'), findsWidgets);
+    // RM-M05-01 — every photo behind the gallery button.
+    expect(find.byTooltip('Voir toutes les photos'), findsOneWidget);
+  });
+
+  testWidgets('RM-M05-01 — the gallery shows every photo, not the carousel\'s three', (tester) async {
+    await pump(tester);
+
+    await tester.tap(find.byTooltip('Voir toutes les photos'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('1 / 4'), findsOneWidget);
+  });
+
+  testWidgets('what it is, as pills: the facts and the amenities together', (tester) async {
+    await pump(tester);
+    await scrollTo(tester, find.text('Charges en sus'));
+
+    expect(find.text('2 pièces'), findsOneWidget);
+    expect(find.text('1 salle de bain'), findsOneWidget);
+    expect(find.text('Meublé'), findsOneWidget);
+    expect(find.text('45 m²'), findsOneWidget);
+  });
+
+  testWidgets('located and rated: the two cards, side by side', (tester) async {
+    when(() => bloc.state).thenReturn(
+      ListingDetailReady(
+        detail: detail(
+          latitude: 4.05,
+          longitude: 9.7,
+          rating: const PropertyRatingSummary(average: 4.6, reviewCount: 12),
+        ),
+      ),
+    );
+    await pump(tester);
+    await scrollTo(tester, find.text('12 avis'));
+
+    expect(find.text('Localisation'), findsOneWidget);
+    expect(find.text('Avis'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Localisation')).dy,
+      tester.getTopLeft(find.text('Avis')).dy,
+    );
+  });
+
+  testWidgets('the fiche, scrolled to its cards', (tester) async {
+    when(() => bloc.state).thenReturn(
+      ListingDetailReady(
+        detail: detail(
+          latitude: 4.05,
+          longitude: 9.7,
+          rating: const PropertyRatingSummary(average: 4.6, reviewCount: 12),
+        ),
+      ),
+    );
+    await pump(tester);
+    await tester.drag(pageList(), const Offset(0, -420));
+    await tester.pumpAndSettle();
+
+    await expectLater(find.byType(ListingDetailPage), matchesGoldenFile('goldens/listing_detail_cards.png'));
+  });
+
+  testWidgets('no position, no map card', (tester) async {
+    await pump(tester);
+    // All the way down: the list builds only what is on screen.
+    await tester.drag(pageList(), const Offset(0, -3000));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Description'), findsOneWidget);
+    expect(find.text('Localisation'), findsNothing);
+  });
+
   testWidgets('RM-M05-08 — no review, no rating block', (tester) async {
     await pump(tester);
 
@@ -185,9 +267,12 @@ void main() {
       ),
     );
     await pump(tester);
+    // The mockup's "Avis" card says it too, with how many.
+    await scrollTo(tester, find.text('7 avis'));
+    expect(find.text('Avis'), findsOneWidget);
     await scrollTo(tester, find.text('Avis sur le bien'));
 
-    expect(find.textContaining('4.2'), findsOneWidget);
+    expect(find.textContaining('4.2'), findsWidgets);
     // RG-06 — the kind of testimony is named, since they do not weigh the same.
     expect(find.text('Locataire'), findsOneWidget);
   });

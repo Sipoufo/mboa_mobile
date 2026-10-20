@@ -40,6 +40,8 @@ class AppRouter extends RootStackRouter {
         // CA-M05-04). The fiches are pushed over the shell rather than living
         // in a tab — they are a destination, not a section.
         AutoRoute(page: ListingDetailRoute.page, path: '/listings/:id'),
+        // The fiche's "Localisation" card, full screen.
+        AutoRoute(page: ListingMapRoute.page, path: '/listing-map'),
         // M12 — a thread is opened from the list or straight after a first
         // contact; it needs a session, which the tab already checked.
         AutoRoute(page: ThreadRoute.page, path: '/messages/:id'),
