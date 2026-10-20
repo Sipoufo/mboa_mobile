@@ -201,7 +201,6 @@ class _Identity extends StatelessWidget {
                 children: [
                   // Fainter than on the Pro cards: a short band with a name
                   // on it, where the texture must stay behind the words.
-                  Positioned.fill(child: MboaDecorDiscs(color: colors.onBrand, opacity: 0.06)),
                   Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.06, scale: 0.65)),
                 ],
               ),
