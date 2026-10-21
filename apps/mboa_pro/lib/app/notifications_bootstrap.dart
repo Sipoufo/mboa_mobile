@@ -3,6 +3,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../features/rents/bloc/waiting_declarations_bloc.dart';
 import '../features/reservations/bloc/pending_reservations_bloc.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
@@ -26,6 +27,10 @@ void _showInApp(BuildContext context, PushMessage message) {
   // N-32 — a new request: the home's counter is read again, by event.
   if (message.type == PushType.reservation && getIt.isRegistered<PendingReservationsBloc>()) {
     getIt<PendingReservationsBloc>().add(const PendingReservationsRequested());
+  }
+  // N-35 — a payment declared: the home's counter likewise.
+  if (message.type == PushType.home && getIt.isRegistered<WaitingDeclarationsBloc>()) {
+    getIt<WaitingDeclarationsBloc>().add(const WaitingDeclarationsRequested());
   }
 
   final title = message.title;
@@ -77,6 +82,12 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(IncomingReservationRoute(id: id));
     case PushType.reservation when !isAgent:
       router.push(IncomingReservationsRoute());
+    // N-35 — a payment declared, on the declaration where it is answered;
+    // several merged into one push carry no id, and open the inbox.
+    case PushType.home when id != null && !isAgent:
+      router.push(ReceivedDeclarationRoute(declarationId: id));
+    case PushType.home when !isAgent:
+      router.push(RentsRoute());
     case PushType.message:
       // No endpoint reads one conversation by id; the inbox lists it first.
       router.push(const MessagesRoute());
@@ -84,7 +95,6 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.contract:
     case PushType.reservation:
     case PushType.savedSearch:
-    // M30 — routed to its screens with "Mon Logement" (lot 2, commit 5).
     case PushType.home:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());

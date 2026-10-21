@@ -3,6 +3,7 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../features/my_home/bloc/my_homes_bloc.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
 
@@ -22,6 +23,12 @@ Future<void> startNotifications({
 
 /// Foreground messages aren't drawn by the OS, so surface them in-app.
 void _showInApp(BuildContext context, PushMessage message) {
+  // N-36 — a payment confirmed or contested: the next rent and the late
+  // count move, so "Mon logement" is read again.
+  if (message.type == PushType.home && getIt.isRegistered<MyHomesBloc>()) {
+    getIt<MyHomesBloc>().add(const MyHomesRequested());
+  }
+
   final title = message.title;
   if (title == null || title.isEmpty) return;
 
@@ -55,6 +62,12 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(AuthenticatedRouter(children: [ReservationDetailRoute(id: id)]));
     case PushType.reservation:
       router.push(const AuthenticatedRouter(children: [MyReservationsRoute()]));
+    // N-36 — a payment confirmed or contested, in its space; several merged
+    // into one push carry no id, and open the list.
+    case PushType.home when id != null:
+      router.push(AuthenticatedRouter(children: [MyHomeRoute(contractId: id)]));
+    case PushType.home:
+      router.push(const AuthenticatedRouter(children: [MyHomesRoute()]));
     case PushType.message:
       router.navigate(const UserShellRoute(children: [MessagesRoute()]));
     case PushType.annonce:
@@ -62,8 +75,6 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.paymentConfirmed:
     case PushType.kyc:
     case PushType.residence:
-    // M30 — routed to its screens with "Mon Logement" (lot 2, commit 5).
-    case PushType.home:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

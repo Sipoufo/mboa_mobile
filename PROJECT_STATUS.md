@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-19.
+> Last updated: 2026-10-21.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1135 tests green, analyze clean.** `mboa_user` 296 · `mboa_pro` 529 ·
-`mboa_core` 19 · `mboa_shared` 263 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1253 tests green, analyze clean.** `mboa_user` 330 · `mboa_pro` 557 ·
+`mboa_core` 19 · `mboa_shared` 319 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -46,7 +46,7 @@
 | M03 push notifications | ✅ **Android both apps**, every `PushTarget` routed (CA-M03-02) · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
 | M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache, saved searches + N-01 (read-only offline), **exact point once contacted (RM-M04-06)** |
-| M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur |
+| M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur · **redesigned after the founder's mockup** (photo hero, gallery, fact chips, provider row, map card) |
 | M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
 | M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur, motif d'annulation |
 | M07bis rapport (locataire) | ✅ écriture, verrouillé une fois publié · la fiche montre points +/− et photos |
@@ -63,6 +63,7 @@
 | M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
 | M29 réservation — lot 1 | ✅ **tenant**: "Réserver" on the fiche, request screen (stay, indicative total, no money), "Ma demande" + ticket, "Mes réservations" (offline) · **Pro**: inbox (timeline), request detail (accept / refuse with reason / extend / cancel), home counter, contract drawn up from a request (RM-M08-10), unreserve by hand (RM-M10-10) · system message in the thread · N-32/33/34 routed |
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
+| M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · receipts (slice D) and invoice declarations (slice E) not shipped by the backend yet |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -88,8 +89,37 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 - A contract **from a request** names no tenant (`TENANT_FROM_RESERVATION`).
 - `ReservationTicket`, `ReservationStatusChip`, the refusal labels and the
   termination UI live in `mboa_shared`; both apps use them.
-- Lot 2+ (Finance, fiche bien redesign) waits for the founder's mockups —
-  ask first.
+- A reservation on a **residence unit** is found from the residence (its
+  "Demandes de réservation" row, narrowed to its units client-side) — §30
+  asks the server for the residence on the request.
+
+### M30 lot 2 — what to know before touching (2026-10-21)
+
+- **No money moves through Mboa** (RM-M30-06). The founder's "Finance"
+  mockups are a wallet; they were adapted **without** balance, top-up or
+  transfer. A tenant *declares* a payment made elsewhere; the landlord
+  confirms or contests it. UI tests fail on "payer maintenant", "recharge",
+  "solde".
+- **Domain names avoid the generated ones**: `RentDue`, `RentDeposit`,
+  `RentSchedule`, `RentPaymentMethod`, `HomeStage`, `HomeSpaceState` — the
+  generated `Due`, `HomeSchedule`, `HomeSummary`… are re-exported by
+  `mboa_core`, and the Pro app has its own `HomeState` / `PaymentMethod`.
+- A rent declaration covers **consecutive échéances by their index**, not by
+  their place in the list: with 4 declared, 3 and 5 sit side by side in the
+  form and do not follow each other (`DeclarationForm.toggle`).
+- Confirm / contest ride on the server's `canConfirm` / `canContest`; the
+  bar is one main action ("Confirmer le paiement") and "⋯" (Contester, with
+  a required reason). The tenant gets no bar at all.
+- `FeatureKey.loyers` (was `portefeuille`): any prestataire, any tier, KYC
+  or not (RM-M30-15); never an agent.
+- The inbox narrows by listing client-side (the API filters spaces by one
+  listing, the inbox not at all); a residence passes its units' ids.
+- Pushes: N-35 `entityId` = the **declaration** (Pro), N-36 = the
+  **contract** (tenant); merged pushes carry no id and open the lists.
+- Shared in `mboa_shared/homes`: models, repository (cache in the
+  account-scoped `homesBox`), `HomeSpaceBloc/View`, `DeclarationBloc/View`,
+  `HomeCard` (with a `viewer`), `home_bits`. Pro's `DayTimeline` is shared by
+  both inboxes (requests, rents).
 
 ---
 
@@ -1092,15 +1122,19 @@ as the same thing.
 
 ## Pending / next
 
-Updated 2026-10-18. The client was regenerated from the export carrying M24
+Updated 2026-10-21. The client was regenerated from the export carrying M24
 (invoices) and M26 (payments to contractors), `eb848cd`.
 
 Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **M29 lot 1** (reservation, termination, system messages) — waits on the
-  backend's lot 1 plan (§27 items 2 to 7); M30/M31 after it.
+- **M30 slice D** — receipts (PDF, a `ready` flag, "Quittance en
+  préparation", N-37) once the backend ships it; **slice E** — declaring an
+  invoice paid. **§30** — the residence on a reservation request.
+- **Fiche** — "Réservable sous condition — Avance et caution" needs the
+  founder's definition (and backend data); managers / agents on the fiche
+  need API data.
 - **M14 per-listing figures** — `/prestataires/me/dashboard/annonces` could
   fill the empty "Statistiques" card of the Pro listing detail.
 - Settings: the `searchable` toggle is still unwired.

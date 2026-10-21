@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_pro/app/notifications_bootstrap.dart';
+import 'package:mboa_pro/app/router/app_router.dart';
 import 'package:mboa_pro/app/router/app_router.gr.dart';
 import 'package:mboa_pro/features/rents/bloc/rents_bloc.dart';
 import 'package:mboa_pro/features/rents/bloc/waiting_declarations_bloc.dart';
@@ -29,6 +31,8 @@ class MockWaitingDeclarationsBloc extends MockBloc<WaitingDeclarationsEvent, Wai
 class MockHomeSpaceBloc extends MockBloc<HomeSpaceEvent, HomeSpaceState> implements HomeSpaceBloc {}
 
 class MockStackRouter extends Mock implements StackRouter {}
+
+class MockAppRouter extends Mock implements AppRouter {}
 
 class _FakeRoute extends Fake implements PageRouteInfo<dynamic> {}
 
@@ -358,6 +362,49 @@ void main() {
       await tester.pumpAndSettle();
 
       await expectLater(find.byType(RentsView), matchesGoldenFile('goldens/rents_tenants.png'));
+    });
+  });
+
+  group('N-35, the push', () {
+    late MockAppRouter router;
+
+    setUpAll(() => registerFallbackValue(_FakeRoute()));
+
+    setUp(() {
+      router = MockAppRouter();
+      when(() => router.push<Object?>(any())).thenAnswer((_) async => null);
+      when(() => router.navigate(any())).thenAnswer((_) async {});
+      getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
+    });
+
+    tearDown(getIt.reset);
+
+    test('a payment declared opens the declaration, where it is answered', () {
+      getIt<SessionSnapshot>().markAuthenticated(role: AccountRole.prestataire);
+
+      routeNotificationTap(router, const PushMessage(type: PushType.home, entityId: 'd-1'));
+
+      final route = verify(() => router.push<Object?>(captureAny())).captured.single as PageRouteInfo;
+      expect(route.routeName, ReceivedDeclarationRoute.name);
+      expect((route.args! as ReceivedDeclarationRouteArgs).declarationId, 'd-1');
+    });
+
+    test('several merged (no id): the inbox', () {
+      getIt<SessionSnapshot>().markAuthenticated(role: AccountRole.prestataire);
+
+      routeNotificationTap(router, const PushMessage(type: PushType.home));
+
+      final route = verify(() => router.push<Object?>(captureAny())).captured.single as PageRouteInfo;
+      expect(route.routeName, RentsRoute.name);
+    });
+
+    test('an agent has no rents: the shell', () {
+      getIt<SessionSnapshot>().markAuthenticated(role: AccountRole.agent);
+
+      routeNotificationTap(router, const PushMessage(type: PushType.home, entityId: 'd-1'));
+
+      verifyNever(() => router.push<Object?>(any()));
+      verify(() => router.navigate(const AuthenticatedRouter())).called(1);
     });
   });
 }
