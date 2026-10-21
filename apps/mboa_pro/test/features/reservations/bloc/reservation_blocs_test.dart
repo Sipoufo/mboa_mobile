@@ -68,16 +68,13 @@ void main() {
     );
 
     blocTest<IncomingReservationsBloc, IncomingReservationsState>(
-      'a residence\'s: its units\' requests only, the others left out',
-      setUp: () => when(() => repository.list()).thenAnswer(
-        (_) async => const IncomingReservations([
-          pending,
-          Reservation(id: 'r-9', status: ReservationStatus.pending, annonceId: 'elsewhere'),
-        ]),
-      ),
-      build: () => IncomingReservationsBloc(repository: repository, unitIds: const {'a-1', 'a-2'}),
+      'a residence\'s: its units\' requests, narrowed by the server (§30)',
+      setUp: () => when(() => repository.list(residenceId: 'res-1'))
+          .thenAnswer((_) async => const IncomingReservations([pending])),
+      build: () => IncomingReservationsBloc(repository: repository, residenceId: 'res-1'),
       act: (bloc) => bloc.add(const IncomingReservationsRequested()),
       expect: () => const [IncomingReservationsLoading(), IncomingReservationsReady(items: [pending])],
+      verify: (_) => verify(() => repository.list(residenceId: 'res-1')).called(1),
     );
 
     blocTest<IncomingReservationsBloc, IncomingReservationsState>(

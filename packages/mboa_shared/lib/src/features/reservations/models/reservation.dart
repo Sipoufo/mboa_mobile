@@ -102,6 +102,8 @@ class Reservation extends Equatable {
     required this.status,
     this.annonceId,
     this.annonceTitle,
+    this.residenceId,
+    this.residenceName,
     this.userAccountId,
     this.client,
     this.prestataire,
@@ -132,6 +134,11 @@ class Reservation extends Equatable {
 
   /// A copy, kept if the listing goes.
   final String? annonceTitle;
+
+  /// §30 — the residence the listing is a unit of; null for a standalone
+  /// listing.
+  final String? residenceId;
+  final String? residenceName;
 
   /// The client's account — what opens their Mboa Score (RM-M09-04).
   final String? userAccountId;
@@ -177,6 +184,13 @@ class Reservation extends Equatable {
     return rentalPeriod.lastDay(start, units);
   }
 
+  /// What the request is on, as a row says it: a unit names its residence
+  /// ("Chambre 3 · Résidence Deido"), a standalone listing its title alone.
+  String? get placeTitle => switch ((annonceTitle, residenceName)) {
+        (final title?, final residence?) => '$title · $residence',
+        (final title, final residence) => title ?? residence,
+      };
+
   /// A short reference, for the confirmation card.
   String get reference => id.length <= 8 ? id.toUpperCase() : id.substring(0, 8).toUpperCase();
 
@@ -185,6 +199,8 @@ class Reservation extends Equatable {
         status: ReservationStatus.fromWire(response.status?.name),
         annonceId: response.annonceId,
         annonceTitle: response.annonceTitle,
+        residenceId: response.residenceId,
+        residenceName: response.residenceName,
         userAccountId: response.userAccountId,
         client: ReservationParty.fromResponse(response.client),
         prestataire: ReservationParty.fromResponse(response.prestataire),
@@ -222,6 +238,8 @@ class Reservation extends Equatable {
         'status': status.name,
         'annonceId': annonceId,
         'title': annonceTitle,
+        'residenceId': residenceId,
+        'residence': residenceName,
         'start': desiredStartDate?.toIso8601String(),
         'units': durationUnits,
         'period': rentalPeriod.name,
@@ -238,6 +256,8 @@ class Reservation extends Equatable {
       status: ReservationStatus.values.where((s) => s.name == json['status']).firstOrNull ?? ReservationStatus.unknown,
       annonceId: json['annonceId'] as String?,
       annonceTitle: json['title'] as String?,
+      residenceId: json['residenceId'] as String?,
+      residenceName: json['residence'] as String?,
       client: json['client'] is String ? ReservationParty(name: json['client'] as String) : null,
       createdAt: date(json['createdAt']),
       desiredStartDate: date(json['start']),
@@ -254,6 +274,8 @@ class Reservation extends Equatable {
         status,
         annonceId,
         annonceTitle,
+        residenceId,
+        residenceName,
         userAccountId,
         client,
         prestataire,

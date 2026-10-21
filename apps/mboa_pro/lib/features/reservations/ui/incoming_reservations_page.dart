@@ -20,7 +20,7 @@ import '../bloc/incoming_reservations_bloc.dart';
 /// with a clock on them (RM-M29-05).
 @RoutePage()
 class IncomingReservationsPage extends StatelessWidget implements AutoRouteWrapper {
-  const IncomingReservationsPage({super.key, this.annonceId, this.annonceTitle, this.unitIds});
+  const IncomingReservationsPage({super.key, this.annonceId, this.annonceTitle, this.residenceId});
 
   /// Set to list one listing's requests.
   final String? annonceId;
@@ -28,12 +28,12 @@ class IncomingReservationsPage extends StatelessWidget implements AutoRouteWrapp
   /// What the list is about — a listing's title, or a residence's name.
   final String? annonceTitle;
 
-  /// Set to list a residence's units' requests.
-  final List<String>? unitIds;
+  /// Set to list a residence's units' requests (§30).
+  final String? residenceId;
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<IncomingReservationsBloc>(
-        create: (_) => getIt<IncomingReservationsBloc>(param1: annonceId, param2: unitIds?.toSet())
+        create: (_) => getIt<IncomingReservationsBloc>(param1: annonceId, param2: residenceId)
           ..add(const IncomingReservationsRequested()),
         child: this,
       );
@@ -218,7 +218,7 @@ class _Row extends StatelessWidget {
                   Text(
                     l10n.proReservationRowBody(
                       reservation.client?.name ?? l10n.proReservationClient,
-                      reservation.annonceTitle ?? l10n.reservationUntitled,
+                      reservation.placeTitle ?? l10n.reservationUntitled,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

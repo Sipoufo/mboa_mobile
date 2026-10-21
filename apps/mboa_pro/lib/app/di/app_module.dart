@@ -294,11 +294,11 @@ void registerAppModule() {
   getIt.registerLazySingleton<PendingReservationsBloc>(
     () => PendingReservationsBloc(repository: getIt<IncomingReservationsRepository>()),
   );
-  getIt.registerFactoryParam<IncomingReservationsBloc, String?, Set<String>?>(
-    (annonceId, unitIds) => IncomingReservationsBloc(
+  getIt.registerFactoryParam<IncomingReservationsBloc, String?, String?>(
+    (annonceId, residenceId) => IncomingReservationsBloc(
       repository: getIt<IncomingReservationsRepository>(),
       annonceId: annonceId,
-      unitIds: unitIds,
+      residenceId: residenceId,
     ),
   );
 

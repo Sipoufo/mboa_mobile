@@ -133,7 +133,7 @@ class _Row extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      reservation.annonceTitle ?? l10n.reservationUntitled,
+                      reservation.placeTitle ?? l10n.reservationUntitled,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.mboaText.label.copyWith(color: colors.ink),

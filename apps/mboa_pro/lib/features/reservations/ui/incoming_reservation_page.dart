@@ -268,7 +268,7 @@ class _RequestCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      r.annonceTitle ?? l10n.reservationUntitled,
+                      r.placeTitle ?? l10n.reservationUntitled,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: context.mboaText.h3.copyWith(color: colors.ink),

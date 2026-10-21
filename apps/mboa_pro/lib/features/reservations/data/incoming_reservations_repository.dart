@@ -46,14 +46,15 @@ class IncomingReservationsRepository {
 
   RservationsPrestataireApi get _api => _dioClient.api.getRservationsPrestataireApi();
 
-  /// Newest first — all of them, or one listing's. Offline, the last list
-  /// read for the same scope.
-  Future<IncomingReservations> list({String? annonceId}) async {
-    final key = 'incoming:${annonceId ?? 'all'}';
+  /// Newest first — all of them, one listing's, or a residence's units'
+  /// (§30). Offline, the last list read for the same scope.
+  Future<IncomingReservations> list({String? annonceId, String? residenceId}) async {
+    final key = 'incoming:${annonceId ?? 'all'}${residenceId == null ? '' : ':residence:$residenceId'}';
     try {
       final response = await _api.listIncomingReservations(
         pageable: Pageable((b) => b..size = 100),
         annonceId: annonceId,
+        residenceId: residenceId,
       );
       final items = (response.data?.content ?? BuiltList<ReservationResponse>()).map(Reservation.fromResponse).toList();
       await _cache.put(StorageKeys.reservationsBox, key, {'items': items.map((r) => r.toCache()).toList()});

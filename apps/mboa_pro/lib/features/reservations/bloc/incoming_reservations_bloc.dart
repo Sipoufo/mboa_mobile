@@ -4,10 +4,10 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import '../data/incoming_reservations_repository.dart';
 
-/// "Demandes de réservation" — all of them, or one listing's when built with
-/// its id. Offline, the last list read, marked.
+/// "Demandes de réservation" — all of them, one listing's, or a residence's
+/// units' when built with an id. Offline, the last list read, marked.
 class IncomingReservationsBloc extends Bloc<IncomingReservationsEvent, IncomingReservationsState> {
-  IncomingReservationsBloc({required IncomingReservationsRepository repository, this.annonceId, this.unitIds})
+  IncomingReservationsBloc({required IncomingReservationsRepository repository, this.annonceId, this.residenceId})
       : _repository = repository,
         super(const IncomingReservationsLoading()) {
     on<IncomingReservationsRequested>(_onRequested);
@@ -18,18 +18,16 @@ class IncomingReservationsBloc extends Bloc<IncomingReservationsEvent, IncomingR
   /// Set when the list is one listing's (opened from its fiche).
   final String? annonceId;
 
-  /// Set when the list is a residence's: its units' requests. The API filters
-  /// by one listing only, so the full list is read and narrowed here.
-  final Set<String>? unitIds;
+  /// Set when the list is a residence's: its units' requests, narrowed by
+  /// the server (§30).
+  final String? residenceId;
 
   Future<void> _onRequested(IncomingReservationsRequested event, Emitter<IncomingReservationsState> emit) async {
     // A refresh keeps the list on screen rather than blanking it.
     if (state is! IncomingReservationsReady) emit(const IncomingReservationsLoading());
     try {
-      final page = await _repository.list(annonceId: annonceId);
-      final units = unitIds;
-      final items = units == null ? page.items : [for (final r in page.items) if (units.contains(r.annonceId)) r];
-      emit(IncomingReservationsReady(items: items, isOffline: page.fromCache));
+      final page = await _repository.list(annonceId: annonceId, residenceId: residenceId);
+      emit(IncomingReservationsReady(items: page.items, isOffline: page.fromCache));
     } catch (_) {
       if (state is! IncomingReservationsReady) emit(const IncomingReservationsFailure());
     }

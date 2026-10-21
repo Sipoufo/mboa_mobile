@@ -71,6 +71,33 @@ void main() {
       verify(() => cache.put(StorageKeys.reservationsBox, 'incoming:a-1', any())).called(1);
     });
 
+    test('§30 — a residence\'s, narrowed by the server; the unit names its residence, offline too', () async {
+      final unit = _response('r-2').rebuild((b) => b
+        ..annonceTitle = 'Chambre 3'
+        ..residenceId = 'res-1'
+        ..residenceName = 'Résidence Deido');
+      when(() => api.listIncomingReservations(pageable: any(named: 'pageable'), residenceId: 'res-1'))
+          .thenAnswer((_) async => _ok(_page([unit])));
+
+      final page = await repository.list(residenceId: 'res-1');
+
+      final r = page.items.single;
+      expect(r.residenceId, 'res-1');
+      expect(r.placeTitle, 'Chambre 3 · Résidence Deido');
+      final cached = verify(() => cache.put(StorageKeys.reservationsBox, 'incoming:all:residence:res-1', captureAny()))
+          .captured
+          .single as Map<String, dynamic>;
+      final copy = Reservation.fromCache(Map<String, dynamic>.from((cached['items'] as List).single as Map));
+      expect(copy?.placeTitle, 'Chambre 3 · Résidence Deido');
+    });
+
+    test('a standalone listing is named by its title alone', () async {
+      when(() => api.listIncomingReservations(pageable: any(named: 'pageable'), annonceId: 'a-1'))
+          .thenAnswer((_) async => _ok(_page([_response('r-1')])));
+
+      expect((await repository.list(annonceId: 'a-1')).items.single.placeTitle, 'Studio Bonapriso');
+    });
+
     test('offline, the copy — with who asked and when', () async {
       when(() => api.listIncomingReservations(pageable: any(named: 'pageable'))).thenThrow(_offline);
       when(() => cache.get(StorageKeys.reservationsBox, 'incoming:all', ttl: any(named: 'ttl'))).thenReturn({

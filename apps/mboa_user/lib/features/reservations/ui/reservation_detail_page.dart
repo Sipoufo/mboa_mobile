@@ -122,7 +122,7 @@ class _Body extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                r.annonceTitle ?? l10n.reservationUntitled,
+                r.placeTitle ?? l10n.reservationUntitled,
                 style: context.mboaText.h2.copyWith(color: colors.ink),
               ),
             ),

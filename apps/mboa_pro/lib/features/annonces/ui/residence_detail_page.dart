@@ -117,10 +117,7 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                   icon: LucideIcons.ticket,
                   label: l10n.proReservationsTitle,
                   onTap: () => context.router.push(
-                    IncomingReservationsRoute(
-                      annonceTitle: residence.name,
-                      unitIds: [for (final unit in residence.units) unit.id],
-                    ),
+                    IncomingReservationsRoute(annonceTitle: residence.name, residenceId: residence.id),
                   ),
                 ),
                 const SizedBox(height: Dimens.spacingSm),

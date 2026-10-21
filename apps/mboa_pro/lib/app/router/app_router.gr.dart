@@ -775,7 +775,7 @@ class IncomingReservationsRoute
     _i51.Key? key,
     String? annonceId,
     String? annonceTitle,
-    List<String>? unitIds,
+    String? residenceId,
     List<_i50.PageRouteInfo>? children,
   }) : super(
          IncomingReservationsRoute.name,
@@ -783,7 +783,7 @@ class IncomingReservationsRoute
            key: key,
            annonceId: annonceId,
            annonceTitle: annonceTitle,
-           unitIds: unitIds,
+           residenceId: residenceId,
          ),
          initialChildren: children,
        );
@@ -801,7 +801,7 @@ class IncomingReservationsRoute
           key: args.key,
           annonceId: args.annonceId,
           annonceTitle: args.annonceTitle,
-          unitIds: args.unitIds,
+          residenceId: args.residenceId,
         ),
       );
     },
@@ -813,7 +813,7 @@ class IncomingReservationsRouteArgs {
     this.key,
     this.annonceId,
     this.annonceTitle,
-    this.unitIds,
+    this.residenceId,
   });
 
   final _i51.Key? key;
@@ -822,11 +822,11 @@ class IncomingReservationsRouteArgs {
 
   final String? annonceTitle;
 
-  final List<String>? unitIds;
+  final String? residenceId;
 
   @override
   String toString() {
-    return 'IncomingReservationsRouteArgs{key: $key, annonceId: $annonceId, annonceTitle: $annonceTitle, unitIds: $unitIds}';
+    return 'IncomingReservationsRouteArgs{key: $key, annonceId: $annonceId, annonceTitle: $annonceTitle, residenceId: $residenceId}';
   }
 }
 
