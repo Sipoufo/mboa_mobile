@@ -4739,5 +4739,260 @@
   "myHomeDeclareShort": "Déclarer",
   "@myHomeDeclareShort": {
     "description": "M30 — the round button, one word like the mockup."
+  },
+  "declareTitle": "Déclarer un paiement",
+  "@declareTitle": {
+    "description": "RM-M30-03 — the form's title."
+  },
+  "declareDepositTitle": "Déclarer la caution",
+  "@declareDepositTitle": {
+    "description": "The deposit form's title."
+  },
+  "declareWhich": "Pour quelles échéances ?",
+  "@declareWhich": {
+    "description": "The échéances to cover."
+  },
+  "declareWhichHint": "Elles se suivent : touche la suivante pour payer plusieurs mois d'avance.",
+  "@declareWhichHint": {
+    "description": "§29.1 — consecutive."
+  },
+  "declareNoOpen": "Aucune échéance à déclarer pour l'instant.",
+  "@declareNoOpen": {
+    "description": "No open échéance."
+  },
+  "declareAmount": "Montant payé",
+  "@declareAmount": {
+    "description": "The amount field."
+  },
+  "declarePaidOn": "Payé le",
+  "@declarePaidOn": {
+    "description": "The date field."
+  },
+  "declareMethod": "Moyen de paiement",
+  "@declareMethod": {
+    "description": "The method field."
+  },
+  "declareTabMobile": "Mobile Money",
+  "@declareTabMobile": {
+    "description": "The mockup's first tab."
+  },
+  "declareTabOther": "Autres",
+  "@declareTabOther": {
+    "description": "The mockup's second tab."
+  },
+  "declareReference": "Référence (facultatif)",
+  "@declareReference": {
+    "description": "The transaction reference."
+  },
+  "declareReferenceHint": "Le code reçu par SMS, par exemple",
+  "@declareReferenceHint": {
+    "description": "Reference hint."
+  },
+  "declareNote": "Un mot pour ton propriétaire (facultatif)",
+  "@declareNote": {
+    "description": "The note."
+  },
+  "declareProofs": "Justificatifs (facultatif)",
+  "@declareProofs": {
+    "description": "RM-M30-03."
+  },
+  "declareProofsHint": "Une capture du SMS ou une photo du reçu. Sans justificatif, la déclaration le dit.",
+  "@declareProofsHint": {
+    "description": "RM-M30-03."
+  },
+  "declareAddProof": "Ajouter",
+  "@declareAddProof": {
+    "description": "Add a proof."
+  },
+  "declareProofN": "Justificatif {n}",
+  "@declareProofN": {
+    "description": "A proof tile.",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "declareSend": "Déclarer le paiement",
+  "@declareSend": {
+    "description": "Submit."
+  },
+  "declareUnusualTitle": "Montant inhabituel",
+  "@declareUnusualTitle": {
+    "description": "CE-M30-02."
+  },
+  "declareUnusualBody": "Tu déclares {amount} pour {due} à payer. Vérifie le montant avant d'envoyer.",
+  "@declareUnusualBody": {
+    "description": "CE-M30-02.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "declareUnusualConfirm": "Envoyer quand même",
+  "@declareUnusualConfirm": {
+    "description": "CE-M30-02."
+  },
+  "declareSentTitle": "Paiement déclaré",
+  "@declareSentTitle": {
+    "description": "After sending."
+  },
+  "declareSentBody": "Ton propriétaire va le confirmer.",
+  "@declareSentBody": {
+    "description": "After sending."
+  },
+  "declareUploadFailed": "Le justificatif n'est pas parti. Réessaie.",
+  "@declareUploadFailed": {
+    "description": "CE-M30-01."
+  },
+  "declareFailed": "La déclaration n'est pas partie. Réessaie.",
+  "@declareFailed": {
+    "description": "Network failure."
+  },
+  "declRefusedAmount": "Le montant doit être supérieur à zéro.",
+  "@declRefusedAmount": {
+    "description": "DECLARATION_AMOUNT_INVALID."
+  },
+  "declRefusedDate": "La date de paiement ne peut pas être dans le futur.",
+  "@declRefusedDate": {
+    "description": "DECLARATION_DATE_INVALID."
+  },
+  "declRefusedDues": "Choisis des échéances qui se suivent, dans les 12 prochaines.",
+  "@declRefusedDues": {
+    "description": "DUE_INDEXES_INVALID."
+  },
+  "declRefusedDueConfirmed": "Une de ces échéances est déjà payée.",
+  "@declRefusedDueConfirmed": {
+    "description": "DUE_ALREADY_CONFIRMED."
+  },
+  "declRefusedNoDeposit": "Ce contrat ne prévoit pas de caution.",
+  "@declRefusedNoDeposit": {
+    "description": "NO_DEPOSIT."
+  },
+  "declRefusedDepositConfirmed": "La caution est déjà confirmée.",
+  "@declRefusedDepositConfirmed": {
+    "description": "DEPOSIT_ALREADY_CONFIRMED."
+  },
+  "declRefusedProofLimit": "Trois justificatifs au plus.",
+  "@declRefusedProofLimit": {
+    "description": "PROOF_LIMIT."
+  },
+  "declRefusedAttachment": "Un justificatif n'a pas pu être lu : ajoute-le à nouveau.",
+  "@declRefusedAttachment": {
+    "description": "INVALID_ATTACHMENT."
+  },
+  "declRefusedReadOnly": "Cette location est terminée : tu ne peux plus déclarer de paiement.",
+  "@declRefusedReadOnly": {
+    "description": "HOME_READ_ONLY."
+  },
+  "declRefusedAnswered": "Ce paiement a déjà reçu une réponse.",
+  "@declRefusedAnswered": {
+    "description": "DECLARATION_ANSWERED."
+  },
+  "declRefusedReason": "Donne le motif de la contestation.",
+  "@declRefusedReason": {
+    "description": "CONTEST_REASON_REQUIRED."
+  },
+  "declarationTitle": "Paiement déclaré",
+  "@declarationTitle": {
+    "description": "The declaration's screen."
+  },
+  "declarationTenant": "Locataire",
+  "@declarationTenant": {
+    "description": "The card's left side."
+  },
+  "declarationLandlord": "Propriétaire",
+  "@declarationLandlord": {
+    "description": "The card's right side."
+  },
+  "declarationOutside": "Payé hors de Mboa",
+  "@declarationOutside": {
+    "description": "RM-M30-06."
+  },
+  "declarationCovers": "Échéances",
+  "@declarationCovers": {
+    "description": "What it covers."
+  },
+  "declarationTenantNote": "Mot du locataire",
+  "@declarationTenantNote": {
+    "description": "The note."
+  },
+  "declarationContestReason": "Motif de la contestation",
+  "@declarationContestReason": {
+    "description": "RM-M30-07."
+  },
+  "declarationProofs": "Justificatifs",
+  "@declarationProofs": {
+    "description": "RM-M30-12 — never public."
+  },
+  "declarationDeclaredOn": "Déclaré le {date}",
+  "@declarationDeclaredOn": {
+    "description": "When it was sent.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "declarationWaiting": "En attente de la réponse du propriétaire.",
+  "@declarationWaiting": {
+    "description": "DECLARED."
+  },
+  "declarationUnconfirmedBody": "Sans réponse depuis 7 jours : la déclaration reste visible des deux côtés.",
+  "@declarationUnconfirmedBody": {
+    "description": "RM-M30-04 — UNCONFIRMED."
+  },
+  "declarationConfirm": "Confirmer le paiement",
+  "@declarationConfirm": {
+    "description": "RM-M30-04 — the landlord's main action."
+  },
+  "declarationContest": "Contester",
+  "@declarationContest": {
+    "description": "RM-M30-04 — behind ⋯."
+  },
+  "declarationConfirmTitle": "Confirmer ce paiement ?",
+  "@declarationConfirmTitle": {
+    "description": "Confirm dialog."
+  },
+  "declarationConfirmBody": "Tu confirmes avoir reçu {amount}. Une quittance sera établie pour le locataire.",
+  "@declarationConfirmBody": {
+    "description": "RM-M30-05.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "declarationContestHint": "Le locataire verra ce motif. La déclaration reste visible des deux côtés.",
+  "@declarationContestHint": {
+    "description": "RM-M30-07."
+  },
+  "declarationConfirmedToast": "Paiement confirmé",
+  "@declarationConfirmedToast": {
+    "description": "After confirming."
+  },
+  "declarationContestedToast": "Paiement contesté",
+  "@declarationContestedToast": {
+    "description": "After contesting."
+  },
+  "declarationReference": "Référence",
+  "@declarationReference": {
+    "description": "The declaration detail."
+  },
+  "declarationDeclaredAt": "Déclaré le",
+  "@declarationDeclaredAt": {
+    "description": "The declaration detail."
+  },
+  "declarationProperty": "Logement",
+  "@declarationProperty": {
+    "description": "Declaration detail: label of the rented property's title"
+  },
+  "declarationWaitingYou": "Le locataire attend ta réponse : confirme si tu as bien reçu ce paiement, ou conteste-le.",
+  "@declarationWaitingYou": {
+    "description": "Declaration detail, landlord side: a declaration waiting for their answer"
   }
 }

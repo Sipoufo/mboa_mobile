@@ -12154,6 +12154,587 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Déclarer un paiement`
+  String get declareTitle {
+    return Intl.message(
+      'Déclarer un paiement',
+      name: 'declareTitle',
+      desc: 'RM-M30-03 — the form\'s title.',
+      args: [],
+    );
+  }
+
+  /// `Déclarer la caution`
+  String get declareDepositTitle {
+    return Intl.message(
+      'Déclarer la caution',
+      name: 'declareDepositTitle',
+      desc: 'The deposit form\'s title.',
+      args: [],
+    );
+  }
+
+  /// `Pour quelles échéances ?`
+  String get declareWhich {
+    return Intl.message(
+      'Pour quelles échéances ?',
+      name: 'declareWhich',
+      desc: 'The échéances to cover.',
+      args: [],
+    );
+  }
+
+  /// `Elles se suivent : touche la suivante pour payer plusieurs mois d'avance.`
+  String get declareWhichHint {
+    return Intl.message(
+      'Elles se suivent : touche la suivante pour payer plusieurs mois d\'avance.',
+      name: 'declareWhichHint',
+      desc: '§29.1 — consecutive.',
+      args: [],
+    );
+  }
+
+  /// `Aucune échéance à déclarer pour l'instant.`
+  String get declareNoOpen {
+    return Intl.message(
+      'Aucune échéance à déclarer pour l\'instant.',
+      name: 'declareNoOpen',
+      desc: 'No open échéance.',
+      args: [],
+    );
+  }
+
+  /// `Montant payé`
+  String get declareAmount {
+    return Intl.message(
+      'Montant payé',
+      name: 'declareAmount',
+      desc: 'The amount field.',
+      args: [],
+    );
+  }
+
+  /// `Payé le`
+  String get declarePaidOn {
+    return Intl.message(
+      'Payé le',
+      name: 'declarePaidOn',
+      desc: 'The date field.',
+      args: [],
+    );
+  }
+
+  /// `Moyen de paiement`
+  String get declareMethod {
+    return Intl.message(
+      'Moyen de paiement',
+      name: 'declareMethod',
+      desc: 'The method field.',
+      args: [],
+    );
+  }
+
+  /// `Mobile Money`
+  String get declareTabMobile {
+    return Intl.message(
+      'Mobile Money',
+      name: 'declareTabMobile',
+      desc: 'The mockup\'s first tab.',
+      args: [],
+    );
+  }
+
+  /// `Autres`
+  String get declareTabOther {
+    return Intl.message(
+      'Autres',
+      name: 'declareTabOther',
+      desc: 'The mockup\'s second tab.',
+      args: [],
+    );
+  }
+
+  /// `Référence (facultatif)`
+  String get declareReference {
+    return Intl.message(
+      'Référence (facultatif)',
+      name: 'declareReference',
+      desc: 'The transaction reference.',
+      args: [],
+    );
+  }
+
+  /// `Le code reçu par SMS, par exemple`
+  String get declareReferenceHint {
+    return Intl.message(
+      'Le code reçu par SMS, par exemple',
+      name: 'declareReferenceHint',
+      desc: 'Reference hint.',
+      args: [],
+    );
+  }
+
+  /// `Un mot pour ton propriétaire (facultatif)`
+  String get declareNote {
+    return Intl.message(
+      'Un mot pour ton propriétaire (facultatif)',
+      name: 'declareNote',
+      desc: 'The note.',
+      args: [],
+    );
+  }
+
+  /// `Justificatifs (facultatif)`
+  String get declareProofs {
+    return Intl.message(
+      'Justificatifs (facultatif)',
+      name: 'declareProofs',
+      desc: 'RM-M30-03.',
+      args: [],
+    );
+  }
+
+  /// `Une capture du SMS ou une photo du reçu. Sans justificatif, la déclaration le dit.`
+  String get declareProofsHint {
+    return Intl.message(
+      'Une capture du SMS ou une photo du reçu. Sans justificatif, la déclaration le dit.',
+      name: 'declareProofsHint',
+      desc: 'RM-M30-03.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter`
+  String get declareAddProof {
+    return Intl.message(
+      'Ajouter',
+      name: 'declareAddProof',
+      desc: 'Add a proof.',
+      args: [],
+    );
+  }
+
+  /// `Justificatif {n}`
+  String declareProofN(String n) {
+    return Intl.message(
+      'Justificatif $n',
+      name: 'declareProofN',
+      desc: 'A proof tile.',
+      args: [n],
+    );
+  }
+
+  /// `Déclarer le paiement`
+  String get declareSend {
+    return Intl.message(
+      'Déclarer le paiement',
+      name: 'declareSend',
+      desc: 'Submit.',
+      args: [],
+    );
+  }
+
+  /// `Montant inhabituel`
+  String get declareUnusualTitle {
+    return Intl.message(
+      'Montant inhabituel',
+      name: 'declareUnusualTitle',
+      desc: 'CE-M30-02.',
+      args: [],
+    );
+  }
+
+  /// `Tu déclares {amount} pour {due} à payer. Vérifie le montant avant d'envoyer.`
+  String declareUnusualBody(String amount, String due) {
+    return Intl.message(
+      'Tu déclares $amount pour $due à payer. Vérifie le montant avant d\'envoyer.',
+      name: 'declareUnusualBody',
+      desc: 'CE-M30-02.',
+      args: [amount, due],
+    );
+  }
+
+  /// `Envoyer quand même`
+  String get declareUnusualConfirm {
+    return Intl.message(
+      'Envoyer quand même',
+      name: 'declareUnusualConfirm',
+      desc: 'CE-M30-02.',
+      args: [],
+    );
+  }
+
+  /// `Paiement déclaré`
+  String get declareSentTitle {
+    return Intl.message(
+      'Paiement déclaré',
+      name: 'declareSentTitle',
+      desc: 'After sending.',
+      args: [],
+    );
+  }
+
+  /// `Ton propriétaire va le confirmer.`
+  String get declareSentBody {
+    return Intl.message(
+      'Ton propriétaire va le confirmer.',
+      name: 'declareSentBody',
+      desc: 'After sending.',
+      args: [],
+    );
+  }
+
+  /// `Le justificatif n'est pas parti. Réessaie.`
+  String get declareUploadFailed {
+    return Intl.message(
+      'Le justificatif n\'est pas parti. Réessaie.',
+      name: 'declareUploadFailed',
+      desc: 'CE-M30-01.',
+      args: [],
+    );
+  }
+
+  /// `La déclaration n'est pas partie. Réessaie.`
+  String get declareFailed {
+    return Intl.message(
+      'La déclaration n\'est pas partie. Réessaie.',
+      name: 'declareFailed',
+      desc: 'Network failure.',
+      args: [],
+    );
+  }
+
+  /// `Le montant doit être supérieur à zéro.`
+  String get declRefusedAmount {
+    return Intl.message(
+      'Le montant doit être supérieur à zéro.',
+      name: 'declRefusedAmount',
+      desc: 'DECLARATION_AMOUNT_INVALID.',
+      args: [],
+    );
+  }
+
+  /// `La date de paiement ne peut pas être dans le futur.`
+  String get declRefusedDate {
+    return Intl.message(
+      'La date de paiement ne peut pas être dans le futur.',
+      name: 'declRefusedDate',
+      desc: 'DECLARATION_DATE_INVALID.',
+      args: [],
+    );
+  }
+
+  /// `Choisis des échéances qui se suivent, dans les 12 prochaines.`
+  String get declRefusedDues {
+    return Intl.message(
+      'Choisis des échéances qui se suivent, dans les 12 prochaines.',
+      name: 'declRefusedDues',
+      desc: 'DUE_INDEXES_INVALID.',
+      args: [],
+    );
+  }
+
+  /// `Une de ces échéances est déjà payée.`
+  String get declRefusedDueConfirmed {
+    return Intl.message(
+      'Une de ces échéances est déjà payée.',
+      name: 'declRefusedDueConfirmed',
+      desc: 'DUE_ALREADY_CONFIRMED.',
+      args: [],
+    );
+  }
+
+  /// `Ce contrat ne prévoit pas de caution.`
+  String get declRefusedNoDeposit {
+    return Intl.message(
+      'Ce contrat ne prévoit pas de caution.',
+      name: 'declRefusedNoDeposit',
+      desc: 'NO_DEPOSIT.',
+      args: [],
+    );
+  }
+
+  /// `La caution est déjà confirmée.`
+  String get declRefusedDepositConfirmed {
+    return Intl.message(
+      'La caution est déjà confirmée.',
+      name: 'declRefusedDepositConfirmed',
+      desc: 'DEPOSIT_ALREADY_CONFIRMED.',
+      args: [],
+    );
+  }
+
+  /// `Trois justificatifs au plus.`
+  String get declRefusedProofLimit {
+    return Intl.message(
+      'Trois justificatifs au plus.',
+      name: 'declRefusedProofLimit',
+      desc: 'PROOF_LIMIT.',
+      args: [],
+    );
+  }
+
+  /// `Un justificatif n'a pas pu être lu : ajoute-le à nouveau.`
+  String get declRefusedAttachment {
+    return Intl.message(
+      'Un justificatif n\'a pas pu être lu : ajoute-le à nouveau.',
+      name: 'declRefusedAttachment',
+      desc: 'INVALID_ATTACHMENT.',
+      args: [],
+    );
+  }
+
+  /// `Cette location est terminée : tu ne peux plus déclarer de paiement.`
+  String get declRefusedReadOnly {
+    return Intl.message(
+      'Cette location est terminée : tu ne peux plus déclarer de paiement.',
+      name: 'declRefusedReadOnly',
+      desc: 'HOME_READ_ONLY.',
+      args: [],
+    );
+  }
+
+  /// `Ce paiement a déjà reçu une réponse.`
+  String get declRefusedAnswered {
+    return Intl.message(
+      'Ce paiement a déjà reçu une réponse.',
+      name: 'declRefusedAnswered',
+      desc: 'DECLARATION_ANSWERED.',
+      args: [],
+    );
+  }
+
+  /// `Donne le motif de la contestation.`
+  String get declRefusedReason {
+    return Intl.message(
+      'Donne le motif de la contestation.',
+      name: 'declRefusedReason',
+      desc: 'CONTEST_REASON_REQUIRED.',
+      args: [],
+    );
+  }
+
+  /// `Paiement déclaré`
+  String get declarationTitle {
+    return Intl.message(
+      'Paiement déclaré',
+      name: 'declarationTitle',
+      desc: 'The declaration\'s screen.',
+      args: [],
+    );
+  }
+
+  /// `Locataire`
+  String get declarationTenant {
+    return Intl.message(
+      'Locataire',
+      name: 'declarationTenant',
+      desc: 'The card\'s left side.',
+      args: [],
+    );
+  }
+
+  /// `Propriétaire`
+  String get declarationLandlord {
+    return Intl.message(
+      'Propriétaire',
+      name: 'declarationLandlord',
+      desc: 'The card\'s right side.',
+      args: [],
+    );
+  }
+
+  /// `Payé hors de Mboa`
+  String get declarationOutside {
+    return Intl.message(
+      'Payé hors de Mboa',
+      name: 'declarationOutside',
+      desc: 'RM-M30-06.',
+      args: [],
+    );
+  }
+
+  /// `Échéances`
+  String get declarationCovers {
+    return Intl.message(
+      'Échéances',
+      name: 'declarationCovers',
+      desc: 'What it covers.',
+      args: [],
+    );
+  }
+
+  /// `Mot du locataire`
+  String get declarationTenantNote {
+    return Intl.message(
+      'Mot du locataire',
+      name: 'declarationTenantNote',
+      desc: 'The note.',
+      args: [],
+    );
+  }
+
+  /// `Motif de la contestation`
+  String get declarationContestReason {
+    return Intl.message(
+      'Motif de la contestation',
+      name: 'declarationContestReason',
+      desc: 'RM-M30-07.',
+      args: [],
+    );
+  }
+
+  /// `Justificatifs`
+  String get declarationProofs {
+    return Intl.message(
+      'Justificatifs',
+      name: 'declarationProofs',
+      desc: 'RM-M30-12 — never public.',
+      args: [],
+    );
+  }
+
+  /// `Déclaré le {date}`
+  String declarationDeclaredOn(String date) {
+    return Intl.message(
+      'Déclaré le $date',
+      name: 'declarationDeclaredOn',
+      desc: 'When it was sent.',
+      args: [date],
+    );
+  }
+
+  /// `En attente de la réponse du propriétaire.`
+  String get declarationWaiting {
+    return Intl.message(
+      'En attente de la réponse du propriétaire.',
+      name: 'declarationWaiting',
+      desc: 'DECLARED.',
+      args: [],
+    );
+  }
+
+  /// `Sans réponse depuis 7 jours : la déclaration reste visible des deux côtés.`
+  String get declarationUnconfirmedBody {
+    return Intl.message(
+      'Sans réponse depuis 7 jours : la déclaration reste visible des deux côtés.',
+      name: 'declarationUnconfirmedBody',
+      desc: 'RM-M30-04 — UNCONFIRMED.',
+      args: [],
+    );
+  }
+
+  /// `Confirmer le paiement`
+  String get declarationConfirm {
+    return Intl.message(
+      'Confirmer le paiement',
+      name: 'declarationConfirm',
+      desc: 'RM-M30-04 — the landlord\'s main action.',
+      args: [],
+    );
+  }
+
+  /// `Contester`
+  String get declarationContest {
+    return Intl.message(
+      'Contester',
+      name: 'declarationContest',
+      desc: 'RM-M30-04 — behind ⋯.',
+      args: [],
+    );
+  }
+
+  /// `Confirmer ce paiement ?`
+  String get declarationConfirmTitle {
+    return Intl.message(
+      'Confirmer ce paiement ?',
+      name: 'declarationConfirmTitle',
+      desc: 'Confirm dialog.',
+      args: [],
+    );
+  }
+
+  /// `Tu confirmes avoir reçu {amount}. Une quittance sera établie pour le locataire.`
+  String declarationConfirmBody(String amount) {
+    return Intl.message(
+      'Tu confirmes avoir reçu $amount. Une quittance sera établie pour le locataire.',
+      name: 'declarationConfirmBody',
+      desc: 'RM-M30-05.',
+      args: [amount],
+    );
+  }
+
+  /// `Le locataire verra ce motif. La déclaration reste visible des deux côtés.`
+  String get declarationContestHint {
+    return Intl.message(
+      'Le locataire verra ce motif. La déclaration reste visible des deux côtés.',
+      name: 'declarationContestHint',
+      desc: 'RM-M30-07.',
+      args: [],
+    );
+  }
+
+  /// `Paiement confirmé`
+  String get declarationConfirmedToast {
+    return Intl.message(
+      'Paiement confirmé',
+      name: 'declarationConfirmedToast',
+      desc: 'After confirming.',
+      args: [],
+    );
+  }
+
+  /// `Paiement contesté`
+  String get declarationContestedToast {
+    return Intl.message(
+      'Paiement contesté',
+      name: 'declarationContestedToast',
+      desc: 'After contesting.',
+      args: [],
+    );
+  }
+
+  /// `Référence`
+  String get declarationReference {
+    return Intl.message(
+      'Référence',
+      name: 'declarationReference',
+      desc: 'The declaration detail.',
+      args: [],
+    );
+  }
+
+  /// `Déclaré le`
+  String get declarationDeclaredAt {
+    return Intl.message(
+      'Déclaré le',
+      name: 'declarationDeclaredAt',
+      desc: 'The declaration detail.',
+      args: [],
+    );
+  }
+
+  /// `Logement`
+  String get declarationProperty {
+    return Intl.message(
+      'Logement',
+      name: 'declarationProperty',
+      desc: 'Declaration detail: label of the rented property\'s title',
+      args: [],
+    );
+  }
+
+  /// `Le locataire attend ta réponse : confirme si tu as bien reçu ce paiement, ou conteste-le.`
+  String get declarationWaitingYou {
+    return Intl.message(
+      'Le locataire attend ta réponse : confirme si tu as bien reçu ce paiement, ou conteste-le.',
+      name: 'declarationWaitingYou',
+      desc:
+          'Declaration detail, landlord side: a declaration waiting for their answer',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

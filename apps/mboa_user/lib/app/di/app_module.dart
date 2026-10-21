@@ -3,6 +3,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
+import '../../features/my_home/bloc/declare_payment_bloc.dart';
 import '../../features/my_home/bloc/my_homes_bloc.dart';
 import '../../features/profile/profile_types.dart';
 import '../../features/favorites/bloc/favorites_bloc.dart';
@@ -169,6 +170,12 @@ void registerAppModule() {
   );
   getIt.registerFactory<HomeSpaceBloc>(
     () => HomeSpaceBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactory<DeclarationBloc>(
+    () => DeclarationBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactory<DeclarePaymentBloc>(
+    () => DeclarePaymentBloc(repository: getIt<HomesRepository>(), uploader: getIt<MediaUploader>()),
   );
 
   // M27 — the resident's review, written from a signed contract.

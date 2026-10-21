@@ -108,6 +108,9 @@ class AppRouter extends RootStackRouter {
             // M30 — "Mon Logement": a space per signed contract.
             AutoRoute(page: MyHomesRoute.page, path: 'homes'),
             AutoRoute(page: MyHomeRoute.page, path: 'homes/:contractId'),
+            // The form carries the échéances it was opened on: no deep link.
+            AutoRoute(page: DeclarePaymentRoute.page, path: 'homes/:contractId/declare'),
+            AutoRoute(page: MyDeclarationRoute.page, path: 'homes/:contractId/declarations/:declarationId'),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),

@@ -4739,5 +4739,260 @@
   "myHomeDeclareShort": "Declare",
   "@myHomeDeclareShort": {
     "description": "M30 — the round button, one word like the mockup."
+  },
+  "declareTitle": "Declare a payment",
+  "@declareTitle": {
+    "description": "RM-M30-03 — the form's title."
+  },
+  "declareDepositTitle": "Declare the deposit",
+  "@declareDepositTitle": {
+    "description": "The deposit form's title."
+  },
+  "declareWhich": "For which payments?",
+  "@declareWhich": {
+    "description": "The échéances to cover."
+  },
+  "declareWhichHint": "They follow each other: tap the next one to pay several months ahead.",
+  "@declareWhichHint": {
+    "description": "§29.1 — consecutive."
+  },
+  "declareNoOpen": "Nothing to declare for now.",
+  "@declareNoOpen": {
+    "description": "No open échéance."
+  },
+  "declareAmount": "Amount paid",
+  "@declareAmount": {
+    "description": "The amount field."
+  },
+  "declarePaidOn": "Paid on",
+  "@declarePaidOn": {
+    "description": "The date field."
+  },
+  "declareMethod": "Payment method",
+  "@declareMethod": {
+    "description": "The method field."
+  },
+  "declareTabMobile": "Mobile Money",
+  "@declareTabMobile": {
+    "description": "The mockup's first tab."
+  },
+  "declareTabOther": "Other",
+  "@declareTabOther": {
+    "description": "The mockup's second tab."
+  },
+  "declareReference": "Reference (optional)",
+  "@declareReference": {
+    "description": "The transaction reference."
+  },
+  "declareReferenceHint": "The code from the SMS, for example",
+  "@declareReferenceHint": {
+    "description": "Reference hint."
+  },
+  "declareNote": "A note for your landlord (optional)",
+  "@declareNote": {
+    "description": "The note."
+  },
+  "declareProofs": "Proofs (optional)",
+  "@declareProofs": {
+    "description": "RM-M30-03."
+  },
+  "declareProofsHint": "A screenshot of the SMS or a photo of the receipt. Without one, the declaration says so.",
+  "@declareProofsHint": {
+    "description": "RM-M30-03."
+  },
+  "declareAddProof": "Add",
+  "@declareAddProof": {
+    "description": "Add a proof."
+  },
+  "declareProofN": "Proof {n}",
+  "@declareProofN": {
+    "description": "A proof tile.",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "declareSend": "Declare the payment",
+  "@declareSend": {
+    "description": "Submit."
+  },
+  "declareUnusualTitle": "Unusual amount",
+  "@declareUnusualTitle": {
+    "description": "CE-M30-02."
+  },
+  "declareUnusualBody": "You declare {amount} for {due} due. Check the amount before sending.",
+  "@declareUnusualBody": {
+    "description": "CE-M30-02.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "declareUnusualConfirm": "Send anyway",
+  "@declareUnusualConfirm": {
+    "description": "CE-M30-02."
+  },
+  "declareSentTitle": "Payment declared",
+  "@declareSentTitle": {
+    "description": "After sending."
+  },
+  "declareSentBody": "Your landlord will confirm it.",
+  "@declareSentBody": {
+    "description": "After sending."
+  },
+  "declareUploadFailed": "The proof didn't go through. Try again.",
+  "@declareUploadFailed": {
+    "description": "CE-M30-01."
+  },
+  "declareFailed": "The declaration didn't go through. Try again.",
+  "@declareFailed": {
+    "description": "Network failure."
+  },
+  "declRefusedAmount": "The amount must be above zero.",
+  "@declRefusedAmount": {
+    "description": "DECLARATION_AMOUNT_INVALID."
+  },
+  "declRefusedDate": "The payment date can't be in the future.",
+  "@declRefusedDate": {
+    "description": "DECLARATION_DATE_INVALID."
+  },
+  "declRefusedDues": "Pick payments that follow each other, within the next 12.",
+  "@declRefusedDues": {
+    "description": "DUE_INDEXES_INVALID."
+  },
+  "declRefusedDueConfirmed": "One of these payments is already paid.",
+  "@declRefusedDueConfirmed": {
+    "description": "DUE_ALREADY_CONFIRMED."
+  },
+  "declRefusedNoDeposit": "This contract has no deposit.",
+  "@declRefusedNoDeposit": {
+    "description": "NO_DEPOSIT."
+  },
+  "declRefusedDepositConfirmed": "The deposit is already confirmed.",
+  "@declRefusedDepositConfirmed": {
+    "description": "DEPOSIT_ALREADY_CONFIRMED."
+  },
+  "declRefusedProofLimit": "Three proofs at most.",
+  "@declRefusedProofLimit": {
+    "description": "PROOF_LIMIT."
+  },
+  "declRefusedAttachment": "A proof couldn't be read: add it again.",
+  "@declRefusedAttachment": {
+    "description": "INVALID_ATTACHMENT."
+  },
+  "declRefusedReadOnly": "This tenancy is over: you can no longer declare a payment.",
+  "@declRefusedReadOnly": {
+    "description": "HOME_READ_ONLY."
+  },
+  "declRefusedAnswered": "This payment was already answered.",
+  "@declRefusedAnswered": {
+    "description": "DECLARATION_ANSWERED."
+  },
+  "declRefusedReason": "Give the reason for the contest.",
+  "@declRefusedReason": {
+    "description": "CONTEST_REASON_REQUIRED."
+  },
+  "declarationTitle": "Declared payment",
+  "@declarationTitle": {
+    "description": "The declaration's screen."
+  },
+  "declarationTenant": "Tenant",
+  "@declarationTenant": {
+    "description": "The card's left side."
+  },
+  "declarationLandlord": "Landlord",
+  "@declarationLandlord": {
+    "description": "The card's right side."
+  },
+  "declarationOutside": "Paid outside Mboa",
+  "@declarationOutside": {
+    "description": "RM-M30-06."
+  },
+  "declarationCovers": "Payments",
+  "@declarationCovers": {
+    "description": "What it covers."
+  },
+  "declarationTenantNote": "From the tenant",
+  "@declarationTenantNote": {
+    "description": "The note."
+  },
+  "declarationContestReason": "Reason for the contest",
+  "@declarationContestReason": {
+    "description": "RM-M30-07."
+  },
+  "declarationProofs": "Proofs",
+  "@declarationProofs": {
+    "description": "RM-M30-12 — never public."
+  },
+  "declarationDeclaredOn": "Declared on {date}",
+  "@declarationDeclaredOn": {
+    "description": "When it was sent.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "declarationWaiting": "Waiting for the landlord's answer.",
+  "@declarationWaiting": {
+    "description": "DECLARED."
+  },
+  "declarationUnconfirmedBody": "Unanswered for 7 days: the declaration stays visible on both sides.",
+  "@declarationUnconfirmedBody": {
+    "description": "RM-M30-04 — UNCONFIRMED."
+  },
+  "declarationConfirm": "Confirm the payment",
+  "@declarationConfirm": {
+    "description": "RM-M30-04 — the landlord's main action."
+  },
+  "declarationContest": "Contest",
+  "@declarationContest": {
+    "description": "RM-M30-04 — behind ⋯."
+  },
+  "declarationConfirmTitle": "Confirm this payment?",
+  "@declarationConfirmTitle": {
+    "description": "Confirm dialog."
+  },
+  "declarationConfirmBody": "You confirm you received {amount}. A receipt will be issued for the tenant.",
+  "@declarationConfirmBody": {
+    "description": "RM-M30-05.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "declarationContestHint": "The tenant will see this reason. The declaration stays visible on both sides.",
+  "@declarationContestHint": {
+    "description": "RM-M30-07."
+  },
+  "declarationConfirmedToast": "Payment confirmed",
+  "@declarationConfirmedToast": {
+    "description": "After confirming."
+  },
+  "declarationContestedToast": "Payment contested",
+  "@declarationContestedToast": {
+    "description": "After contesting."
+  },
+  "declarationReference": "Reference",
+  "@declarationReference": {
+    "description": "The declaration detail."
+  },
+  "declarationDeclaredAt": "Declared on",
+  "@declarationDeclaredAt": {
+    "description": "The declaration detail."
+  },
+  "declarationProperty": "Home",
+  "@declarationProperty": {
+    "description": "Declaration detail: label of the rented property's title"
+  },
+  "declarationWaitingYou": "The tenant is waiting for your answer: confirm you received this payment, or contest it.",
+  "@declarationWaitingYou": {
+    "description": "Declaration detail, landlord side: a declaration waiting for their answer"
   }
 }
