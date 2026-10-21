@@ -198,6 +198,13 @@ Box names and TTLs are centralized in `mboa_core` (`StorageKeys`, `CacheTtl`). T
 | BLoC Events | `PascalCase` + `Event` suffix | `AuthOtpRequested`, `AuthLogoutRequested` |
 | BLoC States | `PascalCase` + `State` suffix | `AuthAuthenticated`, `AuthFailure` |
 
+## UI — Action Bars and Brand Texture (Doc05 §6.1, §5.3)
+
+- An action bar carries **one main button** (the action the screen expects) and a square **"⋯"** button that opens the other actions in a bottom sheet — **never a column of two or three buttons**.
+- Destructive or rare actions (Contester, Signaler, Annuler) live behind "⋯", in red in the sheet.
+- A screen that expects nothing from its reader has **no bar at all** — no empty bar, no disabled buttons. Which actions exist comes from the server's `can*` flags.
+- The brand texture (`MboaBrandPattern`, the "M" monograms) goes on brand-colour surfaces only, faint (8 % by default), never on white or on a property photo.
+
 ## Media
 
 - Compression is mandatory before any upload: **JPEG 85%, max resolution 1920×1080**, target 200–500 KB.
@@ -367,6 +374,7 @@ make bootstrap          # reinstall dependencies
 - **NEVER** use Google Maps — MapLibre GL + MapTiler only (OpenStreetMap, per Doc 13).
 - **NEVER** disable `flutter analyze` to pass a build — fix the warnings. Do not add a per-app `analysis_options.yaml` that weakens the strict root config.
 - **NEVER** use `setState` for API-sourced data — BLoC only.
+- **NEVER** stack two or more buttons in an action bar — one main button plus "⋯" (Doc05 §6.1).
 - **NEVER** create a BLoC that manages multiple unrelated features.
 - **NEVER** access `BuildContext` outside the widget tree (except inside a `BlocListener` callback).
 - **NEVER** ignore a refresh token failure — always trigger a clean logout.
