@@ -22,9 +22,14 @@ class AccessPolicy {
 
   AccessDecision check(FeatureKey feature, AccessContext context) {
     switch (feature) {
-      // Not built: no backend endpoints exist for it yet.
-      case FeatureKey.portefeuille:
-        return const AccessDenied(AccessRestriction.comingSoon);
+      // M30 — every prestataire, with no add-on (RM-M30-15): confirming a
+      // rent is not a premium feature. Not tied to KYC either — a tenant's
+      // payment is answered whatever became of the listings.
+      case FeatureKey.loyers:
+        if (!context.role.isPrestataire) {
+          return const AccessDenied(AccessRestriction.roleRequired);
+        }
+        return const AccessGranted();
 
       // M11 — assigning agents is a verified-prestataire surface, like the
       // listings it hangs off.

@@ -42,6 +42,8 @@ import '../../features/reservations/bloc/incoming_reservations_bloc.dart';
 import '../../features/reservations/bloc/pending_reservations_bloc.dart';
 import '../../features/reservations/data/incoming_reservations_repository.dart';
 import '../../features/register/data/register_repository.dart';
+import '../../features/rents/bloc/rents_bloc.dart';
+import '../../features/rents/bloc/waiting_declarations_bloc.dart';
 import '../../features/splash/logic/splash_cubit.dart';
 import '../../features/subscription/bloc/subscribe_bloc.dart';
 import '../../features/subscription/bloc/subscription_bloc.dart';
@@ -299,6 +301,25 @@ void registerAppModule() {
       unitIds: unitIds,
     ),
   );
+
+  // M30 — "Loyers", the landlord's side of "Mon Logement" (no add-on,
+  // RM-M30-15). The home's counter is a singleton like the requests'; the
+  // lists, a space and a declaration are built per screen.
+  getIt.registerLazySingleton<HomesRepository>(
+    () => HomesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<WaitingDeclarationsBloc>(
+    () => WaitingDeclarationsBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactoryParam<RentsBloc, Set<String>?, void>(
+    (annonceIds, _) => RentsBloc(repository: getIt<HomesRepository>(), annonceIds: annonceIds),
+  );
+  getIt.registerFactory<HomeSpaceBloc>(
+    () => HomeSpaceBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactory<DeclarationBloc>(
+    () => DeclarationBloc(repository: getIt<HomesRepository>()),
+  );
   getIt.registerFactory<IncomingReservationBloc>(
     () => IncomingReservationBloc(
       repository: getIt<IncomingReservationsRepository>(),
@@ -426,6 +447,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<PendingReservationsBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<WaitingDeclarationsBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<KycCubit>(

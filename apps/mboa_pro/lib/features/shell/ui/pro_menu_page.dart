@@ -73,6 +73,12 @@ class ProMenuPage extends StatelessWidget {
                     label: l10n.proReservationsTitle,
                     onTap: () => _go(context, IncomingReservationsRoute()),
                   ),
+                  // M30 — the declared payments and the tenants' spaces.
+                  _MenuEntry(
+                    icon: LucideIcons.handCoins,
+                    label: l10n.proRentsTitle,
+                    onTap: () => _go(context, RentsRoute()),
+                  ),
                   _MenuEntry(
                     icon: LucideIcons.calendarCheck,
                     label: l10n.visitsMineTitle,

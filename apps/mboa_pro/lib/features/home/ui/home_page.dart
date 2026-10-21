@@ -11,6 +11,8 @@ import '../../../app/router/app_router.gr.dart';
 import '../../kyc/logic/kyc_cubit.dart';
 import '../../kyc/models/kyc_status.dart';
 import '../../profile/profile_types.dart';
+import '../../rents/bloc/waiting_declarations_bloc.dart';
+import '../../rents/ui/widgets/waiting_declarations_card.dart';
 import '../../reservations/bloc/pending_reservations_bloc.dart';
 import '../../reservations/ui/widgets/pending_reservations_card.dart';
 import '../../subscription/bloc/subscription_bloc.dart';
@@ -35,6 +37,7 @@ class HomePage extends StatelessWidget {
           onRefresh: () async {
             context.read<HomeBloc>().add(const HomeRefreshRequested());
             context.read<PendingReservationsBloc>().add(const PendingReservationsRequested());
+            context.read<WaitingDeclarationsBloc>().add(const WaitingDeclarationsRequested());
           },
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
@@ -57,6 +60,11 @@ class HomePage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
                 child: PendingReservationsCard(),
+              ),
+              // M30 — payments declared by tenants, waiting for an answer.
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
+                child: WaitingDeclarationsCard(),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
@@ -94,10 +102,10 @@ class _CtaCarousel extends StatelessWidget {
           HomeCtaCard(
             tone: HomeCtaTone.dark,
             icon: LucideIcons.handCoins,
-            title: l10n.homeCtaPortefeuilleTitle,
-            body: l10n.homeCtaPortefeuilleBody,
-            actionLabel: l10n.homeCtaPortefeuilleAction,
-            onPressed: () => _open(context, FeatureKey.portefeuille),
+            title: l10n.homeCtaRentsTitle,
+            body: l10n.homeCtaRentsBody,
+            actionLabel: l10n.homeCtaRentsAction,
+            onPressed: () => _open(context, FeatureKey.loyers),
           ),
           const SizedBox(width: Dimens.spacingMd),
           HomeCtaCard(
@@ -132,6 +140,7 @@ class _CtaCarousel extends StatelessWidget {
     // wrong the moment M11 granted it.
     context.router.push(switch (feature) {
       FeatureKey.mesAgents => const MesAgentsRoute(),
+      FeatureKey.loyers => RentsRoute(),
       _ => const MesBiensRoute(),
     });
   }

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
@@ -87,80 +86,6 @@ class MyHomesView extends StatelessWidget {
                     ),
             ),
         },
-      ),
-    );
-  }
-}
-
-/// A space in a list: the place, and what is due next — or late.
-class HomeCard extends StatelessWidget {
-  const HomeCard({super.key, required this.home, required this.onTap});
-
-  final Home home;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final next = home.nextDue;
-
-    final (String line, Color tone) = switch (home) {
-      _ when home.state == HomeStage.readOnly => (l10n.myHomeEnded, colors.textSecondary),
-      _ when home.isOverdue => (l10n.myHomeOverdueCount(home.overdueCount), colors.error),
-      _ when next?.dueDate != null => (
-          '${l10n.myHomeNextRent} · ${fcfaOf(context, next!.remaining)} · ${DateFormat.MMMd(locale).format(next.dueDate!)}',
-          colors.primary,
-        ),
-      _ => (l10n.myHomeUpToDate, colors.success),
-    };
-
-    return Material(
-      color: colors.surface,
-      borderRadius: BorderRadius.circular(Dimens.radiusLg),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(Dimens.spacing),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(Dimens.radiusMd),
-                child: SizedBox.square(
-                  dimension: 64,
-                  child: switch (home.coverUrl) {
-                    final url? => MboaNetworkImage(url: url),
-                    null => ColoredBox(
-                        color: colors.primary,
-                        child: MboaBrandPattern(color: colors.onBrand, opacity: 0.12, scale: 0.5),
-                      ),
-                  },
-                ),
-              ),
-              const SizedBox(width: Dimens.spacingMd),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      home.annonceTitle ?? l10n.reservationUntitled,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.mboaText.label.copyWith(color: colors.ink),
-                    ),
-                    if ([home.district, home.city].nonNulls.join(', ') case final place when place.isNotEmpty)
-                      Text(place, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
-                    const SizedBox(height: Dimens.spacingXs),
-                    Text(line, style: context.mboaText.caption.copyWith(color: tone, fontWeight: FontWeight.w600)),
-                  ],
-                ),
-              ),
-              Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
-            ],
-          ),
-        ),
       ),
     );
   }

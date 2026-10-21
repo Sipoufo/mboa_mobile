@@ -81,6 +81,7 @@ export 'src/features/homes/data/homes_repository.dart';
 export 'src/features/homes/models/home.dart';
 export 'src/features/homes/ui/declaration_view.dart';
 export 'src/features/homes/ui/home_bits.dart';
+export 'src/features/homes/ui/home_card.dart';
 export 'src/features/homes/ui/home_space_view.dart';
 export 'src/features/reservations/models/reservation.dart';
 export 'src/features/reservations/ui/reservation_bits.dart';

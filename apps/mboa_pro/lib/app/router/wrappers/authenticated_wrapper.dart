@@ -11,6 +11,7 @@ import '../../../features/annonces/bloc/residences_bloc.dart';
 import '../../../features/home/bloc/home_bloc.dart';
 import '../../../features/kyc/logic/kyc_cubit.dart';
 import '../../../features/profile/profile_types.dart';
+import '../../../features/rents/bloc/waiting_declarations_bloc.dart';
 import '../../../features/reservations/bloc/pending_reservations_bloc.dart';
 import '../../../features/subscription/bloc/subscription_bloc.dart';
 
@@ -57,6 +58,8 @@ class AuthenticatedWrapper extends StatelessWidget implements AutoRouteWrapper {
         // M29 — the home's count of waiting requests; read by the home only,
         // so an agent session never asks.
         BlocProvider<PendingReservationsBloc>.value(value: getIt<PendingReservationsBloc>()),
+        // M30 — the home's count of declared payments waiting for an answer.
+        BlocProvider<WaitingDeclarationsBloc>.value(value: getIt<WaitingDeclarationsBloc>()),
       ],
       child: this,
     );

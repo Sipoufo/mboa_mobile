@@ -16,15 +16,26 @@ void main() {
         tier: tier,
       );
 
-  group('coming-soon surfaces', () {
-    test('portefeuille is denied on every tier', () {
-      // Still no endpoints behind it.
+  group('loyers (M30)', () {
+    test('RM-M30-15 — every prestataire, on every tier, KYC or not', () {
+      for (final tier in SubscriptionTier.values) {
+        expect(policy.check(FeatureKey.loyers, prestataire(tier: tier)).isGranted, isTrue);
+      }
+      expect(policy.check(FeatureKey.loyers, prestataire(approved: false)).isGranted, isTrue);
+    });
+
+    test('not for an agent — the rents are the landlord\'s', () {
       expect(
         policy.check(
-          FeatureKey.portefeuille,
-          prestataire(tier: SubscriptionTier.proPlus),
+          FeatureKey.loyers,
+          const AccessContext(
+            role: AccountRole.agent,
+            isKycApproved: true,
+            isKycPending: false,
+            tier: SubscriptionTier.gratuit,
+          ),
         ),
-        const AccessDenied(AccessRestriction.comingSoon),
+        const AccessDenied(AccessRestriction.roleRequired),
       );
     });
   });

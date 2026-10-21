@@ -4,8 +4,9 @@ enum FeatureKey {
   /// Listing management (CDC M10).
   mesBiens,
 
-  /// Wallet / transactions. No API and no CDC module yet — coming soon.
-  portefeuille,
+  /// The landlord's rents (CDC M30): his tenants' spaces and the payments
+  /// they declare. No money moves through Mboa (RM-M30-06).
+  loyers,
 
   /// Agent delegation (CDC M15/M16). No agent endpoints yet — coming soon.
   mesAgents,

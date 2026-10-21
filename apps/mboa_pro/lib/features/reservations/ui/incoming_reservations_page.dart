@@ -9,6 +9,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../../app/widgets/day_timeline.dart';
 import '../bloc/incoming_reservations_bloc.dart';
 
 /// "Demandes de réservation" (CDC M29) — every request on the prestataire's
@@ -100,7 +101,6 @@ class _InboxState extends State<_Inbox> {
     final colors = context.mboaColors;
     final state = widget.state;
     final shown = _filter == _Filter.pending ? state.pending : state.items;
-    final days = _byDay(shown);
     final bloc = context.read<IncomingReservationsBloc>();
 
     return RefreshIndicator(
@@ -157,80 +157,18 @@ class _InboxState extends State<_Inbox> {
               ),
             )
           else
-            for (final (index, day) in days.indexed)
-              _Day(
-                day: day.$1,
-                items: day.$2,
-                last: index == days.length - 1,
-                onOpen: (reservation) async {
+            DayTimeline<Reservation>(
+              items: shown,
+              dayOf: (r) => r.createdAt,
+              itemBuilder: (reservation) => _Row(
+                reservation: reservation,
+                onTap: () async {
                   await context.router.push(IncomingReservationRoute(id: reservation.id));
                   // An answer given there shows here on the way back.
                   bloc.add(const IncomingReservationsRequested());
                 },
               ),
-        ],
-      ),
-    );
-  }
-
-  /// The requests by the day they were sent, newest day first; a request the
-  /// cache kept without its date goes last.
-  static List<(DateTime?, List<Reservation>)> _byDay(List<Reservation> items) {
-    final days = <DateTime?, List<Reservation>>{};
-    for (final r in items) {
-      final at = r.createdAt;
-      days.putIfAbsent(at == null ? null : DateTime(at.year, at.month, at.day), () => []).add(r);
-    }
-    final keys = days.keys.toList()
-      ..sort((a, b) => a == null ? 1 : (b == null ? -1 : b.compareTo(a)));
-    return [for (final k in keys) (k, days[k]!)];
-  }
-}
-
-/// One day of the timeline: the date, the dotted line, the day's requests.
-class _Day extends StatelessWidget {
-  const _Day({required this.day, required this.items, required this.last, required this.onOpen});
-
-  final DateTime? day;
-  final List<Reservation> items;
-  final bool last;
-  final ValueChanged<Reservation> onOpen;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final day = this.day;
-
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            width: 44,
-            child: Column(
-              children: [
-                if (day != null) ...[
-                  Text(DateFormat.d(locale).format(day), style: context.mboaText.h2.copyWith(color: colors.primaryDark)),
-                  Text(
-                    DateFormat.MMM(locale).format(day),
-                    style: context.mboaText.caption.copyWith(color: colors.primaryDark),
-                  ),
-                ],
-                const SizedBox(height: Dimens.spacingXs),
-                if (!last) Expanded(child: CustomPaint(painter: _DottedLine(colors.primaryDark.withValues(alpha: 0.5)))),
-              ],
             ),
-          ),
-          const SizedBox(width: Dimens.spacingMd),
-          Expanded(
-            child: Column(
-              children: [
-                for (final r in items) _Row(reservation: r, onTap: () => onOpen(r)),
-                if (!last) const SizedBox(height: Dimens.spacingSm),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -308,25 +246,6 @@ class _Row extends StatelessWidget {
       ),
     );
   }
-}
-
-class _DottedLine extends CustomPainter {
-  const _DottedLine(this.color);
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.5;
-    for (var y = 2.0; y < size.height; y += 6) {
-      canvas.drawLine(Offset(size.width / 2, y), Offset(size.width / 2, y + 2.5), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DottedLine old) => old.color != color;
 }
 
 class _OfflineBanner extends StatelessWidget {

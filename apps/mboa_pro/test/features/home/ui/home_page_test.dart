@@ -13,6 +13,7 @@ import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
+import 'package:mboa_pro/features/rents/bloc/waiting_declarations_bloc.dart';
 import 'package:mboa_pro/features/reservations/bloc/pending_reservations_bloc.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
@@ -24,6 +25,9 @@ class MockHomeBloc extends MockBloc<HomeEvent, HomeState> implements HomeBloc {}
 
 class MockPendingReservationsBloc extends MockBloc<PendingReservationsEvent, PendingReservationsState>
     implements PendingReservationsBloc {}
+
+class MockWaitingDeclarationsBloc extends MockBloc<WaitingDeclarationsEvent, WaitingDeclarationsState>
+    implements WaitingDeclarationsBloc {}
 
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
@@ -37,6 +41,7 @@ class MockSubscriptionBloc
 void main() {
   late MockHomeBloc homeBloc;
   late MockPendingReservationsBloc pendingBloc;
+  late MockWaitingDeclarationsBloc waitingBloc;
   late MockProProfileBloc profileBloc;
   late MockKycCubit kycCubit;
   late MockSubscriptionBloc subscriptionBloc;
@@ -57,6 +62,8 @@ void main() {
     homeBloc = MockHomeBloc();
     pendingBloc = MockPendingReservationsBloc();
     when(() => pendingBloc.state).thenReturn(const PendingReservationsUnknown());
+    waitingBloc = MockWaitingDeclarationsBloc();
+    when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsUnknown());
     profileBloc = MockProProfileBloc();
     kycCubit = MockKycCubit();
     subscriptionBloc = MockSubscriptionBloc();
@@ -97,6 +104,7 @@ void main() {
             BlocProvider<SubscriptionBloc>.value(value: subscriptionBloc),
             BlocProvider<HomeBloc>.value(value: homeBloc),
             BlocProvider<PendingReservationsBloc>.value(value: pendingBloc),
+            BlocProvider<WaitingDeclarationsBloc>.value(value: waitingBloc),
           ],
           child: const HomePage(),
         ),
@@ -117,7 +125,7 @@ void main() {
     expect(find.textContaining('Gère tes biens'), findsOneWidget);
 
     expect(find.text('Mes biens'), findsOneWidget);
-    expect(find.text('Portefeuille'), findsOneWidget);
+    expect(find.text('Loyers'), findsOneWidget);
     expect(find.text('Mes agents'), findsOneWidget);
 
     expect(find.text('17'), findsOneWidget);
@@ -159,12 +167,45 @@ void main() {
     verify(() => pendingBloc.add(const PendingReservationsRequested())).called(2);
   });
 
+  testWidgets('M30 — declared payments waiting for an answer are said, and opened from it', (tester) async {
+    when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsCounted(2));
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.text('2 paiements déclarés attendent ta confirmation'), findsOneWidget);
+    expect(find.text('Voir'), findsOneWidget);
+  });
+
+  testWidgets('M30 — nothing waiting, nothing said', (tester) async {
+    when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsCounted(0));
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.textContaining('attend'), findsNothing);
+  });
+
+  testWidgets('M30 — the count is read on first show, and again on coming back', (tester) async {
+    await pump(tester, const HomeReady(stats));
+    verify(() => waitingBloc.add(const WaitingDeclarationsRequested())).called(1);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.hidden);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+
+    verify(() => waitingBloc.add(const WaitingDeclarationsRequested())).called(1);
+  });
+
   testWidgets('lays out without overflow on a small phone', (tester) async {
     tester.view.physicalSize = const Size(320 * 3, 568 * 3);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    // Both nudges shown: the tallest the home gets.
+    when(() => pendingBloc.state).thenReturn(const PendingReservationsCounted(12));
+    when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsCounted(12));
     await pump(tester, const HomeReady(stats));
     expect(tester.takeException(), isNull);
 

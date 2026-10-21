@@ -4315,36 +4315,6 @@ class I18n {
     );
   }
 
-  /// `Portefeuille`
-  String get homeCtaPortefeuilleTitle {
-    return Intl.message(
-      'Portefeuille',
-      name: 'homeCtaPortefeuilleTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Suis les encaissements et les dépenses de tes biens, depuis l’application`
-  String get homeCtaPortefeuilleBody {
-    return Intl.message(
-      'Suis les encaissements et les dépenses de tes biens, depuis l’application',
-      name: 'homeCtaPortefeuilleBody',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Gérer mes transactions`
-  String get homeCtaPortefeuilleAction {
-    return Intl.message(
-      'Gérer mes transactions',
-      name: 'homeCtaPortefeuilleAction',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Mes agents`
   String get homeCtaAgentsTitle {
     return Intl.message(
@@ -12732,6 +12702,128 @@ class I18n {
       name: 'declarationWaitingYou',
       desc:
           'Declaration detail, landlord side: a declaration waiting for their answer',
+      args: [],
+    );
+  }
+
+  /// `Loyers`
+  String get proRentsTitle {
+    return Intl.message(
+      'Loyers',
+      name: 'proRentsTitle',
+      desc: 'Pro: the rents screen title (M30, landlord side)',
+      args: [],
+    );
+  }
+
+  /// `À confirmer`
+  String get proRentsTabWaiting {
+    return Intl.message(
+      'À confirmer',
+      name: 'proRentsTabWaiting',
+      desc: 'Pro rents: tab of declared payments waiting for an answer',
+      args: [],
+    );
+  }
+
+  /// `Locataires`
+  String get proRentsTabHomes {
+    return Intl.message(
+      'Locataires',
+      name: 'proRentsTabHomes',
+      desc: 'Pro rents: tab of the tenants\' spaces',
+      args: [],
+    );
+  }
+
+  /// `Aucun paiement à confirmer. Quand un locataire déclare un loyer, il arrive ici.`
+  String get proRentsEmptyWaiting {
+    return Intl.message(
+      'Aucun paiement à confirmer. Quand un locataire déclare un loyer, il arrive ici.',
+      name: 'proRentsEmptyWaiting',
+      desc: 'Pro rents: empty waiting tab',
+      args: [],
+    );
+  }
+
+  /// `Aucun locataire pour l'instant. Un espace s'ouvre dès qu'un contrat est signé.`
+  String get proRentsEmptyHomes {
+    return Intl.message(
+      'Aucun locataire pour l\'instant. Un espace s\'ouvre dès qu\'un contrat est signé.',
+      name: 'proRentsEmptyHomes',
+      desc: 'Pro rents: empty tenants tab',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : les loyers tels qu'à ta dernière connexion.`
+  String get proRentsOffline {
+    return Intl.message(
+      'Hors ligne : les loyers tels qu\'à ta dernière connexion.',
+      name: 'proRentsOffline',
+      desc: 'Pro rents: offline banner',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 paiement déclaré attend ta confirmation} other{{count} paiements déclarés attendent ta confirmation}}`
+  String proRentsPending(int count) {
+    return Intl.plural(
+      count,
+      one: '1 paiement déclaré attend ta confirmation',
+      other: '$count paiements déclarés attendent ta confirmation',
+      name: 'proRentsPending',
+      desc: 'Pro home: nudge counting declared payments waiting for an answer',
+      args: [count],
+    );
+  }
+
+  /// `Voir`
+  String get proRentsPendingAction {
+    return Intl.message(
+      'Voir',
+      name: 'proRentsPendingAction',
+      desc: 'Pro home: action on the declared payments nudge',
+      args: [],
+    );
+  }
+
+  /// `Voir les loyers`
+  String get proRentsSeeAll {
+    return Intl.message(
+      'Voir les loyers',
+      name: 'proRentsSeeAll',
+      desc: 'Pro listing detail: link to the listing\'s rents',
+      args: [],
+    );
+  }
+
+  /// `Loyers`
+  String get homeCtaRentsTitle {
+    return Intl.message(
+      'Loyers',
+      name: 'homeCtaRentsTitle',
+      desc: 'Pro home CTA card title (M30)',
+      args: [],
+    );
+  }
+
+  /// `Les paiements que tes locataires déclarent, à confirmer depuis l'application`
+  String get homeCtaRentsBody {
+    return Intl.message(
+      'Les paiements que tes locataires déclarent, à confirmer depuis l\'application',
+      name: 'homeCtaRentsBody',
+      desc: 'Pro home CTA card body (M30)',
+      args: [],
+    );
+  }
+
+  /// `Voir mes loyers`
+  String get homeCtaRentsAction {
+    return Intl.message(
+      'Voir mes loyers',
+      name: 'homeCtaRentsAction',
+      desc: 'Pro home CTA card action (M30)',
       args: [],
     );
   }

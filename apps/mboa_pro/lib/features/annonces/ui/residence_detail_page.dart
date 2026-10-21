@@ -113,9 +113,23 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                 const SizedBox(height: Dimens.spacing),
                 // M29 — a request is made on one unit; the residence is where
                 // the prestataire looks for it.
-                _ReservationsLink(
+                _InboxLink(
+                  icon: LucideIcons.ticket,
+                  label: l10n.proReservationsTitle,
                   onTap: () => context.router.push(
                     IncomingReservationsRoute(
+                      annonceTitle: residence.name,
+                      unitIds: [for (final unit in residence.units) unit.id],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: Dimens.spacingSm),
+                // M30 — likewise for the rents: a lease is on one unit.
+                _InboxLink(
+                  icon: LucideIcons.handCoins,
+                  label: l10n.proRentsTitle,
+                  onTap: () => context.router.push(
+                    RentsRoute(
                       annonceTitle: residence.name,
                       unitIds: [for (final unit in residence.units) unit.id],
                     ),
@@ -228,14 +242,16 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
   }
 }
 
-class _ReservationsLink extends StatelessWidget {
-  const _ReservationsLink({required this.onTap});
+/// A row to one of the residence's inboxes (requests, rents).
+class _InboxLink extends StatelessWidget {
+  const _InboxLink({required this.icon, required this.label, required this.onTap});
 
+  final IconData icon;
+  final String label;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
     final colors = context.mboaColors;
 
     return Material(
@@ -248,10 +264,10 @@ class _ReservationsLink extends StatelessWidget {
           padding: const EdgeInsets.all(Dimens.spacing),
           child: Row(
             children: [
-              Icon(LucideIcons.ticket, size: Dimens.icon, color: colors.primary),
+              Icon(icon, size: Dimens.icon, color: colors.primary),
               const SizedBox(width: Dimens.spacingMd),
               Expanded(
-                child: Text(l10n.proReservationsTitle, style: context.mboaText.label.copyWith(color: colors.ink)),
+                child: Text(label, style: context.mboaText.label.copyWith(color: colors.ink)),
               ),
               Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
             ],

@@ -1489,12 +1489,6 @@
   "@homeCtaBiensBody": {},
   "homeCtaBiensAction": "Manage my properties",
   "@homeCtaBiensAction": {},
-  "homeCtaPortefeuilleTitle": "Wallet",
-  "@homeCtaPortefeuilleTitle": {},
-  "homeCtaPortefeuilleBody": "Manage the financial transactions tied to your properties from the app",
-  "@homeCtaPortefeuilleBody": {},
-  "homeCtaPortefeuilleAction": "Manage my transactions",
-  "@homeCtaPortefeuilleAction": {},
   "homeCtaAgentsTitle": "My agents",
   "@homeCtaAgentsTitle": {},
   "homeCtaAgentsBody": "Create agents to delegate partial or full management of your properties",
@@ -4994,5 +4988,58 @@
   "declarationWaitingYou": "The tenant is waiting for your answer: confirm you received this payment, or contest it.",
   "@declarationWaitingYou": {
     "description": "Declaration detail, landlord side: a declaration waiting for their answer"
+  },
+  "proRentsTitle": "Rents",
+  "@proRentsTitle": {
+    "description": "Pro: the rents screen title (M30, landlord side)"
+  },
+  "proRentsTabWaiting": "To confirm",
+  "@proRentsTabWaiting": {
+    "description": "Pro rents: tab of declared payments waiting for an answer"
+  },
+  "proRentsTabHomes": "Tenants",
+  "@proRentsTabHomes": {
+    "description": "Pro rents: tab of the tenants' spaces"
+  },
+  "proRentsEmptyWaiting": "No payment to confirm. When a tenant declares a rent, it lands here.",
+  "@proRentsEmptyWaiting": {
+    "description": "Pro rents: empty waiting tab"
+  },
+  "proRentsEmptyHomes": "No tenant yet. A space opens as soon as a contract is signed.",
+  "@proRentsEmptyHomes": {
+    "description": "Pro rents: empty tenants tab"
+  },
+  "proRentsOffline": "Offline: rents as of your last connection.",
+  "@proRentsOffline": {
+    "description": "Pro rents: offline banner"
+  },
+  "proRentsPending": "{count, plural, =1{1 declared payment awaits your confirmation} other{{count} declared payments await your confirmation}}",
+  "@proRentsPending": {
+    "description": "Pro home: nudge counting declared payments waiting for an answer",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "proRentsPendingAction": "See",
+  "@proRentsPendingAction": {
+    "description": "Pro home: action on the declared payments nudge"
+  },
+  "proRentsSeeAll": "See the rents",
+  "@proRentsSeeAll": {
+    "description": "Pro listing detail: link to the listing's rents"
+  },
+  "homeCtaRentsTitle": "Rents",
+  "@homeCtaRentsTitle": {
+    "description": "Pro home CTA card title (M30)"
+  },
+  "homeCtaRentsBody": "The payments your tenants declare, to confirm from the app",
+  "@homeCtaRentsBody": {
+    "description": "Pro home CTA card body (M30)"
+  },
+  "homeCtaRentsAction": "See my rents",
+  "@homeCtaRentsAction": {
+    "description": "Pro home CTA card action (M30)"
   }
 }

@@ -140,6 +140,11 @@ class _Body extends StatelessWidget {
         _ReservationsCard(annonce: annonce),
         const SizedBox(height: Dimens.spacing),
 
+        // M30 — the rents on this listing: what its tenants declared, and
+        // their spaces.
+        _RentsCard(annonce: annonce),
+        const SizedBox(height: Dimens.spacing),
+
         // RM-M08-01 — only a prestataire initiates, and always from a bien:
         // the contract copies the property it carries (RM-M08-05), so this is
         // where one starts.
@@ -604,6 +609,36 @@ class _ReservationsCard extends StatelessWidget {
                 l10n.proReservationsSeeAll,
                 style: context.mboaText.label.copyWith(color: colors.ink),
               ),
+            ),
+            Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RentsCard extends StatelessWidget {
+  const _RentsCard({required this.annonce});
+
+  final Annonce annonce;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return _SectionCard(
+      title: l10n.proRentsTitle,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.radius),
+        onTap: () => context.router.push(RentsRoute(annonceId: annonce.id, annonceTitle: annonce.title)),
+        child: Row(
+          children: [
+            Icon(LucideIcons.handCoins, size: Dimens.icon, color: colors.primary),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: Text(l10n.proRentsSeeAll, style: context.mboaText.label.copyWith(color: colors.ink)),
             ),
             Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
           ],

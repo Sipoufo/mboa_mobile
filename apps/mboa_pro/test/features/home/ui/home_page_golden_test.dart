@@ -12,6 +12,7 @@ import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
 import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
+import 'package:mboa_pro/features/rents/bloc/waiting_declarations_bloc.dart';
 import 'package:mboa_pro/features/reservations/bloc/pending_reservations_bloc.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
@@ -26,6 +27,9 @@ class MockHomeBloc extends MockBloc<HomeEvent, HomeState> implements HomeBloc {}
 class MockPendingReservationsBloc extends MockBloc<PendingReservationsEvent, PendingReservationsState>
     implements PendingReservationsBloc {}
 
+class MockWaitingDeclarationsBloc extends MockBloc<WaitingDeclarationsEvent, WaitingDeclarationsState>
+    implements WaitingDeclarationsBloc {}
+
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
 
@@ -38,6 +42,7 @@ class MockSubscriptionBloc
 void main() {
   late MockHomeBloc homeBloc;
   late MockPendingReservationsBloc pendingBloc;
+  late MockWaitingDeclarationsBloc waitingBloc;
   late MockProProfileBloc profileBloc;
   late MockKycCubit kycCubit;
   late MockSubscriptionBloc subscriptionBloc;
@@ -69,6 +74,8 @@ void main() {
     homeBloc = MockHomeBloc();
     pendingBloc = MockPendingReservationsBloc();
     when(() => pendingBloc.state).thenReturn(const PendingReservationsUnknown());
+    waitingBloc = MockWaitingDeclarationsBloc();
+    when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsUnknown());
     profileBloc = MockProProfileBloc();
     kycCubit = MockKycCubit();
     subscriptionBloc = MockSubscriptionBloc();
@@ -108,6 +115,7 @@ void main() {
             BlocProvider<SubscriptionBloc>.value(value: subscriptionBloc),
             BlocProvider<HomeBloc>.value(value: homeBloc),
             BlocProvider<PendingReservationsBloc>.value(value: pendingBloc),
+            BlocProvider<WaitingDeclarationsBloc>.value(value: waitingBloc),
           ],
           child: const HomePage(),
         ),
