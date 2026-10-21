@@ -21,6 +21,7 @@ part 'declaration_response.g.dart';
 /// * [tenant] 
 /// * [kind] 
 /// * [dueIndexes] 
+/// * [invoiceId] 
 /// * [amount] 
 /// * [paidOn] 
 /// * [method] 
@@ -34,6 +35,8 @@ part 'declaration_response.g.dart';
 /// * [answeredAt] 
 /// * [canConfirm] 
 /// * [canContest] 
+/// * [receiptId] 
+/// * [receiptReady] 
 @BuiltValue()
 abstract class DeclarationResponse implements Built<DeclarationResponse, DeclarationResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -53,10 +56,13 @@ abstract class DeclarationResponse implements Built<DeclarationResponse, Declara
 
   @BuiltValueField(wireName: r'kind')
   DeclarationResponseKindEnum? get kind;
-  // enum kindEnum {  RENT,  DEPOSIT,  };
+  // enum kindEnum {  RENT,  DEPOSIT,  INVOICE,  };
 
   @BuiltValueField(wireName: r'dueIndexes')
   BuiltList<int>? get dueIndexes;
+
+  @BuiltValueField(wireName: r'invoiceId')
+  String? get invoiceId;
 
   @BuiltValueField(wireName: r'amount')
   int? get amount;
@@ -98,6 +104,12 @@ abstract class DeclarationResponse implements Built<DeclarationResponse, Declara
 
   @BuiltValueField(wireName: r'canContest')
   bool? get canContest;
+
+  @BuiltValueField(wireName: r'receiptId')
+  String? get receiptId;
+
+  @BuiltValueField(wireName: r'receiptReady')
+  bool? get receiptReady;
 
   DeclarationResponse._();
 
@@ -169,6 +181,13 @@ class _$DeclarationResponseSerializer implements PrimitiveSerializer<Declaration
       yield serializers.serialize(
         object.dueIndexes,
         specifiedType: const FullType(BuiltList, [FullType(int)]),
+      );
+    }
+    if (object.invoiceId != null) {
+      yield r'invoiceId';
+      yield serializers.serialize(
+        object.invoiceId,
+        specifiedType: const FullType(String),
       );
     }
     if (object.amount != null) {
@@ -262,6 +281,20 @@ class _$DeclarationResponseSerializer implements PrimitiveSerializer<Declaration
         specifiedType: const FullType(bool),
       );
     }
+    if (object.receiptId != null) {
+      yield r'receiptId';
+      yield serializers.serialize(
+        object.receiptId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.receiptReady != null) {
+      yield r'receiptReady';
+      yield serializers.serialize(
+        object.receiptReady,
+        specifiedType: const FullType(bool),
+      );
+    }
   }
 
   @override
@@ -340,6 +373,14 @@ class _$DeclarationResponseSerializer implements PrimitiveSerializer<Declaration
           ) as BuiltList<int>?;
           if (valueDes == null) continue;
           result.dueIndexes.replace(valueDes);
+          break;
+        case r'invoiceId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.invoiceId = valueDes;
           break;
         case r'amount':
           final valueDes = serializers.deserialize(
@@ -445,6 +486,22 @@ class _$DeclarationResponseSerializer implements PrimitiveSerializer<Declaration
           if (valueDes == null) continue;
           result.canContest = valueDes;
           break;
+        case r'receiptId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.receiptId = valueDes;
+          break;
+        case r'receiptReady':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.receiptReady = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -480,6 +537,8 @@ class DeclarationResponseKindEnum extends EnumClass {
   static const DeclarationResponseKindEnum RENT = _$declarationResponseKindEnum_RENT;
   @BuiltValueEnumConst(wireName: r'DEPOSIT')
   static const DeclarationResponseKindEnum DEPOSIT = _$declarationResponseKindEnum_DEPOSIT;
+  @BuiltValueEnumConst(wireName: r'INVOICE')
+  static const DeclarationResponseKindEnum INVOICE = _$declarationResponseKindEnum_INVOICE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const DeclarationResponseKindEnum unknownDefaultOpenApi = _$declarationResponseKindEnum_unknownDefaultOpenApi;
 

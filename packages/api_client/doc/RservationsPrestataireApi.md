@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**cancelIncomingReservation**](RservationsPrestataireApi.md#cancelincomingreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/cancel | Cancel an accepted reservation, with a reason — counted for the admin (RM-M29-08)
 [**extendReservation**](RservationsPrestataireApi.md#extendreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/extend | Extend an accepted reservation by 7 days, once (RM-M29-07)
 [**getIncomingReservation**](RservationsPrestataireApi.md#getincomingreservation) | **GET** /api/v1/prestataires/me/reservations/{id} | One request on my listings
-[**listIncomingReservations**](RservationsPrestataireApi.md#listincomingreservations) | **GET** /api/v1/prestataires/me/reservations | Requests on my listings, newest first — status&#x3D;PENDING&#39;s totalElements is the home counter
+[**listIncomingReservations**](RservationsPrestataireApi.md#listincomingreservations) | **GET** /api/v1/prestataires/me/reservations | Requests on my listings, newest first, on one listing or one residence&#39;s units — status&#x3D;PENDING&#39;s totalElements is the home counter
 [**refuseReservation**](RservationsPrestataireApi.md#refusereservation) | **POST** /api/v1/prestataires/me/reservations/{id}/refuse | Refuse, with a reason — never public (RM-M29-06)
 
 
@@ -184,9 +184,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listIncomingReservations**
-> PageResponseReservationResponse listIncomingReservations(pageable, annonceId, status)
+> PageResponseReservationResponse listIncomingReservations(pageable, annonceId, residenceId, status)
 
-Requests on my listings, newest first — status=PENDING's totalElements is the home counter
+Requests on my listings, newest first, on one listing or one residence's units — status=PENDING's totalElements is the home counter
 
 ### Example
 ```dart
@@ -195,10 +195,11 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getRservationsPrestataireApi();
 final Pageable pageable = ; // Pageable | 
 final String annonceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final String residenceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 final BuiltList<String> status = ; // BuiltList<String> | 
 
 try {
-    final response = api.listIncomingReservations(pageable, annonceId, status);
+    final response = api.listIncomingReservations(pageable, annonceId, residenceId, status);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling RservationsPrestataireApi->listIncomingReservations: $e\n');
@@ -211,6 +212,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pageable** | [**Pageable**](.md)|  | 
  **annonceId** | **String**|  | [optional] 
+ **residenceId** | **String**|  | [optional] 
  **status** | [**BuiltList&lt;String&gt;**](String.md)|  | [optional] 
 
 ### Return type

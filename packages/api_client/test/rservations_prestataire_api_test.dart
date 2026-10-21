@@ -35,9 +35,9 @@ void main() {
       // TODO
     });
 
-    // Requests on my listings, newest first — status=PENDING's totalElements is the home counter
+    // Requests on my listings, newest first, on one listing or one residence's units — status=PENDING's totalElements is the home counter
     //
-    //Future<PageResponseReservationResponse> listIncomingReservations(Pageable pageable, { String annonceId, BuiltList<String> status }) async
+    //Future<PageResponseReservationResponse> listIncomingReservations(Pageable pageable, { String annonceId, String residenceId, BuiltList<String> status }) async
     test('test listIncomingReservations', () async {
       // TODO
     });

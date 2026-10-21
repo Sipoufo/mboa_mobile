@@ -62,5 +62,20 @@ void main() {
       // TODO
     });
 
+    // String source_
+    test('to test the property `source_`', () async {
+      // TODO
+    });
+
+    // String sourceId
+    test('to test the property `sourceId`', () async {
+      // TODO
+    });
+
+    // bool readOnly
+    test('to test the property `readOnly`', () async {
+      // TODO
+    });
+
   });
 }

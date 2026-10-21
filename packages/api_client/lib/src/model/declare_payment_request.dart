@@ -25,7 +25,7 @@ part 'declare_payment_request.g.dart';
 abstract class DeclarePaymentRequest implements Built<DeclarePaymentRequest, DeclarePaymentRequestBuilder> {
   @BuiltValueField(wireName: r'kind')
   DeclarePaymentRequestKindEnum get kind;
-  // enum kindEnum {  RENT,  DEPOSIT,  };
+  // enum kindEnum {  RENT,  DEPOSIT,  INVOICE,  };
 
   @BuiltValueField(wireName: r'dueIndexes')
   BuiltList<int>? get dueIndexes;
@@ -238,6 +238,8 @@ class DeclarePaymentRequestKindEnum extends EnumClass {
   static const DeclarePaymentRequestKindEnum RENT = _$declarePaymentRequestKindEnum_RENT;
   @BuiltValueEnumConst(wireName: r'DEPOSIT')
   static const DeclarePaymentRequestKindEnum DEPOSIT = _$declarePaymentRequestKindEnum_DEPOSIT;
+  @BuiltValueEnumConst(wireName: r'INVOICE')
+  static const DeclarePaymentRequestKindEnum INVOICE = _$declarePaymentRequestKindEnum_INVOICE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const DeclarePaymentRequestKindEnum unknownDefaultOpenApi = _$declarePaymentRequestKindEnum_unknownDefaultOpenApi;
 

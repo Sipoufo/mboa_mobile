@@ -37,6 +37,12 @@ const MessageResponseSystemEventEnum
 _$messageResponseSystemEventEnum_RESERVATION_REQUESTED =
     const MessageResponseSystemEventEnum._('RESERVATION_REQUESTED');
 const MessageResponseSystemEventEnum
+_$messageResponseSystemEventEnum_HOME_REQUEST_OPENED =
+    const MessageResponseSystemEventEnum._('HOME_REQUEST_OPENED');
+const MessageResponseSystemEventEnum
+_$messageResponseSystemEventEnum_HOME_REQUEST_UPDATED =
+    const MessageResponseSystemEventEnum._('HOME_REQUEST_UPDATED');
+const MessageResponseSystemEventEnum
 _$messageResponseSystemEventEnum_unknownDefaultOpenApi =
     const MessageResponseSystemEventEnum._('unknownDefaultOpenApi');
 
@@ -46,6 +52,10 @@ MessageResponseSystemEventEnum _$messageResponseSystemEventEnumValueOf(
   switch (name) {
     case 'RESERVATION_REQUESTED':
       return _$messageResponseSystemEventEnum_RESERVATION_REQUESTED;
+    case 'HOME_REQUEST_OPENED':
+      return _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED;
+    case 'HOME_REQUEST_UPDATED':
+      return _$messageResponseSystemEventEnum_HOME_REQUEST_UPDATED;
     case 'unknownDefaultOpenApi':
       return _$messageResponseSystemEventEnum_unknownDefaultOpenApi;
     default:
@@ -58,6 +68,8 @@ _$messageResponseSystemEventEnumValues =
     BuiltSet<MessageResponseSystemEventEnum>(
       const <MessageResponseSystemEventEnum>[
         _$messageResponseSystemEventEnum_RESERVATION_REQUESTED,
+        _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED,
+        _$messageResponseSystemEventEnum_HOME_REQUEST_UPDATED,
         _$messageResponseSystemEventEnum_unknownDefaultOpenApi,
       ],
     );
@@ -107,10 +119,14 @@ class _$MessageResponseSystemEventEnumSerializer
     implements PrimitiveSerializer<MessageResponseSystemEventEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
     'RESERVATION_REQUESTED': 'RESERVATION_REQUESTED',
+    'HOME_REQUEST_OPENED': 'HOME_REQUEST_OPENED',
+    'HOME_REQUEST_UPDATED': 'HOME_REQUEST_UPDATED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'RESERVATION_REQUESTED': 'RESERVATION_REQUESTED',
+    'HOME_REQUEST_OPENED': 'HOME_REQUEST_OPENED',
+    'HOME_REQUEST_UPDATED': 'HOME_REQUEST_UPDATED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -157,6 +173,8 @@ class _$MessageResponse extends MessageResponse {
   final MessageResponseSystemEventEnum? systemEvent;
   @override
   final ReservationRequestSnapshot? reservation;
+  @override
+  final String? homeRequestId;
 
   factory _$MessageResponse([void Function(MessageResponseBuilder)? updates]) =>
       (MessageResponseBuilder()..update(updates))._build();
@@ -172,6 +190,7 @@ class _$MessageResponse extends MessageResponse {
     this.kind,
     this.systemEvent,
     this.reservation,
+    this.homeRequestId,
   }) : super._();
   @override
   MessageResponse rebuild(void Function(MessageResponseBuilder) updates) =>
@@ -193,7 +212,8 @@ class _$MessageResponse extends MessageResponse {
         readAt == other.readAt &&
         kind == other.kind &&
         systemEvent == other.systemEvent &&
-        reservation == other.reservation;
+        reservation == other.reservation &&
+        homeRequestId == other.homeRequestId;
   }
 
   @override
@@ -209,6 +229,7 @@ class _$MessageResponse extends MessageResponse {
     _$hash = $jc(_$hash, kind.hashCode);
     _$hash = $jc(_$hash, systemEvent.hashCode);
     _$hash = $jc(_$hash, reservation.hashCode);
+    _$hash = $jc(_$hash, homeRequestId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -225,7 +246,8 @@ class _$MessageResponse extends MessageResponse {
           ..add('readAt', readAt)
           ..add('kind', kind)
           ..add('systemEvent', systemEvent)
-          ..add('reservation', reservation))
+          ..add('reservation', reservation)
+          ..add('homeRequestId', homeRequestId))
         .toString();
   }
 }
@@ -280,6 +302,11 @@ class MessageResponseBuilder
   set reservation(ReservationRequestSnapshotBuilder? reservation) =>
       _$this._reservation = reservation;
 
+  String? _homeRequestId;
+  String? get homeRequestId => _$this._homeRequestId;
+  set homeRequestId(String? homeRequestId) =>
+      _$this._homeRequestId = homeRequestId;
+
   MessageResponseBuilder() {
     MessageResponse._defaults(this);
   }
@@ -297,6 +324,7 @@ class MessageResponseBuilder
       _kind = $v.kind;
       _systemEvent = $v.systemEvent;
       _reservation = $v.reservation?.toBuilder();
+      _homeRequestId = $v.homeRequestId;
       _$v = null;
     }
     return this;
@@ -331,6 +359,7 @@ class MessageResponseBuilder
             kind: kind,
             systemEvent: systemEvent,
             reservation: _reservation?.build(),
+            homeRequestId: homeRequestId,
           );
     } catch (_) {
       late String _$failedField;

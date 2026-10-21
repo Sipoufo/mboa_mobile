@@ -49,6 +49,9 @@ const CreateInvoiceRequestSettlementEnum
 _$createInvoiceRequestSettlementEnum_MANUAL =
     const CreateInvoiceRequestSettlementEnum._('MANUAL');
 const CreateInvoiceRequestSettlementEnum
+_$createInvoiceRequestSettlementEnum_DECLARED =
+    const CreateInvoiceRequestSettlementEnum._('DECLARED');
+const CreateInvoiceRequestSettlementEnum
 _$createInvoiceRequestSettlementEnum_unknownDefaultOpenApi =
     const CreateInvoiceRequestSettlementEnum._('unknownDefaultOpenApi');
 
@@ -60,6 +63,8 @@ CreateInvoiceRequestSettlementEnum _$createInvoiceRequestSettlementEnumValueOf(
       return _$createInvoiceRequestSettlementEnum_IN_APP;
     case 'MANUAL':
       return _$createInvoiceRequestSettlementEnum_MANUAL;
+    case 'DECLARED':
+      return _$createInvoiceRequestSettlementEnum_DECLARED;
     case 'unknownDefaultOpenApi':
       return _$createInvoiceRequestSettlementEnum_unknownDefaultOpenApi;
     default:
@@ -73,6 +78,7 @@ _$createInvoiceRequestSettlementEnumValues =
       const <CreateInvoiceRequestSettlementEnum>[
         _$createInvoiceRequestSettlementEnum_IN_APP,
         _$createInvoiceRequestSettlementEnum_MANUAL,
+        _$createInvoiceRequestSettlementEnum_DECLARED,
         _$createInvoiceRequestSettlementEnum_unknownDefaultOpenApi,
       ],
     );
@@ -126,11 +132,13 @@ class _$CreateInvoiceRequestSettlementEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'IN_APP': 'IN_APP',
     'MANUAL': 'MANUAL',
+    'DECLARED': 'DECLARED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'IN_APP': 'IN_APP',
     'MANUAL': 'MANUAL',
+    'DECLARED': 'DECLARED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

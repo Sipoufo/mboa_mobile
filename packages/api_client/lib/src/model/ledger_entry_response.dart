@@ -24,6 +24,9 @@ part 'ledger_entry_response.g.dart';
 /// * [note] 
 /// * [hasAttachment] 
 /// * [createdAt] 
+/// * [source_] 
+/// * [sourceId] 
+/// * [readOnly] 
 @BuiltValue()
 abstract class LedgerEntryResponse implements Built<LedgerEntryResponse, LedgerEntryResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -60,6 +63,16 @@ abstract class LedgerEntryResponse implements Built<LedgerEntryResponse, LedgerE
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
+
+  @BuiltValueField(wireName: r'source')
+  LedgerEntryResponseSource_Enum? get source_;
+  // enum source_Enum {  INVOICE,  RENT,  };
+
+  @BuiltValueField(wireName: r'sourceId')
+  String? get sourceId;
+
+  @BuiltValueField(wireName: r'readOnly')
+  bool? get readOnly;
 
   LedgerEntryResponse._();
 
@@ -159,6 +172,27 @@ class _$LedgerEntryResponseSerializer implements PrimitiveSerializer<LedgerEntry
       yield serializers.serialize(
         object.createdAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.source_ != null) {
+      yield r'source';
+      yield serializers.serialize(
+        object.source_,
+        specifiedType: const FullType(LedgerEntryResponseSource_Enum),
+      );
+    }
+    if (object.sourceId != null) {
+      yield r'sourceId';
+      yield serializers.serialize(
+        object.sourceId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.readOnly != null) {
+      yield r'readOnly';
+      yield serializers.serialize(
+        object.readOnly,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -272,6 +306,30 @@ class _$LedgerEntryResponseSerializer implements PrimitiveSerializer<LedgerEntry
           if (valueDes == null) continue;
           result.createdAt = valueDes;
           break;
+        case r'source':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(LedgerEntryResponseSource_Enum),
+          ) as LedgerEntryResponseSource_Enum?;
+          if (valueDes == null) continue;
+          result.source_ = valueDes;
+          break;
+        case r'sourceId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.sourceId = valueDes;
+          break;
+        case r'readOnly':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.readOnly = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -341,5 +399,22 @@ class LedgerEntryResponseCategoryEnum extends EnumClass {
 
   static BuiltSet<LedgerEntryResponseCategoryEnum> get values => _$ledgerEntryResponseCategoryEnumValues;
   static LedgerEntryResponseCategoryEnum valueOf(String name) => _$ledgerEntryResponseCategoryEnumValueOf(name);
+}
+
+class LedgerEntryResponseSource_Enum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'INVOICE')
+  static const LedgerEntryResponseSource_Enum INVOICE = _$ledgerEntryResponseSourceEnum_INVOICE;
+  @BuiltValueEnumConst(wireName: r'RENT')
+  static const LedgerEntryResponseSource_Enum RENT = _$ledgerEntryResponseSourceEnum_RENT;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const LedgerEntryResponseSource_Enum unknownDefaultOpenApi = _$ledgerEntryResponseSourceEnum_unknownDefaultOpenApi;
+
+  static Serializer<LedgerEntryResponseSource_Enum> get serializer => _$ledgerEntryResponseSourceEnumSerializer;
+
+  const LedgerEntryResponseSource_Enum._(String name): super(name);
+
+  static BuiltSet<LedgerEntryResponseSource_Enum> get values => _$ledgerEntryResponseSourceEnumValues;
+  static LedgerEntryResponseSource_Enum valueOf(String name) => _$ledgerEntryResponseSourceEnumValueOf(name);
 }
 

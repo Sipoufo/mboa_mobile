@@ -26,12 +26,13 @@ class MessagerieApi {
 
   const MessagerieApi(this._dio, this._serializers);
 
-  /// List a conversation&#39;s messages, newest first
+  /// List a conversation&#39;s messages, newest first — or one M30 request&#39;s (homeRequestId)
   /// 
   ///
   /// Parameters:
   /// * [id] 
   /// * [pageable] 
+  /// * [homeRequestId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -44,6 +45,7 @@ class MessagerieApi {
   Future<Response<PageResponseMessageResponse>> listConversationMessages({ 
     required String id,
     required Pageable pageable,
+    String? homeRequestId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -71,6 +73,7 @@ class MessagerieApi {
     );
 
     final _queryParameters = <String, dynamic>{
+      if (homeRequestId != null) r'homeRequestId': encodeQueryParameter(_serializers, homeRequestId, const FullType(String)),
       r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
     };
 

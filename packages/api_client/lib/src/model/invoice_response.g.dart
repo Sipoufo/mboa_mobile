@@ -42,6 +42,8 @@ const InvoiceResponseSettlementEnum _$invoiceResponseSettlementEnum_IN_APP =
     const InvoiceResponseSettlementEnum._('IN_APP');
 const InvoiceResponseSettlementEnum _$invoiceResponseSettlementEnum_MANUAL =
     const InvoiceResponseSettlementEnum._('MANUAL');
+const InvoiceResponseSettlementEnum _$invoiceResponseSettlementEnum_DECLARED =
+    const InvoiceResponseSettlementEnum._('DECLARED');
 const InvoiceResponseSettlementEnum
 _$invoiceResponseSettlementEnum_unknownDefaultOpenApi =
     const InvoiceResponseSettlementEnum._('unknownDefaultOpenApi');
@@ -54,6 +56,8 @@ InvoiceResponseSettlementEnum _$invoiceResponseSettlementEnumValueOf(
       return _$invoiceResponseSettlementEnum_IN_APP;
     case 'MANUAL':
       return _$invoiceResponseSettlementEnum_MANUAL;
+    case 'DECLARED':
+      return _$invoiceResponseSettlementEnum_DECLARED;
     case 'unknownDefaultOpenApi':
       return _$invoiceResponseSettlementEnum_unknownDefaultOpenApi;
     default:
@@ -66,6 +70,7 @@ _$invoiceResponseSettlementEnumValues = BuiltSet<InvoiceResponseSettlementEnum>(
   const <InvoiceResponseSettlementEnum>[
     _$invoiceResponseSettlementEnum_IN_APP,
     _$invoiceResponseSettlementEnum_MANUAL,
+    _$invoiceResponseSettlementEnum_DECLARED,
     _$invoiceResponseSettlementEnum_unknownDefaultOpenApi,
   ],
 );
@@ -112,6 +117,8 @@ const InvoiceResponsePaidViaEnum _$invoiceResponsePaidViaEnum_IN_APP =
     const InvoiceResponsePaidViaEnum._('IN_APP');
 const InvoiceResponsePaidViaEnum _$invoiceResponsePaidViaEnum_MANUAL =
     const InvoiceResponsePaidViaEnum._('MANUAL');
+const InvoiceResponsePaidViaEnum _$invoiceResponsePaidViaEnum_DECLARED =
+    const InvoiceResponsePaidViaEnum._('DECLARED');
 const InvoiceResponsePaidViaEnum
 _$invoiceResponsePaidViaEnum_unknownDefaultOpenApi =
     const InvoiceResponsePaidViaEnum._('unknownDefaultOpenApi');
@@ -122,6 +129,8 @@ InvoiceResponsePaidViaEnum _$invoiceResponsePaidViaEnumValueOf(String name) {
       return _$invoiceResponsePaidViaEnum_IN_APP;
     case 'MANUAL':
       return _$invoiceResponsePaidViaEnum_MANUAL;
+    case 'DECLARED':
+      return _$invoiceResponsePaidViaEnum_DECLARED;
     case 'unknownDefaultOpenApi':
       return _$invoiceResponsePaidViaEnum_unknownDefaultOpenApi;
     default:
@@ -133,6 +142,7 @@ final BuiltSet<InvoiceResponsePaidViaEnum> _$invoiceResponsePaidViaEnumValues =
     BuiltSet<InvoiceResponsePaidViaEnum>(const <InvoiceResponsePaidViaEnum>[
       _$invoiceResponsePaidViaEnum_IN_APP,
       _$invoiceResponsePaidViaEnum_MANUAL,
+      _$invoiceResponsePaidViaEnum_DECLARED,
       _$invoiceResponsePaidViaEnum_unknownDefaultOpenApi,
     ]);
 
@@ -188,11 +198,13 @@ class _$InvoiceResponseSettlementEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'IN_APP': 'IN_APP',
     'MANUAL': 'MANUAL',
+    'DECLARED': 'DECLARED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'IN_APP': 'IN_APP',
     'MANUAL': 'MANUAL',
+    'DECLARED': 'DECLARED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -262,11 +274,13 @@ class _$InvoiceResponsePaidViaEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'IN_APP': 'IN_APP',
     'MANUAL': 'MANUAL',
+    'DECLARED': 'DECLARED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'IN_APP': 'IN_APP',
     'MANUAL': 'MANUAL',
+    'DECLARED': 'DECLARED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

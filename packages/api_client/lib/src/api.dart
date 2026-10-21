@@ -51,6 +51,7 @@ import 'package:api_client/src/api/phone_change_api.dart';
 import 'package:api_client/src/api/prestataire_dashboard_api.dart';
 import 'package:api_client/src/api/prestataire_profile_api.dart';
 import 'package:api_client/src/api/prestataire_visites_api.dart';
+import 'package:api_client/src/api/quittances_api.dart';
 import 'package:api_client/src/api/residences_api.dart';
 import 'package:api_client/src/api/rservations_api.dart';
 import 'package:api_client/src/api/rservations_prestataire_api.dart';
@@ -408,6 +409,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   PrestataireVisitesApi getPrestataireVisitesApi() {
     return PrestataireVisitesApi(dio, serializers);
+  }
+
+  /// Get QuittancesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  QuittancesApi getQuittancesApi() {
+    return QuittancesApi(dio, serializers);
   }
 
   /// Get ResidencesApi instance, base route and serializer can be overridden by a given but be careful,

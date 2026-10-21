@@ -370,12 +370,13 @@ class RservationsPrestataireApi {
     );
   }
 
-  /// Requests on my listings, newest first — status&#x3D;PENDING&#39;s totalElements is the home counter
+  /// Requests on my listings, newest first, on one listing or one residence&#39;s units — status&#x3D;PENDING&#39;s totalElements is the home counter
   /// 
   ///
   /// Parameters:
   /// * [pageable] 
   /// * [annonceId] 
+  /// * [residenceId] 
   /// * [status] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -389,6 +390,7 @@ class RservationsPrestataireApi {
   Future<Response<PageResponseReservationResponse>> listIncomingReservations({ 
     required Pageable pageable,
     String? annonceId,
+    String? residenceId,
     BuiltList<String>? status,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -418,6 +420,7 @@ class RservationsPrestataireApi {
 
     final _queryParameters = <String, dynamic>{
       if (annonceId != null) r'annonceId': encodeQueryParameter(_serializers, annonceId, const FullType(String)),
+      if (residenceId != null) r'residenceId': encodeQueryParameter(_serializers, residenceId, const FullType(String)),
       if (status != null) r'status': encodeCollectionQueryParameter<String>(_serializers, status, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
       r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
     };

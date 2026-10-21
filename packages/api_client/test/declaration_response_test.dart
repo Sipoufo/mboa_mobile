@@ -42,6 +42,11 @@ void main() {
       // TODO
     });
 
+    // String invoiceId
+    test('to test the property `invoiceId`', () async {
+      // TODO
+    });
+
     // int amount
     test('to test the property `amount`', () async {
       // TODO
@@ -104,6 +109,16 @@ void main() {
 
     // bool canContest
     test('to test the property `canContest`', () async {
+      // TODO
+    });
+
+    // String receiptId
+    test('to test the property `receiptId`', () async {
+      // TODO
+    });
+
+    // bool receiptReady
+    test('to test the property `receiptReady`', () async {
       // TODO
     });
 

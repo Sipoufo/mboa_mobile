@@ -14,6 +14,7 @@ part 'send_message_request.g.dart';
 /// Properties:
 /// * [body] 
 /// * [attachmentKeys] 
+/// * [homeRequestId] 
 @BuiltValue()
 abstract class SendMessageRequest implements Built<SendMessageRequest, SendMessageRequestBuilder> {
   @BuiltValueField(wireName: r'body')
@@ -21,6 +22,9 @@ abstract class SendMessageRequest implements Built<SendMessageRequest, SendMessa
 
   @BuiltValueField(wireName: r'attachmentKeys')
   BuiltList<String>? get attachmentKeys;
+
+  @BuiltValueField(wireName: r'homeRequestId')
+  String? get homeRequestId;
 
   SendMessageRequest._();
 
@@ -57,6 +61,13 @@ class _$SendMessageRequestSerializer implements PrimitiveSerializer<SendMessageR
       yield serializers.serialize(
         object.attachmentKeys,
         specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.homeRequestId != null) {
+      yield r'homeRequestId';
+      yield serializers.serialize(
+        object.homeRequestId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -97,6 +108,14 @@ class _$SendMessageRequestSerializer implements PrimitiveSerializer<SendMessageR
           ) as BuiltList<String>?;
           if (valueDes == null) continue;
           result.attachmentKeys.replace(valueDes);
+          break;
+        case r'homeRequestId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.homeRequestId = valueDes;
           break;
         default:
           unhandled.add(key);

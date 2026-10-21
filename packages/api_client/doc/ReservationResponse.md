@@ -34,6 +34,8 @@ Name | Type | Description | Notes
 **canCancel** | **bool** |  | [optional] 
 **canDraftContract** | **bool** |  | [optional] 
 **contractId** | **String** |  | [optional] 
+**residenceId** | **String** |  | [optional] 
+**residenceName** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

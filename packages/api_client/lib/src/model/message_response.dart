@@ -23,6 +23,7 @@ part 'message_response.g.dart';
 /// * [kind] 
 /// * [systemEvent] 
 /// * [reservation] 
+/// * [homeRequestId] 
 @BuiltValue()
 abstract class MessageResponse implements Built<MessageResponse, MessageResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -52,10 +53,13 @@ abstract class MessageResponse implements Built<MessageResponse, MessageResponse
 
   @BuiltValueField(wireName: r'systemEvent')
   MessageResponseSystemEventEnum? get systemEvent;
-  // enum systemEventEnum {  RESERVATION_REQUESTED,  };
+  // enum systemEventEnum {  RESERVATION_REQUESTED,  HOME_REQUEST_OPENED,  HOME_REQUEST_UPDATED,  };
 
   @BuiltValueField(wireName: r'reservation')
   ReservationRequestSnapshot? get reservation;
+
+  @BuiltValueField(wireName: r'homeRequestId')
+  String? get homeRequestId;
 
   MessageResponse._();
 
@@ -148,6 +152,13 @@ class _$MessageResponseSerializer implements PrimitiveSerializer<MessageResponse
       yield serializers.serialize(
         object.reservation,
         specifiedType: const FullType(ReservationRequestSnapshot),
+      );
+    }
+    if (object.homeRequestId != null) {
+      yield r'homeRequestId';
+      yield serializers.serialize(
+        object.homeRequestId,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -253,6 +264,14 @@ class _$MessageResponseSerializer implements PrimitiveSerializer<MessageResponse
           if (valueDes == null) continue;
           result.reservation.replace(valueDes);
           break;
+        case r'homeRequestId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.homeRequestId = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -303,6 +322,10 @@ class MessageResponseSystemEventEnum extends EnumClass {
 
   @BuiltValueEnumConst(wireName: r'RESERVATION_REQUESTED')
   static const MessageResponseSystemEventEnum RESERVATION_REQUESTED = _$messageResponseSystemEventEnum_RESERVATION_REQUESTED;
+  @BuiltValueEnumConst(wireName: r'HOME_REQUEST_OPENED')
+  static const MessageResponseSystemEventEnum HOME_REQUEST_OPENED = _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED;
+  @BuiltValueEnumConst(wireName: r'HOME_REQUEST_UPDATED')
+  static const MessageResponseSystemEventEnum HOME_REQUEST_UPDATED = _$messageResponseSystemEventEnum_HOME_REQUEST_UPDATED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const MessageResponseSystemEventEnum unknownDefaultOpenApi = _$messageResponseSystemEventEnum_unknownDefaultOpenApi;
 

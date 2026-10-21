@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **tenant** | [**ParticipantSummary**](ParticipantSummary.md) |  | [optional] 
 **kind** | **String** |  | [optional] 
 **dueIndexes** | **BuiltList&lt;int&gt;** |  | [optional] 
+**invoiceId** | **String** |  | [optional] 
 **amount** | **int** |  | [optional] 
 **paidOn** | [**Date**](Date.md) |  | [optional] 
 **method** | **String** |  | [optional] 
@@ -28,6 +29,8 @@ Name | Type | Description | Notes
 **answeredAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **canConfirm** | **bool** |  | [optional] 
 **canContest** | **bool** |  | [optional] 
+**receiptId** | **String** |  | [optional] 
+**receiptReady** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

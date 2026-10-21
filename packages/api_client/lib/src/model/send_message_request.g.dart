@@ -11,12 +11,15 @@ class _$SendMessageRequest extends SendMessageRequest {
   final String? body;
   @override
   final BuiltList<String>? attachmentKeys;
+  @override
+  final String? homeRequestId;
 
   factory _$SendMessageRequest([
     void Function(SendMessageRequestBuilder)? updates,
   ]) => (SendMessageRequestBuilder()..update(updates))._build();
 
-  _$SendMessageRequest._({this.body, this.attachmentKeys}) : super._();
+  _$SendMessageRequest._({this.body, this.attachmentKeys, this.homeRequestId})
+    : super._();
   @override
   SendMessageRequest rebuild(
     void Function(SendMessageRequestBuilder) updates,
@@ -31,7 +34,8 @@ class _$SendMessageRequest extends SendMessageRequest {
     if (identical(other, this)) return true;
     return other is SendMessageRequest &&
         body == other.body &&
-        attachmentKeys == other.attachmentKeys;
+        attachmentKeys == other.attachmentKeys &&
+        homeRequestId == other.homeRequestId;
   }
 
   @override
@@ -39,6 +43,7 @@ class _$SendMessageRequest extends SendMessageRequest {
     var _$hash = 0;
     _$hash = $jc(_$hash, body.hashCode);
     _$hash = $jc(_$hash, attachmentKeys.hashCode);
+    _$hash = $jc(_$hash, homeRequestId.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -47,7 +52,8 @@ class _$SendMessageRequest extends SendMessageRequest {
   String toString() {
     return (newBuiltValueToStringHelper(r'SendMessageRequest')
           ..add('body', body)
-          ..add('attachmentKeys', attachmentKeys))
+          ..add('attachmentKeys', attachmentKeys)
+          ..add('homeRequestId', homeRequestId))
         .toString();
   }
 }
@@ -66,6 +72,11 @@ class SendMessageRequestBuilder
   set attachmentKeys(ListBuilder<String>? attachmentKeys) =>
       _$this._attachmentKeys = attachmentKeys;
 
+  String? _homeRequestId;
+  String? get homeRequestId => _$this._homeRequestId;
+  set homeRequestId(String? homeRequestId) =>
+      _$this._homeRequestId = homeRequestId;
+
   SendMessageRequestBuilder() {
     SendMessageRequest._defaults(this);
   }
@@ -75,6 +86,7 @@ class SendMessageRequestBuilder
     if ($v != null) {
       _body = $v.body;
       _attachmentKeys = $v.attachmentKeys?.toBuilder();
+      _homeRequestId = $v.homeRequestId;
       _$v = null;
     }
     return this;
@@ -101,6 +113,7 @@ class SendMessageRequestBuilder
           _$SendMessageRequest._(
             body: body,
             attachmentKeys: _attachmentKeys?.build(),
+            homeRequestId: homeRequestId,
           );
     } catch (_) {
       late String _$failedField;

@@ -10,6 +10,8 @@ const DeclarationResponseKindEnum _$declarationResponseKindEnum_RENT =
     const DeclarationResponseKindEnum._('RENT');
 const DeclarationResponseKindEnum _$declarationResponseKindEnum_DEPOSIT =
     const DeclarationResponseKindEnum._('DEPOSIT');
+const DeclarationResponseKindEnum _$declarationResponseKindEnum_INVOICE =
+    const DeclarationResponseKindEnum._('INVOICE');
 const DeclarationResponseKindEnum
 _$declarationResponseKindEnum_unknownDefaultOpenApi =
     const DeclarationResponseKindEnum._('unknownDefaultOpenApi');
@@ -20,6 +22,8 @@ DeclarationResponseKindEnum _$declarationResponseKindEnumValueOf(String name) {
       return _$declarationResponseKindEnum_RENT;
     case 'DEPOSIT':
       return _$declarationResponseKindEnum_DEPOSIT;
+    case 'INVOICE':
+      return _$declarationResponseKindEnum_INVOICE;
     case 'unknownDefaultOpenApi':
       return _$declarationResponseKindEnum_unknownDefaultOpenApi;
     default:
@@ -32,6 +36,7 @@ _$declarationResponseKindEnumValues =
     BuiltSet<DeclarationResponseKindEnum>(const <DeclarationResponseKindEnum>[
       _$declarationResponseKindEnum_RENT,
       _$declarationResponseKindEnum_DEPOSIT,
+      _$declarationResponseKindEnum_INVOICE,
       _$declarationResponseKindEnum_unknownDefaultOpenApi,
     ]);
 
@@ -142,11 +147,13 @@ class _$DeclarationResponseKindEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'RENT': 'RENT',
     'DEPOSIT': 'DEPOSIT',
+    'INVOICE': 'INVOICE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'RENT': 'RENT',
     'DEPOSIT': 'DEPOSIT',
+    'INVOICE': 'INVOICE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -268,6 +275,8 @@ class _$DeclarationResponse extends DeclarationResponse {
   @override
   final BuiltList<int>? dueIndexes;
   @override
+  final String? invoiceId;
+  @override
   final int? amount;
   @override
   final Date? paidOn;
@@ -293,6 +302,10 @@ class _$DeclarationResponse extends DeclarationResponse {
   final bool? canConfirm;
   @override
   final bool? canContest;
+  @override
+  final String? receiptId;
+  @override
+  final bool? receiptReady;
 
   factory _$DeclarationResponse([
     void Function(DeclarationResponseBuilder)? updates,
@@ -306,6 +319,7 @@ class _$DeclarationResponse extends DeclarationResponse {
     this.tenant,
     this.kind,
     this.dueIndexes,
+    this.invoiceId,
     this.amount,
     this.paidOn,
     this.method,
@@ -319,6 +333,8 @@ class _$DeclarationResponse extends DeclarationResponse {
     this.answeredAt,
     this.canConfirm,
     this.canContest,
+    this.receiptId,
+    this.receiptReady,
   }) : super._();
   @override
   DeclarationResponse rebuild(
@@ -340,6 +356,7 @@ class _$DeclarationResponse extends DeclarationResponse {
         tenant == other.tenant &&
         kind == other.kind &&
         dueIndexes == other.dueIndexes &&
+        invoiceId == other.invoiceId &&
         amount == other.amount &&
         paidOn == other.paidOn &&
         method == other.method &&
@@ -352,7 +369,9 @@ class _$DeclarationResponse extends DeclarationResponse {
         declaredAt == other.declaredAt &&
         answeredAt == other.answeredAt &&
         canConfirm == other.canConfirm &&
-        canContest == other.canContest;
+        canContest == other.canContest &&
+        receiptId == other.receiptId &&
+        receiptReady == other.receiptReady;
   }
 
   @override
@@ -365,6 +384,7 @@ class _$DeclarationResponse extends DeclarationResponse {
     _$hash = $jc(_$hash, tenant.hashCode);
     _$hash = $jc(_$hash, kind.hashCode);
     _$hash = $jc(_$hash, dueIndexes.hashCode);
+    _$hash = $jc(_$hash, invoiceId.hashCode);
     _$hash = $jc(_$hash, amount.hashCode);
     _$hash = $jc(_$hash, paidOn.hashCode);
     _$hash = $jc(_$hash, method.hashCode);
@@ -378,6 +398,8 @@ class _$DeclarationResponse extends DeclarationResponse {
     _$hash = $jc(_$hash, answeredAt.hashCode);
     _$hash = $jc(_$hash, canConfirm.hashCode);
     _$hash = $jc(_$hash, canContest.hashCode);
+    _$hash = $jc(_$hash, receiptId.hashCode);
+    _$hash = $jc(_$hash, receiptReady.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -392,6 +414,7 @@ class _$DeclarationResponse extends DeclarationResponse {
           ..add('tenant', tenant)
           ..add('kind', kind)
           ..add('dueIndexes', dueIndexes)
+          ..add('invoiceId', invoiceId)
           ..add('amount', amount)
           ..add('paidOn', paidOn)
           ..add('method', method)
@@ -404,7 +427,9 @@ class _$DeclarationResponse extends DeclarationResponse {
           ..add('declaredAt', declaredAt)
           ..add('answeredAt', answeredAt)
           ..add('canConfirm', canConfirm)
-          ..add('canContest', canContest))
+          ..add('canContest', canContest)
+          ..add('receiptId', receiptId)
+          ..add('receiptReady', receiptReady))
         .toString();
   }
 }
@@ -442,6 +467,10 @@ class DeclarationResponseBuilder
   ListBuilder<int> get dueIndexes => _$this._dueIndexes ??= ListBuilder<int>();
   set dueIndexes(ListBuilder<int>? dueIndexes) =>
       _$this._dueIndexes = dueIndexes;
+
+  String? _invoiceId;
+  String? get invoiceId => _$this._invoiceId;
+  set invoiceId(String? invoiceId) => _$this._invoiceId = invoiceId;
 
   int? _amount;
   int? get amount => _$this._amount;
@@ -498,6 +527,14 @@ class DeclarationResponseBuilder
   bool? get canContest => _$this._canContest;
   set canContest(bool? canContest) => _$this._canContest = canContest;
 
+  String? _receiptId;
+  String? get receiptId => _$this._receiptId;
+  set receiptId(String? receiptId) => _$this._receiptId = receiptId;
+
+  bool? _receiptReady;
+  bool? get receiptReady => _$this._receiptReady;
+  set receiptReady(bool? receiptReady) => _$this._receiptReady = receiptReady;
+
   DeclarationResponseBuilder() {
     DeclarationResponse._defaults(this);
   }
@@ -512,6 +549,7 @@ class DeclarationResponseBuilder
       _tenant = $v.tenant?.toBuilder();
       _kind = $v.kind;
       _dueIndexes = $v.dueIndexes?.toBuilder();
+      _invoiceId = $v.invoiceId;
       _amount = $v.amount;
       _paidOn = $v.paidOn;
       _method = $v.method;
@@ -525,6 +563,8 @@ class DeclarationResponseBuilder
       _answeredAt = $v.answeredAt;
       _canConfirm = $v.canConfirm;
       _canContest = $v.canContest;
+      _receiptId = $v.receiptId;
+      _receiptReady = $v.receiptReady;
       _$v = null;
     }
     return this;
@@ -556,6 +596,7 @@ class DeclarationResponseBuilder
             tenant: _tenant?.build(),
             kind: kind,
             dueIndexes: _dueIndexes?.build(),
+            invoiceId: invoiceId,
             amount: amount,
             paidOn: paidOn,
             method: method,
@@ -569,6 +610,8 @@ class DeclarationResponseBuilder
             answeredAt: answeredAt,
             canConfirm: canConfirm,
             canContest: canContest,
+            receiptId: receiptId,
+            receiptReady: receiptReady,
           );
     } catch (_) {
       late String _$failedField;

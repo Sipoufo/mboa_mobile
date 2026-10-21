@@ -19,7 +19,7 @@ part 'create_upload_request.g.dart';
 abstract class CreateUploadRequest implements Built<CreateUploadRequest, CreateUploadRequestBuilder> {
   @BuiltValueField(wireName: r'category')
   CreateUploadRequestCategoryEnum get category;
-  // enum categoryEnum {  KYC_DOCUMENT,  LISTING_PHOTO,  PROFILE_PHOTO,  MESSAGE_ATTACHMENT,  VISIT_REPORT,  RECEIPT,  CONTRACT,  FINANCE_ATTACHMENT,  };
+  // enum categoryEnum {  KYC_DOCUMENT,  LISTING_PHOTO,  PROFILE_PHOTO,  MESSAGE_ATTACHMENT,  VISIT_REPORT,  RECEIPT,  CONTRACT,  FINANCE_ATTACHMENT,  EVIDENCE,  };
 
   @BuiltValueField(wireName: r'contentType')
   String get contentType;
@@ -156,6 +156,8 @@ class CreateUploadRequestCategoryEnum extends EnumClass {
   static const CreateUploadRequestCategoryEnum CONTRACT = _$createUploadRequestCategoryEnum_CONTRACT;
   @BuiltValueEnumConst(wireName: r'FINANCE_ATTACHMENT')
   static const CreateUploadRequestCategoryEnum FINANCE_ATTACHMENT = _$createUploadRequestCategoryEnum_FINANCE_ATTACHMENT;
+  @BuiltValueEnumConst(wireName: r'EVIDENCE')
+  static const CreateUploadRequestCategoryEnum EVIDENCE = _$createUploadRequestCategoryEnum_EVIDENCE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateUploadRequestCategoryEnum unknownDefaultOpenApi = _$createUploadRequestCategoryEnum_unknownDefaultOpenApi;
 

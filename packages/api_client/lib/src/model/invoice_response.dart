@@ -59,7 +59,7 @@ abstract class InvoiceResponse implements Built<InvoiceResponse, InvoiceResponse
 
   @BuiltValueField(wireName: r'settlement')
   InvoiceResponseSettlementEnum? get settlement;
-  // enum settlementEnum {  IN_APP,  MANUAL,  };
+  // enum settlementEnum {  IN_APP,  MANUAL,  DECLARED,  };
 
   @BuiltValueField(wireName: r'status')
   InvoiceResponseStatusEnum? get status;
@@ -76,7 +76,7 @@ abstract class InvoiceResponse implements Built<InvoiceResponse, InvoiceResponse
 
   @BuiltValueField(wireName: r'paidVia')
   InvoiceResponsePaidViaEnum? get paidVia;
-  // enum paidViaEnum {  IN_APP,  MANUAL,  };
+  // enum paidViaEnum {  IN_APP,  MANUAL,  DECLARED,  };
 
   @BuiltValueField(wireName: r'paymentId')
   String? get paymentId;
@@ -442,6 +442,8 @@ class InvoiceResponseSettlementEnum extends EnumClass {
   static const InvoiceResponseSettlementEnum IN_APP = _$invoiceResponseSettlementEnum_IN_APP;
   @BuiltValueEnumConst(wireName: r'MANUAL')
   static const InvoiceResponseSettlementEnum MANUAL = _$invoiceResponseSettlementEnum_MANUAL;
+  @BuiltValueEnumConst(wireName: r'DECLARED')
+  static const InvoiceResponseSettlementEnum DECLARED = _$invoiceResponseSettlementEnum_DECLARED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const InvoiceResponseSettlementEnum unknownDefaultOpenApi = _$invoiceResponseSettlementEnum_unknownDefaultOpenApi;
 
@@ -480,6 +482,8 @@ class InvoiceResponsePaidViaEnum extends EnumClass {
   static const InvoiceResponsePaidViaEnum IN_APP = _$invoiceResponsePaidViaEnum_IN_APP;
   @BuiltValueEnumConst(wireName: r'MANUAL')
   static const InvoiceResponsePaidViaEnum MANUAL = _$invoiceResponsePaidViaEnum_MANUAL;
+  @BuiltValueEnumConst(wireName: r'DECLARED')
+  static const InvoiceResponsePaidViaEnum DECLARED = _$invoiceResponsePaidViaEnum_DECLARED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const InvoiceResponsePaidViaEnum unknownDefaultOpenApi = _$invoiceResponsePaidViaEnum_unknownDefaultOpenApi;
 

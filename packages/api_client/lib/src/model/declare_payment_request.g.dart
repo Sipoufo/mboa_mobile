@@ -10,6 +10,8 @@ const DeclarePaymentRequestKindEnum _$declarePaymentRequestKindEnum_RENT =
     const DeclarePaymentRequestKindEnum._('RENT');
 const DeclarePaymentRequestKindEnum _$declarePaymentRequestKindEnum_DEPOSIT =
     const DeclarePaymentRequestKindEnum._('DEPOSIT');
+const DeclarePaymentRequestKindEnum _$declarePaymentRequestKindEnum_INVOICE =
+    const DeclarePaymentRequestKindEnum._('INVOICE');
 const DeclarePaymentRequestKindEnum
 _$declarePaymentRequestKindEnum_unknownDefaultOpenApi =
     const DeclarePaymentRequestKindEnum._('unknownDefaultOpenApi');
@@ -22,6 +24,8 @@ DeclarePaymentRequestKindEnum _$declarePaymentRequestKindEnumValueOf(
       return _$declarePaymentRequestKindEnum_RENT;
     case 'DEPOSIT':
       return _$declarePaymentRequestKindEnum_DEPOSIT;
+    case 'INVOICE':
+      return _$declarePaymentRequestKindEnum_INVOICE;
     case 'unknownDefaultOpenApi':
       return _$declarePaymentRequestKindEnum_unknownDefaultOpenApi;
     default:
@@ -34,6 +38,7 @@ _$declarePaymentRequestKindEnumValues = BuiltSet<DeclarePaymentRequestKindEnum>(
   const <DeclarePaymentRequestKindEnum>[
     _$declarePaymentRequestKindEnum_RENT,
     _$declarePaymentRequestKindEnum_DEPOSIT,
+    _$declarePaymentRequestKindEnum_INVOICE,
     _$declarePaymentRequestKindEnum_unknownDefaultOpenApi,
   ],
 );
@@ -101,11 +106,13 @@ class _$DeclarePaymentRequestKindEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'RENT': 'RENT',
     'DEPOSIT': 'DEPOSIT',
+    'INVOICE': 'INVOICE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'RENT': 'RENT',
     'DEPOSIT': 'DEPOSIT',
+    'INVOICE': 'INVOICE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

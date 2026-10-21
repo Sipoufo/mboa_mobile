@@ -31,6 +31,9 @@ const CreateUploadRequestCategoryEnum
 _$createUploadRequestCategoryEnum_FINANCE_ATTACHMENT =
     const CreateUploadRequestCategoryEnum._('FINANCE_ATTACHMENT');
 const CreateUploadRequestCategoryEnum
+_$createUploadRequestCategoryEnum_EVIDENCE =
+    const CreateUploadRequestCategoryEnum._('EVIDENCE');
+const CreateUploadRequestCategoryEnum
 _$createUploadRequestCategoryEnum_unknownDefaultOpenApi =
     const CreateUploadRequestCategoryEnum._('unknownDefaultOpenApi');
 
@@ -54,6 +57,8 @@ CreateUploadRequestCategoryEnum _$createUploadRequestCategoryEnumValueOf(
       return _$createUploadRequestCategoryEnum_CONTRACT;
     case 'FINANCE_ATTACHMENT':
       return _$createUploadRequestCategoryEnum_FINANCE_ATTACHMENT;
+    case 'EVIDENCE':
+      return _$createUploadRequestCategoryEnum_EVIDENCE;
     case 'unknownDefaultOpenApi':
       return _$createUploadRequestCategoryEnum_unknownDefaultOpenApi;
     default:
@@ -73,6 +78,7 @@ _$createUploadRequestCategoryEnumValues =
         _$createUploadRequestCategoryEnum_RECEIPT,
         _$createUploadRequestCategoryEnum_CONTRACT,
         _$createUploadRequestCategoryEnum_FINANCE_ATTACHMENT,
+        _$createUploadRequestCategoryEnum_EVIDENCE,
         _$createUploadRequestCategoryEnum_unknownDefaultOpenApi,
       ],
     );
@@ -92,6 +98,7 @@ class _$CreateUploadRequestCategoryEnumSerializer
     'RECEIPT': 'RECEIPT',
     'CONTRACT': 'CONTRACT',
     'FINANCE_ATTACHMENT': 'FINANCE_ATTACHMENT',
+    'EVIDENCE': 'EVIDENCE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -103,6 +110,7 @@ class _$CreateUploadRequestCategoryEnumSerializer
     'RECEIPT': 'RECEIPT',
     'CONTRACT': 'CONTRACT',
     'FINANCE_ATTACHMENT': 'FINANCE_ATTACHMENT',
+    'EVIDENCE': 'EVIDENCE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

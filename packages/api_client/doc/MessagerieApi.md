@@ -9,7 +9,7 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**listConversationMessages**](MessagerieApi.md#listconversationmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first
+[**listConversationMessages**](MessagerieApi.md#listconversationmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first — or one M30 request&#39;s (homeRequestId)
 [**listMyConversations**](MessagerieApi.md#listmyconversations) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
 [**markConversationRead**](MessagerieApi.md#markconversationread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
 [**sendMessage**](MessagerieApi.md#sendmessage) | **POST** /api/v1/conversations/{id}/messages | Post a message in a conversation
@@ -17,9 +17,9 @@ Method | HTTP request | Description
 
 
 # **listConversationMessages**
-> PageResponseMessageResponse listConversationMessages(id, pageable)
+> PageResponseMessageResponse listConversationMessages(id, pageable, homeRequestId)
 
-List a conversation's messages, newest first
+List a conversation's messages, newest first — or one M30 request's (homeRequestId)
 
 ### Example
 ```dart
@@ -28,9 +28,10 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getMessagerieApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 final Pageable pageable = ; // Pageable | 
+final String homeRequestId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.listConversationMessages(id, pageable);
+    final response = api.listConversationMessages(id, pageable, homeRequestId);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling MessagerieApi->listConversationMessages: $e\n');
@@ -43,6 +44,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
  **pageable** | [**Pageable**](.md)|  | 
+ **homeRequestId** | **String**|  | [optional] 
 
 ### Return type
 

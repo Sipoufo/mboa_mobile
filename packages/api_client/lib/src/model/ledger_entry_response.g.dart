@@ -97,12 +97,48 @@ _$ledgerEntryResponseCategoryEnumValues =
       ],
     );
 
+const LedgerEntryResponseSource_Enum _$ledgerEntryResponseSourceEnum_INVOICE =
+    const LedgerEntryResponseSource_Enum._('INVOICE');
+const LedgerEntryResponseSource_Enum _$ledgerEntryResponseSourceEnum_RENT =
+    const LedgerEntryResponseSource_Enum._('RENT');
+const LedgerEntryResponseSource_Enum
+_$ledgerEntryResponseSourceEnum_unknownDefaultOpenApi =
+    const LedgerEntryResponseSource_Enum._('unknownDefaultOpenApi');
+
+LedgerEntryResponseSource_Enum _$ledgerEntryResponseSourceEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'INVOICE':
+      return _$ledgerEntryResponseSourceEnum_INVOICE;
+    case 'RENT':
+      return _$ledgerEntryResponseSourceEnum_RENT;
+    case 'unknownDefaultOpenApi':
+      return _$ledgerEntryResponseSourceEnum_unknownDefaultOpenApi;
+    default:
+      return _$ledgerEntryResponseSourceEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<LedgerEntryResponseSource_Enum>
+_$ledgerEntryResponseSourceEnumValues =
+    BuiltSet<LedgerEntryResponseSource_Enum>(
+      const <LedgerEntryResponseSource_Enum>[
+        _$ledgerEntryResponseSourceEnum_INVOICE,
+        _$ledgerEntryResponseSourceEnum_RENT,
+        _$ledgerEntryResponseSourceEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 Serializer<LedgerEntryResponseDirectionEnum>
 _$ledgerEntryResponseDirectionEnumSerializer =
     _$LedgerEntryResponseDirectionEnumSerializer();
 Serializer<LedgerEntryResponseCategoryEnum>
 _$ledgerEntryResponseCategoryEnumSerializer =
     _$LedgerEntryResponseCategoryEnumSerializer();
+Serializer<LedgerEntryResponseSource_Enum>
+_$ledgerEntryResponseSourceEnumSerializer =
+    _$LedgerEntryResponseSource_EnumSerializer();
 
 class _$LedgerEntryResponseDirectionEnumSerializer
     implements PrimitiveSerializer<LedgerEntryResponseDirectionEnum> {
@@ -182,6 +218,41 @@ class _$LedgerEntryResponseCategoryEnumSerializer
   );
 }
 
+class _$LedgerEntryResponseSource_EnumSerializer
+    implements PrimitiveSerializer<LedgerEntryResponseSource_Enum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'INVOICE': 'INVOICE',
+    'RENT': 'RENT',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'INVOICE': 'INVOICE',
+    'RENT': 'RENT',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[LedgerEntryResponseSource_Enum];
+  @override
+  final String wireName = 'LedgerEntryResponseSource_Enum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    LedgerEntryResponseSource_Enum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  LedgerEntryResponseSource_Enum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => LedgerEntryResponseSource_Enum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$LedgerEntryResponse extends LedgerEntryResponse {
   @override
   final String? id;
@@ -205,6 +276,12 @@ class _$LedgerEntryResponse extends LedgerEntryResponse {
   final bool? hasAttachment;
   @override
   final DateTime? createdAt;
+  @override
+  final LedgerEntryResponseSource_Enum? source_;
+  @override
+  final String? sourceId;
+  @override
+  final bool? readOnly;
 
   factory _$LedgerEntryResponse([
     void Function(LedgerEntryResponseBuilder)? updates,
@@ -222,6 +299,9 @@ class _$LedgerEntryResponse extends LedgerEntryResponse {
     this.note,
     this.hasAttachment,
     this.createdAt,
+    this.source_,
+    this.sourceId,
+    this.readOnly,
   }) : super._();
   @override
   LedgerEntryResponse rebuild(
@@ -246,7 +326,10 @@ class _$LedgerEntryResponse extends LedgerEntryResponse {
         propertyLabel == other.propertyLabel &&
         note == other.note &&
         hasAttachment == other.hasAttachment &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        source_ == other.source_ &&
+        sourceId == other.sourceId &&
+        readOnly == other.readOnly;
   }
 
   @override
@@ -263,6 +346,9 @@ class _$LedgerEntryResponse extends LedgerEntryResponse {
     _$hash = $jc(_$hash, note.hashCode);
     _$hash = $jc(_$hash, hasAttachment.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, source_.hashCode);
+    _$hash = $jc(_$hash, sourceId.hashCode);
+    _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -280,7 +366,10 @@ class _$LedgerEntryResponse extends LedgerEntryResponse {
           ..add('propertyLabel', propertyLabel)
           ..add('note', note)
           ..add('hasAttachment', hasAttachment)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('source_', source_)
+          ..add('sourceId', sourceId)
+          ..add('readOnly', readOnly))
         .toString();
   }
 }
@@ -337,6 +426,19 @@ class LedgerEntryResponseBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  LedgerEntryResponseSource_Enum? _source_;
+  LedgerEntryResponseSource_Enum? get source_ => _$this._source_;
+  set source_(LedgerEntryResponseSource_Enum? source_) =>
+      _$this._source_ = source_;
+
+  String? _sourceId;
+  String? get sourceId => _$this._sourceId;
+  set sourceId(String? sourceId) => _$this._sourceId = sourceId;
+
+  bool? _readOnly;
+  bool? get readOnly => _$this._readOnly;
+  set readOnly(bool? readOnly) => _$this._readOnly = readOnly;
+
   LedgerEntryResponseBuilder() {
     LedgerEntryResponse._defaults(this);
   }
@@ -355,6 +457,9 @@ class LedgerEntryResponseBuilder
       _note = $v.note;
       _hasAttachment = $v.hasAttachment;
       _createdAt = $v.createdAt;
+      _source_ = $v.source_;
+      _sourceId = $v.sourceId;
+      _readOnly = $v.readOnly;
       _$v = null;
     }
     return this;
@@ -388,6 +493,9 @@ class LedgerEntryResponseBuilder
           note: note,
           hasAttachment: hasAttachment,
           createdAt: createdAt,
+          source_: source_,
+          sourceId: sourceId,
+          readOnly: readOnly,
         );
     replace(_$result);
     return _$result;

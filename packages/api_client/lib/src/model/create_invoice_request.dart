@@ -39,7 +39,7 @@ abstract class CreateInvoiceRequest implements Built<CreateInvoiceRequest, Creat
 
   @BuiltValueField(wireName: r'settlement')
   CreateInvoiceRequestSettlementEnum? get settlement;
-  // enum settlementEnum {  IN_APP,  MANUAL,  };
+  // enum settlementEnum {  IN_APP,  MANUAL,  DECLARED,  };
 
   CreateInvoiceRequest._();
 
@@ -219,6 +219,8 @@ class CreateInvoiceRequestSettlementEnum extends EnumClass {
   static const CreateInvoiceRequestSettlementEnum IN_APP = _$createInvoiceRequestSettlementEnum_IN_APP;
   @BuiltValueEnumConst(wireName: r'MANUAL')
   static const CreateInvoiceRequestSettlementEnum MANUAL = _$createInvoiceRequestSettlementEnum_MANUAL;
+  @BuiltValueEnumConst(wireName: r'DECLARED')
+  static const CreateInvoiceRequestSettlementEnum DECLARED = _$createInvoiceRequestSettlementEnum_DECLARED;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateInvoiceRequestSettlementEnum unknownDefaultOpenApi = _$createInvoiceRequestSettlementEnum_unknownDefaultOpenApi;
 

@@ -137,5 +137,15 @@ void main() {
       // TODO
     });
 
+    // String residenceId
+    test('to test the property `residenceId`', () async {
+      // TODO
+    });
+
+    // String residenceName
+    test('to test the property `residenceName`', () async {
+      // TODO
+    });
+
   });
 }

@@ -19,6 +19,9 @@ Name | Type | Description | Notes
 **note** | **String** |  | [optional] 
 **hasAttachment** | **bool** |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**source_** | **String** |  | [optional] 
+**sourceId** | **String** |  | [optional] 
+**readOnly** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

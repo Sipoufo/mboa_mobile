@@ -441,6 +441,10 @@ class _$ReservationResponse extends ReservationResponse {
   final bool? canDraftContract;
   @override
   final String? contractId;
+  @override
+  final String? residenceId;
+  @override
+  final String? residenceName;
 
   factory _$ReservationResponse([
     void Function(ReservationResponseBuilder)? updates,
@@ -473,6 +477,8 @@ class _$ReservationResponse extends ReservationResponse {
     this.canCancel,
     this.canDraftContract,
     this.contractId,
+    this.residenceId,
+    this.residenceName,
   }) : super._();
   @override
   ReservationResponse rebuild(
@@ -512,7 +518,9 @@ class _$ReservationResponse extends ReservationResponse {
         canExtend == other.canExtend &&
         canCancel == other.canCancel &&
         canDraftContract == other.canDraftContract &&
-        contractId == other.contractId;
+        contractId == other.contractId &&
+        residenceId == other.residenceId &&
+        residenceName == other.residenceName;
   }
 
   @override
@@ -544,6 +552,8 @@ class _$ReservationResponse extends ReservationResponse {
     _$hash = $jc(_$hash, canCancel.hashCode);
     _$hash = $jc(_$hash, canDraftContract.hashCode);
     _$hash = $jc(_$hash, contractId.hashCode);
+    _$hash = $jc(_$hash, residenceId.hashCode);
+    _$hash = $jc(_$hash, residenceName.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -576,7 +586,9 @@ class _$ReservationResponse extends ReservationResponse {
           ..add('canExtend', canExtend)
           ..add('canCancel', canCancel)
           ..add('canDraftContract', canDraftContract)
-          ..add('contractId', contractId))
+          ..add('contractId', contractId)
+          ..add('residenceId', residenceId)
+          ..add('residenceName', residenceName))
         .toString();
   }
 }
@@ -701,6 +713,15 @@ class ReservationResponseBuilder
   String? get contractId => _$this._contractId;
   set contractId(String? contractId) => _$this._contractId = contractId;
 
+  String? _residenceId;
+  String? get residenceId => _$this._residenceId;
+  set residenceId(String? residenceId) => _$this._residenceId = residenceId;
+
+  String? _residenceName;
+  String? get residenceName => _$this._residenceName;
+  set residenceName(String? residenceName) =>
+      _$this._residenceName = residenceName;
+
   ReservationResponseBuilder() {
     ReservationResponse._defaults(this);
   }
@@ -734,6 +755,8 @@ class ReservationResponseBuilder
       _canCancel = $v.canCancel;
       _canDraftContract = $v.canDraftContract;
       _contractId = $v.contractId;
+      _residenceId = $v.residenceId;
+      _residenceName = $v.residenceName;
       _$v = null;
     }
     return this;
@@ -784,6 +807,8 @@ class ReservationResponseBuilder
             canCancel: canCancel,
             canDraftContract: canDraftContract,
             contractId: contractId,
+            residenceId: residenceId,
+            residenceName: residenceName,
           );
     } catch (_) {
       late String _$failedField;

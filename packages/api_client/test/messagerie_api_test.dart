@@ -7,9 +7,9 @@ void main() {
   final instance = ApiClient().getMessagerieApi();
 
   group(MessagerieApi, () {
-    // List a conversation's messages, newest first
+    // List a conversation's messages, newest first — or one M30 request's (homeRequestId)
     //
-    //Future<PageResponseMessageResponse> listConversationMessages(String id, Pageable pageable) async
+    //Future<PageResponseMessageResponse> listConversationMessages(String id, Pageable pageable, { String homeRequestId }) async
     test('test listConversationMessages', () async {
       // TODO
     });
