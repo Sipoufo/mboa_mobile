@@ -311,8 +311,9 @@ void registerAppModule() {
   getIt.registerLazySingleton<WaitingDeclarationsBloc>(
     () => WaitingDeclarationsBloc(repository: getIt<HomesRepository>()),
   );
-  getIt.registerFactoryParam<RentsBloc, Set<String>?, void>(
-    (annonceIds, _) => RentsBloc(repository: getIt<HomesRepository>(), annonceIds: annonceIds),
+  getIt.registerFactoryParam<RentsBloc, String?, String?>(
+    (annonceId, residenceId) =>
+        RentsBloc(repository: getIt<HomesRepository>(), annonceId: annonceId, residenceId: residenceId),
   );
   getIt.registerFactory<HomeSpaceBloc>(
     () => HomeSpaceBloc(repository: getIt<HomesRepository>()),

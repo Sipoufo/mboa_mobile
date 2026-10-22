@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-22.
+> Last updated: 2026-10-23.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1308 tests green, analyze clean.** `mboa_user` 349 · `mboa_pro` 562 ·
-`mboa_core` 19 · `mboa_shared` 350 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1339 tests green, analyze clean.** `mboa_user` 351 · `mboa_pro` 583 ·
+`mboa_core` 19 · `mboa_shared` 358 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -89,9 +89,14 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 - A contract **from a request** names no tenant (`TENANT_FROM_RESERVATION`).
 - `ReservationTicket`, `ReservationStatusChip`, the refusal labels and the
   termination UI live in `mboa_shared`; both apps use them.
-- A reservation on a **residence unit** is found from the residence (its
-  "Demandes de réservation" row, narrowed to its units client-side) — §30
-  asks the server for the residence on the request.
+- A reservation on a **residence unit** names its residence (§30) and is
+  found from the residence (server filter `residenceId`).
+- **RM-M29-16** (§32): accepting a request on a residence is choosing the
+  unit — the server's assignable units, the one asked for first; the
+  reservation then keeps `requestedAnnonce*` and both apps say « Attribuée
+  à la place de … ». The client consents on the contract.
+- System messages carry their `systemEvent`: only a reservation request is
+  drawn as the client's quoted words; Mboa's other sentences as they are.
 
 ### M30 lot 2 — what to know before touching (2026-10-21)
 
@@ -132,6 +137,11 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
   a slot (`HomeSpaceView.invoices`) because the landlord reads the same space
   and cannot list them. An open invoice can be declared even after the
   tenancy. « What is left » is the server's (`remaining`, §31.2).
+- "Loyers" reads **residence → unit → space** (§32): the whole
+  "Locataires" list groups a residence's units under one card (rented,
+  late), opened as the residence's own "Loyers" (server filter
+  `residenceId`, both tabs). A unit everywhere reads « Chambre 3 · Résidence
+  Deido » (`placeTitle`).
 - N-39 is `HOME_EVIDENCE` (contract): it opens the tenant's space in Pro
   until lot 3 brings the proofs screen. `HOME` stays N-35 (declaration) in
   Pro and N-36 / N-37 (contract) for the tenant.

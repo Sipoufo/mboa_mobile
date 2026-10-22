@@ -5276,5 +5276,23 @@
   "messageSystemTitle": "Message de Mboa",
   "@messageSystemTitle": {
     "description": "Thread system message of a kind this build does not know"
+  },
+  "proRentsResidenceUnits": "{count, plural, =1{1 unité louée} other{{count} unités louées}}",
+  "@proRentsResidenceUnits": {
+    "description": "Pro rents: a residence card, how many units have a tenant space",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "proRentsResidenceLate": "{count, plural, =1{1 unité en retard} other{{count} unités en retard}}",
+  "@proRentsResidenceLate": {
+    "description": "Pro rents: a residence card, how many units are late",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

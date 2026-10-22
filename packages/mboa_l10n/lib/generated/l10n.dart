@@ -13313,6 +13313,30 @@ class I18n {
       args: [],
     );
   }
+
+  /// `{count, plural, =1{1 unité louée} other{{count} unités louées}}`
+  String proRentsResidenceUnits(int count) {
+    return Intl.plural(
+      count,
+      one: '1 unité louée',
+      other: '$count unités louées',
+      name: 'proRentsResidenceUnits',
+      desc: 'Pro rents: a residence card, how many units have a tenant space',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{1 unité en retard} other{{count} unités en retard}}`
+  String proRentsResidenceLate(int count) {
+    return Intl.plural(
+      count,
+      one: '1 unité en retard',
+      other: '$count unités en retard',
+      name: 'proRentsResidenceLate',
+      desc: 'Pro rents: a residence card, how many units are late',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

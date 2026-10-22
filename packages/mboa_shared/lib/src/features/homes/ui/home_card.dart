@@ -65,7 +65,8 @@ class HomeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      home.annonceTitle ?? l10n.reservationUntitled,
+                      // A unit names its residence (§32): « Chambre 3 · Résidence Deido ».
+                      home.placeTitle ?? l10n.reservationUntitled,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.mboaText.label.copyWith(color: colors.ink),

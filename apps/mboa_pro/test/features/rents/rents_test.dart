@@ -56,10 +56,12 @@ void main() {
         canContest: true,
       );
 
-  Home home(String annonceId, {String tenant = 'Awa Nkeng', int overdue = 0}) => Home(
+  Home home(String annonceId, {String tenant = 'Awa Nkeng', int overdue = 0, String? residence, String? title}) => Home(
         contractId: 'c-$annonceId',
         annonceId: annonceId,
-        annonceTitle: annonceId == 'a-1' ? 'Studio Akwa' : 'Chambre 3',
+        annonceTitle: title ?? (annonceId == 'a-1' ? 'Studio Akwa' : 'Chambre 3'),
+        residenceId: residence == null ? null : 'res-$residence',
+        residenceName: residence == null ? null : 'Résidence $residence',
         district: 'Akwa',
         city: 'Douala',
         tenant: ContractParticipant(displayName: tenant),
@@ -85,7 +87,11 @@ void main() {
       act: (bloc) => bloc.add(const RentsRequested()),
       expect: () => [
         const RentsLoading(),
-        RentsReady(waiting: [declared('d-1'), declared('d-2', annonceId: 'a-2')], homes: [home('a-1'), home('a-2')]),
+        RentsReady(
+          waiting: [declared('d-1'), declared('d-2', annonceId: 'a-2')],
+          homes: [home('a-1'), home('a-2')],
+          byResidence: true,
+        ),
       ],
     );
 
@@ -96,32 +102,56 @@ void main() {
             .thenAnswer((_) async => Cached([declared('d-1'), declared('d-2', annonceId: 'a-2')]));
         when(() => repository.tenantHomes(annonceId: 'a-1')).thenAnswer((_) async => Cached([home('a-1')]));
       },
-      build: () => RentsBloc(repository: repository, annonceIds: {'a-1'}),
+      build: () => RentsBloc(repository: repository, annonceId: 'a-1'),
       act: (bloc) => bloc.add(const RentsRequested()),
       verify: (bloc) {
         final state = bloc.state as RentsReady;
         expect(state.waiting.map((d) => d.id), ['d-1']);
         expect(state.homes.map((h) => h.annonceId), ['a-1']);
+        expect(state.byResidence, isFalse);
         verify(() => repository.tenantHomes(annonceId: 'a-1')).called(1);
       },
     );
 
     blocTest<RentsBloc, RentsState>(
-      "a residence's units: both narrowed here",
+      "§32 — a residence's units: both narrowed by the server, and listed as units",
       setUp: () {
-        when(() => repository.waitingDeclarations()).thenAnswer(
-          (_) async => Cached([declared('d-1'), declared('d-2', annonceId: 'a-2'), declared('d-3', annonceId: 'a-3')]),
+        when(() => repository.waitingDeclarations(residenceId: 'res-1')).thenAnswer(
+          (_) async => Cached([declared('d-2', annonceId: 'a-2'), declared('d-3', annonceId: 'a-3')]),
         );
-        when(() => repository.tenantHomes()).thenAnswer((_) async => Cached([home('a-1'), home('a-2'), home('a-3')]));
+        when(() => repository.tenantHomes(residenceId: 'res-1'))
+            .thenAnswer((_) async => Cached([home('a-2', residence: '1'), home('a-3', residence: '1')]));
       },
-      build: () => RentsBloc(repository: repository, annonceIds: {'a-2', 'a-3'}),
+      build: () => RentsBloc(repository: repository, residenceId: 'res-1'),
       act: (bloc) => bloc.add(const RentsRequested()),
       verify: (bloc) {
         final state = bloc.state as RentsReady;
         expect(state.waiting.map((d) => d.id), ['d-2', 'd-3']);
-        expect(state.homes.map((h) => h.annonceId), ['a-2', 'a-3']);
+        // Its own screen: the units, not the residence again.
+        expect(state.tenants, [SingleHome(home('a-2', residence: '1')), SingleHome(home('a-3', residence: '1'))]);
       },
     );
+
+    test('§32 — the whole list reads residence first, standalone spaces as they are, in the server\'s order', () {
+      final state = RentsReady(
+        homes: [
+          home('a-1'),
+          home('a-2', residence: 'Deido', overdue: 1),
+          home('a-5', title: 'Villa Bonapriso'),
+          home('a-3', residence: 'Deido'),
+          home('a-4', residence: 'Akwa'),
+        ],
+        byResidence: true,
+      );
+
+      final tenants = state.tenants;
+      expect(tenants.map((e) => e.runtimeType), [SingleHome, ResidenceHomes, SingleHome, ResidenceHomes]);
+      final deido = tenants[1] as ResidenceHomes;
+      expect(deido.name, 'Résidence Deido');
+      expect(deido.homes.map((h) => h.annonceId), ['a-2', 'a-3']);
+      expect(deido.lateCount, 1);
+      expect((tenants[3] as ResidenceHomes).homes.single.annonceId, 'a-4');
+    });
 
     blocTest<RentsBloc, RentsState>(
       'offline: the last lists read, marked',
@@ -377,6 +407,80 @@ void main() {
       await pump(tester, view());
 
       await expectLater(find.byType(RentsView), matchesGoldenFile('goldens/rents_inbox.png'));
+    });
+
+    testWidgets('§32 — a residence first: its units counted, the late ones said; opened as its own "Loyers"', (tester) async {
+      when(() => bloc.state).thenReturn(
+        RentsReady(
+          homes: [
+            home('a-1'),
+            home('a-2', residence: 'Deido', overdue: 1, tenant: 'Paul Ebodé'),
+            home('a-3', residence: 'Deido', title: 'Chambre 5'),
+          ],
+          byResidence: true,
+        ),
+      );
+      await pump(tester, view());
+      await tester.tap(find.text('Locataires (3)'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Résidence Deido'), findsOneWidget);
+      expect(find.text('2 unités louées'), findsOneWidget);
+      expect(find.text('1 unité en retard'), findsOneWidget);
+      // Its units are on its own screen, not here.
+      expect(find.text('Paul Ebodé · Akwa · Douala'), findsNothing);
+
+      await tester.tap(find.text('Résidence Deido'));
+      await tester.pumpAndSettle();
+      final route = verify(() => router.push<Object?>(captureAny())).captured.single as PageRouteInfo;
+      expect(route.routeName, RentsRoute.name);
+      final args = route.args! as RentsRouteArgs;
+      expect(args.residenceId, 'res-Deido');
+      expect(args.annonceTitle, 'Résidence Deido');
+    });
+
+    testWidgets('§32 — a unit names its residence, in the inbox and on its card', (tester) async {
+      when(() => bloc.state).thenReturn(
+        RentsReady(
+          waiting: [
+            Declaration(
+              id: 'd-1',
+              annonceTitle: 'Chambre 3',
+              residenceName: 'Résidence Deido',
+              tenant: const ContractParticipant(displayName: 'Awa Nkeng'),
+              amount: 50000,
+              status: DeclarationStatus.declared,
+              declaredAt: DateTime(2026, 10, 22, 8),
+            ),
+          ],
+          homes: [home('a-2', residence: 'Deido')],
+        ),
+      );
+      await pump(tester, view());
+
+      expect(find.text('Awa Nkeng · Chambre 3 · Résidence Deido'), findsOneWidget);
+      await tester.tap(find.text('Locataires (1)'));
+      await tester.pumpAndSettle();
+      expect(find.text('Chambre 3 · Résidence Deido'), findsOneWidget);
+    });
+
+    testWidgets('the tenants, by residence', (tester) async {
+      when(() => bloc.state).thenReturn(
+        RentsReady(
+          homes: [
+            home('a-1'),
+            home('a-2', residence: 'Deido', overdue: 1, tenant: 'Paul Ebodé'),
+            home('a-3', residence: 'Deido', title: 'Chambre 5'),
+            home('a-4', residence: 'Akwa', title: 'Studio 2'),
+          ],
+          byResidence: true,
+        ),
+      );
+      await pump(tester, view());
+      await tester.tap(find.text('Locataires (4)'));
+      await tester.pumpAndSettle();
+
+      await expectLater(find.byType(RentsView), matchesGoldenFile('goldens/rents_by_residence.png'));
     });
 
     testWidgets('the tenants', (tester) async {

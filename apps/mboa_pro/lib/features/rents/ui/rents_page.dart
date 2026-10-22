@@ -17,11 +17,12 @@ import '../bloc/waiting_declarations_bloc.dart';
 /// the two read as one family: what waits for an answer first, as a timeline
 /// by day; then the tenants' spaces.
 ///
-/// Every rent on his listings, or one listing's (a residence's units') when
-/// opened from its fiche.
+/// Every rent on his listings, one listing's (from its fiche), or one
+/// residence's units' (from the residence, or its card here — §32: a
+/// residence, then its units, then a tenant's space).
 @RoutePage()
 class RentsPage extends StatelessWidget implements AutoRouteWrapper {
-  const RentsPage({super.key, this.annonceId, this.annonceTitle, this.unitIds});
+  const RentsPage({super.key, this.annonceId, this.annonceTitle, this.residenceId});
 
   /// Set to list one listing's rents.
   final String? annonceId;
@@ -30,12 +31,11 @@ class RentsPage extends StatelessWidget implements AutoRouteWrapper {
   final String? annonceTitle;
 
   /// Set to list a residence's units' rents.
-  final List<String>? unitIds;
+  final String? residenceId;
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<RentsBloc>(
-        create: (_) => getIt<RentsBloc>(param1: unitIds?.toSet() ?? (annonceId == null ? null : {annonceId!}))
-          ..add(const RentsRequested()),
+        create: (_) => getIt<RentsBloc>(param1: annonceId, param2: residenceId)..add(const RentsRequested()),
         child: this,
       );
 
@@ -181,13 +181,20 @@ class _ListsState extends State<_Lists> {
               ),
             )
           else
-            for (final (index, home) in state.homes.indexed) ...[
+            for (final (index, entry) in state.tenants.indexed) ...[
               if (index > 0) const SizedBox(height: Dimens.spacingMd),
-              HomeCard(
-                home: home,
-                viewer: ContractParty.prestataire,
-                onTap: () => _open(TenantHomeRoute(contractId: home.contractId)),
-              ),
+              switch (entry) {
+                SingleHome(:final home) => HomeCard(
+                    home: home,
+                    viewer: ContractParty.prestataire,
+                    onTap: () => _open(TenantHomeRoute(contractId: home.contractId)),
+                  ),
+                // §32 — the residence first; its units on its own screen.
+                final ResidenceHomes residence => _ResidenceCard(
+                    residence: residence,
+                    onTap: () => _open(RentsRoute(residenceId: residence.residenceId, annonceTitle: residence.name)),
+                  ),
+              },
             ],
         ],
       ),
@@ -227,7 +234,7 @@ class _Row extends StatelessWidget {
                 children: [
                   Text(fcfaOf(context, d.amount), style: context.mboaText.label.copyWith(color: colors.primaryDark)),
                   Text(
-                    [d.tenant?.displayName ?? l10n.declarationTenant, d.annonceTitle ?? l10n.reservationUntitled].join(' · '),
+                    [d.tenant?.displayName ?? l10n.declarationTenant, d.placeTitle ?? l10n.reservationUntitled].join(' · '),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.mboaText.caption.copyWith(color: colors.ink),
@@ -255,6 +262,80 @@ class _Row extends StatelessWidget {
             ),
             Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A residence in "Locataires": its name, how many units are rented, how
+/// many are late — opened as its own "Loyers".
+class _ResidenceCard extends StatelessWidget {
+  const _ResidenceCard({required this.residence, required this.onTap});
+
+  final ResidenceHomes residence;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final late = residence.lateCount;
+
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(Dimens.radiusLg),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.spacing),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(Dimens.radiusMd),
+                child: SizedBox.square(
+                  dimension: 64,
+                  child: ColoredBox(
+                    color: colors.primaryDark,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.12, scale: 0.5)),
+                        Center(child: Icon(LucideIcons.layers, color: colors.onBrand, size: Dimens.icon)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      residence.name ?? l10n.reservationUntitled,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.label.copyWith(color: colors.ink),
+                    ),
+                    Text(
+                      l10n.proRentsResidenceUnits(residence.homes.length),
+                      style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                    ),
+                    const SizedBox(height: Dimens.spacingXs),
+                    Text(
+                      late > 0 ? l10n.proRentsResidenceLate(late) : l10n.myHomeUpToDate,
+                      style: context.mboaText.caption.copyWith(
+                        color: late > 0 ? colors.error : colors.success,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+            ],
+          ),
         ),
       ),
     );

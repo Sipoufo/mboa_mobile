@@ -126,10 +126,7 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                   icon: LucideIcons.handCoins,
                   label: l10n.proRentsTitle,
                   onTap: () => context.router.push(
-                    RentsRoute(
-                      annonceTitle: residence.name,
-                      unitIds: [for (final unit in residence.units) unit.id],
-                    ),
+                    RentsRoute(annonceTitle: residence.name, residenceId: residence.id),
                   ),
                 ),
                 const SizedBox(height: Dimens.spacingLg),
