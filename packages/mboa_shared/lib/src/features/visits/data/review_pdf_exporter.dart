@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
+import '../../media/pdf_sharer.dart';
 
 /// Hands a generated PDF to the operating system (RM-M07bis-06).
 ///
@@ -19,11 +17,5 @@ class ReviewPdfExporter {
 
   /// Writes [bytes] and offers them. [name] becomes the file name the user
   /// sees, so it carries the property rather than an id.
-  Future<void> share(Uint8List bytes, {required String name}) async {
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/$name.pdf');
-    await file.writeAsBytes(bytes, flush: true);
-
-    await Share.shareXFiles([XFile(file.path, mimeType: 'application/pdf')]);
-  }
+  Future<void> share(Uint8List bytes, {required String name}) => PdfSharer().shareBytes(bytes, name: name);
 }

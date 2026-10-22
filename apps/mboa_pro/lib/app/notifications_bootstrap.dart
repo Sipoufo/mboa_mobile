@@ -96,6 +96,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.reservation:
     case PushType.savedSearch:
     case PushType.home:
+    // N-36 for an invoice is the tenant's.
+    case PushType.invoice:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

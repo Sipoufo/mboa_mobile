@@ -1130,6 +1130,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "declRefusedDues": MessageLookupByLibrary.simpleMessage(
       "Pick payments that follow each other, within the next 12.",
     ),
+    "declRefusedInvoiceSettled": MessageLookupByLibrary.simpleMessage(
+      "This invoice is already paid or cancelled.",
+    ),
     "declRefusedNoDeposit": MessageLookupByLibrary.simpleMessage(
       "This contract has no deposit.",
     ),
@@ -1173,6 +1176,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Declared on",
     ),
     "declarationDeclaredOn": m37,
+    "declarationInvoice": MessageLookupByLibrary.simpleMessage("Invoice"),
     "declarationLandlord": MessageLookupByLibrary.simpleMessage("Landlord"),
     "declarationOutside": MessageLookupByLibrary.simpleMessage(
       "Paid outside Mboa",

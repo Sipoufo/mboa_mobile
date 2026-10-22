@@ -11,6 +11,14 @@ String fcfaOf(BuildContext context, int amount) =>
     '${NumberFormat.decimalPattern(Localizations.localeOf(context).toLanguageTag()).format(amount)} '
     '${I18n.of(context).annonceFormCurrency}';
 
+/// What a declaration is for, as a title says it: « Loyer · 2 échéances »,
+/// « Caution », « Facture ».
+String declarationWhat(I18n l10n, Declaration d) => switch (d.kind) {
+      DeclarationKind.rent => l10n.declarationRentCount(d.dueIndexes.length),
+      DeclarationKind.deposit => l10n.myHomeDeposit,
+      DeclarationKind.invoice => l10n.declarationInvoice,
+    };
+
 /// How an échéance reads, its icon and its tone.
 ({String label, IconData icon, Color tone}) dueLook(BuildContext context, DueStatus status) {
   final l10n = I18n.of(context);

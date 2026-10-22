@@ -1187,6 +1187,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "declRefusedDues": MessageLookupByLibrary.simpleMessage(
       "Choisis des échéances qui se suivent, dans les 12 prochaines.",
     ),
+    "declRefusedInvoiceSettled": MessageLookupByLibrary.simpleMessage(
+      "Cette facture est déjà réglée ou annulée.",
+    ),
     "declRefusedNoDeposit": MessageLookupByLibrary.simpleMessage(
       "Ce contrat ne prévoit pas de caution.",
     ),
@@ -1228,6 +1231,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "declarationCovers": MessageLookupByLibrary.simpleMessage("Échéances"),
     "declarationDeclaredAt": MessageLookupByLibrary.simpleMessage("Déclaré le"),
     "declarationDeclaredOn": m37,
+    "declarationInvoice": MessageLookupByLibrary.simpleMessage("Facture"),
     "declarationLandlord": MessageLookupByLibrary.simpleMessage("Propriétaire"),
     "declarationOutside": MessageLookupByLibrary.simpleMessage(
       "Payé hors de Mboa",

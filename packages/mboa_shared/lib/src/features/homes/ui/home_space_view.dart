@@ -430,7 +430,7 @@ class DeclarationRow extends StatelessWidget {
     final colors = context.mboaColors;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final d = declaration;
-    final what = d.kind == DeclarationKind.deposit ? l10n.myHomeDeposit : l10n.declarationRentCount(d.dueIndexes.length);
+    final what = declarationWhat(l10n, d);
     final paidOn = d.paidOn == null ? null : DateFormat.yMMMd(locale).format(d.paidOn!);
 
     return InkWell(

@@ -209,7 +209,7 @@ class _Row extends StatelessWidget {
     final locale = Localizations.localeOf(context).toLanguageTag();
     final d = declaration;
     final at = d.declaredAt;
-    final what = d.kind == DeclarationKind.deposit ? l10n.myHomeDeposit : l10n.declarationRentCount(d.dueIndexes.length);
+    final what = declarationWhat(l10n, d);
 
     return InkWell(
       onTap: onTap,

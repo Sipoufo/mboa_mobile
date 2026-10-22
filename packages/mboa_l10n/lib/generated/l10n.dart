@@ -12827,6 +12827,27 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Facture`
+  String get declarationInvoice {
+    return Intl.message(
+      'Facture',
+      name: 'declarationInvoice',
+      desc:
+          'A declaration\'s title when it declares an invoice paid (M30 slice E)',
+      args: [],
+    );
+  }
+
+  /// `Cette facture est déjà réglée ou annulée.`
+  String get declRefusedInvoiceSettled {
+    return Intl.message(
+      'Cette facture est déjà réglée ou annulée.',
+      name: 'declRefusedInvoiceSettled',
+      desc: 'Refusal: declaring an invoice that is no longer open',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

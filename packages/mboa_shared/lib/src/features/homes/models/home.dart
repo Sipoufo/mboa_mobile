@@ -412,9 +412,23 @@ class RentSchedule extends Equatable {
 
 enum DeclarationKind {
   rent,
-  deposit;
+  deposit,
 
-  String get wire => this == DeclarationKind.rent ? 'RENT' : 'DEPOSIT';
+  /// An invoice declared paid (slice E, RM-M24-09) — declared on the invoice,
+  /// never on the home's route.
+  invoice;
+
+  String get wire => switch (this) {
+        DeclarationKind.rent => 'RENT',
+        DeclarationKind.deposit => 'DEPOSIT',
+        DeclarationKind.invoice => 'INVOICE',
+      };
+
+  static DeclarationKind fromWire(String? name) => switch (name) {
+        'DEPOSIT' => DeclarationKind.deposit,
+        'INVOICE' => DeclarationKind.invoice,
+        _ => DeclarationKind.rent,
+      };
 }
 
 /// How the tenant paid — outside Mboa, always (RM-M30-03).
@@ -489,6 +503,9 @@ class Declaration extends Equatable {
     this.answeredAt,
     this.canConfirm = false,
     this.canContest = false,
+    this.invoiceId,
+    this.receiptId,
+    this.receiptReady = false,
   });
 
   final String id;
@@ -516,13 +533,21 @@ class Declaration extends Equatable {
   final bool canConfirm;
   final bool canContest;
 
+  /// Set when [kind] is [DeclarationKind.invoice].
+  final String? invoiceId;
+
+  /// The receipt a confirmation produces (slice D) — named at once, its PDF
+  /// [receiptReady] a few seconds later (CA-M30-02).
+  final String? receiptId;
+  final bool receiptReady;
+
   static Declaration fromResponse(DeclarationResponse response) => Declaration(
         id: response.id ?? '',
         contractId: response.contractId,
         annonceId: response.annonceId,
         annonceTitle: response.annonceTitle,
         tenant: response.tenant == null ? null : ContractParticipant.fromResponse(response.tenant!),
-        kind: response.kind?.name == 'DEPOSIT' ? DeclarationKind.deposit : DeclarationKind.rent,
+        kind: DeclarationKind.fromWire(response.kind?.name),
         dueIndexes: response.dueIndexes?.toList() ?? const [],
         amount: response.amount ?? 0,
         paidOn: response.paidOn?.toDateTime(),
@@ -537,6 +562,9 @@ class Declaration extends Equatable {
         answeredAt: response.answeredAt?.toLocal(),
         canConfirm: response.canConfirm ?? false,
         canContest: response.canContest ?? false,
+        invoiceId: response.invoiceId,
+        receiptId: response.receiptId,
+        receiptReady: response.receiptReady ?? false,
       );
 
   Map<String, dynamic> toCache() => {
@@ -554,6 +582,8 @@ class Declaration extends Equatable {
         'status': status.name,
         'contestReason': contestReason,
         'declaredAt': declaredAt?.toIso8601String(),
+        'invoiceId': invoiceId,
+        'receiptId': receiptId,
       };
 
   static Declaration? fromCache(Object? raw) {
@@ -566,7 +596,7 @@ class Declaration extends Equatable {
       contractId: json['contractId'] as String?,
       annonceTitle: json['annonceTitle'] as String?,
       tenant: json['tenant'] is String ? ContractParticipant(displayName: json['tenant'] as String) : null,
-      kind: json['kind'] == DeclarationKind.deposit.name ? DeclarationKind.deposit : DeclarationKind.rent,
+      kind: DeclarationKind.values.where((k) => k.name == json['kind']).firstOrNull ?? DeclarationKind.rent,
       dueIndexes: [for (final i in (json['dueIndexes'] as List? ?? const [])) if (i is int) i],
       amount: json['amount'] as int? ?? 0,
       paidOn: _date(json['paidOn']),
@@ -576,6 +606,9 @@ class Declaration extends Equatable {
       status: DeclarationStatus.values.where((s) => s.name == json['status']).firstOrNull ?? DeclarationStatus.unknown,
       contestReason: json['contestReason'] as String?,
       declaredAt: _date(json['declaredAt']),
+      invoiceId: json['invoiceId'] as String?,
+      // Whether its PDF is ready is not kept: it is asked again online.
+      receiptId: json['receiptId'] as String?,
     );
   }
 
@@ -601,6 +634,9 @@ class Declaration extends Equatable {
         answeredAt,
         canConfirm,
         canContest,
+        invoiceId,
+        receiptId,
+        receiptReady,
       ];
 }
 
@@ -642,6 +678,114 @@ class HomeTotals extends Equatable {
 
   @override
   List<Object?> get props => [confirmedTotal, declaredTotal, contestedTotal, lastConfirmedAt];
+}
+
+enum InvoiceKind { water, electricity, other }
+
+/// Where an invoice stands — the server's word, lateness included.
+enum InvoiceStatus {
+  toPay,
+  overdue,
+  paid,
+  cancelled,
+  unknown;
+
+  static InvoiceStatus fromWire(String? name) => switch (name) {
+        'TO_PAY' => InvoiceStatus.toPay,
+        'OVERDUE' => InvoiceStatus.overdue,
+        'PAID' => InvoiceStatus.paid,
+        'CANCELLED' => InvoiceStatus.cancelled,
+        _ => InvoiceStatus.unknown,
+      };
+
+  /// Still to settle: it can be declared paid.
+  bool get isOpen => this == InvoiceStatus.toPay || this == InvoiceStatus.overdue;
+}
+
+/// An invoice the landlord issued on a tenancy (CDC M24) — water, electricity,
+/// or other. It outlives the tenancy: open, it can be declared paid even
+/// once the space is read only (slice E). The tenant's read; issuing one is
+/// the landlord's, behind the finance add-on.
+class HomeInvoice extends Equatable {
+  const HomeInvoice({
+    required this.id,
+    this.contractId,
+    this.annonceTitle,
+    this.kind = InvoiceKind.other,
+    this.label,
+    this.amount = 0,
+    this.dueDate,
+    this.status = InvoiceStatus.unknown,
+    this.paidAt,
+    this.paidViaDeclaration = false,
+  });
+
+  final String id;
+  final String? contractId;
+  final String? annonceTitle;
+  final InvoiceKind kind;
+
+  /// The landlord's own words: « Électricité — septembre ».
+  final String? label;
+  final int amount;
+  final DateTime? dueDate;
+  final InvoiceStatus status;
+  final DateTime? paidAt;
+
+  /// Settled by confirmed declarations (`paidVia: DECLARED`).
+  final bool paidViaDeclaration;
+
+  static HomeInvoice fromResponse(InvoiceResponse response) => HomeInvoice(
+        id: response.id ?? '',
+        contractId: response.contractId,
+        annonceTitle: response.annonceTitle,
+        kind: switch (response.kind?.name) {
+          'WATER' => InvoiceKind.water,
+          'ELECTRICITY' => InvoiceKind.electricity,
+          _ => InvoiceKind.other,
+        },
+        label: _blank(response.label),
+        amount: response.amount ?? 0,
+        dueDate: response.dueDate?.toDateTime(),
+        status: InvoiceStatus.fromWire(response.status?.name),
+        paidAt: response.paidAt?.toLocal(),
+        paidViaDeclaration: response.paidVia?.name == 'DECLARED',
+      );
+
+  Map<String, dynamic> toCache() => {
+        'id': id,
+        'contractId': contractId,
+        'annonceTitle': annonceTitle,
+        'kind': kind.name,
+        'label': label,
+        'amount': amount,
+        'dueDate': dueDate?.toIso8601String(),
+        'status': status.name,
+        'paidAt': paidAt?.toIso8601String(),
+        'declared': paidViaDeclaration,
+      };
+
+  static HomeInvoice? fromCache(Object? raw) {
+    if (raw is! Map) return null;
+    final json = Map<String, dynamic>.from(raw);
+    final id = json['id'];
+    if (id is! String) return null;
+    return HomeInvoice(
+      id: id,
+      contractId: json['contractId'] as String?,
+      annonceTitle: json['annonceTitle'] as String?,
+      kind: InvoiceKind.values.where((k) => k.name == json['kind']).firstOrNull ?? InvoiceKind.other,
+      label: json['label'] as String?,
+      amount: json['amount'] as int? ?? 0,
+      dueDate: _date(json['dueDate']),
+      status: InvoiceStatus.values.where((s) => s.name == json['status']).firstOrNull ?? InvoiceStatus.unknown,
+      paidAt: _date(json['paidAt']),
+      paidViaDeclaration: json['declared'] as bool? ?? false,
+    );
+  }
+
+  @override
+  List<Object?> get props => [id, contractId, annonceTitle, kind, label, amount, dueDate, status, paidAt, paidViaDeclaration];
 }
 
 DateTime? _date(Object? raw) => raw is String ? DateTime.tryParse(raw) : null;

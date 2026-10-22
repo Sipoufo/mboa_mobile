@@ -5041,5 +5041,13 @@
   "homeCtaRentsAction": "Voir mes loyers",
   "@homeCtaRentsAction": {
     "description": "Pro home CTA card action (M30)"
+  },
+  "declarationInvoice": "Facture",
+  "@declarationInvoice": {
+    "description": "A declaration's title when it declares an invoice paid (M30 slice E)"
+  },
+  "declRefusedInvoiceSettled": "Cette facture est déjà réglée ou annulée.",
+  "@declRefusedInvoiceSettled": {
+    "description": "Refusal: declaring an invoice that is no longer open"
   }
 }

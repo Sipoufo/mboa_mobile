@@ -25,6 +25,15 @@ enum DeclarationRefusal {
   /// Answered meanwhile.
   answered,
   contestReasonRequired,
+
+  /// The invoice was paid or cancelled meanwhile (slice E).
+  invoiceSettled,
+}
+
+/// The receipt is still being made — usually a few seconds after the
+/// confirmation (CA-M30-02); the server retries on its own.
+class ReceiptNotReady implements Exception {
+  const ReceiptNotReady();
 }
 
 class DeclarationRefused implements Exception {
@@ -90,6 +99,8 @@ class HomesRepository {
   final HiveCache _cache;
 
   MonLogementApi get _api => _dioClient.api.getMonLogementApi();
+  QuittancesApi get _receipts => _dioClient.api.getQuittancesApi();
+  InvoicesTenantApi get _invoices => _dioClient.api.getInvoicesTenantApi();
 
   // --- The tenant's spaces --------------------------------------------------
 
@@ -175,6 +186,74 @@ class HomesRepository {
                 ..amount = draft.amount
                 ..paidOn = draft.paidOn.toDate()
                 ..method = DeclarePaymentRequestMethodEnum.valueOf(draft.method.wire)
+                ..reference = _blank(draft.reference)
+                ..note = _blank(draft.note)
+                ..proofKeys = draft.proofKeys.isEmpty ? null : ListBuilder<String>(draft.proofKeys),
+            ),
+          ))
+              .data,
+        ),
+      );
+
+  // --- Receipts (slice D), either party ---------------------------------------
+
+  /// A short-lived link to a receipt's PDF; [ReceiptNotReady] while it is
+  /// made.
+  Future<String> receiptPdfUrl(String receiptId) async {
+    try {
+      final url = (await _receipts.getReceiptPdf(receiptId: receiptId)).data?.downloadUrl;
+      if (url == null || url.isEmpty) throw StateError('receipt $receiptId came back without a link');
+      return url;
+    } on DioException catch (error) {
+      if (ApiError.from(error).hasCode('RECEIPT_NOT_READY')) throw const ReceiptNotReady();
+      rethrow;
+    }
+  }
+
+  // --- Invoices declared paid (slice E), the tenant ---------------------------
+
+  /// The tenant's invoices, latest due first — one tenancy's with
+  /// [contractId] (the API lists them all; they are few). Offline, the last
+  /// list read.
+  Future<Cached<List<HomeInvoice>>> invoices({String? contractId}) async {
+    const key = 'invoices';
+    List<HomeInvoice> mine(List<HomeInvoice> all) =>
+        contractId == null ? all : [for (final i in all) if (i.contractId == contractId) i];
+    try {
+      final response = await _invoices.listMyInvoices(pageable: Pageable((b) => b..size = 100));
+      final items = response.data?.content?.map(HomeInvoice.fromResponse).toList() ?? const <HomeInvoice>[];
+      await _cache.put(StorageKeys.homesBox, key, {'items': [for (final i in items) i.toCache()]});
+      return Cached(mine(items));
+    } catch (error) {
+      final raw = _cache.get(StorageKeys.homesBox, key)?['items'];
+      if (raw is! List) Error.throwWithStackTrace(error, StackTrace.current);
+      return Cached(mine([for (final i in raw) ?HomeInvoice.fromCache(i)]), fromCache: true);
+    }
+  }
+
+  /// One invoice — what N-36 opens for an invoice.
+  Future<HomeInvoice> invoice(String invoiceId) async {
+    final data = (await _invoices.getMyInvoice(id: invoiceId)).data;
+    if (data == null) throw StateError('invoice $invoiceId came back empty');
+    return HomeInvoice.fromResponse(data);
+  }
+
+  /// The invoice's declarations, newest first.
+  Future<List<Declaration>> invoiceDeclarations(String invoiceId) async {
+    final response = await _api.listInvoiceDeclarations(invoiceId: invoiceId, pageable: Pageable((b) => b..size = 50));
+    return response.data?.content?.map(Declaration.fromResponse).toList() ?? const [];
+  }
+
+  /// Declares an invoice paid — open invoices only (`INVOICE_SETTLED`).
+  Future<Declaration> declareInvoice(String invoiceId, DeclarationDraft draft) => _guard(
+        () async => _declaration(
+          (await _api.declareInvoicePayment(
+            invoiceId: invoiceId,
+            declareInvoicePaymentRequest: DeclareInvoicePaymentRequest(
+              (b) => b
+                ..amount = draft.amount
+                ..paidOn = draft.paidOn.toDate()
+                ..method = DeclareInvoicePaymentRequestMethodEnum.valueOf(draft.method.wire)
                 ..reference = _blank(draft.reference)
                 ..note = _blank(draft.note)
                 ..proofKeys = draft.proofKeys.isEmpty ? null : ListBuilder<String>(draft.proofKeys),
@@ -270,6 +349,7 @@ class HomesRepository {
         ('HOME_READ_ONLY', DeclarationRefusal.readOnly),
         ('DECLARATION_ANSWERED', DeclarationRefusal.answered),
         ('CONTEST_REASON_REQUIRED', DeclarationRefusal.contestReasonRequired),
+        ('INVOICE_SETTLED', DeclarationRefusal.invoiceSettled),
       ]) {
         if (api.hasCode(code)) throw DeclarationRefused(reason);
       }

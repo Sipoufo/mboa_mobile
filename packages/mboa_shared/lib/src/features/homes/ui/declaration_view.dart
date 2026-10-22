@@ -23,6 +23,7 @@ String declarationRefusalText(I18n l10n, DeclarationRefusal reason) => switch (r
       DeclarationRefusal.readOnly => l10n.declRefusedReadOnly,
       DeclarationRefusal.answered => l10n.declRefusedAnswered,
       DeclarationRefusal.contestReasonRequired => l10n.declRefusedReason,
+      DeclarationRefusal.invoiceSettled => l10n.declRefusedInvoiceSettled,
     };
 
 /// One declared payment (CDC M30), after the founder's "Historique" card:
@@ -133,7 +134,7 @@ class _Body extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                d.kind == DeclarationKind.deposit ? l10n.myHomeDeposit : l10n.declarationRentCount(d.dueIndexes.length),
+                declarationWhat(l10n, d),
                 style: context.mboaText.body.copyWith(color: colors.textSecondary),
               ),
               const SizedBox(height: Dimens.spacingXs),

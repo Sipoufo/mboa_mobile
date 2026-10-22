@@ -75,6 +75,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.paymentConfirmed:
     case PushType.kyc:
     case PushType.residence:
+    // Slice E — routed with the invoice screens (next commit).
+    case PushType.invoice:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

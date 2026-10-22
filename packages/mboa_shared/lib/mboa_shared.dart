@@ -112,6 +112,7 @@ export 'src/features/location/ui/option_picker_sheet.dart';
 // Media — image capture/compression + R2 presigned upload (shared).
 export 'src/features/media/capture_source_sheet.dart';
 export 'src/features/media/media_uploader.dart';
+export 'src/features/media/pdf_sharer.dart';
 
 // Profile / Settings base (M02) — shared base model, repository and bloc.
 export 'src/features/profile/bloc/profile_bloc.dart';

@@ -93,6 +93,10 @@ enum PushType {
   /// push: the list opens.
   home,
 
+  /// Slice E — `entityId` = the invoice: N-36 for an invoice declared paid,
+  /// confirmed or contested (the tenant's).
+  invoice,
+
   unknown;
 
   static PushType parse(String? raw) =>
@@ -107,6 +111,7 @@ enum PushType {
         'SAVED_SEARCH' => PushType.savedSearch,
         'HOME' => PushType.home,
         'RESERVATION' => PushType.reservation,
+        'INVOICE' => PushType.invoice,
         _ => PushType.unknown,
       };
 }
