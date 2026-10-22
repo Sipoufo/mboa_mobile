@@ -1222,3 +1222,67 @@ cannot tell which screen to open; today an N-39 would open a declaration that
 does not exist. Asked: a distinct target for N-39 (e.g. `HOME_EVIDENCE`,
 append-only like the others) — or, if you prefer, confirm that `deepLink` is
 always present and stable, and the app will route N-35 / N-39 on it.
+
+## §32 — Residences: which residence a home is in, and assigning another unit on acceptance
+
+Two asks from the founder after testing M29 and M30 on residences. Both
+follow §30's shape (the residence named on the object, and a filter).
+
+### 1. M30 — a home on a residence unit does not say which residence
+
+"Loyers" (Pro) is to read **residence → unit → the tenant's space**: the
+"Locataires" tab groups the spaces by residence (one card per residence, its
+units under it), standalone listings apart. Today `HomeSummary` carries the
+unit's `annonceId` and `annonceTitle` only, so the app cannot group without
+re-deriving the residence from another list.
+
+Asked:
+- **`residenceId` and `residenceName`** on `HomeSummary` (null for a
+  standalone listing), both sides, list and detail — as §30 did for
+  `ReservationResponse`;
+- the filter **`residenceId`** on `GET /prestataires/me/homes` (combining with
+  `annonceId` and `state`), and on `GET /prestataires/me/declarations`, so the
+  residence's "Loyers" (opened from the residence screen) is narrowed by the
+  server rather than by the app with the units' ids, as it is today;
+- the same two fields on `DeclarationResponse`, so an inbox row can read
+  « Chambre 3 · Résidence Deido ».
+
+### 2. M29 — the landlord assigns the unit when accepting a request on a residence
+
+A client reserves « Chambre 2 » of a residence; the landlord would rather
+give them « Chambre 4 » (same type, or the one actually free on that date).
+Today he can only accept the unit asked for, or refuse.
+
+The rule we propose (for Doc 10, M29 — the founder adds it): **the client's
+request names the unit they want; on acceptance, the landlord may assign
+another unit of the same residence instead.** The client is told, and gives
+their consent where it already lies: on the contract drawn up on the
+assigned unit (M08 — they accept or contest it, price included).
+
+Asked:
+- `POST /prestataires/me/reservations/{id}/accept` accepts an optional body
+  **`{ unitId }`**:
+  - absent → today's behaviour;
+  - present → another unit **of the same residence**, reservable (published,
+    neither reserved nor rented). Refusals: `UNIT_NOT_IN_RESIDENCE`,
+    `UNIT_NOT_RESERVABLE` (409); a request on a standalone listing with a
+    `unitId` → 400.
+- After an assignment, `ReservationResponse`:
+  - `annonceId` / `annonceTitle` are the **assigned** unit (what is reserved,
+    what the contract is drawn on);
+  - **`requestedAnnonceId` / `requestedAnnonceTitle`** keep what the client
+    asked for, so both apps can say « Chambre 4 (au lieu de Chambre 2) ».
+- The unit asked for stays free; the assigned one is reserved 7 days, and
+  RM-M29-04 applies **to it** (the other pending requests on the assigned
+  unit are not retained; those on the unit asked for stay pending).
+- **`canAssignUnit`** on the request (pending, on a residence unit), like the
+  other `can*` — the app shows the choice only where the server allows it.
+- **The units the landlord can choose from**: a
+  `GET /prestataires/me/reservations/{id}/assignable-units` →
+  `[{ annonceId, title, propertyType, price, rentalPeriod }]`, the residence's
+  reservable units, the one asked for first. The app could read the
+  residence instead, but the server is the one deciding what is reservable.
+- N-33 (accepted) and the system message in the thread name the assigned
+  unit (« … t'a attribué Chambre 4 »).
+
+Meanwhile the app accepts the unit asked for, as today.
