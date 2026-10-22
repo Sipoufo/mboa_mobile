@@ -165,6 +165,37 @@ class EvidenceBatch extends Equatable {
   List<Object?> get props => [id, contractId, recordedAt, photos, acknowledgedAt, ownerComment, canAcknowledge];
 }
 
+/// One room, moving in beside moving out (CA-M31-04): each photo with its
+/// time. A room photographed only once is still listed — the empty side says
+/// so.
+class EvidenceRoomPair extends Equatable {
+  const EvidenceRoomPair({required this.room, this.roomLabel, this.entry = const [], this.exit = const []});
+
+  final EvidenceRoom room;
+
+  /// The tenant's word for an [EvidenceRoom.other] room.
+  final String? roomLabel;
+  final List<EvidencePhoto> entry;
+  final List<EvidencePhoto> exit;
+
+  /// Both sides exist — a comparison, not a gallery.
+  bool get isPaired => entry.isNotEmpty && exit.isNotEmpty;
+
+  static EvidenceRoomPair fromResponse(EvidenceRoomComparison response) => EvidenceRoomPair(
+        room: EvidenceRoom.fromWire(response.room?.name),
+        roomLabel: response.roomLabel,
+        entry: [
+          for (final p in response.entry?.toList() ?? const <EvidencePhotoResponse>[]) EvidencePhoto.fromResponse(p),
+        ],
+        exit: [
+          for (final p in response.exit?.toList() ?? const <EvidencePhotoResponse>[]) EvidencePhoto.fromResponse(p),
+        ],
+      );
+
+  @override
+  List<Object?> get props => [room, roomLabel, entry, exit];
+}
+
 /// A photo ready to send: compressed, its EXIF gone, and fingerprinted on
 /// the very bytes that will travel (base64 SHA-256, §27.6).
 class PreparedPhoto extends Equatable {

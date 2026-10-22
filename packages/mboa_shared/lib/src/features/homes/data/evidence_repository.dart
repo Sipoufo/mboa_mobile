@@ -79,6 +79,14 @@ class EvidenceRepository {
   Future<EvidenceBatch> batch(String contractId, String batchId) async =>
       _read((await _api.getEvidenceBatch(contractId: contractId, batchId: batchId)).data);
 
+  /// Moving in beside moving out, room by room (CA-M31-04) — each photo with
+  /// a short-lived link, so never kept offline. Both sides of the lease may
+  /// ask, during the tenancy and after it.
+  Future<List<EvidenceRoomPair>> compare(String contractId) async {
+    final rooms = (await _api.compareEvidence(contractId: contractId)).data?.toList() ?? const [];
+    return [for (final r in rooms) EvidenceRoomPair.fromResponse(r)];
+  }
+
   /// The landlord's, once — with a word the tenant sees.
   Future<EvidenceBatch> acknowledge(String contractId, String batchId, {String? comment}) async => _read(
         (await _api.acknowledgeEvidence(
