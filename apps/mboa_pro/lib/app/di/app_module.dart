@@ -43,6 +43,7 @@ import '../../features/reservations/bloc/pending_reservations_bloc.dart';
 import '../../features/reservations/data/incoming_reservations_repository.dart';
 import '../../features/register/data/register_repository.dart';
 import '../../features/rents/bloc/rents_bloc.dart';
+import '../../features/tenant_requests/bloc/open_requests_bloc.dart';
 import '../../features/rents/bloc/waiting_declarations_bloc.dart';
 import '../../features/splash/logic/splash_cubit.dart';
 import '../../features/subscription/bloc/subscribe_bloc.dart';
@@ -308,6 +309,20 @@ void registerAppModule() {
   getIt.registerLazySingleton<HomesRepository>(
     () => HomesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );
+  // M30 lot 3 — tenants' requests: the home's counter is a singleton like
+  // the others; the lists and one request are built per screen.
+  getIt.registerLazySingleton<HomeRequestsRepository>(
+    () => HomeRequestsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<OpenRequestsBloc>(
+    () => OpenRequestsBloc(repository: getIt<HomeRequestsRepository>()),
+  );
+  getIt.registerFactoryParam<HomeRequestsBloc, String?, void>(
+    (contractId, _) => HomeRequestsBloc(repository: getIt<HomeRequestsRepository>(), contractId: contractId),
+  );
+  getIt.registerFactory<HomeRequestBloc>(
+    () => HomeRequestBloc(repository: getIt<HomeRequestsRepository>(), messaging: getIt<MessagingRepository>()),
+  );
   getIt.registerLazySingleton<WaitingDeclarationsBloc>(
     () => WaitingDeclarationsBloc(repository: getIt<HomesRepository>()),
   );
@@ -451,6 +466,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<WaitingDeclarationsBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<OpenRequestsBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<KycCubit>(

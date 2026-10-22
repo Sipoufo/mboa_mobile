@@ -13,6 +13,8 @@ import '../../kyc/models/kyc_status.dart';
 import '../../profile/profile_types.dart';
 import '../../rents/bloc/waiting_declarations_bloc.dart';
 import '../../rents/ui/widgets/waiting_declarations_card.dart';
+import '../../tenant_requests/bloc/open_requests_bloc.dart';
+import '../../tenant_requests/ui/widgets/open_requests_card.dart';
 import '../../reservations/bloc/pending_reservations_bloc.dart';
 import '../../reservations/ui/widgets/pending_reservations_card.dart';
 import '../../subscription/bloc/subscription_bloc.dart';
@@ -38,6 +40,7 @@ class HomePage extends StatelessWidget {
             context.read<HomeBloc>().add(const HomeRefreshRequested());
             context.read<PendingReservationsBloc>().add(const PendingReservationsRequested());
             context.read<WaitingDeclarationsBloc>().add(const WaitingDeclarationsRequested());
+            context.read<OpenRequestsBloc>().add(const OpenRequestsRequested());
           },
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
@@ -65,6 +68,11 @@ class HomePage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
                 child: WaitingDeclarationsCard(),
+              ),
+              // M30 lot 3 — tenants' requests waiting on him.
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
+                child: OpenRequestsCard(),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),

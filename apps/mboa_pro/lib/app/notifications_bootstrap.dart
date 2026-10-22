@@ -4,6 +4,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/rents/bloc/waiting_declarations_bloc.dart';
+import '../features/tenant_requests/bloc/open_requests_bloc.dart';
 import '../features/reservations/bloc/pending_reservations_bloc.dart';
 import 'router/app_router.dart';
 import 'router/app_router.gr.dart';
@@ -27,6 +28,10 @@ void _showInApp(BuildContext context, PushMessage message) {
   // N-32 — a new request: the home's counter is read again, by event.
   if (message.type == PushType.reservation && getIt.isRegistered<PendingReservationsBloc>()) {
     getIt<PendingReservationsBloc>().add(const PendingReservationsRequested());
+  }
+  // N-38 — a tenant's request: its counter likewise.
+  if (message.type == PushType.homeRequest && getIt.isRegistered<OpenRequestsBloc>()) {
+    getIt<OpenRequestsBloc>().add(const OpenRequestsRequested());
   }
   // N-35 — a payment declared: the home's counter likewise.
   if (message.type == PushType.home && getIt.isRegistered<WaitingDeclarationsBloc>()) {
@@ -94,6 +99,12 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(TenantHomeRoute(contractId: id));
     case PushType.homeEvidence when !isAgent:
       router.push(RentsRoute());
+    // N-38 — a tenant's request created, moved on or answered: the request;
+    // merged, the inbox.
+    case PushType.homeRequest when id != null && !isAgent:
+      router.push(TenantRequestRoute(requestId: id));
+    case PushType.homeRequest when !isAgent:
+      router.push(const ReceivedRequestsRoute());
     case PushType.message:
       // No endpoint reads one conversation by id; the inbox lists it first.
       router.push(const MessagesRoute());
@@ -105,7 +116,6 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     // N-36 for an invoice is the tenant's.
     case PushType.invoice:
     case PushType.homeEvidence:
-    // M30 lot 3 — routed with the request screens.
     case PushType.homeRequest:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());

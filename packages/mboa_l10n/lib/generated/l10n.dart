@@ -13979,6 +13979,28 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Demandes des locataires`
+  String get proRequestsTitle {
+    return Intl.message(
+      'Demandes des locataires',
+      name: 'proRequestsTitle',
+      desc: 'Pro: menu entry for the tenants\' requests inbox',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 demande de locataire attend ta réponse} other{{count} demandes de locataires attendent ta réponse}}`
+  String proRequestsPending(int count) {
+    return Intl.plural(
+      count,
+      one: '1 demande de locataire attend ta réponse',
+      other: '$count demandes de locataires attendent ta réponse',
+      name: 'proRequestsPending',
+      desc: 'Pro home: nudge counting tenants\' requests waiting',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

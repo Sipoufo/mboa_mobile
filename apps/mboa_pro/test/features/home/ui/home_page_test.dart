@@ -14,6 +14,7 @@ import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
 import 'package:mboa_pro/features/rents/bloc/waiting_declarations_bloc.dart';
+import 'package:mboa_pro/features/tenant_requests/bloc/open_requests_bloc.dart';
 import 'package:mboa_pro/features/reservations/bloc/pending_reservations_bloc.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
 import 'package:mboa_pro/features/subscription/models/subscription_models.dart';
@@ -29,6 +30,8 @@ class MockPendingReservationsBloc extends MockBloc<PendingReservationsEvent, Pen
 class MockWaitingDeclarationsBloc extends MockBloc<WaitingDeclarationsEvent, WaitingDeclarationsState>
     implements WaitingDeclarationsBloc {}
 
+class MockOpenRequestsBloc extends MockBloc<OpenRequestsEvent, OpenRequestsState> implements OpenRequestsBloc {}
+
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
 
@@ -42,6 +45,7 @@ void main() {
   late MockHomeBloc homeBloc;
   late MockPendingReservationsBloc pendingBloc;
   late MockWaitingDeclarationsBloc waitingBloc;
+  late MockOpenRequestsBloc requestsBloc;
   late MockProProfileBloc profileBloc;
   late MockKycCubit kycCubit;
   late MockSubscriptionBloc subscriptionBloc;
@@ -64,6 +68,8 @@ void main() {
     when(() => pendingBloc.state).thenReturn(const PendingReservationsUnknown());
     waitingBloc = MockWaitingDeclarationsBloc();
     when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsUnknown());
+    requestsBloc = MockOpenRequestsBloc();
+    when(() => requestsBloc.state).thenReturn(const OpenRequestsUnknown());
     profileBloc = MockProProfileBloc();
     kycCubit = MockKycCubit();
     subscriptionBloc = MockSubscriptionBloc();
@@ -105,6 +111,7 @@ void main() {
             BlocProvider<HomeBloc>.value(value: homeBloc),
             BlocProvider<PendingReservationsBloc>.value(value: pendingBloc),
             BlocProvider<WaitingDeclarationsBloc>.value(value: waitingBloc),
+            BlocProvider<OpenRequestsBloc>.value(value: requestsBloc),
           ],
           child: const HomePage(),
         ),
@@ -197,6 +204,20 @@ void main() {
     verify(() => waitingBloc.add(const WaitingDeclarationsRequested())).called(1);
   });
 
+  testWidgets('M30 lot 3 — tenants\' requests waiting are said, and read on first show', (tester) async {
+    when(() => requestsBloc.state).thenReturn(const OpenRequestsCounted(2));
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.text('2 demandes de locataires attendent ta réponse'), findsOneWidget);
+    verifyNever(() => requestsBloc.add(const OpenRequestsRequested()));
+  });
+
+  testWidgets('M30 lot 3 — unknown yet: asked for', (tester) async {
+    await pump(tester, const HomeReady(stats));
+
+    verify(() => requestsBloc.add(const OpenRequestsRequested())).called(1);
+  });
+
   testWidgets('lays out without overflow on a small phone', (tester) async {
     tester.view.physicalSize = const Size(320 * 3, 568 * 3);
     tester.view.devicePixelRatio = 3;
@@ -206,14 +227,17 @@ void main() {
     // Both nudges shown: the tallest the home gets.
     when(() => pendingBloc.state).thenReturn(const PendingReservationsCounted(12));
     when(() => waitingBloc.state).thenReturn(const WaitingDeclarationsCounted(12));
+    when(() => requestsBloc.state).thenReturn(const OpenRequestsCounted(12));
     await pump(tester, const HomeReady(stats));
     expect(tester.takeException(), isNull);
 
     // All the way down: a lazy list builds only what is on screen, so the
     // stats' tiles were never laid out here while the header was taller —
     // and their overflow went unseen.
-    await tester.drag(find.byType(ListView).first, const Offset(0, -2000));
-    await tester.pumpAndSettle();
+    for (var i = 0; i < 10 && find.byType(MetricTile).evaluate().isEmpty; i++) {
+      await tester.drag(find.byType(ListView).first, const Offset(0, -500));
+      await tester.pumpAndSettle();
+    }
     expect(find.byType(MetricTile), findsWidgets);
     expect(tester.takeException(), isNull);
   });

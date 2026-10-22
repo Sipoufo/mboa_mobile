@@ -5565,5 +5565,18 @@
   "requestFailed": "La demande n'est pas partie. Réessaie.",
   "@requestFailed": {
     "description": "New request failed"
+  },
+  "proRequestsTitle": "Demandes des locataires",
+  "@proRequestsTitle": {
+    "description": "Pro: menu entry for the tenants' requests inbox"
+  },
+  "proRequestsPending": "{count, plural, =1{1 demande de locataire attend ta réponse} other{{count} demandes de locataires attendent ta réponse}}",
+  "@proRequestsPending": {
+    "description": "Pro home: nudge counting tenants' requests waiting",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

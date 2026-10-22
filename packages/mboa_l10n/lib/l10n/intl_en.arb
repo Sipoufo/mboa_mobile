@@ -5565,5 +5565,18 @@
   "requestFailed": "The request was not sent. Try again.",
   "@requestFailed": {
     "description": "New request failed"
+  },
+  "proRequestsTitle": "Tenants' requests",
+  "@proRequestsTitle": {
+    "description": "Pro: menu entry for the tenants' requests inbox"
+  },
+  "proRequestsPending": "{count, plural, =1{1 tenant request awaits your answer} other{{count} tenant requests await your answer}}",
+  "@proRequestsPending": {
+    "description": "Pro home: nudge counting tenants' requests waiting",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

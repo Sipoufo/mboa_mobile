@@ -100,6 +100,11 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: RentsRoute.page, path: 'rents'),
             AutoRoute(page: ReceivedDeclarationRoute.page, path: 'rents/declarations/:declarationId'),
             AutoRoute(page: TenantHomeRoute.page, path: 'rents/homes/:contractId'),
+            // M30 lot 3 — tenants' requests: the inbox, one home's, one
+            // request (what N-38 opens).
+            AutoRoute(page: ReceivedRequestsRoute.page, path: 'requests'),
+            AutoRoute(page: TenantHomeRequestsRoute.page, path: 'rents/homes/:contractId/requests'),
+            AutoRoute(page: TenantRequestRoute.page, path: 'home-requests/:requestId'),
             AutoRoute(page: ContractDetailRoute.page, path: 'contracts/:id'),
             // M27 — the review hangs off the contract, so its route does too.
             AutoRoute(
