@@ -1188,3 +1188,37 @@ a standalone listing), and the inbox filter **`residenceId`** on
 its units (the full list read and filtered by the units' ids), the menu has a
 permanent « Demandes de réservation » entry, and the home's counter is read
 again on returning to the app and on an N-32 in the foreground.
+
+## §31 — M30: two `ReceiptResponse`, an invoice's confirmed total, and two pushes with one target
+
+**1. The home's receipts cannot be read (blocking).** Two DTOs are named
+`ReceiptResponse`: the subscription payment's `{ downloadUrl }` (M13,
+`GET /subscriptions/payments/{id}/receipt`) and slice D's receipt
+`{ id, declarationId, contractId, kind, periodStart?, periodEnd?, amount,
+issuedAt, ready }`. The export keeps one schema per name, and it kept the
+first: in `mboa.openapi.yaml`, `PageResponseReceiptResponse.content` is a list
+of `{ downloadUrl }`. `GET /homes/{contractId}/receipts` is therefore
+unreadable in the generated client — no kind, no period, no amount.
+
+Asked: **rename slice D's DTO** (e.g. `HomeReceiptResponse`, with its page
+`PageResponseHomeReceiptResponse`). The subscription one can keep its name;
+the app reads only `downloadUrl` from it.
+
+Meanwhile, the app builds everything that hangs off a declaration
+(`receiptId`, `receiptReady`, `GET /receipts/{id}/pdf`); only the home's list
+of receipts waits for the rename.
+
+**2. An invoice's confirmed total (nice to have).** `InvoiceResponse` says
+`TO_PAY` until the confirmed declarations cover the amount, but not how much
+they already cover. The declare form starts at "what is left", so the app sums
+the invoice's confirmed declarations (`GET /invoices/{id}/declarations`) — a
+second request per invoice. A **`confirmedTotal`** (or `remaining`) on
+`InvoiceResponse` would make that one read, and keep the sum the server's.
+
+**3. N-35 and N-39 share a target with different ids (for lot 3).** Both reach
+the landlord as `type: HOME`, N-35 with `entityId` = the **declaration**, N-39
+with `entityId` = the **contract**. The app routes on `{type, entityId}`, so it
+cannot tell which screen to open; today an N-39 would open a declaration that
+does not exist. Asked: a distinct target for N-39 (e.g. `HOME_EVIDENCE`,
+append-only like the others) — or, if you prefer, confirm that `deepLink` is
+always present and stable, and the app will route N-35 / N-39 on it.
