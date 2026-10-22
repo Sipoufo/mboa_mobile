@@ -68,6 +68,12 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(AuthenticatedRouter(children: [MyHomeRoute(contractId: id)]));
     case PushType.home:
       router.push(const AuthenticatedRouter(children: [MyHomesRoute()]));
+    // N-38 — a request to the landlord moved on or answered: the request;
+    // merged, "Mes logements".
+    case PushType.homeRequest when id != null:
+      router.push(AuthenticatedRouter(children: [HomeRequestRoute(requestId: id)]));
+    case PushType.homeRequest:
+      router.push(const AuthenticatedRouter(children: [MyHomesRoute()]));
     // N-36 for an invoice declared paid: the invoice; merged, "Mes logements".
     case PushType.invoice when id != null:
       router.push(AuthenticatedRouter(children: [InvoiceRoute(invoiceId: id)]));
@@ -82,8 +88,6 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.residence:
     // N-39 is the landlord's.
     case PushType.homeEvidence:
-    // M30 lot 3 — routed with the request screens.
-    case PushType.homeRequest:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

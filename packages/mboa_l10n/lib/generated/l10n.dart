@@ -13869,6 +13869,116 @@ class I18n {
       args: [],
     );
   }
+
+  /// `C'est à propos de…`
+  String get requestFormType {
+    return Intl.message(
+      'C\'est à propos de…',
+      name: 'requestFormType',
+      desc: 'New request: the type',
+      args: [],
+    );
+  }
+
+  /// `En quelques mots`
+  String get requestFormTitle {
+    return Intl.message(
+      'En quelques mots',
+      name: 'requestFormTitle',
+      desc: 'New request: the title label',
+      args: [],
+    );
+  }
+
+  /// `Par exemple « Fuite sous l'évier »`
+  String get requestFormTitleHint {
+    return Intl.message(
+      'Par exemple « Fuite sous l\'évier »',
+      name: 'requestFormTitleHint',
+      desc: 'New request: title hint',
+      args: [],
+    );
+  }
+
+  /// `Ce qui se passe`
+  String get requestFormDescription {
+    return Intl.message(
+      'Ce qui se passe',
+      name: 'requestFormDescription',
+      desc: 'New request: description label',
+      args: [],
+    );
+  }
+
+  /// `Depuis quand, où, ce que tu as déjà essayé…`
+  String get requestFormDescriptionHint {
+    return Intl.message(
+      'Depuis quand, où, ce que tu as déjà essayé…',
+      name: 'requestFormDescriptionHint',
+      desc: 'New request: description hint',
+      args: [],
+    );
+  }
+
+  /// `Photos (facultatif, 5 au plus)`
+  String get requestFormPhotos {
+    return Intl.message(
+      'Photos (facultatif, 5 au plus)',
+      name: 'requestFormPhotos',
+      desc: 'New request: photos label',
+      args: [],
+    );
+  }
+
+  /// `Photo {n}`
+  String requestFormPhotoN(String n) {
+    return Intl.message(
+      'Photo $n',
+      name: 'requestFormPhotoN',
+      desc: 'New request: one photo\'s chip',
+      args: [n],
+    );
+  }
+
+  /// `Envoyer la demande`
+  String get requestFormSend {
+    return Intl.message(
+      'Envoyer la demande',
+      name: 'requestFormSend',
+      desc: 'New request: main action',
+      args: [],
+    );
+  }
+
+  /// `Demande envoyée`
+  String get requestSentTitle {
+    return Intl.message(
+      'Demande envoyée',
+      name: 'requestSentTitle',
+      desc: 'New request sent: toast',
+      args: [],
+    );
+  }
+
+  /// `Ton propriétaire la reçoit, et tu suis ses réponses ici.`
+  String get requestSentBody {
+    return Intl.message(
+      'Ton propriétaire la reçoit, et tu suis ses réponses ici.',
+      name: 'requestSentBody',
+      desc: 'New request sent: toast body',
+      args: [],
+    );
+  }
+
+  /// `La demande n'est pas partie. Réessaie.`
+  String get requestFailed {
+    return Intl.message(
+      'La demande n\'est pas partie. Réessaie.',
+      name: 'requestFailed',
+      desc: 'New request failed',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -5516,5 +5516,54 @@
   "contactsTitle": "Contacts",
   "@contactsTitle": {
     "description": "M30 lot 3: useful contacts (tile)"
+  },
+  "requestFormType": "It is about…",
+  "@requestFormType": {
+    "description": "New request: the type"
+  },
+  "requestFormTitle": "In a few words",
+  "@requestFormTitle": {
+    "description": "New request: the title label"
+  },
+  "requestFormTitleHint": "For example “Leak under the sink”",
+  "@requestFormTitleHint": {
+    "description": "New request: title hint"
+  },
+  "requestFormDescription": "What is going on",
+  "@requestFormDescription": {
+    "description": "New request: description label"
+  },
+  "requestFormDescriptionHint": "Since when, where, what you already tried…",
+  "@requestFormDescriptionHint": {
+    "description": "New request: description hint"
+  },
+  "requestFormPhotos": "Photos (optional, up to 5)",
+  "@requestFormPhotos": {
+    "description": "New request: photos label"
+  },
+  "requestFormPhotoN": "Photo {n}",
+  "@requestFormPhotoN": {
+    "description": "New request: one photo's chip",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "requestFormSend": "Send the request",
+  "@requestFormSend": {
+    "description": "New request: main action"
+  },
+  "requestSentTitle": "Request sent",
+  "@requestSentTitle": {
+    "description": "New request sent: toast"
+  },
+  "requestSentBody": "Your landlord gets it, and you follow the answers here.",
+  "@requestSentBody": {
+    "description": "New request sent: toast body"
+  },
+  "requestFailed": "The request was not sent. Try again.",
+  "@requestFailed": {
+    "description": "New request failed"
   }
 }

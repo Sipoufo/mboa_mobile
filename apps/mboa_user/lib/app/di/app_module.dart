@@ -5,6 +5,7 @@ import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/my_home/bloc/declare_payment_bloc.dart';
 import '../../features/my_home/bloc/home_invoices_bloc.dart';
+import '../../features/my_home/bloc/home_request_form_bloc.dart';
 import '../../features/my_home/bloc/invoice_bloc.dart';
 import '../../features/my_home/bloc/my_homes_bloc.dart';
 import '../../features/profile/profile_types.dart';
@@ -175,6 +176,19 @@ void registerAppModule() {
   );
   getIt.registerFactory<DeclarationBloc>(
     () => DeclarationBloc(repository: getIt<HomesRepository>()),
+  );
+  // M30 lot 3 — requests to the landlord.
+  getIt.registerLazySingleton<HomeRequestsRepository>(
+    () => HomeRequestsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactoryParam<HomeRequestsBloc, String?, void>(
+    (contractId, _) => HomeRequestsBloc(repository: getIt<HomeRequestsRepository>(), contractId: contractId),
+  );
+  getIt.registerFactory<HomeRequestBloc>(
+    () => HomeRequestBloc(repository: getIt<HomeRequestsRepository>(), messaging: getIt<MessagingRepository>()),
+  );
+  getIt.registerFactory<HomeRequestFormBloc>(
+    () => HomeRequestFormBloc(repository: getIt<HomeRequestsRepository>(), uploader: getIt<MediaUploader>()),
   );
   getIt.registerFactory<HomeInvoicesBloc>(
     () => HomeInvoicesBloc(repository: getIt<HomesRepository>()),

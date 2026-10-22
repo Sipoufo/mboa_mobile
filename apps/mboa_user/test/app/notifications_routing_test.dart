@@ -92,6 +92,14 @@ void main() {
     expect(pushed().initialChildren!.single.routeName, MyHomesRoute.name);
   });
 
+  test('N-38 opens the request', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.homeRequest, entityId: 'hr-1'));
+
+    final child = pushed().initialChildren!.single;
+    expect(child.routeName, HomeRequestRoute.name);
+    expect((child.args! as HomeRequestRouteArgs).requestId, 'hr-1');
+  });
+
   test('a type this build does not know lands on the shell', () {
     routeNotificationTap(router, const PushMessage(type: PushType.unknown));
 

@@ -114,6 +114,11 @@ class AppRouter extends RootStackRouter {
             // Slice E — an invoice outlives its tenancy: its own route, what
             // N-36 for an invoice opens.
             AutoRoute(page: InvoiceRoute.page, path: 'invoices/:invoiceId'),
+            // M30 lot 3 — requests to the landlord; one request is what N-38
+            // opens, without its home.
+            AutoRoute(page: HomeRequestsRoute.page, path: 'homes/:contractId/requests'),
+            AutoRoute(page: HomeRequestFormRoute.page, path: 'homes/:contractId/requests/new'),
+            AutoRoute(page: HomeRequestRoute.page, path: 'home-requests/:requestId'),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),

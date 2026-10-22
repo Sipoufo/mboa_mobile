@@ -5516,5 +5516,54 @@
   "contactsTitle": "Contacts",
   "@contactsTitle": {
     "description": "M30 lot 3: useful contacts (tile)"
+  },
+  "requestFormType": "C'est à propos de…",
+  "@requestFormType": {
+    "description": "New request: the type"
+  },
+  "requestFormTitle": "En quelques mots",
+  "@requestFormTitle": {
+    "description": "New request: the title label"
+  },
+  "requestFormTitleHint": "Par exemple « Fuite sous l'évier »",
+  "@requestFormTitleHint": {
+    "description": "New request: title hint"
+  },
+  "requestFormDescription": "Ce qui se passe",
+  "@requestFormDescription": {
+    "description": "New request: description label"
+  },
+  "requestFormDescriptionHint": "Depuis quand, où, ce que tu as déjà essayé…",
+  "@requestFormDescriptionHint": {
+    "description": "New request: description hint"
+  },
+  "requestFormPhotos": "Photos (facultatif, 5 au plus)",
+  "@requestFormPhotos": {
+    "description": "New request: photos label"
+  },
+  "requestFormPhotoN": "Photo {n}",
+  "@requestFormPhotoN": {
+    "description": "New request: one photo's chip",
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "requestFormSend": "Envoyer la demande",
+  "@requestFormSend": {
+    "description": "New request: main action"
+  },
+  "requestSentTitle": "Demande envoyée",
+  "@requestSentTitle": {
+    "description": "New request sent: toast"
+  },
+  "requestSentBody": "Ton propriétaire la reçoit, et tu suis ses réponses ici.",
+  "@requestSentBody": {
+    "description": "New request sent: toast body"
+  },
+  "requestFailed": "La demande n'est pas partie. Réessaie.",
+  "@requestFailed": {
+    "description": "New request failed"
   }
 }
