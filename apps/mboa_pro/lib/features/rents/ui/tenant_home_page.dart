@@ -24,6 +24,7 @@ class TenantHomePage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) => HomeSpaceView(
         onRequests: () => context.router.push(TenantHomeRequestsRoute(contractId: contractId)),
+        onEvidence: () => context.router.push(TenantEvidenceRoute(contractId: contractId)),
         onOpenDeclaration: (declaration) async {
           final space = context.read<HomeSpaceBloc>();
           await context.router.push(ReceivedDeclarationRoute(declarationId: declaration.id));

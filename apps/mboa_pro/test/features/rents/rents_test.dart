@@ -529,14 +529,14 @@ void main() {
       expect(route.routeName, RentsRoute.name);
     });
 
-    test('§31.3 — N-39, photo proofs added: the tenant\'s space, not a declaration', () {
+    test('§31.3 — N-39, photo proofs added: that tenancy\'s photos, not a declaration', () {
       getIt<SessionSnapshot>().markAuthenticated(role: AccountRole.prestataire);
 
       routeNotificationTap(router, const PushMessage(type: PushType.homeEvidence, entityId: 'c-1'));
 
       final route = verify(() => router.push<Object?>(captureAny())).captured.single as PageRouteInfo;
-      expect(route.routeName, TenantHomeRoute.name);
-      expect((route.args! as TenantHomeRouteArgs).contractId, 'c-1');
+      expect(route.routeName, TenantEvidenceRoute.name);
+      expect((route.args! as TenantEvidenceRouteArgs).contractId, 'c-1');
     });
 
     test('N-39 merged (no id): "Loyers"', () {

@@ -119,6 +119,10 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: HomeRequestsRoute.page, path: 'homes/:contractId/requests'),
             AutoRoute(page: HomeRequestFormRoute.page, path: 'homes/:contractId/requests/new'),
             AutoRoute(page: HomeRequestRoute.page, path: 'home-requests/:requestId'),
+            // M30 lot 3 — photo proofs.
+            AutoRoute(page: HomeEvidenceRoute.page, path: 'homes/:contractId/evidence'),
+            AutoRoute(page: EvidenceSendRoute.page, path: 'homes/:contractId/evidence/new'),
+            AutoRoute(page: HomeEvidenceBatchRoute.page, path: 'homes/:contractId/evidence/:batchId'),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),

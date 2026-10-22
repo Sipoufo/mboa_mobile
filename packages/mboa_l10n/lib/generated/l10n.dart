@@ -14001,6 +14001,421 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Salon`
+  String get evidenceRoomLivingRoom {
+    return Intl.message(
+      'Salon',
+      name: 'evidenceRoomLivingRoom',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `Chambre`
+  String get evidenceRoomBedroom {
+    return Intl.message(
+      'Chambre',
+      name: 'evidenceRoomBedroom',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `Cuisine`
+  String get evidenceRoomKitchen {
+    return Intl.message(
+      'Cuisine',
+      name: 'evidenceRoomKitchen',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `Salle de bain`
+  String get evidenceRoomBathroom {
+    return Intl.message(
+      'Salle de bain',
+      name: 'evidenceRoomBathroom',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `WC`
+  String get evidenceRoomToilet {
+    return Intl.message(
+      'WC',
+      name: 'evidenceRoomToilet',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `Extérieur`
+  String get evidenceRoomOutdoor {
+    return Intl.message(
+      'Extérieur',
+      name: 'evidenceRoomOutdoor',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `Autre`
+  String get evidenceRoomOther {
+    return Intl.message(
+      'Autre',
+      name: 'evidenceRoomOther',
+      desc: 'Evidence room',
+      args: [],
+    );
+  }
+
+  /// `Entrée`
+  String get evidencePhaseEntry {
+    return Intl.message(
+      'Entrée',
+      name: 'evidencePhaseEntry',
+      desc: 'Evidence phase',
+      args: [],
+    );
+  }
+
+  /// `Pendant le bail`
+  String get evidencePhaseStay {
+    return Intl.message(
+      'Pendant le bail',
+      name: 'evidencePhaseStay',
+      desc: 'Evidence phase',
+      args: [],
+    );
+  }
+
+  /// `Sortie`
+  String get evidencePhaseExit {
+    return Intl.message(
+      'Sortie',
+      name: 'evidencePhaseExit',
+      desc: 'Evidence phase',
+      args: [],
+    );
+  }
+
+  /// `Envoyer des photos`
+  String get evidenceAdd {
+    return Intl.message(
+      'Envoyer des photos',
+      name: 'evidenceAdd',
+      desc: 'Evidence: the tenant\'s main action',
+      args: [],
+    );
+  }
+
+  /// `Aucune photo pour l'instant. À l'entrée, pendant le bail ou à la sortie : chaque envoi est horodaté par Mboa.`
+  String get evidenceEmptyTenant {
+    return Intl.message(
+      'Aucune photo pour l\'instant. À l\'entrée, pendant le bail ou à la sortie : chaque envoi est horodaté par Mboa.',
+      name: 'evidenceEmptyTenant',
+      desc: 'Evidence: empty, tenant',
+      args: [],
+    );
+  }
+
+  /// `Ton locataire n'a encore envoyé aucune photo.`
+  String get evidenceEmptyLandlord {
+    return Intl.message(
+      'Ton locataire n\'a encore envoyé aucune photo.',
+      name: 'evidenceEmptyLandlord',
+      desc: 'Evidence: empty, landlord',
+      args: [],
+    );
+  }
+
+  /// `Horodatées par Mboa à la réception, non modifiables et jamais publiques.`
+  String get evidenceNotice {
+    return Intl.message(
+      'Horodatées par Mboa à la réception, non modifiables et jamais publiques.',
+      name: 'evidenceNotice',
+      desc: 'Evidence: what Mboa guarantees (RM-M30-12)',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 photo} other{{count} photos}}`
+  String evidencePhotoCount(int count) {
+    return Intl.plural(
+      count,
+      one: '1 photo',
+      other: '$count photos',
+      name: 'evidencePhotoCount',
+      desc: 'Evidence: photos in a sending',
+      args: [count],
+    );
+  }
+
+  /// `Reçu par Mboa le {date}`
+  String evidenceRecordedOn(String date) {
+    return Intl.message(
+      'Reçu par Mboa le $date',
+      name: 'evidenceRecordedOn',
+      desc: 'Evidence: the server\'s time',
+      args: [date],
+    );
+  }
+
+  /// `Vu par le propriétaire`
+  String get evidenceSeen {
+    return Intl.message(
+      'Vu par le propriétaire',
+      name: 'evidenceSeen',
+      desc: 'Evidence: acknowledged',
+      args: [],
+    );
+  }
+
+  /// `Vu par le propriétaire le {date}`
+  String evidenceSeenOn(String date) {
+    return Intl.message(
+      'Vu par le propriétaire le $date',
+      name: 'evidenceSeenOn',
+      desc: 'Evidence: acknowledged, with the day',
+      args: [date],
+    );
+  }
+
+  /// `Pas encore vu par le propriétaire`
+  String get evidenceNotSeen {
+    return Intl.message(
+      'Pas encore vu par le propriétaire',
+      name: 'evidenceNotSeen',
+      desc: 'Evidence: not acknowledged',
+      args: [],
+    );
+  }
+
+  /// `Accuser réception`
+  String get evidenceAcknowledge {
+    return Intl.message(
+      'Accuser réception',
+      name: 'evidenceAcknowledge',
+      desc: 'Evidence: the landlord\'s main action',
+      args: [],
+    );
+  }
+
+  /// `Accuser réception ?`
+  String get evidenceAckTitle {
+    return Intl.message(
+      'Accuser réception ?',
+      name: 'evidenceAckTitle',
+      desc: 'Evidence: acknowledge dialog',
+      args: [],
+    );
+  }
+
+  /// `Un mot pour ton locataire (facultatif)`
+  String get evidenceAckHint {
+    return Intl.message(
+      'Un mot pour ton locataire (facultatif)',
+      name: 'evidenceAckHint',
+      desc: 'Evidence: acknowledge note hint',
+      args: [],
+    );
+  }
+
+  /// `Réception confirmée`
+  String get evidenceAckToast {
+    return Intl.message(
+      'Réception confirmée',
+      name: 'evidenceAckToast',
+      desc: 'Evidence: acknowledged toast',
+      args: [],
+    );
+  }
+
+  /// `Fermer`
+  String get commonClose {
+    return Intl.message(
+      'Fermer',
+      name: 'commonClose',
+      desc: 'Close (a full-screen photo, a sheet)',
+      args: [],
+    );
+  }
+
+  /// `Une pièce par photo, et un mot si besoin. Mboa les horodate à la réception : elles ne pourront plus être modifiées.`
+  String get evidenceSendHint {
+    return Intl.message(
+      'Une pièce par photo, et un mot si besoin. Mboa les horodate à la réception : elles ne pourront plus être modifiées.',
+      name: 'evidenceSendHint',
+      desc: 'Evidence send: hint',
+      args: [],
+    );
+  }
+
+  /// `Appareil photo`
+  String get evidenceCamera {
+    return Intl.message(
+      'Appareil photo',
+      name: 'evidenceCamera',
+      desc: 'Evidence send: camera',
+      args: [],
+    );
+  }
+
+  /// `Galerie`
+  String get evidenceGallery {
+    return Intl.message(
+      'Galerie',
+      name: 'evidenceGallery',
+      desc: 'Evidence send: gallery',
+      args: [],
+    );
+  }
+
+  /// `Ex. « Chambre 2 »`
+  String get evidenceRoomLabelHint {
+    return Intl.message(
+      'Ex. « Chambre 2 »',
+      name: 'evidenceRoomLabelHint',
+      desc: 'Evidence send: room label',
+      args: [],
+    );
+  }
+
+  /// `Un mot (facultatif)`
+  String get evidenceCommentHint {
+    return Intl.message(
+      'Un mot (facultatif)',
+      name: 'evidenceCommentHint',
+      desc: 'Evidence send: comment',
+      args: [],
+    );
+  }
+
+  /// `Retirer`
+  String get evidenceRemove {
+    return Intl.message(
+      'Retirer',
+      name: 'evidenceRemove',
+      desc: 'Evidence send: remove a photo',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{Envoyer 1 photo} other{Envoyer {count} photos}}`
+  String evidenceSend(int count) {
+    return Intl.plural(
+      count,
+      one: 'Envoyer 1 photo',
+      other: 'Envoyer $count photos',
+      name: 'evidenceSend',
+      desc: 'Evidence send: main action',
+      args: [count],
+    );
+  }
+
+  /// `Envoi… {done}/{total}`
+  String evidenceSending(int done, int total) {
+    return Intl.message(
+      'Envoi… $done/$total',
+      name: 'evidenceSending',
+      desc: 'Evidence send: progress',
+      args: [done, total],
+    );
+  }
+
+  /// `Photos envoyées`
+  String get evidenceSentTitle {
+    return Intl.message(
+      'Photos envoyées',
+      name: 'evidenceSentTitle',
+      desc: 'Evidence sent: toast',
+      args: [],
+    );
+  }
+
+  /// `Mboa les a horodatées, et ton propriétaire est prévenu.`
+  String get evidenceSentBody {
+    return Intl.message(
+      'Mboa les a horodatées, et ton propriétaire est prévenu.',
+      name: 'evidenceSentBody',
+      desc: 'Evidence sent: toast body',
+      args: [],
+    );
+  }
+
+  /// `Fichier non envoyé, réessaie.`
+  String get evidenceUploadFailed {
+    return Intl.message(
+      'Fichier non envoyé, réessaie.',
+      name: 'evidenceUploadFailed',
+      desc:
+          'Evidence: a photo did not reach storage after three tries (CE-M30-01)',
+      args: [],
+    );
+  }
+
+  /// `20 photos au plus par envoi.`
+  String get evidenceRefusedTooLarge {
+    return Intl.message(
+      '20 photos au plus par envoi.',
+      name: 'evidenceRefusedTooLarge',
+      desc: 'Evidence refused',
+      args: [],
+    );
+  }
+
+  /// `Ce logement a atteint ses 200 photos.`
+  String get evidenceRefusedLimit {
+    return Intl.message(
+      'Ce logement a atteint ses 200 photos.',
+      name: 'evidenceRefusedLimit',
+      desc: 'Evidence refused',
+      args: [],
+    );
+  }
+
+  /// `Le bail est terminé : seules les photos de sortie sont encore possibles, 7 jours.`
+  String get evidenceRefusedPhaseClosed {
+    return Intl.message(
+      'Le bail est terminé : seules les photos de sortie sont encore possibles, 7 jours.',
+      name: 'evidenceRefusedPhaseClosed',
+      desc: 'Evidence refused',
+      args: [],
+    );
+  }
+
+  /// `Ce logement est en lecture seule : plus d'envoi possible.`
+  String get evidenceRefusedReadOnly {
+    return Intl.message(
+      'Ce logement est en lecture seule : plus d\'envoi possible.',
+      name: 'evidenceRefusedReadOnly',
+      desc: 'Evidence refused',
+      args: [],
+    );
+  }
+
+  /// `Une photo n'est pas arrivée entière : rien n'a été enregistré. Réessaie.`
+  String get evidenceRefusedNotStored {
+    return Intl.message(
+      'Une photo n\'est pas arrivée entière : rien n\'a été enregistré. Réessaie.',
+      name: 'evidenceRefusedNotStored',
+      desc: 'Evidence refused',
+      args: [],
+    );
+  }
+
+  /// `Une de ces photos est déjà enregistrée.`
+  String get evidenceRefusedAlready {
+    return Intl.message(
+      'Une de ces photos est déjà enregistrée.',
+      name: 'evidenceRefusedAlready',
+      desc: 'Evidence refused',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

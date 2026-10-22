@@ -5578,5 +5578,197 @@
         "type": "int"
       }
     }
+  },
+  "evidenceRoomLivingRoom": "Salon",
+  "@evidenceRoomLivingRoom": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomBedroom": "Chambre",
+  "@evidenceRoomBedroom": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomKitchen": "Cuisine",
+  "@evidenceRoomKitchen": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomBathroom": "Salle de bain",
+  "@evidenceRoomBathroom": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomToilet": "WC",
+  "@evidenceRoomToilet": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomOutdoor": "Extérieur",
+  "@evidenceRoomOutdoor": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomOther": "Autre",
+  "@evidenceRoomOther": {
+    "description": "Evidence room"
+  },
+  "evidencePhaseEntry": "Entrée",
+  "@evidencePhaseEntry": {
+    "description": "Evidence phase"
+  },
+  "evidencePhaseStay": "Pendant le bail",
+  "@evidencePhaseStay": {
+    "description": "Evidence phase"
+  },
+  "evidencePhaseExit": "Sortie",
+  "@evidencePhaseExit": {
+    "description": "Evidence phase"
+  },
+  "evidenceAdd": "Envoyer des photos",
+  "@evidenceAdd": {
+    "description": "Evidence: the tenant's main action"
+  },
+  "evidenceEmptyTenant": "Aucune photo pour l'instant. À l'entrée, pendant le bail ou à la sortie : chaque envoi est horodaté par Mboa.",
+  "@evidenceEmptyTenant": {
+    "description": "Evidence: empty, tenant"
+  },
+  "evidenceEmptyLandlord": "Ton locataire n'a encore envoyé aucune photo.",
+  "@evidenceEmptyLandlord": {
+    "description": "Evidence: empty, landlord"
+  },
+  "evidenceNotice": "Horodatées par Mboa à la réception, non modifiables et jamais publiques.",
+  "@evidenceNotice": {
+    "description": "Evidence: what Mboa guarantees (RM-M30-12)"
+  },
+  "evidencePhotoCount": "{count, plural, =1{1 photo} other{{count} photos}}",
+  "@evidencePhotoCount": {
+    "description": "Evidence: photos in a sending",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "evidenceRecordedOn": "Reçu par Mboa le {date}",
+  "@evidenceRecordedOn": {
+    "description": "Evidence: the server's time",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "evidenceSeen": "Vu par le propriétaire",
+  "@evidenceSeen": {
+    "description": "Evidence: acknowledged"
+  },
+  "evidenceSeenOn": "Vu par le propriétaire le {date}",
+  "@evidenceSeenOn": {
+    "description": "Evidence: acknowledged, with the day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "evidenceNotSeen": "Pas encore vu par le propriétaire",
+  "@evidenceNotSeen": {
+    "description": "Evidence: not acknowledged"
+  },
+  "evidenceAcknowledge": "Accuser réception",
+  "@evidenceAcknowledge": {
+    "description": "Evidence: the landlord's main action"
+  },
+  "evidenceAckTitle": "Accuser réception ?",
+  "@evidenceAckTitle": {
+    "description": "Evidence: acknowledge dialog"
+  },
+  "evidenceAckHint": "Un mot pour ton locataire (facultatif)",
+  "@evidenceAckHint": {
+    "description": "Evidence: acknowledge note hint"
+  },
+  "evidenceAckToast": "Réception confirmée",
+  "@evidenceAckToast": {
+    "description": "Evidence: acknowledged toast"
+  },
+  "commonClose": "Fermer",
+  "@commonClose": {
+    "description": "Close (a full-screen photo, a sheet)"
+  },
+  "evidenceSendHint": "Une pièce par photo, et un mot si besoin. Mboa les horodate à la réception : elles ne pourront plus être modifiées.",
+  "@evidenceSendHint": {
+    "description": "Evidence send: hint"
+  },
+  "evidenceCamera": "Appareil photo",
+  "@evidenceCamera": {
+    "description": "Evidence send: camera"
+  },
+  "evidenceGallery": "Galerie",
+  "@evidenceGallery": {
+    "description": "Evidence send: gallery"
+  },
+  "evidenceRoomLabelHint": "Ex. « Chambre 2 »",
+  "@evidenceRoomLabelHint": {
+    "description": "Evidence send: room label"
+  },
+  "evidenceCommentHint": "Un mot (facultatif)",
+  "@evidenceCommentHint": {
+    "description": "Evidence send: comment"
+  },
+  "evidenceRemove": "Retirer",
+  "@evidenceRemove": {
+    "description": "Evidence send: remove a photo"
+  },
+  "evidenceSend": "{count, plural, =1{Envoyer 1 photo} other{Envoyer {count} photos}}",
+  "@evidenceSend": {
+    "description": "Evidence send: main action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "evidenceSending": "Envoi… {done}/{total}",
+  "@evidenceSending": {
+    "description": "Evidence send: progress",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "evidenceSentTitle": "Photos envoyées",
+  "@evidenceSentTitle": {
+    "description": "Evidence sent: toast"
+  },
+  "evidenceSentBody": "Mboa les a horodatées, et ton propriétaire est prévenu.",
+  "@evidenceSentBody": {
+    "description": "Evidence sent: toast body"
+  },
+  "evidenceUploadFailed": "Fichier non envoyé, réessaie.",
+  "@evidenceUploadFailed": {
+    "description": "Evidence: a photo did not reach storage after three tries (CE-M30-01)"
+  },
+  "evidenceRefusedTooLarge": "20 photos au plus par envoi.",
+  "@evidenceRefusedTooLarge": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedLimit": "Ce logement a atteint ses 200 photos.",
+  "@evidenceRefusedLimit": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedPhaseClosed": "Le bail est terminé : seules les photos de sortie sont encore possibles, 7 jours.",
+  "@evidenceRefusedPhaseClosed": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedReadOnly": "Ce logement est en lecture seule : plus d'envoi possible.",
+  "@evidenceRefusedReadOnly": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedNotStored": "Une photo n'est pas arrivée entière : rien n'a été enregistré. Réessaie.",
+  "@evidenceRefusedNotStored": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedAlready": "Une de ces photos est déjà enregistrée.",
+  "@evidenceRefusedAlready": {
+    "description": "Evidence refused"
   }
 }

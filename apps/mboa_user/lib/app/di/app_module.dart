@@ -4,6 +4,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/my_home/bloc/declare_payment_bloc.dart';
+import '../../features/my_home/bloc/evidence_send_bloc.dart';
 import '../../features/my_home/bloc/home_invoices_bloc.dart';
 import '../../features/my_home/bloc/home_request_form_bloc.dart';
 import '../../features/my_home/bloc/invoice_bloc.dart';
@@ -189,6 +190,17 @@ void registerAppModule() {
   );
   getIt.registerFactory<HomeRequestFormBloc>(
     () => HomeRequestFormBloc(repository: getIt<HomeRequestsRepository>(), uploader: getIt<MediaUploader>()),
+  );
+  // M30 lot 3 — photo proofs.
+  getIt.registerLazySingleton<EvidenceRepository>(
+    () => EvidenceRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactoryParam<EvidenceBloc, String, void>(
+    (contractId, _) => EvidenceBloc(repository: getIt<EvidenceRepository>(), contractId: contractId),
+  );
+  getIt.registerFactory<EvidenceBatchBloc>(() => EvidenceBatchBloc(repository: getIt<EvidenceRepository>()));
+  getIt.registerFactory<EvidenceSendBloc>(
+    () => EvidenceSendBloc(repository: getIt<EvidenceRepository>(), preparer: PhotoPreparer()),
   );
   getIt.registerFactory<HomeInvoicesBloc>(
     () => HomeInvoicesBloc(repository: getIt<HomesRepository>()),

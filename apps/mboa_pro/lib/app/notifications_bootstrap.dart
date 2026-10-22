@@ -93,10 +93,9 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(ReceivedDeclarationRoute(declarationId: id));
     case PushType.home when !isAgent:
       router.push(RentsRoute());
-    // N-39 — photo proofs added: the tenant's space (the proofs screen comes
-    // with M30 lot 3); merged, "Loyers".
+    // N-39 — photo proofs added: that tenancy's photos; merged, "Loyers".
     case PushType.homeEvidence when id != null && !isAgent:
-      router.push(TenantHomeRoute(contractId: id));
+      router.push(TenantEvidenceRoute(contractId: id));
     case PushType.homeEvidence when !isAgent:
       router.push(RentsRoute());
     // N-38 — a tenant's request created, moved on or answered: the request;

@@ -314,6 +314,13 @@ void registerAppModule() {
   getIt.registerLazySingleton<HomeRequestsRepository>(
     () => HomeRequestsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );
+  getIt.registerLazySingleton<EvidenceRepository>(
+    () => EvidenceRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactoryParam<EvidenceBloc, String, void>(
+    (contractId, _) => EvidenceBloc(repository: getIt<EvidenceRepository>(), contractId: contractId),
+  );
+  getIt.registerFactory<EvidenceBatchBloc>(() => EvidenceBatchBloc(repository: getIt<EvidenceRepository>()));
   getIt.registerLazySingleton<OpenRequestsBloc>(
     () => OpenRequestsBloc(repository: getIt<HomeRequestsRepository>()),
   );

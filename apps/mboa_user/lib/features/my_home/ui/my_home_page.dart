@@ -51,6 +51,7 @@ class MyHomePage extends StatelessWidget implements AutoRouteWrapper {
           MyDeclarationRoute(contractId: contractId, declarationId: declaration.id),
         ),
         onRequests: () => context.router.push(HomeRequestsRoute(contractId: contractId)),
+        onEvidence: () => context.router.push(HomeEvidenceRoute(contractId: contractId)),
         invoices: HomeInvoicesSection(
           onOpen: (invoice) async {
             final invoices = context.read<HomeInvoicesBloc>();

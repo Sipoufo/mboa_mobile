@@ -5578,5 +5578,197 @@
         "type": "int"
       }
     }
+  },
+  "evidenceRoomLivingRoom": "Living room",
+  "@evidenceRoomLivingRoom": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomBedroom": "Bedroom",
+  "@evidenceRoomBedroom": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomKitchen": "Kitchen",
+  "@evidenceRoomKitchen": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomBathroom": "Bathroom",
+  "@evidenceRoomBathroom": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomToilet": "Toilet",
+  "@evidenceRoomToilet": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomOutdoor": "Outdoor",
+  "@evidenceRoomOutdoor": {
+    "description": "Evidence room"
+  },
+  "evidenceRoomOther": "Other",
+  "@evidenceRoomOther": {
+    "description": "Evidence room"
+  },
+  "evidencePhaseEntry": "Move-in",
+  "@evidencePhaseEntry": {
+    "description": "Evidence phase"
+  },
+  "evidencePhaseStay": "During the tenancy",
+  "@evidencePhaseStay": {
+    "description": "Evidence phase"
+  },
+  "evidencePhaseExit": "Move-out",
+  "@evidencePhaseExit": {
+    "description": "Evidence phase"
+  },
+  "evidenceAdd": "Send photos",
+  "@evidenceAdd": {
+    "description": "Evidence: the tenant's main action"
+  },
+  "evidenceEmptyTenant": "No photos yet. At move-in, during the tenancy or at move-out: each sending is time-stamped by Mboa.",
+  "@evidenceEmptyTenant": {
+    "description": "Evidence: empty, tenant"
+  },
+  "evidenceEmptyLandlord": "Your tenant has not sent any photo yet.",
+  "@evidenceEmptyLandlord": {
+    "description": "Evidence: empty, landlord"
+  },
+  "evidenceNotice": "Time-stamped by Mboa on receipt, unalterable and never public.",
+  "@evidenceNotice": {
+    "description": "Evidence: what Mboa guarantees (RM-M30-12)"
+  },
+  "evidencePhotoCount": "{count, plural, =1{1 photo} other{{count} photos}}",
+  "@evidencePhotoCount": {
+    "description": "Evidence: photos in a sending",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "evidenceRecordedOn": "Received by Mboa on {date}",
+  "@evidenceRecordedOn": {
+    "description": "Evidence: the server's time",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "evidenceSeen": "Seen by the landlord",
+  "@evidenceSeen": {
+    "description": "Evidence: acknowledged"
+  },
+  "evidenceSeenOn": "Seen by the landlord on {date}",
+  "@evidenceSeenOn": {
+    "description": "Evidence: acknowledged, with the day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "evidenceNotSeen": "Not yet seen by the landlord",
+  "@evidenceNotSeen": {
+    "description": "Evidence: not acknowledged"
+  },
+  "evidenceAcknowledge": "Acknowledge",
+  "@evidenceAcknowledge": {
+    "description": "Evidence: the landlord's main action"
+  },
+  "evidenceAckTitle": "Acknowledge?",
+  "@evidenceAckTitle": {
+    "description": "Evidence: acknowledge dialog"
+  },
+  "evidenceAckHint": "A word for your tenant (optional)",
+  "@evidenceAckHint": {
+    "description": "Evidence: acknowledge note hint"
+  },
+  "evidenceAckToast": "Receipt confirmed",
+  "@evidenceAckToast": {
+    "description": "Evidence: acknowledged toast"
+  },
+  "commonClose": "Close",
+  "@commonClose": {
+    "description": "Close (a full-screen photo, a sheet)"
+  },
+  "evidenceSendHint": "One room per photo, and a word if needed. Mboa time-stamps them on receipt: they cannot be changed afterwards.",
+  "@evidenceSendHint": {
+    "description": "Evidence send: hint"
+  },
+  "evidenceCamera": "Camera",
+  "@evidenceCamera": {
+    "description": "Evidence send: camera"
+  },
+  "evidenceGallery": "Gallery",
+  "@evidenceGallery": {
+    "description": "Evidence send: gallery"
+  },
+  "evidenceRoomLabelHint": "E.g. “Bedroom 2”",
+  "@evidenceRoomLabelHint": {
+    "description": "Evidence send: room label"
+  },
+  "evidenceCommentHint": "A word (optional)",
+  "@evidenceCommentHint": {
+    "description": "Evidence send: comment"
+  },
+  "evidenceRemove": "Remove",
+  "@evidenceRemove": {
+    "description": "Evidence send: remove a photo"
+  },
+  "evidenceSend": "{count, plural, =1{Send 1 photo} other{Send {count} photos}}",
+  "@evidenceSend": {
+    "description": "Evidence send: main action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "evidenceSending": "Sending… {done}/{total}",
+  "@evidenceSending": {
+    "description": "Evidence send: progress",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "evidenceSentTitle": "Photos sent",
+  "@evidenceSentTitle": {
+    "description": "Evidence sent: toast"
+  },
+  "evidenceSentBody": "Mboa time-stamped them, and your landlord is told.",
+  "@evidenceSentBody": {
+    "description": "Evidence sent: toast body"
+  },
+  "evidenceUploadFailed": "File not sent, try again.",
+  "@evidenceUploadFailed": {
+    "description": "Evidence: a photo did not reach storage after three tries (CE-M30-01)"
+  },
+  "evidenceRefusedTooLarge": "20 photos at most per sending.",
+  "@evidenceRefusedTooLarge": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedLimit": "This home reached its 200 photos.",
+  "@evidenceRefusedLimit": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedPhaseClosed": "The tenancy is over: only move-out photos are still possible, for 7 days.",
+  "@evidenceRefusedPhaseClosed": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedReadOnly": "This home is read only: no more sendings.",
+  "@evidenceRefusedReadOnly": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedNotStored": "A photo did not arrive whole: nothing was recorded. Try again.",
+  "@evidenceRefusedNotStored": {
+    "description": "Evidence refused"
+  },
+  "evidenceRefusedAlready": "One of these photos is already recorded.",
+  "@evidenceRefusedAlready": {
+    "description": "Evidence refused"
   }
 }

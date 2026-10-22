@@ -76,15 +76,19 @@ export 'src/features/session/session_module.dart';
 
 // Settings / account — language, deletion (phone & password changes to follow).
 export 'src/features/homes/bloc/declaration_bloc.dart';
+export 'src/features/homes/bloc/evidence_bloc.dart';
 export 'src/features/homes/bloc/home_request_bloc.dart';
 export 'src/features/homes/bloc/home_requests_bloc.dart';
 export 'src/features/homes/bloc/home_space_bloc.dart';
+export 'src/features/homes/data/evidence_repository.dart';
 export 'src/features/homes/data/home_requests_repository.dart';
 export 'src/features/homes/data/homes_repository.dart';
 export 'src/features/homes/models/home.dart';
+export 'src/features/homes/models/evidence.dart';
 export 'src/features/homes/models/home_request.dart';
 export 'src/features/homes/ui/declaration_view.dart';
 export 'src/features/homes/ui/home_bits.dart';
+export 'src/features/homes/ui/evidence_view.dart';
 export 'src/features/homes/ui/home_card.dart';
 export 'src/features/homes/ui/home_requests_view.dart';
 export 'src/features/homes/ui/home_space_view.dart';
@@ -118,6 +122,7 @@ export 'src/features/location/ui/option_picker_sheet.dart';
 export 'src/features/media/capture_source_sheet.dart';
 export 'src/features/media/media_uploader.dart';
 export 'src/features/media/pdf_sharer.dart';
+export 'src/features/media/photo_preparer.dart';
 
 // Profile / Settings base (M02) — shared base model, repository and bloc.
 export 'src/features/profile/bloc/profile_bloc.dart';
