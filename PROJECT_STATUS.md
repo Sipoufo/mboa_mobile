@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-21.
+> Last updated: 2026-10-22.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1253 tests green, analyze clean.** `mboa_user` 330 · `mboa_pro` 557 ·
-`mboa_core` 19 · `mboa_shared` 319 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1301 tests green, analyze clean.** `mboa_user` 349 · `mboa_pro` 560 ·
+`mboa_core` 19 · `mboa_shared` 345 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -63,7 +63,7 @@
 | M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
 | M29 réservation — lot 1 | ✅ **tenant**: "Réserver" on the fiche, request screen (stay, indicative total, no money), "Ma demande" + ticket, "Mes réservations" (offline) · **Pro**: inbox (timeline), request detail (accept / refuse with reason / extend / cancel), home counter, contract drawn up from a request (RM-M08-10), unreserve by hand (RM-M10-10) · system message in the thread · N-32/33/34 routed |
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
-| M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · receipts (slice D) and invoice declarations (slice E) not shipped by the backend yet |
+| M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) — the home's list of receipts waits for §31 · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -120,6 +120,19 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
   account-scoped `homesBox`), `HomeSpaceBloc/View`, `DeclarationBloc/View`,
   `HomeCard` (with a `viewer`), `home_bits`. Pro's `DayTimeline` is shared by
   both inboxes (requests, rents).
+- **PDFs go on the share sheet** (`PdfSharer`): a short-lived link fetched by
+  a bare Dio — never `DioClient`'s, so the token does not reach storage —
+  then save / print / send. Receipts and the contract use it; nothing in the
+  app opens a browser or copies a link any more.
+- A receipt is named by the confirmation and made seconds later:
+  `DeclarationBloc` reads the declaration again every 3 s, 10 times, then
+  offers « Réessayer ». The card says « Reçu de paiement », not « Quittance »:
+  a partial rent's PDF is not one, and only the receipt list (§31) says which.
+- Invoices (M24) are the **tenant's** read here: the space shows them through
+  a slot (`HomeSpaceView.invoices`) because the landlord reads the same space
+  and cannot list them. An open invoice can be declared even after the
+  tenancy. « What is left » is the app's sum of confirmed declarations, for
+  the form only — §31.2 asks the server for it.
 
 ---
 
@@ -1129,9 +1142,12 @@ Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **M30 slice D** — receipts (PDF, a `ready` flag, "Quittance en
-  préparation", N-37) once the backend ships it; **slice E** — declaring an
-  invoice paid. **§30** — the residence on a reservation request.
+- **§31** (backend): rename slice D's `ReceiptResponse` — then the home's
+  list of receipts; an invoice's confirmed total; N-35 / N-39 share `HOME`.
+- **M30 lot 3** (photo proofs, requests to the landlord, useful contacts) —
+  shipped by the backend; waits for the founder's mockups.
+- **M24 / M25 landlord side** (issuing invoices, the register) — behind the
+  finance add-on; the register's system-kept lines (`readOnly`) come with it.
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
   founder's definition (and backend data); managers / agents on the fiche
   need API data.

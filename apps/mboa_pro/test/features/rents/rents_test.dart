@@ -280,6 +280,32 @@ void main() {
       expect(find.textContaining('Aucun locataire'), findsOneWidget);
     });
 
+    testWidgets('slice E — an invoice declared paid reads as one, and is answered in the same inbox', (tester) async {
+      when(() => bloc.state).thenReturn(
+        RentsReady(
+          waiting: [
+            Declaration(
+              id: 'd-7',
+              annonceTitle: 'Studio Akwa',
+              tenant: const ContractParticipant(displayName: 'Awa Nkeng'),
+              kind: DeclarationKind.invoice,
+              invoiceId: 'i-1',
+              amount: 12000,
+              method: RentPaymentMethod.cash,
+              status: DeclarationStatus.declared,
+              declaredAt: DateTime(2026, 10, 21, 10),
+              canConfirm: true,
+            ),
+          ],
+        ),
+      );
+      await pump(tester, view());
+
+      expect(find.text('Facture · Espèces'), findsOneWidget);
+      // Not an échéance count: an invoice names none.
+      expect(find.textContaining('échéance'), findsNothing);
+    });
+
     testWidgets('offline, it says so', (tester) async {
       when(() => bloc.state).thenReturn(RentsReady(waiting: [declared('d-1')], isOffline: true));
       await pump(tester, view());
