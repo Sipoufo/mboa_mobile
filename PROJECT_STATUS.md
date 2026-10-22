@@ -25,10 +25,10 @@
 **1412 tests green, analyze clean.** `mboa_user` 370 · `mboa_pro` 598 ·
 `mboa_core` 19 · `mboa_shared` 397 · `mboa_ui` 21 · `mboa_l10n` 7.
 
-> **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
-> it boots on the public search, the four tabs respond, the visitor states are
-> right and the city picker degrades cleanly with the backend down. The pro app
-> still has not been launched.
+> **Both apps run on the founder's device** (since 2026-10-20, side by side,
+> against the local backend): reservations, contracts, "Mon logement" and
+> "Loyers" were tested end to end there. Push is Android-only until the APNs
+> key exists.
 
 > **Doc 10 and the OpenAPI spec moved on 2026-08-13 / 2026-08-20** — see
 > *What the 2026-08-20 spec changed* below before planning anything. M16 has
@@ -1149,7 +1149,7 @@ as the same thing.
 
 ## Pending / next
 
-Updated 2026-10-21. The client was regenerated from the export carrying M24
+Updated 2026-10-24. The client was regenerated from the export carrying M24
 (invoices) and M26 (payments to contractors), `eb848cd`.
 
 Ready to build (the API exists, nothing in the apps):
@@ -1159,8 +1159,15 @@ Ready to build (the API exists, nothing in the apps):
 - **§33** (backend): the rating and the distance on search results — then
   « Proche de vous », « à X km » and the location permission (phase 2 of
   the search home).
-- **M31** « Mes anciens logements » — the backend's next lot; the evidence
-  entry/exit comparison (`/evidence/compare`) belongs there.
+- **M31** « Mes anciens logements » — **shipped by the backend** (slices 4A,
+  4B): `/past-homes` (list, sheet: lease as signed, expenses by year with
+  receipts, unconfirmed apart, contract code, « Mon avis »), the expenses
+  PDF, and the before/after comparison `/evidence/compare`. Nothing in the
+  apps yet; waits for the founder's mockups.
+- **Receipts' 404** (seen on device): R2 answered 404 to a receipt's
+  presigned link; the app now reports storage's own code
+  (`PdfDownloadFailed`). Waiting for that line to write the backend a precise
+  request.
 - **M24 / M25 landlord side** (issuing invoices, the register) — behind the
   finance add-on; the register's system-kept lines (`readOnly`) come with it.
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
@@ -1182,10 +1189,9 @@ Blocked:
 
 ## Tech debt
 
-- **Nothing has been run on a device or simulator.** Every claim here is from
-  tests, analyze and native builds — not from the app running. Simulator install
-  kept failing with CoreSimulator 405; a physical device may be easier. The
-  broken "Republier" button is exactly the class of bug this misses.
+- **Device testing is the founder's**, by hand: there are no integration
+  tests (`integration_test`) — goldens and widget tests are the only proof
+  of a screen before it reaches a phone.
 - **Push routing** matches `PushTarget` exactly. A `MESSAGE` tap opens the inbox,
   not the thread: no endpoint reads one conversation by id.
 - **Goldens now load the icon font too** (`load_brand_fonts` reads
