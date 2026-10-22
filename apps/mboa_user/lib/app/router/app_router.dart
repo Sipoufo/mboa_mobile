@@ -111,6 +111,9 @@ class AppRouter extends RootStackRouter {
             // The form carries the échéances it was opened on: no deep link.
             AutoRoute(page: DeclarePaymentRoute.page, path: 'homes/:contractId/declare'),
             AutoRoute(page: MyDeclarationRoute.page, path: 'homes/:contractId/declarations/:declarationId'),
+            // Slice E — an invoice outlives its tenancy: its own route, what
+            // N-36 for an invoice opens.
+            AutoRoute(page: InvoiceRoute.page, path: 'invoices/:invoiceId'),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),

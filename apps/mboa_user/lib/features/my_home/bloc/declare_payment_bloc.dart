@@ -56,7 +56,12 @@ class DeclarePaymentBloc extends Bloc<DeclarePaymentEvent, DeclarePaymentState> 
     if (form == null || contractId == null || !form.isComplete || state.isSending || state.isUploading) return;
     emit(state.copyWith(isSending: true));
     try {
-      final declaration = await _repository.declare(contractId, form.toDraft());
+      // An invoice is declared on the invoice, never on the home's route.
+      final declaration = switch (form.invoiceId) {
+        final invoiceId? when form.kind == DeclarationKind.invoice =>
+          await _repository.declareInvoice(invoiceId, form.toDraft()),
+        _ => await _repository.declare(contractId, form.toDraft()),
+      };
       emit(state.copyWith(sent: declaration));
     } on DeclarationRefused catch (refused) {
       emit(state.copyWith(refusal: refused.reason));

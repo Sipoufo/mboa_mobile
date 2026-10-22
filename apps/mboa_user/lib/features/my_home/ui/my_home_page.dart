@@ -5,8 +5,10 @@ import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../bloc/home_invoices_bloc.dart';
 import '../bloc/my_homes_bloc.dart';
 import '../models/declaration_form.dart';
+import 'widgets/home_invoices_section.dart';
 
 /// One space of "Mon Logement", the tenant's side (CDC M30) — the shared
 /// view, with the tenant's own action: declaring a payment made outside Mboa.
@@ -17,8 +19,14 @@ class MyHomePage extends StatelessWidget implements AutoRouteWrapper {
   final String contractId;
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<HomeSpaceBloc>(
-        create: (_) => getIt<HomeSpaceBloc>()..add(HomeSpaceRequested(contractId)),
+  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<HomeSpaceBloc>(create: (_) => getIt<HomeSpaceBloc>()..add(HomeSpaceRequested(contractId))),
+          // Slice E — the tenancy's invoices, a section of the space.
+          BlocProvider<HomeInvoicesBloc>(
+            create: (_) => getIt<HomeInvoicesBloc>()..add(HomeInvoicesRequested(contractId)),
+          ),
+        ],
         child: this,
       );
 
@@ -41,6 +49,14 @@ class MyHomePage extends StatelessWidget implements AutoRouteWrapper {
         onDeclareDeposit: (state) => _declare(context, DeclarationForm.deposit(state.home.deposit, today: DateTime.now())),
         onOpenDeclaration: (declaration) => context.router.push(
           MyDeclarationRoute(contractId: contractId, declarationId: declaration.id),
+        ),
+        invoices: HomeInvoicesSection(
+          onOpen: (invoice) async {
+            final invoices = context.read<HomeInvoicesBloc>();
+            await context.router.push(InvoiceRoute(invoiceId: invoice.id));
+            // Declared there: its status and the list's are read again.
+            invoices.add(HomeInvoicesRequested(contractId));
+          },
         ),
       );
 }

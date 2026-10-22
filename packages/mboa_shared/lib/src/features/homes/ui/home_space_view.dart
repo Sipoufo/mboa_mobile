@@ -18,12 +18,16 @@ import 'home_bits.dart';
 /// landlord's side, so the buttons are absent rather than refused; both may
 /// open a declaration.
 class HomeSpaceView extends StatelessWidget {
-  const HomeSpaceView({super.key, this.onDeclare, this.onDeclareDeposit, this.onOpenDeclaration});
+  const HomeSpaceView({super.key, this.onDeclare, this.onDeclareDeposit, this.onOpenDeclaration, this.invoices});
 
   /// Declare rent — preselecting [due] when a row was tapped.
   final void Function(HomeSpaceReady state, RentDue? due)? onDeclare;
   final void Function(HomeSpaceReady state)? onDeclareDeposit;
   final void Function(Declaration declaration)? onOpenDeclaration;
+
+  /// The tenancy's invoices (M24, slice E) — the tenant's alone: the
+  /// landlord's are behind the finance add-on. Drawn after the schedule.
+  final Widget? invoices;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,7 @@ class HomeSpaceView extends StatelessWidget {
                     _Notice(icon: LucideIcons.shieldCheck, tone: colors.primary, text: l10n.myHomeNoMoney),
                   ],
                   const SizedBox(height: Dimens.spacingLg),
-                  _SectionTitle(l10n.myHomeScheduleTitle),
+                  HomeSectionTitle(l10n.myHomeScheduleTitle),
                   if (ready.schedule.moreBefore && !ready.isOffline)
                     Center(
                       child: TextButton.icon(
@@ -111,9 +115,10 @@ class HomeSpaceView extends StatelessWidget {
                         }
                       },
                     ),
+                  ?invoices,
                   if (ready.declarations.isNotEmpty) ...[
                     const SizedBox(height: Dimens.spacingLg),
-                    _SectionTitle(l10n.myHomeDeclarationsTitle),
+                    HomeSectionTitle(l10n.myHomeDeclarationsTitle),
                     for (final declaration in ready.declarations)
                       DeclarationRow(
                         declaration: declaration,
@@ -298,8 +303,10 @@ class _Totals extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.text);
+/// A section's heading in a space — public, so a section an app adds
+/// (the tenant's invoices) reads as the others.
+class HomeSectionTitle extends StatelessWidget {
+  const HomeSectionTitle(this.text, {super.key});
 
   final String text;
 

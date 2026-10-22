@@ -231,11 +231,19 @@ class HomesRepository {
     }
   }
 
-  /// One invoice — what N-36 opens for an invoice.
-  Future<HomeInvoice> invoice(String invoiceId) async {
-    final data = (await _invoices.getMyInvoice(id: invoiceId)).data;
-    if (data == null) throw StateError('invoice $invoiceId came back empty');
-    return HomeInvoice.fromResponse(data);
+  /// One invoice — what N-36 opens for an invoice. Offline, the copy kept
+  /// with the list, if it has it.
+  Future<Cached<HomeInvoice>> invoice(String invoiceId) async {
+    try {
+      final data = (await _invoices.getMyInvoice(id: invoiceId)).data;
+      if (data == null) throw StateError('invoice $invoiceId came back empty');
+      return Cached(HomeInvoice.fromResponse(data));
+    } catch (error) {
+      final raw = _cache.get(StorageKeys.homesBox, 'invoices')?['items'];
+      final kept = raw is List ? [for (final i in raw) ?HomeInvoice.fromCache(i)].where((i) => i.id == invoiceId) : null;
+      if (kept == null || kept.isEmpty) Error.throwWithStackTrace(error, StackTrace.current);
+      return Cached(kept.first, fromCache: true);
+    }
   }
 
   /// The invoice's declarations, newest first.

@@ -247,8 +247,44 @@ void main() {
         ),
       );
 
-      expect((await repository.invoice('i-1')).label, 'Électricité — septembre');
+      expect((await repository.invoice('i-1')).value.label, 'Électricité — septembre');
       expect((await repository.invoiceDeclarations('i-1')).single.id, 'd-1');
+    });
+  });
+
+  group('one invoice, offline', () {
+    late MockInvoicesTenantApi invoices;
+    late MockHiveCache cache;
+    late HomesRepository repository;
+
+    setUp(() {
+      final dioClient = MockDioClient();
+      final apiClient = MockApiClient();
+      invoices = MockInvoicesTenantApi();
+      cache = MockHiveCache();
+      when(() => dioClient.api).thenReturn(apiClient);
+      when(apiClient.getInvoicesTenantApi).thenReturn(invoices);
+      when(() => invoices.getMyInvoice(id: any(named: 'id'))).thenThrow(_offline);
+      repository = HomesRepository(dioClient: dioClient, cache: cache);
+    });
+
+    test('the copy kept with the list, marked', () async {
+      when(() => cache.get(StorageKeys.homesBox, 'invoices', ttl: any(named: 'ttl'))).thenReturn({
+        'items': [HomeInvoice.fromResponse(_invoice('i-1')).toCache(), HomeInvoice.fromResponse(_invoice('i-2')).toCache()],
+      });
+
+      final read = await repository.invoice('i-2');
+
+      expect(read.value.id, 'i-2');
+      expect(read.fromCache, isTrue);
+    });
+
+    test('not in the copy: the failure', () async {
+      when(() => cache.get(StorageKeys.homesBox, 'invoices', ttl: any(named: 'ttl'))).thenReturn({
+        'items': [HomeInvoice.fromResponse(_invoice('i-1')).toCache()],
+      });
+
+      await expectLater(repository.invoice('i-9'), throwsA(isA<DioException>()));
     });
   });
 

@@ -68,6 +68,11 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(AuthenticatedRouter(children: [MyHomeRoute(contractId: id)]));
     case PushType.home:
       router.push(const AuthenticatedRouter(children: [MyHomesRoute()]));
+    // N-36 for an invoice declared paid: the invoice; merged, "Mes logements".
+    case PushType.invoice when id != null:
+      router.push(AuthenticatedRouter(children: [InvoiceRoute(invoiceId: id)]));
+    case PushType.invoice:
+      router.push(const AuthenticatedRouter(children: [MyHomesRoute()]));
     case PushType.message:
       router.navigate(const UserShellRoute(children: [MessagesRoute()]));
     case PushType.annonce:
@@ -75,8 +80,6 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.paymentConfirmed:
     case PushType.kyc:
     case PushType.residence:
-    // Slice E — routed with the invoice screens (next commit).
-    case PushType.invoice:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

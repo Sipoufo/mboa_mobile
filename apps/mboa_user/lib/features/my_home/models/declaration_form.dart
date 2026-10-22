@@ -9,6 +9,9 @@ import 'package:mboa_shared/mboa_shared.dart';
 ///  * the amount starts at what is left to pay on them, and stays the
 ///    tenant's to change — a partial payment is a smaller amount on one;
 ///  * CE-M30-02: zero, or more than ten times what is due, asks once more.
+///
+/// The deposit and an invoice (slice E) name no échéance: what is due is
+/// fixed when the form opens.
 class DeclarationForm extends Equatable {
   const DeclarationForm({
     required this.kind,
@@ -16,7 +19,8 @@ class DeclarationForm extends Equatable {
     this.start,
     this.end,
     this.amount,
-    this.depositDue = 0,
+    this.fixedDue = 0,
+    this.invoiceId,
     this.paidOn,
     this.method,
     this.reference = '',
@@ -41,7 +45,20 @@ class DeclarationForm extends Equatable {
 
   factory DeclarationForm.deposit(RentDeposit deposit, {required DateTime today}) {
     final due = (deposit.amount - deposit.confirmedTotal).clamp(0, deposit.amount);
-    return DeclarationForm(kind: DeclarationKind.deposit, depositDue: due, amount: due, paidOn: _day(today));
+    return DeclarationForm(kind: DeclarationKind.deposit, fixedDue: due, amount: due, paidOn: _day(today));
+  }
+
+  /// An invoice declared paid, starting at what is left of it — [left] is
+  /// the screen's (the amount less what was already confirmed).
+  factory DeclarationForm.invoice(HomeInvoice invoice, {required int left, required DateTime today}) {
+    final due = left.clamp(0, invoice.amount);
+    return DeclarationForm(
+      kind: DeclarationKind.invoice,
+      invoiceId: invoice.id,
+      fixedDue: due,
+      amount: due,
+      paidOn: _day(today),
+    );
   }
 
   /// At most three proofs per declaration (§29, `PROOF_LIMIT`).
@@ -57,7 +74,12 @@ class DeclarationForm extends Equatable {
   final int? end;
 
   final int? amount;
-  final int depositDue;
+
+  /// What is due on the deposit or the invoice.
+  final int fixedDue;
+
+  /// Set when [kind] is [DeclarationKind.invoice].
+  final String? invoiceId;
   final DateTime? paidOn;
   final RentPaymentMethod? method;
   final String reference;
@@ -68,7 +90,7 @@ class DeclarationForm extends Equatable {
       start == null || end == null ? const [] : options.sublist(start!, end! + 1);
 
   /// What is left to pay on what is chosen.
-  int get due => kind == DeclarationKind.deposit ? depositDue : selected.fold(0, (sum, d) => sum + d.remaining);
+  int get due => kind == DeclarationKind.rent ? selected.fold(0, (sum, d) => sum + d.remaining) : fixedDue;
 
   bool isSelected(RentDue due) => selected.any((d) => d.index == due.index);
 
@@ -105,7 +127,7 @@ class DeclarationForm extends Equatable {
       (amount ?? 0) > 0 &&
       paidOn != null &&
       method != null &&
-      (kind == DeclarationKind.deposit || selected.isNotEmpty);
+      (kind != DeclarationKind.rent || selected.isNotEmpty);
 
   DeclarationDraft toDraft() => DeclarationDraft(
         kind: kind,
@@ -137,7 +159,8 @@ class DeclarationForm extends Equatable {
         start: start ?? this.start,
         end: end ?? this.end,
         amount: clearAmount ? null : (amount ?? this.amount),
-        depositDue: depositDue,
+        fixedDue: fixedDue,
+        invoiceId: invoiceId,
         paidOn: paidOn ?? this.paidOn,
         method: method ?? this.method,
         reference: reference ?? this.reference,
@@ -148,5 +171,6 @@ class DeclarationForm extends Equatable {
   static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
 
   @override
-  List<Object?> get props => [kind, options, start, end, amount, depositDue, paidOn, method, reference, note, proofKeys];
+  List<Object?> get props =>
+      [kind, options, start, end, amount, fixedDue, invoiceId, paidOn, method, reference, note, proofKeys];
 }

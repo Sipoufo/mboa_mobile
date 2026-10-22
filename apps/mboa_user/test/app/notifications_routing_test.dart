@@ -78,6 +78,20 @@ void main() {
     expect(pushed().initialChildren!.single.routeName, MyHomesRoute.name);
   });
 
+  test('N-36 for an invoice opens the invoice', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.invoice, entityId: 'i-1'));
+
+    final child = pushed().initialChildren!.single;
+    expect(child.routeName, InvoiceRoute.name);
+    expect((child.args! as InvoiceRouteArgs).invoiceId, 'i-1');
+  });
+
+  test('an invoice push merged (no id) opens "Mes logements"', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.invoice));
+
+    expect(pushed().initialChildren!.single.routeName, MyHomesRoute.name);
+  });
+
   test('a type this build does not know lands on the shell', () {
     routeNotificationTap(router, const PushMessage(type: PushType.unknown));
 

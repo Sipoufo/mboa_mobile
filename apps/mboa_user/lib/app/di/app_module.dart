@@ -4,6 +4,8 @@ import 'package:mboa_shared/mboa_shared.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/my_home/bloc/declare_payment_bloc.dart';
+import '../../features/my_home/bloc/home_invoices_bloc.dart';
+import '../../features/my_home/bloc/invoice_bloc.dart';
 import '../../features/my_home/bloc/my_homes_bloc.dart';
 import '../../features/profile/profile_types.dart';
 import '../../features/favorites/bloc/favorites_bloc.dart';
@@ -173,6 +175,12 @@ void registerAppModule() {
   );
   getIt.registerFactory<DeclarationBloc>(
     () => DeclarationBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactory<HomeInvoicesBloc>(
+    () => HomeInvoicesBloc(repository: getIt<HomesRepository>()),
+  );
+  getIt.registerFactory<InvoiceBloc>(
+    () => InvoiceBloc(repository: getIt<HomesRepository>()),
   );
   getIt.registerFactory<DeclarePaymentBloc>(
     () => DeclarePaymentBloc(repository: getIt<HomesRepository>(), uploader: getIt<MediaUploader>()),

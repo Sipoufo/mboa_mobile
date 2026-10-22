@@ -5090,5 +5090,87 @@
   "declarationContestedBody": "Le propriétaire conteste ce paiement.",
   "@declarationContestedBody": {
     "description": "Declaration detail: a contested payment (its reason follows)"
+  },
+  "invoicesTitle": "Factures",
+  "@invoicesTitle": {
+    "description": "M30 slice E: the space's section of the tenancy's invoices"
+  },
+  "invoiceTitle": "Facture",
+  "@invoiceTitle": {
+    "description": "M30 slice E: one invoice's screen title"
+  },
+  "invoiceKindWater": "Eau",
+  "@invoiceKindWater": {
+    "description": "Invoice kind"
+  },
+  "invoiceKindElectricity": "Électricité",
+  "@invoiceKindElectricity": {
+    "description": "Invoice kind"
+  },
+  "invoiceKindOther": "Autre",
+  "@invoiceKindOther": {
+    "description": "Invoice kind"
+  },
+  "invoiceStatusToPay": "À payer",
+  "@invoiceStatusToPay": {
+    "description": "Invoice status"
+  },
+  "invoiceStatusOverdue": "En retard",
+  "@invoiceStatusOverdue": {
+    "description": "Invoice status"
+  },
+  "invoiceStatusPaid": "Payée",
+  "@invoiceStatusPaid": {
+    "description": "Invoice status"
+  },
+  "invoiceStatusCancelled": "Annulée",
+  "@invoiceStatusCancelled": {
+    "description": "Invoice status"
+  },
+  "invoiceDueOn": "Échéance : {date}",
+  "@invoiceDueOn": {
+    "description": "An open invoice's due date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePaidOn": "Payée le {date}",
+  "@invoicePaidOn": {
+    "description": "A paid invoice's day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceConfirmedSoFar": "Déjà confirmé : {confirmed} · reste {left}",
+  "@invoiceConfirmedSoFar": {
+    "description": "An open invoice partly confirmed",
+    "placeholders": {
+      "confirmed": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceDeclare": "Déclarer payée",
+  "@invoiceDeclare": {
+    "description": "Main action on an open invoice: declare it paid outside Mboa"
+  },
+  "invoiceDeclarations": "Déclarations",
+  "@invoiceDeclarations": {
+    "description": "The invoice's declarations section"
+  },
+  "declareInvoiceTitle": "Déclarer une facture payée",
+  "@declareInvoiceTitle": {
+    "description": "Declare form title for an invoice"
+  },
+  "invoiceNoMoney": "Les factures se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.",
+  "@invoiceNoMoney": {
+    "description": "M30 slice E: notice on an open invoice (RM-M30-06)"
   }
 }

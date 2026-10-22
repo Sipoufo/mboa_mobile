@@ -12941,6 +12941,166 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Factures`
+  String get invoicesTitle {
+    return Intl.message(
+      'Factures',
+      name: 'invoicesTitle',
+      desc: 'M30 slice E: the space\'s section of the tenancy\'s invoices',
+      args: [],
+    );
+  }
+
+  /// `Facture`
+  String get invoiceTitle {
+    return Intl.message(
+      'Facture',
+      name: 'invoiceTitle',
+      desc: 'M30 slice E: one invoice\'s screen title',
+      args: [],
+    );
+  }
+
+  /// `Eau`
+  String get invoiceKindWater {
+    return Intl.message(
+      'Eau',
+      name: 'invoiceKindWater',
+      desc: 'Invoice kind',
+      args: [],
+    );
+  }
+
+  /// `Électricité`
+  String get invoiceKindElectricity {
+    return Intl.message(
+      'Électricité',
+      name: 'invoiceKindElectricity',
+      desc: 'Invoice kind',
+      args: [],
+    );
+  }
+
+  /// `Autre`
+  String get invoiceKindOther {
+    return Intl.message(
+      'Autre',
+      name: 'invoiceKindOther',
+      desc: 'Invoice kind',
+      args: [],
+    );
+  }
+
+  /// `À payer`
+  String get invoiceStatusToPay {
+    return Intl.message(
+      'À payer',
+      name: 'invoiceStatusToPay',
+      desc: 'Invoice status',
+      args: [],
+    );
+  }
+
+  /// `En retard`
+  String get invoiceStatusOverdue {
+    return Intl.message(
+      'En retard',
+      name: 'invoiceStatusOverdue',
+      desc: 'Invoice status',
+      args: [],
+    );
+  }
+
+  /// `Payée`
+  String get invoiceStatusPaid {
+    return Intl.message(
+      'Payée',
+      name: 'invoiceStatusPaid',
+      desc: 'Invoice status',
+      args: [],
+    );
+  }
+
+  /// `Annulée`
+  String get invoiceStatusCancelled {
+    return Intl.message(
+      'Annulée',
+      name: 'invoiceStatusCancelled',
+      desc: 'Invoice status',
+      args: [],
+    );
+  }
+
+  /// `Échéance : {date}`
+  String invoiceDueOn(String date) {
+    return Intl.message(
+      'Échéance : $date',
+      name: 'invoiceDueOn',
+      desc: 'An open invoice\'s due date',
+      args: [date],
+    );
+  }
+
+  /// `Payée le {date}`
+  String invoicePaidOn(String date) {
+    return Intl.message(
+      'Payée le $date',
+      name: 'invoicePaidOn',
+      desc: 'A paid invoice\'s day',
+      args: [date],
+    );
+  }
+
+  /// `Déjà confirmé : {confirmed} · reste {left}`
+  String invoiceConfirmedSoFar(String confirmed, String left) {
+    return Intl.message(
+      'Déjà confirmé : $confirmed · reste $left',
+      name: 'invoiceConfirmedSoFar',
+      desc: 'An open invoice partly confirmed',
+      args: [confirmed, left],
+    );
+  }
+
+  /// `Déclarer payée`
+  String get invoiceDeclare {
+    return Intl.message(
+      'Déclarer payée',
+      name: 'invoiceDeclare',
+      desc: 'Main action on an open invoice: declare it paid outside Mboa',
+      args: [],
+    );
+  }
+
+  /// `Déclarations`
+  String get invoiceDeclarations {
+    return Intl.message(
+      'Déclarations',
+      name: 'invoiceDeclarations',
+      desc: 'The invoice\'s declarations section',
+      args: [],
+    );
+  }
+
+  /// `Déclarer une facture payée`
+  String get declareInvoiceTitle {
+    return Intl.message(
+      'Déclarer une facture payée',
+      name: 'declareInvoiceTitle',
+      desc: 'Declare form title for an invoice',
+      args: [],
+    );
+  }
+
+  /// `Les factures se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.`
+  String get invoiceNoMoney {
+    return Intl.message(
+      'Les factures se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.',
+      name: 'invoiceNoMoney',
+      desc: 'M30 slice E: notice on an open invoice (RM-M30-06)',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

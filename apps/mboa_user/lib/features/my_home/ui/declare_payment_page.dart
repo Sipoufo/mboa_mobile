@@ -151,7 +151,11 @@ class _DeclarePaymentViewState extends State<DeclarePaymentView> {
           backgroundColor: colors.background,
           appBar: AppBar(
             leading: const MboaHeaderBackButton(),
-            title: Text(form.kind == DeclarationKind.deposit ? l10n.declareDepositTitle : l10n.declareTitle),
+            title: Text(switch (form.kind) {
+              DeclarationKind.rent => l10n.declareTitle,
+              DeclarationKind.deposit => l10n.declareDepositTitle,
+              DeclarationKind.invoice => l10n.declareInvoiceTitle,
+            }),
           ),
           body: ListView(
             padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
