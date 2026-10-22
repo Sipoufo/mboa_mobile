@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:api_client/api_client.dart' as api;
 import 'package:built_collection/built_collection.dart';
 import 'package:dio/dio.dart';
@@ -321,6 +323,30 @@ void main() {
   });
 
   group('the PDF', () {
+    test('storage refusing the link says what it said, and where — never the signature', () async {
+      final dio = MockDio();
+      const url = 'https://acc.r2.cloudflarestorage.com/mboa-media/receipts/c-1/r-1.pdf?X-Amz-Signature=secret';
+      when(() => dio.get<List<int>>(any(), options: any(named: 'options'))).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: url),
+          response: Response(
+            requestOptions: RequestOptions(path: url),
+            statusCode: 404,
+            data: utf8.encode('<?xml version="1.0"?><Error><Code>NoSuchKey</Code></Error>'),
+          ),
+        ),
+      );
+
+      final error = await PdfSharer(client: dio).shareLink(url, name: 'x').then<Object?>((_) => null, onError: (Object e) => e);
+
+      expect(error, isA<PdfDownloadFailed>());
+      final failed = error! as PdfDownloadFailed;
+      expect(failed.status, 404);
+      expect(failed.storageCode, 'NoSuchKey');
+      expect(failed.where, 'acc.r2.cloudflarestorage.com/mboa-media/receipts/c-1/r-1.pdf');
+      expect(failed.toString(), isNot(contains('secret')));
+    });
+
     test('a link is fetched as bytes by a client of its own', () async {
       final dio = MockDio();
       when(() => dio.get<List<int>>(any(), options: any(named: 'options'))).thenAnswer(

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -20,10 +21,15 @@ class PdfSharer {
   /// Downloads [url] and offers it as `[name].pdf` — [name] is what the user
   /// sees, so it says what the document is, not an id.
   Future<void> shareLink(String url, {required String name}) async {
-    final response = await (_client ?? Dio()).get<List<int>>(
-      url,
-      options: Options(responseType: ResponseType.bytes),
-    );
+    final Response<List<int>> response;
+    try {
+      response = await (_client ?? Dio()).get<List<int>>(
+        url,
+        options: Options(responseType: ResponseType.bytes),
+      );
+    } on DioException catch (error) {
+      throw PdfDownloadFailed.from(url, error);
+    }
     final bytes = response.data;
     if (bytes == null || bytes.isEmpty) throw StateError('empty PDF at the link');
     await shareBytes(Uint8List.fromList(bytes), name: name);
@@ -41,4 +47,30 @@ class PdfSharer {
     final cleaned = name.replaceAll(RegExp(r'[\\/:*?"<>|]+'), '-').trim();
     return cleaned.isEmpty ? 'document' : cleaned;
   }
+}
+
+/// Storage refused the link. Says what storage said — its status, its error
+/// code (« NoSuchKey », « AccessDenied »…) and where the link pointed,
+/// without the signature — so a report can tell a missing file from an
+/// expired or wrong link.
+class PdfDownloadFailed implements Exception {
+  const PdfDownloadFailed({this.status, this.storageCode, required this.where});
+
+  factory PdfDownloadFailed.from(String url, DioException error) {
+    final data = error.response?.data;
+    final body = data is List<int> ? utf8.decode(data, allowMalformed: true) : '$data';
+    final uri = Uri.tryParse(url);
+    return PdfDownloadFailed(
+      status: error.response?.statusCode,
+      storageCode: RegExp('<Code>([^<]+)</Code>').firstMatch(body)?.group(1),
+      where: uri == null ? '?' : '${uri.host}${uri.path}',
+    );
+  }
+
+  final int? status;
+  final String? storageCode;
+  final String where;
+
+  @override
+  String toString() => 'PdfDownloadFailed(status: $status, code: $storageCode, at: $where)';
 }
