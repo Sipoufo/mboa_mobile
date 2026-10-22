@@ -12,8 +12,10 @@ import 'package:mboa_pro/features/annonces/models/annonce.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
 import 'package:mboa_pro/features/reservations/bloc/incoming_reservation_bloc.dart';
 import 'package:mboa_pro/features/reservations/bloc/incoming_reservations_bloc.dart';
+import 'package:mboa_pro/features/reservations/models/unit_choice.dart';
 import 'package:mboa_pro/features/reservations/ui/incoming_reservation_page.dart';
 import 'package:mboa_pro/features/reservations/ui/incoming_reservations_page.dart';
+import 'package:mboa_pro/features/reservations/ui/widgets/unit_assign_sheet.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
@@ -184,6 +186,102 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(() => bloc.add(const IncomingReservationAccepted())).called(1);
+    });
+
+    group('RM-M29-16 — on a residence', () {
+      final onResidence = Reservation(
+        id: 'r-1',
+        status: ReservationStatus.pending,
+        annonceId: 'a-1',
+        annonceTitle: 'Chambre 2',
+        residenceName: 'Résidence Deido',
+        client: client,
+        desiredStartDate: DateTime(2026, 11, 1),
+        durationUnits: 6,
+        rentalPeriod: RentalPeriod.month,
+        expiresAt: DateTime(2026, 10, 24, 9, 10),
+        createdAt: DateTime(2026, 10, 22, 9, 10),
+        canAccept: true,
+        canRefuse: true,
+        canAssignUnit: true,
+      );
+      const units = [
+        UnitChoice(annonceId: 'a-1', title: 'Chambre 2', propertyType: PropertyType.room, price: 45000, rentalPeriod: RentalPeriod.month),
+        UnitChoice(annonceId: 'a-4', title: 'Chambre 4', propertyType: PropertyType.room, price: 50000, rentalPeriod: RentalPeriod.month),
+      ];
+
+      testWidgets('accepting is choosing the unit — the one asked for first, and marked', (tester) async {
+        when(() => bloc.state).thenReturn(IncomingReservationReady(onResidence, units: units));
+        await pump(tester, view());
+
+        await tester.tap(find.text('Accepter la demande'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Quelle unité attribuer ?'), findsOneWidget);
+        expect(find.text('Demandée'), findsOneWidget);
+        await tester.tap(find.text('Chambre 4'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Accepter avec « Chambre 4 »'));
+        await tester.pumpAndSettle();
+
+        verify(() => bloc.add(const IncomingReservationAccepted(unitId: 'a-4'))).called(1);
+      });
+
+      testWidgets('the unit asked for, kept: accepted as asked', (tester) async {
+        when(() => bloc.state).thenReturn(IncomingReservationReady(onResidence, units: units));
+        await pump(tester, view());
+
+        await tester.tap(find.text('Accepter la demande'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.descendant(of: find.byType(UnitAssignSheet), matching: find.text('Accepter la demande')));
+        await tester.pumpAndSettle();
+
+        verify(() => bloc.add(const IncomingReservationAccepted())).called(1);
+      });
+
+      testWidgets('the units not read yet are asked for', (tester) async {
+        when(() => bloc.state).thenReturn(IncomingReservationReady(onResidence));
+        await pump(tester, view());
+
+        await tester.tap(find.text('Accepter la demande'));
+        await tester.pump();
+
+        verify(() => bloc.add(const IncomingReservationUnitsRequested())).called(1);
+      });
+
+      testWidgets('another unit given: said under its name', (tester) async {
+        when(() => bloc.state).thenReturn(
+          IncomingReservationReady(
+            Reservation(
+              id: 'r-1',
+              status: ReservationStatus.accepted,
+              annonceId: 'a-4',
+              annonceTitle: 'Chambre 4',
+              requestedAnnonceId: 'a-1',
+              requestedAnnonceTitle: 'Chambre 2',
+              client: client,
+              reservedUntil: DateTime(2026, 10, 29, 18),
+            ),
+          ),
+        );
+        await pump(tester, view());
+
+        expect(find.text('Attribuée à la place de « Chambre 2 »'), findsOneWidget);
+      });
+
+      testWidgets('the unit sheet', (tester) async {
+        when(() => bloc.state).thenReturn(IncomingReservationReady(onResidence, units: units));
+        await pump(tester, view());
+        await tester.tap(find.text('Accepter la demande'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Chambre 4'));
+        await tester.pumpAndSettle();
+
+        // The sheet hugs its content (350 of 844): the white above is the
+        // route's layer, captured without the page behind it.
+        expect(tester.getSize(find.byType(UnitAssignSheet)).height, lessThan(500));
+        await expectLater(find.byType(UnitAssignSheet), matchesGoldenFile('goldens/reservation_unit_sheet.png'));
+      });
     });
 
     testWidgets('RM-M29-06 — refusing needs a reason, then sends it with the note', (tester) async {

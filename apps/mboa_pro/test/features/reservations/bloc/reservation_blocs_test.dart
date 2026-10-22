@@ -7,6 +7,7 @@ import 'package:mboa_pro/features/reservations/bloc/incoming_reservation_bloc.da
 import 'package:mboa_pro/features/reservations/bloc/incoming_reservations_bloc.dart';
 import 'package:mboa_pro/features/reservations/bloc/pending_reservations_bloc.dart';
 import 'package:mboa_pro/features/reservations/data/incoming_reservations_repository.dart';
+import 'package:mboa_pro/features/reservations/models/unit_choice.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -145,6 +146,85 @@ void main() {
       act: (bloc) => bloc.add(const IncomingReservationRequested('r-1')),
       expect: () => const [IncomingReservationLoading(), IncomingReservationReady(pending)],
     );
+
+    group('RM-M29-16 — another unit of the residence', () {
+      const onResidence = Reservation(
+        id: 'r-1',
+        status: ReservationStatus.pending,
+        annonceId: 'a-1',
+        annonceTitle: 'Chambre 2',
+        canAccept: true,
+        canAssignUnit: true,
+      );
+      const reassigned = Reservation(
+        id: 'r-1',
+        status: ReservationStatus.accepted,
+        annonceId: 'a-4',
+        annonceTitle: 'Chambre 4',
+        requestedAnnonceId: 'a-1',
+        requestedAnnonceTitle: 'Chambre 2',
+      );
+      const units = [UnitChoice(annonceId: 'a-1', title: 'Chambre 2'), UnitChoice(annonceId: 'a-4', title: 'Chambre 4')];
+      const room4 = Annonce(
+        id: 'a-4',
+        title: 'Chambre 4',
+        status: AnnonceStatus.reserved,
+        propertyType: PropertyType.room,
+        price: 50000,
+      );
+
+      blocTest<IncomingReservationBloc, IncomingReservationState>(
+        'the units are read when the landlord comes to choose, and kept',
+        setUp: () => when(() => repository.assignableUnits('r-1')).thenAnswer((_) async => units),
+        build: build,
+        seed: () => const IncomingReservationReady(onResidence, listing: listing),
+        act: (bloc) => bloc.add(const IncomingReservationUnitsRequested()),
+        expect: () => const [
+          IncomingReservationReady(onResidence, listing: listing, unitsLoading: true),
+          IncomingReservationReady(onResidence, listing: listing, units: units),
+        ],
+      );
+
+      blocTest<IncomingReservationBloc, IncomingReservationState>(
+        'units that do not come are said',
+        setUp: () => when(() => repository.assignableUnits('r-1')).thenThrow(Exception('offline')),
+        build: build,
+        seed: () => const IncomingReservationReady(onResidence, listing: listing),
+        act: (bloc) => bloc.add(const IncomingReservationUnitsRequested()),
+        verify: (bloc) => expect((bloc.state as IncomingReservationReady).unitsFailed, isTrue),
+      );
+
+      blocTest<IncomingReservationBloc, IncomingReservationState>(
+        'not on a standalone listing: nothing asked',
+        build: build,
+        seed: () => const IncomingReservationReady(pending, listing: listing),
+        act: (bloc) => bloc
+          ..add(const IncomingReservationUnitsRequested())
+          ..add(const IncomingReservationAccepted(unitId: 'a-4')),
+        expect: () => const <IncomingReservationState>[],
+        verify: (_) {
+          verifyNever(() => repository.assignableUnits(any()));
+          verifyNever(() => repository.accept(any(), unitId: any(named: 'unitId')));
+        },
+      );
+
+      blocTest<IncomingReservationBloc, IncomingReservationState>(
+        'accepted on another unit: sent, and its listing shown instead of the one asked for',
+        setUp: () {
+          when(() => repository.accept('r-1', unitId: 'a-4')).thenAnswer((_) async => reassigned);
+          when(() => annonces.getOne('a-4')).thenAnswer((_) async => room4);
+        },
+        build: build,
+        seed: () => const IncomingReservationReady(onResidence, listing: listing),
+        act: (bloc) => bloc.add(const IncomingReservationAccepted(unitId: 'a-4')),
+        verify: (bloc) {
+          final state = bloc.state as IncomingReservationReady;
+          expect(state.reservation.wasReassigned, isTrue);
+          expect(state.listing, room4);
+          expect(state.done, ReservationDecision.accepted);
+        },
+      );
+    });
 
     blocTest<IncomingReservationBloc, IncomingReservationState>(
       'no request, a failure that can be retried by id',

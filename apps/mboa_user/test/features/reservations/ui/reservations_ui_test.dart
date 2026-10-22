@@ -188,6 +188,34 @@ void main() {
       expect(find.textContaining('Ne verse aucun argent'), findsOneWidget);
     });
 
+    testWidgets('RM-M29-16 — another unit given: said under its name, the one asked for named', (tester) async {
+      when(() => bloc.state).thenReturn(
+        ReservationReady(
+          Reservation(
+            id: accepted.id,
+            status: ReservationStatus.accepted,
+            annonceId: 'a-4',
+            annonceTitle: 'Chambre 4',
+            residenceName: 'Résidence Deido',
+            requestedAnnonceId: 'a-1',
+            requestedAnnonceTitle: 'Chambre 2',
+            reservedUntil: accepted.reservedUntil,
+          ),
+        ),
+      );
+      await pump(tester, view());
+
+      expect(find.text('Chambre 4 · Résidence Deido'), findsOneWidget);
+      expect(find.text('Attribuée à la place de « Chambre 2 »'), findsOneWidget);
+    });
+
+    testWidgets('the unit asked for: nothing more said', (tester) async {
+      when(() => bloc.state).thenReturn(ReservationReady(accepted));
+      await pump(tester, view());
+
+      expect(find.textContaining('à la place de'), findsNothing);
+    });
+
     testWidgets('RM-M29-06 — a refusal gives its reason and the word that came with it', (tester) async {
       when(() => bloc.state).thenReturn(
         const ReservationReady(

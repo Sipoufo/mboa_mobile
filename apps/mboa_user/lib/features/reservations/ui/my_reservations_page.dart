@@ -138,6 +138,7 @@ class _Row extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: context.mboaText.label.copyWith(color: colors.ink),
                     ),
+                    ReassignedNote(reservation: reservation),
                     if (start != null && units != null) ...[
                       const SizedBox(height: 2),
                       Text(

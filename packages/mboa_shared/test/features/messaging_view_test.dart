@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart' as api;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -179,6 +180,7 @@ void main() {
           Message(
             id: 's-1',
             isSystem: true,
+            systemEvent: SystemEvent.reservationRequested,
             body: 'Je peux visiter samedi ?',
             sentAt: DateTime(2026, 10, 19, 9),
             reservation: ReservationSnapshot(
@@ -196,5 +198,46 @@ void main() {
     expect(find.textContaining('À partir du 1 novembre 2026'), findsOneWidget);
     expect(find.textContaining('6 mois'), findsOneWidget);
     expect(find.text('« Je peux visiter samedi ? »'), findsOneWidget);
+  });
+
+  testWidgets('RM-M29-16 — another unit assigned: Mboa\'s sentence, as it is, never as the client\'s words', (tester) async {
+    when(() => thread.state).thenReturn(
+      ThreadReady(
+        conversation: conversation(),
+        messages: [
+          Message(
+            id: 's-2',
+            isSystem: true,
+            systemEvent: SystemEvent.unitAssigned,
+            body: 'Le propriétaire t\'a attribué « Chambre 4 » (au lieu de « Chambre 2 »).',
+            sentAt: DateTime(2026, 10, 22, 9),
+          ),
+        ],
+      ),
+    );
+    await pump(tester, ThreadView(uploader: uploader));
+
+    expect(find.text('Unité attribuée'), findsOneWidget);
+    expect(find.text('Demande de réservation'), findsNothing);
+    expect(find.text('Le propriétaire t\'a attribué « Chambre 4 » (au lieu de « Chambre 2 »).'), findsOneWidget);
+  });
+
+  test('a system message says what it announces; one with a request and no event is the request', () {
+    Message read(api.MessageResponseSystemEventEnum? event, {bool withRequest = false}) => Message.fromResponse(
+          api.MessageResponse(
+            (b) {
+              b
+                ..id = 'm'
+                ..kind = api.MessageResponseKindEnum.SYSTEM
+                ..systemEvent = event;
+              if (withRequest) b.reservation.reservationRequestId = 'r-1';
+            },
+          ),
+        );
+
+    expect(read(api.MessageResponseSystemEventEnum.RESERVATION_UNIT_ASSIGNED).systemEvent, SystemEvent.unitAssigned);
+    expect(read(api.MessageResponseSystemEventEnum.HOME_REQUEST_UPDATED).systemEvent, SystemEvent.homeRequestUpdated);
+    expect(read(null, withRequest: true).systemEvent, SystemEvent.reservationRequested);
+    expect(read(null).systemEvent, SystemEvent.unknown);
   });
 }

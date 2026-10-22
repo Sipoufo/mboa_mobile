@@ -111,6 +111,28 @@ class ReservationSnapshot extends Equatable {
 }
 
 /// One message in a thread (CDC M12).
+/// What a system message announces — each drawn its own way: a request
+/// carries the client's words, the others are Mboa's own sentence.
+enum SystemEvent {
+  reservationRequested,
+
+  /// RM-M29-16 — the landlord assigned another unit of the residence.
+  unitAssigned,
+
+  /// M30 lot 3 — a request to the landlord, opened or moved on.
+  homeRequestOpened,
+  homeRequestUpdated,
+  unknown;
+
+  static SystemEvent fromWire(String? name) => switch (name) {
+        'RESERVATION_REQUESTED' => SystemEvent.reservationRequested,
+        'RESERVATION_UNIT_ASSIGNED' => SystemEvent.unitAssigned,
+        'HOME_REQUEST_OPENED' => SystemEvent.homeRequestOpened,
+        'HOME_REQUEST_UPDATED' => SystemEvent.homeRequestUpdated,
+        _ => SystemEvent.unknown,
+      };
+}
+
 class Message extends Equatable {
   const Message({
     required this.id,
@@ -122,6 +144,7 @@ class Message extends Equatable {
     this.readAt,
     this.status = MessageStatus.sent,
     this.isSystem = false,
+    this.systemEvent = SystemEvent.unknown,
     this.reservation,
   });
 
@@ -137,6 +160,7 @@ class Message extends Equatable {
         isMine = true,
         readAt = null,
         isSystem = false,
+        systemEvent = SystemEvent.unknown,
         reservation = null;
 
   final String id;
@@ -156,7 +180,11 @@ class Message extends Equatable {
   /// neither side of the thread, and not reportable.
   final bool isSystem;
 
-  /// What a system message announces — today, a reservation request.
+  /// What it announces, when [isSystem]. A system message that names no
+  /// event but carries a request is the request (before the field existed).
+  final SystemEvent systemEvent;
+
+  /// The request a system message announces.
   final ReservationSnapshot? reservation;
 
   List<String> get attachmentUrls =>
@@ -173,6 +201,10 @@ class Message extends Equatable {
         sentAt: response.sentAt?.toLocal(),
         readAt: response.readAt?.toLocal(),
         isSystem: response.kind?.name == 'SYSTEM',
+        systemEvent: switch (SystemEvent.fromWire(response.systemEvent?.name)) {
+          SystemEvent.unknown when response.reservation != null => SystemEvent.reservationRequested,
+          final event => event,
+        },
         reservation: ReservationSnapshot.fromResponse(response.reservation),
       );
 
@@ -186,6 +218,7 @@ class Message extends Equatable {
         readAt: readAt,
         status: status ?? this.status,
         isSystem: isSystem,
+        systemEvent: systemEvent,
         reservation: reservation,
       );
 
@@ -200,6 +233,7 @@ class Message extends Equatable {
         readAt,
         status,
         isSystem,
+        systemEvent,
         reservation,
       ];
 }

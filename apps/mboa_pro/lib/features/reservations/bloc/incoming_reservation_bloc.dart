@@ -5,6 +5,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import '../../annonces/data/annonce_repository.dart';
 import '../../annonces/models/annonce.dart';
 import '../data/incoming_reservations_repository.dart';
+import '../models/unit_choice.dart';
 
 /// What an answer was.
 enum ReservationDecision { accepted, refused, extended, cancelled }
@@ -26,9 +27,10 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
     on<IncomingReservationAccepted>((event, emit) => _decide(
           emit,
           ReservationDecision.accepted,
-          allowed: (r) => r.canAccept,
-          call: (id) => _repository.accept(id),
+          allowed: (r) => r.canAccept && (event.unitId == null || r.canAssignUnit),
+          call: (id) => _repository.accept(id, unitId: event.unitId),
         ));
+    on<IncomingReservationUnitsRequested>(_onUnits);
     on<IncomingReservationRefused>((event, emit) => _decide(
           emit,
           ReservationDecision.refused,
@@ -78,6 +80,22 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
     );
   }
 
+  /// RM-M29-16 — the units the landlord may assign, read when he chooses.
+  Future<void> _onUnits(IncomingReservationUnitsRequested event, Emitter<IncomingReservationState> emit) async {
+    final current = state;
+    if (current is! IncomingReservationReady || !current.reservation.canAssignUnit || current.unitsLoading) return;
+    emit(current.copyWith(unitsLoading: true));
+    try {
+      final units = await _repository.assignableUnits(current.reservation.id);
+      emit(_latest(current).copyWith(units: units));
+    } catch (_) {
+      emit(_latest(current).copyWith(unitsFailed: true));
+    }
+  }
+
+  IncomingReservationReady _latest(IncomingReservationReady fallback) =>
+      state is IncomingReservationReady ? state as IncomingReservationReady : fallback;
+
   Future<Annonce?> _listing(String annonceId) async {
     try {
       return await _annonces.getOne(annonceId);
@@ -105,9 +123,13 @@ class IncomingReservationBloc extends Bloc<IncomingReservationEvent, IncomingRes
     emit(current.copyWith(isBusy: true));
     try {
       final updated = await call(current.reservation.id);
+      // Another unit assigned: its photo and rent, not the one asked for.
+      final annonceId = updated.annonceId;
+      final listing = annonceId != null && annonceId != current.listing?.id ? await _listing(annonceId) : current.listing;
       emit(
         current.copyWith(
           reservation: updated,
+          listing: listing,
           // Accepting closes every other waiting request (RM-M29-04).
           otherPending: decision == ReservationDecision.accepted ? 0 : current.otherPending,
           done: decision,
@@ -144,8 +166,20 @@ final class IncomingReservationRequested extends IncomingReservationEvent {
   List<Object?> get props => [id];
 }
 
+/// [unitId]: another unit of the residence, assigned instead of the one
+/// asked for (RM-M29-16); null accepts as asked.
 final class IncomingReservationAccepted extends IncomingReservationEvent {
-  const IncomingReservationAccepted();
+  const IncomingReservationAccepted({this.unitId});
+
+  final String? unitId;
+
+  @override
+  List<Object?> get props => [unitId];
+}
+
+/// The units that may be assigned — read when the landlord comes to choose.
+final class IncomingReservationUnitsRequested extends IncomingReservationEvent {
+  const IncomingReservationUnitsRequested();
 }
 
 final class IncomingReservationRefused extends IncomingReservationEvent {
@@ -201,6 +235,9 @@ final class IncomingReservationReady extends IncomingReservationState {
     this.done,
     this.refusal,
     this.failed = false,
+    this.units,
+    this.unitsLoading = false,
+    this.unitsFailed = false,
   });
 
   final Reservation reservation;
@@ -222,25 +259,40 @@ final class IncomingReservationReady extends IncomingReservationState {
   /// The answer did not go through.
   final bool failed;
 
-  /// Transient outcomes are not carried over.
+  /// RM-M29-16 — the units that may be assigned, once read; kept.
+  final List<UnitChoice>? units;
+  final bool unitsLoading;
+
+  /// They could not be read — said once.
+  final bool unitsFailed;
+
+  /// Transient outcomes are not carried over; what was read is.
   IncomingReservationReady copyWith({
     Reservation? reservation,
+    Annonce? listing,
     int? otherPending,
     bool isBusy = false,
     ReservationDecision? done,
     DecisionRefusal? refusal,
     bool failed = false,
+    List<UnitChoice>? units,
+    bool unitsLoading = false,
+    bool unitsFailed = false,
   }) =>
       IncomingReservationReady(
         reservation ?? this.reservation,
-        listing: listing,
+        listing: listing ?? this.listing,
         otherPending: otherPending ?? this.otherPending,
         isBusy: isBusy,
         done: done,
         refusal: refusal,
         failed: failed,
+        units: units ?? this.units,
+        unitsLoading: unitsLoading,
+        unitsFailed: unitsFailed,
       );
 
   @override
-  List<Object?> get props => [reservation, listing, otherPending, isBusy, done, refusal, failed];
+  List<Object?> get props =>
+      [reservation, listing, otherPending, isBusy, done, refusal, failed, units, unitsLoading, unitsFailed];
 }

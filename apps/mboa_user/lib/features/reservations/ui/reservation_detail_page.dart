@@ -130,6 +130,7 @@ class _Body extends StatelessWidget {
             Padding(padding: const EdgeInsets.only(top: 6), child: ReservationStatusChip(status: r.status)),
           ],
         ),
+        ReassignedNote(reservation: r),
         const SizedBox(height: Dimens.spacing),
         if (r.status == ReservationStatus.accepted) ...[
           ReservationTicket(reservation: r, nextStep: l10n.reservationNextStepBody),

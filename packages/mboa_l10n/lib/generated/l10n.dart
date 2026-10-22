@@ -13221,6 +13221,98 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Attribuée à la place de « {title} »`
+  String reservationAssignedInsteadOf(String title) {
+    return Intl.message(
+      'Attribuée à la place de « $title »',
+      name: 'reservationAssignedInsteadOf',
+      desc:
+          'RM-M29-16: the unit reserved is another than the one asked for (both apps)',
+      args: [title],
+    );
+  }
+
+  /// `Quelle unité attribuer ?`
+  String get proReservationAssignTitle {
+    return Intl.message(
+      'Quelle unité attribuer ?',
+      name: 'proReservationAssignTitle',
+      desc: 'Pro: sheet title when accepting a request on a residence',
+      args: [],
+    );
+  }
+
+  /// `La demande porte sur « {title} ». Tu peux attribuer une autre unité libre de la résidence : le contrat sera rédigé sur celle-ci.`
+  String proReservationAssignHint(String title) {
+    return Intl.message(
+      'La demande porte sur « $title ». Tu peux attribuer une autre unité libre de la résidence : le contrat sera rédigé sur celle-ci.',
+      name: 'proReservationAssignHint',
+      desc: 'Pro: hint in the unit sheet',
+      args: [title],
+    );
+  }
+
+  /// `Demandée`
+  String get proReservationAssignRequested {
+    return Intl.message(
+      'Demandée',
+      name: 'proReservationAssignRequested',
+      desc: 'Pro: tag on the unit the client asked for',
+      args: [],
+    );
+  }
+
+  /// `Accepter avec « {title} »`
+  String proReservationAcceptWith(String title) {
+    return Intl.message(
+      'Accepter avec « $title »',
+      name: 'proReservationAcceptWith',
+      desc: 'Pro: accepting while assigning another unit',
+      args: [title],
+    );
+  }
+
+  /// `Les unités de la résidence n'ont pas pu être lues. Réessaie.`
+  String get proReservationAssignFailed {
+    return Intl.message(
+      'Les unités de la résidence n\'ont pas pu être lues. Réessaie.',
+      name: 'proReservationAssignFailed',
+      desc: 'Pro: the assignable units could not be read',
+      args: [],
+    );
+  }
+
+  /// `Unité attribuée`
+  String get messageSystemUnitAssignedTitle {
+    return Intl.message(
+      'Unité attribuée',
+      name: 'messageSystemUnitAssignedTitle',
+      desc:
+          'Thread system message: the landlord assigned another unit (RM-M29-16)',
+      args: [],
+    );
+  }
+
+  /// `Demande au propriétaire`
+  String get messageSystemHomeRequestTitle {
+    return Intl.message(
+      'Demande au propriétaire',
+      name: 'messageSystemHomeRequestTitle',
+      desc: 'Thread system message: a request to the landlord (M30 lot 3)',
+      args: [],
+    );
+  }
+
+  /// `Message de Mboa`
+  String get messageSystemTitle {
+    return Intl.message(
+      'Message de Mboa',
+      name: 'messageSystemTitle',
+      desc: 'Thread system message of a kind this build does not know',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

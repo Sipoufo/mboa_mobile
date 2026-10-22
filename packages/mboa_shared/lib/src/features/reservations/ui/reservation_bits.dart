@@ -48,6 +48,40 @@ String refusalReasonLabel(I18n l10n, RefusalReason reason) => switch (reason) {
       RefusalReason.other => l10n.reservationRefusalOther,
     };
 
+/// RM-M29-16 — the landlord assigned another unit of the residence than the
+/// one asked for: said on both sides, under the unit's name. Nothing when
+/// the unit is the one asked for.
+class ReassignedNote extends StatelessWidget {
+  const ReassignedNote({super.key, required this.reservation});
+
+  final Reservation reservation;
+
+  @override
+  Widget build(BuildContext context) {
+    final asked = reservation.requestedAnnonceTitle;
+    if (!reservation.wasReassigned || asked == null) return const SizedBox.shrink();
+    final colors = context.mboaColors;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimens.spacingXs),
+      child: Row(
+        children: [
+          Icon(LucideIcons.arrowRightLeft, size: Dimens.iconSm, color: colors.primary),
+          const SizedBox(width: Dimens.spacingXs),
+          Flexible(
+            child: Text(
+              I18n.of(context).reservationAssignedInsteadOf(asked),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: context.mboaText.caption.copyWith(color: colors.primary, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// "Réservation confirmée" — the founder's ticket, without its barcode: a
 /// reference, the hold's last day, and what comes next.
 class ReservationTicket extends StatelessWidget {

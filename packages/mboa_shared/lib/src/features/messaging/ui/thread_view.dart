@@ -277,6 +277,16 @@ class _SystemCard extends StatelessWidget {
     final request = message.reservation;
     final start = request?.desiredStartDate;
     final units = request?.durationUnits;
+    // A request carries the client's words; the rest is Mboa's own sentence.
+    final isRequest = message.systemEvent == SystemEvent.reservationRequested;
+    final (IconData icon, String title) = switch (message.systemEvent) {
+      SystemEvent.reservationRequested => (LucideIcons.calendarCheck, l10n.messageSystemReservationTitle),
+      SystemEvent.unitAssigned => (LucideIcons.arrowRightLeft, l10n.messageSystemUnitAssignedTitle),
+      SystemEvent.homeRequestOpened ||
+      SystemEvent.homeRequestUpdated =>
+        (LucideIcons.wrench, l10n.messageSystemHomeRequestTitle),
+      SystemEvent.unknown => (LucideIcons.info, l10n.messageSystemTitle),
+    };
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Dimens.spacingSm, horizontal: Dimens.spacingLg),
@@ -292,11 +302,11 @@ class _SystemCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(LucideIcons.calendarCheck, size: Dimens.iconSm, color: colors.primary),
+                Icon(icon, size: Dimens.iconSm, color: colors.primary),
                 const SizedBox(width: Dimens.spacingSm),
                 Expanded(
                   child: Text(
-                    l10n.messageSystemReservationTitle,
+                    title,
                     style: context.mboaText.label.copyWith(color: colors.primary, fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -312,13 +322,17 @@ class _SystemCard extends StatelessWidget {
                 style: context.mboaText.body.copyWith(color: colors.ink),
               ),
             ],
-            // The client's own words, if they wrote any.
+            // A request: the client's own words, if they wrote any, quoted.
+            // Anything else: Mboa's sentence, as it is.
             if (message.body case final body? when body.trim().isNotEmpty) ...[
               const SizedBox(height: Dimens.spacingSm),
-              Text(
-                '« ${body.trim()} »',
-                style: context.mboaText.body.copyWith(color: colors.textSecondary, fontStyle: FontStyle.italic),
-              ),
+              if (isRequest)
+                Text(
+                  '« ${body.trim()} »',
+                  style: context.mboaText.body.copyWith(color: colors.textSecondary, fontStyle: FontStyle.italic),
+                )
+              else
+                Text(body.trim(), style: context.mboaText.body.copyWith(color: colors.ink)),
             ],
           ],
         ),

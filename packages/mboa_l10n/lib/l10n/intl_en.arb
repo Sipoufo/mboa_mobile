@@ -5225,5 +5225,56 @@
   "proReservationUnitAlreadyRequested": "This client already asked for that unit: accept that request instead.",
   "@proReservationUnitAlreadyRequested": {
     "description": "Refusal: client already has a request on the unit"
+  },
+  "reservationAssignedInsteadOf": "Assigned instead of “{title}”",
+  "@reservationAssignedInsteadOf": {
+    "description": "RM-M29-16: the unit reserved is another than the one asked for (both apps)",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAssignTitle": "Which unit to assign?",
+  "@proReservationAssignTitle": {
+    "description": "Pro: sheet title when accepting a request on a residence"
+  },
+  "proReservationAssignHint": "The request is for “{title}”. You can assign another free unit of the residence: the contract will be drawn on that one.",
+  "@proReservationAssignHint": {
+    "description": "Pro: hint in the unit sheet",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAssignRequested": "Asked for",
+  "@proReservationAssignRequested": {
+    "description": "Pro: tag on the unit the client asked for"
+  },
+  "proReservationAcceptWith": "Accept with “{title}”",
+  "@proReservationAcceptWith": {
+    "description": "Pro: accepting while assigning another unit",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAssignFailed": "The residence's units could not be read. Try again.",
+  "@proReservationAssignFailed": {
+    "description": "Pro: the assignable units could not be read"
+  },
+  "messageSystemUnitAssignedTitle": "Unit assigned",
+  "@messageSystemUnitAssignedTitle": {
+    "description": "Thread system message: the landlord assigned another unit (RM-M29-16)"
+  },
+  "messageSystemHomeRequestTitle": "Request to the landlord",
+  "@messageSystemHomeRequestTitle": {
+    "description": "Thread system message: a request to the landlord (M30 lot 3)"
+  },
+  "messageSystemTitle": "Message from Mboa",
+  "@messageSystemTitle": {
+    "description": "Thread system message of a kind this build does not know"
   }
 }

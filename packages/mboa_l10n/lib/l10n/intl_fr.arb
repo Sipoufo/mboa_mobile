@@ -5225,5 +5225,56 @@
   "proReservationUnitAlreadyRequested": "Ce client a déjà demandé cette unité : accepte plutôt cette demande-là.",
   "@proReservationUnitAlreadyRequested": {
     "description": "Refusal: client already has a request on the unit"
+  },
+  "reservationAssignedInsteadOf": "Attribuée à la place de « {title} »",
+  "@reservationAssignedInsteadOf": {
+    "description": "RM-M29-16: the unit reserved is another than the one asked for (both apps)",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAssignTitle": "Quelle unité attribuer ?",
+  "@proReservationAssignTitle": {
+    "description": "Pro: sheet title when accepting a request on a residence"
+  },
+  "proReservationAssignHint": "La demande porte sur « {title} ». Tu peux attribuer une autre unité libre de la résidence : le contrat sera rédigé sur celle-ci.",
+  "@proReservationAssignHint": {
+    "description": "Pro: hint in the unit sheet",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAssignRequested": "Demandée",
+  "@proReservationAssignRequested": {
+    "description": "Pro: tag on the unit the client asked for"
+  },
+  "proReservationAcceptWith": "Accepter avec « {title} »",
+  "@proReservationAcceptWith": {
+    "description": "Pro: accepting while assigning another unit",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "proReservationAssignFailed": "Les unités de la résidence n'ont pas pu être lues. Réessaie.",
+  "@proReservationAssignFailed": {
+    "description": "Pro: the assignable units could not be read"
+  },
+  "messageSystemUnitAssignedTitle": "Unité attribuée",
+  "@messageSystemUnitAssignedTitle": {
+    "description": "Thread system message: the landlord assigned another unit (RM-M29-16)"
+  },
+  "messageSystemHomeRequestTitle": "Demande au propriétaire",
+  "@messageSystemHomeRequestTitle": {
+    "description": "Thread system message: a request to the landlord (M30 lot 3)"
+  },
+  "messageSystemTitle": "Message de Mboa",
+  "@messageSystemTitle": {
+    "description": "Thread system message of a kind this build does not know"
   }
 }

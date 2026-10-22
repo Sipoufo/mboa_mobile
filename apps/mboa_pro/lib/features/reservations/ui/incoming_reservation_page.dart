@@ -16,6 +16,7 @@ import '../bloc/incoming_reservation_bloc.dart';
 import '../bloc/pending_reservations_bloc.dart';
 import '../data/incoming_reservations_repository.dart';
 import 'widgets/decision_sheet.dart';
+import 'widgets/unit_assign_sheet.dart';
 
 /// One request on a prestataire's listing (CDC M29), after the founder's
 /// mockup: the property, the stay, the indicative total and who asks — then
@@ -52,9 +53,13 @@ class IncomingReservationView extends StatelessWidget {
     return BlocConsumer<IncomingReservationBloc, IncomingReservationState>(
       listenWhen: (_, current) =>
           current is IncomingReservationReady &&
-          (current.done != null || current.refusal != null || current.failed),
+          (current.done != null || current.refusal != null || current.failed || current.unitsFailed),
       listener: (context, state) {
         final ready = state as IncomingReservationReady;
+        if (ready.unitsFailed) {
+          MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.proReservationAssignFailed);
+          return;
+        }
         if (ready.done case final done?) {
           MboaToast.success(
             context: context,
@@ -278,6 +283,7 @@ class _RequestCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: context.mboaText.h3.copyWith(color: colors.ink),
                     ),
+                    ReassignedNote(reservation: r),
                     if (price != null && listing != null) ...[
                       const SizedBox(height: Dimens.spacingXs),
                       Text(
@@ -543,6 +549,25 @@ class _Actions extends StatelessWidget {
   Future<void> _accept(BuildContext context) async {
     final l10n = I18n.of(context);
     final bloc = context.read<IncomingReservationBloc>();
+    final r = state.reservation;
+    // RM-M29-16 — on a residence, the choice of the unit is the confirmation.
+    if (r.canAssignUnit && r.annonceId != null) {
+      if (state.units == null) bloc.add(const IncomingReservationUnitsRequested());
+      final chosen = await showModalBottomSheet<String>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: context.mboaColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
+        ),
+        builder: (_) => BlocProvider<IncomingReservationBloc>.value(
+          value: bloc,
+          child: UnitAssignSheet(requestedId: r.annonceId!, requestedTitle: r.annonceTitle),
+        ),
+      );
+      if (chosen != null) bloc.add(IncomingReservationAccepted(unitId: chosen == r.annonceId ? null : chosen));
+      return;
+    }
     final confirmed = await _confirm(
       context,
       title: l10n.proReservationAcceptConfirmTitle,
