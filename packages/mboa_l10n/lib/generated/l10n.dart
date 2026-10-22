@@ -364,16 +364,6 @@ class I18n {
     );
   }
 
-  /// `Lien du PDF copié`
-  String get contractPdfCopied {
-    return Intl.message(
-      'Lien du PDF copié',
-      name: 'contractPdfCopied',
-      desc: 'The URL is short-lived; url_launcher is unwired.',
-      args: [],
-    );
-  }
-
   /// `Modifier les termes`
   String get contractAmend {
     return Intl.message(
@@ -12845,6 +12835,109 @@ class I18n {
       'Cette facture est déjà réglée ou annulée.',
       name: 'declRefusedInvoiceSettled',
       desc: 'Refusal: declaring an invoice that is no longer open',
+      args: [],
+    );
+  }
+
+  /// `Reçu de paiement`
+  String get receiptTitle {
+    return Intl.message(
+      'Reçu de paiement',
+      name: 'receiptTitle',
+      desc:
+          'M30 slice D: the receipt a confirmed payment produces (card title, file name)',
+      args: [],
+    );
+  }
+
+  /// `Établi par Mboa à la confirmation. Il précise que le paiement a été fait hors de Mboa.`
+  String get receiptBody {
+    return Intl.message(
+      'Établi par Mboa à la confirmation. Il précise que le paiement a été fait hors de Mboa.',
+      name: 'receiptBody',
+      desc: 'M30 slice D: receipt card, ready',
+      args: [],
+    );
+  }
+
+  /// `Quittance en préparation…`
+  String get receiptPreparing {
+    return Intl.message(
+      'Quittance en préparation…',
+      name: 'receiptPreparing',
+      desc: 'M30 slice D: receipt card while the PDF is made (CA-M30-02)',
+      args: [],
+    );
+  }
+
+  /// `Le reçu tarde à arriver. Réessaie dans un instant.`
+  String get receiptLate {
+    return Intl.message(
+      'Le reçu tarde à arriver. Réessaie dans un instant.',
+      name: 'receiptLate',
+      desc: 'M30 slice D: receipt still not made after the automatic reads',
+      args: [],
+    );
+  }
+
+  /// `Télécharger le reçu`
+  String get receiptDownload {
+    return Intl.message(
+      'Télécharger le reçu',
+      name: 'receiptDownload',
+      desc: 'M30 slice D: main action once a payment is confirmed',
+      args: [],
+    );
+  }
+
+  /// `Le reçu n'a pas pu être téléchargé. Réessaie.`
+  String get receiptFailed {
+    return Intl.message(
+      'Le reçu n\'a pas pu être téléchargé. Réessaie.',
+      name: 'receiptFailed',
+      desc: 'M30 slice D: the receipt PDF could not be fetched',
+      args: [],
+    );
+  }
+
+  /// `Contrat Mboa`
+  String get contractPdfFileName {
+    return Intl.message(
+      'Contrat Mboa',
+      name: 'contractPdfFileName',
+      desc:
+          'File name of a contract\'s PDF on the share sheet (followed by the property)',
+      args: [],
+    );
+  }
+
+  /// `Le propriétaire a confirmé l'avoir reçu.`
+  String get declarationConfirmedBody {
+    return Intl.message(
+      'Le propriétaire a confirmé l\'avoir reçu.',
+      name: 'declarationConfirmedBody',
+      desc: 'Declaration detail: a confirmed payment, no date known',
+      args: [],
+    );
+  }
+
+  /// `Le propriétaire a confirmé l'avoir reçu le {date}.`
+  String declarationConfirmedOn(String date) {
+    return Intl.message(
+      'Le propriétaire a confirmé l\'avoir reçu le $date.',
+      name: 'declarationConfirmedOn',
+      desc:
+          'Declaration detail: a confirmed payment, with the day of the answer',
+      args: [date],
+    );
+  }
+
+  /// `Le propriétaire conteste ce paiement.`
+  String get declarationContestedBody {
+    return Intl.message(
+      'Le propriétaire conteste ce paiement.',
+      name: 'declarationContestedBody',
+      desc: 'Declaration detail: a contested payment (its reason follows)',
       args: [],
     );
   }

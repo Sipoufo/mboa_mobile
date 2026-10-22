@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -66,7 +65,6 @@ class ContractDetailView extends StatelessWidget {
             (curr is ContractDetailReady &&
                 (curr.lastActionFailed ||
                     curr.justActed ||
-                    curr.pdfUrl != null ||
                     curr.terminationRefusal != null)),
         listener: (context, state) {
           if (state is ContractWasCancelled) {
@@ -96,14 +94,6 @@ class ContractDetailView extends StatelessWidget {
               title: l10n.commonErrorTitle,
               description: l10n.contractActionFailed,
             );
-            return;
-          }
-          if (ready.pdfUrl case final url?) {
-            // CA-M08-01 — the URL is short-lived, and nothing in the app opens
-            // one yet (url_launcher is unwired everywhere else), so it is
-            // copied rather than half-opened.
-            Clipboard.setData(ClipboardData(text: url));
-            MboaToast.success(context: context, title: l10n.contractPdfCopied);
             return;
           }
           if (ready.justActed) {
@@ -922,7 +912,11 @@ class _SignedBar extends StatelessWidget {
                 isLoading: state.isBusy,
                 onPressed: state.isBusy
                     ? null
-                    : () => context.read<ContractDetailBloc>().add(const ContractPdfRequested()),
+                    : () => context.read<ContractDetailBloc>().add(
+                          ContractPdfRequested(
+                            name: [l10n.contractPdfFileName, ?state.contract.annonceTitle].join(' — '),
+                          ),
+                        ),
               ),
             ),
             if (hasMore) ...[

@@ -71,9 +71,15 @@ class ContractCancelled extends ContractDetailEvent {
   const ContractCancelled();
 }
 
-/// CA-M08-01.
+/// CA-M08-01 — fetched and offered as `[name].pdf`.
 class ContractPdfRequested extends ContractDetailEvent {
-  const ContractPdfRequested();
+  const ContractPdfRequested({this.name = 'Contrat Mboa'});
+
+  /// The file name the user sees.
+  final String name;
+
+  @override
+  List<Object?> get props => [name];
 }
 
 /// RM-M08-11 — ask to end a signed contract: proposed to the other party

@@ -127,10 +127,6 @@
   "@contractPdf": {
     "description": "CA-M08-01."
   },
-  "contractPdfCopied": "PDF link copied",
-  "@contractPdfCopied": {
-    "description": "The URL is short-lived; url_launcher is unwired."
-  },
   "contractAmend": "Amend the terms",
   "@contractAmend": {
     "description": "RM-M08-08."
@@ -5049,5 +5045,50 @@
   "declRefusedInvoiceSettled": "This invoice is already paid or cancelled.",
   "@declRefusedInvoiceSettled": {
     "description": "Refusal: declaring an invoice that is no longer open"
+  },
+  "receiptTitle": "Payment receipt",
+  "@receiptTitle": {
+    "description": "M30 slice D: the receipt a confirmed payment produces (card title, file name)"
+  },
+  "receiptBody": "Issued by Mboa on confirmation. It states that the payment was made outside Mboa.",
+  "@receiptBody": {
+    "description": "M30 slice D: receipt card, ready"
+  },
+  "receiptPreparing": "Receipt being prepared…",
+  "@receiptPreparing": {
+    "description": "M30 slice D: receipt card while the PDF is made (CA-M30-02)"
+  },
+  "receiptLate": "The receipt is taking a while. Try again in a moment.",
+  "@receiptLate": {
+    "description": "M30 slice D: receipt still not made after the automatic reads"
+  },
+  "receiptDownload": "Download the receipt",
+  "@receiptDownload": {
+    "description": "M30 slice D: main action once a payment is confirmed"
+  },
+  "receiptFailed": "The receipt could not be downloaded. Try again.",
+  "@receiptFailed": {
+    "description": "M30 slice D: the receipt PDF could not be fetched"
+  },
+  "contractPdfFileName": "Mboa contract",
+  "@contractPdfFileName": {
+    "description": "File name of a contract's PDF on the share sheet (followed by the property)"
+  },
+  "declarationConfirmedBody": "The landlord confirmed receiving it.",
+  "@declarationConfirmedBody": {
+    "description": "Declaration detail: a confirmed payment, no date known"
+  },
+  "declarationConfirmedOn": "The landlord confirmed receiving it on {date}.",
+  "@declarationConfirmedOn": {
+    "description": "Declaration detail: a confirmed payment, with the day of the answer",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "declarationContestedBody": "The landlord contests this payment.",
+  "@declarationContestedBody": {
+    "description": "Declaration detail: a contested payment (its reason follows)"
   }
 }

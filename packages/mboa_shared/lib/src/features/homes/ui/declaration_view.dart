@@ -46,10 +46,19 @@ class DeclarationView extends StatelessWidget {
 
     return BlocConsumer<DeclarationBloc, DeclarationState>(
       listenWhen: (_, current) =>
-          current is DeclarationReady && (current.done != null || current.refusal != null || current.failed),
+          current is DeclarationReady &&
+          (current.done != null ||
+              current.refusal != null ||
+              current.failed ||
+              current.receiptNotReady ||
+              current.receiptFailed),
       listener: (context, state) {
         final ready = state as DeclarationReady;
-        if (ready.done case final done?) {
+        if (ready.receiptNotReady) {
+          MboaToast.info(context: context, title: l10n.receiptPreparing);
+        } else if (ready.receiptFailed) {
+          MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.receiptFailed);
+        } else if (ready.done case final done?) {
           MboaToast.success(
             context: context,
             title: done == DeclarationAnswer.confirmed ? l10n.declarationConfirmedToast : l10n.declarationContestedToast,
@@ -76,7 +85,15 @@ class DeclarationView extends StatelessWidget {
             ),
           final DeclarationReady ready => _Body(state: ready),
         },
-        bottomNavigationBar: state is DeclarationReady ? _AnswerBar(state: state) : null,
+        bottomNavigationBar: switch (state) {
+          // The landlord's answer while it waits; once confirmed, the receipt
+          // — for either party. Nothing while it is made: the card says so.
+          final DeclarationReady ready when ready.declaration.canConfirm || ready.declaration.canContest =>
+            _AnswerBar(state: ready),
+          final DeclarationReady ready when ready.declaration.receiptId != null && !ready.receiptPending =>
+            _ReceiptBar(state: ready),
+          _ => null,
+        },
       ),
     );
   }
@@ -100,8 +117,12 @@ class _Body extends StatelessWidget {
       DeclarationStatus.declared when d.canConfirm => (l10n.declarationWaitingYou, colors.warning),
       DeclarationStatus.declared => (l10n.declarationWaiting, colors.warning),
       DeclarationStatus.unconfirmed => (l10n.declarationUnconfirmedBody, colors.warning),
-      DeclarationStatus.confirmed => (l10n.declStatusConfirmed, colors.success),
-      DeclarationStatus.contested => (l10n.declStatusContested, colors.error),
+      // The chip says the status; the line says who did what, and when.
+      DeclarationStatus.confirmed => (
+          d.answeredAt == null ? l10n.declarationConfirmedBody : l10n.declarationConfirmedOn(date(d.answeredAt!)),
+          colors.success,
+        ),
+      DeclarationStatus.contested => (l10n.declarationContestedBody, colors.error),
       DeclarationStatus.unknown => (l10n.reservationStatusUnknown, colors.textSecondary),
     };
 
@@ -208,6 +229,10 @@ class _Body extends StatelessWidget {
             ],
           ),
         ),
+        if (d.receiptId != null) ...[
+          const SizedBox(height: Dimens.spacing),
+          _ReceiptCard(state: state),
+        ],
         const SizedBox(height: Dimens.spacing),
         Container(
           padding: const EdgeInsets.all(Dimens.spacing),
@@ -255,6 +280,99 @@ class _Body extends StatelessWidget {
 
   static String _initials(String name) =>
       name.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty).take(2).map((w) => w[0].toUpperCase()).join();
+}
+
+/// The receipt a confirmation produced (slice D): ready, being made, or late
+/// in coming. Its PDF says what Mboa did — and did not: no money held.
+class _ReceiptCard extends StatelessWidget {
+  const _ReceiptCard({required this.state});
+
+  final DeclarationReady state;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Container(
+      padding: const EdgeInsets.all(Dimens.spacing),
+      decoration: BoxDecoration(color: colors.surface, borderRadius: BorderRadius.circular(Dimens.radiusMd)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(color: colors.primaryPale, shape: BoxShape.circle),
+            child: state.receiptPending && !state.receiptWaitOver
+                ? Padding(
+                    padding: const EdgeInsets.all(Dimens.spacingMd),
+                    child: CircularProgressIndicator(strokeWidth: 2, color: colors.primary),
+                  )
+                : Icon(LucideIcons.fileCheck2, color: colors.primary, size: Dimens.icon),
+          ),
+          const SizedBox(width: Dimens.spacingMd),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.receiptTitle, style: context.mboaText.label.copyWith(color: colors.ink)),
+                const SizedBox(height: 2),
+                Text(
+                  switch (state) {
+                    DeclarationReady(receiptWaitOver: true) => l10n.receiptLate,
+                    DeclarationReady(receiptPending: true) => l10n.receiptPreparing,
+                    _ => l10n.receiptBody,
+                  },
+                  style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                ),
+                if (state.receiptWaitOver)
+                  TextButton(
+                    style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 36)),
+                    onPressed: () =>
+                        context.read<DeclarationBloc>().add(const DeclarationReceiptRefreshed(byHand: true)),
+                    child: Text(l10n.commonRetry),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Once confirmed: the receipt, the one main action for either party.
+class _ReceiptBar extends StatelessWidget {
+  const _ReceiptBar({required this.state});
+
+  final DeclarationReady state;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final d = state.declaration;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    // The file name the user sees: what, where, when — never an id.
+    final name = [
+      l10n.receiptTitle,
+      ?d.annonceTitle,
+      if (d.paidOn case final paidOn?) DateFormat.yMMMd(locale).format(paidOn),
+    ].join(' — ');
+
+    return Container(
+      decoration: BoxDecoration(color: colors.surface, border: Border(top: BorderSide(color: colors.border))),
+      child: SafeArea(
+        minimum: const EdgeInsets.all(Dimens.spacing),
+        child: Button.primary(
+          title: l10n.receiptDownload,
+          isLoading: state.receiptBusy,
+          onPressed: () => context.read<DeclarationBloc>().add(DeclarationReceiptRequested(name: name)),
+        ),
+      ),
+    );
+  }
 }
 
 /// The landlord's answer: confirm as the one main action, contest behind

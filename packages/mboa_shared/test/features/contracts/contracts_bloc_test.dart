@@ -5,6 +5,8 @@ import 'package:mocktail/mocktail.dart';
 
 class MockContractRepository extends Mock implements ContractRepository {}
 
+class MockPdfSharer extends Mock implements PdfSharer {}
+
 Contract contract({
   String id = 'c-1',
   ContractStatus status = ContractStatus.sent,
@@ -29,8 +31,12 @@ Contract contract({
 /// tested in `mboa_pro`.
 void main() {
   late MockContractRepository repository;
+  late MockPdfSharer sharer;
 
-  setUp(() => repository = MockContractRepository());
+  setUp(() {
+    repository = MockContractRepository();
+    sharer = MockPdfSharer();
+  });
 
   group('the list', () {
     ContractsBloc build() => ContractsBloc(repository: repository);
@@ -154,16 +160,32 @@ void main() {
     );
 
     blocTest<ContractDetailBloc, ContractDetailState>(
-      'CA-M08-01 — the PDF link is carried once, not stored',
-      setUp: () => when(() => repository.pdfUrl('c-1'))
-          .thenAnswer((_) async => 'https://r2/signed.pdf'),
-      build: build,
+      'CA-M08-01 — the PDF is fetched and offered under its name, not copied as a link',
+      setUp: () {
+        when(() => repository.pdfUrl('c-1')).thenAnswer((_) async => 'https://r2/signed.pdf');
+        when(() => sharer.shareLink(any(), name: any(named: 'name'))).thenAnswer((_) async {});
+      },
+      build: () => ContractDetailBloc(repository: repository, sharer: sharer),
+      seed: () => ContractDetailReady(contract(status: ContractStatus.signed)),
+      act: (bloc) => bloc.add(const ContractPdfRequested(name: 'Contrat Mboa — Studio')),
+      verify: (bloc) {
+        verify(() => sharer.shareLink('https://r2/signed.pdf', name: 'Contrat Mboa — Studio')).called(1);
+        final state = bloc.state as ContractDetailReady;
+        expect(state.isBusy, isFalse);
+        expect(state.lastActionFailed, isFalse);
+      },
+    );
+
+    blocTest<ContractDetailBloc, ContractDetailState>(
+      'a PDF that cannot be fetched is said',
+      setUp: () {
+        when(() => repository.pdfUrl('c-1')).thenAnswer((_) async => 'https://r2/signed.pdf');
+        when(() => sharer.shareLink(any(), name: any(named: 'name'))).thenThrow(Exception('offline'));
+      },
+      build: () => ContractDetailBloc(repository: repository, sharer: sharer),
       seed: () => ContractDetailReady(contract(status: ContractStatus.signed)),
       act: (bloc) => bloc.add(const ContractPdfRequested()),
-      verify: (bloc) => expect(
-        (bloc.state as ContractDetailReady).pdfUrl,
-        'https://r2/signed.pdf',
-      ),
+      verify: (bloc) => expect((bloc.state as ContractDetailReady).lastActionFailed, isTrue),
     );
 
     blocTest<ContractDetailBloc, ContractDetailState>(

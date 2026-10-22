@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../media/pdf_sharer.dart';
 import '../data/contract_repository.dart';
 import '../models/contract.dart';
 
@@ -16,8 +18,9 @@ part 'contract_detail_state.dart';
 /// would be a bug waiting to happen.
 class ContractDetailBloc
     extends Bloc<ContractDetailEvent, ContractDetailState> {
-  ContractDetailBloc({required ContractRepository repository})
+  ContractDetailBloc({required ContractRepository repository, PdfSharer? sharer})
       : _repository = repository,
+        _sharer = sharer ?? PdfSharer(),
         super(const ContractDetailInitial()) {
     on<ContractRequested>(_onRequested);
     on<ContractSent>(_onSent);
@@ -34,6 +37,7 @@ class ContractDetailBloc
   }
 
   final ContractRepository _repository;
+  final PdfSharer _sharer;
 
   Future<void> _onRequested(
     ContractRequested event,
@@ -131,7 +135,9 @@ class ContractDetailBloc
     }
   }
 
-  /// CA-M08-01 — a short-lived URL, handed to the screen to open.
+  /// CA-M08-01 — a short-lived link, fetched and offered on the share sheet
+  /// (save, print, send). It used to be copied to the clipboard: nothing in
+  /// the app opened one.
   Future<void> _onPdf(
     ContractPdfRequested event,
     Emitter<ContractDetailState> emit,
@@ -142,7 +148,8 @@ class ContractDetailBloc
     emit(current.copyWith(isBusy: true));
     try {
       final url = await _repository.pdfUrl(current.contract.id);
-      emit(current.copyWith(isBusy: false, pdfUrl: url));
+      await _sharer.shareLink(url, name: event.name);
+      emit(current.copyWith(isBusy: false));
     } catch (_) {
       emit(current.copyWith(isBusy: false, lastActionFailed: true));
     }

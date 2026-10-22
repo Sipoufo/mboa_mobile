@@ -21,7 +21,6 @@ class ContractDetailReady extends ContractDetailState {
     this.isBusy = false,
     this.justActed = false,
     this.lastActionFailed = false,
-    this.pdfUrl,
     this.terminationRefusal,
   });
 
@@ -33,9 +32,6 @@ class ContractDetailReady extends ContractDetailState {
 
   final bool lastActionFailed;
 
-  /// CA-M08-01 — short-lived, so it is carried once and not stored.
-  final String? pdfUrl;
-
   /// RM-M08-11 — why the server turned a termination down; said once.
   final TerminationRefusal? terminationRefusal;
 
@@ -44,7 +40,6 @@ class ContractDetailReady extends ContractDetailState {
     bool? isBusy,
     bool justActed = false,
     bool lastActionFailed = false,
-    String? pdfUrl,
     TerminationRefusal? terminationRefusal,
   }) =>
       ContractDetailReady(
@@ -52,13 +47,12 @@ class ContractDetailReady extends ContractDetailState {
         isBusy: isBusy ?? this.isBusy,
         justActed: justActed,
         lastActionFailed: lastActionFailed,
-        pdfUrl: pdfUrl,
         terminationRefusal: terminationRefusal,
       );
 
   @override
   List<Object?> get props =>
-      [contract, isBusy, justActed, lastActionFailed, pdfUrl, terminationRefusal];
+      [contract, isBusy, justActed, lastActionFailed, terminationRefusal];
 }
 
 /// Gone: the screen pops, and the list re-reads.

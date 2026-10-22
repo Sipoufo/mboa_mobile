@@ -11,6 +11,8 @@ import '../score/load_brand_fonts.dart';
 
 class MockHomesRepository extends Mock implements HomesRepository {}
 
+class MockPdfSharer extends Mock implements PdfSharer {}
+
 class MockDeclarationBloc extends MockBloc<DeclarationEvent, DeclarationState> implements DeclarationBloc {}
 
 /// CDC M30 — one declared payment, read by either party, answered by the
@@ -22,6 +24,9 @@ void main() {
     bool canConfirm = false,
     bool canContest = false,
     String? contestReason,
+    String? receiptId,
+    bool receiptReady = false,
+    DateTime? answeredAt,
   }) =>
       Declaration(
         id: 'd-1',
@@ -40,6 +45,9 @@ void main() {
         declaredAt: DateTime(2026, 10, 19),
         canConfirm: canConfirm,
         canContest: canContest,
+        receiptId: receiptId,
+        receiptReady: receiptReady,
+        answeredAt: answeredAt,
       );
 
   group('the bloc', () {
@@ -169,6 +177,127 @@ void main() {
     );
   });
 
+  group('the receipt (slice D)', () {
+    late MockHomesRepository repository;
+    late MockPdfSharer sharer;
+
+    setUp(() {
+      repository = MockHomesRepository();
+      sharer = MockPdfSharer();
+    });
+
+    DeclarationBloc build({int tries = 3}) => DeclarationBloc(
+          repository: repository,
+          sharer: sharer,
+          receiptPoll: const Duration(milliseconds: 5),
+          receiptPollTries: tries,
+        );
+
+    final pending = declaration(status: DeclarationStatus.confirmed, receiptId: 'r-1');
+    final ready = declaration(status: DeclarationStatus.confirmed, receiptId: 'r-1', receiptReady: true);
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'CA-M30-02 — named but not made: read again until it is, then no more',
+      setUp: () {
+        var reads = 0;
+        when(() => repository.declaration('c-1', 'd-1')).thenAnswer((_) async => ++reads < 3 ? pending : ready);
+        when(() => repository.proofUrls('c-1', 'd-1')).thenAnswer((_) async => const []);
+      },
+      build: build,
+      act: (bloc) => bloc.add(const DeclarationRequested(id: 'd-1', contractId: 'c-1')),
+      wait: const Duration(milliseconds: 100),
+      verify: (bloc) {
+        final state = bloc.state as DeclarationReady;
+        expect(state.declaration.receiptReady, isTrue);
+        expect(state.receiptPending, isFalse);
+        // The first read, then two more: ready at the third, and it stops.
+        verify(() => repository.declaration('c-1', 'd-1')).called(3);
+      },
+    );
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'a confirmation names the receipt: the landlord\'s screen waits for it too',
+      setUp: () {
+        when(() => repository.confirm('d-1')).thenAnswer((_) async => pending);
+        when(() => repository.receivedDeclaration('d-1')).thenAnswer((_) async => ready);
+      },
+      build: build,
+      seed: () => DeclarationReady(declaration(canConfirm: true)),
+      act: (bloc) => bloc.add(const DeclarationConfirmed()),
+      wait: const Duration(milliseconds: 50),
+      verify: (bloc) => expect((bloc.state as DeclarationReady).declaration.receiptReady, isTrue),
+    );
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'still not made after the tries: the wait is over, said; by hand, read again',
+      setUp: () {
+        var reads = 0;
+        when(() => repository.declaration('c-1', 'd-1')).thenAnswer((_) async => ++reads < 5 ? pending : ready);
+        when(() => repository.proofUrls('c-1', 'd-1')).thenAnswer((_) async => const []);
+      },
+      build: () => build(tries: 2),
+      act: (bloc) async {
+        bloc.add(const DeclarationRequested(id: 'd-1', contractId: 'c-1'));
+        await Future<void>.delayed(const Duration(milliseconds: 80));
+        expect((bloc.state as DeclarationReady).receiptWaitOver, isTrue);
+        // No more automatic reads once it is over.
+        verify(() => repository.declaration('c-1', 'd-1')).called(3);
+        bloc.add(const DeclarationReceiptRefreshed(byHand: true));
+      },
+      wait: const Duration(milliseconds: 80),
+      verify: (bloc) {
+        final state = bloc.state as DeclarationReady;
+        expect(state.declaration.receiptReady, isTrue);
+        expect(state.receiptWaitOver, isFalse);
+      },
+    );
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'ready: fetched and offered under the name the screen gives',
+      setUp: () {
+        when(() => repository.receiptPdfUrl('r-1')).thenAnswer((_) async => 'https://r2/r-1.pdf');
+        when(() => sharer.shareLink(any(), name: any(named: 'name'))).thenAnswer((_) async {});
+      },
+      build: build,
+      seed: () => DeclarationReady(ready),
+      act: (bloc) => bloc.add(const DeclarationReceiptRequested(name: 'Reçu de paiement — Studio Akwa')),
+      expect: () => [DeclarationReady(ready, receiptBusy: true), DeclarationReady(ready)],
+      verify: (_) =>
+          verify(() => sharer.shareLink('https://r2/r-1.pdf', name: 'Reçu de paiement — Studio Akwa')).called(1),
+    );
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'the server still making it is said as such, not as a failure',
+      setUp: () => when(() => repository.receiptPdfUrl('r-1')).thenThrow(const ReceiptNotReady()),
+      build: build,
+      seed: () => DeclarationReady(ready),
+      act: (bloc) => bloc.add(const DeclarationReceiptRequested(name: 'x')),
+      expect: () => [DeclarationReady(ready, receiptBusy: true), DeclarationReady(ready, receiptNotReady: true)],
+      verify: (_) => verifyNever(() => sharer.shareLink(any(), name: any(named: 'name'))),
+    );
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'a download that fails is said',
+      setUp: () {
+        when(() => repository.receiptPdfUrl('r-1')).thenAnswer((_) async => 'https://r2/r-1.pdf');
+        when(() => sharer.shareLink(any(), name: any(named: 'name'))).thenThrow(Exception('offline'));
+      },
+      build: build,
+      seed: () => DeclarationReady(ready),
+      act: (bloc) => bloc.add(const DeclarationReceiptRequested(name: 'x')),
+      expect: () => [DeclarationReady(ready, receiptBusy: true), DeclarationReady(ready, receiptFailed: true)],
+    );
+
+    blocTest<DeclarationBloc, DeclarationState>(
+      'no receipt, nothing asked',
+      build: build,
+      seed: () => DeclarationReady(declaration()),
+      act: (bloc) => bloc.add(const DeclarationReceiptRequested(name: 'x')),
+      expect: () => const <DeclarationState>[],
+      verify: (_) => verifyNever(() => repository.receiptPdfUrl(any())),
+    );
+  });
+
   group('the screen', () {
     late MockDeclarationBloc bloc;
 
@@ -254,6 +383,76 @@ void main() {
       await pump(tester, DeclarationReady(declaration(status: DeclarationStatus.contested, contestReason: 'Rien reçu')));
 
       expect(find.text('« Rien reçu »'), findsOneWidget);
+    });
+
+    testWidgets('confirmed: the receipt is the main action, for either party, under a readable name', (tester) async {
+      await pump(
+        tester,
+        DeclarationReady(declaration(status: DeclarationStatus.confirmed, receiptId: 'r-1', receiptReady: true)),
+      );
+
+      expect(find.text('Reçu de paiement'), findsOneWidget);
+      await tester.tap(find.text('Télécharger le reçu'));
+      verify(
+        () => bloc.add(const DeclarationReceiptRequested(name: 'Reçu de paiement — Studio Akwa — 18 oct. 2026')),
+      ).called(1);
+    });
+
+    testWidgets('being made: said on the card, and no button to press yet', (tester) async {
+      when(() => bloc.state).thenReturn(
+        DeclarationReady(declaration(status: DeclarationStatus.confirmed, receiptId: 'r-1')),
+      );
+      tester.view.physicalSize = const Size(390 * 3, 844 * 3);
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('fr'),
+          theme: MboaTheme.light(),
+          localizationsDelegates: MboaLocalizations.delegates,
+          supportedLocales: MboaLocalizations.supportedLocales,
+          home: BlocProvider<DeclarationBloc>.value(value: bloc, child: const DeclarationView()),
+        ),
+      );
+      // The spinner turns forever: pumped, not settled.
+      await tester.pump();
+
+      expect(find.text('Quittance en préparation…'), findsOneWidget);
+      expect(find.text('Télécharger le reçu'), findsNothing);
+    });
+
+    testWidgets('late in coming: said, and tried again by hand', (tester) async {
+      await pump(
+        tester,
+        DeclarationReady(
+          declaration(status: DeclarationStatus.confirmed, receiptId: 'r-1'),
+          receiptWaitOver: true,
+        ),
+      );
+
+      expect(find.textContaining('tarde à arriver'), findsOneWidget);
+      await tester.tap(find.text('Réessayer'));
+      verify(() => bloc.add(const DeclarationReceiptRefreshed(byHand: true))).called(1);
+    });
+
+    testWidgets('the receipt, as the tenant sees it', (tester) async {
+      await pump(
+        tester,
+        DeclarationReady(
+          declaration(
+            status: DeclarationStatus.confirmed,
+            receiptId: 'r-1',
+            receiptReady: true,
+            answeredAt: DateTime(2026, 10, 20, 8),
+          ),
+        ),
+      );
+
+      // Who did what, and when — not the chip's word again.
+      expect(find.text('Le propriétaire a confirmé l\'avoir reçu le 20 octobre 2026.'), findsOneWidget);
+
+      await expectLater(find.byType(DeclarationView), matchesGoldenFile('goldens/declaration_receipt.png'));
     });
 
     testWidgets('the declaration, as the landlord sees it', (tester) async {
