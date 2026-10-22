@@ -11,6 +11,8 @@ import '../../features/assignments/bloc/property_agent_bloc.dart';
 import '../../features/assignments/data/agent_mission_repository.dart';
 import '../../features/assignments/data/assignment_repository.dart';
 import '../../features/annonces/data/location_capture.dart';
+import '../../features/contacts/bloc/contact_form_bloc.dart';
+import '../../features/contacts/bloc/my_contacts_bloc.dart';
 import '../../features/contracts/bloc/contract_form_bloc.dart';
 import '../../features/visits/bloc/prestataire_visits_bloc.dart';
 import '../../features/visits/bloc/visit_review_bloc.dart';
@@ -321,6 +323,11 @@ void registerAppModule() {
     (contractId, _) => EvidenceBloc(repository: getIt<EvidenceRepository>(), contractId: contractId),
   );
   getIt.registerFactory<EvidenceBatchBloc>(() => EvidenceBatchBloc(repository: getIt<EvidenceRepository>()));
+  getIt.registerLazySingleton<ContactsRepository>(
+    () => ContactsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactory<MyContactsBloc>(() => MyContactsBloc(repository: getIt<ContactsRepository>()));
+  getIt.registerFactory<ContactFormBloc>(() => ContactFormBloc(repository: getIt<ContactsRepository>()));
   getIt.registerLazySingleton<OpenRequestsBloc>(
     () => OpenRequestsBloc(repository: getIt<HomeRequestsRepository>()),
   );

@@ -105,6 +105,9 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: ReceivedRequestsRoute.page, path: 'requests'),
             AutoRoute(page: TenantHomeRequestsRoute.page, path: 'rents/homes/:contractId/requests'),
             AutoRoute(page: TenantRequestRoute.page, path: 'home-requests/:requestId'),
+            // M30 lot 3 — useful contacts.
+            AutoRoute(page: ContactsRoute.page, path: 'contacts'),
+            AutoRoute(page: ContactFormRoute.page, path: 'contacts/form'),
             // M30 lot 3 — a tenancy's photo proofs (N-39).
             AutoRoute(page: TenantEvidenceRoute.page, path: 'rents/homes/:contractId/evidence'),
             AutoRoute(page: TenantEvidenceBatchRoute.page, path: 'rents/homes/:contractId/evidence/:batchId'),

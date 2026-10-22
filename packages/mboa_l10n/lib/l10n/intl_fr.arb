@@ -5770,5 +5770,110 @@
   "evidenceRefusedAlready": "Une de ces photos est déjà enregistrée.",
   "@evidenceRefusedAlready": {
     "description": "Evidence refused"
+  },
+  "contactsUsefulTitle": "Contacts utiles",
+  "@contactsUsefulTitle": {
+    "description": "M30 lot 3: useful contacts screen title"
+  },
+  "contactsEmptyTenant": "Ton propriétaire n'a encore partagé aucun contact pour ce logement.",
+  "@contactsEmptyTenant": {
+    "description": "Contacts: empty, tenant"
+  },
+  "contactsEmptyLandlord": "Aucun contact pour l'instant. Gardien, ménagère, plombier : note ici qui appeler, et partage-les avec tes locataires si tu veux.",
+  "@contactsEmptyLandlord": {
+    "description": "Contacts: empty, landlord"
+  },
+  "contactsLandlordHint": "Tes locataires ne voient que le nom, le rôle et le numéro des contacts que tu partages.",
+  "@contactsLandlordHint": {
+    "description": "Contacts: what the tenant sees"
+  },
+  "contactsOffline": "Hors ligne : tes contacts tels qu'à ta dernière connexion.",
+  "@contactsOffline": {
+    "description": "Contacts: offline"
+  },
+  "contactsCall": "Appeler",
+  "@contactsCall": {
+    "description": "Contacts: call"
+  },
+  "contactsAdd": "Ajouter un contact",
+  "@contactsAdd": {
+    "description": "Contacts: main action"
+  },
+  "contactsEdit": "Modifier le contact",
+  "@contactsEdit": {
+    "description": "Contacts: edit title"
+  },
+  "contactsFull": "15 contacts au plus.",
+  "@contactsFull": {
+    "description": "Contacts: the cap"
+  },
+  "contactsInvalid": "Vérifie le numéro : 9 chiffres après +237.",
+  "@contactsInvalid": {
+    "description": "Contacts refused: invalid"
+  },
+  "contactsPrivate": "Privé",
+  "@contactsPrivate": {
+    "description": "Contacts: not shared"
+  },
+  "contactsSharedAll": "Tous mes biens",
+  "@contactsSharedAll": {
+    "description": "Contacts: shared everywhere"
+  },
+  "contactsSharedSome": "{count, plural, =1{Partagé sur 1 bien} other{Partagé sur {count} biens}}",
+  "@contactsSharedSome": {
+    "description": "Contacts: shared on some",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactsName": "Nom",
+  "@contactsName": {
+    "description": "Contact form"
+  },
+  "contactsRole": "Rôle",
+  "@contactsRole": {
+    "description": "Contact form"
+  },
+  "contactsPhone": "Téléphone",
+  "@contactsPhone": {
+    "description": "Contact form"
+  },
+  "contactsShare": "Partager avec mes locataires",
+  "@contactsShare": {
+    "description": "Contact form: share switch"
+  },
+  "contactsShareHint": "Sur tous tes biens, ou seulement ceux que tu choisis.",
+  "@contactsShareHint": {
+    "description": "Contact form: share hint"
+  },
+  "contactsSave": "Enregistrer",
+  "@contactsSave": {
+    "description": "Contact form: main action"
+  },
+  "contactsDelete": "Supprimer le contact",
+  "@contactsDelete": {
+    "description": "Contact form: delete (behind ⋯)"
+  },
+  "contactsRoleCaretaker": "Gardien",
+  "@contactsRoleCaretaker": {
+    "description": "Contact role suggestion"
+  },
+  "contactsRoleCleaner": "Ménagère",
+  "@contactsRoleCleaner": {
+    "description": "Contact role suggestion"
+  },
+  "contactsRolePlumber": "Plombier",
+  "@contactsRolePlumber": {
+    "description": "Contact role suggestion"
+  },
+  "contactsRoleElectrician": "Électricien",
+  "@contactsRoleElectrician": {
+    "description": "Contact role suggestion"
+  },
+  "contactsRoleSecurity": "Agent de sécurité",
+  "@contactsRoleSecurity": {
+    "description": "Contact role suggestion"
   }
 }

@@ -79,6 +79,12 @@ class ProMenuPage extends StatelessWidget {
                     label: l10n.proRequestsTitle,
                     onTap: () => _go(context, const ReceivedRequestsRoute()),
                   ),
+                  // M30 lot 3 — the people around his properties.
+                  _MenuEntry(
+                    icon: LucideIcons.contactRound,
+                    label: l10n.contactsUsefulTitle,
+                    onTap: () => _go(context, const ContactsRoute()),
+                  ),
                   // M30 — the declared payments and the tenants' spaces.
                   _MenuEntry(
                     icon: LucideIcons.handCoins,

@@ -14416,6 +14416,258 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Contacts utiles`
+  String get contactsUsefulTitle {
+    return Intl.message(
+      'Contacts utiles',
+      name: 'contactsUsefulTitle',
+      desc: 'M30 lot 3: useful contacts screen title',
+      args: [],
+    );
+  }
+
+  /// `Ton propriétaire n'a encore partagé aucun contact pour ce logement.`
+  String get contactsEmptyTenant {
+    return Intl.message(
+      'Ton propriétaire n\'a encore partagé aucun contact pour ce logement.',
+      name: 'contactsEmptyTenant',
+      desc: 'Contacts: empty, tenant',
+      args: [],
+    );
+  }
+
+  /// `Aucun contact pour l'instant. Gardien, ménagère, plombier : note ici qui appeler, et partage-les avec tes locataires si tu veux.`
+  String get contactsEmptyLandlord {
+    return Intl.message(
+      'Aucun contact pour l\'instant. Gardien, ménagère, plombier : note ici qui appeler, et partage-les avec tes locataires si tu veux.',
+      name: 'contactsEmptyLandlord',
+      desc: 'Contacts: empty, landlord',
+      args: [],
+    );
+  }
+
+  /// `Tes locataires ne voient que le nom, le rôle et le numéro des contacts que tu partages.`
+  String get contactsLandlordHint {
+    return Intl.message(
+      'Tes locataires ne voient que le nom, le rôle et le numéro des contacts que tu partages.',
+      name: 'contactsLandlordHint',
+      desc: 'Contacts: what the tenant sees',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : tes contacts tels qu'à ta dernière connexion.`
+  String get contactsOffline {
+    return Intl.message(
+      'Hors ligne : tes contacts tels qu\'à ta dernière connexion.',
+      name: 'contactsOffline',
+      desc: 'Contacts: offline',
+      args: [],
+    );
+  }
+
+  /// `Appeler`
+  String get contactsCall {
+    return Intl.message(
+      'Appeler',
+      name: 'contactsCall',
+      desc: 'Contacts: call',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un contact`
+  String get contactsAdd {
+    return Intl.message(
+      'Ajouter un contact',
+      name: 'contactsAdd',
+      desc: 'Contacts: main action',
+      args: [],
+    );
+  }
+
+  /// `Modifier le contact`
+  String get contactsEdit {
+    return Intl.message(
+      'Modifier le contact',
+      name: 'contactsEdit',
+      desc: 'Contacts: edit title',
+      args: [],
+    );
+  }
+
+  /// `15 contacts au plus.`
+  String get contactsFull {
+    return Intl.message(
+      '15 contacts au plus.',
+      name: 'contactsFull',
+      desc: 'Contacts: the cap',
+      args: [],
+    );
+  }
+
+  /// `Vérifie le numéro : 9 chiffres après +237.`
+  String get contactsInvalid {
+    return Intl.message(
+      'Vérifie le numéro : 9 chiffres après +237.',
+      name: 'contactsInvalid',
+      desc: 'Contacts refused: invalid',
+      args: [],
+    );
+  }
+
+  /// `Privé`
+  String get contactsPrivate {
+    return Intl.message(
+      'Privé',
+      name: 'contactsPrivate',
+      desc: 'Contacts: not shared',
+      args: [],
+    );
+  }
+
+  /// `Tous mes biens`
+  String get contactsSharedAll {
+    return Intl.message(
+      'Tous mes biens',
+      name: 'contactsSharedAll',
+      desc: 'Contacts: shared everywhere',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{Partagé sur 1 bien} other{Partagé sur {count} biens}}`
+  String contactsSharedSome(int count) {
+    return Intl.plural(
+      count,
+      one: 'Partagé sur 1 bien',
+      other: 'Partagé sur $count biens',
+      name: 'contactsSharedSome',
+      desc: 'Contacts: shared on some',
+      args: [count],
+    );
+  }
+
+  /// `Nom`
+  String get contactsName {
+    return Intl.message(
+      'Nom',
+      name: 'contactsName',
+      desc: 'Contact form',
+      args: [],
+    );
+  }
+
+  /// `Rôle`
+  String get contactsRole {
+    return Intl.message(
+      'Rôle',
+      name: 'contactsRole',
+      desc: 'Contact form',
+      args: [],
+    );
+  }
+
+  /// `Téléphone`
+  String get contactsPhone {
+    return Intl.message(
+      'Téléphone',
+      name: 'contactsPhone',
+      desc: 'Contact form',
+      args: [],
+    );
+  }
+
+  /// `Partager avec mes locataires`
+  String get contactsShare {
+    return Intl.message(
+      'Partager avec mes locataires',
+      name: 'contactsShare',
+      desc: 'Contact form: share switch',
+      args: [],
+    );
+  }
+
+  /// `Sur tous tes biens, ou seulement ceux que tu choisis.`
+  String get contactsShareHint {
+    return Intl.message(
+      'Sur tous tes biens, ou seulement ceux que tu choisis.',
+      name: 'contactsShareHint',
+      desc: 'Contact form: share hint',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get contactsSave {
+    return Intl.message(
+      'Enregistrer',
+      name: 'contactsSave',
+      desc: 'Contact form: main action',
+      args: [],
+    );
+  }
+
+  /// `Supprimer le contact`
+  String get contactsDelete {
+    return Intl.message(
+      'Supprimer le contact',
+      name: 'contactsDelete',
+      desc: 'Contact form: delete (behind ⋯)',
+      args: [],
+    );
+  }
+
+  /// `Gardien`
+  String get contactsRoleCaretaker {
+    return Intl.message(
+      'Gardien',
+      name: 'contactsRoleCaretaker',
+      desc: 'Contact role suggestion',
+      args: [],
+    );
+  }
+
+  /// `Ménagère`
+  String get contactsRoleCleaner {
+    return Intl.message(
+      'Ménagère',
+      name: 'contactsRoleCleaner',
+      desc: 'Contact role suggestion',
+      args: [],
+    );
+  }
+
+  /// `Plombier`
+  String get contactsRolePlumber {
+    return Intl.message(
+      'Plombier',
+      name: 'contactsRolePlumber',
+      desc: 'Contact role suggestion',
+      args: [],
+    );
+  }
+
+  /// `Électricien`
+  String get contactsRoleElectrician {
+    return Intl.message(
+      'Électricien',
+      name: 'contactsRoleElectrician',
+      desc: 'Contact role suggestion',
+      args: [],
+    );
+  }
+
+  /// `Agent de sécurité`
+  String get contactsRoleSecurity {
+    return Intl.message(
+      'Agent de sécurité',
+      name: 'contactsRoleSecurity',
+      desc: 'Contact role suggestion',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

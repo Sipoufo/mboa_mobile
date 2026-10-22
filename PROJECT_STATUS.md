@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-23.
+> Last updated: 2026-10-24.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1339 tests green, analyze clean.** `mboa_user` 351 · `mboa_pro` 583 ·
-`mboa_core` 19 · `mboa_shared` 358 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1412 tests green, analyze clean.** `mboa_user` 370 · `mboa_pro` 598 ·
+`mboa_core` 19 · `mboa_shared` 397 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -63,6 +63,8 @@
 | M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
 | M29 réservation — lot 1 | ✅ **tenant**: "Réserver" on the fiche, request screen (stay, indicative total, no money), "Ma demande" + ticket, "Mes réservations" (offline) · **Pro**: inbox (timeline), request detail (accept / refuse with reason / extend / cancel), home counter, contract drawn up from a request (RM-M08-10), unreserve by hand (RM-M10-10) · system message in the thread · N-32/33/34 routed |
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
+| M30 Mon Logement — lot 3 | ✅ the space's daily-life tiles, both apps: **Demandes** (ask — remark, repair, question, photos —, follow, reply in the property's thread; the landlord takes it in hand and resolves it; Pro inbox + home nudge; N-38), **État des lieux** (photos by phase and room, compressed and fingerprinted, uploaded with a signed checksum, recorded with Mboa's time, acknowledged once by the landlord; N-39), **Contacts** (the landlord's 15, shared on all or some properties; the tenant calls them) · the space's lists are tabs |
+| M04 search home | ✅ after the founder's mockup: greeting, city + filters, category tabs, « À la une » (Pro / Pro+), row cards, the map one floating pill away · rating and distance wait for §33 |
 | M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) and the space's « Quittances et reçus » · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
@@ -1154,8 +1156,11 @@ Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **M30 lot 3** (photo proofs, requests to the landlord, useful contacts) —
-  shipped by the backend; waits for the founder's mockups.
+- **§33** (backend): the rating and the distance on search results — then
+  « Proche de vous », « à X km » and the location permission (phase 2 of
+  the search home).
+- **M31** « Mes anciens logements » — the backend's next lot; the evidence
+  entry/exit comparison (`/evidence/compare`) belongs there.
 - **M24 / M25 landlord side** (issuing invoices, the register) — behind the
   finance add-on; the register's system-kept lines (`readOnly`) come with it.
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
