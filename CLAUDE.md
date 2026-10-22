@@ -356,7 +356,11 @@ make bootstrap          # reinstall dependencies
 - When facing an error (crash, assertion, incorrect render), identify which layer it originates from (UI, BLoC, Repository, DioClient) before fixing.
 - Fix autonomously, write a regression test, document cause + fix in the commit message.
 
-## 8. Self-Improvement
+## 8. Skills and Sub-agents
+
+- You may use **any skill and any sub-agent** available in the session that you judge useful to solve a task — exploration, planning, code review, design critique, research, parallel work — without asking first.
+
+## 9. Self-Improvement
 
 - After each feature, identify opportunities: widget extractions, missing golden tests, list performance (ListView.builder vs Column).
 - Suggest updates to this file — never modify it autonomously.
