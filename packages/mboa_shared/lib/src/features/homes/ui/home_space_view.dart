@@ -26,7 +26,8 @@ class HomeSpaceView extends StatelessWidget {
   final void Function(Declaration declaration)? onOpenDeclaration;
 
   /// The tenancy's invoices (M24, slice E) — the tenant's alone: the
-  /// landlord's are behind the finance add-on. Drawn after the schedule.
+  /// landlord's are behind the finance add-on. The body of the "Factures"
+  /// tab, which only exists when it is given.
   final Widget? invoices;
 
   @override
@@ -61,22 +62,64 @@ class HomeSpaceView extends StatelessWidget {
                 ],
               ),
             ),
-          final HomeSpaceReady ready => RefreshIndicator(
-              onRefresh: () async => context.read<HomeSpaceBloc>().add(HomeSpaceRequested(ready.home.contractId)),
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
+          final HomeSpaceReady ready => _Space(view: this, ready: ready),
+        },
+      ),
+    );
+  }
+}
+
+enum _Tab { schedule, invoices, receipts, declarations }
+
+/// The space: what is due and the actions scroll away; the lists — the
+/// schedule, the invoices, the receipts, the declarations — each have a tab,
+/// so a long schedule never buries the rest.
+class _Space extends StatelessWidget {
+  const _Space({required this.view, required this.ready});
+
+  final HomeSpaceView view;
+  final HomeSpaceReady ready;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final tabs = [
+      _Tab.schedule,
+      if (view.invoices != null) _Tab.invoices,
+      _Tab.receipts,
+      _Tab.declarations,
+    ];
+    String label(_Tab tab) => switch (tab) {
+          _Tab.schedule => l10n.myHomeScheduleTitle,
+          _Tab.invoices => l10n.invoicesTitle,
+          _Tab.receipts => l10n.myHomeTabReceipts,
+          _Tab.declarations => l10n.myHomeDeclarationsTitle,
+        };
+
+    return DefaultTabController(
+      length: tabs.length,
+      child: RefreshIndicator(
+        // The lists scroll inside the outer view: their pull refreshes too.
+        notificationPredicate: (notification) => notification.depth <= 2,
+        onRefresh: () async => context.read<HomeSpaceBloc>().add(HomeSpaceRequested(ready.home.contractId)),
+        child: NestedScrollView(
+          headerSliverBuilder: (context, _) => [
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, 0),
+              sliver: SliverList.list(
                 children: [
                   if (ready.isOffline) ...[
                     _Notice(icon: LucideIcons.wifiOff, tone: colors.warning, text: l10n.myHomeOffline),
                     const SizedBox(height: Dimens.spacing),
                   ],
                   _Header(home: ready.home),
-                  if (onDeclare != null && ready.home.isWritable && !ready.isOffline) ...[
+                  if (view.onDeclare != null && ready.home.isWritable && !ready.isOffline) ...[
                     const SizedBox(height: Dimens.spacingLg),
                     _RoundActions(
-                      onDeclare: () => onDeclare!(ready, null),
-                      onDeposit: ready.home.deposit.amount > 0 && onDeclareDeposit != null
-                          ? () => onDeclareDeposit!(ready)
+                      onDeclare: () => view.onDeclare!(ready, null),
+                      onDeposit: ready.home.deposit.amount > 0 && view.onDeclareDeposit != null
+                          ? () => view.onDeclareDeposit!(ready)
                           : null,
                     ),
                   ],
@@ -84,67 +127,133 @@ class HomeSpaceView extends StatelessWidget {
                     const SizedBox(height: Dimens.spacingLg),
                     _Totals(totals: totals),
                   ],
-                  if (onDeclare != null) ...[
+                  if (view.onDeclare != null) ...[
                     const SizedBox(height: Dimens.spacing),
                     _Notice(icon: LucideIcons.shieldCheck, tone: colors.primary, text: l10n.myHomeNoMoney),
                   ],
-                  const SizedBox(height: Dimens.spacingLg),
-                  HomeSectionTitle(l10n.myHomeScheduleTitle),
-                  if (ready.schedule.moreBefore && !ready.isOffline)
-                    Center(
-                      child: TextButton.icon(
-                        onPressed: ready.loadingOlder
-                            ? null
-                            : () => context.read<HomeSpaceBloc>().add(const HomeSpaceOlderRequested()),
-                        icon: ready.loadingOlder
-                            ? const Loader(size: Dimens.loaderSizeXs)
-                            : const Icon(LucideIcons.chevronUp, size: Dimens.iconSm),
-                        label: Text(l10n.myHomeOlder),
-                      ),
-                    ),
-                  for (final (index, due) in ready.schedule.dues.indexed)
-                    _DueRow(
-                      due: due,
-                      last: index == ready.schedule.dues.length - 1,
-                      onTap: () {
-                        final declarations = ready.declarationsOf(due);
-                        if (declarations.isNotEmpty && onOpenDeclaration != null) {
-                          onOpenDeclaration!(declarations.last);
-                        } else if (due.status.isOpen && onDeclare != null && ready.home.isWritable && !ready.isOffline) {
-                          onDeclare!(ready, due);
-                        }
-                      },
-                    ),
-                  ?invoices,
-                  if (ready.receipts.isNotEmpty) ...[
-                    const SizedBox(height: Dimens.spacingLg),
-                    HomeSectionTitle(l10n.receiptsTitle),
-                    for (final receipt in ready.receipts)
-                      ReceiptRow(
-                        receipt: receipt,
-                        // Its PDF is downloaded where its declaration is read,
-                        // which is opened by its id.
-                        onTap: onOpenDeclaration == null
-                            ? null
-                            : () => onOpenDeclaration!(
-                                  Declaration(id: receipt.declarationId, contractId: ready.home.contractId),
-                                ),
-                      ),
-                  ],
-                  if (ready.declarations.isNotEmpty) ...[
-                    const SizedBox(height: Dimens.spacingLg),
-                    HomeSectionTitle(l10n.myHomeDeclarationsTitle),
-                    for (final declaration in ready.declarations)
-                      DeclarationRow(
-                        declaration: declaration,
-                        onTap: onOpenDeclaration == null ? null : () => onOpenDeclaration!(declaration),
-                      ),
-                  ],
+                  const SizedBox(height: Dimens.spacing),
                 ],
               ),
             ),
-        },
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _TabBarHeader(
+                TabBar(
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  labelColor: colors.primary,
+                  unselectedLabelColor: colors.textSecondary,
+                  labelStyle: context.mboaText.label.copyWith(fontWeight: FontWeight.w700),
+                  unselectedLabelStyle: context.mboaText.label,
+                  indicatorColor: colors.primary,
+                  dividerColor: colors.border,
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.screenMargin - Dimens.spacingSm),
+                  tabs: [for (final tab in tabs) Tab(text: label(tab))],
+                ),
+                background: colors.background,
+              ),
+            ),
+          ],
+          body: TabBarView(
+            children: [for (final tab in tabs) _TabBody(view: view, ready: ready, tab: tab)],
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class _TabBarHeader extends SliverPersistentHeaderDelegate {
+  const _TabBarHeader(this.tabBar, {required this.background});
+
+  final TabBar tabBar;
+  final Color background;
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) =>
+      ColoredBox(color: background, child: tabBar);
+
+  @override
+  bool shouldRebuild(_TabBarHeader old) => old.tabBar != tabBar || old.background != background;
+}
+
+/// One tab's list — or what it is waiting for.
+class _TabBody extends StatelessWidget {
+  const _TabBody({required this.view, required this.ready, required this.tab});
+
+  final HomeSpaceView view;
+  final HomeSpaceReady ready;
+  final _Tab tab;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final onOpen = view.onOpenDeclaration;
+    Widget empty(String text) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.spacingXl),
+          child: Text(text, textAlign: TextAlign.center, style: context.mboaText.body.copyWith(color: colors.textSecondary)),
+        );
+
+    final children = switch (tab) {
+      _Tab.schedule => [
+          if (ready.schedule.moreBefore && !ready.isOffline)
+            Center(
+              child: TextButton.icon(
+                onPressed: ready.loadingOlder
+                    ? null
+                    : () => context.read<HomeSpaceBloc>().add(const HomeSpaceOlderRequested()),
+                icon: ready.loadingOlder
+                    ? const Loader(size: Dimens.loaderSizeXs)
+                    : const Icon(LucideIcons.chevronUp, size: Dimens.iconSm),
+                label: Text(l10n.myHomeOlder),
+              ),
+            ),
+          if (ready.schedule.dues.isEmpty) empty(l10n.myHomeScheduleEmpty),
+          for (final (index, due) in ready.schedule.dues.indexed)
+            _DueRow(
+              due: due,
+              last: index == ready.schedule.dues.length - 1,
+              onTap: () {
+                final declarations = ready.declarationsOf(due);
+                if (declarations.isNotEmpty && onOpen != null) {
+                  onOpen(declarations.last);
+                } else if (due.status.isOpen && view.onDeclare != null && ready.home.isWritable && !ready.isOffline) {
+                  view.onDeclare!(ready, due);
+                }
+              },
+            ),
+        ],
+      _Tab.invoices => [?view.invoices],
+      _Tab.receipts => [
+          if (ready.receipts.isEmpty) empty(l10n.myHomeReceiptsEmpty),
+          for (final receipt in ready.receipts)
+            ReceiptRow(
+              receipt: receipt,
+              // Its PDF is downloaded where its declaration is read, which
+              // is opened by its id.
+              onTap: onOpen == null
+                  ? null
+                  : () => onOpen(Declaration(id: receipt.declarationId, contractId: ready.home.contractId)),
+            ),
+        ],
+      _Tab.declarations => [
+          if (ready.declarations.isEmpty) empty(l10n.myHomeDeclarationsEmpty),
+          for (final declaration in ready.declarations)
+            DeclarationRow(declaration: declaration, onTap: onOpen == null ? null : () => onOpen(declaration)),
+        ],
+    };
+
+    return ListView(
+      key: PageStorageKey(tab),
+      padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
+      children: children,
     );
   }
 }

@@ -1439,6 +1439,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invoiceStatusPaid": MessageLookupByLibrary.simpleMessage("Paid"),
     "invoiceStatusToPay": MessageLookupByLibrary.simpleMessage("To pay"),
     "invoiceTitle": MessageLookupByLibrary.simpleMessage("Invoice"),
+    "invoicesEmpty": MessageLookupByLibrary.simpleMessage("No invoices yet."),
     "invoicesTitle": MessageLookupByLibrary.simpleMessage("Invoices"),
     "kycAccountAgent": MessageLookupByLibrary.simpleMessage("Agent account"),
     "kycAccountPrestataire": MessageLookupByLibrary.simpleMessage(
@@ -1698,6 +1699,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "missionsWithdraw": MessageLookupByLibrary.simpleMessage("Withdraw"),
     "myHomeConfirmedTotal": MessageLookupByLibrary.simpleMessage("Confirmed"),
     "myHomeContestedTotal": MessageLookupByLibrary.simpleMessage("Contested"),
+    "myHomeDeclarationsEmpty": MessageLookupByLibrary.simpleMessage(
+      "No payment declared yet.",
+    ),
     "myHomeDeclarationsTitle": MessageLookupByLibrary.simpleMessage(
       "Declarations",
     ),
@@ -1719,8 +1723,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "myHomeOverdue": MessageLookupByLibrary.simpleMessage("Overdue"),
     "myHomeOverdueCount": m61,
     "myHomePeriod": m62,
+    "myHomeReceiptsEmpty": MessageLookupByLibrary.simpleMessage(
+      "No receipts yet. One comes as soon as a payment is confirmed.",
+    ),
+    "myHomeScheduleEmpty": MessageLookupByLibrary.simpleMessage(
+      "No due dates yet.",
+    ),
     "myHomeScheduleTitle": MessageLookupByLibrary.simpleMessage("Schedule"),
     "myHomeStartsOn": m63,
+    "myHomeTabReceipts": MessageLookupByLibrary.simpleMessage("Receipts"),
     "myHomeTitle": MessageLookupByLibrary.simpleMessage("My home"),
     "myHomeUpToDate": MessageLookupByLibrary.simpleMessage("All up to date"),
     "myHomeUpcomingState": MessageLookupByLibrary.simpleMessage("Upcoming"),

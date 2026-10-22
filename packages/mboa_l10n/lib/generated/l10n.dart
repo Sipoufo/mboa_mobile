@@ -13337,6 +13337,56 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Quittances`
+  String get myHomeTabReceipts {
+    return Intl.message(
+      'Quittances',
+      name: 'myHomeTabReceipts',
+      desc: 'Space tab: the receipts',
+      args: [],
+    );
+  }
+
+  /// `Aucune échéance pour l'instant.`
+  String get myHomeScheduleEmpty {
+    return Intl.message(
+      'Aucune échéance pour l\'instant.',
+      name: 'myHomeScheduleEmpty',
+      desc: 'Space: empty schedule tab',
+      args: [],
+    );
+  }
+
+  /// `Aucune quittance pour l'instant. Elle arrive dès qu'un paiement est confirmé.`
+  String get myHomeReceiptsEmpty {
+    return Intl.message(
+      'Aucune quittance pour l\'instant. Elle arrive dès qu\'un paiement est confirmé.',
+      name: 'myHomeReceiptsEmpty',
+      desc: 'Space: empty receipts tab',
+      args: [],
+    );
+  }
+
+  /// `Aucun paiement déclaré pour l'instant.`
+  String get myHomeDeclarationsEmpty {
+    return Intl.message(
+      'Aucun paiement déclaré pour l\'instant.',
+      name: 'myHomeDeclarationsEmpty',
+      desc: 'Space: empty declarations tab',
+      args: [],
+    );
+  }
+
+  /// `Aucune facture pour l'instant.`
+  String get invoicesEmpty {
+    return Intl.message(
+      'Aucune facture pour l\'instant.',
+      name: 'invoicesEmpty',
+      desc: 'Space: empty invoices tab',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

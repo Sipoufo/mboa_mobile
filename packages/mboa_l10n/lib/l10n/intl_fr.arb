@@ -5294,5 +5294,25 @@
         "type": "int"
       }
     }
+  },
+  "myHomeTabReceipts": "Quittances",
+  "@myHomeTabReceipts": {
+    "description": "Space tab: the receipts"
+  },
+  "myHomeScheduleEmpty": "Aucune échéance pour l'instant.",
+  "@myHomeScheduleEmpty": {
+    "description": "Space: empty schedule tab"
+  },
+  "myHomeReceiptsEmpty": "Aucune quittance pour l'instant. Elle arrive dès qu'un paiement est confirmé.",
+  "@myHomeReceiptsEmpty": {
+    "description": "Space: empty receipts tab"
+  },
+  "myHomeDeclarationsEmpty": "Aucun paiement déclaré pour l'instant.",
+  "@myHomeDeclarationsEmpty": {
+    "description": "Space: empty declarations tab"
+  },
+  "invoicesEmpty": "Aucune facture pour l'instant.",
+  "@invoicesEmpty": {
+    "description": "Space: empty invoices tab"
   }
 }

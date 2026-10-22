@@ -5294,5 +5294,25 @@
         "type": "int"
       }
     }
+  },
+  "myHomeTabReceipts": "Receipts",
+  "@myHomeTabReceipts": {
+    "description": "Space tab: the receipts"
+  },
+  "myHomeScheduleEmpty": "No due dates yet.",
+  "@myHomeScheduleEmpty": {
+    "description": "Space: empty schedule tab"
+  },
+  "myHomeReceiptsEmpty": "No receipts yet. One comes as soon as a payment is confirmed.",
+  "@myHomeReceiptsEmpty": {
+    "description": "Space: empty receipts tab"
+  },
+  "myHomeDeclarationsEmpty": "No payment declared yet.",
+  "@myHomeDeclarationsEmpty": {
+    "description": "Space: empty declarations tab"
+  },
+  "invoicesEmpty": "No invoices yet.",
+  "@invoicesEmpty": {
+    "description": "Space: empty invoices tab"
   }
 }

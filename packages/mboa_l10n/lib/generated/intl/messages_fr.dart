@@ -1507,6 +1507,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "invoiceStatusPaid": MessageLookupByLibrary.simpleMessage("Payée"),
     "invoiceStatusToPay": MessageLookupByLibrary.simpleMessage("À payer"),
     "invoiceTitle": MessageLookupByLibrary.simpleMessage("Facture"),
+    "invoicesEmpty": MessageLookupByLibrary.simpleMessage(
+      "Aucune facture pour l\'instant.",
+    ),
     "invoicesTitle": MessageLookupByLibrary.simpleMessage("Factures"),
     "kycAccountAgent": MessageLookupByLibrary.simpleMessage("Compte Agent"),
     "kycAccountPrestataire": MessageLookupByLibrary.simpleMessage(
@@ -1794,6 +1797,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "missionsWithdraw": MessageLookupByLibrary.simpleMessage("Retirer"),
     "myHomeConfirmedTotal": MessageLookupByLibrary.simpleMessage("Confirmé"),
     "myHomeContestedTotal": MessageLookupByLibrary.simpleMessage("Contesté"),
+    "myHomeDeclarationsEmpty": MessageLookupByLibrary.simpleMessage(
+      "Aucun paiement déclaré pour l\'instant.",
+    ),
     "myHomeDeclarationsTitle": MessageLookupByLibrary.simpleMessage(
       "Déclarations",
     ),
@@ -1819,8 +1825,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "myHomeOverdue": MessageLookupByLibrary.simpleMessage("En retard"),
     "myHomeOverdueCount": m61,
     "myHomePeriod": m62,
+    "myHomeReceiptsEmpty": MessageLookupByLibrary.simpleMessage(
+      "Aucune quittance pour l\'instant. Elle arrive dès qu\'un paiement est confirmé.",
+    ),
+    "myHomeScheduleEmpty": MessageLookupByLibrary.simpleMessage(
+      "Aucune échéance pour l\'instant.",
+    ),
     "myHomeScheduleTitle": MessageLookupByLibrary.simpleMessage("Échéancier"),
     "myHomeStartsOn": m63,
+    "myHomeTabReceipts": MessageLookupByLibrary.simpleMessage("Quittances"),
     "myHomeTitle": MessageLookupByLibrary.simpleMessage("Mon logement"),
     "myHomeUpToDate": MessageLookupByLibrary.simpleMessage("Tout est à jour"),
     "myHomeUpcomingState": MessageLookupByLibrary.simpleMessage("À venir"),

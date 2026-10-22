@@ -290,8 +290,9 @@ void main() {
         onOpen: (d) => opened = d,
       );
 
-      await tester.scrollUntilVisible(find.text('Reçu de dépôt de garantie'), 200);
-      expect(find.text('Quittances et reçus'), findsOneWidget);
+      // Their own tab: a long schedule never buries them.
+      await tester.tap(find.text('Quittances'));
+      await tester.pumpAndSettle();
       expect(find.text('Quittance de loyer'), findsOneWidget);
       expect(find.text('Reçu de paiement partiel'), findsOneWidget);
       // Being made, said; with no period, the day it was issued.
@@ -306,6 +307,30 @@ void main() {
       expect(opened?.id, 'd-0');
       await tester.pumpAndSettle();
       await expectLater(find.byType(HomeSpaceView), matchesGoldenFile('goldens/home_space_receipts.png'));
+    });
+
+    testWidgets('the lists are tabs — no "Factures" where no invoices are given (the landlord\'s side)', (tester) async {
+      await pump(tester, ready(home(next: due(1, DueStatus.due))));
+
+      expect(find.byType(Tab), findsNWidgets(3));
+      expect(find.text('Échéancier'), findsOneWidget);
+      expect(find.text('Quittances'), findsOneWidget);
+      expect(find.text('Déclarations'), findsOneWidget);
+      expect(find.text('Factures'), findsNothing);
+
+      // Empty: said, not blank.
+      await tester.tap(find.text('Quittances'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Aucune quittance'), findsOneWidget);
+    });
+
+    testWidgets('pulled down, the space is read again — from inside a tab too', (tester) async {
+      await pump(tester, ready(home(next: due(1, DueStatus.due))));
+
+      await tester.fling(find.byType(NestedScrollView), const Offset(0, 400), 1000);
+      await tester.pumpAndSettle();
+
+      verify(() => bloc.add(const HomeSpaceRequested('c-1'))).called(1);
     });
 
     testWidgets('the space, the tenant\'s side', (tester) async {

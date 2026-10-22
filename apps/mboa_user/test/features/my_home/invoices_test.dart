@@ -266,7 +266,7 @@ void main() {
       expect(find.text('Déclarer payée'), findsNothing);
     });
 
-    testWidgets("the space's section: nothing when there are none; each invoice opens", (tester) async {
+    testWidgets("the space's tab: said when there are none; each invoice opens", (tester) async {
       HomeInvoice? opened;
       Widget section(HomeInvoicesState state) {
         final bloc = MockHomeInvoicesBloc();
@@ -278,12 +278,9 @@ void main() {
       }
 
       await pump(tester, section(const HomeInvoicesReady()));
-      expect(find.text('Factures'), findsNothing);
-      await pump(tester, section(const HomeInvoicesFailure()));
-      expect(find.text('Factures'), findsNothing);
+      expect(find.text('Aucune facture pour l\'instant.'), findsOneWidget);
 
       await pump(tester, section(HomeInvoicesReady(items: [invoice()])));
-      expect(find.text('Factures'), findsOneWidget);
       await tester.tap(find.text('Électricité — septembre'));
       expect(opened, invoice());
     });

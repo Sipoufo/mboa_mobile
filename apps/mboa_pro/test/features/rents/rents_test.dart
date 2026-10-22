@@ -382,7 +382,8 @@ void main() {
 
       // Declaring is the tenant's.
       expect(find.text('Déclarer'), findsNothing);
-      await tester.scrollUntilVisible(find.byType(DeclarationRow), 200, scrollable: find.byType(Scrollable).first);
+      await tester.tap(find.text('Déclarations'));
+      await tester.pumpAndSettle();
       await tester.tap(find.byType(DeclarationRow));
       await tester.pumpAndSettle();
 
