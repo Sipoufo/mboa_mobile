@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:clock/clock.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
@@ -117,9 +118,11 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
     PaymentAttempt attempt,
     Emitter<SubscribeState> emit,
   ) async {
-    final deadline = DateTime.now().add(pollTimeout);
+    // `clock`, not `DateTime.now()`: identical in production, but lets tests
+    // run the deadline on fake time instead of racing the machine's load.
+    final deadline = clock.now().add(pollTimeout);
 
-    while (DateTime.now().isBefore(deadline)) {
+    while (clock.now().isBefore(deadline)) {
       await Future<void>.delayed(pollInterval);
       if (isClosed || emit.isDone) return;
 
