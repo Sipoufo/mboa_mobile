@@ -1286,3 +1286,27 @@ Asked:
   unit (« … t'a attribué Chambre 4 »).
 
 Meanwhile the app accepts the unit asked for, as today.
+
+## §33 — M04: the rating and the distance on search results
+
+The tenant's search home was redesigned after the founder's mockup
+(2026-10-23). Two things on its cards have no source in `GET /search`:
+
+**1. The rating.** The mockup's cards read « ★ 3.9 ». `PropertyRating`
+(average, count) is on the fiche only. Asked: **`rating { average, count }`**
+on `SearchResultItem` (null when unrated, as on the fiche), and on
+`ResidenceSearchCard` if residences are rated.
+
+**2. « à 60 km de vous » and « Proche de vous ».** Asked:
+- optional query params **`lat`, `lng`** (the user's position, sent only
+  when they allowed it);
+- with them, **`distanceKm`** on each result (computed from the listing's
+  real position, even when the app only shows an approximate one —
+  rounded to 0.1 km, so it gives nothing away);
+- **`sort=distance`** (nearest first), combinable with every filter;
+  without it, today's tier order stays. The city stays mandatory
+  (RM-M04-01) unless you think a "near me" search without a city should
+  exist — say so, it changes the app's empty state.
+
+Meanwhile the app shows neither the rating nor any distance, and the list
+is titled « À Douala » instead of « Proche de vous ».
