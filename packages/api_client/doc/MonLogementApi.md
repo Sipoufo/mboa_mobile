@@ -935,7 +935,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listHomeReceipts**
-> PageResponseReceiptResponse listHomeReceipts(contractId, pageable)
+> PageResponseHomeReceiptResponse listHomeReceipts(contractId, pageable)
 
 A home's receipts, newest first — one per confirmed declaration (RM-M30-05)
 
@@ -964,7 +964,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PageResponseReceiptResponse**](PageResponseReceiptResponse.md)
+[**PageResponseHomeReceiptResponse**](PageResponseHomeReceiptResponse.md)
 
 ### Authorization
 

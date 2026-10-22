@@ -4,13 +4,13 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
-import 'package:api_client/src/model/receipt_response.dart';
+import 'package:api_client/src/model/home_receipt_response.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'page_response_receipt_response.g.dart';
+part 'page_response_home_receipt_response.g.dart';
 
-/// PageResponseReceiptResponse
+/// PageResponseHomeReceiptResponse
 ///
 /// Properties:
 /// * [content] 
@@ -20,9 +20,9 @@ part 'page_response_receipt_response.g.dart';
 /// * [totalPages] 
 /// * [last] 
 @BuiltValue()
-abstract class PageResponseReceiptResponse implements Built<PageResponseReceiptResponse, PageResponseReceiptResponseBuilder> {
+abstract class PageResponseHomeReceiptResponse implements Built<PageResponseHomeReceiptResponse, PageResponseHomeReceiptResponseBuilder> {
   @BuiltValueField(wireName: r'content')
-  BuiltList<ReceiptResponse>? get content;
+  BuiltList<HomeReceiptResponse>? get content;
 
   @BuiltValueField(wireName: r'page')
   int? get page;
@@ -39,34 +39,34 @@ abstract class PageResponseReceiptResponse implements Built<PageResponseReceiptR
   @BuiltValueField(wireName: r'last')
   bool? get last;
 
-  PageResponseReceiptResponse._();
+  PageResponseHomeReceiptResponse._();
 
-  factory PageResponseReceiptResponse([void updates(PageResponseReceiptResponseBuilder b)]) = _$PageResponseReceiptResponse;
+  factory PageResponseHomeReceiptResponse([void updates(PageResponseHomeReceiptResponseBuilder b)]) = _$PageResponseHomeReceiptResponse;
 
   @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(PageResponseReceiptResponseBuilder b) => b;
+  static void _defaults(PageResponseHomeReceiptResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<PageResponseReceiptResponse> get serializer => _$PageResponseReceiptResponseSerializer();
+  static Serializer<PageResponseHomeReceiptResponse> get serializer => _$PageResponseHomeReceiptResponseSerializer();
 }
 
-class _$PageResponseReceiptResponseSerializer implements PrimitiveSerializer<PageResponseReceiptResponse> {
+class _$PageResponseHomeReceiptResponseSerializer implements PrimitiveSerializer<PageResponseHomeReceiptResponse> {
   @override
-  final Iterable<Type> types = const [PageResponseReceiptResponse, _$PageResponseReceiptResponse];
+  final Iterable<Type> types = const [PageResponseHomeReceiptResponse, _$PageResponseHomeReceiptResponse];
 
   @override
-  final String wireName = r'PageResponseReceiptResponse';
+  final String wireName = r'PageResponseHomeReceiptResponse';
 
   Iterable<Object?> _serializeProperties(
     Serializers serializers,
-    PageResponseReceiptResponse object, {
+    PageResponseHomeReceiptResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
     if (object.content != null) {
       yield r'content';
       yield serializers.serialize(
         object.content,
-        specifiedType: const FullType(BuiltList, [FullType(ReceiptResponse)]),
+        specifiedType: const FullType(BuiltList, [FullType(HomeReceiptResponse)]),
       );
     }
     if (object.page != null) {
@@ -109,7 +109,7 @@ class _$PageResponseReceiptResponseSerializer implements PrimitiveSerializer<Pag
   @override
   Object serialize(
     Serializers serializers,
-    PageResponseReceiptResponse object, {
+    PageResponseHomeReceiptResponse object, {
     FullType specifiedType = FullType.unspecified,
   }) {
     return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
@@ -120,7 +120,7 @@ class _$PageResponseReceiptResponseSerializer implements PrimitiveSerializer<Pag
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
     required List<Object?> serializedList,
-    required PageResponseReceiptResponseBuilder result,
+    required PageResponseHomeReceiptResponseBuilder result,
     required List<Object?> unhandled,
   }) {
     for (var i = 0; i < serializedList.length; i += 2) {
@@ -130,8 +130,8 @@ class _$PageResponseReceiptResponseSerializer implements PrimitiveSerializer<Pag
         case r'content':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType.nullable(BuiltList, [FullType(ReceiptResponse)]),
-          ) as BuiltList<ReceiptResponse>?;
+            specifiedType: const FullType.nullable(BuiltList, [FullType(HomeReceiptResponse)]),
+          ) as BuiltList<HomeReceiptResponse>?;
           if (valueDes == null) continue;
           result.content.replace(valueDes);
           break;
@@ -184,12 +184,12 @@ class _$PageResponseReceiptResponseSerializer implements PrimitiveSerializer<Pag
   }
 
   @override
-  PageResponseReceiptResponse deserialize(
+  PageResponseHomeReceiptResponse deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = PageResponseReceiptResponseBuilder();
+    final result = PageResponseHomeReceiptResponseBuilder();
     final serializedList = (serialized as Iterable<Object?>).toList();
     final unhandled = <Object?>[];
     _deserializeProperties(

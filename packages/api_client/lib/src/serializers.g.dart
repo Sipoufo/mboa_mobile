@@ -176,6 +176,8 @@ Serializers _$serializers =
           ..add(HomeDepositStatusEnum.serializer)
           ..add(HomeDetail.serializer)
           ..add(HomeFinanceSummary.serializer)
+          ..add(HomeReceiptResponse.serializer)
+          ..add(HomeReceiptResponseKindEnum.serializer)
           ..add(HomeRequestEventResponse.serializer)
           ..add(HomeRequestEventResponseStatusEnum.serializer)
           ..add(HomeRequestNoteRequest.serializer)
@@ -245,6 +247,7 @@ Serializers _$serializers =
           ..add(PageResponseEvidenceBatchResponse.serializer)
           ..add(PageResponseFavoriResponse.serializer)
           ..add(PageResponseHistoriqueResponse.serializer)
+          ..add(PageResponseHomeReceiptResponse.serializer)
           ..add(PageResponseHomeRequestResponse.serializer)
           ..add(PageResponseHomeSummary.serializer)
           ..add(PageResponseInvoiceResponse.serializer)
@@ -253,7 +256,6 @@ Serializers _$serializers =
           ..add(PageResponseMessageResponse.serializer)
           ..add(PageResponsePaymentSummary.serializer)
           ..add(PageResponsePropertyReview.serializer)
-          ..add(PageResponseReceiptResponse.serializer)
           ..add(PageResponseReservationResponse.serializer)
           ..add(PageResponseResidenceResponse.serializer)
           ..add(PageResponseSearchResult.serializer)
@@ -606,6 +608,12 @@ Serializers _$serializers =
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
+              const FullType(HomeReceiptResponse),
+            ]),
+            () => ListBuilder<HomeReceiptResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
               const FullType(HomeRequestResponse),
             ]),
             () => ListBuilder<HomeRequestResponse>(),
@@ -671,10 +679,6 @@ Serializers _$serializers =
               const FullType(ProviderCardBadgesEnum),
             ]),
             () => ListBuilder<ProviderCardBadgesEnum>(),
-          )
-          ..addBuilderFactory(
-            const FullType(BuiltList, const [const FullType(ReceiptResponse)]),
-            () => ListBuilder<ReceiptResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [

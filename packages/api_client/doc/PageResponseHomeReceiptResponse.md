@@ -1,4 +1,4 @@
-# api_client.model.PageResponseReceiptResponse
+# api_client.model.PageResponseHomeReceiptResponse
 
 ## Load the model package
 ```dart
@@ -8,7 +8,7 @@ import 'package:api_client/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**content** | [**BuiltList&lt;ReceiptResponse&gt;**](ReceiptResponse.md) |  | [optional] 
+**content** | [**BuiltList&lt;HomeReceiptResponse&gt;**](HomeReceiptResponse.md) |  | [optional] 
 **page** | **int** |  | [optional] 
 **size** | **int** |  | [optional] 
 **totalElements** | **int** |  | [optional] 

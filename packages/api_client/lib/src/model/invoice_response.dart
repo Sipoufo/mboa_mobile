@@ -30,6 +30,8 @@ part 'invoice_response.g.dart';
 /// * [paymentId] 
 /// * [cancelledAt] 
 /// * [createdAt] 
+/// * [confirmedTotal] 
+/// * [remaining] 
 @BuiltValue()
 abstract class InvoiceResponse implements Built<InvoiceResponse, InvoiceResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -86,6 +88,12 @@ abstract class InvoiceResponse implements Built<InvoiceResponse, InvoiceResponse
 
   @BuiltValueField(wireName: r'createdAt')
   DateTime? get createdAt;
+
+  @BuiltValueField(wireName: r'confirmedTotal')
+  int? get confirmedTotal;
+
+  @BuiltValueField(wireName: r'remaining')
+  int? get remaining;
 
   InvoiceResponse._();
 
@@ -227,6 +235,20 @@ class _$InvoiceResponseSerializer implements PrimitiveSerializer<InvoiceResponse
       yield serializers.serialize(
         object.createdAt,
         specifiedType: const FullType(DateTime),
+      );
+    }
+    if (object.confirmedTotal != null) {
+      yield r'confirmedTotal';
+      yield serializers.serialize(
+        object.confirmedTotal,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.remaining != null) {
+      yield r'remaining';
+      yield serializers.serialize(
+        object.remaining,
+        specifiedType: const FullType(int),
       );
     }
   }
@@ -387,6 +409,22 @@ class _$InvoiceResponseSerializer implements PrimitiveSerializer<InvoiceResponse
           ) as DateTime?;
           if (valueDes == null) continue;
           result.createdAt = valueDes;
+          break;
+        case r'confirmedTotal':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.confirmedTotal = valueDes;
+          break;
+        case r'remaining':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.remaining = valueDes;
           break;
         default:
           unhandled.add(key);

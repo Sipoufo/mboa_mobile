@@ -1,14 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'page_response_receipt_response.dart';
+part of 'page_response_home_receipt_response.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-class _$PageResponseReceiptResponse extends PageResponseReceiptResponse {
+class _$PageResponseHomeReceiptResponse
+    extends PageResponseHomeReceiptResponse {
   @override
-  final BuiltList<ReceiptResponse>? content;
+  final BuiltList<HomeReceiptResponse>? content;
   @override
   final int? page;
   @override
@@ -20,11 +21,11 @@ class _$PageResponseReceiptResponse extends PageResponseReceiptResponse {
   @override
   final bool? last;
 
-  factory _$PageResponseReceiptResponse([
-    void Function(PageResponseReceiptResponseBuilder)? updates,
-  ]) => (PageResponseReceiptResponseBuilder()..update(updates))._build();
+  factory _$PageResponseHomeReceiptResponse([
+    void Function(PageResponseHomeReceiptResponseBuilder)? updates,
+  ]) => (PageResponseHomeReceiptResponseBuilder()..update(updates))._build();
 
-  _$PageResponseReceiptResponse._({
+  _$PageResponseHomeReceiptResponse._({
     this.content,
     this.page,
     this.size,
@@ -33,18 +34,18 @@ class _$PageResponseReceiptResponse extends PageResponseReceiptResponse {
     this.last,
   }) : super._();
   @override
-  PageResponseReceiptResponse rebuild(
-    void Function(PageResponseReceiptResponseBuilder) updates,
+  PageResponseHomeReceiptResponse rebuild(
+    void Function(PageResponseHomeReceiptResponseBuilder) updates,
   ) => (toBuilder()..update(updates)).build();
 
   @override
-  PageResponseReceiptResponseBuilder toBuilder() =>
-      PageResponseReceiptResponseBuilder()..replace(this);
+  PageResponseHomeReceiptResponseBuilder toBuilder() =>
+      PageResponseHomeReceiptResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PageResponseReceiptResponse &&
+    return other is PageResponseHomeReceiptResponse &&
         content == other.content &&
         page == other.page &&
         size == other.size &&
@@ -68,7 +69,7 @@ class _$PageResponseReceiptResponse extends PageResponseReceiptResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'PageResponseReceiptResponse')
+    return (newBuiltValueToStringHelper(r'PageResponseHomeReceiptResponse')
           ..add('content', content)
           ..add('page', page)
           ..add('size', size)
@@ -79,18 +80,18 @@ class _$PageResponseReceiptResponse extends PageResponseReceiptResponse {
   }
 }
 
-class PageResponseReceiptResponseBuilder
+class PageResponseHomeReceiptResponseBuilder
     implements
         Builder<
-          PageResponseReceiptResponse,
-          PageResponseReceiptResponseBuilder
+          PageResponseHomeReceiptResponse,
+          PageResponseHomeReceiptResponseBuilder
         > {
-  _$PageResponseReceiptResponse? _$v;
+  _$PageResponseHomeReceiptResponse? _$v;
 
-  ListBuilder<ReceiptResponse>? _content;
-  ListBuilder<ReceiptResponse> get content =>
-      _$this._content ??= ListBuilder<ReceiptResponse>();
-  set content(ListBuilder<ReceiptResponse>? content) =>
+  ListBuilder<HomeReceiptResponse>? _content;
+  ListBuilder<HomeReceiptResponse> get content =>
+      _$this._content ??= ListBuilder<HomeReceiptResponse>();
+  set content(ListBuilder<HomeReceiptResponse>? content) =>
       _$this._content = content;
 
   int? _page;
@@ -114,11 +115,11 @@ class PageResponseReceiptResponseBuilder
   bool? get last => _$this._last;
   set last(bool? last) => _$this._last = last;
 
-  PageResponseReceiptResponseBuilder() {
-    PageResponseReceiptResponse._defaults(this);
+  PageResponseHomeReceiptResponseBuilder() {
+    PageResponseHomeReceiptResponse._defaults(this);
   }
 
-  PageResponseReceiptResponseBuilder get _$this {
+  PageResponseHomeReceiptResponseBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _content = $v.content?.toBuilder();
@@ -133,24 +134,24 @@ class PageResponseReceiptResponseBuilder
   }
 
   @override
-  void replace(PageResponseReceiptResponse other) {
-    _$v = other as _$PageResponseReceiptResponse;
+  void replace(PageResponseHomeReceiptResponse other) {
+    _$v = other as _$PageResponseHomeReceiptResponse;
   }
 
   @override
-  void update(void Function(PageResponseReceiptResponseBuilder)? updates) {
+  void update(void Function(PageResponseHomeReceiptResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  PageResponseReceiptResponse build() => _build();
+  PageResponseHomeReceiptResponse build() => _build();
 
-  _$PageResponseReceiptResponse _build() {
-    _$PageResponseReceiptResponse _$result;
+  _$PageResponseHomeReceiptResponse _build() {
+    _$PageResponseHomeReceiptResponse _$result;
     try {
       _$result =
           _$v ??
-          _$PageResponseReceiptResponse._(
+          _$PageResponseHomeReceiptResponse._(
             content: _content?.build(),
             page: page,
             size: size,
@@ -165,7 +166,7 @@ class PageResponseReceiptResponseBuilder
         _content?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-          r'PageResponseReceiptResponse',
+          r'PageResponseHomeReceiptResponse',
           _$failedField,
           e.toString(),
         );

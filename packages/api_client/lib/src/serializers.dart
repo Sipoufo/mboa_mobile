@@ -106,6 +106,7 @@ import 'package:api_client/src/model/history_section_admin_visit_line.dart';
 import 'package:api_client/src/model/home_deposit.dart';
 import 'package:api_client/src/model/home_detail.dart';
 import 'package:api_client/src/model/home_finance_summary.dart';
+import 'package:api_client/src/model/home_receipt_response.dart';
 import 'package:api_client/src/model/home_request_event_response.dart';
 import 'package:api_client/src/model/home_request_note_request.dart';
 import 'package:api_client/src/model/home_request_response.dart';
@@ -147,6 +148,7 @@ import 'package:api_client/src/model/page_response_declaration_response.dart';
 import 'package:api_client/src/model/page_response_evidence_batch_response.dart';
 import 'package:api_client/src/model/page_response_favori_response.dart';
 import 'package:api_client/src/model/page_response_historique_response.dart';
+import 'package:api_client/src/model/page_response_home_receipt_response.dart';
 import 'package:api_client/src/model/page_response_home_request_response.dart';
 import 'package:api_client/src/model/page_response_home_summary.dart';
 import 'package:api_client/src/model/page_response_invoice_response.dart';
@@ -155,7 +157,6 @@ import 'package:api_client/src/model/page_response_ledger_entry_response.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';
 import 'package:api_client/src/model/page_response_payment_summary.dart';
 import 'package:api_client/src/model/page_response_property_review.dart';
-import 'package:api_client/src/model/page_response_receipt_response.dart';
 import 'package:api_client/src/model/page_response_reservation_response.dart';
 import 'package:api_client/src/model/page_response_residence_response.dart';
 import 'package:api_client/src/model/page_response_search_result.dart';
@@ -368,6 +369,7 @@ part 'serializers.g.dart';
   HomeDeposit,
   HomeDetail,
   HomeFinanceSummary,
+  HomeReceiptResponse,
   HomeRequestEventResponse,
   HomeRequestNoteRequest,
   HomeRequestResponse,
@@ -409,6 +411,7 @@ part 'serializers.g.dart';
   PageResponseEvidenceBatchResponse,
   PageResponseFavoriResponse,
   PageResponseHistoriqueResponse,
+  PageResponseHomeReceiptResponse,
   PageResponseHomeRequestResponse,
   PageResponseHomeSummary,
   PageResponseInvoiceResponse,
@@ -417,7 +420,6 @@ part 'serializers.g.dart';
   PageResponseMessageResponse,
   PageResponsePaymentSummary,
   PageResponsePropertyReview,
-  PageResponseReceiptResponse,
   PageResponseReservationResponse,
   PageResponseResidenceResponse,
   PageResponseSearchResult,
@@ -605,10 +607,6 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<ChangeRequestResponse>(),
       )
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(ReceiptResponse)]),
-        () => ListBuilder<ReceiptResponse>(),
-      )
-      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ResidenceResponse)]),
         () => ListBuilder<ResidenceResponse>(),
       )
@@ -627,6 +625,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltSet, [FullType(String)]),
         () => SetBuilder<String>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(HomeReceiptResponse)]),
+        () => ListBuilder<HomeReceiptResponse>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(FieldError)]),

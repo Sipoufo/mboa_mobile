@@ -92,5 +92,15 @@ void main() {
       // TODO
     });
 
+    // int confirmedTotal
+    test('to test the property `confirmedTotal`', () async {
+      // TODO
+    });
+
+    // int remaining
+    test('to test the property `remaining`', () async {
+      // TODO
+    });
+
   });
 }

@@ -156,7 +156,7 @@ void main() {
 
     // A home's receipts, newest first — one per confirmed declaration (RM-M30-05)
     //
-    //Future<PageResponseReceiptResponse> listHomeReceipts(String contractId, Pageable pageable) async
+    //Future<PageResponseHomeReceiptResponse> listHomeReceipts(String contractId, Pageable pageable) async
     test('test listHomeReceipts', () async {
       // TODO
     });

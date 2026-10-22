@@ -28,9 +28,9 @@ import 'package:api_client/src/model/home_request_status_request.dart';
 import 'package:api_client/src/model/home_schedule.dart';
 import 'package:api_client/src/model/page_response_declaration_response.dart';
 import 'package:api_client/src/model/page_response_evidence_batch_response.dart';
+import 'package:api_client/src/model/page_response_home_receipt_response.dart';
 import 'package:api_client/src/model/page_response_home_request_response.dart';
 import 'package:api_client/src/model/page_response_home_summary.dart';
-import 'package:api_client/src/model/page_response_receipt_response.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/presigned_download.dart';
 import 'package:api_client/src/model/record_evidence_request.dart';
@@ -1938,9 +1938,9 @@ class MonLogementApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [PageResponseReceiptResponse] as data
+  /// Returns a [Future] containing a [Response] with a [PageResponseHomeReceiptResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PageResponseReceiptResponse>> listHomeReceipts({ 
+  Future<Response<PageResponseHomeReceiptResponse>> listHomeReceipts({ 
     required String contractId,
     required Pageable pageable,
     CancelToken? cancelToken,
@@ -1982,14 +1982,14 @@ class MonLogementApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    PageResponseReceiptResponse? _responseData;
+    PageResponseHomeReceiptResponse? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(PageResponseReceiptResponse),
-      ) as PageResponseReceiptResponse;
+        specifiedType: const FullType(PageResponseHomeReceiptResponse),
+      ) as PageResponseHomeReceiptResponse;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -2001,7 +2001,7 @@ class MonLogementApi {
       );
     }
 
-    return Response<PageResponseReceiptResponse>(
+    return Response<PageResponseHomeReceiptResponse>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

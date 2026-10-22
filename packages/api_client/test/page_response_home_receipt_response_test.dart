@@ -1,13 +1,13 @@
 import 'package:test/test.dart';
 import 'package:api_client/api_client.dart';
 
-// tests for PageResponseReceiptResponse
+// tests for PageResponseHomeReceiptResponse
 void main() {
-  final instance = PageResponseReceiptResponseBuilder();
+  final instance = PageResponseHomeReceiptResponseBuilder();
   // TODO add properties to the builder and call build()
 
-  group(PageResponseReceiptResponse, () {
-    // BuiltList<ReceiptResponse> content
+  group(PageResponseHomeReceiptResponse, () {
+    // BuiltList<HomeReceiptResponse> content
     test('to test the property `content`', () async {
       // TODO
     });

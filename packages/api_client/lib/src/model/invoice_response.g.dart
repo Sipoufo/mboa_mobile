@@ -341,6 +341,10 @@ class _$InvoiceResponse extends InvoiceResponse {
   final DateTime? cancelledAt;
   @override
   final DateTime? createdAt;
+  @override
+  final int? confirmedTotal;
+  @override
+  final int? remaining;
 
   factory _$InvoiceResponse([void Function(InvoiceResponseBuilder)? updates]) =>
       (InvoiceResponseBuilder()..update(updates))._build();
@@ -363,6 +367,8 @@ class _$InvoiceResponse extends InvoiceResponse {
     this.paymentId,
     this.cancelledAt,
     this.createdAt,
+    this.confirmedTotal,
+    this.remaining,
   }) : super._();
   @override
   InvoiceResponse rebuild(void Function(InvoiceResponseBuilder) updates) =>
@@ -391,7 +397,9 @@ class _$InvoiceResponse extends InvoiceResponse {
         paidVia == other.paidVia &&
         paymentId == other.paymentId &&
         cancelledAt == other.cancelledAt &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        confirmedTotal == other.confirmedTotal &&
+        remaining == other.remaining;
   }
 
   @override
@@ -414,6 +422,8 @@ class _$InvoiceResponse extends InvoiceResponse {
     _$hash = $jc(_$hash, paymentId.hashCode);
     _$hash = $jc(_$hash, cancelledAt.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, confirmedTotal.hashCode);
+    _$hash = $jc(_$hash, remaining.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -437,7 +447,9 @@ class _$InvoiceResponse extends InvoiceResponse {
           ..add('paidVia', paidVia)
           ..add('paymentId', paymentId)
           ..add('cancelledAt', cancelledAt)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('confirmedTotal', confirmedTotal)
+          ..add('remaining', remaining))
         .toString();
   }
 }
@@ -515,6 +527,15 @@ class InvoiceResponseBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
+  int? _confirmedTotal;
+  int? get confirmedTotal => _$this._confirmedTotal;
+  set confirmedTotal(int? confirmedTotal) =>
+      _$this._confirmedTotal = confirmedTotal;
+
+  int? _remaining;
+  int? get remaining => _$this._remaining;
+  set remaining(int? remaining) => _$this._remaining = remaining;
+
   InvoiceResponseBuilder() {
     InvoiceResponse._defaults(this);
   }
@@ -539,6 +560,8 @@ class InvoiceResponseBuilder
       _paymentId = $v.paymentId;
       _cancelledAt = $v.cancelledAt;
       _createdAt = $v.createdAt;
+      _confirmedTotal = $v.confirmedTotal;
+      _remaining = $v.remaining;
       _$v = null;
     }
     return this;
@@ -578,6 +601,8 @@ class InvoiceResponseBuilder
           paymentId: paymentId,
           cancelledAt: cancelledAt,
           createdAt: createdAt,
+          confirmedTotal: confirmedTotal,
+          remaining: remaining,
         );
     replace(_$result);
     return _$result;

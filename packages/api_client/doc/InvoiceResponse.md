@@ -25,6 +25,8 @@ Name | Type | Description | Notes
 **paymentId** | **String** |  | [optional] 
 **cancelledAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **createdAt** | [**DateTime**](DateTime.md) |  | [optional] 
+**confirmedTotal** | **int** |  | [optional] 
+**remaining** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

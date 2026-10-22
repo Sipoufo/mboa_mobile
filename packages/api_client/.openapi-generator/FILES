@@ -121,6 +121,7 @@ doc/HistorySectionAdminVisitLine.md
 doc/HomeDeposit.md
 doc/HomeDetail.md
 doc/HomeFinanceSummary.md
+doc/HomeReceiptResponse.md
 doc/HomeRequestEventResponse.md
 doc/HomeRequestNoteRequest.md
 doc/HomeRequestResponse.md
@@ -170,6 +171,7 @@ doc/PageResponseDeclarationResponse.md
 doc/PageResponseEvidenceBatchResponse.md
 doc/PageResponseFavoriResponse.md
 doc/PageResponseHistoriqueResponse.md
+doc/PageResponseHomeReceiptResponse.md
 doc/PageResponseHomeRequestResponse.md
 doc/PageResponseHomeSummary.md
 doc/PageResponseInvoiceResponse.md
@@ -178,7 +180,6 @@ doc/PageResponseLedgerEntryResponse.md
 doc/PageResponseMessageResponse.md
 doc/PageResponsePaymentSummary.md
 doc/PageResponsePropertyReview.md
-doc/PageResponseReceiptResponse.md
 doc/PageResponseReservationResponse.md
 doc/PageResponseResidenceResponse.md
 doc/PageResponseSearchResult.md
@@ -470,6 +471,7 @@ lib/src/model/history_section_admin_visit_line.dart
 lib/src/model/home_deposit.dart
 lib/src/model/home_detail.dart
 lib/src/model/home_finance_summary.dart
+lib/src/model/home_receipt_response.dart
 lib/src/model/home_request_event_response.dart
 lib/src/model/home_request_note_request.dart
 lib/src/model/home_request_response.dart
@@ -511,6 +513,7 @@ lib/src/model/page_response_declaration_response.dart
 lib/src/model/page_response_evidence_batch_response.dart
 lib/src/model/page_response_favori_response.dart
 lib/src/model/page_response_historique_response.dart
+lib/src/model/page_response_home_receipt_response.dart
 lib/src/model/page_response_home_request_response.dart
 lib/src/model/page_response_home_summary.dart
 lib/src/model/page_response_invoice_response.dart
@@ -519,7 +522,6 @@ lib/src/model/page_response_ledger_entry_response.dart
 lib/src/model/page_response_message_response.dart
 lib/src/model/page_response_payment_summary.dart
 lib/src/model/page_response_property_review.dart
-lib/src/model/page_response_receipt_response.dart
 lib/src/model/page_response_reservation_response.dart
 lib/src/model/page_response_residence_response.dart
 lib/src/model/page_response_search_result.dart
@@ -758,6 +760,7 @@ test/history_section_admin_visit_line_test.dart
 test/home_deposit_test.dart
 test/home_detail_test.dart
 test/home_finance_summary_test.dart
+test/home_receipt_response_test.dart
 test/home_request_event_response_test.dart
 test/home_request_note_request_test.dart
 test/home_request_response_test.dart
@@ -807,6 +810,7 @@ test/page_response_declaration_response_test.dart
 test/page_response_evidence_batch_response_test.dart
 test/page_response_favori_response_test.dart
 test/page_response_historique_response_test.dart
+test/page_response_home_receipt_response_test.dart
 test/page_response_home_request_response_test.dart
 test/page_response_home_summary_test.dart
 test/page_response_invoice_response_test.dart
@@ -815,7 +819,6 @@ test/page_response_ledger_entry_response_test.dart
 test/page_response_message_response_test.dart
 test/page_response_payment_summary_test.dart
 test/page_response_property_review_test.dart
-test/page_response_receipt_response_test.dart
 test/page_response_reservation_response_test.dart
 test/page_response_residence_response_test.dart
 test/page_response_search_result_test.dart
