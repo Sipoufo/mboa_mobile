@@ -1,5 +1,6 @@
 .gitignore
 README.md
+doc/AcceptReservationRequest.md
 doc/AccountApi.md
 doc/AccountContractHistory.md
 doc/AccountModerationEntry.md
@@ -43,6 +44,7 @@ doc/AnnonceDetailResponse.md
 doc/AnnonceResponse.md
 doc/AnnoncesApi.md
 doc/AssignAgentRequest.md
+doc/AssignableUnit.md
 doc/AssignationAgentApi.md
 doc/AssignationAgentRsidenceApi.md
 doc/AssignmentItem.md
@@ -99,6 +101,7 @@ doc/EvidenceBatchResponse.md
 doc/EvidenceFileRequest.md
 doc/EvidencePhotoRequest.md
 doc/EvidencePhotoResponse.md
+doc/EvidenceRoomComparison.md
 doc/EvidenceUpload.md
 doc/EvidenceUploadsRequest.md
 doc/ExtendSubscriptionRequest.md
@@ -150,6 +153,7 @@ doc/MboaScoreApi.md
 doc/MboaScoreResponse.md
 doc/MeResponse.md
 doc/MediaApi.md
+doc/MesAnciensLogementsApi.md
 doc/MessageResponse.md
 doc/MessagerieApi.md
 doc/MonLogementApi.md
@@ -189,6 +193,10 @@ doc/PageResponseVisiteResponse.md
 doc/Pageable.md
 doc/ParticipantSummary.md
 doc/PasswordApi.md
+doc/PastHomeExpenses.md
+doc/PastHomeResponse.md
+doc/PastHomeReview.md
+doc/PastPayment.md
 doc/PayInvoiceRequest.md
 doc/PaymentInitiatedResponse.md
 doc/PaymentSummary.md
@@ -312,6 +320,7 @@ doc/VisitesAvisApi.md
 doc/VisitesPrsenceApi.md
 doc/VisitorSlots.md
 doc/Window.md
+doc/YearTotal.md
 doc/Zone.md
 doc/ZoneResponse.md
 lib/api_client.dart
@@ -350,6 +359,7 @@ lib/src/api/kyc_api.dart
 lib/src/api/locations_api.dart
 lib/src/api/mboa_score_api.dart
 lib/src/api/media_api.dart
+lib/src/api/mes_anciens_logements_api.dart
 lib/src/api/messagerie_api.dart
 lib/src/api/mon_logement_api.dart
 lib/src/api/notification_devices_api.dart
@@ -378,6 +388,7 @@ lib/src/auth/basic_auth.dart
 lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/date_serializer.dart
+lib/src/model/accept_reservation_request.dart
 lib/src/model/account_contract_history.dart
 lib/src/model/account_moderation_entry.dart
 lib/src/model/account_report_history.dart
@@ -405,6 +416,7 @@ lib/src/model/agent_visite_detail.dart
 lib/src/model/annonce_detail_response.dart
 lib/src/model/annonce_response.dart
 lib/src/model/assign_agent_request.dart
+lib/src/model/assignable_unit.dart
 lib/src/model/assignment_item.dart
 lib/src/model/assignment_response.dart
 lib/src/model/auth_tokens.dart
@@ -455,6 +467,7 @@ lib/src/model/evidence_batch_response.dart
 lib/src/model/evidence_file_request.dart
 lib/src/model/evidence_photo_request.dart
 lib/src/model/evidence_photo_response.dart
+lib/src/model/evidence_room_comparison.dart
 lib/src/model/evidence_upload.dart
 lib/src/model/evidence_uploads_request.dart
 lib/src/model/extend_subscription_request.dart
@@ -530,6 +543,10 @@ lib/src/model/page_response_type_change_review_item.dart
 lib/src/model/page_response_visite_response.dart
 lib/src/model/pageable.dart
 lib/src/model/participant_summary.dart
+lib/src/model/past_home_expenses.dart
+lib/src/model/past_home_response.dart
+lib/src/model/past_home_review.dart
+lib/src/model/past_payment.dart
 lib/src/model/pay_invoice_request.dart
 lib/src/model/payment_initiated_response.dart
 lib/src/model/payment_summary.dart
@@ -636,9 +653,11 @@ lib/src/model/verify_otp_request.dart
 lib/src/model/visite_response.dart
 lib/src/model/visitor_slots.dart
 lib/src/model/window.dart
+lib/src/model/year_total.dart
 lib/src/model/zone.dart
 lib/src/model/zone_response.dart
 lib/src/serializers.dart
+test/accept_reservation_request_test.dart
 test/account_api_test.dart
 test/account_contract_history_test.dart
 test/account_moderation_entry_test.dart
@@ -682,6 +701,7 @@ test/annonce_detail_response_test.dart
 test/annonce_response_test.dart
 test/annonces_api_test.dart
 test/assign_agent_request_test.dart
+test/assignable_unit_test.dart
 test/assignation_agent_api_test.dart
 test/assignation_agent_rsidence_api_test.dart
 test/assignment_item_test.dart
@@ -738,6 +758,7 @@ test/evidence_batch_response_test.dart
 test/evidence_file_request_test.dart
 test/evidence_photo_request_test.dart
 test/evidence_photo_response_test.dart
+test/evidence_room_comparison_test.dart
 test/evidence_upload_test.dart
 test/evidence_uploads_request_test.dart
 test/extend_subscription_request_test.dart
@@ -789,6 +810,7 @@ test/mboa_score_api_test.dart
 test/mboa_score_response_test.dart
 test/me_response_test.dart
 test/media_api_test.dart
+test/mes_anciens_logements_api_test.dart
 test/message_response_test.dart
 test/messagerie_api_test.dart
 test/mon_logement_api_test.dart
@@ -828,6 +850,10 @@ test/page_response_visite_response_test.dart
 test/pageable_test.dart
 test/participant_summary_test.dart
 test/password_api_test.dart
+test/past_home_expenses_test.dart
+test/past_home_response_test.dart
+test/past_home_review_test.dart
+test/past_payment_test.dart
 test/pay_invoice_request_test.dart
 test/payment_initiated_response_test.dart
 test/payment_summary_test.dart
@@ -951,5 +977,6 @@ test/visites_avis_api_test.dart
 test/visites_prsence_api_test.dart
 test/visitor_slots_test.dart
 test/window_test.dart
+test/year_total_test.dart
 test/zone_response_test.dart
 test/zone_test.dart

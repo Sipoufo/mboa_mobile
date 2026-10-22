@@ -209,6 +209,10 @@ class _$HomeSummary extends HomeSummary {
   final int? overdueCount;
   @override
   final int? overdueAmount;
+  @override
+  final String? residenceId;
+  @override
+  final String? residenceName;
 
   factory _$HomeSummary([void Function(HomeSummaryBuilder)? updates]) =>
       (HomeSummaryBuilder()..update(updates))._build();
@@ -235,6 +239,8 @@ class _$HomeSummary extends HomeSummary {
     this.nextDue,
     this.overdueCount,
     this.overdueAmount,
+    this.residenceId,
+    this.residenceName,
   }) : super._();
   @override
   HomeSummary rebuild(void Function(HomeSummaryBuilder) updates) =>
@@ -267,7 +273,9 @@ class _$HomeSummary extends HomeSummary {
         tacitRenewal == other.tacitRenewal &&
         nextDue == other.nextDue &&
         overdueCount == other.overdueCount &&
-        overdueAmount == other.overdueAmount;
+        overdueAmount == other.overdueAmount &&
+        residenceId == other.residenceId &&
+        residenceName == other.residenceName;
   }
 
   @override
@@ -294,6 +302,8 @@ class _$HomeSummary extends HomeSummary {
     _$hash = $jc(_$hash, nextDue.hashCode);
     _$hash = $jc(_$hash, overdueCount.hashCode);
     _$hash = $jc(_$hash, overdueAmount.hashCode);
+    _$hash = $jc(_$hash, residenceId.hashCode);
+    _$hash = $jc(_$hash, residenceName.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -321,7 +331,9 @@ class _$HomeSummary extends HomeSummary {
           ..add('tacitRenewal', tacitRenewal)
           ..add('nextDue', nextDue)
           ..add('overdueCount', overdueCount)
-          ..add('overdueAmount', overdueAmount))
+          ..add('overdueAmount', overdueAmount)
+          ..add('residenceId', residenceId)
+          ..add('residenceName', residenceName))
         .toString();
   }
 }
@@ -421,6 +433,15 @@ class HomeSummaryBuilder implements Builder<HomeSummary, HomeSummaryBuilder> {
   set overdueAmount(int? overdueAmount) =>
       _$this._overdueAmount = overdueAmount;
 
+  String? _residenceId;
+  String? get residenceId => _$this._residenceId;
+  set residenceId(String? residenceId) => _$this._residenceId = residenceId;
+
+  String? _residenceName;
+  String? get residenceName => _$this._residenceName;
+  set residenceName(String? residenceName) =>
+      _$this._residenceName = residenceName;
+
   HomeSummaryBuilder() {
     HomeSummary._defaults(this);
   }
@@ -449,6 +470,8 @@ class HomeSummaryBuilder implements Builder<HomeSummary, HomeSummaryBuilder> {
       _nextDue = $v.nextDue?.toBuilder();
       _overdueCount = $v.overdueCount;
       _overdueAmount = $v.overdueAmount;
+      _residenceId = $v.residenceId;
+      _residenceName = $v.residenceName;
       _$v = null;
     }
     return this;
@@ -494,6 +517,8 @@ class HomeSummaryBuilder implements Builder<HomeSummary, HomeSummaryBuilder> {
             nextDue: _nextDue?.build(),
             overdueCount: overdueCount,
             overdueAmount: overdueAmount,
+            residenceId: residenceId,
+            residenceName: residenceName,
           );
     } catch (_) {
       late String _$failedField;

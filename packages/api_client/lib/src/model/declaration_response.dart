@@ -37,6 +37,8 @@ part 'declaration_response.g.dart';
 /// * [canContest] 
 /// * [receiptId] 
 /// * [receiptReady] 
+/// * [residenceId] 
+/// * [residenceName] 
 @BuiltValue()
 abstract class DeclarationResponse implements Built<DeclarationResponse, DeclarationResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -110,6 +112,12 @@ abstract class DeclarationResponse implements Built<DeclarationResponse, Declara
 
   @BuiltValueField(wireName: r'receiptReady')
   bool? get receiptReady;
+
+  @BuiltValueField(wireName: r'residenceId')
+  String? get residenceId;
+
+  @BuiltValueField(wireName: r'residenceName')
+  String? get residenceName;
 
   DeclarationResponse._();
 
@@ -293,6 +301,20 @@ class _$DeclarationResponseSerializer implements PrimitiveSerializer<Declaration
       yield serializers.serialize(
         object.receiptReady,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.residenceId != null) {
+      yield r'residenceId';
+      yield serializers.serialize(
+        object.residenceId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.residenceName != null) {
+      yield r'residenceName';
+      yield serializers.serialize(
+        object.residenceName,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -501,6 +523,22 @@ class _$DeclarationResponseSerializer implements PrimitiveSerializer<Declaration
           ) as bool?;
           if (valueDes == null) continue;
           result.receiptReady = valueDes;
+          break;
+        case r'residenceId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.residenceId = valueDes;
+          break;
+        case r'residenceName':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.residenceName = valueDes;
           break;
         default:
           unhandled.add(key);

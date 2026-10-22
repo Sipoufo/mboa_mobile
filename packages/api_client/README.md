@@ -247,6 +247,9 @@ Class | Method | HTTP request | Description
 [*MboaScoreApi*](doc/MboaScoreApi.md) | [**getMyMboaScore**](doc/MboaScoreApi.md#getmymboascore) | **GET** /api/v1/users/me/score | The authenticated user&#39;s Mboa Score and its breakdown
 [*MboaScoreApi*](doc/MboaScoreApi.md) | [**getTenantMboaScore**](doc/MboaScoreApi.md#gettenantmboascore) | **GET** /api/v1/prestataires/me/tenants/{userId}/score | A tenant&#39;s Mboa Score, once they have messaged you or asked to visit (RM-M09-04)
 [*MediaApi*](doc/MediaApi.md) | [**createMediaUpload**](doc/MediaApi.md#createmediaupload) | **POST** /api/v1/media/uploads | Get a pre-signed URL to upload a file directly to storage
+[*MesAnciensLogementsApi*](doc/MesAnciensLogementsApi.md) | [**getMyPastHome**](doc/MesAnciensLogementsApi.md#getmypasthome) | **GET** /api/v1/past-homes/{contractId} | One past home: property as signed, contract code, confirmed expenses, requests, current note, my review (RM-M31-02 to 05)
+[*MesAnciensLogementsApi*](doc/MesAnciensLogementsApi.md) | [**getMyPastHomeExpensesPdf**](doc/MesAnciensLogementsApi.md#getmypasthomeexpensespdf) | **GET** /api/v1/past-homes/{contractId}/expenses.pdf | My expenses for a past home as a PDF: confirmed rents and charges with receipts and totals, the rest apart
+[*MesAnciensLogementsApi*](doc/MesAnciensLogementsApi.md) | [**listMyPastHomes**](doc/MesAnciensLogementsApi.md#listmypasthomes) | **GET** /api/v1/past-homes | My tenancies that are over, latest first (RM-M31-01)
 [*MessagerieApi*](doc/MessagerieApi.md) | [**listConversationMessages**](doc/MessagerieApi.md#listconversationmessages) | **GET** /api/v1/conversations/{id}/messages | List a conversation&#39;s messages, newest first — or one M30 request&#39;s (homeRequestId)
 [*MessagerieApi*](doc/MessagerieApi.md) | [**listMyConversations**](doc/MessagerieApi.md#listmyconversations) | **GET** /api/v1/conversations | List the authenticated participant&#39;s conversations
 [*MessagerieApi*](doc/MessagerieApi.md) | [**markConversationRead**](doc/MessagerieApi.md#markconversationread) | **POST** /api/v1/conversations/{id}/read | Mark the conversation&#39;s incoming messages as read
@@ -254,6 +257,7 @@ Class | Method | HTTP request | Description
 [*MessagerieApi*](doc/MessagerieApi.md) | [**startConversation**](doc/MessagerieApi.md#startconversation) | **POST** /api/v1/conversations | Contact a listing — opens (or reuses) the thread and posts the first message
 [*MonLogementApi*](doc/MonLogementApi.md) | [**acknowledgeEvidence**](doc/MonLogementApi.md#acknowledgeevidence) | **POST** /api/v1/homes/{contractId}/evidence/{batchId}/acknowledge | Acknowledge a sending of photo proofs, with a word — never contest by deleting (RM-M30-12)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**closeHomeRequest**](doc/MonLogementApi.md#closehomerequest) | **POST** /api/v1/home-requests/{requestId}/close | The tenant closes a request — for good
+[*MonLogementApi*](doc/MonLogementApi.md) | [**compareEvidence**](doc/MonLogementApi.md#compareevidence) | **GET** /api/v1/homes/{contractId}/evidence/compare | The home&#39;s state before and after, room by room: entry and exit photos side by side (CA-M31-04)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**confirmDeclaration**](doc/MonLogementApi.md#confirmdeclaration) | **POST** /api/v1/prestataires/me/declarations/{declarationId}/confirm | Confirm a declared payment: it now pays its échéances (RM-M30-04, RM-M30-08)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**contestDeclaration**](doc/MonLogementApi.md#contestdeclaration) | **POST** /api/v1/prestataires/me/declarations/{declarationId}/contest | Contest a declared payment, with a reason the tenant sees (RM-M30-04, RM-M30-07)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**createEvidenceUploads**](doc/MonLogementApi.md#createevidenceuploads) | **POST** /api/v1/homes/{contractId}/evidence/uploads | Get one upload per photo proof, its SHA-256 signed in — storage refuses any other content (RM-M30-11)
@@ -279,7 +283,7 @@ Class | Method | HTTP request | Description
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyHomes**](doc/MonLogementApi.md#listmyhomes) | **GET** /api/v1/homes | My homes — one per signed contract, active first, then to come, then ended (RM-M30-01)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyReceivedDeclarations**](doc/MonLogementApi.md#listmyreceiveddeclarations) | **GET** /api/v1/prestataires/me/declarations | Declared payments on my homes, oldest first — status&#x3D;DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyReceivedRequests**](doc/MonLogementApi.md#listmyreceivedrequests) | **GET** /api/v1/prestataires/me/requests | Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
-[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyTenantHomes**](doc/MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first (RM-M30-14: mine only)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyTenantHomes**](doc/MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first — on one listing or one residence&#39;s units (RM-M30-14: mine only)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyUsefulContacts**](doc/MonLogementApi.md#listmyusefulcontacts) | **GET** /api/v1/prestataires/me/contacts | My useful contacts — caretaker, cleaner, craftsmen (RM-M30-13)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**moveHomeRequest**](doc/MonLogementApi.md#movehomerequest) | **POST** /api/v1/home-requests/{requestId}/status | The landlord takes a request in hand or resolves it, with a word
 [*MonLogementApi*](doc/MonLogementApi.md) | [**recordEvidence**](doc/MonLogementApi.md#recordevidence) | **POST** /api/v1/homes/{contractId}/evidence | Record uploaded photo proofs: checked in storage, then timestamped by the server — never modified (RM-M30-11)
@@ -317,10 +321,11 @@ Class | Method | HTTP request | Description
 [*RservationsApi*](doc/RservationsApi.md) | [**getMyReservation**](doc/RservationsApi.md#getmyreservation) | **GET** /api/v1/reservations/{id} | One of my reservation requests
 [*RservationsApi*](doc/RservationsApi.md) | [**listMyReservations**](doc/RservationsApi.md#listmyreservations) | **GET** /api/v1/reservations | My reservation requests, newest first
 [*RservationsApi*](doc/RservationsApi.md) | [**requestReservation**](doc/RservationsApi.md#requestreservation) | **POST** /api/v1/reservations | Ask to reserve a published listing: move-in day, duration, a word (RM-M29-01)
-[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**acceptReservation**](doc/RservationsPrestataireApi.md#acceptreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/accept | Accept: the listing is reserved for this client 7 days; the others are not retained (RM-M29-04/07)
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**acceptReservation**](doc/RservationsPrestataireApi.md#acceptreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/accept | Accept, optionally on another unit of the residence (unitId): it is reserved for this client 7 days; the others on it are not retained (RM-M29-04/07/16)
 [*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**cancelIncomingReservation**](doc/RservationsPrestataireApi.md#cancelincomingreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/cancel | Cancel an accepted reservation, with a reason — counted for the admin (RM-M29-08)
 [*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**extendReservation**](doc/RservationsPrestataireApi.md#extendreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/extend | Extend an accepted reservation by 7 days, once (RM-M29-07)
 [*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**getIncomingReservation**](doc/RservationsPrestataireApi.md#getincomingreservation) | **GET** /api/v1/prestataires/me/reservations/{id} | One request on my listings
+[*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**listAssignableUnits**](doc/RservationsPrestataireApi.md#listassignableunits) | **GET** /api/v1/prestataires/me/reservations/{id}/assignable-units | The residence&#39;s units this request could be accepted on instead — free, same period, the one asked for first (RM-M29-16)
 [*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**listIncomingReservations**](doc/RservationsPrestataireApi.md#listincomingreservations) | **GET** /api/v1/prestataires/me/reservations | Requests on my listings, newest first, on one listing or one residence&#39;s units — status&#x3D;PENDING&#39;s totalElements is the home counter
 [*RservationsPrestataireApi*](doc/RservationsPrestataireApi.md) | [**refuseReservation**](doc/RservationsPrestataireApi.md#refusereservation) | **POST** /api/v1/prestataires/me/reservations/{id}/refuse | Refuse, with a reason — never public (RM-M29-06)
 [*SavedSearchesApi*](doc/SavedSearchesApi.md) | [**deleteSavedSearch**](doc/SavedSearchesApi.md#deletesavedsearch) | **DELETE** /api/v1/saved-searches/{id} | Forget a saved search
@@ -360,6 +365,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AcceptReservationRequest](doc/AcceptReservationRequest.md)
  - [AccountContractHistory](doc/AccountContractHistory.md)
  - [AccountModerationEntry](doc/AccountModerationEntry.md)
  - [AccountReportHistory](doc/AccountReportHistory.md)
@@ -387,6 +393,7 @@ Class | Method | HTTP request | Description
  - [AnnonceDetailResponse](doc/AnnonceDetailResponse.md)
  - [AnnonceResponse](doc/AnnonceResponse.md)
  - [AssignAgentRequest](doc/AssignAgentRequest.md)
+ - [AssignableUnit](doc/AssignableUnit.md)
  - [AssignmentItem](doc/AssignmentItem.md)
  - [AssignmentResponse](doc/AssignmentResponse.md)
  - [AuthTokens](doc/AuthTokens.md)
@@ -436,6 +443,7 @@ Class | Method | HTTP request | Description
  - [EvidenceFileRequest](doc/EvidenceFileRequest.md)
  - [EvidencePhotoRequest](doc/EvidencePhotoRequest.md)
  - [EvidencePhotoResponse](doc/EvidencePhotoResponse.md)
+ - [EvidenceRoomComparison](doc/EvidenceRoomComparison.md)
  - [EvidenceUpload](doc/EvidenceUpload.md)
  - [EvidenceUploadsRequest](doc/EvidenceUploadsRequest.md)
  - [ExtendSubscriptionRequest](doc/ExtendSubscriptionRequest.md)
@@ -511,6 +519,10 @@ Class | Method | HTTP request | Description
  - [PageResponseVisiteResponse](doc/PageResponseVisiteResponse.md)
  - [Pageable](doc/Pageable.md)
  - [ParticipantSummary](doc/ParticipantSummary.md)
+ - [PastHomeExpenses](doc/PastHomeExpenses.md)
+ - [PastHomeResponse](doc/PastHomeResponse.md)
+ - [PastHomeReview](doc/PastHomeReview.md)
+ - [PastPayment](doc/PastPayment.md)
  - [PayInvoiceRequest](doc/PayInvoiceRequest.md)
  - [PaymentInitiatedResponse](doc/PaymentInitiatedResponse.md)
  - [PaymentSummary](doc/PaymentSummary.md)
@@ -617,6 +629,7 @@ Class | Method | HTTP request | Description
  - [VisiteResponse](doc/VisiteResponse.md)
  - [VisitorSlots](doc/VisitorSlots.md)
  - [Window](doc/Window.md)
+ - [YearTotal](doc/YearTotal.md)
  - [Zone](doc/Zone.md)
  - [ZoneResponse](doc/ZoneResponse.md)
 

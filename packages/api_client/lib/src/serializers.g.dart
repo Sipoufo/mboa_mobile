@@ -8,6 +8,7 @@ part of 'serializers.dart';
 
 Serializers _$serializers =
     (Serializers().toBuilder()
+          ..add(AcceptReservationRequest.serializer)
           ..add(AccountContractHistory.serializer)
           ..add(AccountModerationEntry.serializer)
           ..add(AccountModerationEntryActionEnum.serializer)
@@ -72,6 +73,9 @@ Serializers _$serializers =
           ..add(AnnonceResponseRentalPeriodEnum.serializer)
           ..add(AnnonceResponseStatusEnum.serializer)
           ..add(AssignAgentRequest.serializer)
+          ..add(AssignableUnit.serializer)
+          ..add(AssignableUnitPropertyTypeEnum.serializer)
+          ..add(AssignableUnitRentalPeriodEnum.serializer)
           ..add(AssignmentItem.serializer)
           ..add(AssignmentItemTypeEnum.serializer)
           ..add(AssignmentResponse.serializer)
@@ -156,6 +160,8 @@ Serializers _$serializers =
           ..add(EvidencePhotoResponse.serializer)
           ..add(EvidencePhotoResponsePhaseEnum.serializer)
           ..add(EvidencePhotoResponseRoomEnum.serializer)
+          ..add(EvidenceRoomComparison.serializer)
+          ..add(EvidenceRoomComparisonRoomEnum.serializer)
           ..add(EvidenceUpload.serializer)
           ..add(EvidenceUploadsRequest.serializer)
           ..add(ExtendSubscriptionRequest.serializer)
@@ -264,6 +270,12 @@ Serializers _$serializers =
           ..add(PageResponseVisiteResponse.serializer)
           ..add(Pageable.serializer)
           ..add(ParticipantSummary.serializer)
+          ..add(PastHomeExpenses.serializer)
+          ..add(PastHomeResponse.serializer)
+          ..add(PastHomeReview.serializer)
+          ..add(PastPayment.serializer)
+          ..add(PastPaymentKindEnum.serializer)
+          ..add(PastPaymentStatusEnum.serializer)
           ..add(PayInvoiceRequest.serializer)
           ..add(PayInvoiceRequestMethodEnum.serializer)
           ..add(PaymentInitiatedResponse.serializer)
@@ -450,6 +462,7 @@ Serializers _$serializers =
           ..add(VisitorSlotsReasonEnum.serializer)
           ..add(VisitorSlotsVisitorKindEnum.serializer)
           ..add(Window.serializer)
+          ..add(YearTotal.serializer)
           ..add(Zone.serializer)
           ..add(ZoneResponse.serializer)
           ..addBuilderFactory(
@@ -585,6 +598,18 @@ Serializers _$serializers =
               const FullType(EvidencePhotoRequest),
             ]),
             () => ListBuilder<EvidencePhotoRequest>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(EvidencePhotoResponse),
+            ]),
+            () => ListBuilder<EvidencePhotoResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(EvidencePhotoResponse),
+            ]),
+            () => ListBuilder<EvidencePhotoResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
@@ -959,6 +984,18 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(VisiteResponse)]),
             () => ListBuilder<VisiteResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(YearTotal)]),
+            () => ListBuilder<YearTotal>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(PastPayment)]),
+            () => ListBuilder<PastPayment>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(PastPayment)]),
+            () => ListBuilder<PastPayment>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(Zone)]),

@@ -9,6 +9,8 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
+import 'package:api_client/src/model/accept_reservation_request.dart';
+import 'package:api_client/src/model/assignable_unit.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/owner_decision_request.dart';
 import 'package:api_client/src/model/page_response_reservation_response.dart';
@@ -24,11 +26,12 @@ class RservationsPrestataireApi {
 
   const RservationsPrestataireApi(this._dio, this._serializers);
 
-  /// Accept: the listing is reserved for this client 7 days; the others are not retained (RM-M29-04/07)
+  /// Accept, optionally on another unit of the residence (unitId): it is reserved for this client 7 days; the others on it are not retained (RM-M29-04/07/16)
   /// 
   ///
   /// Parameters:
   /// * [id] 
+  /// * [acceptReservationRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -40,6 +43,7 @@ class RservationsPrestataireApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<ReservationResponse>> acceptReservation({ 
     required String id,
+    AcceptReservationRequest? acceptReservationRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -63,11 +67,31 @@ class RservationsPrestataireApi {
         ],
         ...?extra,
       },
+      contentType: 'application/json',
       validateStatus: validateStatus,
     );
 
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(AcceptReservationRequest);
+      _bodyData = acceptReservationRequest == null ? null : _serializers.serialize(acceptReservationRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
     final _response = await _dio.request<Object>(
       _path,
+      data: _bodyData,
       options: _options,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
@@ -359,6 +383,87 @@ class RservationsPrestataireApi {
     }
 
     return Response<ReservationResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// The residence&#39;s units this request could be accepted on instead — free, same period, the one asked for first (RM-M29-16)
+  /// 
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [BuiltList<AssignableUnit>] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<BuiltList<AssignableUnit>>> listAssignableUnits({ 
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/prestataires/me/reservations/{id}/assignable-units'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    BuiltList<AssignableUnit>? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(AssignableUnit)]),
+      ) as BuiltList<AssignableUnit>;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BuiltList<AssignableUnit>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

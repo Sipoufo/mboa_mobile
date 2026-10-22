@@ -29,6 +29,8 @@ Name | Type | Description | Notes
 **nextDue** | [**Due**](Due.md) |  | [optional] 
 **overdueCount** | **int** |  | [optional] 
 **overdueAmount** | **int** |  | [optional] 
+**residenceId** | **String** |  | [optional] 
+**residenceName** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

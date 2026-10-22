@@ -445,6 +445,12 @@ class _$ReservationResponse extends ReservationResponse {
   final String? residenceId;
   @override
   final String? residenceName;
+  @override
+  final String? requestedAnnonceId;
+  @override
+  final String? requestedAnnonceTitle;
+  @override
+  final bool? canAssignUnit;
 
   factory _$ReservationResponse([
     void Function(ReservationResponseBuilder)? updates,
@@ -479,6 +485,9 @@ class _$ReservationResponse extends ReservationResponse {
     this.contractId,
     this.residenceId,
     this.residenceName,
+    this.requestedAnnonceId,
+    this.requestedAnnonceTitle,
+    this.canAssignUnit,
   }) : super._();
   @override
   ReservationResponse rebuild(
@@ -520,7 +529,10 @@ class _$ReservationResponse extends ReservationResponse {
         canDraftContract == other.canDraftContract &&
         contractId == other.contractId &&
         residenceId == other.residenceId &&
-        residenceName == other.residenceName;
+        residenceName == other.residenceName &&
+        requestedAnnonceId == other.requestedAnnonceId &&
+        requestedAnnonceTitle == other.requestedAnnonceTitle &&
+        canAssignUnit == other.canAssignUnit;
   }
 
   @override
@@ -554,6 +566,9 @@ class _$ReservationResponse extends ReservationResponse {
     _$hash = $jc(_$hash, contractId.hashCode);
     _$hash = $jc(_$hash, residenceId.hashCode);
     _$hash = $jc(_$hash, residenceName.hashCode);
+    _$hash = $jc(_$hash, requestedAnnonceId.hashCode);
+    _$hash = $jc(_$hash, requestedAnnonceTitle.hashCode);
+    _$hash = $jc(_$hash, canAssignUnit.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -588,7 +603,10 @@ class _$ReservationResponse extends ReservationResponse {
           ..add('canDraftContract', canDraftContract)
           ..add('contractId', contractId)
           ..add('residenceId', residenceId)
-          ..add('residenceName', residenceName))
+          ..add('residenceName', residenceName)
+          ..add('requestedAnnonceId', requestedAnnonceId)
+          ..add('requestedAnnonceTitle', requestedAnnonceTitle)
+          ..add('canAssignUnit', canAssignUnit))
         .toString();
   }
 }
@@ -722,6 +740,21 @@ class ReservationResponseBuilder
   set residenceName(String? residenceName) =>
       _$this._residenceName = residenceName;
 
+  String? _requestedAnnonceId;
+  String? get requestedAnnonceId => _$this._requestedAnnonceId;
+  set requestedAnnonceId(String? requestedAnnonceId) =>
+      _$this._requestedAnnonceId = requestedAnnonceId;
+
+  String? _requestedAnnonceTitle;
+  String? get requestedAnnonceTitle => _$this._requestedAnnonceTitle;
+  set requestedAnnonceTitle(String? requestedAnnonceTitle) =>
+      _$this._requestedAnnonceTitle = requestedAnnonceTitle;
+
+  bool? _canAssignUnit;
+  bool? get canAssignUnit => _$this._canAssignUnit;
+  set canAssignUnit(bool? canAssignUnit) =>
+      _$this._canAssignUnit = canAssignUnit;
+
   ReservationResponseBuilder() {
     ReservationResponse._defaults(this);
   }
@@ -757,6 +790,9 @@ class ReservationResponseBuilder
       _contractId = $v.contractId;
       _residenceId = $v.residenceId;
       _residenceName = $v.residenceName;
+      _requestedAnnonceId = $v.requestedAnnonceId;
+      _requestedAnnonceTitle = $v.requestedAnnonceTitle;
+      _canAssignUnit = $v.canAssignUnit;
       _$v = null;
     }
     return this;
@@ -809,6 +845,9 @@ class ReservationResponseBuilder
             contractId: contractId,
             residenceId: residenceId,
             residenceName: residenceName,
+            requestedAnnonceId: requestedAnnonceId,
+            requestedAnnonceTitle: requestedAnnonceTitle,
+            canAssignUnit: canAssignUnit,
           );
     } catch (_) {
       late String _$failedField;

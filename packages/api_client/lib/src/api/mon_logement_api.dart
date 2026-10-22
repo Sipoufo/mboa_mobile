@@ -18,6 +18,7 @@ import 'package:api_client/src/model/declare_invoice_payment_request.dart';
 import 'package:api_client/src/model/declare_payment_request.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/evidence_batch_response.dart';
+import 'package:api_client/src/model/evidence_room_comparison.dart';
 import 'package:api_client/src/model/evidence_upload.dart';
 import 'package:api_client/src/model/evidence_uploads_request.dart';
 import 'package:api_client/src/model/home_detail.dart';
@@ -243,6 +244,87 @@ class MonLogementApi {
     }
 
     return Response<HomeRequestResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// The home&#39;s state before and after, room by room: entry and exit photos side by side (CA-M31-04)
+  /// 
+  ///
+  /// Parameters:
+  /// * [contractId] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [BuiltList<EvidenceRoomComparison>] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<BuiltList<EvidenceRoomComparison>>> compareEvidence({ 
+    required String contractId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/homes/{contractId}/evidence/compare'.replaceAll('{' r'contractId' '}', encodeQueryParameter(_serializers, contractId, const FullType(String)).toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    BuiltList<EvidenceRoomComparison>? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(EvidenceRoomComparison)]),
+      ) as BuiltList<EvidenceRoomComparison>;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BuiltList<EvidenceRoomComparison>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2288,6 +2370,7 @@ class MonLogementApi {
   /// * [pageable] 
   /// * [status] 
   /// * [contractId] 
+  /// * [residenceId] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -2301,6 +2384,7 @@ class MonLogementApi {
     required Pageable pageable,
     BuiltList<String>? status,
     String? contractId,
+    String? residenceId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -2330,6 +2414,7 @@ class MonLogementApi {
     final _queryParameters = <String, dynamic>{
       if (status != null) r'status': encodeCollectionQueryParameter<String>(_serializers, status, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
       if (contractId != null) r'contractId': encodeQueryParameter(_serializers, contractId, const FullType(String)),
+      if (residenceId != null) r'residenceId': encodeQueryParameter(_serializers, residenceId, const FullType(String)),
       r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
     };
 
@@ -2465,12 +2550,13 @@ class MonLogementApi {
     );
   }
 
-  /// The homes on my properties, one per signed contract, active first (RM-M30-14: mine only)
+  /// The homes on my properties, one per signed contract, active first — on one listing or one residence&#39;s units (RM-M30-14: mine only)
   /// 
   ///
   /// Parameters:
   /// * [pageable] 
   /// * [annonceId] 
+  /// * [residenceId] 
   /// * [state] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -2484,6 +2570,7 @@ class MonLogementApi {
   Future<Response<PageResponseHomeSummary>> listMyTenantHomes({ 
     required Pageable pageable,
     String? annonceId,
+    String? residenceId,
     BuiltList<String>? state,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -2513,6 +2600,7 @@ class MonLogementApi {
 
     final _queryParameters = <String, dynamic>{
       if (annonceId != null) r'annonceId': encodeQueryParameter(_serializers, annonceId, const FullType(String)),
+      if (residenceId != null) r'residenceId': encodeQueryParameter(_serializers, residenceId, const FullType(String)),
       if (state != null) r'state': encodeCollectionQueryParameter<String>(_serializers, state, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
       r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
     };

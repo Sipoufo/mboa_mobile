@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**acknowledgeEvidence**](MonLogementApi.md#acknowledgeevidence) | **POST** /api/v1/homes/{contractId}/evidence/{batchId}/acknowledge | Acknowledge a sending of photo proofs, with a word — never contest by deleting (RM-M30-12)
 [**closeHomeRequest**](MonLogementApi.md#closehomerequest) | **POST** /api/v1/home-requests/{requestId}/close | The tenant closes a request — for good
+[**compareEvidence**](MonLogementApi.md#compareevidence) | **GET** /api/v1/homes/{contractId}/evidence/compare | The home&#39;s state before and after, room by room: entry and exit photos side by side (CA-M31-04)
 [**confirmDeclaration**](MonLogementApi.md#confirmdeclaration) | **POST** /api/v1/prestataires/me/declarations/{declarationId}/confirm | Confirm a declared payment: it now pays its échéances (RM-M30-04, RM-M30-08)
 [**contestDeclaration**](MonLogementApi.md#contestdeclaration) | **POST** /api/v1/prestataires/me/declarations/{declarationId}/contest | Contest a declared payment, with a reason the tenant sees (RM-M30-04, RM-M30-07)
 [**createEvidenceUploads**](MonLogementApi.md#createevidenceuploads) | **POST** /api/v1/homes/{contractId}/evidence/uploads | Get one upload per photo proof, its SHA-256 signed in — storage refuses any other content (RM-M30-11)
@@ -36,7 +37,7 @@ Method | HTTP request | Description
 [**listMyHomes**](MonLogementApi.md#listmyhomes) | **GET** /api/v1/homes | My homes — one per signed contract, active first, then to come, then ended (RM-M30-01)
 [**listMyReceivedDeclarations**](MonLogementApi.md#listmyreceiveddeclarations) | **GET** /api/v1/prestataires/me/declarations | Declared payments on my homes, oldest first — status&#x3D;DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
 [**listMyReceivedRequests**](MonLogementApi.md#listmyreceivedrequests) | **GET** /api/v1/prestataires/me/requests | Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
-[**listMyTenantHomes**](MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first (RM-M30-14: mine only)
+[**listMyTenantHomes**](MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first — on one listing or one residence&#39;s units (RM-M30-14: mine only)
 [**listMyUsefulContacts**](MonLogementApi.md#listmyusefulcontacts) | **GET** /api/v1/prestataires/me/contacts | My useful contacts — caretaker, cleaner, craftsmen (RM-M30-13)
 [**moveHomeRequest**](MonLogementApi.md#movehomerequest) | **POST** /api/v1/home-requests/{requestId}/status | The landlord takes a request in hand or resolves it, with a word
 [**recordEvidence**](MonLogementApi.md#recordevidence) | **POST** /api/v1/homes/{contractId}/evidence | Record uploaded photo proofs: checked in storage, then timestamped by the server — never modified (RM-M30-11)
@@ -128,6 +129,47 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **compareEvidence**
+> BuiltList<EvidenceRoomComparison> compareEvidence(contractId)
+
+The home's state before and after, room by room: entry and exit photos side by side (CA-M31-04)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getMonLogementApi();
+final String contractId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.compareEvidence(contractId);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling MonLogementApi->compareEvidence: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **contractId** | **String**|  | 
+
+### Return type
+
+[**BuiltList&lt;EvidenceRoomComparison&gt;**](EvidenceRoomComparison.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1109,7 +1151,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listMyReceivedDeclarations**
-> PageResponseDeclarationResponse listMyReceivedDeclarations(pageable, status, contractId)
+> PageResponseDeclarationResponse listMyReceivedDeclarations(pageable, status, contractId, residenceId)
 
 Declared payments on my homes, oldest first — status=DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
 
@@ -1121,9 +1163,10 @@ final api = ApiClient().getMonLogementApi();
 final Pageable pageable = ; // Pageable | 
 final BuiltList<String> status = ; // BuiltList<String> | 
 final String contractId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final String residenceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final response = api.listMyReceivedDeclarations(pageable, status, contractId);
+    final response = api.listMyReceivedDeclarations(pageable, status, contractId, residenceId);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling MonLogementApi->listMyReceivedDeclarations: $e\n');
@@ -1137,6 +1180,7 @@ Name | Type | Description  | Notes
  **pageable** | [**Pageable**](.md)|  | 
  **status** | [**BuiltList&lt;String&gt;**](String.md)|  | [optional] 
  **contractId** | **String**|  | [optional] 
+ **residenceId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -1199,9 +1243,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listMyTenantHomes**
-> PageResponseHomeSummary listMyTenantHomes(pageable, annonceId, state)
+> PageResponseHomeSummary listMyTenantHomes(pageable, annonceId, residenceId, state)
 
-The homes on my properties, one per signed contract, active first (RM-M30-14: mine only)
+The homes on my properties, one per signed contract, active first — on one listing or one residence's units (RM-M30-14: mine only)
 
 ### Example
 ```dart
@@ -1210,10 +1254,11 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getMonLogementApi();
 final Pageable pageable = ; // Pageable | 
 final String annonceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final String residenceId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 final BuiltList<String> state = ; // BuiltList<String> | 
 
 try {
-    final response = api.listMyTenantHomes(pageable, annonceId, state);
+    final response = api.listMyTenantHomes(pageable, annonceId, residenceId, state);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling MonLogementApi->listMyTenantHomes: $e\n');
@@ -1226,6 +1271,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pageable** | [**Pageable**](.md)|  | 
  **annonceId** | **String**|  | [optional] 
+ **residenceId** | **String**|  | [optional] 
  **state** | [**BuiltList&lt;String&gt;**](String.md)|  | [optional] 
 
 ### Return type

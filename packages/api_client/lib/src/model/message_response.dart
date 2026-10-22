@@ -53,7 +53,7 @@ abstract class MessageResponse implements Built<MessageResponse, MessageResponse
 
   @BuiltValueField(wireName: r'systemEvent')
   MessageResponseSystemEventEnum? get systemEvent;
-  // enum systemEventEnum {  RESERVATION_REQUESTED,  HOME_REQUEST_OPENED,  HOME_REQUEST_UPDATED,  };
+  // enum systemEventEnum {  RESERVATION_REQUESTED,  RESERVATION_UNIT_ASSIGNED,  HOME_REQUEST_OPENED,  HOME_REQUEST_UPDATED,  };
 
   @BuiltValueField(wireName: r'reservation')
   ReservationRequestSnapshot? get reservation;
@@ -322,6 +322,8 @@ class MessageResponseSystemEventEnum extends EnumClass {
 
   @BuiltValueEnumConst(wireName: r'RESERVATION_REQUESTED')
   static const MessageResponseSystemEventEnum RESERVATION_REQUESTED = _$messageResponseSystemEventEnum_RESERVATION_REQUESTED;
+  @BuiltValueEnumConst(wireName: r'RESERVATION_UNIT_ASSIGNED')
+  static const MessageResponseSystemEventEnum RESERVATION_UNIT_ASSIGNED = _$messageResponseSystemEventEnum_RESERVATION_UNIT_ASSIGNED;
   @BuiltValueEnumConst(wireName: r'HOME_REQUEST_OPENED')
   static const MessageResponseSystemEventEnum HOME_REQUEST_OPENED = _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED;
   @BuiltValueEnumConst(wireName: r'HOME_REQUEST_UPDATED')

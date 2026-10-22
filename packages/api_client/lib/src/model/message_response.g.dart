@@ -37,6 +37,9 @@ const MessageResponseSystemEventEnum
 _$messageResponseSystemEventEnum_RESERVATION_REQUESTED =
     const MessageResponseSystemEventEnum._('RESERVATION_REQUESTED');
 const MessageResponseSystemEventEnum
+_$messageResponseSystemEventEnum_RESERVATION_UNIT_ASSIGNED =
+    const MessageResponseSystemEventEnum._('RESERVATION_UNIT_ASSIGNED');
+const MessageResponseSystemEventEnum
 _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED =
     const MessageResponseSystemEventEnum._('HOME_REQUEST_OPENED');
 const MessageResponseSystemEventEnum
@@ -52,6 +55,8 @@ MessageResponseSystemEventEnum _$messageResponseSystemEventEnumValueOf(
   switch (name) {
     case 'RESERVATION_REQUESTED':
       return _$messageResponseSystemEventEnum_RESERVATION_REQUESTED;
+    case 'RESERVATION_UNIT_ASSIGNED':
+      return _$messageResponseSystemEventEnum_RESERVATION_UNIT_ASSIGNED;
     case 'HOME_REQUEST_OPENED':
       return _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED;
     case 'HOME_REQUEST_UPDATED':
@@ -68,6 +73,7 @@ _$messageResponseSystemEventEnumValues =
     BuiltSet<MessageResponseSystemEventEnum>(
       const <MessageResponseSystemEventEnum>[
         _$messageResponseSystemEventEnum_RESERVATION_REQUESTED,
+        _$messageResponseSystemEventEnum_RESERVATION_UNIT_ASSIGNED,
         _$messageResponseSystemEventEnum_HOME_REQUEST_OPENED,
         _$messageResponseSystemEventEnum_HOME_REQUEST_UPDATED,
         _$messageResponseSystemEventEnum_unknownDefaultOpenApi,
@@ -119,12 +125,14 @@ class _$MessageResponseSystemEventEnumSerializer
     implements PrimitiveSerializer<MessageResponseSystemEventEnum> {
   static const Map<String, Object> _toWire = const <String, Object>{
     'RESERVATION_REQUESTED': 'RESERVATION_REQUESTED',
+    'RESERVATION_UNIT_ASSIGNED': 'RESERVATION_UNIT_ASSIGNED',
     'HOME_REQUEST_OPENED': 'HOME_REQUEST_OPENED',
     'HOME_REQUEST_UPDATED': 'HOME_REQUEST_UPDATED',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'RESERVATION_REQUESTED': 'RESERVATION_REQUESTED',
+    'RESERVATION_UNIT_ASSIGNED': 'RESERVATION_UNIT_ASSIGNED',
     'HOME_REQUEST_OPENED': 'HOME_REQUEST_OPENED',
     'HOME_REQUEST_UPDATED': 'HOME_REQUEST_UPDATED',
     'unknown_default_open_api': 'unknownDefaultOpenApi',

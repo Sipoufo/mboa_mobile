@@ -42,6 +42,9 @@ part 'reservation_response.g.dart';
 /// * [contractId] 
 /// * [residenceId] 
 /// * [residenceName] 
+/// * [requestedAnnonceId] 
+/// * [requestedAnnonceTitle] 
+/// * [canAssignUnit] 
 @BuiltValue()
 abstract class ReservationResponse implements Built<ReservationResponse, ReservationResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -131,6 +134,15 @@ abstract class ReservationResponse implements Built<ReservationResponse, Reserva
 
   @BuiltValueField(wireName: r'residenceName')
   String? get residenceName;
+
+  @BuiltValueField(wireName: r'requestedAnnonceId')
+  String? get requestedAnnonceId;
+
+  @BuiltValueField(wireName: r'requestedAnnonceTitle')
+  String? get requestedAnnonceTitle;
+
+  @BuiltValueField(wireName: r'canAssignUnit')
+  bool? get canAssignUnit;
 
   ReservationResponse._();
 
@@ -349,6 +361,27 @@ class _$ReservationResponseSerializer implements PrimitiveSerializer<Reservation
       yield serializers.serialize(
         object.residenceName,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.requestedAnnonceId != null) {
+      yield r'requestedAnnonceId';
+      yield serializers.serialize(
+        object.requestedAnnonceId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.requestedAnnonceTitle != null) {
+      yield r'requestedAnnonceTitle';
+      yield serializers.serialize(
+        object.requestedAnnonceTitle,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.canAssignUnit != null) {
+      yield r'canAssignUnit';
+      yield serializers.serialize(
+        object.canAssignUnit,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -597,6 +630,30 @@ class _$ReservationResponseSerializer implements PrimitiveSerializer<Reservation
           ) as String?;
           if (valueDes == null) continue;
           result.residenceName = valueDes;
+          break;
+        case r'requestedAnnonceId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.requestedAnnonceId = valueDes;
+          break;
+        case r'requestedAnnonceTitle':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.requestedAnnonceTitle = valueDes;
+          break;
+        case r'canAssignUnit':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.canAssignUnit = valueDes;
           break;
         default:
           unhandled.add(key);

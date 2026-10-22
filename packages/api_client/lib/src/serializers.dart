@@ -14,6 +14,7 @@ import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:api_client/src/date_serializer.dart';
 import 'package:api_client/src/model/date.dart';
 
+import 'package:api_client/src/model/accept_reservation_request.dart';
 import 'package:api_client/src/model/account_contract_history.dart';
 import 'package:api_client/src/model/account_moderation_entry.dart';
 import 'package:api_client/src/model/account_report_history.dart';
@@ -41,6 +42,7 @@ import 'package:api_client/src/model/agent_visite_detail.dart';
 import 'package:api_client/src/model/annonce_detail_response.dart';
 import 'package:api_client/src/model/annonce_response.dart';
 import 'package:api_client/src/model/assign_agent_request.dart';
+import 'package:api_client/src/model/assignable_unit.dart';
 import 'package:api_client/src/model/assignment_item.dart';
 import 'package:api_client/src/model/assignment_response.dart';
 import 'package:api_client/src/model/auth_tokens.dart';
@@ -90,6 +92,7 @@ import 'package:api_client/src/model/evidence_batch_response.dart';
 import 'package:api_client/src/model/evidence_file_request.dart';
 import 'package:api_client/src/model/evidence_photo_request.dart';
 import 'package:api_client/src/model/evidence_photo_response.dart';
+import 'package:api_client/src/model/evidence_room_comparison.dart';
 import 'package:api_client/src/model/evidence_upload.dart';
 import 'package:api_client/src/model/evidence_uploads_request.dart';
 import 'package:api_client/src/model/extend_subscription_request.dart';
@@ -165,6 +168,10 @@ import 'package:api_client/src/model/page_response_type_change_review_item.dart'
 import 'package:api_client/src/model/page_response_visite_response.dart';
 import 'package:api_client/src/model/pageable.dart';
 import 'package:api_client/src/model/participant_summary.dart';
+import 'package:api_client/src/model/past_home_expenses.dart';
+import 'package:api_client/src/model/past_home_response.dart';
+import 'package:api_client/src/model/past_home_review.dart';
+import 'package:api_client/src/model/past_payment.dart';
 import 'package:api_client/src/model/pay_invoice_request.dart';
 import 'package:api_client/src/model/payment_initiated_response.dart';
 import 'package:api_client/src/model/payment_summary.dart';
@@ -271,12 +278,14 @@ import 'package:api_client/src/model/verify_otp_request.dart';
 import 'package:api_client/src/model/visite_response.dart';
 import 'package:api_client/src/model/visitor_slots.dart';
 import 'package:api_client/src/model/window.dart';
+import 'package:api_client/src/model/year_total.dart';
 import 'package:api_client/src/model/zone.dart';
 import 'package:api_client/src/model/zone_response.dart';
 
 part 'serializers.g.dart';
 
 @SerializersFor([
+  AcceptReservationRequest,
   AccountContractHistory,
   AccountModerationEntry,
   AccountReportHistory,
@@ -304,6 +313,7 @@ part 'serializers.g.dart';
   AnnonceDetailResponse,
   AnnonceResponse,
   AssignAgentRequest,
+  AssignableUnit,
   AssignmentItem,
   AssignmentResponse,
   AuthTokens,
@@ -353,6 +363,7 @@ part 'serializers.g.dart';
   EvidenceFileRequest,
   EvidencePhotoRequest,
   EvidencePhotoResponse,
+  EvidenceRoomComparison,
   EvidenceUpload,
   EvidenceUploadsRequest,
   ExtendSubscriptionRequest,
@@ -428,6 +439,10 @@ part 'serializers.g.dart';
   PageResponseVisiteResponse,
   Pageable,
   ParticipantSummary,
+  PastHomeExpenses,
+  PastHomeResponse,
+  PastHomeReview,
+  PastPayment,
   PayInvoiceRequest,
   PaymentInitiatedResponse,
   PaymentSummary,
@@ -534,6 +549,7 @@ part 'serializers.g.dart';
   VisiteResponse,
   VisitorSlots,
   Window,
+  YearTotal,
   Zone,
   ZoneResponse,
 ])
@@ -567,6 +583,10 @@ Serializers serializers = (_$serializers.toBuilder()
         () => ListBuilder<KycReviewItem>(),
       )
       ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(AssignableUnit)]),
+        () => ListBuilder<AssignableUnit>(),
+      )
+      ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ReservationResponse)]),
         () => ListBuilder<ReservationResponse>(),
       )
@@ -581,6 +601,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Line)]),
         () => ListBuilder<Line>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(EvidenceRoomComparison)]),
+        () => ListBuilder<EvidenceRoomComparison>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(Due)]),
@@ -657,6 +681,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AnnonceResponse)]),
         () => ListBuilder<AnnonceResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(YearTotal)]),
+        () => ListBuilder<YearTotal>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ScoreSignal)]),
@@ -785,6 +813,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AvailabilityRuleRequest)]),
         () => ListBuilder<AvailabilityRuleRequest>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(PastPayment)]),
+        () => ListBuilder<PastPayment>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(CategoryTotal)]),

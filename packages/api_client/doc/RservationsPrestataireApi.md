@@ -9,18 +9,19 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**acceptReservation**](RservationsPrestataireApi.md#acceptreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/accept | Accept: the listing is reserved for this client 7 days; the others are not retained (RM-M29-04/07)
+[**acceptReservation**](RservationsPrestataireApi.md#acceptreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/accept | Accept, optionally on another unit of the residence (unitId): it is reserved for this client 7 days; the others on it are not retained (RM-M29-04/07/16)
 [**cancelIncomingReservation**](RservationsPrestataireApi.md#cancelincomingreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/cancel | Cancel an accepted reservation, with a reason — counted for the admin (RM-M29-08)
 [**extendReservation**](RservationsPrestataireApi.md#extendreservation) | **POST** /api/v1/prestataires/me/reservations/{id}/extend | Extend an accepted reservation by 7 days, once (RM-M29-07)
 [**getIncomingReservation**](RservationsPrestataireApi.md#getincomingreservation) | **GET** /api/v1/prestataires/me/reservations/{id} | One request on my listings
+[**listAssignableUnits**](RservationsPrestataireApi.md#listassignableunits) | **GET** /api/v1/prestataires/me/reservations/{id}/assignable-units | The residence&#39;s units this request could be accepted on instead — free, same period, the one asked for first (RM-M29-16)
 [**listIncomingReservations**](RservationsPrestataireApi.md#listincomingreservations) | **GET** /api/v1/prestataires/me/reservations | Requests on my listings, newest first, on one listing or one residence&#39;s units — status&#x3D;PENDING&#39;s totalElements is the home counter
 [**refuseReservation**](RservationsPrestataireApi.md#refusereservation) | **POST** /api/v1/prestataires/me/reservations/{id}/refuse | Refuse, with a reason — never public (RM-M29-06)
 
 
 # **acceptReservation**
-> ReservationResponse acceptReservation(id)
+> ReservationResponse acceptReservation(id, acceptReservationRequest)
 
-Accept: the listing is reserved for this client 7 days; the others are not retained (RM-M29-04/07)
+Accept, optionally on another unit of the residence (unitId): it is reserved for this client 7 days; the others on it are not retained (RM-M29-04/07/16)
 
 ### Example
 ```dart
@@ -28,9 +29,10 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getRservationsPrestataireApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final AcceptReservationRequest acceptReservationRequest = ; // AcceptReservationRequest | 
 
 try {
-    final response = api.acceptReservation(id);
+    final response = api.acceptReservation(id, acceptReservationRequest);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling RservationsPrestataireApi->acceptReservation: $e\n');
@@ -42,6 +44,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
+ **acceptReservationRequest** | [**AcceptReservationRequest**](AcceptReservationRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -53,7 +56,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -171,6 +174,47 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ReservationResponse**](ReservationResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **listAssignableUnits**
+> BuiltList<AssignableUnit> listAssignableUnits(id)
+
+The residence's units this request could be accepted on instead — free, same period, the one asked for first (RM-M29-16)
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getRservationsPrestataireApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final response = api.listAssignableUnits(id);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling RservationsPrestataireApi->listAssignableUnits: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+
+### Return type
+
+[**BuiltList&lt;AssignableUnit&gt;**](AssignableUnit.md)
 
 ### Authorization
 

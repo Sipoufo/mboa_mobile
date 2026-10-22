@@ -36,6 +36,9 @@ Name | Type | Description | Notes
 **contractId** | **String** |  | [optional] 
 **residenceId** | **String** |  | [optional] 
 **residenceName** | **String** |  | [optional] 
+**requestedAnnonceId** | **String** |  | [optional] 
+**requestedAnnonceTitle** | **String** |  | [optional] 
+**canAssignUnit** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

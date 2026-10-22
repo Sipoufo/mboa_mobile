@@ -43,6 +43,7 @@ import 'package:api_client/src/api/kyc_api.dart';
 import 'package:api_client/src/api/locations_api.dart';
 import 'package:api_client/src/api/mboa_score_api.dart';
 import 'package:api_client/src/api/media_api.dart';
+import 'package:api_client/src/api/mes_anciens_logements_api.dart';
 import 'package:api_client/src/api/messagerie_api.dart';
 import 'package:api_client/src/api/mon_logement_api.dart';
 import 'package:api_client/src/api/notification_devices_api.dart';
@@ -361,6 +362,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   MediaApi getMediaApi() {
     return MediaApi(dio, serializers);
+  }
+
+  /// Get MesAnciensLogementsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  MesAnciensLogementsApi getMesAnciensLogementsApi() {
+    return MesAnciensLogementsApi(dio, serializers);
   }
 
   /// Get MessagerieApi instance, base route and serializer can be overridden by a given but be careful,

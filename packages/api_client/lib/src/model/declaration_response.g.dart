@@ -306,6 +306,10 @@ class _$DeclarationResponse extends DeclarationResponse {
   final String? receiptId;
   @override
   final bool? receiptReady;
+  @override
+  final String? residenceId;
+  @override
+  final String? residenceName;
 
   factory _$DeclarationResponse([
     void Function(DeclarationResponseBuilder)? updates,
@@ -335,6 +339,8 @@ class _$DeclarationResponse extends DeclarationResponse {
     this.canContest,
     this.receiptId,
     this.receiptReady,
+    this.residenceId,
+    this.residenceName,
   }) : super._();
   @override
   DeclarationResponse rebuild(
@@ -371,7 +377,9 @@ class _$DeclarationResponse extends DeclarationResponse {
         canConfirm == other.canConfirm &&
         canContest == other.canContest &&
         receiptId == other.receiptId &&
-        receiptReady == other.receiptReady;
+        receiptReady == other.receiptReady &&
+        residenceId == other.residenceId &&
+        residenceName == other.residenceName;
   }
 
   @override
@@ -400,6 +408,8 @@ class _$DeclarationResponse extends DeclarationResponse {
     _$hash = $jc(_$hash, canContest.hashCode);
     _$hash = $jc(_$hash, receiptId.hashCode);
     _$hash = $jc(_$hash, receiptReady.hashCode);
+    _$hash = $jc(_$hash, residenceId.hashCode);
+    _$hash = $jc(_$hash, residenceName.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -429,7 +439,9 @@ class _$DeclarationResponse extends DeclarationResponse {
           ..add('canConfirm', canConfirm)
           ..add('canContest', canContest)
           ..add('receiptId', receiptId)
-          ..add('receiptReady', receiptReady))
+          ..add('receiptReady', receiptReady)
+          ..add('residenceId', residenceId)
+          ..add('residenceName', residenceName))
         .toString();
   }
 }
@@ -535,6 +547,15 @@ class DeclarationResponseBuilder
   bool? get receiptReady => _$this._receiptReady;
   set receiptReady(bool? receiptReady) => _$this._receiptReady = receiptReady;
 
+  String? _residenceId;
+  String? get residenceId => _$this._residenceId;
+  set residenceId(String? residenceId) => _$this._residenceId = residenceId;
+
+  String? _residenceName;
+  String? get residenceName => _$this._residenceName;
+  set residenceName(String? residenceName) =>
+      _$this._residenceName = residenceName;
+
   DeclarationResponseBuilder() {
     DeclarationResponse._defaults(this);
   }
@@ -565,6 +586,8 @@ class DeclarationResponseBuilder
       _canContest = $v.canContest;
       _receiptId = $v.receiptId;
       _receiptReady = $v.receiptReady;
+      _residenceId = $v.residenceId;
+      _residenceName = $v.residenceName;
       _$v = null;
     }
     return this;
@@ -612,6 +635,8 @@ class DeclarationResponseBuilder
             canContest: canContest,
             receiptId: receiptId,
             receiptReady: receiptReady,
+            residenceId: residenceId,
+            residenceName: residenceName,
           );
     } catch (_) {
       late String _$failedField;

@@ -37,6 +37,8 @@ part 'home_summary.g.dart';
 /// * [nextDue] 
 /// * [overdueCount] 
 /// * [overdueAmount] 
+/// * [residenceId] 
+/// * [residenceName] 
 @BuiltValue()
 abstract class HomeSummary implements Built<HomeSummary, HomeSummaryBuilder> {
   @BuiltValueField(wireName: r'contractId')
@@ -103,6 +105,12 @@ abstract class HomeSummary implements Built<HomeSummary, HomeSummaryBuilder> {
 
   @BuiltValueField(wireName: r'overdueAmount')
   int? get overdueAmount;
+
+  @BuiltValueField(wireName: r'residenceId')
+  String? get residenceId;
+
+  @BuiltValueField(wireName: r'residenceName')
+  String? get residenceName;
 
   HomeSummary._();
 
@@ -272,6 +280,20 @@ class _$HomeSummarySerializer implements PrimitiveSerializer<HomeSummary> {
       yield serializers.serialize(
         object.overdueAmount,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.residenceId != null) {
+      yield r'residenceId';
+      yield serializers.serialize(
+        object.residenceId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.residenceName != null) {
+      yield r'residenceName';
+      yield serializers.serialize(
+        object.residenceName,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -464,6 +486,22 @@ class _$HomeSummarySerializer implements PrimitiveSerializer<HomeSummary> {
           ) as int?;
           if (valueDes == null) continue;
           result.overdueAmount = valueDes;
+          break;
+        case r'residenceId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.residenceId = valueDes;
+          break;
+        case r'residenceName':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.residenceName = valueDes;
           break;
         default:
           unhandled.add(key);

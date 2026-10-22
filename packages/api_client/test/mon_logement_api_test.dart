@@ -21,6 +21,13 @@ void main() {
       // TODO
     });
 
+    // The home's state before and after, room by room: entry and exit photos side by side (CA-M31-04)
+    //
+    //Future<BuiltList<EvidenceRoomComparison>> compareEvidence(String contractId) async
+    test('test compareEvidence', () async {
+      // TODO
+    });
+
     // Confirm a declared payment: it now pays its échéances (RM-M30-04, RM-M30-08)
     //
     //Future<DeclarationResponse> confirmDeclaration(String declarationId) async
@@ -184,7 +191,7 @@ void main() {
 
     // Declared payments on my homes, oldest first — status=DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
     //
-    //Future<PageResponseDeclarationResponse> listMyReceivedDeclarations(Pageable pageable, { BuiltList<String> status, String contractId }) async
+    //Future<PageResponseDeclarationResponse> listMyReceivedDeclarations(Pageable pageable, { BuiltList<String> status, String contractId, String residenceId }) async
     test('test listMyReceivedDeclarations', () async {
       // TODO
     });
@@ -196,9 +203,9 @@ void main() {
       // TODO
     });
 
-    // The homes on my properties, one per signed contract, active first (RM-M30-14: mine only)
+    // The homes on my properties, one per signed contract, active first — on one listing or one residence's units (RM-M30-14: mine only)
     //
-    //Future<PageResponseHomeSummary> listMyTenantHomes(Pageable pageable, { String annonceId, BuiltList<String> state }) async
+    //Future<PageResponseHomeSummary> listMyTenantHomes(Pageable pageable, { String annonceId, String residenceId, BuiltList<String> state }) async
     test('test listMyTenantHomes', () async {
       // TODO
     });

@@ -147,5 +147,20 @@ void main() {
       // TODO
     });
 
+    // String requestedAnnonceId
+    test('to test the property `requestedAnnonceId`', () async {
+      // TODO
+    });
+
+    // String requestedAnnonceTitle
+    test('to test the property `requestedAnnonceTitle`', () async {
+      // TODO
+    });
+
+    // bool canAssignUnit
+    test('to test the property `canAssignUnit`', () async {
+      // TODO
+    });
+
   });
 }

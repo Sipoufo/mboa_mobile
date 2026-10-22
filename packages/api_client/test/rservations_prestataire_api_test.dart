@@ -7,9 +7,9 @@ void main() {
   final instance = ApiClient().getRservationsPrestataireApi();
 
   group(RservationsPrestataireApi, () {
-    // Accept: the listing is reserved for this client 7 days; the others are not retained (RM-M29-04/07)
+    // Accept, optionally on another unit of the residence (unitId): it is reserved for this client 7 days; the others on it are not retained (RM-M29-04/07/16)
     //
-    //Future<ReservationResponse> acceptReservation(String id) async
+    //Future<ReservationResponse> acceptReservation(String id, { AcceptReservationRequest acceptReservationRequest }) async
     test('test acceptReservation', () async {
       // TODO
     });
@@ -32,6 +32,13 @@ void main() {
     //
     //Future<ReservationResponse> getIncomingReservation(String id) async
     test('test getIncomingReservation', () async {
+      // TODO
+    });
+
+    // The residence's units this request could be accepted on instead — free, same period, the one asked for first (RM-M29-16)
+    //
+    //Future<BuiltList<AssignableUnit>> listAssignableUnits(String id) async
+    test('test listAssignableUnits', () async {
       // TODO
     });
 
