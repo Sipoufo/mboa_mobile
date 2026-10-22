@@ -298,21 +298,28 @@ class HomesRepository {
 
   // --- The landlord (no add-on, RM-M30-15) ------------------------------------
 
-  /// His tenants' spaces, one listing's with [annonceId].
-  Future<Cached<List<Home>>> tenantHomes({String? annonceId}) => _cachedList(
-        'tenants:${annonceId ?? 'all'}',
-        () async => (await _api.listMyTenantHomes(pageable: Pageable((b) => b..size = 50), annonceId: annonceId))
+  /// His tenants' spaces — one listing's with [annonceId], one residence's
+  /// units' with [residenceId] (§32, narrowed by the server).
+  Future<Cached<List<Home>>> tenantHomes({String? annonceId, String? residenceId}) => _cachedList(
+        'tenants:${annonceId ?? 'all'}${residenceId == null ? '' : ':residence:$residenceId'}',
+        () async => (await _api.listMyTenantHomes(
+          pageable: Pageable((b) => b..size = 50),
+          annonceId: annonceId,
+          residenceId: residenceId,
+        ))
             .data
             ?.content,
       );
 
-  /// Declarations waiting for his answer, oldest first.
-  Future<Cached<List<Declaration>>> waitingDeclarations() async {
-    const key = 'received:waiting';
+  /// Declarations waiting for his answer, oldest first — one residence's
+  /// units' with [residenceId] (§32).
+  Future<Cached<List<Declaration>>> waitingDeclarations({String? residenceId}) async {
+    final key = 'received:waiting${residenceId == null ? '' : ':residence:$residenceId'}';
     try {
       final response = await _api.listMyReceivedDeclarations(
         pageable: Pageable((b) => b..size = 50),
         status: BuiltList(const ['DECLARED', 'UNCONFIRMED']),
+        residenceId: residenceId,
       );
       final items = response.data?.content?.map(Declaration.fromResponse).toList() ?? const <Declaration>[];
       await _cache.put(StorageKeys.homesBox, key, {'items': [for (final d in items) d.toCache()]});

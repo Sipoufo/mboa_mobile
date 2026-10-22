@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../models/unit_choice.dart';
+
 /// Why the server turned an answer down — read once here, told in words by
 /// the screen.
 enum DecisionRefusal {
@@ -17,6 +19,22 @@ enum DecisionRefusal {
 
   /// Extending or cancelling needs an accepted reservation.
   notAccepted,
+
+  // RM-M29-16 — assigning another unit on accepting.
+
+  /// A standalone listing: there is no other unit to give.
+  unitNotApplicable,
+  unitNotInResidence,
+
+  /// Not published (any more).
+  unitNotReservable,
+
+  /// Rented by the month where the request is by the week, or the reverse.
+  unitPeriodMismatch,
+
+  /// The client already asked for that unit: that request is the one to
+  /// accept.
+  unitAlreadyRequested,
 }
 
 class ReservationDecisionRefused implements Exception {
@@ -86,8 +104,20 @@ class IncomingReservationsRepository {
   Future<Reservation> get(String id) async => _read(await _api.getIncomingReservation(id: id));
 
   /// The listing is reserved for this client, and every other waiting
-  /// request on it is not retained (RM-M29-04).
-  Future<Reservation> accept(String id) => _decide(() => _api.acceptReservation(id: id));
+  /// request on it is not retained (RM-M29-04). On a residence, [unitId]
+  /// assigns another of its units instead of the one asked for (RM-M29-16).
+  Future<Reservation> accept(String id, {String? unitId}) => _decide(
+        () => _api.acceptReservation(
+          id: id,
+          acceptReservationRequest: unitId == null ? null : AcceptReservationRequest((b) => b..unitId = unitId),
+        ),
+      );
+
+  /// RM-M29-16 — the units that can be assigned, the one asked for first.
+  Future<List<UnitChoice>> assignableUnits(String id) async {
+    final response = await _api.listAssignableUnits(id: id);
+    return [for (final unit in response.data ?? BuiltList<AssignableUnit>()) UnitChoice.fromResponse(unit)];
+  }
 
   /// RM-M29-06 — a reason from the list, and a word more if wanted.
   Future<Reservation> refuse(String id, {required RefusalReason reason, String? note}) =>
@@ -117,6 +147,11 @@ class IncomingReservationsRepository {
         ('LISTING_NOT_RESERVABLE', DecisionRefusal.notReservable),
         ('RESERVATION_ALREADY_EXTENDED', DecisionRefusal.alreadyExtended),
         ('RESERVATION_NOT_ACCEPTED', DecisionRefusal.notAccepted),
+        ('UNIT_ASSIGNMENT_NOT_APPLICABLE', DecisionRefusal.unitNotApplicable),
+        ('UNIT_NOT_IN_RESIDENCE', DecisionRefusal.unitNotInResidence),
+        ('UNIT_NOT_RESERVABLE', DecisionRefusal.unitNotReservable),
+        ('UNIT_PERIOD_MISMATCH', DecisionRefusal.unitPeriodMismatch),
+        ('UNIT_ALREADY_REQUESTED', DecisionRefusal.unitAlreadyRequested),
       ]) {
         if (api.hasCode(code)) throw ReservationDecisionRefused(reason);
       }

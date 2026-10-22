@@ -1949,6 +1949,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "See the contract",
     ),
     "proReservationStay": MessageLookupByLibrary.simpleMessage("Stay"),
+    "proReservationUnitAlreadyRequested": MessageLookupByLibrary.simpleMessage(
+      "This client already asked for that unit: accept that request instead.",
+    ),
+    "proReservationUnitNotApplicable": MessageLookupByLibrary.simpleMessage(
+      "This listing is not a residence unit: there is no other unit to assign.",
+    ),
+    "proReservationUnitNotInResidence": MessageLookupByLibrary.simpleMessage(
+      "This unit is not in the same residence.",
+    ),
+    "proReservationUnitNotReservable": MessageLookupByLibrary.simpleMessage(
+      "This unit is no longer available. Choose another.",
+    ),
+    "proReservationUnitPeriodMismatch": MessageLookupByLibrary.simpleMessage(
+      "This unit is not rented on the same period (month, week…).",
+    ),
     "proReservationWrite": MessageLookupByLibrary.simpleMessage(
       "Message the client",
     ),

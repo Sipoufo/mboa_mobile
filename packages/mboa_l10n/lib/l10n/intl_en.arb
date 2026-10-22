@@ -5205,5 +5205,25 @@
   "receiptRowPreparing": "Being prepared…",
   "@receiptRowPreparing": {
     "description": "A receipt in the space's list whose PDF is still being made"
+  },
+  "proReservationUnitNotApplicable": "This listing is not a residence unit: there is no other unit to assign.",
+  "@proReservationUnitNotApplicable": {
+    "description": "Refusal: assigning a unit on a standalone listing"
+  },
+  "proReservationUnitNotInResidence": "This unit is not in the same residence.",
+  "@proReservationUnitNotInResidence": {
+    "description": "Refusal: unit of another residence"
+  },
+  "proReservationUnitNotReservable": "This unit is no longer available. Choose another.",
+  "@proReservationUnitNotReservable": {
+    "description": "Refusal: unit not published"
+  },
+  "proReservationUnitPeriodMismatch": "This unit is not rented on the same period (month, week…).",
+  "@proReservationUnitPeriodMismatch": {
+    "description": "Refusal: unit on another rental period"
+  },
+  "proReservationUnitAlreadyRequested": "This client already asked for that unit: accept that request instead.",
+  "@proReservationUnitAlreadyRequested": {
+    "description": "Refusal: client already has a request on the unit"
   }
 }

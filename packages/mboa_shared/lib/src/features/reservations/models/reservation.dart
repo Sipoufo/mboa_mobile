@@ -126,6 +126,9 @@ class Reservation extends Equatable {
     this.canCancel = false,
     this.canDraftContract = false,
     this.contractId,
+    this.requestedAnnonceId,
+    this.requestedAnnonceTitle,
+    this.canAssignUnit = false,
   });
 
   final String id;
@@ -175,6 +178,19 @@ class Reservation extends Equatable {
   /// §28 — the Mboa Contract drawn up from this request and not called off.
   /// The client gets it once it is sent (a draft is the owner's alone).
   final String? contractId;
+
+  /// RM-M29-16 — the unit the client asked for, kept when the landlord
+  /// assigned another one of the residence on accepting ([annonceId] is then
+  /// the assigned unit: what is reserved, what the contract is drawn on).
+  final String? requestedAnnonceId;
+  final String? requestedAnnonceTitle;
+
+  /// The landlord may assign another unit on accepting — a waiting request
+  /// on a residence unit (the server's verdict).
+  final bool canAssignUnit;
+
+  /// Another unit than the one asked for was assigned.
+  bool get wasReassigned => requestedAnnonceId != null && requestedAnnonceId != annonceId;
 
   /// The stay's last day, indicative — the contract's end is the server's.
   DateTime? get lastDay {
@@ -228,6 +244,9 @@ class Reservation extends Equatable {
         canCancel: response.canCancel ?? false,
         canDraftContract: response.canDraftContract ?? false,
         contractId: response.contractId,
+        requestedAnnonceId: response.requestedAnnonceId,
+        requestedAnnonceTitle: response.requestedAnnonceTitle,
+        canAssignUnit: response.canAssignUnit ?? false,
       );
 
   /// Only what a list row draws, for the offline copy of either list.
@@ -240,6 +259,8 @@ class Reservation extends Equatable {
         'title': annonceTitle,
         'residenceId': residenceId,
         'residence': residenceName,
+        'requestedId': requestedAnnonceId,
+        'requested': requestedAnnonceTitle,
         'start': desiredStartDate?.toIso8601String(),
         'units': durationUnits,
         'period': rentalPeriod.name,
@@ -258,6 +279,8 @@ class Reservation extends Equatable {
       annonceTitle: json['title'] as String?,
       residenceId: json['residenceId'] as String?,
       residenceName: json['residence'] as String?,
+      requestedAnnonceId: json['requestedId'] as String?,
+      requestedAnnonceTitle: json['requested'] as String?,
       client: json['client'] is String ? ReservationParty(name: json['client'] as String) : null,
       createdAt: date(json['createdAt']),
       desiredStartDate: date(json['start']),
@@ -298,5 +321,8 @@ class Reservation extends Equatable {
         canCancel,
         canDraftContract,
         contractId,
+        requestedAnnonceId,
+        requestedAnnonceTitle,
+        canAssignUnit,
       ];
 }

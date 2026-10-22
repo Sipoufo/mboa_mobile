@@ -79,6 +79,11 @@ class IncomingReservationView extends StatelessWidget {
               DecisionRefusal.notReservable => l10n.proReservationNotReservable,
               DecisionRefusal.alreadyExtended => l10n.proReservationAlreadyExtended,
               DecisionRefusal.notAccepted => l10n.proReservationNotAccepted,
+              DecisionRefusal.unitNotApplicable => l10n.proReservationUnitNotApplicable,
+              DecisionRefusal.unitNotInResidence => l10n.proReservationUnitNotInResidence,
+              DecisionRefusal.unitNotReservable => l10n.proReservationUnitNotReservable,
+              DecisionRefusal.unitPeriodMismatch => l10n.proReservationUnitPeriodMismatch,
+              DecisionRefusal.unitAlreadyRequested => l10n.proReservationUnitAlreadyRequested,
               null => l10n.proReservationFailed,
             },
           );

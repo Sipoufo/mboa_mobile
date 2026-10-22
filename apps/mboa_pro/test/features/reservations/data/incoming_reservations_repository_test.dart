@@ -12,6 +12,8 @@ class MockReservationsPrestataireApi extends Mock implements RservationsPrestata
 
 class _FakeDecision extends Fake implements OwnerDecisionRequest {}
 
+class _FakeAccept extends Fake implements AcceptReservationRequest {}
+
 Response<T> _ok<T>(T data) => Response<T>(data: data, requestOptions: RequestOptions(path: '/reservations'));
 
 DioException _refused(String code) => DioException(
@@ -46,6 +48,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(Pageable());
     registerFallbackValue(_FakeDecision());
+    registerFallbackValue(_FakeAccept());
   });
 
   setUp(() {
@@ -163,16 +166,71 @@ void main() {
     ('LISTING_NOT_RESERVABLE', DecisionRefusal.notReservable),
     ('RESERVATION_ALREADY_EXTENDED', DecisionRefusal.alreadyExtended),
     ('RESERVATION_NOT_ACCEPTED', DecisionRefusal.notAccepted),
+    ('UNIT_ASSIGNMENT_NOT_APPLICABLE', DecisionRefusal.unitNotApplicable),
+    ('UNIT_NOT_IN_RESIDENCE', DecisionRefusal.unitNotInResidence),
+    ('UNIT_NOT_RESERVABLE', DecisionRefusal.unitNotReservable),
+    ('UNIT_PERIOD_MISMATCH', DecisionRefusal.unitPeriodMismatch),
+    ('UNIT_ALREADY_REQUESTED', DecisionRefusal.unitAlreadyRequested),
   ]) {
     test('$code is told as ${reason.name}', () async {
-      when(() => api.acceptReservation(id: 'r-1')).thenThrow(_refused(code));
+      when(() => api.acceptReservation(id: 'r-1', acceptReservationRequest: any(named: 'acceptReservationRequest')))
+          .thenThrow(_refused(code));
 
       await expectLater(
-        repository.accept('r-1'),
+        repository.accept('r-1', unitId: 'u-4'),
         throwsA(isA<ReservationDecisionRefused>().having((e) => e.reason, 'reason', reason)),
       );
     });
   }
+
+  group('RM-M29-16 — another unit on accepting', () {
+    test('accepting as asked sends no body', () async {
+      when(() => api.acceptReservation(id: 'r-1', acceptReservationRequest: any(named: 'acceptReservationRequest')))
+          .thenAnswer((_) async => _ok(_response('r-1')));
+
+      await repository.accept('r-1');
+
+      verify(() => api.acceptReservation(id: 'r-1')).called(1);
+    });
+
+    test('assigning one sends its id', () async {
+      when(() => api.acceptReservation(id: 'r-1', acceptReservationRequest: any(named: 'acceptReservationRequest')))
+          .thenAnswer((_) async => _ok(_response('r-1')));
+
+      await repository.accept('r-1', unitId: 'u-4');
+
+      final body = verify(
+        () => api.acceptReservation(id: 'r-1', acceptReservationRequest: captureAny(named: 'acceptReservationRequest')),
+      ).captured.single as AcceptReservationRequest;
+      expect(body.unitId, 'u-4');
+    });
+
+    test('the units to choose from, as the server lists them', () async {
+      when(() => api.listAssignableUnits(id: 'r-1')).thenAnswer(
+        (_) async => _ok(
+          BuiltList<AssignableUnit>([
+            AssignableUnit((b) => b
+              ..annonceId = 'u-2'
+              ..title = 'Chambre 2'
+              ..propertyType = AssignableUnitPropertyTypeEnum.ROOM
+              ..price = 45000
+              ..rentalPeriod = AssignableUnitRentalPeriodEnum.MONTH),
+            AssignableUnit((b) => b
+              ..annonceId = 'u-4'
+              ..title = 'Chambre 4'
+              ..price = 50000),
+          ]),
+        ),
+      );
+
+      final units = await repository.assignableUnits('r-1');
+
+      expect(units.map((u) => u.annonceId), ['u-2', 'u-4']);
+      expect(units.first.propertyType, PropertyType.room);
+      expect(units.first.rentalPeriod, RentalPeriod.month);
+      expect(units.last.price, 50000);
+    });
+  });
 
   test('anything else is rethrown', () async {
     when(() => api.extendReservation(id: 'r-1')).thenThrow(_offline);

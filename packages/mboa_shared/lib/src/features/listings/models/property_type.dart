@@ -15,6 +15,16 @@ enum PropertyType {
   commercialSpace
   ;
 
+  /// From the wire's plain name — where the API sends a string, not an enum.
+  static PropertyType fromWire(String? name) => switch (name) {
+        'STUDIO' => PropertyType.studio,
+        'VILLA' => PropertyType.villa,
+        'ROOM' => PropertyType.room,
+        'OFFICE' => PropertyType.office,
+        'COMMERCIAL_SPACE' => PropertyType.commercialSpace,
+        _ => PropertyType.apartment,
+      };
+
   static PropertyType fromResponse(AnnonceResponsePropertyTypeEnum? value) => switch (value) {
     AnnonceResponsePropertyTypeEnum.STUDIO => PropertyType.studio,
     AnnonceResponsePropertyTypeEnum.VILLA => PropertyType.villa,

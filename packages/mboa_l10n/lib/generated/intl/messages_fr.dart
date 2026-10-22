@@ -2055,6 +2055,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "Voir le contrat",
     ),
     "proReservationStay": MessageLookupByLibrary.simpleMessage("Séjour"),
+    "proReservationUnitAlreadyRequested": MessageLookupByLibrary.simpleMessage(
+      "Ce client a déjà demandé cette unité : accepte plutôt cette demande-là.",
+    ),
+    "proReservationUnitNotApplicable": MessageLookupByLibrary.simpleMessage(
+      "Ce bien n\'est pas une unité de résidence : il n\'y a pas d\'autre unité à attribuer.",
+    ),
+    "proReservationUnitNotInResidence": MessageLookupByLibrary.simpleMessage(
+      "Cette unité n\'est pas dans la même résidence.",
+    ),
+    "proReservationUnitNotReservable": MessageLookupByLibrary.simpleMessage(
+      "Cette unité n\'est plus disponible. Choisis-en une autre.",
+    ),
+    "proReservationUnitPeriodMismatch": MessageLookupByLibrary.simpleMessage(
+      "Cette unité ne se loue pas sur la même période (mois, semaine…).",
+    ),
     "proReservationWrite": MessageLookupByLibrary.simpleMessage(
       "Écrire au client",
     ),

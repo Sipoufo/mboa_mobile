@@ -200,6 +200,8 @@ class Home extends Equatable {
     required this.contractId,
     this.annonceId,
     this.annonceTitle,
+    this.residenceId,
+    this.residenceName,
     this.city,
     this.district,
     this.exactAddress,
@@ -223,6 +225,16 @@ class Home extends Equatable {
   final String contractId;
   final String? annonceId;
   final String? annonceTitle;
+
+  /// §32 — the residence the unit is in; null for a standalone listing.
+  final String? residenceId;
+  final String? residenceName;
+
+  /// « Chambre 3 · Résidence Deido », or a standalone listing's title.
+  String? get placeTitle => switch ((annonceTitle, residenceName)) {
+        (final title?, final residence?) => '$title · $residence',
+        (final title, final residence) => title ?? residence,
+      };
   final String? city;
   final String? district;
 
@@ -259,6 +271,8 @@ class Home extends Equatable {
         contractId: response.contractId ?? '',
         annonceId: response.annonceId,
         annonceTitle: response.annonceTitle,
+        residenceId: response.residenceId,
+        residenceName: response.residenceName,
         city: response.city,
         district: response.district,
         exactAddress: response.exactAddress,
@@ -284,6 +298,8 @@ class Home extends Equatable {
         'contractId': contractId,
         'annonceId': annonceId,
         'annonceTitle': annonceTitle,
+        'residenceId': residenceId,
+        'residence': residenceName,
         'city': city,
         'district': district,
         'exactAddress': exactAddress,
@@ -315,6 +331,8 @@ class Home extends Equatable {
       contractId: id,
       annonceId: json['annonceId'] as String?,
       annonceTitle: json['annonceTitle'] as String?,
+      residenceId: json['residenceId'] as String?,
+      residenceName: json['residence'] as String?,
       city: json['city'] as String?,
       district: json['district'] as String?,
       exactAddress: json['exactAddress'] as String?,
@@ -344,6 +362,8 @@ class Home extends Equatable {
         contractId,
         annonceId,
         annonceTitle,
+        residenceId,
+        residenceName,
         city,
         district,
         exactAddress,
@@ -487,6 +507,8 @@ class Declaration extends Equatable {
     this.contractId,
     this.annonceId,
     this.annonceTitle,
+    this.residenceId,
+    this.residenceName,
     this.tenant,
     this.kind = DeclarationKind.rent,
     this.dueIndexes = const [],
@@ -512,6 +534,16 @@ class Declaration extends Equatable {
   final String? contractId;
   final String? annonceId;
   final String? annonceTitle;
+
+  /// §32 — the residence the unit is in; null for a standalone listing.
+  final String? residenceId;
+  final String? residenceName;
+
+  /// « Chambre 3 · Résidence Deido », or a standalone listing's title.
+  String? get placeTitle => switch ((annonceTitle, residenceName)) {
+        (final title?, final residence?) => '$title · $residence',
+        (final title, final residence) => title ?? residence,
+      };
   final ContractParticipant? tenant;
   final DeclarationKind kind;
   final List<int> dueIndexes;
@@ -546,6 +578,8 @@ class Declaration extends Equatable {
         contractId: response.contractId,
         annonceId: response.annonceId,
         annonceTitle: response.annonceTitle,
+        residenceId: response.residenceId,
+        residenceName: response.residenceName,
         tenant: response.tenant == null ? null : ContractParticipant.fromResponse(response.tenant!),
         kind: DeclarationKind.fromWire(response.kind?.name),
         dueIndexes: response.dueIndexes?.toList() ?? const [],
@@ -571,6 +605,8 @@ class Declaration extends Equatable {
         'id': id,
         'contractId': contractId,
         'annonceTitle': annonceTitle,
+        'residenceId': residenceId,
+        'residence': residenceName,
         'tenant': tenant?.displayName,
         'kind': kind.name,
         'dueIndexes': dueIndexes,
@@ -595,6 +631,8 @@ class Declaration extends Equatable {
       id: id,
       contractId: json['contractId'] as String?,
       annonceTitle: json['annonceTitle'] as String?,
+      residenceId: json['residenceId'] as String?,
+      residenceName: json['residence'] as String?,
       tenant: json['tenant'] is String ? ContractParticipant(displayName: json['tenant'] as String) : null,
       kind: DeclarationKind.values.where((k) => k.name == json['kind']).firstOrNull ?? DeclarationKind.rent,
       dueIndexes: [for (final i in (json['dueIndexes'] as List? ?? const [])) if (i is int) i],
@@ -618,6 +656,8 @@ class Declaration extends Equatable {
         contractId,
         annonceId,
         annonceTitle,
+        residenceId,
+        residenceName,
         tenant,
         kind,
         dueIndexes,

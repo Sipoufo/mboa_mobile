@@ -13171,6 +13171,56 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ce bien n'est pas une unité de résidence : il n'y a pas d'autre unité à attribuer.`
+  String get proReservationUnitNotApplicable {
+    return Intl.message(
+      'Ce bien n\'est pas une unité de résidence : il n\'y a pas d\'autre unité à attribuer.',
+      name: 'proReservationUnitNotApplicable',
+      desc: 'Refusal: assigning a unit on a standalone listing',
+      args: [],
+    );
+  }
+
+  /// `Cette unité n'est pas dans la même résidence.`
+  String get proReservationUnitNotInResidence {
+    return Intl.message(
+      'Cette unité n\'est pas dans la même résidence.',
+      name: 'proReservationUnitNotInResidence',
+      desc: 'Refusal: unit of another residence',
+      args: [],
+    );
+  }
+
+  /// `Cette unité n'est plus disponible. Choisis-en une autre.`
+  String get proReservationUnitNotReservable {
+    return Intl.message(
+      'Cette unité n\'est plus disponible. Choisis-en une autre.',
+      name: 'proReservationUnitNotReservable',
+      desc: 'Refusal: unit not published',
+      args: [],
+    );
+  }
+
+  /// `Cette unité ne se loue pas sur la même période (mois, semaine…).`
+  String get proReservationUnitPeriodMismatch {
+    return Intl.message(
+      'Cette unité ne se loue pas sur la même période (mois, semaine…).',
+      name: 'proReservationUnitPeriodMismatch',
+      desc: 'Refusal: unit on another rental period',
+      args: [],
+    );
+  }
+
+  /// `Ce client a déjà demandé cette unité : accepte plutôt cette demande-là.`
+  String get proReservationUnitAlreadyRequested {
+    return Intl.message(
+      'Ce client a déjà demandé cette unité : accepte plutôt cette demande-là.',
+      name: 'proReservationUnitAlreadyRequested',
+      desc: 'Refusal: client already has a request on the unit',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {
