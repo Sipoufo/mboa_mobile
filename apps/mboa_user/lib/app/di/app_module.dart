@@ -10,6 +10,8 @@ import '../../features/my_home/bloc/home_invoices_bloc.dart';
 import '../../features/my_home/bloc/home_request_form_bloc.dart';
 import '../../features/my_home/bloc/invoice_bloc.dart';
 import '../../features/my_home/bloc/my_homes_bloc.dart';
+import '../../features/past_homes/bloc/past_home_bloc.dart';
+import '../../features/past_homes/bloc/past_homes_bloc.dart';
 import '../../features/profile/profile_types.dart';
 import '../../features/favorites/bloc/favorites_bloc.dart';
 import '../../features/favorites/data/favorites_repository.dart';
@@ -210,6 +212,12 @@ void registerAppModule() {
   getIt.registerFactory<EvidenceSendBloc>(
     () => EvidenceSendBloc(repository: getIt<EvidenceRepository>(), preparer: PhotoPreparer()),
   );
+  // M31 — the tenancies that are over.
+  getIt.registerLazySingleton<PastHomesRepository>(
+    () => PastHomesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactory<PastHomesBloc>(() => PastHomesBloc(repository: getIt<PastHomesRepository>()));
+  getIt.registerFactory<PastHomeBloc>(() => PastHomeBloc(repository: getIt<PastHomesRepository>()));
   getIt.registerFactory<HomeInvoicesBloc>(
     () => HomeInvoicesBloc(repository: getIt<HomesRepository>()),
   );

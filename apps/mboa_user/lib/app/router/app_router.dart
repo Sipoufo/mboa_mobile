@@ -124,6 +124,8 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: HomeEvidenceRoute.page, path: 'homes/:contractId/evidence'),
             AutoRoute(page: EvidenceSendRoute.page, path: 'homes/:contractId/evidence/new'),
             AutoRoute(page: HomeEvidenceBatchRoute.page, path: 'homes/:contractId/evidence/:batchId'),
+            // M31 — an ended tenancy, kept for the tenant.
+            AutoRoute(page: PastHomeRoute.page, path: 'past-homes/:contractId'),
 
             AutoRoute(page: SettingsMenuRoute.page, path: 'settings'),
             AutoRoute(page: NotificationPreferencesRoute.page, path: 'settings/notifications'),

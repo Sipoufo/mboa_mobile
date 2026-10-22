@@ -5875,5 +5875,192 @@
   "contactsRoleSecurity": "Agent de sécurité",
   "@contactsRoleSecurity": {
     "description": "Contact role suggestion"
+  },
+  "myHomesTabCurrent": "En cours",
+  "@myHomesTabCurrent": {
+    "description": "M31 — Mes logements tab: tenancies running or to come"
+  },
+  "myHomesTabPast": "Anciens",
+  "@myHomesTabPast": {
+    "description": "M31 — Mes logements tab: tenancies that are over"
+  },
+  "pastHomesEmptyTitle": "Aucun ancien logement",
+  "@pastHomesEmptyTitle": {
+    "description": "M31 — empty past list, title"
+  },
+  "pastHomesEmptyBody": "Quand une location se termine, tu la retrouves ici : ton contrat, tes dépenses et tes reçus.",
+  "@pastHomesEmptyBody": {
+    "description": "M31 — empty past list, body"
+  },
+  "pastHomesOffline": "Hors ligne : tes anciens logements tels qu'à ta dernière connexion.",
+  "@pastHomesOffline": {
+    "description": "M31 — past list offline"
+  },
+  "pastHomeTitle": "Ancien logement",
+  "@pastHomeTitle": {
+    "description": "M31 — the sheet's title"
+  },
+  "pastHomeDates": "Du {from} au {to}",
+  "@pastHomeDates": {
+    "description": "M31 — the lease's dates as signed",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeRent": "Loyer",
+  "@pastHomeRent": {
+    "description": "M31 — header: the rent as signed"
+  },
+  "pastHomeSeeListing": "Voir l'annonce",
+  "@pastHomeSeeListing": {
+    "description": "M31 — the listing is still online"
+  },
+  "pastHomePaidTotal": "Payé pendant ce séjour",
+  "@pastHomePaidTotal": {
+    "description": "M31 — the big figure: confirmed total"
+  },
+  "pastHomeTotalNote": "Seuls les paiements confirmés par ton propriétaire comptent. La caution n'est pas une dépense.",
+  "@pastHomeTotalNote": {
+    "description": "M31 — under the total (RM-M31-03)"
+  },
+  "pastHomeExpensesTitle": "Mes dépenses",
+  "@pastHomeExpensesTitle": {
+    "description": "M31 — section title"
+  },
+  "pastHomeNoExpense": "Aucun paiement confirmé.",
+  "@pastHomeNoExpense": {
+    "description": "M31 — no confirmed payment"
+  },
+  "pastHomeNotConfirmedTitle": "Non confirmés · hors total",
+  "@pastHomeNotConfirmedTitle": {
+    "description": "M31 — declared, unanswered or contested payments"
+  },
+  "pastHomeContractTitle": "Mon contrat",
+  "@pastHomeContractTitle": {
+    "description": "M31 — section title"
+  },
+  "pastHomeContractOpen": "Voir le contrat signé",
+  "@pastHomeContractOpen": {
+    "description": "M31 — opens the contract and its PDF"
+  },
+  "pastHomeVerificationCode": "Code de vérification : {code}",
+  "@pastHomeVerificationCode": {
+    "description": "M31 — the contract's code",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeRatingTitle": "Note du bien aujourd'hui",
+  "@pastHomeRatingTitle": {
+    "description": "M31 — live rating (RM-M31-04)"
+  },
+  "pastHomeReviewTitle": "Mon avis",
+  "@pastHomeReviewTitle": {
+    "description": "M31 — section title"
+  },
+  "pastHomeReviewWrite": "Donner mon avis",
+  "@pastHomeReviewWrite": {
+    "description": "M31 — no review yet"
+  },
+  "pastHomeReviewWriteHint": "Ton expérience aide les prochains locataires.",
+  "@pastHomeReviewWriteHint": {
+    "description": "M31 — under « Donner mon avis »"
+  },
+  "pastHomeReviewEdit": "Modifier mon avis",
+  "@pastHomeReviewEdit": {
+    "description": "M31 — the review can still change"
+  },
+  "pastHomeReviewEditUntil": "Modifiable jusqu'au {date}",
+  "@pastHomeReviewEditUntil": {
+    "description": "M31 — editableUntil",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeReviewMine": "Mon avis · {rating}/5",
+  "@pastHomeReviewMine": {
+    "description": "M31 — a review that can no longer change",
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "pastHomeReviewLocked": "Il n'est plus modifiable.",
+  "@pastHomeReviewLocked": {
+    "description": "M31 — locked review"
+  },
+  "pastHomeLifeTitle": "La vie du logement",
+  "@pastHomeLifeTitle": {
+    "description": "M31 — section: requests, photos, schedule"
+  },
+  "pastHomeRequests": "{count, plural, =0{Aucune demande} =1{1 demande} other{{count} demandes}}",
+  "@pastHomeRequests": {
+    "description": "M31 — requests to the landlord",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pastHomeRequestsOpen": "{count, plural, =1{dont 1 ouverte} other{dont {count} ouvertes}}",
+  "@pastHomeRequestsOpen": {
+    "description": "M31 — open requests",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pastHomeEvidenceOpen": "Photos de sortie possibles jusqu'au {date}",
+  "@pastHomeEvidenceOpen": {
+    "description": "M31 — RM-M31-08, 7 days after the end",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeEvidenceClosed": "Tes photos d'entrée et de sortie",
+  "@pastHomeEvidenceClosed": {
+    "description": "M31 — evidence, read only"
+  },
+  "pastHomeSpace": "Échéancier et déclarations",
+  "@pastHomeSpace": {
+    "description": "M31 — opens the space, read only"
+  },
+  "pastHomeStatement": "Télécharger le relevé des dépenses",
+  "@pastHomeStatement": {
+    "description": "M31 — the main action: the PDF"
+  },
+  "pastHomeStatementName": "Relevé des dépenses",
+  "@pastHomeStatementName": {
+    "description": "M31 — the PDF's file name"
+  },
+  "pastHomeStatementFailed": "Le relevé n'a pas pu être préparé. Vérifie ta connexion et réessaie.",
+  "@pastHomeStatementFailed": {
+    "description": "M31 — the PDF failed"
+  },
+  "pastHomeOffline": "Hors ligne : ce logement tel qu'à ta dernière connexion. Le relevé et les photos demandent une connexion.",
+  "@pastHomeOffline": {
+    "description": "M31 — the sheet offline"
+  },
+  "myHomeEndedOn": "Terminée le {date}",
+  "@myHomeEndedOn": {
+    "description": "M31 — an ended tenancy in a list, with its end date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -5875,5 +5875,192 @@
   "contactsRoleSecurity": "Security guard",
   "@contactsRoleSecurity": {
     "description": "Contact role suggestion"
+  },
+  "myHomesTabCurrent": "Current",
+  "@myHomesTabCurrent": {
+    "description": "M31 — Mes logements tab: tenancies running or to come"
+  },
+  "myHomesTabPast": "Past",
+  "@myHomesTabPast": {
+    "description": "M31 — Mes logements tab: tenancies that are over"
+  },
+  "pastHomesEmptyTitle": "No past home yet",
+  "@pastHomesEmptyTitle": {
+    "description": "M31 — empty past list, title"
+  },
+  "pastHomesEmptyBody": "When a tenancy ends, you find it here: your contract, your expenses and your receipts.",
+  "@pastHomesEmptyBody": {
+    "description": "M31 — empty past list, body"
+  },
+  "pastHomesOffline": "Offline: your past homes as of your last connection.",
+  "@pastHomesOffline": {
+    "description": "M31 — past list offline"
+  },
+  "pastHomeTitle": "Past home",
+  "@pastHomeTitle": {
+    "description": "M31 — the sheet's title"
+  },
+  "pastHomeDates": "From {from} to {to}",
+  "@pastHomeDates": {
+    "description": "M31 — the lease's dates as signed",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeRent": "Rent",
+  "@pastHomeRent": {
+    "description": "M31 — header: the rent as signed"
+  },
+  "pastHomeSeeListing": "See the listing",
+  "@pastHomeSeeListing": {
+    "description": "M31 — the listing is still online"
+  },
+  "pastHomePaidTotal": "Paid during this stay",
+  "@pastHomePaidTotal": {
+    "description": "M31 — the big figure: confirmed total"
+  },
+  "pastHomeTotalNote": "Only payments your landlord confirmed count. The deposit is not an expense.",
+  "@pastHomeTotalNote": {
+    "description": "M31 — under the total (RM-M31-03)"
+  },
+  "pastHomeExpensesTitle": "My expenses",
+  "@pastHomeExpensesTitle": {
+    "description": "M31 — section title"
+  },
+  "pastHomeNoExpense": "No confirmed payment.",
+  "@pastHomeNoExpense": {
+    "description": "M31 — no confirmed payment"
+  },
+  "pastHomeNotConfirmedTitle": "Not confirmed · not in the total",
+  "@pastHomeNotConfirmedTitle": {
+    "description": "M31 — declared, unanswered or contested payments"
+  },
+  "pastHomeContractTitle": "My contract",
+  "@pastHomeContractTitle": {
+    "description": "M31 — section title"
+  },
+  "pastHomeContractOpen": "See the signed contract",
+  "@pastHomeContractOpen": {
+    "description": "M31 — opens the contract and its PDF"
+  },
+  "pastHomeVerificationCode": "Verification code: {code}",
+  "@pastHomeVerificationCode": {
+    "description": "M31 — the contract's code",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeRatingTitle": "The property's rating today",
+  "@pastHomeRatingTitle": {
+    "description": "M31 — live rating (RM-M31-04)"
+  },
+  "pastHomeReviewTitle": "My review",
+  "@pastHomeReviewTitle": {
+    "description": "M31 — section title"
+  },
+  "pastHomeReviewWrite": "Write my review",
+  "@pastHomeReviewWrite": {
+    "description": "M31 — no review yet"
+  },
+  "pastHomeReviewWriteHint": "Your experience helps the next tenants.",
+  "@pastHomeReviewWriteHint": {
+    "description": "M31 — under « Donner mon avis »"
+  },
+  "pastHomeReviewEdit": "Edit my review",
+  "@pastHomeReviewEdit": {
+    "description": "M31 — the review can still change"
+  },
+  "pastHomeReviewEditUntil": "Can be edited until {date}",
+  "@pastHomeReviewEditUntil": {
+    "description": "M31 — editableUntil",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeReviewMine": "My review · {rating}/5",
+  "@pastHomeReviewMine": {
+    "description": "M31 — a review that can no longer change",
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "pastHomeReviewLocked": "It can no longer be edited.",
+  "@pastHomeReviewLocked": {
+    "description": "M31 — locked review"
+  },
+  "pastHomeLifeTitle": "Life in the home",
+  "@pastHomeLifeTitle": {
+    "description": "M31 — section: requests, photos, schedule"
+  },
+  "pastHomeRequests": "{count, plural, =0{No request} =1{1 request} other{{count} requests}}",
+  "@pastHomeRequests": {
+    "description": "M31 — requests to the landlord",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pastHomeRequestsOpen": "{count, plural, =1{1 still open} other{{count} still open}}",
+  "@pastHomeRequestsOpen": {
+    "description": "M31 — open requests",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pastHomeEvidenceOpen": "Exit photos possible until {date}",
+  "@pastHomeEvidenceOpen": {
+    "description": "M31 — RM-M31-08, 7 days after the end",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pastHomeEvidenceClosed": "Your move-in and move-out photos",
+  "@pastHomeEvidenceClosed": {
+    "description": "M31 — evidence, read only"
+  },
+  "pastHomeSpace": "Schedule and declarations",
+  "@pastHomeSpace": {
+    "description": "M31 — opens the space, read only"
+  },
+  "pastHomeStatement": "Download the expenses statement",
+  "@pastHomeStatement": {
+    "description": "M31 — the main action: the PDF"
+  },
+  "pastHomeStatementName": "Expenses statement",
+  "@pastHomeStatementName": {
+    "description": "M31 — the PDF's file name"
+  },
+  "pastHomeStatementFailed": "The statement could not be prepared. Check your connection and try again.",
+  "@pastHomeStatementFailed": {
+    "description": "M31 — the PDF failed"
+  },
+  "pastHomeOffline": "Offline: this home as of your last connection. The statement and the photos need a connection.",
+  "@pastHomeOffline": {
+    "description": "M31 — the sheet offline"
+  },
+  "myHomeEndedOn": "Ended on {date}",
+  "@myHomeEndedOn": {
+    "description": "M31 — an ended tenancy in a list, with its end date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

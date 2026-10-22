@@ -9,11 +9,14 @@ import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mboa_user/features/my_home/bloc/my_homes_bloc.dart';
 import 'package:mboa_user/features/my_home/ui/my_homes_page.dart';
 import 'package:mboa_user/features/my_home/ui/widgets/next_rent_banner.dart';
+import 'package:mboa_user/features/past_homes/bloc/past_homes_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHomesRepository extends Mock implements HomesRepository {}
 
 class MockMyHomesBloc extends MockBloc<MyHomesEvent, MyHomesState> implements MyHomesBloc {}
+
+class MockPastHomesBloc extends MockBloc<PastHomesEvent, PastHomesState> implements PastHomesBloc {}
 
 /// CDC M30 — the tenant's spaces, and the search tab's reminder.
 void main() {
@@ -64,8 +67,26 @@ void main() {
 
   group('the screens', () {
     late MockMyHomesBloc bloc;
+    late MockPastHomesBloc pastBloc;
+    late List<String> opened;
 
-    setUp(() => bloc = MockMyHomesBloc());
+    setUp(() {
+      bloc = MockMyHomesBloc();
+      pastBloc = MockPastHomesBloc();
+      opened = [];
+      when(() => pastBloc.state).thenReturn(const PastHomesReady(items: []));
+    });
+
+    Widget homes() => MultiBlocProvider(
+          providers: [
+            BlocProvider<MyHomesBloc>.value(value: bloc),
+            BlocProvider<PastHomesBloc>.value(value: pastBloc),
+          ],
+          child: MyHomesView(
+            onOpen: (home) => opened.add('space:${home.contractId}'),
+            onOpenPast: (home) => opened.add('past:${home.contractId}'),
+          ),
+        );
 
     tearDown(getIt.reset);
 
@@ -84,7 +105,7 @@ void main() {
 
     testWidgets('no signed contract yet: when a space opens, said', (tester) async {
       when(() => bloc.state).thenReturn(const MyHomesReady(items: []));
-      await pump(tester, BlocProvider<MyHomesBloc>.value(value: bloc, child: const MyHomesView()));
+      await pump(tester, homes());
 
       expect(find.text('Pas encore de logement'), findsOneWidget);
       expect(find.textContaining('signé par les deux parties'), findsOneWidget);
@@ -92,10 +113,40 @@ void main() {
 
     testWidgets('a space: the place and what is due next', (tester) async {
       when(() => bloc.state).thenReturn(MyHomesReady(items: [home('c-1', next: due)]));
-      await pump(tester, BlocProvider<MyHomesBloc>.value(value: bloc, child: const MyHomesView()));
+      await pump(tester, homes());
 
       expect(find.text('Studio Akwa'), findsOneWidget);
       expect(find.textContaining('Prochain loyer'), findsOneWidget);
+      await tester.tap(find.text('Studio Akwa'));
+      expect(opened, ['space:c-1']);
+    });
+
+    testWidgets('M31 — over, a tenancy leaves « En cours » for « Anciens », where it opens its sheet', (tester) async {
+      when(() => bloc.state).thenReturn(
+        MyHomesReady(items: [home('c-1', next: due), home('c-2', state: HomeStage.readOnly)]),
+      );
+      when(() => pastBloc.state).thenReturn(PastHomesReady(items: [home('c-2', state: HomeStage.readOnly)]));
+      await pump(tester, homes());
+
+      expect(find.text('En cours'), findsOneWidget);
+      expect(find.text('Anciens'), findsOneWidget);
+      expect(find.text('Location terminée'), findsNothing);
+
+      await tester.tap(find.text('Anciens'));
+      await tester.pumpAndSettle();
+      expect(find.text('Location terminée'), findsOneWidget);
+      await tester.tap(find.text('Studio Akwa'));
+      expect(opened, ['past:c-2']);
+    });
+
+    testWidgets('M31 — no ended tenancy yet: « Anciens » says what will be there', (tester) async {
+      when(() => bloc.state).thenReturn(MyHomesReady(items: [home('c-1', next: due)]));
+      await pump(tester, homes());
+      await tester.tap(find.text('Anciens'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Aucun ancien logement'), findsOneWidget);
+      expect(find.textContaining('tes dépenses et tes reçus'), findsOneWidget);
     });
 
     testWidgets('the banner: the next rent while a space is active', (tester) async {

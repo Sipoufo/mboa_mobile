@@ -11,13 +11,20 @@ import '../../../app/router/app_router.gr.dart';
 import '../bloc/home_request_form_bloc.dart';
 
 /// A home's requests to the landlord, the tenant's side (CDC M30 lot 3,
-/// RM-M30-09): the shared list, with « Nouvelle demande ».
+/// RM-M30-09): the shared list, with « Nouvelle demande » — except from an
+/// ended tenancy ([readOnly], M31), where they are only read (RM-M31-06).
 @RoutePage()
 class HomeRequestsPage extends StatelessWidget implements AutoRouteWrapper {
-  const HomeRequestsPage({super.key, @PathParam('contractId') required this.contractId, this.title});
+  const HomeRequestsPage({
+    super.key,
+    @PathParam('contractId') required this.contractId,
+    this.title,
+    this.readOnly = false,
+  });
 
   final String contractId;
   final String? title;
+  final bool readOnly;
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<HomeRequestsBloc>(
@@ -28,11 +35,13 @@ class HomeRequestsPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) => HomeRequestsView(
         title: title,
-        onNew: () async {
-          final bloc = context.read<HomeRequestsBloc>();
-          final sent = await context.router.push<bool>(HomeRequestFormRoute(contractId: contractId));
-          if (sent ?? false) bloc.add(const HomeRequestsRequested());
-        },
+        onNew: readOnly
+            ? null
+            : () async {
+                final bloc = context.read<HomeRequestsBloc>();
+                final sent = await context.router.push<bool>(HomeRequestFormRoute(contractId: contractId));
+                if (sent ?? false) bloc.add(const HomeRequestsRequested());
+              },
         onOpen: (request) async {
           final bloc = context.read<HomeRequestsBloc>();
           await context.router.push(HomeRequestRoute(requestId: request.id));

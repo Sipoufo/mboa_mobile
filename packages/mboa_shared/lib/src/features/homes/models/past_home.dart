@@ -125,6 +125,10 @@ class PastHome extends Equatable {
   final PropertyRatingSummary rating;
   final MyPastReview myReview;
 
+  /// RM-M31-08 — exit photos are still taken for 7 days after the end; the
+  /// server holds the line, this only says until when.
+  DateTime? get exitPhotosUntil => home.endDate?.add(const Duration(days: 7));
+
   static PastHome fromResponse(PastHomeResponse response) {
     final expenses = response.expenses;
     final review = response.myReview;

@@ -14668,6 +14668,371 @@ class I18n {
       args: [],
     );
   }
+
+  /// `En cours`
+  String get myHomesTabCurrent {
+    return Intl.message(
+      'En cours',
+      name: 'myHomesTabCurrent',
+      desc: 'M31 — Mes logements tab: tenancies running or to come',
+      args: [],
+    );
+  }
+
+  /// `Anciens`
+  String get myHomesTabPast {
+    return Intl.message(
+      'Anciens',
+      name: 'myHomesTabPast',
+      desc: 'M31 — Mes logements tab: tenancies that are over',
+      args: [],
+    );
+  }
+
+  /// `Aucun ancien logement`
+  String get pastHomesEmptyTitle {
+    return Intl.message(
+      'Aucun ancien logement',
+      name: 'pastHomesEmptyTitle',
+      desc: 'M31 — empty past list, title',
+      args: [],
+    );
+  }
+
+  /// `Quand une location se termine, tu la retrouves ici : ton contrat, tes dépenses et tes reçus.`
+  String get pastHomesEmptyBody {
+    return Intl.message(
+      'Quand une location se termine, tu la retrouves ici : ton contrat, tes dépenses et tes reçus.',
+      name: 'pastHomesEmptyBody',
+      desc: 'M31 — empty past list, body',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : tes anciens logements tels qu'à ta dernière connexion.`
+  String get pastHomesOffline {
+    return Intl.message(
+      'Hors ligne : tes anciens logements tels qu\'à ta dernière connexion.',
+      name: 'pastHomesOffline',
+      desc: 'M31 — past list offline',
+      args: [],
+    );
+  }
+
+  /// `Ancien logement`
+  String get pastHomeTitle {
+    return Intl.message(
+      'Ancien logement',
+      name: 'pastHomeTitle',
+      desc: 'M31 — the sheet\'s title',
+      args: [],
+    );
+  }
+
+  /// `Du {from} au {to}`
+  String pastHomeDates(String from, String to) {
+    return Intl.message(
+      'Du $from au $to',
+      name: 'pastHomeDates',
+      desc: 'M31 — the lease\'s dates as signed',
+      args: [from, to],
+    );
+  }
+
+  /// `Loyer`
+  String get pastHomeRent {
+    return Intl.message(
+      'Loyer',
+      name: 'pastHomeRent',
+      desc: 'M31 — header: the rent as signed',
+      args: [],
+    );
+  }
+
+  /// `Voir l'annonce`
+  String get pastHomeSeeListing {
+    return Intl.message(
+      'Voir l\'annonce',
+      name: 'pastHomeSeeListing',
+      desc: 'M31 — the listing is still online',
+      args: [],
+    );
+  }
+
+  /// `Payé pendant ce séjour`
+  String get pastHomePaidTotal {
+    return Intl.message(
+      'Payé pendant ce séjour',
+      name: 'pastHomePaidTotal',
+      desc: 'M31 — the big figure: confirmed total',
+      args: [],
+    );
+  }
+
+  /// `Seuls les paiements confirmés par ton propriétaire comptent. La caution n'est pas une dépense.`
+  String get pastHomeTotalNote {
+    return Intl.message(
+      'Seuls les paiements confirmés par ton propriétaire comptent. La caution n\'est pas une dépense.',
+      name: 'pastHomeTotalNote',
+      desc: 'M31 — under the total (RM-M31-03)',
+      args: [],
+    );
+  }
+
+  /// `Mes dépenses`
+  String get pastHomeExpensesTitle {
+    return Intl.message(
+      'Mes dépenses',
+      name: 'pastHomeExpensesTitle',
+      desc: 'M31 — section title',
+      args: [],
+    );
+  }
+
+  /// `Aucun paiement confirmé.`
+  String get pastHomeNoExpense {
+    return Intl.message(
+      'Aucun paiement confirmé.',
+      name: 'pastHomeNoExpense',
+      desc: 'M31 — no confirmed payment',
+      args: [],
+    );
+  }
+
+  /// `Non confirmés · hors total`
+  String get pastHomeNotConfirmedTitle {
+    return Intl.message(
+      'Non confirmés · hors total',
+      name: 'pastHomeNotConfirmedTitle',
+      desc: 'M31 — declared, unanswered or contested payments',
+      args: [],
+    );
+  }
+
+  /// `Mon contrat`
+  String get pastHomeContractTitle {
+    return Intl.message(
+      'Mon contrat',
+      name: 'pastHomeContractTitle',
+      desc: 'M31 — section title',
+      args: [],
+    );
+  }
+
+  /// `Voir le contrat signé`
+  String get pastHomeContractOpen {
+    return Intl.message(
+      'Voir le contrat signé',
+      name: 'pastHomeContractOpen',
+      desc: 'M31 — opens the contract and its PDF',
+      args: [],
+    );
+  }
+
+  /// `Code de vérification : {code}`
+  String pastHomeVerificationCode(String code) {
+    return Intl.message(
+      'Code de vérification : $code',
+      name: 'pastHomeVerificationCode',
+      desc: 'M31 — the contract\'s code',
+      args: [code],
+    );
+  }
+
+  /// `Note du bien aujourd'hui`
+  String get pastHomeRatingTitle {
+    return Intl.message(
+      'Note du bien aujourd\'hui',
+      name: 'pastHomeRatingTitle',
+      desc: 'M31 — live rating (RM-M31-04)',
+      args: [],
+    );
+  }
+
+  /// `Mon avis`
+  String get pastHomeReviewTitle {
+    return Intl.message(
+      'Mon avis',
+      name: 'pastHomeReviewTitle',
+      desc: 'M31 — section title',
+      args: [],
+    );
+  }
+
+  /// `Donner mon avis`
+  String get pastHomeReviewWrite {
+    return Intl.message(
+      'Donner mon avis',
+      name: 'pastHomeReviewWrite',
+      desc: 'M31 — no review yet',
+      args: [],
+    );
+  }
+
+  /// `Ton expérience aide les prochains locataires.`
+  String get pastHomeReviewWriteHint {
+    return Intl.message(
+      'Ton expérience aide les prochains locataires.',
+      name: 'pastHomeReviewWriteHint',
+      desc: 'M31 — under « Donner mon avis »',
+      args: [],
+    );
+  }
+
+  /// `Modifier mon avis`
+  String get pastHomeReviewEdit {
+    return Intl.message(
+      'Modifier mon avis',
+      name: 'pastHomeReviewEdit',
+      desc: 'M31 — the review can still change',
+      args: [],
+    );
+  }
+
+  /// `Modifiable jusqu'au {date}`
+  String pastHomeReviewEditUntil(String date) {
+    return Intl.message(
+      'Modifiable jusqu\'au $date',
+      name: 'pastHomeReviewEditUntil',
+      desc: 'M31 — editableUntil',
+      args: [date],
+    );
+  }
+
+  /// `Mon avis · {rating}/5`
+  String pastHomeReviewMine(int rating) {
+    return Intl.message(
+      'Mon avis · $rating/5',
+      name: 'pastHomeReviewMine',
+      desc: 'M31 — a review that can no longer change',
+      args: [rating],
+    );
+  }
+
+  /// `Il n'est plus modifiable.`
+  String get pastHomeReviewLocked {
+    return Intl.message(
+      'Il n\'est plus modifiable.',
+      name: 'pastHomeReviewLocked',
+      desc: 'M31 — locked review',
+      args: [],
+    );
+  }
+
+  /// `La vie du logement`
+  String get pastHomeLifeTitle {
+    return Intl.message(
+      'La vie du logement',
+      name: 'pastHomeLifeTitle',
+      desc: 'M31 — section: requests, photos, schedule',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Aucune demande} =1{1 demande} other{{count} demandes}}`
+  String pastHomeRequests(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucune demande',
+      one: '1 demande',
+      other: '$count demandes',
+      name: 'pastHomeRequests',
+      desc: 'M31 — requests to the landlord',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{dont 1 ouverte} other{dont {count} ouvertes}}`
+  String pastHomeRequestsOpen(int count) {
+    return Intl.plural(
+      count,
+      one: 'dont 1 ouverte',
+      other: 'dont $count ouvertes',
+      name: 'pastHomeRequestsOpen',
+      desc: 'M31 — open requests',
+      args: [count],
+    );
+  }
+
+  /// `Photos de sortie possibles jusqu'au {date}`
+  String pastHomeEvidenceOpen(String date) {
+    return Intl.message(
+      'Photos de sortie possibles jusqu\'au $date',
+      name: 'pastHomeEvidenceOpen',
+      desc: 'M31 — RM-M31-08, 7 days after the end',
+      args: [date],
+    );
+  }
+
+  /// `Tes photos d'entrée et de sortie`
+  String get pastHomeEvidenceClosed {
+    return Intl.message(
+      'Tes photos d\'entrée et de sortie',
+      name: 'pastHomeEvidenceClosed',
+      desc: 'M31 — evidence, read only',
+      args: [],
+    );
+  }
+
+  /// `Échéancier et déclarations`
+  String get pastHomeSpace {
+    return Intl.message(
+      'Échéancier et déclarations',
+      name: 'pastHomeSpace',
+      desc: 'M31 — opens the space, read only',
+      args: [],
+    );
+  }
+
+  /// `Télécharger le relevé des dépenses`
+  String get pastHomeStatement {
+    return Intl.message(
+      'Télécharger le relevé des dépenses',
+      name: 'pastHomeStatement',
+      desc: 'M31 — the main action: the PDF',
+      args: [],
+    );
+  }
+
+  /// `Relevé des dépenses`
+  String get pastHomeStatementName {
+    return Intl.message(
+      'Relevé des dépenses',
+      name: 'pastHomeStatementName',
+      desc: 'M31 — the PDF\'s file name',
+      args: [],
+    );
+  }
+
+  /// `Le relevé n'a pas pu être préparé. Vérifie ta connexion et réessaie.`
+  String get pastHomeStatementFailed {
+    return Intl.message(
+      'Le relevé n\'a pas pu être préparé. Vérifie ta connexion et réessaie.',
+      name: 'pastHomeStatementFailed',
+      desc: 'M31 — the PDF failed',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : ce logement tel qu'à ta dernière connexion. Le relevé et les photos demandent une connexion.`
+  String get pastHomeOffline {
+    return Intl.message(
+      'Hors ligne : ce logement tel qu\'à ta dernière connexion. Le relevé et les photos demandent une connexion.',
+      name: 'pastHomeOffline',
+      desc: 'M31 — the sheet offline',
+      args: [],
+    );
+  }
+
+  /// `Terminée le {date}`
+  String myHomeEndedOn(String date) {
+    return Intl.message(
+      'Terminée le $date',
+      name: 'myHomeEndedOn',
+      desc: 'M31 — an ended tenancy in a list, with its end date',
+      args: [date],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

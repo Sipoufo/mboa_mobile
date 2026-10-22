@@ -15,9 +15,12 @@ import '../bloc/evidence_send_bloc.dart';
 /// the shared list, with « Envoyer des photos ».
 @RoutePage()
 class HomeEvidencePage extends StatelessWidget implements AutoRouteWrapper {
-  const HomeEvidencePage({super.key, @PathParam('contractId') required this.contractId});
+  const HomeEvidencePage({super.key, @PathParam('contractId') required this.contractId, this.readOnly = false});
 
   final String contractId;
+
+  /// From an ended tenancy past its 7 days (RM-M31-08): read, not added to.
+  final bool readOnly;
 
   @override
   Widget wrappedRoute(BuildContext context) => BlocProvider<EvidenceBloc>(
@@ -27,11 +30,13 @@ class HomeEvidencePage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) => EvidenceView(
-        onAdd: () async {
-          final bloc = context.read<EvidenceBloc>();
-          final sent = await context.router.push<bool>(EvidenceSendRoute(contractId: contractId));
-          if (sent ?? false) bloc.add(const EvidenceRequested());
-        },
+        onAdd: readOnly
+            ? null
+            : () async {
+                final bloc = context.read<EvidenceBloc>();
+                final sent = await context.router.push<bool>(EvidenceSendRoute(contractId: contractId));
+                if (sent ?? false) bloc.add(const EvidenceRequested());
+              },
         onOpen: (batch) => context.router.push(HomeEvidenceBatchRoute(contractId: contractId, batchId: batch.id)),
       );
 }

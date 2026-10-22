@@ -27,7 +27,10 @@ class HomeCard extends StatelessWidget {
     final next = home.nextDue;
 
     final (String line, Color tone) = switch (home) {
-      _ when home.state == HomeStage.readOnly => (l10n.myHomeEnded, colors.textSecondary),
+      _ when home.state == HomeStage.readOnly => (
+          home.endDate == null ? l10n.myHomeEnded : l10n.myHomeEndedOn(DateFormat.yMMMd(locale).format(home.endDate!)),
+          colors.textSecondary,
+        ),
       _ when home.isOverdue => (l10n.myHomeOverdueCount(home.overdueCount), colors.error),
       _ when next?.dueDate != null => (
           '${l10n.myHomeNextRent} · ${fcfaOf(context, next!.remaining)} · ${DateFormat.MMMd(locale).format(next.dueDate!)}',
