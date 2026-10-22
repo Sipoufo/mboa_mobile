@@ -49,7 +49,7 @@ class DeclarationForm extends Equatable {
   }
 
   /// An invoice declared paid, starting at what is left of it — [left] is
-  /// the screen's (the amount less what was already confirmed).
+  /// the server's `remaining`.
   factory DeclarationForm.invoice(HomeInvoice invoice, {required int left, required DateTime today}) {
     final due = left.clamp(0, invoice.amount);
     return DeclarationForm(

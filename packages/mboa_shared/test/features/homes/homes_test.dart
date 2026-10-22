@@ -188,6 +188,45 @@ void main() {
       verify(() => cache.put(StorageKeys.homesBox, 'home:c-1', any())).called(1);
     });
 
+    test('slice D — the receipts come with the space, and are kept with it', () async {
+      online();
+      when(() => monLogement.listHomeReceipts(contractId: 'c-1', pageable: any(named: 'pageable'))).thenAnswer(
+        (_) async => _ok(
+          api.PageResponseHomeReceiptResponse(
+            (b) => b
+              ..content = ListBuilder([
+                api.HomeReceiptResponse((r) => r
+                  ..id = 'r-1'
+                  ..declarationId = 'd-1'
+                  ..kind = api.HomeReceiptResponseKindEnum.RENT
+                  ..amount = 150000
+                  ..ready = true),
+              ]),
+          ),
+        ),
+      );
+
+      final read = await repository.bundle('c-1');
+
+      expect(read.value.receipts.single.kind, ReceiptKind.rent);
+      final kept = verify(() => cache.put(StorageKeys.homesBox, 'home:c-1', captureAny())).captured.single as Map;
+      expect((kept['receipts'] as List).single, containsPair('id', 'r-1'));
+    });
+
+    test('receipts that do not come spoil nothing, and keep the last list read', () async {
+      online();
+      when(() => monLogement.listHomeReceipts(contractId: 'c-1', pageable: any(named: 'pageable'))).thenThrow(_offline);
+      when(() => cache.get(StorageKeys.homesBox, 'home:c-1', ttl: any(named: 'ttl'))).thenReturn({
+        'receipts': [const HomeReceipt(id: 'r-0', declarationId: 'd-0', ready: true).toCache()],
+      });
+
+      final read = await repository.bundle('c-1');
+
+      expect(read.fromCache, isFalse);
+      expect(read.value.declarations.single.id, 'd-1');
+      expect(read.value.receipts.single.id, 'r-0');
+    });
+
     test('offline, the copy — and the failure when there is none', () async {
       online();
       final stored = <String, dynamic>{};

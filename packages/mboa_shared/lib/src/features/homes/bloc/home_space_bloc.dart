@@ -31,6 +31,7 @@ class HomeSpaceBloc extends Bloc<HomeSpaceEvent, HomeSpaceState> {
           schedule: read.value.schedule,
           declarations: read.value.declarations,
           totals: read.value.totals,
+          receipts: read.value.receipts,
           isOffline: read.fromCache,
         ),
       );
@@ -105,6 +106,7 @@ final class HomeSpaceReady extends HomeSpaceState {
     required this.schedule,
     this.declarations = const [],
     this.totals,
+    this.receipts = const [],
     this.isOffline = false,
     this.loadingOlder = false,
     this.olderFailed = false,
@@ -114,6 +116,9 @@ final class HomeSpaceReady extends HomeSpaceState {
   final RentSchedule schedule;
   final List<Declaration> declarations;
   final HomeTotals? totals;
+
+  /// Newest first — each opens its declaration, where its PDF is.
+  final List<HomeReceipt> receipts;
 
   /// The device's copy: shown, marked, nothing declared from it.
   final bool isOffline;
@@ -132,11 +137,12 @@ final class HomeSpaceReady extends HomeSpaceState {
         schedule: schedule ?? this.schedule,
         declarations: declarations,
         totals: totals,
+        receipts: receipts,
         isOffline: isOffline,
         loadingOlder: loadingOlder,
         olderFailed: olderFailed,
       );
 
   @override
-  List<Object?> get props => [home, schedule, declarations, totals, isOffline, loadingOlder, olderFailed];
+  List<Object?> get props => [home, schedule, declarations, totals, receipts, isOffline, loadingOlder, olderFailed];
 }

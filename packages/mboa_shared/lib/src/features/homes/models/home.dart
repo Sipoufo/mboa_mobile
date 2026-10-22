@@ -718,6 +718,8 @@ class HomeInvoice extends Equatable {
     this.status = InvoiceStatus.unknown,
     this.paidAt,
     this.paidViaDeclaration = false,
+    this.confirmedTotal = 0,
+    this.remaining = 0,
   });
 
   final String id;
@@ -735,6 +737,11 @@ class HomeInvoice extends Equatable {
   /// Settled by confirmed declarations (`paidVia: DECLARED`).
   final bool paidViaDeclaration;
 
+  /// What the confirmed declarations cover, and what is left — the
+  /// server's (§31.2); left is 0 once paid or cancelled.
+  final int confirmedTotal;
+  final int remaining;
+
   static HomeInvoice fromResponse(InvoiceResponse response) => HomeInvoice(
         id: response.id ?? '',
         contractId: response.contractId,
@@ -750,6 +757,8 @@ class HomeInvoice extends Equatable {
         status: InvoiceStatus.fromWire(response.status?.name),
         paidAt: response.paidAt?.toLocal(),
         paidViaDeclaration: response.paidVia?.name == 'DECLARED',
+        confirmedTotal: response.confirmedTotal ?? 0,
+        remaining: response.remaining ?? 0,
       );
 
   Map<String, dynamic> toCache() => {
@@ -763,6 +772,8 @@ class HomeInvoice extends Equatable {
         'status': status.name,
         'paidAt': paidAt?.toIso8601String(),
         'declared': paidViaDeclaration,
+        'confirmed': confirmedTotal,
+        'remaining': remaining,
       };
 
   static HomeInvoice? fromCache(Object? raw) {
@@ -781,11 +792,110 @@ class HomeInvoice extends Equatable {
       status: InvoiceStatus.values.where((s) => s.name == json['status']).firstOrNull ?? InvoiceStatus.unknown,
       paidAt: _date(json['paidAt']),
       paidViaDeclaration: json['declared'] as bool? ?? false,
+      confirmedTotal: json['confirmed'] as int? ?? 0,
+      remaining: json['remaining'] as int? ?? 0,
     );
   }
 
   @override
-  List<Object?> get props => [id, contractId, annonceTitle, kind, label, amount, dueDate, status, paidAt, paidViaDeclaration];
+  List<Object?> get props =>
+      [id, contractId, annonceTitle, kind, label, amount, dueDate, status, paidAt, paidViaDeclaration, confirmedTotal, remaining];
+}
+
+/// What a receipt is — its title on the PDF (§29.5): a full rent's
+/// « Quittance de loyer », a partial one's receipt, the deposit's, an
+/// invoice's.
+enum ReceiptKind {
+  rent,
+  rentPartial,
+  deposit,
+  invoice,
+  unknown;
+
+  static ReceiptKind fromWire(String? name) => switch (name) {
+        'RENT' => ReceiptKind.rent,
+        'RENT_PARTIAL' => ReceiptKind.rentPartial,
+        'DEPOSIT' => ReceiptKind.deposit,
+        'INVOICE' => ReceiptKind.invoice,
+        _ => ReceiptKind.unknown,
+      };
+}
+
+/// One receipt of a space (slice D) — one per confirmed declaration, its
+/// period and amount fixed at the confirmation. Its PDF is fetched from
+/// the declaration it belongs to.
+class HomeReceipt extends Equatable {
+  const HomeReceipt({
+    required this.id,
+    required this.declarationId,
+    this.contractId,
+    this.kind = ReceiptKind.unknown,
+    this.periodStart,
+    this.periodEnd,
+    this.amount = 0,
+    this.issuedAt,
+    this.ready = false,
+  });
+
+  final String id;
+  final String declarationId;
+  final String? contractId;
+  final ReceiptKind kind;
+
+  /// None for the deposit and an invoice.
+  final DateTime? periodStart;
+  final DateTime? periodEnd;
+  final int amount;
+  final DateTime? issuedAt;
+
+  /// Its PDF is made.
+  final bool ready;
+
+  static HomeReceipt fromResponse(HomeReceiptResponse response) => HomeReceipt(
+        id: response.id ?? '',
+        declarationId: response.declarationId ?? '',
+        contractId: response.contractId,
+        kind: ReceiptKind.fromWire(response.kind?.name),
+        periodStart: response.periodStart?.toDateTime(),
+        periodEnd: response.periodEnd?.toDateTime(),
+        amount: response.amount ?? 0,
+        issuedAt: response.issuedAt?.toLocal(),
+        ready: response.ready ?? false,
+      );
+
+  Map<String, dynamic> toCache() => {
+        'id': id,
+        'declarationId': declarationId,
+        'contractId': contractId,
+        'kind': kind.name,
+        'from': periodStart?.toIso8601String(),
+        'to': periodEnd?.toIso8601String(),
+        'amount': amount,
+        'issuedAt': issuedAt?.toIso8601String(),
+        'ready': ready,
+      };
+
+  static HomeReceipt? fromCache(Object? raw) {
+    if (raw is! Map) return null;
+    final json = Map<String, dynamic>.from(raw);
+    final id = json['id'];
+    final declarationId = json['declarationId'];
+    if (id is! String || declarationId is! String) return null;
+    return HomeReceipt(
+      id: id,
+      declarationId: declarationId,
+      contractId: json['contractId'] as String?,
+      kind: ReceiptKind.values.where((k) => k.name == json['kind']).firstOrNull ?? ReceiptKind.unknown,
+      periodStart: _date(json['from']),
+      periodEnd: _date(json['to']),
+      amount: json['amount'] as int? ?? 0,
+      issuedAt: _date(json['issuedAt']),
+      ready: json['ready'] as bool? ?? false,
+    );
+  }
+
+  @override
+  List<Object?> get props => [id, declarationId, contractId, kind, periodStart, periodEnd, amount, issuedAt, ready];
 }
 
 DateTime? _date(Object? raw) => raw is String ? DateTime.tryParse(raw) : null;

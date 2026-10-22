@@ -13101,6 +13101,76 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Quittances et reçus`
+  String get receiptsTitle {
+    return Intl.message(
+      'Quittances et reçus',
+      name: 'receiptsTitle',
+      desc: 'M30 slice D: the space\'s section of receipts',
+      args: [],
+    );
+  }
+
+  /// `Quittance de loyer`
+  String get receiptKindRent {
+    return Intl.message(
+      'Quittance de loyer',
+      name: 'receiptKindRent',
+      desc: 'Receipt kind: rent fully paid for its period',
+      args: [],
+    );
+  }
+
+  /// `Reçu de paiement partiel`
+  String get receiptKindRentPartial {
+    return Intl.message(
+      'Reçu de paiement partiel',
+      name: 'receiptKindRentPartial',
+      desc: 'Receipt kind: part of a rent',
+      args: [],
+    );
+  }
+
+  /// `Reçu de dépôt de garantie`
+  String get receiptKindDeposit {
+    return Intl.message(
+      'Reçu de dépôt de garantie',
+      name: 'receiptKindDeposit',
+      desc: 'Receipt kind: the deposit',
+      args: [],
+    );
+  }
+
+  /// `Reçu de facture`
+  String get receiptKindInvoice {
+    return Intl.message(
+      'Reçu de facture',
+      name: 'receiptKindInvoice',
+      desc: 'Receipt kind: an invoice declared paid',
+      args: [],
+    );
+  }
+
+  /// `Émis le {date}`
+  String receiptIssuedOn(String date) {
+    return Intl.message(
+      'Émis le $date',
+      name: 'receiptIssuedOn',
+      desc: 'A receipt without a period: its issue day',
+      args: [date],
+    );
+  }
+
+  /// `En préparation…`
+  String get receiptRowPreparing {
+    return Intl.message(
+      'En préparation…',
+      name: 'receiptRowPreparing',
+      desc: 'A receipt in the space\'s list whose PDF is still being made',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -5172,5 +5172,38 @@
   "invoiceNoMoney": "Les factures se paient hors de Mboa : tu les déclares ici, ton propriétaire les confirme.",
   "@invoiceNoMoney": {
     "description": "M30 slice E: notice on an open invoice (RM-M30-06)"
+  },
+  "receiptsTitle": "Quittances et reçus",
+  "@receiptsTitle": {
+    "description": "M30 slice D: the space's section of receipts"
+  },
+  "receiptKindRent": "Quittance de loyer",
+  "@receiptKindRent": {
+    "description": "Receipt kind: rent fully paid for its period"
+  },
+  "receiptKindRentPartial": "Reçu de paiement partiel",
+  "@receiptKindRentPartial": {
+    "description": "Receipt kind: part of a rent"
+  },
+  "receiptKindDeposit": "Reçu de dépôt de garantie",
+  "@receiptKindDeposit": {
+    "description": "Receipt kind: the deposit"
+  },
+  "receiptKindInvoice": "Reçu de facture",
+  "@receiptKindInvoice": {
+    "description": "Receipt kind: an invoice declared paid"
+  },
+  "receiptIssuedOn": "Émis le {date}",
+  "@receiptIssuedOn": {
+    "description": "A receipt without a period: its issue day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptRowPreparing": "En préparation…",
+  "@receiptRowPreparing": {
+    "description": "A receipt in the space's list whose PDF is still being made"
   }
 }

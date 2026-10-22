@@ -74,14 +74,23 @@ class Cached<T> {
 }
 
 /// One space as a screen shows it: the home, a window of its schedule, its
-/// declarations and its totals.
+/// declarations, its totals and its receipts.
 class HomeBundle {
-  const HomeBundle({required this.home, required this.schedule, this.declarations = const [], this.totals});
+  const HomeBundle({
+    required this.home,
+    required this.schedule,
+    this.declarations = const [],
+    this.totals,
+    this.receipts = const [],
+  });
 
   final Home home;
   final RentSchedule schedule;
   final List<Declaration> declarations;
   final HomeTotals? totals;
+
+  /// Newest first (slice D).
+  final List<HomeReceipt> receipts;
 }
 
 /// "Mon Logement" (CDC M30) — `/homes` for both parties, and the landlord's
@@ -117,10 +126,11 @@ class HomesRepository {
   Future<Cached<HomeBundle>> bundle(String contractId) async {
     final key = 'home:$contractId';
     try {
-      final (detail, declarations, totals) = await (
+      final (detail, declarations, totals, receipts) = await (
         _api.getHome(contractId: contractId),
         _api.listHomeDeclarations(contractId: contractId, pageable: Pageable((b) => b..size = 50)),
         _api.getHomeFinanceSummary(contractId: contractId),
+        _receiptsOrNull(contractId),
       ).wait;
       final data = detail.data;
       final summary = data?.home;
@@ -130,12 +140,16 @@ class HomesRepository {
         schedule: data?.schedule == null ? const RentSchedule() : RentSchedule.fromResponse(data!.schedule!),
         declarations: declarations.data?.content?.map(Declaration.fromResponse).toList() ?? const [],
         totals: totals.data == null ? null : HomeTotals.fromResponse(totals.data!),
+        // A list that did not come keeps the last one read, not an empty one.
+        receipts: receipts ??
+            [for (final r in (_cache.get(StorageKeys.homesBox, key)?['receipts'] as List? ?? const [])) ?HomeReceipt.fromCache(r)],
       );
       await _cache.put(StorageKeys.homesBox, key, {
         'home': bundle.home.toCache(),
         'schedule': bundle.schedule.toCache(),
         'declarations': [for (final d in bundle.declarations) d.toCache()],
         'totals': bundle.totals?.toCache(),
+        'receipts': [for (final r in bundle.receipts) r.toCache()],
       });
       return Cached(bundle);
     } catch (error) {
@@ -150,9 +164,20 @@ class HomesRepository {
           schedule: RentSchedule.fromCache(raw['schedule']) ?? const RentSchedule(),
           declarations: [for (final d in (raw['declarations'] as List? ?? const [])) ?Declaration.fromCache(d)],
           totals: HomeTotals.fromCache(raw['totals']),
+          receipts: [for (final r in (raw['receipts'] as List? ?? const [])) ?HomeReceipt.fromCache(r)],
         ),
         fromCache: true,
       );
+    }
+  }
+
+  /// The space's receipts — best-effort: the space stands without them.
+  Future<List<HomeReceipt>?> _receiptsOrNull(String contractId) async {
+    try {
+      final response = await _api.listHomeReceipts(contractId: contractId, pageable: Pageable((b) => b..size = 50));
+      return response.data?.content?.map(HomeReceipt.fromResponse).toList() ?? const [];
+    } catch (_) {
+      return null;
     }
   }
 

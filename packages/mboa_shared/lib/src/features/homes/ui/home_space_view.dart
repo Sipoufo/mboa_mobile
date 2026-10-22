@@ -116,6 +116,21 @@ class HomeSpaceView extends StatelessWidget {
                       },
                     ),
                   ?invoices,
+                  if (ready.receipts.isNotEmpty) ...[
+                    const SizedBox(height: Dimens.spacingLg),
+                    HomeSectionTitle(l10n.receiptsTitle),
+                    for (final receipt in ready.receipts)
+                      ReceiptRow(
+                        receipt: receipt,
+                        // Its PDF is downloaded where its declaration is read,
+                        // which is opened by its id.
+                        onTap: onOpenDeclaration == null
+                            ? null
+                            : () => onOpenDeclaration!(
+                                  Declaration(id: receipt.declarationId, contractId: ready.home.contractId),
+                                ),
+                      ),
+                  ],
                   if (ready.declarations.isNotEmpty) ...[
                     const SizedBox(height: Dimens.spacingLg),
                     HomeSectionTitle(l10n.myHomeDeclarationsTitle),

@@ -88,8 +88,40 @@ void main() {
       expect(HomeInvoice.fromCache(invoice.toCache()), invoice);
     });
 
-    test('INVOICE pushes are known (slice E)', () {
+    test('INVOICE pushes are known (slice E), and HOME_EVIDENCE (§31.3)', () {
       expect(PushType.parse('INVOICE'), PushType.invoice);
+      expect(PushType.parse('HOME_EVIDENCE'), PushType.homeEvidence);
+    });
+
+    test('§31.2 — an invoice says what is confirmed and what is left, kept offline', () {
+      final invoice = HomeInvoice.fromResponse(_invoice('i-1').rebuild((b) => b
+        ..confirmedTotal = 5000
+        ..remaining = 7000));
+
+      expect(invoice.confirmedTotal, 5000);
+      expect(invoice.remaining, 7000);
+      expect(HomeInvoice.fromCache(invoice.toCache()), invoice);
+    });
+
+    test('a receipt reads its kind, period and readiness, and survives the copy', () {
+      final receipt = HomeReceipt.fromResponse(
+        api.HomeReceiptResponse(
+          (b) => b
+            ..id = 'r-1'
+            ..declarationId = 'd-1'
+            ..contractId = 'c-1'
+            ..kind = api.HomeReceiptResponseKindEnum.RENT_PARTIAL
+            ..periodStart = api.Date(2026, 9, 23)
+            ..periodEnd = api.Date(2026, 10, 22)
+            ..amount = 50000
+            ..ready = true,
+        ),
+      );
+
+      expect(receipt.kind, ReceiptKind.rentPartial);
+      expect(receipt.periodStart, DateTime(2026, 9, 23));
+      expect(receipt.ready, isTrue);
+      expect(HomeReceipt.fromCache(receipt.toCache()), receipt);
     });
   });
 

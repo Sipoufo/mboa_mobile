@@ -206,95 +206,97 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m79(min) => "At least ${min} characters.";
 
-  static String m80(total) => "Over the stay: ${total} · indicative";
+  static String m80(date) => "Issued on ${date}";
 
-  static String m81(date) => "The provider has until ${date} to answer.";
+  static String m81(total) => "Over the stay: ${total} · indicative";
 
-  static String m82(reason) => "Reason: ${reason}";
+  static String m82(date) => "The provider has until ${date} to answer.";
 
-  static String m83(start, duration) => "From ${start} · ${duration}";
+  static String m83(reason) => "Reason: ${reason}";
 
-  static String m84(count) =>
-      "${Intl.plural(count, one: '${count} day living there', other: '${count} days living there')}";
+  static String m84(start, duration) => "From ${start} · ${duration}";
 
   static String m85(count) =>
-      "${Intl.plural(count, one: '${count} month living there', other: '${count} months living there')}";
+      "${Intl.plural(count, one: '${count} day living there', other: '${count} days living there')}";
 
   static String m86(count) =>
-      "${Intl.plural(count, one: '${count} quarter living there', other: '${count} quarters living there')}";
+      "${Intl.plural(count, one: '${count} month living there', other: '${count} months living there')}";
 
   static String m87(count) =>
-      "${Intl.plural(count, one: '${count} week living there', other: '${count} weeks living there')}";
+      "${Intl.plural(count, one: '${count} quarter living there', other: '${count} quarters living there')}";
 
   static String m88(count) =>
-      "${Intl.plural(count, one: '${count} year living there', other: '${count} years living there')}";
+      "${Intl.plural(count, one: '${count} week living there', other: '${count} weeks living there')}";
 
   static String m89(count) =>
+      "${Intl.plural(count, one: '${count} year living there', other: '${count} years living there')}";
+
+  static String m90(count) =>
       "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
 
-  static String m90(query) => "No unit matches “${query}”.";
+  static String m91(query) => "No unit matches “${query}”.";
 
-  static String m91(value) => "Perceived condition: ${value}/5";
+  static String m92(value) => "Perceived condition: ${value}/5";
 
-  static String m92(value) => "Condition as seen: ${value}/5";
+  static String m93(value) => "Condition as seen: ${value}/5";
 
-  static String m93(date) => "Published on ${date}";
+  static String m94(date) => "Published on ${date}";
 
-  static String m94(name) =>
+  static String m95(name) =>
       "\"${name}\" will no longer tell you about new places.";
 
-  static String m95(count) =>
+  static String m96(count) =>
       "${Intl.plural(count, one: '1 new', other: '${count} new')}";
 
-  static String m96(count, limit) => "${count} of ${limit}";
+  static String m97(count, limit) => "${count} of ${limit}";
 
-  static String m97(score, max) => "Mboa Score: ${score} out of ${max}";
+  static String m98(score, max) => "Mboa Score: ${score} out of ${max}";
 
-  static String m98(points, max) => "plus ${points} of ${max} points";
+  static String m99(points, max) => "plus ${points} of ${max} points";
 
-  static String m99(points) => "minus ${points} points";
+  static String m100(points) => "minus ${points} points";
 
-  static String m100(points) => "${points} points";
+  static String m101(points) => "${points} points";
 
-  static String m101(max) => "0 of ${max} points";
+  static String m102(max) => "0 of ${max} points";
 
-  static String m102(count) =>
+  static String m103(count) =>
       "${Intl.plural(count, zero: 'No signed contract yet', one: '1 signed contract', other: '${count} signed contracts')}";
 
-  static String m103(max) =>
+  static String m104(max) =>
       "Each contract signed on Mboa counts, up to ${max} points.";
 
-  static String m104(max) =>
+  static String m105(max) =>
       "${max} is the top. There\'s no perfect score: there\'s always room to grow.";
 
-  static String m105(max) => "out of ${max}";
+  static String m106(max) => "out of ${max}";
 
-  static String m106(count) =>
+  static String m107(count) =>
       "${Intl.plural(count, zero: 'No upheld report', one: '1 upheld report', other: '${count} upheld reports')}";
 
-  static String m107(price) => "From ${price}";
-
-  static String m108(count) =>
-      "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
+  static String m108(price) => "From ${price}";
 
   static String m109(count) =>
+      "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
+
+  static String m110(count) =>
       "${Intl.plural(count, zero: 'No property', one: '1 property', other: '${count} properties')}";
 
-  static String m110(count) => "${count}+";
+  static String m111(count) => "${count}+";
 
-  static String m111(count) =>
+  static String m112(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m112(date) => "Valid until ${date}";
+  static String m113(date) => "Valid until ${date}";
 
-  static String m113(count) =>
+  static String m114(count) =>
       "${Intl.plural(count, zero: 'No visits', one: '1 visit', other: '${count} visits')}";
 
-  static String m114(from, to) => "${from} to ${to}";
+  static String m115(from, to) => "${from} to ${to}";
 
-  static String m115(time) => "Confirmed at ${time}";
+  static String m116(time) => "Confirmed at ${time}";
 
-  static String m116(distance) =>
+  static String m117(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -2067,13 +2069,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "receiptFailed": MessageLookupByLibrary.simpleMessage(
       "The receipt could not be downloaded. Try again.",
     ),
+    "receiptIssuedOn": m80,
+    "receiptKindDeposit": MessageLookupByLibrary.simpleMessage(
+      "Security deposit receipt",
+    ),
+    "receiptKindInvoice": MessageLookupByLibrary.simpleMessage(
+      "Invoice receipt",
+    ),
+    "receiptKindRent": MessageLookupByLibrary.simpleMessage("Rent receipt"),
+    "receiptKindRentPartial": MessageLookupByLibrary.simpleMessage(
+      "Partial payment receipt",
+    ),
     "receiptLate": MessageLookupByLibrary.simpleMessage(
       "The receipt is taking a while. Try again in a moment.",
     ),
     "receiptPreparing": MessageLookupByLibrary.simpleMessage(
       "Receipt being prepared…",
     ),
+    "receiptRowPreparing": MessageLookupByLibrary.simpleMessage(
+      "Being prepared…",
+    ),
     "receiptTitle": MessageLookupByLibrary.simpleMessage("Payment receipt"),
+    "receiptsTitle": MessageLookupByLibrary.simpleMessage("Receipts"),
     "registerButton": MessageLookupByLibrary.simpleMessage("Sign up"),
     "registerFailed": MessageLookupByLibrary.simpleMessage(
       "Registration failed. Check your details.",
@@ -2166,7 +2183,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationExpiredBody": MessageLookupByLibrary.simpleMessage(
       "The provider didn\'t answer within 48 hours: your request is closed.",
     ),
-    "reservationIndicativeTotal": m80,
+    "reservationIndicativeTotal": m81,
     "reservationKeep": MessageLookupByLibrary.simpleMessage("Keep my request"),
     "reservationLapsedBody": MessageLookupByLibrary.simpleMessage(
       "The reservation ran out with no signed contract.",
@@ -2196,7 +2213,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationPendingTitle": MessageLookupByLibrary.simpleMessage(
       "Awaiting an answer",
     ),
-    "reservationPendingUntil": m81,
+    "reservationPendingUntil": m82,
     "reservationPickDate": MessageLookupByLibrary.simpleMessage("Choose"),
     "reservationProfileIncompleteBody": MessageLookupByLibrary.simpleMessage(
       "Your profile must be complete to request a reservation.",
@@ -2222,12 +2239,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationRefusedBody": MessageLookupByLibrary.simpleMessage(
       "The provider declined your request.",
     ),
-    "reservationRefusedReason": m82,
+    "reservationRefusedReason": m83,
     "reservationRentTitle": MessageLookupByLibrary.simpleMessage("Rent"),
     "reservationReservedUntil": MessageLookupByLibrary.simpleMessage(
       "Reserved until",
     ),
-    "reservationRowStay": m83,
+    "reservationRowStay": m84,
     "reservationSeeContracts": MessageLookupByLibrary.simpleMessage(
       "See my contracts",
     ),
@@ -2318,18 +2335,18 @@ class MessageLookup extends MessageLookupByLibrary {
       "Residence details",
     ),
     "residenceDetailUnitsLabel": MessageLookupByLibrary.simpleMessage("Total"),
-    "residenceStayDay": m84,
-    "residenceStayMonth": m85,
-    "residenceStayQuarter": m86,
-    "residenceStayWeek": m87,
-    "residenceStayYear": m88,
+    "residenceStayDay": m85,
+    "residenceStayMonth": m86,
+    "residenceStayQuarter": m87,
+    "residenceStayWeek": m88,
+    "residenceStayYear": m89,
     "residenceTitle": MessageLookupByLibrary.simpleMessage("Residence details"),
     "residenceUnitStatus": MessageLookupByLibrary.simpleMessage("Status"),
-    "residenceUnitsAvailable": m89,
+    "residenceUnitsAvailable": m90,
     "residenceUnitsPending": MessageLookupByLibrary.simpleMessage(
       "Editing a unit is coming soon.",
     ),
-    "residenceUnitsSearchEmpty": m90,
+    "residenceUnitsSearchEmpty": m91,
     "residenceUnitsSearchHint": MessageLookupByLibrary.simpleMessage(
       "Search for a unit",
     ),
@@ -2408,11 +2425,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "You have not replied to this review yet.",
     ),
     "reviewCommentsTitle": MessageLookupByLibrary.simpleMessage("Your replies"),
-    "reviewCondition": m91,
+    "reviewCondition": m92,
     "reviewConditionLabel": MessageLookupByLibrary.simpleMessage(
       "Condition as you saw it",
     ),
-    "reviewConditionValue": m92,
+    "reviewConditionValue": m93,
     "reviewCons": MessageLookupByLibrary.simpleMessage("Negatives"),
     "reviewDeletedAuthor": MessageLookupByLibrary.simpleMessage(
       "Deleted account",
@@ -2447,7 +2464,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewPros": MessageLookupByLibrary.simpleMessage("Positives"),
     "reviewPublish": MessageLookupByLibrary.simpleMessage("Publish my review"),
     "reviewPublished": MessageLookupByLibrary.simpleMessage("Review published"),
-    "reviewPublishedOn": m93,
+    "reviewPublishedOn": m94,
     "reviewRatingLabel": MessageLookupByLibrary.simpleMessage("Overall rating"),
     "reviewRatingRequired": MessageLookupByLibrary.simpleMessage(
       "The overall rating is required.",
@@ -2500,7 +2517,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "This change was not saved. Try again.",
     ),
     "savedSearchDelete": MessageLookupByLibrary.simpleMessage("Delete"),
-    "savedSearchDeleteBody": m94,
+    "savedSearchDeleteBody": m95,
     "savedSearchDeleteTitle": MessageLookupByLibrary.simpleMessage(
       "Delete this search?",
     ),
@@ -2510,7 +2527,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "savedSearchNameLabel": MessageLookupByLibrary.simpleMessage(
       "Name (optional)",
     ),
-    "savedSearchNewCount": m95,
+    "savedSearchNewCount": m96,
     "savedSearchRename": MessageLookupByLibrary.simpleMessage("Rename"),
     "savedSearchRenameConfirm": MessageLookupByLibrary.simpleMessage("Save"),
     "savedSearchResultsEmpty": MessageLookupByLibrary.simpleMessage(
@@ -2519,7 +2536,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "savedSearchResultsFailed": MessageLookupByLibrary.simpleMessage(
       "The results could not be loaded. Check your connection.",
     ),
-    "savedSearchesCount": m96,
+    "savedSearchesCount": m97,
     "savedSearchesEmpty": MessageLookupByLibrary.simpleMessage(
       "No saved searches yet. Run a search, then tap the bookmark to hear about new places.",
     ),
@@ -2532,21 +2549,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "savedSearchesTitle": MessageLookupByLibrary.simpleMessage(
       "Saved searches",
     ),
-    "scoreA11y": m97,
-    "scoreA11yEarned": m98,
-    "scoreA11yPenalty": m99,
-    "scoreA11yPoints": m100,
+    "scoreA11y": m98,
+    "scoreA11yEarned": m99,
+    "scoreA11yPenalty": m100,
+    "scoreA11yPoints": m101,
     "scoreA11ySoon": MessageLookupByLibrary.simpleMessage("coming soon"),
-    "scoreA11yZero": m101,
+    "scoreA11yZero": m102,
     "scoreClose": MessageLookupByLibrary.simpleMessage("Close"),
-    "scoreContractsCount": m102,
+    "scoreContractsCount": m103,
     "scoreFooterSelf": MessageLookupByLibrary.simpleMessage(
       "Your score updates on its own whenever something changes.",
     ),
     "scoreFooterTenant": MessageLookupByLibrary.simpleMessage(
       "A decision aid, not a verdict.",
     ),
-    "scoreHintContracts": m103,
+    "scoreHintContracts": m104,
     "scoreHintIdentity": MessageLookupByLibrary.simpleMessage(
       "Your ID, checked by the Mboa team.",
     ),
@@ -2574,7 +2591,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "scoreLoadFailedTitle": MessageLookupByLibrary.simpleMessage(
       "The score couldn\'t load",
     ),
-    "scoreMaxNote": m104,
+    "scoreMaxNote": m105,
     "scoreMine": MessageLookupByLibrary.simpleMessage("My Mboa Score"),
     "scoreMineSubtitle": MessageLookupByLibrary.simpleMessage(
       "Your reliability score, in detail",
@@ -2592,14 +2609,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Not visible yet",
     ),
     "scoreOpen": MessageLookupByLibrary.simpleMessage("See their Mboa Score"),
-    "scoreOutOf": m105,
+    "scoreOutOf": m106,
     "scorePrivateSelf": MessageLookupByLibrary.simpleMessage(
       "It\'s never public: only landlords you contact can see it.",
     ),
     "scorePrivateTenant": MessageLookupByLibrary.simpleMessage(
       "Private: for your decision only.",
     ),
-    "scoreReportsCount": m106,
+    "scoreReportsCount": m107,
     "scoreSectionSelf": MessageLookupByLibrary.simpleMessage(
       "What goes into your score",
     ),
@@ -2678,11 +2695,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "searchRentRange": MessageLookupByLibrary.simpleMessage("Rent (FCFA)"),
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Residence"),
-    "searchResidenceFrom": m107,
-    "searchResidenceUnits": m108,
-    "searchResultCount": m109,
+    "searchResidenceFrom": m108,
+    "searchResidenceUnits": m109,
+    "searchResultCount": m110,
     "searchRoomsMin": MessageLookupByLibrary.simpleMessage("Minimum rooms"),
-    "searchRoomsPlus": m110,
+    "searchRoomsPlus": m111,
     "searchStaleBanner": MessageLookupByLibrary.simpleMessage(
       "Results not refreshed — the server did not answer.",
     ),
@@ -2724,7 +2741,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m111,
+    "subscriptionListingLimit": m112,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -2739,7 +2756,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m112,
+    "subscriptionRenewsOn": m113,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
@@ -2868,13 +2885,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitVisitorAgent": MessageLookupByLibrary.simpleMessage("Mboa agent"),
     "visitVisitorOwner": MessageLookupByLibrary.simpleMessage("The owner"),
-    "visitVisitorRecord": m113,
+    "visitVisitorRecord": m114,
     "visitWaitingVisitor": MessageLookupByLibrary.simpleMessage(
       "You are confirmed on site. Waiting for the visitor.",
     ),
     "visitWeekNext": MessageLookupByLibrary.simpleMessage("Next week"),
     "visitWeekPrev": MessageLookupByLibrary.simpleMessage("Previous week"),
-    "visitWeekRange": m114,
+    "visitWeekRange": m115,
     "visitWithdraw": MessageLookupByLibrary.simpleMessage(
       "Withdraw my request",
     ),
@@ -2974,7 +2991,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsPast": MessageLookupByLibrary.simpleMessage("Past"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m115,
+    "visitsPresenceConfirmedAt": m116,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -3009,7 +3026,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m116,
+    "visitsTooFarBody": m117,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

@@ -19,6 +19,78 @@ String declarationWhat(I18n l10n, Declaration d) => switch (d.kind) {
       DeclarationKind.invoice => l10n.declarationInvoice,
     };
 
+/// A receipt's title, as its PDF says it (§29.5).
+String receiptKindTitle(I18n l10n, ReceiptKind kind) => switch (kind) {
+      ReceiptKind.rent => l10n.receiptKindRent,
+      ReceiptKind.rentPartial => l10n.receiptKindRentPartial,
+      ReceiptKind.deposit => l10n.receiptKindDeposit,
+      ReceiptKind.invoice => l10n.receiptKindInvoice,
+      ReceiptKind.unknown => l10n.receiptTitle,
+    };
+
+/// A receipt in a space: what, for which period (or when it was issued),
+/// how much — or that it is still being made.
+class ReceiptRow extends StatelessWidget {
+  const ReceiptRow({super.key, required this.receipt, this.onTap});
+
+  final HomeReceipt receipt;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    String day(DateTime d) => DateFormat.yMMMd(locale).format(d);
+    final line = switch (receipt) {
+      // Whatever its kind: « Quittance » would be wrong for a partial one.
+      HomeReceipt(ready: false) => l10n.receiptRowPreparing,
+      // The year once, at the end: « 23 sept. – 22 nov. 2026 ».
+      HomeReceipt(:final periodStart?, :final periodEnd?) =>
+        '${DateFormat.MMMd(locale).format(periodStart)} – ${day(periodEnd)}',
+      HomeReceipt(:final issuedAt?) => l10n.receiptIssuedOn(day(issuedAt)),
+      _ => null,
+    };
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(Dimens.radius),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Dimens.spacingSm),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(color: colors.primaryPale, borderRadius: BorderRadius.circular(Dimens.radius)),
+              child: Icon(LucideIcons.fileCheck2, size: Dimens.icon, color: colors.primary),
+            ),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(receiptKindTitle(l10n, receipt.kind), style: context.mboaText.label.copyWith(color: colors.ink)),
+                  if (line != null)
+                    Text(
+                      line,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(width: Dimens.spacingSm),
+            Text(fcfaOf(context, receipt.amount), style: context.mboaText.label.copyWith(color: colors.ink)),
+            if (onTap != null) Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// How an échéance reads, its icon and its tone.
 ({String label, IconData icon, Color tone}) dueLook(BuildContext context, DueStatus status) {
   final l10n = I18n.of(context);

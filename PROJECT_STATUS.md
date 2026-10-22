@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1301 tests green, analyze clean.** `mboa_user` 349 · `mboa_pro` 560 ·
-`mboa_core` 19 · `mboa_shared` 345 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1308 tests green, analyze clean.** `mboa_user` 349 · `mboa_pro` 562 ·
+`mboa_core` 19 · `mboa_shared` 350 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **The tenant app has now run on a simulator** (iPhone 17 Pro, 2026-09-30):
 > it boots on the public search, the four tabs respond, the visitor states are
@@ -63,7 +63,7 @@
 | M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
 | M29 réservation — lot 1 | ✅ **tenant**: "Réserver" on the fiche, request screen (stay, indicative total, no money), "Ma demande" + ticket, "Mes réservations" (offline) · **Pro**: inbox (timeline), request detail (accept / refuse with reason / extend / cancel), home counter, contract drawn up from a request (RM-M08-10), unreserve by hand (RM-M10-10) · system message in the thread · N-32/33/34 routed |
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
-| M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) — the home's list of receipts waits for §31 · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
+| M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) and the space's « Quittances et reçus » · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
 agents) · `packages/`: `mboa_core` (DioClient, secure storage, Hive, env, DI),
@@ -131,8 +131,10 @@ notifications, routing guards, `ApiError`), `mboa_ui` (design system),
 - Invoices (M24) are the **tenant's** read here: the space shows them through
   a slot (`HomeSpaceView.invoices`) because the landlord reads the same space
   and cannot list them. An open invoice can be declared even after the
-  tenancy. « What is left » is the app's sum of confirmed declarations, for
-  the form only — §31.2 asks the server for it.
+  tenancy. « What is left » is the server's (`remaining`, §31.2).
+- N-39 is `HOME_EVIDENCE` (contract): it opens the tenant's space in Pro
+  until lot 3 brings the proofs screen. `HOME` stays N-35 (declaration) in
+  Pro and N-36 / N-37 (contract) for the tenant.
 
 ---
 
@@ -1142,8 +1144,6 @@ Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **§31** (backend): rename slice D's `ReceiptResponse` — then the home's
-  list of receipts; an invoice's confirmed total; N-35 / N-39 share `HOME`.
 - **M30 lot 3** (photo proofs, requests to the landlord, useful contacts) —
   shipped by the backend; waits for the founder's mockups.
 - **M24 / M25 landlord side** (issuing invoices, the register) — behind the

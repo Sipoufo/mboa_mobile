@@ -80,6 +80,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.paymentConfirmed:
     case PushType.kyc:
     case PushType.residence:
+    // N-39 is the landlord's.
+    case PushType.homeEvidence:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

@@ -250,6 +250,64 @@ void main() {
       verify(() => bloc.add(const HomeSpaceOlderRequested())).called(1);
     });
 
+    testWidgets('slice D — the receipts, titled as their PDFs; each opens its declaration', (tester) async {
+      Declaration? opened;
+      final state = ready(home(next: due(1, DueStatus.due)));
+      await pump(
+        tester,
+        HomeSpaceReady(
+          home: state.home,
+          schedule: state.schedule,
+          declarations: state.declarations,
+          receipts: [
+            HomeReceipt(
+              id: 'r-2',
+              declarationId: 'd-9',
+              kind: ReceiptKind.rentPartial,
+              periodStart: DateTime(2026, 11, 18),
+              periodEnd: DateTime(2026, 12, 17),
+              amount: 50000,
+            ),
+            HomeReceipt(
+              id: 'r-1',
+              declarationId: 'd-1',
+              kind: ReceiptKind.rent,
+              periodStart: DateTime(2026, 9, 23),
+              periodEnd: DateTime(2026, 11, 22),
+              amount: 300000,
+              ready: true,
+            ),
+            HomeReceipt(
+              id: 'r-0',
+              declarationId: 'd-0',
+              kind: ReceiptKind.deposit,
+              amount: 300000,
+              issuedAt: DateTime(2026, 9, 20, 10),
+              ready: true,
+            ),
+          ],
+        ),
+        onOpen: (d) => opened = d,
+      );
+
+      await tester.scrollUntilVisible(find.text('Reçu de dépôt de garantie'), 200);
+      expect(find.text('Quittances et reçus'), findsOneWidget);
+      expect(find.text('Quittance de loyer'), findsOneWidget);
+      expect(find.text('Reçu de paiement partiel'), findsOneWidget);
+      // Being made, said; with no period, the day it was issued.
+      expect(find.text('En préparation…'), findsOneWidget);
+      expect(find.text('23 sept. – 22 nov. 2026'), findsOneWidget);
+      expect(find.text('Émis le 20 sept. 2026'), findsOneWidget);
+
+      await tester.tap(find.text('Quittance de loyer'));
+      // The declaration it belongs to, where its PDF is downloaded.
+      expect(opened?.id, 'd-1');
+      await tester.tap(find.text('Reçu de dépôt de garantie'));
+      expect(opened?.id, 'd-0');
+      await tester.pumpAndSettle();
+      await expectLater(find.byType(HomeSpaceView), matchesGoldenFile('goldens/home_space_receipts.png'));
+    });
+
     testWidgets('the space, the tenant\'s side', (tester) async {
       await pump(
         tester,

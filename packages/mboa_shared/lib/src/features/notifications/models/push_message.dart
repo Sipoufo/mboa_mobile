@@ -97,6 +97,10 @@ enum PushType {
   /// confirmed or contested (the tenant's).
   invoice,
 
+  /// §31.3 — N-39, photo proofs added: `entityId` = the contract (the
+  /// landlord's).
+  homeEvidence,
+
   unknown;
 
   static PushType parse(String? raw) =>
@@ -112,6 +116,7 @@ enum PushType {
         'HOME' => PushType.home,
         'RESERVATION' => PushType.reservation,
         'INVOICE' => PushType.invoice,
+        'HOME_EVIDENCE' => PushType.homeEvidence,
         _ => PushType.unknown,
       };
 }

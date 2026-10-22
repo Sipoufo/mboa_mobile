@@ -82,14 +82,11 @@ final class InvoiceReady extends InvoiceState {
   final List<Declaration> declarations;
   final bool isOffline;
 
-  /// What the landlord already confirmed on it. A suggestion for the form
-  /// only — the server alone says when the invoice is paid (§31.2 asks for
-  /// this figure on the invoice itself).
-  int get confirmedTotal => declarations
-      .where((d) => d.status == DeclarationStatus.confirmed)
-      .fold(0, (sum, d) => sum + d.amount);
+  /// What the landlord already confirmed on it, and what is left — the
+  /// server's figures (§31.2), never a sum made here.
+  int get confirmedTotal => invoice.confirmedTotal;
 
-  int get left => (invoice.amount - confirmedTotal).clamp(0, invoice.amount);
+  int get left => invoice.remaining;
 
   /// Open, online: it can be declared paid — even once the tenancy is over.
   bool get canDeclare => invoice.status.isOpen && !isOffline;

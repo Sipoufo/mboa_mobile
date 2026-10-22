@@ -88,6 +88,12 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(ReceivedDeclarationRoute(declarationId: id));
     case PushType.home when !isAgent:
       router.push(RentsRoute());
+    // N-39 — photo proofs added: the tenant's space (the proofs screen comes
+    // with M30 lot 3); merged, "Loyers".
+    case PushType.homeEvidence when id != null && !isAgent:
+      router.push(TenantHomeRoute(contractId: id));
+    case PushType.homeEvidence when !isAgent:
+      router.push(RentsRoute());
     case PushType.message:
       // No endpoint reads one conversation by id; the inbox lists it first.
       router.push(const MessagesRoute());
@@ -98,6 +104,7 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.home:
     // N-36 for an invoice is the tenant's.
     case PushType.invoice:
+    case PushType.homeEvidence:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

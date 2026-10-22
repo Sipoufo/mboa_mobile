@@ -33,7 +33,14 @@ class _FakeDraft extends Fake implements DeclarationDraft {}
 void main() {
   final today = DateTime(2026, 10, 21, 15);
 
-  HomeInvoice invoice({InvoiceStatus status = InvoiceStatus.toPay, int amount = 12000, DateTime? paidAt}) => HomeInvoice(
+  HomeInvoice invoice({
+    InvoiceStatus status = InvoiceStatus.toPay,
+    int amount = 12000,
+    DateTime? paidAt,
+    int confirmedTotal = 0,
+    int? remaining,
+  }) =>
+      HomeInvoice(
         id: 'i-1',
         contractId: 'c-1',
         annonceTitle: 'Studio Akwa',
@@ -43,6 +50,8 @@ void main() {
         dueDate: DateTime(2026, 10, 30),
         status: status,
         paidAt: paidAt,
+        confirmedTotal: confirmedTotal,
+        remaining: remaining ?? amount - confirmedTotal,
       );
 
   Declaration declared(String id, int amount, DeclarationStatus status) => Declaration(
@@ -129,9 +138,10 @@ void main() {
     );
 
     blocTest<InvoiceBloc, InvoiceState>(
-      'an invoice and what was declared on it; what is left is the confirmed part off',
+      "an invoice and what was declared on it; what is confirmed and left are the server's",
       setUp: () {
-        when(() => repository.invoice('i-1')).thenAnswer((_) async => Cached(invoice()));
+        when(() => repository.invoice('i-1'))
+            .thenAnswer((_) async => Cached(invoice(confirmedTotal: 5000, remaining: 7000)));
         when(() => repository.invoiceDeclarations('i-1')).thenAnswer(
           (_) async => [
             declared('d-2', 2000, DeclarationStatus.declared),
@@ -145,7 +155,7 @@ void main() {
       verify: (bloc) {
         final state = bloc.state as InvoiceReady;
         expect(state.declarations, hasLength(3));
-        // Only the confirmed counts: waiting and contested are not paid.
+        // §31.2 — the invoice's own figures, never a sum of the list.
         expect(state.confirmedTotal, 5000);
         expect(state.left, 7000);
         expect(state.canDeclare, isTrue);
@@ -188,6 +198,9 @@ void main() {
       expect(InvoiceReady(invoice(status: InvoiceStatus.paid)).canDeclare, isFalse);
       expect(InvoiceReady(invoice(status: InvoiceStatus.cancelled)).canDeclare, isFalse);
       expect(InvoiceReady(invoice(status: InvoiceStatus.overdue)).canDeclare, isTrue);
+      // §31.2 — what is left is the server's: nothing on a cancelled one,
+      // though nothing was confirmed on it.
+      expect(InvoiceReady(invoice(status: InvoiceStatus.cancelled, remaining: 0)).left, 0);
     });
   });
 
@@ -291,7 +304,7 @@ void main() {
       final bloc = MockInvoiceBloc();
       when(() => bloc.state).thenReturn(
         InvoiceReady(
-          invoice(),
+          invoice(confirmedTotal: 5000, remaining: 7000),
           declarations: [
             declared('d-2', 2000, DeclarationStatus.declared),
             declared('d-1', 5000, DeclarationStatus.confirmed),
