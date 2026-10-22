@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscribe_bloc.dart';
 import 'package:mboa_pro/features/subscription/data/subscription_repository.dart';
@@ -8,9 +11,6 @@ import 'package:mocktail/mocktail.dart';
 
 class MockSubscriptionRepository extends Mock
     implements SubscriptionRepository {}
-
-/// Comfortably longer than the bloc's poll timeout under test.
-const _pollWait = Duration(milliseconds: 300);
 
 void main() {
   late MockSubscriptionRepository repository;
@@ -49,11 +49,27 @@ void main() {
     ).thenAnswer((_) async => attempt);
   }
 
-  SubscribeBloc build() => SubscribeBloc(
-        repository: repository,
-        pollInterval: const Duration(milliseconds: 5),
-        pollTimeout: const Duration(milliseconds: 40),
-      );
+  // Production timings: nothing below runs on the wall clock, so there is no
+  // reason to shrink them.
+  SubscribeBloc build() => SubscribeBloc(repository: repository);
+
+  /// Runs one purchase to the end of the poll window on fake time and returns
+  /// every state it emitted.
+  ///
+  /// The poll's delays and its deadline (`clock.now()`) both run on fake time,
+  /// so how many reads fit before the deadline no longer depends on how loaded
+  /// the machine is. On real timers a starved 5 ms delay could overrun a 40 ms
+  /// deadline and hand off before the second read.
+  List<SubscribeState> purchaseOnFakeTime() => fakeAsync((async) {
+        final bloc = build();
+        final states = <SubscribeState>[];
+        bloc.stream.listen(states.add);
+        bloc.add(const SubscribeRequested(tier: tier, method: method));
+        async.elapse(bloc.pollTimeout + bloc.pollInterval);
+        unawaited(bloc.close());
+        async.flushMicrotasks();
+        return states;
+      });
 
   group('happy paths', () {
     blocTest<SubscribeBloc, SubscribeState>(
@@ -71,52 +87,41 @@ void main() {
       ],
     );
 
-    blocTest<SubscribeBloc, SubscribeState>(
-      'polls the payment and confirms once it settles',
-      setUp: () {
-        stubSubscribe(pending);
-        // Pending on the first poll, confirmed on the next — the webhook.
-        var calls = 0;
-        when(() => repository.payment(any())).thenAnswer((_) async {
-          calls++;
-          return calls > 1 ? confirmed : pending;
-        });
-      },
-      build: build,
-      act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
-      wait: _pollWait,
-      expect: () => const [
+    test('polls the payment and confirms once it settles', () {
+      stubSubscribe(pending);
+      // Pending on the first poll, confirmed on the next — the webhook.
+      var calls = 0;
+      when(() => repository.payment(any())).thenAnswer((_) async {
+        calls++;
+        return calls > 1 ? confirmed : pending;
+      });
+
+      expect(purchaseOnFakeTime(), const [
         SubscribeInitiating(tier: tier, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
         SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
-      ],
-    );
+      ]);
+      verify(() => repository.payment('pay-1')).called(2);
+    });
 
-    blocTest<SubscribeBloc, SubscribeState>(
-      'reports a rejection immediately instead of timing out',
-      setUp: () {
-        stubSubscribe(pending);
-        // Watching the tier could never distinguish this from "not yet".
-        when(() => repository.payment(any())).thenAnswer(
-          (_) async => const PaymentAttempt(
-            paymentId: 'pay-1',
-            tier: tier,
-            status: PaymentStatus.failed,
-          ),
-        );
-      },
-      build: build,
-      act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
-      wait: _pollWait,
-      skip: 2,
-      expect: () => [isA<SubscribeFailure>()],
-    );
+    test('reports a rejection immediately instead of timing out', () {
+      stubSubscribe(pending);
+      // Watching the tier could never distinguish this from "not yet".
+      when(() => repository.payment(any())).thenAnswer(
+        (_) async => const PaymentAttempt(
+          paymentId: 'pay-1',
+          tier: tier,
+          status: PaymentStatus.failed,
+        ),
+      );
 
-    blocTest<SubscribeBloc, SubscribeState>(
+      expect(purchaseOnFakeTime().skip(2), [isA<SubscribeFailure>()]);
+      verify(() => repository.payment('pay-1')).called(1);
+    });
+
+    test(
       'a refund settles the payment; it is not something still to wait for',
-      setUp: () {
+      () {
         stubSubscribe(pending);
         // REFUNDED arrived with the 2026-10 spec. Before it was mapped, the
         // catch-all read it as `pending`: the bloc polled it to the deadline
@@ -129,54 +134,44 @@ void main() {
             status: PaymentStatus.refunded,
           ),
         );
+
+        expect(purchaseOnFakeTime().skip(2), [isA<SubscribeFailure>()]);
+        verify(() => repository.payment('pay-1')).called(1);
       },
-      build: build,
-      act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
-      wait: _pollWait,
-      skip: 2,
-      expect: () => [isA<SubscribeFailure>()],
     );
   });
 
   group('the webhook does not land in time', () {
-    blocTest<SubscribeBloc, SubscribeState>(
-      'hands off to the notification path rather than failing',
-      setUp: () => stubSubscribe(pending),
-      build: build,
-      act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
-      wait: _pollWait,
+    test('hands off to the notification path rather than failing', () {
+      stubSubscribe(pending);
+
       // RM-M13-05 allows 15 minutes; the payment may still succeed, so this is
       // explicitly not a failure state.
-      expect: () => const [
+      expect(purchaseOnFakeTime(), const [
         SubscribeInitiating(tier: tier, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
         SubscribePendingHandoff(attempt: pending),
-      ],
-    );
+      ]);
+      // One read every 3 s for 90 s, then it stops — it does not spin.
+      verify(() => repository.payment('pay-1')).called(30);
+    });
 
-    blocTest<SubscribeBloc, SubscribeState>(
-      'keeps polling through a failed read',
-      setUp: () {
-        stubSubscribe(pending);
-        var calls = 0;
-        when(() => repository.payment(any())).thenAnswer((_) async {
-          calls++;
-          if (calls == 1) throw Exception('flaky network');
-          return confirmed;
-        });
-      },
-      build: build,
-      act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
-      wait: _pollWait,
-      expect: () => const [
+    test('keeps polling through a failed read', () {
+      stubSubscribe(pending);
+      var calls = 0;
+      when(() => repository.payment(any())).thenAnswer((_) async {
+        calls++;
+        if (calls == 1) throw Exception('flaky network');
+        return confirmed;
+      });
+
+      expect(purchaseOnFakeTime(), const [
         SubscribeInitiating(tier: tier, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
         SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
-      ],
-    );
+      ]);
+      verify(() => repository.payment('pay-1')).called(2);
+    });
   });
 
   group('failures', () {
