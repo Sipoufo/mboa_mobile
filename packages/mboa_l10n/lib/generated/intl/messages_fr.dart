@@ -928,6 +928,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonOr": MessageLookupByLibrary.simpleMessage("Ou"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Réessayer"),
     "commonYes": MessageLookupByLibrary.simpleMessage("Oui"),
+    "contactsTitle": MessageLookupByLibrary.simpleMessage("Contacts"),
     "contractAccept": MessageLookupByLibrary.simpleMessage(
       "Accepter les termes",
     ),
@@ -1408,6 +1409,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorValidation": MessageLookupByLibrary.simpleMessage(
       "Certaines informations sont invalides. Vérifie le formulaire.",
     ),
+    "evidenceTitle": MessageLookupByLibrary.simpleMessage("État des lieux"),
     "exitAppBody": MessageLookupByLibrary.simpleMessage(
       "Appuie de nouveau pour quitter.",
     ),
@@ -2333,6 +2335,64 @@ class MessageLookup extends MessageLookupByLibrary {
       "Connecte-toi pour signaler un contenu.",
     ),
     "reportTitle": MessageLookupByLibrary.simpleMessage("Signaler"),
+    "requestByLandlord": MessageLookupByLibrary.simpleMessage(
+      "par le propriétaire",
+    ),
+    "requestByTenant": MessageLookupByLibrary.simpleMessage("par le locataire"),
+    "requestClose": MessageLookupByLibrary.simpleMessage("Clore la demande"),
+    "requestDetailTitle": MessageLookupByLibrary.simpleMessage("Demande"),
+    "requestExchanges": MessageLookupByLibrary.simpleMessage("Échanges"),
+    "requestHistory": MessageLookupByLibrary.simpleMessage("Suivi"),
+    "requestMovedToast": MessageLookupByLibrary.simpleMessage("C\'est noté."),
+    "requestNew": MessageLookupByLibrary.simpleMessage("Nouvelle demande"),
+    "requestNoExchange": MessageLookupByLibrary.simpleMessage(
+      "Aucun échange pour l\'instant.",
+    ),
+    "requestNoteHint": MessageLookupByLibrary.simpleMessage(
+      "Facultatif — par exemple « Le plombier passe jeudi »",
+    ),
+    "requestNoteSend": MessageLookupByLibrary.simpleMessage("Valider"),
+    "requestNoteTitle": MessageLookupByLibrary.simpleMessage(
+      "Un mot à ajouter ?",
+    ),
+    "requestRefusedReadOnly": MessageLookupByLibrary.simpleMessage(
+      "Ce logement est en lecture seule : la demande ne peut plus avancer.",
+    ),
+    "requestRefusedTransition": MessageLookupByLibrary.simpleMessage(
+      "Cette demande a déjà avancé : la voici telle qu\'elle est.",
+    ),
+    "requestReopen": MessageLookupByLibrary.simpleMessage(
+      "Le problème persiste",
+    ),
+    "requestReplyFailed": MessageLookupByLibrary.simpleMessage(
+      "La réponse n\'est pas partie. Réessaie.",
+    ),
+    "requestReplyHint": MessageLookupByLibrary.simpleMessage(
+      "Écrire une réponse…",
+    ),
+    "requestResolve": MessageLookupByLibrary.simpleMessage("Marquer résolue"),
+    "requestSend": MessageLookupByLibrary.simpleMessage("Envoyer"),
+    "requestStart": MessageLookupByLibrary.simpleMessage("Prendre en charge"),
+    "requestStatusClosed": MessageLookupByLibrary.simpleMessage("Clôturée"),
+    "requestStatusInProgress": MessageLookupByLibrary.simpleMessage("En cours"),
+    "requestStatusResolved": MessageLookupByLibrary.simpleMessage("Résolue"),
+    "requestStatusSeen": MessageLookupByLibrary.simpleMessage("Vue"),
+    "requestStatusSent": MessageLookupByLibrary.simpleMessage("Envoyée"),
+    "requestTypeMaintenance": MessageLookupByLibrary.simpleMessage(
+      "Entretien / réparation",
+    ),
+    "requestTypeQuestion": MessageLookupByLibrary.simpleMessage("Question"),
+    "requestTypeRemark": MessageLookupByLibrary.simpleMessage("Remarque"),
+    "requestsEmptyLandlord": MessageLookupByLibrary.simpleMessage(
+      "Aucune demande en attente.",
+    ),
+    "requestsEmptyTenant": MessageLookupByLibrary.simpleMessage(
+      "Aucune demande pour l\'instant. Une remarque, une réparation, une question : ton propriétaire la reçoit ici.",
+    ),
+    "requestsOffline": MessageLookupByLibrary.simpleMessage(
+      "Hors ligne : les demandes telles qu\'à ta dernière connexion.",
+    ),
+    "requestsTitle": MessageLookupByLibrary.simpleMessage("Demandes"),
     "reservationAlreadyActive": MessageLookupByLibrary.simpleMessage(
       "Tu as déjà une demande en cours pour ce bien.",
     ),

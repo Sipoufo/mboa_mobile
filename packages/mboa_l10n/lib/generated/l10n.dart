@@ -13529,6 +13529,346 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Remarque`
+  String get requestTypeRemark {
+    return Intl.message(
+      'Remarque',
+      name: 'requestTypeRemark',
+      desc: 'Request to the landlord: type',
+      args: [],
+    );
+  }
+
+  /// `Entretien / réparation`
+  String get requestTypeMaintenance {
+    return Intl.message(
+      'Entretien / réparation',
+      name: 'requestTypeMaintenance',
+      desc: 'Request to the landlord: type',
+      args: [],
+    );
+  }
+
+  /// `Question`
+  String get requestTypeQuestion {
+    return Intl.message(
+      'Question',
+      name: 'requestTypeQuestion',
+      desc: 'Request to the landlord: type',
+      args: [],
+    );
+  }
+
+  /// `Envoyée`
+  String get requestStatusSent {
+    return Intl.message(
+      'Envoyée',
+      name: 'requestStatusSent',
+      desc: 'Request status',
+      args: [],
+    );
+  }
+
+  /// `Vue`
+  String get requestStatusSeen {
+    return Intl.message(
+      'Vue',
+      name: 'requestStatusSeen',
+      desc: 'Request status',
+      args: [],
+    );
+  }
+
+  /// `En cours`
+  String get requestStatusInProgress {
+    return Intl.message(
+      'En cours',
+      name: 'requestStatusInProgress',
+      desc: 'Request status',
+      args: [],
+    );
+  }
+
+  /// `Résolue`
+  String get requestStatusResolved {
+    return Intl.message(
+      'Résolue',
+      name: 'requestStatusResolved',
+      desc: 'Request status',
+      args: [],
+    );
+  }
+
+  /// `Clôturée`
+  String get requestStatusClosed {
+    return Intl.message(
+      'Clôturée',
+      name: 'requestStatusClosed',
+      desc: 'Request status',
+      args: [],
+    );
+  }
+
+  /// `Demandes`
+  String get requestsTitle {
+    return Intl.message(
+      'Demandes',
+      name: 'requestsTitle',
+      desc: 'Requests to the landlord: list title',
+      args: [],
+    );
+  }
+
+  /// `Aucune demande pour l'instant. Une remarque, une réparation, une question : ton propriétaire la reçoit ici.`
+  String get requestsEmptyTenant {
+    return Intl.message(
+      'Aucune demande pour l\'instant. Une remarque, une réparation, une question : ton propriétaire la reçoit ici.',
+      name: 'requestsEmptyTenant',
+      desc: 'Requests: empty, tenant side',
+      args: [],
+    );
+  }
+
+  /// `Aucune demande en attente.`
+  String get requestsEmptyLandlord {
+    return Intl.message(
+      'Aucune demande en attente.',
+      name: 'requestsEmptyLandlord',
+      desc: 'Requests: empty, landlord side',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : les demandes telles qu'à ta dernière connexion.`
+  String get requestsOffline {
+    return Intl.message(
+      'Hors ligne : les demandes telles qu\'à ta dernière connexion.',
+      name: 'requestsOffline',
+      desc: 'Requests: offline banner',
+      args: [],
+    );
+  }
+
+  /// `Nouvelle demande`
+  String get requestNew {
+    return Intl.message(
+      'Nouvelle demande',
+      name: 'requestNew',
+      desc: 'Requests: main action, tenant',
+      args: [],
+    );
+  }
+
+  /// `Demande`
+  String get requestDetailTitle {
+    return Intl.message(
+      'Demande',
+      name: 'requestDetailTitle',
+      desc: 'One request: title',
+      args: [],
+    );
+  }
+
+  /// `Suivi`
+  String get requestHistory {
+    return Intl.message(
+      'Suivi',
+      name: 'requestHistory',
+      desc: 'One request: the history section',
+      args: [],
+    );
+  }
+
+  /// `Échanges`
+  String get requestExchanges {
+    return Intl.message(
+      'Échanges',
+      name: 'requestExchanges',
+      desc: 'One request: its replies',
+      args: [],
+    );
+  }
+
+  /// `Aucun échange pour l'instant.`
+  String get requestNoExchange {
+    return Intl.message(
+      'Aucun échange pour l\'instant.',
+      name: 'requestNoExchange',
+      desc: 'One request: no replies yet',
+      args: [],
+    );
+  }
+
+  /// `Écrire une réponse…`
+  String get requestReplyHint {
+    return Intl.message(
+      'Écrire une réponse…',
+      name: 'requestReplyHint',
+      desc: 'One request: reply field',
+      args: [],
+    );
+  }
+
+  /// `Envoyer`
+  String get requestSend {
+    return Intl.message(
+      'Envoyer',
+      name: 'requestSend',
+      desc: 'One request: send a reply',
+      args: [],
+    );
+  }
+
+  /// `par le propriétaire`
+  String get requestByLandlord {
+    return Intl.message(
+      'par le propriétaire',
+      name: 'requestByLandlord',
+      desc: 'Request history: who acted',
+      args: [],
+    );
+  }
+
+  /// `par le locataire`
+  String get requestByTenant {
+    return Intl.message(
+      'par le locataire',
+      name: 'requestByTenant',
+      desc: 'Request history: who acted',
+      args: [],
+    );
+  }
+
+  /// `Prendre en charge`
+  String get requestStart {
+    return Intl.message(
+      'Prendre en charge',
+      name: 'requestStart',
+      desc: 'Request: landlord\'s step',
+      args: [],
+    );
+  }
+
+  /// `Marquer résolue`
+  String get requestResolve {
+    return Intl.message(
+      'Marquer résolue',
+      name: 'requestResolve',
+      desc: 'Request: landlord\'s step',
+      args: [],
+    );
+  }
+
+  /// `Le problème persiste`
+  String get requestReopen {
+    return Intl.message(
+      'Le problème persiste',
+      name: 'requestReopen',
+      desc: 'Request: tenant reopens a resolved request',
+      args: [],
+    );
+  }
+
+  /// `Clore la demande`
+  String get requestClose {
+    return Intl.message(
+      'Clore la demande',
+      name: 'requestClose',
+      desc: 'Request: tenant closes for good',
+      args: [],
+    );
+  }
+
+  /// `Un mot à ajouter ?`
+  String get requestNoteTitle {
+    return Intl.message(
+      'Un mot à ajouter ?',
+      name: 'requestNoteTitle',
+      desc: 'Request step: optional note dialog',
+      args: [],
+    );
+  }
+
+  /// `Facultatif — par exemple « Le plombier passe jeudi »`
+  String get requestNoteHint {
+    return Intl.message(
+      'Facultatif — par exemple « Le plombier passe jeudi »',
+      name: 'requestNoteHint',
+      desc: 'Request step: note hint',
+      args: [],
+    );
+  }
+
+  /// `Valider`
+  String get requestNoteSend {
+    return Intl.message(
+      'Valider',
+      name: 'requestNoteSend',
+      desc: 'Request step: confirm',
+      args: [],
+    );
+  }
+
+  /// `C'est noté.`
+  String get requestMovedToast {
+    return Intl.message(
+      'C\'est noté.',
+      name: 'requestMovedToast',
+      desc: 'Request step done',
+      args: [],
+    );
+  }
+
+  /// `Cette demande a déjà avancé : la voici telle qu'elle est.`
+  String get requestRefusedTransition {
+    return Intl.message(
+      'Cette demande a déjà avancé : la voici telle qu\'elle est.',
+      name: 'requestRefusedTransition',
+      desc: 'Request step refused: out of order',
+      args: [],
+    );
+  }
+
+  /// `Ce logement est en lecture seule : la demande ne peut plus avancer.`
+  String get requestRefusedReadOnly {
+    return Intl.message(
+      'Ce logement est en lecture seule : la demande ne peut plus avancer.',
+      name: 'requestRefusedReadOnly',
+      desc: 'Request step refused: read only',
+      args: [],
+    );
+  }
+
+  /// `La réponse n'est pas partie. Réessaie.`
+  String get requestReplyFailed {
+    return Intl.message(
+      'La réponse n\'est pas partie. Réessaie.',
+      name: 'requestReplyFailed',
+      desc: 'Request reply failed',
+      args: [],
+    );
+  }
+
+  /// `État des lieux`
+  String get evidenceTitle {
+    return Intl.message(
+      'État des lieux',
+      name: 'evidenceTitle',
+      desc: 'M30 lot 3: photo proofs (tile, screen title)',
+      args: [],
+    );
+  }
+
+  /// `Contacts`
+  String get contactsTitle {
+    return Intl.message(
+      'Contacts',
+      name: 'contactsTitle',
+      desc: 'M30 lot 3: useful contacts (tile)',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

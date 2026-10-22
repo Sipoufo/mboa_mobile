@@ -882,6 +882,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonOr": MessageLookupByLibrary.simpleMessage("Or"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Retry"),
     "commonYes": MessageLookupByLibrary.simpleMessage("Yes"),
+    "contactsTitle": MessageLookupByLibrary.simpleMessage("Contacts"),
     "contractAccept": MessageLookupByLibrary.simpleMessage("Accept the terms"),
     "contractActionDone": MessageLookupByLibrary.simpleMessage(
       "Contract updated",
@@ -1346,6 +1347,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorValidation": MessageLookupByLibrary.simpleMessage(
       "Some details are invalid. Check the form.",
     ),
+    "evidenceTitle": MessageLookupByLibrary.simpleMessage("Condition photos"),
     "exitAppBody": MessageLookupByLibrary.simpleMessage(
       "Press back again to exit.",
     ),
@@ -2203,6 +2205,64 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sign in to report content.",
     ),
     "reportTitle": MessageLookupByLibrary.simpleMessage("Report"),
+    "requestByLandlord": MessageLookupByLibrary.simpleMessage(
+      "by the landlord",
+    ),
+    "requestByTenant": MessageLookupByLibrary.simpleMessage("by the tenant"),
+    "requestClose": MessageLookupByLibrary.simpleMessage("Close the request"),
+    "requestDetailTitle": MessageLookupByLibrary.simpleMessage("Request"),
+    "requestExchanges": MessageLookupByLibrary.simpleMessage("Messages"),
+    "requestHistory": MessageLookupByLibrary.simpleMessage("Follow-up"),
+    "requestMovedToast": MessageLookupByLibrary.simpleMessage("Noted."),
+    "requestNew": MessageLookupByLibrary.simpleMessage("New request"),
+    "requestNoExchange": MessageLookupByLibrary.simpleMessage(
+      "No message yet.",
+    ),
+    "requestNoteHint": MessageLookupByLibrary.simpleMessage(
+      "Optional — e.g. “The plumber comes Thursday”",
+    ),
+    "requestNoteSend": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "requestNoteTitle": MessageLookupByLibrary.simpleMessage(
+      "Anything to add?",
+    ),
+    "requestRefusedReadOnly": MessageLookupByLibrary.simpleMessage(
+      "This home is read only: the request can no longer move.",
+    ),
+    "requestRefusedTransition": MessageLookupByLibrary.simpleMessage(
+      "This request already moved on: here it is as it stands.",
+    ),
+    "requestReopen": MessageLookupByLibrary.simpleMessage(
+      "The problem persists",
+    ),
+    "requestReplyFailed": MessageLookupByLibrary.simpleMessage(
+      "The reply was not sent. Try again.",
+    ),
+    "requestReplyHint": MessageLookupByLibrary.simpleMessage("Write a reply…"),
+    "requestResolve": MessageLookupByLibrary.simpleMessage("Mark resolved"),
+    "requestSend": MessageLookupByLibrary.simpleMessage("Send"),
+    "requestStart": MessageLookupByLibrary.simpleMessage("Take it in hand"),
+    "requestStatusClosed": MessageLookupByLibrary.simpleMessage("Closed"),
+    "requestStatusInProgress": MessageLookupByLibrary.simpleMessage(
+      "In progress",
+    ),
+    "requestStatusResolved": MessageLookupByLibrary.simpleMessage("Resolved"),
+    "requestStatusSeen": MessageLookupByLibrary.simpleMessage("Seen"),
+    "requestStatusSent": MessageLookupByLibrary.simpleMessage("Sent"),
+    "requestTypeMaintenance": MessageLookupByLibrary.simpleMessage(
+      "Maintenance / repair",
+    ),
+    "requestTypeQuestion": MessageLookupByLibrary.simpleMessage("Question"),
+    "requestTypeRemark": MessageLookupByLibrary.simpleMessage("Remark"),
+    "requestsEmptyLandlord": MessageLookupByLibrary.simpleMessage(
+      "No request waiting.",
+    ),
+    "requestsEmptyTenant": MessageLookupByLibrary.simpleMessage(
+      "No request yet. A remark, a repair, a question: your landlord gets it here.",
+    ),
+    "requestsOffline": MessageLookupByLibrary.simpleMessage(
+      "Offline: requests as of your last connection.",
+    ),
+    "requestsTitle": MessageLookupByLibrary.simpleMessage("Requests"),
     "reservationAlreadyActive": MessageLookupByLibrary.simpleMessage(
       "You already have an open request for this property.",
     ),

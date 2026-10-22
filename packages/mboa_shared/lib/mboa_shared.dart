@@ -76,12 +76,17 @@ export 'src/features/session/session_module.dart';
 
 // Settings / account — language, deletion (phone & password changes to follow).
 export 'src/features/homes/bloc/declaration_bloc.dart';
+export 'src/features/homes/bloc/home_request_bloc.dart';
+export 'src/features/homes/bloc/home_requests_bloc.dart';
 export 'src/features/homes/bloc/home_space_bloc.dart';
+export 'src/features/homes/data/home_requests_repository.dart';
 export 'src/features/homes/data/homes_repository.dart';
 export 'src/features/homes/models/home.dart';
+export 'src/features/homes/models/home_request.dart';
 export 'src/features/homes/ui/declaration_view.dart';
 export 'src/features/homes/ui/home_bits.dart';
 export 'src/features/homes/ui/home_card.dart';
+export 'src/features/homes/ui/home_requests_view.dart';
 export 'src/features/homes/ui/home_space_view.dart';
 export 'src/features/reservations/models/reservation.dart';
 export 'src/features/reservations/ui/reservation_bits.dart';

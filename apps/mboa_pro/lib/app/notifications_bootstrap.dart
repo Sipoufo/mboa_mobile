@@ -105,6 +105,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     // N-36 for an invoice is the tenant's.
     case PushType.invoice:
     case PushType.homeEvidence:
+    // M30 lot 3 — routed with the request screens.
+    case PushType.homeRequest:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

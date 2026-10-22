@@ -5380,5 +5380,141 @@
   "searchAllPlaces": "Tous les biens",
   "@searchAllPlaces": {
     "description": "Search home: the list's title without a city"
+  },
+  "requestTypeRemark": "Remarque",
+  "@requestTypeRemark": {
+    "description": "Request to the landlord: type"
+  },
+  "requestTypeMaintenance": "Entretien / réparation",
+  "@requestTypeMaintenance": {
+    "description": "Request to the landlord: type"
+  },
+  "requestTypeQuestion": "Question",
+  "@requestTypeQuestion": {
+    "description": "Request to the landlord: type"
+  },
+  "requestStatusSent": "Envoyée",
+  "@requestStatusSent": {
+    "description": "Request status"
+  },
+  "requestStatusSeen": "Vue",
+  "@requestStatusSeen": {
+    "description": "Request status"
+  },
+  "requestStatusInProgress": "En cours",
+  "@requestStatusInProgress": {
+    "description": "Request status"
+  },
+  "requestStatusResolved": "Résolue",
+  "@requestStatusResolved": {
+    "description": "Request status"
+  },
+  "requestStatusClosed": "Clôturée",
+  "@requestStatusClosed": {
+    "description": "Request status"
+  },
+  "requestsTitle": "Demandes",
+  "@requestsTitle": {
+    "description": "Requests to the landlord: list title"
+  },
+  "requestsEmptyTenant": "Aucune demande pour l'instant. Une remarque, une réparation, une question : ton propriétaire la reçoit ici.",
+  "@requestsEmptyTenant": {
+    "description": "Requests: empty, tenant side"
+  },
+  "requestsEmptyLandlord": "Aucune demande en attente.",
+  "@requestsEmptyLandlord": {
+    "description": "Requests: empty, landlord side"
+  },
+  "requestsOffline": "Hors ligne : les demandes telles qu'à ta dernière connexion.",
+  "@requestsOffline": {
+    "description": "Requests: offline banner"
+  },
+  "requestNew": "Nouvelle demande",
+  "@requestNew": {
+    "description": "Requests: main action, tenant"
+  },
+  "requestDetailTitle": "Demande",
+  "@requestDetailTitle": {
+    "description": "One request: title"
+  },
+  "requestHistory": "Suivi",
+  "@requestHistory": {
+    "description": "One request: the history section"
+  },
+  "requestExchanges": "Échanges",
+  "@requestExchanges": {
+    "description": "One request: its replies"
+  },
+  "requestNoExchange": "Aucun échange pour l'instant.",
+  "@requestNoExchange": {
+    "description": "One request: no replies yet"
+  },
+  "requestReplyHint": "Écrire une réponse…",
+  "@requestReplyHint": {
+    "description": "One request: reply field"
+  },
+  "requestSend": "Envoyer",
+  "@requestSend": {
+    "description": "One request: send a reply"
+  },
+  "requestByLandlord": "par le propriétaire",
+  "@requestByLandlord": {
+    "description": "Request history: who acted"
+  },
+  "requestByTenant": "par le locataire",
+  "@requestByTenant": {
+    "description": "Request history: who acted"
+  },
+  "requestStart": "Prendre en charge",
+  "@requestStart": {
+    "description": "Request: landlord's step"
+  },
+  "requestResolve": "Marquer résolue",
+  "@requestResolve": {
+    "description": "Request: landlord's step"
+  },
+  "requestReopen": "Le problème persiste",
+  "@requestReopen": {
+    "description": "Request: tenant reopens a resolved request"
+  },
+  "requestClose": "Clore la demande",
+  "@requestClose": {
+    "description": "Request: tenant closes for good"
+  },
+  "requestNoteTitle": "Un mot à ajouter ?",
+  "@requestNoteTitle": {
+    "description": "Request step: optional note dialog"
+  },
+  "requestNoteHint": "Facultatif — par exemple « Le plombier passe jeudi »",
+  "@requestNoteHint": {
+    "description": "Request step: note hint"
+  },
+  "requestNoteSend": "Valider",
+  "@requestNoteSend": {
+    "description": "Request step: confirm"
+  },
+  "requestMovedToast": "C'est noté.",
+  "@requestMovedToast": {
+    "description": "Request step done"
+  },
+  "requestRefusedTransition": "Cette demande a déjà avancé : la voici telle qu'elle est.",
+  "@requestRefusedTransition": {
+    "description": "Request step refused: out of order"
+  },
+  "requestRefusedReadOnly": "Ce logement est en lecture seule : la demande ne peut plus avancer.",
+  "@requestRefusedReadOnly": {
+    "description": "Request step refused: read only"
+  },
+  "requestReplyFailed": "La réponse n'est pas partie. Réessaie.",
+  "@requestReplyFailed": {
+    "description": "Request reply failed"
+  },
+  "evidenceTitle": "État des lieux",
+  "@evidenceTitle": {
+    "description": "M30 lot 3: photo proofs (tile, screen title)"
+  },
+  "contactsTitle": "Contacts",
+  "@contactsTitle": {
+    "description": "M30 lot 3: useful contacts (tile)"
   }
 }

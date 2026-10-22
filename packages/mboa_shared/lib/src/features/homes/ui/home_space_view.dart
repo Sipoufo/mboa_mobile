@@ -18,7 +18,16 @@ import 'home_bits.dart';
 /// landlord's side, so the buttons are absent rather than refused; both may
 /// open a declaration.
 class HomeSpaceView extends StatelessWidget {
-  const HomeSpaceView({super.key, this.onDeclare, this.onDeclareDeposit, this.onOpenDeclaration, this.invoices});
+  const HomeSpaceView({
+    super.key,
+    this.onDeclare,
+    this.onDeclareDeposit,
+    this.onOpenDeclaration,
+    this.invoices,
+    this.onRequests,
+    this.onEvidence,
+    this.onContacts,
+  });
 
   /// Declare rent — preselecting [due] when a row was tapped.
   final void Function(HomeSpaceReady state, RentDue? due)? onDeclare;
@@ -29,6 +38,13 @@ class HomeSpaceView extends StatelessWidget {
   /// landlord's are behind the finance add-on. The body of the "Factures"
   /// tab, which only exists when it is given.
   final Widget? invoices;
+
+  /// M30 lot 3 — the daily life of the tenancy, each its own screen: the
+  /// requests to the landlord, the photo proofs, the useful contacts. A
+  /// tile appears for each given.
+  final VoidCallback? onRequests;
+  final VoidCallback? onEvidence;
+  final VoidCallback? onContacts;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +80,43 @@ class HomeSpaceView extends StatelessWidget {
             ),
           final HomeSpaceReady ready => _Space(view: this, ready: ready),
         },
+      ),
+    );
+  }
+}
+
+/// One of the tenancy's daily-life screens (M30 lot 3).
+class _LifeTile extends StatelessWidget {
+  const _LifeTile({required this.icon, required this.label, required this.onTap});
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(Dimens.radiusMd),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.radiusMd),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: Dimens.spacingMd, horizontal: Dimens.spacingSm),
+          child: Column(
+            children: [
+              Icon(icon, color: colors.primary, size: Dimens.iconMd),
+              const SizedBox(height: Dimens.spacingXs),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: context.mboaText.caption.copyWith(color: colors.ink, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -130,6 +183,21 @@ class _Space extends StatelessWidget {
                   if (view.onDeclare != null) ...[
                     const SizedBox(height: Dimens.spacing),
                     _Notice(icon: LucideIcons.shieldCheck, tone: colors.primary, text: l10n.myHomeNoMoney),
+                  ],
+                  if (view.onRequests != null || view.onEvidence != null || view.onContacts != null) ...[
+                    const SizedBox(height: Dimens.spacing),
+                    Row(
+                      children: [
+                        for (final (index, (icon, label, onTap)) in [
+                          if (view.onRequests case final open?) (LucideIcons.messagesSquare, l10n.requestsTitle, open),
+                          if (view.onEvidence case final open?) (LucideIcons.camera, l10n.evidenceTitle, open),
+                          if (view.onContacts case final open?) (LucideIcons.contactRound, l10n.contactsTitle, open),
+                        ].indexed) ...[
+                          if (index > 0) const SizedBox(width: Dimens.spacingSm),
+                          Expanded(child: _LifeTile(icon: icon, label: label, onTap: onTap)),
+                        ],
+                      ],
+                    ),
                   ],
                   const SizedBox(height: Dimens.spacing),
                 ],

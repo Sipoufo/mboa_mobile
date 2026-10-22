@@ -5380,5 +5380,141 @@
   "searchAllPlaces": "All places",
   "@searchAllPlaces": {
     "description": "Search home: the list's title without a city"
+  },
+  "requestTypeRemark": "Remark",
+  "@requestTypeRemark": {
+    "description": "Request to the landlord: type"
+  },
+  "requestTypeMaintenance": "Maintenance / repair",
+  "@requestTypeMaintenance": {
+    "description": "Request to the landlord: type"
+  },
+  "requestTypeQuestion": "Question",
+  "@requestTypeQuestion": {
+    "description": "Request to the landlord: type"
+  },
+  "requestStatusSent": "Sent",
+  "@requestStatusSent": {
+    "description": "Request status"
+  },
+  "requestStatusSeen": "Seen",
+  "@requestStatusSeen": {
+    "description": "Request status"
+  },
+  "requestStatusInProgress": "In progress",
+  "@requestStatusInProgress": {
+    "description": "Request status"
+  },
+  "requestStatusResolved": "Resolved",
+  "@requestStatusResolved": {
+    "description": "Request status"
+  },
+  "requestStatusClosed": "Closed",
+  "@requestStatusClosed": {
+    "description": "Request status"
+  },
+  "requestsTitle": "Requests",
+  "@requestsTitle": {
+    "description": "Requests to the landlord: list title"
+  },
+  "requestsEmptyTenant": "No request yet. A remark, a repair, a question: your landlord gets it here.",
+  "@requestsEmptyTenant": {
+    "description": "Requests: empty, tenant side"
+  },
+  "requestsEmptyLandlord": "No request waiting.",
+  "@requestsEmptyLandlord": {
+    "description": "Requests: empty, landlord side"
+  },
+  "requestsOffline": "Offline: requests as of your last connection.",
+  "@requestsOffline": {
+    "description": "Requests: offline banner"
+  },
+  "requestNew": "New request",
+  "@requestNew": {
+    "description": "Requests: main action, tenant"
+  },
+  "requestDetailTitle": "Request",
+  "@requestDetailTitle": {
+    "description": "One request: title"
+  },
+  "requestHistory": "Follow-up",
+  "@requestHistory": {
+    "description": "One request: the history section"
+  },
+  "requestExchanges": "Messages",
+  "@requestExchanges": {
+    "description": "One request: its replies"
+  },
+  "requestNoExchange": "No message yet.",
+  "@requestNoExchange": {
+    "description": "One request: no replies yet"
+  },
+  "requestReplyHint": "Write a reply…",
+  "@requestReplyHint": {
+    "description": "One request: reply field"
+  },
+  "requestSend": "Send",
+  "@requestSend": {
+    "description": "One request: send a reply"
+  },
+  "requestByLandlord": "by the landlord",
+  "@requestByLandlord": {
+    "description": "Request history: who acted"
+  },
+  "requestByTenant": "by the tenant",
+  "@requestByTenant": {
+    "description": "Request history: who acted"
+  },
+  "requestStart": "Take it in hand",
+  "@requestStart": {
+    "description": "Request: landlord's step"
+  },
+  "requestResolve": "Mark resolved",
+  "@requestResolve": {
+    "description": "Request: landlord's step"
+  },
+  "requestReopen": "The problem persists",
+  "@requestReopen": {
+    "description": "Request: tenant reopens a resolved request"
+  },
+  "requestClose": "Close the request",
+  "@requestClose": {
+    "description": "Request: tenant closes for good"
+  },
+  "requestNoteTitle": "Anything to add?",
+  "@requestNoteTitle": {
+    "description": "Request step: optional note dialog"
+  },
+  "requestNoteHint": "Optional — e.g. “The plumber comes Thursday”",
+  "@requestNoteHint": {
+    "description": "Request step: note hint"
+  },
+  "requestNoteSend": "Confirm",
+  "@requestNoteSend": {
+    "description": "Request step: confirm"
+  },
+  "requestMovedToast": "Noted.",
+  "@requestMovedToast": {
+    "description": "Request step done"
+  },
+  "requestRefusedTransition": "This request already moved on: here it is as it stands.",
+  "@requestRefusedTransition": {
+    "description": "Request step refused: out of order"
+  },
+  "requestRefusedReadOnly": "This home is read only: the request can no longer move.",
+  "@requestRefusedReadOnly": {
+    "description": "Request step refused: read only"
+  },
+  "requestReplyFailed": "The reply was not sent. Try again.",
+  "@requestReplyFailed": {
+    "description": "Request reply failed"
+  },
+  "evidenceTitle": "Condition photos",
+  "@evidenceTitle": {
+    "description": "M30 lot 3: photo proofs (tile, screen title)"
+  },
+  "contactsTitle": "Contacts",
+  "@contactsTitle": {
+    "description": "M30 lot 3: useful contacts (tile)"
   }
 }

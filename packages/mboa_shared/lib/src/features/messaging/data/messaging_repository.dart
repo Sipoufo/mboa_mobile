@@ -40,12 +40,16 @@ class MessagingRepository {
 
   /// Newest first, as the endpoint returns them; the thread reverses for
   /// display so the latest sits at the bottom where a reader expects it.
-  Future<List<Message>> messages(String conversationId, {int page = 0}) async {
+  ///
+  /// With [homeRequestId], one M30 request's: its system messages and the
+  /// replies attached to it.
+  Future<List<Message>> messages(String conversationId, {int page = 0, String? homeRequestId}) async {
     final response = await _api.listConversationMessages(
       id: conversationId,
       pageable: Pageable((b) => b
         ..page = page
         ..size = _pageSize),
+      homeRequestId: homeRequestId,
     );
     return (response.data?.content ?? const <MessageResponse>[])
         .map(Message.fromResponse)
@@ -56,12 +60,15 @@ class MessagingRepository {
     String conversationId, {
     required String body,
     List<String> attachmentKeys = const [],
+    String? homeRequestId,
   }) async {
     final response = await _api.sendMessage(
       id: conversationId,
       sendMessageRequest: SendMessageRequest((b) => b
         ..body = body
-        ..attachmentKeys = ListBuilder<String>(attachmentKeys)),
+        ..attachmentKeys = ListBuilder<String>(attachmentKeys)
+        // M30 — a reply about a request is attached to it (N-38, not N-02).
+        ..homeRequestId = homeRequestId),
     );
     final data = response.data;
     if (data == null) throw StateError('send returned no message');

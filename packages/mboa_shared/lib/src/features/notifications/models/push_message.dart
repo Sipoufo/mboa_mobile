@@ -101,6 +101,10 @@ enum PushType {
   /// landlord's).
   homeEvidence,
 
+  /// M30 lot 3 — N-38, a request to the landlord created, moved on or
+  /// answered: `entityId` = the request, for either party.
+  homeRequest,
+
   unknown;
 
   static PushType parse(String? raw) =>
@@ -117,6 +121,7 @@ enum PushType {
         'RESERVATION' => PushType.reservation,
         'INVOICE' => PushType.invoice,
         'HOME_EVIDENCE' => PushType.homeEvidence,
+        'HOME_REQUEST' => PushType.homeRequest,
         _ => PushType.unknown,
       };
 }

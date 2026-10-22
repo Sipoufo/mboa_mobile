@@ -82,6 +82,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.residence:
     // N-39 is the landlord's.
     case PushType.homeEvidence:
+    // M30 lot 3 — routed with the request screens.
+    case PushType.homeRequest:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }
