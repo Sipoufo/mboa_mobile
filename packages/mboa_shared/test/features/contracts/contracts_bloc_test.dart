@@ -186,6 +186,7 @@ void main() {
       seed: () => ContractDetailReady(contract(status: ContractStatus.signed)),
       act: (bloc) => bloc.add(const ContractPdfRequested()),
       verify: (bloc) => expect((bloc.state as ContractDetailReady).lastActionFailed, isTrue),
+      errors: () => [isA<Exception>()],
     );
 
     blocTest<ContractDetailBloc, ContractDetailState>(

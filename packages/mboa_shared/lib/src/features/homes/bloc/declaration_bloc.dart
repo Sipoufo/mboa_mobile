@@ -152,7 +152,10 @@ class DeclarationBloc extends Bloc<DeclarationEvent, DeclarationState> {
       emit(current.copyWith());
     } on ReceiptNotReady {
       emit(current.copyWith(receiptNotReady: true));
-    } catch (_) {
+    } catch (error, stackTrace) {
+      // Said on screen, and reported: the link, the download or the share
+      // sheet — the toast cannot tell which.
+      addError(error, stackTrace);
       emit(current.copyWith(receiptFailed: true));
     }
   }

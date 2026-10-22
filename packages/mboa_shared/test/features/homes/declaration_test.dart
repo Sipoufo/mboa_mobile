@@ -286,6 +286,8 @@ void main() {
       seed: () => DeclarationReady(ready),
       act: (bloc) => bloc.add(const DeclarationReceiptRequested(name: 'x')),
       expect: () => [DeclarationReady(ready, receiptBusy: true), DeclarationReady(ready, receiptFailed: true)],
+      // Reported too: the toast cannot say which step failed.
+      errors: () => [isA<Exception>()],
     );
 
     blocTest<DeclarationBloc, DeclarationState>(

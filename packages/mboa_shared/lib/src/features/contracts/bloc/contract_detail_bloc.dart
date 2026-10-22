@@ -150,7 +150,8 @@ class ContractDetailBloc
       final url = await _repository.pdfUrl(current.contract.id);
       await _sharer.shareLink(url, name: event.name);
       emit(current.copyWith(isBusy: false));
-    } catch (_) {
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
       emit(current.copyWith(isBusy: false, lastActionFailed: true));
     }
   }

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// A global [BlocObserver] that leaves Sentry breadcrumbs for every state
@@ -21,6 +22,9 @@ class SentryBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
+    // Without a DSN Sentry drops it: in development the console is where a
+    // reported failure can be read.
+    if (kDebugMode) debugPrint('${bloc.runtimeType} error: $error\n$stackTrace');
     Sentry.captureException(
       error,
       stackTrace: stackTrace,
