@@ -13387,6 +13387,148 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Bonjour !`
+  String get searchHello {
+    return Intl.message(
+      'Bonjour !',
+      name: 'searchHello',
+      desc: 'Search home greeting',
+      args: [],
+    );
+  }
+
+  /// `Bienvenue sur Mboa`
+  String get searchWelcome {
+    return Intl.message(
+      'Bienvenue sur Mboa',
+      name: 'searchWelcome',
+      desc: 'Search home greeting line for a guest',
+      args: [],
+    );
+  }
+
+  /// `Tous`
+  String get searchCategoryAll {
+    return Intl.message(
+      'Tous',
+      name: 'searchCategoryAll',
+      desc: 'Search category tab: every kind of place',
+      args: [],
+    );
+  }
+
+  /// `Chambres`
+  String get searchCategoryRoom {
+    return Intl.message(
+      'Chambres',
+      name: 'searchCategoryRoom',
+      desc: 'Search category tab',
+      args: [],
+    );
+  }
+
+  /// `Studios`
+  String get searchCategoryStudio {
+    return Intl.message(
+      'Studios',
+      name: 'searchCategoryStudio',
+      desc: 'Search category tab',
+      args: [],
+    );
+  }
+
+  /// `Appartements`
+  String get searchCategoryApartment {
+    return Intl.message(
+      'Appartements',
+      name: 'searchCategoryApartment',
+      desc: 'Search category tab',
+      args: [],
+    );
+  }
+
+  /// `Maisons`
+  String get searchCategoryHouse {
+    return Intl.message(
+      'Maisons',
+      name: 'searchCategoryHouse',
+      desc: 'Search category tab (villas)',
+      args: [],
+    );
+  }
+
+  /// `Bureaux`
+  String get searchCategoryOffice {
+    return Intl.message(
+      'Bureaux',
+      name: 'searchCategoryOffice',
+      desc: 'Search category tab',
+      args: [],
+    );
+  }
+
+  /// `Commerces`
+  String get searchCategoryCommercial {
+    return Intl.message(
+      'Commerces',
+      name: 'searchCategoryCommercial',
+      desc: 'Search category tab (commercial spaces)',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 pièce} other{{count} pièces}}`
+  String searchRooms(int count) {
+    return Intl.plural(
+      count,
+      one: '1 pièce',
+      other: '$count pièces',
+      name: 'searchRooms',
+      desc: 'Search card facts: room count',
+      args: [count],
+    );
+  }
+
+  /// `Résidence`
+  String get searchResidence {
+    return Intl.message(
+      'Résidence',
+      name: 'searchResidence',
+      desc: 'Search card kind chip for a residence',
+      args: [],
+    );
+  }
+
+  /// `À la une`
+  String get searchFeatured {
+    return Intl.message(
+      'À la une',
+      name: 'searchFeatured',
+      desc: 'Search home: the carousel of Pro and Pro+ places',
+      args: [],
+    );
+  }
+
+  /// `À {city}`
+  String searchInCity(String city) {
+    return Intl.message(
+      'À $city',
+      name: 'searchInCity',
+      desc: 'Search home: the list\'s title',
+      args: [city],
+    );
+  }
+
+  /// `Tous les biens`
+  String get searchAllPlaces {
+    return Intl.message(
+      'Tous les biens',
+      name: 'searchAllPlaces',
+      desc: 'Search home: the list\'s title without a city',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

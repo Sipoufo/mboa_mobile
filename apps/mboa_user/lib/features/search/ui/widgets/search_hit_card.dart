@@ -198,7 +198,7 @@ class _ListingBody extends StatelessWidget {
         _Title(hit.title),
         const SizedBox(height: Dimens.spacingXs),
         _Place(city: hit.city, district: hit.district),
-        _Badges(badges: hit.badges),
+        HitTrustBadges(badges: hit.badges),
         if (facts.isNotEmpty) ...[
           const SizedBox(height: Dimens.spacingMd),
           _Facts(facts: facts),
@@ -227,7 +227,7 @@ class _ResidenceBody extends StatelessWidget {
         _Title(hit.title),
         const SizedBox(height: Dimens.spacingXs),
         _Place(city: hit.city, district: hit.district),
-        _Badges(badges: hit.badges),
+        HitTrustBadges(badges: hit.badges),
         const SizedBox(height: Dimens.spacingMd),
         _Facts(
           facts: [
@@ -267,10 +267,12 @@ class _Title extends StatelessWidget {
 ///
 /// No labels here: four of them would wrap onto three lines and bury the price.
 /// The fiche spells them out — this is the signal that a card is worth opening.
-class _Badges extends StatelessWidget {
-  const _Badges({required this.badges});
+/// Public: the search home's cards carry them too.
+class HitTrustBadges extends StatelessWidget {
+  const HitTrustBadges({super.key, required this.badges, this.top = Dimens.spacingSm});
 
   final List<TrustBadge> badges;
+  final double top;
 
   @override
   Widget build(BuildContext context) {
@@ -279,8 +281,9 @@ class _Badges extends StatelessWidget {
     final l10n = I18n.of(context);
 
     return Padding(
-      padding: const EdgeInsets.only(top: Dimens.spacingSm),
+      padding: EdgeInsets.only(top: top),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           for (final badge in badges) ...[
             Tooltip(

@@ -32,9 +32,14 @@ class SearchMapView extends StatefulWidget {
     required this.state,
     required this.onOpen,
     this.hasMapKey,
+    this.cardBottomInset = Dimens.spacing,
   });
 
   final SearchReady state;
+
+  /// How far above the bottom the tapped place's card sits — clear of what
+  /// floats over the map (the search's list pill).
+  final double cardBottomInset;
   final void Function(SearchHit hit) onOpen;
 
   /// Whether this build has a MapTiler key, injectable so the three
@@ -412,7 +417,7 @@ class _SearchMapViewState extends State<SearchMapView> {
           Positioned(
             left: Dimens.spacing,
             right: Dimens.spacing,
-            bottom: Dimens.spacing,
+            bottom: widget.cardBottomInset,
             child: SearchHitCard.compact(
               hit: selected,
               onTap: () => widget.onOpen(selected),

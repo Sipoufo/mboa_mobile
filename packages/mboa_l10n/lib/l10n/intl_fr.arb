@@ -5314,5 +5314,71 @@
   "invoicesEmpty": "Aucune facture pour l'instant.",
   "@invoicesEmpty": {
     "description": "Space: empty invoices tab"
+  },
+  "searchHello": "Bonjour !",
+  "@searchHello": {
+    "description": "Search home greeting"
+  },
+  "searchWelcome": "Bienvenue sur Mboa",
+  "@searchWelcome": {
+    "description": "Search home greeting line for a guest"
+  },
+  "searchCategoryAll": "Tous",
+  "@searchCategoryAll": {
+    "description": "Search category tab: every kind of place"
+  },
+  "searchCategoryRoom": "Chambres",
+  "@searchCategoryRoom": {
+    "description": "Search category tab"
+  },
+  "searchCategoryStudio": "Studios",
+  "@searchCategoryStudio": {
+    "description": "Search category tab"
+  },
+  "searchCategoryApartment": "Appartements",
+  "@searchCategoryApartment": {
+    "description": "Search category tab"
+  },
+  "searchCategoryHouse": "Maisons",
+  "@searchCategoryHouse": {
+    "description": "Search category tab (villas)"
+  },
+  "searchCategoryOffice": "Bureaux",
+  "@searchCategoryOffice": {
+    "description": "Search category tab"
+  },
+  "searchCategoryCommercial": "Commerces",
+  "@searchCategoryCommercial": {
+    "description": "Search category tab (commercial spaces)"
+  },
+  "searchRooms": "{count, plural, =1{1 pièce} other{{count} pièces}}",
+  "@searchRooms": {
+    "description": "Search card facts: room count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchResidence": "Résidence",
+  "@searchResidence": {
+    "description": "Search card kind chip for a residence"
+  },
+  "searchFeatured": "À la une",
+  "@searchFeatured": {
+    "description": "Search home: the carousel of Pro and Pro+ places"
+  },
+  "searchInCity": "À {city}",
+  "@searchInCity": {
+    "description": "Search home: the list's title",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "searchAllPlaces": "Tous les biens",
+  "@searchAllPlaces": {
+    "description": "Search home: the list's title without a city"
   }
 }

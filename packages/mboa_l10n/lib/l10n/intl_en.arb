@@ -5314,5 +5314,71 @@
   "invoicesEmpty": "No invoices yet.",
   "@invoicesEmpty": {
     "description": "Space: empty invoices tab"
+  },
+  "searchHello": "Hello!",
+  "@searchHello": {
+    "description": "Search home greeting"
+  },
+  "searchWelcome": "Welcome to Mboa",
+  "@searchWelcome": {
+    "description": "Search home greeting line for a guest"
+  },
+  "searchCategoryAll": "All",
+  "@searchCategoryAll": {
+    "description": "Search category tab: every kind of place"
+  },
+  "searchCategoryRoom": "Rooms",
+  "@searchCategoryRoom": {
+    "description": "Search category tab"
+  },
+  "searchCategoryStudio": "Studios",
+  "@searchCategoryStudio": {
+    "description": "Search category tab"
+  },
+  "searchCategoryApartment": "Apartments",
+  "@searchCategoryApartment": {
+    "description": "Search category tab"
+  },
+  "searchCategoryHouse": "Houses",
+  "@searchCategoryHouse": {
+    "description": "Search category tab (villas)"
+  },
+  "searchCategoryOffice": "Offices",
+  "@searchCategoryOffice": {
+    "description": "Search category tab"
+  },
+  "searchCategoryCommercial": "Shops",
+  "@searchCategoryCommercial": {
+    "description": "Search category tab (commercial spaces)"
+  },
+  "searchRooms": "{count, plural, =1{1 room} other{{count} rooms}}",
+  "@searchRooms": {
+    "description": "Search card facts: room count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchResidence": "Residence",
+  "@searchResidence": {
+    "description": "Search card kind chip for a residence"
+  },
+  "searchFeatured": "Featured",
+  "@searchFeatured": {
+    "description": "Search home: the carousel of Pro and Pro+ places"
+  },
+  "searchInCity": "In {city}",
+  "@searchInCity": {
+    "description": "Search home: the list's title",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "searchAllPlaces": "All places",
+  "@searchAllPlaces": {
+    "description": "Search home: the list's title without a city"
   }
 }

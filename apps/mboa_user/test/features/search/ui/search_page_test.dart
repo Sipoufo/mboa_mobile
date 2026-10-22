@@ -223,7 +223,8 @@ void main() {
       await pump(tester);
 
       expect(find.text('Carte'), findsOneWidget);
-      expect(find.text('Liste'), findsOneWidget);
+      // One floating pill, saying where it leads — not a two-way switch.
+      expect(find.text('Liste'), findsNothing);
     });
 
     testWidgets('stays away until a city is chosen', (tester) async {
@@ -256,6 +257,45 @@ void main() {
 
       expect(find.text('Studio meublé — Bonapriso'), findsOneWidget);
     });
+  });
+
+  testWidgets('the search home, with places « à la une »', (tester) async {
+    when(() => bloc.state).thenReturn(
+      SearchReady(
+        query: douala,
+        hits: [
+          const ListingHit(
+            id: 'p-1',
+            title: 'Appartement à louer — Deido',
+            city: 'Douala',
+            district: 'Deido',
+            price: 110000,
+            roomCount: 4,
+            surfaceArea: 65,
+            propertyType: PropertyType.apartment,
+            tierRank: 3,
+            badges: [TrustBadge.trustedProvider],
+          ),
+          const ResidenceHit(
+            id: 'r-2',
+            title: 'Résidence Akwa',
+            city: 'Douala',
+            district: 'Akwa',
+            fromMonthlyRent: 60000,
+            availableUnitCount: 3,
+            tierRank: 2,
+          ),
+          listing('a'),
+          residence,
+        ],
+      ),
+    );
+    await pump(tester);
+
+    expect(find.text('À la une'), findsOneWidget);
+    // The featured are not listed twice.
+    expect(find.text('Appartement à louer — Deido'), findsOneWidget);
+    await expectLater(find.byType(SearchPage), matchesGoldenFile('goldens/search_featured.png'));
   });
 
   testWidgets('the search screen', (tester) async {

@@ -15,7 +15,7 @@ import '../../saved_searches/bloc/saved_searches_bloc.dart';
 import '../../saved_searches/ui/widgets/save_search_sheet.dart';
 import '../bloc/search_bloc.dart';
 import 'widgets/search_filters_sheet.dart';
-import 'widgets/search_hit_card.dart';
+import 'widgets/search_home_widgets.dart';
 import 'widgets/search_map_view.dart';
 
 /// Recherche (CDC M04) — the entry point of 90% of sessions, and the one screen
@@ -130,75 +130,166 @@ class _SearchPageState extends State<SearchPage> {
     saved.add(SavedSearchSaveRequested(query, name: choice.name, alertsEnabled: choice.alertsEnabled));
   }
 
+  /// A category tab: one kind, or all — and search again.
+  void _pickCategory(PropertyType? type) {
+    final bloc = context.read<SearchBloc>();
+    final state = bloc.state;
+    if (state is! SearchReady) return;
+    bloc
+      ..add(SearchFilterChanged(state.query.copyWith(propertyTypes: type == null ? const [] : [type])))
+      ..add(const SearchSubmitted());
+  }
+
+  void _openSavedSearches() {
+    if (!getIt<SessionSnapshot>().hasSession) {
+      unawaited(context.router.root.push(LoginRoute()));
+      return;
+    }
+    unawaited(context.router.root.push(const AuthenticatedRouter(children: [SavedSearchesRoute()])));
+  }
+
+  /// The shell's tabs: Messages is the third, Compte the fourth.
+  void _openTab(int index) => context.tabsRouter.setActiveIndex(index);
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.navSearch)),
-      body: BlocListener<SavedSearchesBloc, SavedSearchesState>(
-        // Only what a save came to: changes made on the list say their own.
-        listenWhen: (prev, curr) =>
-            prev is SavedSearchesReady && prev.isSaving && curr is SavedSearchesReady && curr.outcome != null,
-        listener: (context, state) {
-          if (state is! SavedSearchesReady) return;
-          switch (state.outcome) {
-            case SavedSearchOutcome.saved:
-              MboaToast.success(context: context, title: l10n.saveSearchDone, description: l10n.saveSearchDoneBody);
-            case SavedSearchOutcome.limitReached:
-              MboaToast.info(context: context, title: l10n.saveSearchLimitTitle, description: l10n.saveSearchLimitBody);
-            case SavedSearchOutcome.alreadySaved:
-              MboaToast.info(context: context, title: l10n.saveSearchDuplicate);
-            case SavedSearchOutcome.failed:
-              MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.saveSearchFailed);
-            case null:
-              break;
-          }
-        },
-        child: BlocBuilder<SearchBloc, SearchState>(
-          builder: (context, state) => switch (state) {
-            SearchInitial() => const Center(child: Loader()),
-            SearchFailure() => _Failure(
-              onRetry: () => context.read<SearchBloc>().add(const SearchSubmitted()),
-            ),
-            final SearchReady ready => Column(
-              children: [
-                _SearchBar(
-                  state: ready,
-                  onPickCity: _pickCity,
-                  onOpenFilters: _openFilters,
-                ),
-                // M30 — the next rent, while a space is active.
-                const NextRentBanner(),
-                if (ready.cachedBecause case final reason?)
-                  _CacheBanner(
-                    reason: reason,
-                    onRetry: () => context.read<SearchBloc>().add(const SearchSubmitted()),
-                  ),
-                // Nothing to switch between until a city is chosen
-                // (RM-M04-01), and an empty map is not a second empty state.
-                if (ready.query.isValid && !ready.isEmpty && !ready.isLoading)
-                  _ResultsHeader(
-                    count: ready.hits.length,
-                    view: _view,
-                    onChanged: (view) => setState(() => _view = view),
-                    onSave: () => _save(ready.query),
-                  ),
-                Expanded(
-                  child: switch (_view) {
-                    _View.list => _Results(state: ready, controller: _scroll),
-                    _View.map => SearchMapView(
-                      state: ready,
-                      onOpen: (hit) => _open(context, hit),
-                    ),
+      body: SafeArea(
+        bottom: false,
+        child: BlocListener<SavedSearchesBloc, SavedSearchesState>(
+          // Only what a save came to: changes made on the list say their own.
+          listenWhen: (prev, curr) =>
+              prev is SavedSearchesReady && prev.isSaving && curr is SavedSearchesReady && curr.outcome != null,
+          listener: (context, state) {
+            if (state is! SavedSearchesReady) return;
+            switch (state.outcome) {
+              case SavedSearchOutcome.saved:
+                MboaToast.success(context: context, title: l10n.saveSearchDone, description: l10n.saveSearchDoneBody);
+              case SavedSearchOutcome.limitReached:
+                MboaToast.info(context: context, title: l10n.saveSearchLimitTitle, description: l10n.saveSearchLimitBody);
+              case SavedSearchOutcome.alreadySaved:
+                MboaToast.info(context: context, title: l10n.saveSearchDuplicate);
+              case SavedSearchOutcome.failed:
+                MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.saveSearchFailed);
+              case null:
+                break;
+            }
+          },
+          child: Column(
+            children: [
+              SearchGreeting(
+                onSavedSearches: _openSavedSearches,
+                onMessages: () => _openTab(2),
+                onAvatar: () => getIt<SessionSnapshot>().hasSession
+                    ? _openTab(3)
+                    : unawaited(context.router.root.push(LoginRoute())),
+              ),
+              Expanded(
+                child: BlocBuilder<SearchBloc, SearchState>(
+                  builder: (context, state) => switch (state) {
+                    SearchInitial() => const Center(child: Loader()),
+                    SearchFailure() => _Failure(
+                        onRetry: () => context.read<SearchBloc>().add(const SearchSubmitted()),
+                      ),
+                    final SearchReady ready => _Home(
+                        state: ready,
+                        view: _view,
+                        controller: _scroll,
+                        onPickCity: _pickCity,
+                        onOpenFilters: _openFilters,
+                        onCategory: _pickCategory,
+                        onSave: () => _save(ready.query),
+                        onToggleView: () => setState(() => _view = _view == _View.list ? _View.map : _View.list),
+                      ),
                   },
                 ),
-              ],
-            ),
-          },
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+/// The search home under its bloc: the city and the filters, the category
+/// tabs, then the list or the map — and the pill that switches them.
+class _Home extends StatelessWidget {
+  const _Home({
+    required this.state,
+    required this.view,
+    required this.controller,
+    required this.onPickCity,
+    required this.onOpenFilters,
+    required this.onCategory,
+    required this.onSave,
+    required this.onToggleView,
+  });
+
+  final SearchReady state;
+  final _View view;
+  final ScrollController controller;
+  final VoidCallback onPickCity;
+  final VoidCallback onOpenFilters;
+  final ValueChanged<PropertyType?> onCategory;
+  final VoidCallback onSave;
+  final VoidCallback onToggleView;
+
+  @override
+  Widget build(BuildContext context) {
+    final types = state.query.propertyTypes;
+    // Nothing to switch between until a city is chosen (RM-M04-01), and an
+    // empty map is not a second empty state.
+    final hasResults = state.query.isValid && !state.isEmpty && !state.isLoading;
+
+    return Column(
+      children: [
+        _SearchBar(state: state, onPickCity: onPickCity, onOpenFilters: onOpenFilters),
+        SearchCategoryTabs(
+          selected: types.length == 1 ? types.single : null,
+          allSelected: types.isEmpty,
+          onSelected: onCategory,
+        ),
+        if (state.cachedBecause case final reason?)
+          _CacheBanner(
+            reason: reason,
+            onRetry: () => context.read<SearchBloc>().add(const SearchSubmitted()),
+          ),
+        Expanded(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: switch (view) {
+                  _View.list => _Feed(state: state, controller: controller, onSave: onSave),
+                  _View.map => Column(
+                      children: [
+                        if (hasResults) _ResultsHeader(count: state.hits.length, onSave: onSave),
+                        Expanded(
+                          child: SearchMapView(
+                            state: state,
+                            onOpen: (hit) => _open(context, hit),
+                            // The tapped place's card sits above the pill.
+                            cardBottomInset: 72,
+                          ),
+                        ),
+                      ],
+                    ),
+                },
+              ),
+              if (hasResults)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: Dimens.spacing,
+                  child: Center(child: SearchViewPill(showingMap: view == _View.map, onToggle: onToggleView)),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -211,22 +302,15 @@ void _open(BuildContext context, SearchHit hit) => switch (hit) {
   ResidenceHit() => context.router.push(ResidenceDetailRoute(id: hit.id)),
 };
 
-/// How many results, and which half is showing them.
+/// How many results, and keeping the search to be told what is new.
 ///
 /// The count earns its line: "12 biens" tells a reader whether to refine
-/// before they start scrolling, and it is the only honest place to say that
-/// the map draws the same results as the list.
+/// before they start scrolling, and it is the honest place to say that the
+/// map draws the same results as the list.
 class _ResultsHeader extends StatelessWidget {
-  const _ResultsHeader({
-    required this.count,
-    required this.view,
-    required this.onChanged,
-    required this.onSave,
-  });
+  const _ResultsHeader({required this.count, required this.onSave});
 
   final int count;
-  final _View view;
-  final ValueChanged<_View> onChanged;
   final VoidCallback onSave;
 
   @override
@@ -235,125 +319,18 @@ class _ResultsHeader extends StatelessWidget {
     final colors = context.mboaColors;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        Dimens.screenMargin,
-        0,
-        Dimens.screenMargin,
-        Dimens.spacingMd,
-      ),
+      padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, 0, Dimens.spacingSm, 0),
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              l10n.searchResultCount(count),
-              style: context.mboaText.label.copyWith(color: colors.ink),
-            ),
+            child: Text(l10n.searchResultCount(count), style: context.mboaText.label.copyWith(color: colors.ink)),
           ),
           IconButton(
             onPressed: onSave,
             tooltip: l10n.saveSearchAction,
             icon: Icon(LucideIcons.bookmarkPlus, color: colors.primary),
           ),
-          _ViewToggle(view: view, onChanged: onChanged),
         ],
-      ),
-    );
-  }
-}
-
-/// Liste / Carte, over one set of results.
-///
-/// Hand-built rather than a `SegmentedButton`: Material's version brings its
-/// own outline, its own selected tint and a check mark, none of which belong
-/// to this design system (Doc 05 §1.2 — "pas chargé").
-class _ViewToggle extends StatelessWidget {
-  const _ViewToggle({required this.view, required this.onChanged});
-
-  final _View view;
-  final ValueChanged<_View> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-
-    return Container(
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(
-        color: colors.surfaceWarm,
-        borderRadius: BorderRadius.circular(Dimens.radiusFull),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (final value in _View.values)
-            _ToggleSegment(
-              value: value,
-              selected: value == view,
-              onTap: () => onChanged(value),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ToggleSegment extends StatelessWidget {
-  const _ToggleSegment({
-    required this.value,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final _View value;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    return Semantics(
-      selected: selected,
-      button: true,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOut,
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimens.spacingMd,
-            vertical: Dimens.spacingSm,
-          ),
-          decoration: BoxDecoration(
-            color: selected ? colors.primary : Colors.transparent,
-            borderRadius: BorderRadius.circular(Dimens.radiusFull),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                switch (value) {
-                  _View.list => LucideIcons.list,
-                  _View.map => LucideIcons.map,
-                },
-                size: Dimens.iconSm,
-                color: selected ? colors.onBrand : colors.textSecondary,
-              ),
-              const SizedBox(width: Dimens.spacingXs),
-              Text(
-                switch (value) {
-                  _View.list => l10n.searchViewList,
-                  _View.map => l10n.searchViewMap,
-                },
-                style: context.mboaText.caption.copyWith(
-                  color: selected ? colors.onBrand : colors.textSecondary,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -497,38 +474,78 @@ class _CacheBanner extends StatelessWidget {
   }
 }
 
-class _Results extends StatelessWidget {
-  const _Results({required this.state, required this.controller});
+/// The list half, after the founder's mockup: the next rent if any, the
+/// count, « À la une » — the Pro and Pro+ places the server ranks first,
+/// as big photo cards — then every other place, as rows. Places are loaded
+/// page by page as the end comes near (RM-M04-03).
+class _Feed extends StatelessWidget {
+  const _Feed({required this.state, required this.controller, required this.onSave});
 
   final SearchReady state;
   final ScrollController controller;
+  final VoidCallback onSave;
+
+  /// `tierRank`: 3 Pro+, 2 Pro — the server's own order puts them first.
+  static const _featuredFrom = 2;
+  static const _featuredMax = 8;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
     if (state.isLoading) return const Center(child: Loader());
     if (!state.query.isValid) return const _NoCityYet();
     if (state.isEmpty) return const _NoResult();
 
-    return ListView.builder(
+    final featured = [
+      for (final hit in state.hits)
+        if ((hit.tierRank ?? 0) >= _featuredFrom) hit,
+    ].take(_featuredMax).toList();
+    final rest = [for (final hit in state.hits) if (!featured.contains(hit)) hit];
+
+    return CustomScrollView(
       controller: controller,
-      padding: const EdgeInsets.fromLTRB(
-        Dimens.screenMargin,
-        0,
-        Dimens.screenMargin,
-        Dimens.spacingXl,
-      ),
-      // One extra row for the loader that pulls the next page in.
-      itemCount: state.hits.length + (state.isLoadingMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        if (index >= state.hits.length) {
-          return const Padding(
-            padding: EdgeInsets.all(Dimens.spacing),
-            child: Center(child: Loader()),
-          );
-        }
-        final hit = state.hits[index];
-        return SearchHitCard(hit: hit, onTap: () => _open(context, hit));
-      },
+      slivers: [
+        // M30 — the next rent, while a space is active.
+        const SliverToBoxAdapter(child: NextRentBanner()),
+        SliverToBoxAdapter(child: _ResultsHeader(count: state.hits.length, onSave: onSave)),
+        if (featured.isNotEmpty) ...[
+          SliverToBoxAdapter(child: SearchSectionTitle(l10n.searchFeatured)),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: FeaturedHitCard.height,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.screenMargin),
+                itemCount: featured.length,
+                separatorBuilder: (_, _) => const SizedBox(width: Dimens.spacingMd),
+                itemBuilder: (context, index) =>
+                    FeaturedHitCard(hit: featured[index], onTap: () => _open(context, featured[index])),
+              ),
+            ),
+          ),
+        ],
+        if (rest.isNotEmpty)
+          SliverToBoxAdapter(
+            child: SearchSectionTitle(
+              state.query.cityName == null ? l10n.searchAllPlaces : l10n.searchInCity(state.query.cityName!),
+            ),
+          ),
+        SliverPadding(
+          // Room under the last row for the pill.
+          padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, 0, Dimens.screenMargin, 96),
+          sliver: SliverList.builder(
+            // One extra row for the loader that pulls the next page in.
+            itemCount: rest.length + (state.isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index >= rest.length) {
+                return const Padding(padding: EdgeInsets.all(Dimens.spacing), child: Center(child: Loader()));
+              }
+              final hit = rest[index];
+              return HitRowCard(hit: hit, onTap: () => _open(context, hit));
+            },
+          ),
+        ),
+      ],
     );
   }
 }
