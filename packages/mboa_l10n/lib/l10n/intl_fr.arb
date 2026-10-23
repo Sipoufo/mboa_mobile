@@ -6290,5 +6290,153 @@
   "financeOffline": "Hors ligne : la gestion financière telle qu'à ta dernière connexion.",
   "@financeOffline": {
     "description": "Finance offline"
+  },
+  "ownerInvoicesEmpty": "Rien ici pour l'instant.",
+  "@ownerInvoicesEmpty": {
+    "description": "M24 — an empty filter"
+  },
+  "ownerInvoiceNew": "Nouvelle facture",
+  "@ownerInvoiceNew": {
+    "description": "M24 — the list's main action"
+  },
+  "ownerInvoiceMarkPaid": "Marquer payée",
+  "@ownerInvoiceMarkPaid": {
+    "description": "M24 — the detail's main action"
+  },
+  "ownerInvoiceEdit": "Modifier",
+  "@ownerInvoiceEdit": {
+    "description": "M24 — behind ⋯"
+  },
+  "ownerInvoiceCancel": "Annuler la facture",
+  "@ownerInvoiceCancel": {
+    "description": "M24 — behind ⋯, in red"
+  },
+  "ownerInvoiceCancelConfirm": "Annuler cette facture ? Elle reste dans l'historique, sans être due.",
+  "@ownerInvoiceCancelConfirm": {
+    "description": "M24 — confirm a cancellation"
+  },
+  "ownerInvoiceReopen": "Retirer le paiement déclaré",
+  "@ownerInvoiceReopen": {
+    "description": "M24 — behind ⋯ on an invoice paid by hand"
+  },
+  "ownerInvoiceReopenConfirm": "Retirer le paiement que tu as déclaré ? La facture redevient à payer.",
+  "@ownerInvoiceReopenConfirm": {
+    "description": "M24 — confirm a reopening"
+  },
+  "ownerInvoicePaidOnTitle": "Payée le",
+  "@ownerInvoicePaidOnTitle": {
+    "description": "M24 — the date asked when marking paid"
+  },
+  "ownerInvoicePastDue": "Échéance dépassée",
+  "@ownerInvoicePastDue": {
+    "description": "M24 — before the 5 days that make it late (RM-M24-07)"
+  },
+  "ownerInvoiceByDeclaration": "Réglée par les déclarations confirmées du locataire.",
+  "@ownerInvoiceByDeclaration": {
+    "description": "M24 — paidVia DECLARED"
+  },
+  "ownerInvoiceByHand": "Déclarée payée par toi. Mboa ne vérifie pas ce paiement.",
+  "@ownerInvoiceByHand": {
+    "description": "M24 — paidVia MANUAL (RM-M24-05)"
+  },
+  "ownerInvoiceFormTenant": "Pour quel locataire ?",
+  "@ownerInvoiceFormTenant": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormNoTenant": "Aucune location en cours : une facture s'adresse au locataire d'un Contrat Mboa actif.",
+  "@ownerInvoiceFormNoTenant": {
+    "description": "RM-M24-02"
+  },
+  "ownerInvoiceFormKind": "Type de charge",
+  "@ownerInvoiceFormKind": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormLabel": "Libellé",
+  "@ownerInvoiceFormLabel": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormLabelHint": "Ex. : Électricité — septembre",
+  "@ownerInvoiceFormLabelHint": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormLabelRequired": "Obligatoire pour une autre charge.",
+  "@ownerInvoiceFormLabelRequired": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormAmount": "Montant (FCFA)",
+  "@ownerInvoiceFormAmount": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormDue": "À payer avant le",
+  "@ownerInvoiceFormDue": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceCreate": "Créer la facture",
+  "@ownerInvoiceCreate": {
+    "description": "M24 form button"
+  },
+  "ownerInvoiceSave": "Enregistrer",
+  "@ownerInvoiceSave": {
+    "description": "M24 form button (edit)"
+  },
+  "ownerInvoiceCreated": "Facture créée. Ton locataire la voit dans son espace.",
+  "@ownerInvoiceCreated": {
+    "description": "M24 toast"
+  },
+  "ownerInvoiceSaved": "Facture modifiée",
+  "@ownerInvoiceSaved": {
+    "description": "M24 toast"
+  },
+  "ownerInvoicePaidToast": "Facture marquée payée",
+  "@ownerInvoicePaidToast": {
+    "description": "M24 toast"
+  },
+  "ownerInvoiceCancelledToast": "Facture annulée",
+  "@ownerInvoiceCancelledToast": {
+    "description": "M24 toast"
+  },
+  "ownerInvoiceReopenedToast": "Paiement retiré : la facture est à payer",
+  "@ownerInvoiceReopenedToast": {
+    "description": "M24 toast"
+  },
+  "financeRefusedAddon": "L'option Gestion financière n'est plus active : réactive-la pour ajouter ou modifier.",
+  "@financeRefusedAddon": {
+    "description": "FINANCE_ADDON_REQUIRED"
+  },
+  "financeRefusedSettled": "Cette facture est déjà payée ou annulée.",
+  "@financeRefusedSettled": {
+    "description": "INVOICE_SETTLED"
+  },
+  "financeRefusedNotByHand": "Réglée par les déclarations du locataire : il n'y a pas de paiement à retirer.",
+  "@financeRefusedNotByHand": {
+    "description": "INVOICE_NOT_DECLARED"
+  },
+  "financeRefusedLabel": "Donne un libellé à cette charge.",
+  "@financeRefusedLabel": {
+    "description": "INVOICE_LABEL_REQUIRED"
+  },
+  "financeRefusedContract": "Ce contrat n'est plus en cours.",
+  "@financeRefusedContract": {
+    "description": "CONTRACT_NOT_ACTIVE"
+  },
+  "financeRefusedReadOnly": "Cette ligne vient d'un paiement confirmé : elle se corrige à sa source.",
+  "@financeRefusedReadOnly": {
+    "description": "LEDGER_ENTRY_READ_ONLY"
+  },
+  "financeRefusedProperty": "Choisis un bien, une résidence, ou « non affecté » — pas plusieurs.",
+  "@financeRefusedProperty": {
+    "description": "LEDGER_PROPERTY_CONFLICT"
+  },
+  "financeRefusedHasPayments": "Cet intervenant a des paiements : archive-le plutôt.",
+  "@financeRefusedHasPayments": {
+    "description": "SERVICE_PROVIDER_HAS_PAYMENTS"
+  },
+  "financeRefusedArchived": "Cet intervenant est archivé : restaure-le pour lui déclarer un paiement.",
+  "@financeRefusedArchived": {
+    "description": "SERVICE_PROVIDER_ARCHIVED"
+  },
+  "financeRefusedDuplicate": "Ce contact est déjà un de tes intervenants.",
+  "@financeRefusedDuplicate": {
+    "description": "SERVICE_PROVIDER_DUPLICATE"
   }
 }

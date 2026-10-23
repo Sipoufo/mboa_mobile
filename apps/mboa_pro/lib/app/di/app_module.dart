@@ -1,6 +1,10 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/finance/bloc/invoice_form_bloc.dart';
+import '../../features/finance/bloc/owner_invoice_bloc.dart';
+import '../../features/finance/bloc/owner_invoices_bloc.dart';
+import '../../features/finance/data/owner_invoices_repository.dart';
 import '../../features/finance/bloc/finance_addon_bloc.dart';
 import '../../features/finance/data/finance_addon_repository.dart';
 import '../../features/annonces/bloc/listing_stats_bloc.dart';
@@ -439,6 +443,14 @@ void registerAppModule() {
     () => FinanceAddonRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );
   getIt.registerFactory<FinanceAddonBloc>(() => FinanceAddonBloc(repository: getIt<FinanceAddonRepository>()));
+  getIt.registerLazySingleton<OwnerInvoicesRepository>(
+    () => OwnerInvoicesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactory<OwnerInvoicesBloc>(() => OwnerInvoicesBloc(repository: getIt<OwnerInvoicesRepository>()));
+  getIt.registerFactory<OwnerInvoiceBloc>(() => OwnerInvoiceBloc(repository: getIt<OwnerInvoicesRepository>()));
+  getIt.registerFactory<InvoiceFormBloc>(
+    () => InvoiceFormBloc(invoices: getIt<OwnerInvoicesRepository>(), homes: getIt<HomesRepository>()),
+  );
   getIt.registerFactory<SubscribeBloc>(
     () => SubscribeBloc(repository: getIt<SubscriptionRepository>()),
   );

@@ -1634,6 +1634,36 @@ class MessageLookup extends MessageLookupByLibrary {
       "Contractors",
     ),
     "financeReactivate": m55,
+    "financeRefusedAddon": MessageLookupByLibrary.simpleMessage(
+      "The Financial management add-on is no longer active: reactivate it to add or change anything.",
+    ),
+    "financeRefusedArchived": MessageLookupByLibrary.simpleMessage(
+      "This contractor is archived: restore them to declare a payment.",
+    ),
+    "financeRefusedContract": MessageLookupByLibrary.simpleMessage(
+      "This contract is no longer running.",
+    ),
+    "financeRefusedDuplicate": MessageLookupByLibrary.simpleMessage(
+      "This contact is already one of your contractors.",
+    ),
+    "financeRefusedHasPayments": MessageLookupByLibrary.simpleMessage(
+      "This contractor has payments: archive them instead.",
+    ),
+    "financeRefusedLabel": MessageLookupByLibrary.simpleMessage(
+      "Give this charge a label.",
+    ),
+    "financeRefusedNotByHand": MessageLookupByLibrary.simpleMessage(
+      "Settled by the tenant\'s declarations: there is no payment to withdraw.",
+    ),
+    "financeRefusedProperty": MessageLookupByLibrary.simpleMessage(
+      "Choose a property, a residence, or « unassigned » — not several.",
+    ),
+    "financeRefusedReadOnly": MessageLookupByLibrary.simpleMessage(
+      "This line comes from a confirmed payment: it is corrected at its source.",
+    ),
+    "financeRefusedSettled": MessageLookupByLibrary.simpleMessage(
+      "This invoice is already paid or cancelled.",
+    ),
     "hitRating": m56,
     "homeCtaAgentsAction": MessageLookupByLibrary.simpleMessage(
       "Manage my agents",
@@ -2068,6 +2098,73 @@ class MessageLookup extends MessageLookupByLibrary {
     "otpResendIn": m79,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Verification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "ownerInvoiceByDeclaration": MessageLookupByLibrary.simpleMessage(
+      "Settled by the tenant\'s confirmed declarations.",
+    ),
+    "ownerInvoiceByHand": MessageLookupByLibrary.simpleMessage(
+      "Declared paid by you. Mboa does not check this payment.",
+    ),
+    "ownerInvoiceCancel": MessageLookupByLibrary.simpleMessage(
+      "Cancel the invoice",
+    ),
+    "ownerInvoiceCancelConfirm": MessageLookupByLibrary.simpleMessage(
+      "Cancel this invoice? It stays in the history, no longer due.",
+    ),
+    "ownerInvoiceCancelledToast": MessageLookupByLibrary.simpleMessage(
+      "Invoice cancelled",
+    ),
+    "ownerInvoiceCreate": MessageLookupByLibrary.simpleMessage(
+      "Create the invoice",
+    ),
+    "ownerInvoiceCreated": MessageLookupByLibrary.simpleMessage(
+      "Invoice created. Your tenant sees it in their space.",
+    ),
+    "ownerInvoiceEdit": MessageLookupByLibrary.simpleMessage("Edit"),
+    "ownerInvoiceFormAmount": MessageLookupByLibrary.simpleMessage(
+      "Amount (FCFA)",
+    ),
+    "ownerInvoiceFormDue": MessageLookupByLibrary.simpleMessage("Due by"),
+    "ownerInvoiceFormKind": MessageLookupByLibrary.simpleMessage(
+      "Kind of charge",
+    ),
+    "ownerInvoiceFormLabel": MessageLookupByLibrary.simpleMessage("Label"),
+    "ownerInvoiceFormLabelHint": MessageLookupByLibrary.simpleMessage(
+      "E.g. Electricity — September",
+    ),
+    "ownerInvoiceFormLabelRequired": MessageLookupByLibrary.simpleMessage(
+      "Required for another charge.",
+    ),
+    "ownerInvoiceFormNoTenant": MessageLookupByLibrary.simpleMessage(
+      "No tenancy running: an invoice goes to the tenant of an active Mboa Contract.",
+    ),
+    "ownerInvoiceFormTenant": MessageLookupByLibrary.simpleMessage(
+      "For which tenant?",
+    ),
+    "ownerInvoiceMarkPaid": MessageLookupByLibrary.simpleMessage(
+      "Mark as paid",
+    ),
+    "ownerInvoiceNew": MessageLookupByLibrary.simpleMessage("New invoice"),
+    "ownerInvoicePaidOnTitle": MessageLookupByLibrary.simpleMessage("Paid on"),
+    "ownerInvoicePaidToast": MessageLookupByLibrary.simpleMessage(
+      "Invoice marked as paid",
+    ),
+    "ownerInvoicePastDue": MessageLookupByLibrary.simpleMessage("Past due"),
+    "ownerInvoiceReopen": MessageLookupByLibrary.simpleMessage(
+      "Withdraw the declared payment",
+    ),
+    "ownerInvoiceReopenConfirm": MessageLookupByLibrary.simpleMessage(
+      "Withdraw the payment you declared? The invoice is due again.",
+    ),
+    "ownerInvoiceReopenedToast": MessageLookupByLibrary.simpleMessage(
+      "Payment withdrawn: the invoice is due",
+    ),
+    "ownerInvoiceSave": MessageLookupByLibrary.simpleMessage("Save"),
+    "ownerInvoiceSaved": MessageLookupByLibrary.simpleMessage(
+      "Invoice updated",
+    ),
+    "ownerInvoicesEmpty": MessageLookupByLibrary.simpleMessage(
+      "Nothing here yet.",
+    ),
     "pastHomeContractOpen": MessageLookupByLibrary.simpleMessage(
       "See the signed contract",
     ),

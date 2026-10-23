@@ -15486,6 +15486,376 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Rien ici pour l'instant.`
+  String get ownerInvoicesEmpty {
+    return Intl.message(
+      'Rien ici pour l\'instant.',
+      name: 'ownerInvoicesEmpty',
+      desc: 'M24 — an empty filter',
+      args: [],
+    );
+  }
+
+  /// `Nouvelle facture`
+  String get ownerInvoiceNew {
+    return Intl.message(
+      'Nouvelle facture',
+      name: 'ownerInvoiceNew',
+      desc: 'M24 — the list\'s main action',
+      args: [],
+    );
+  }
+
+  /// `Marquer payée`
+  String get ownerInvoiceMarkPaid {
+    return Intl.message(
+      'Marquer payée',
+      name: 'ownerInvoiceMarkPaid',
+      desc: 'M24 — the detail\'s main action',
+      args: [],
+    );
+  }
+
+  /// `Modifier`
+  String get ownerInvoiceEdit {
+    return Intl.message(
+      'Modifier',
+      name: 'ownerInvoiceEdit',
+      desc: 'M24 — behind ⋯',
+      args: [],
+    );
+  }
+
+  /// `Annuler la facture`
+  String get ownerInvoiceCancel {
+    return Intl.message(
+      'Annuler la facture',
+      name: 'ownerInvoiceCancel',
+      desc: 'M24 — behind ⋯, in red',
+      args: [],
+    );
+  }
+
+  /// `Annuler cette facture ? Elle reste dans l'historique, sans être due.`
+  String get ownerInvoiceCancelConfirm {
+    return Intl.message(
+      'Annuler cette facture ? Elle reste dans l\'historique, sans être due.',
+      name: 'ownerInvoiceCancelConfirm',
+      desc: 'M24 — confirm a cancellation',
+      args: [],
+    );
+  }
+
+  /// `Retirer le paiement déclaré`
+  String get ownerInvoiceReopen {
+    return Intl.message(
+      'Retirer le paiement déclaré',
+      name: 'ownerInvoiceReopen',
+      desc: 'M24 — behind ⋯ on an invoice paid by hand',
+      args: [],
+    );
+  }
+
+  /// `Retirer le paiement que tu as déclaré ? La facture redevient à payer.`
+  String get ownerInvoiceReopenConfirm {
+    return Intl.message(
+      'Retirer le paiement que tu as déclaré ? La facture redevient à payer.',
+      name: 'ownerInvoiceReopenConfirm',
+      desc: 'M24 — confirm a reopening',
+      args: [],
+    );
+  }
+
+  /// `Payée le`
+  String get ownerInvoicePaidOnTitle {
+    return Intl.message(
+      'Payée le',
+      name: 'ownerInvoicePaidOnTitle',
+      desc: 'M24 — the date asked when marking paid',
+      args: [],
+    );
+  }
+
+  /// `Échéance dépassée`
+  String get ownerInvoicePastDue {
+    return Intl.message(
+      'Échéance dépassée',
+      name: 'ownerInvoicePastDue',
+      desc: 'M24 — before the 5 days that make it late (RM-M24-07)',
+      args: [],
+    );
+  }
+
+  /// `Réglée par les déclarations confirmées du locataire.`
+  String get ownerInvoiceByDeclaration {
+    return Intl.message(
+      'Réglée par les déclarations confirmées du locataire.',
+      name: 'ownerInvoiceByDeclaration',
+      desc: 'M24 — paidVia DECLARED',
+      args: [],
+    );
+  }
+
+  /// `Déclarée payée par toi. Mboa ne vérifie pas ce paiement.`
+  String get ownerInvoiceByHand {
+    return Intl.message(
+      'Déclarée payée par toi. Mboa ne vérifie pas ce paiement.',
+      name: 'ownerInvoiceByHand',
+      desc: 'M24 — paidVia MANUAL (RM-M24-05)',
+      args: [],
+    );
+  }
+
+  /// `Pour quel locataire ?`
+  String get ownerInvoiceFormTenant {
+    return Intl.message(
+      'Pour quel locataire ?',
+      name: 'ownerInvoiceFormTenant',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `Aucune location en cours : une facture s'adresse au locataire d'un Contrat Mboa actif.`
+  String get ownerInvoiceFormNoTenant {
+    return Intl.message(
+      'Aucune location en cours : une facture s\'adresse au locataire d\'un Contrat Mboa actif.',
+      name: 'ownerInvoiceFormNoTenant',
+      desc: 'RM-M24-02',
+      args: [],
+    );
+  }
+
+  /// `Type de charge`
+  String get ownerInvoiceFormKind {
+    return Intl.message(
+      'Type de charge',
+      name: 'ownerInvoiceFormKind',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `Libellé`
+  String get ownerInvoiceFormLabel {
+    return Intl.message(
+      'Libellé',
+      name: 'ownerInvoiceFormLabel',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `Ex. : Électricité — septembre`
+  String get ownerInvoiceFormLabelHint {
+    return Intl.message(
+      'Ex. : Électricité — septembre',
+      name: 'ownerInvoiceFormLabelHint',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `Obligatoire pour une autre charge.`
+  String get ownerInvoiceFormLabelRequired {
+    return Intl.message(
+      'Obligatoire pour une autre charge.',
+      name: 'ownerInvoiceFormLabelRequired',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `Montant (FCFA)`
+  String get ownerInvoiceFormAmount {
+    return Intl.message(
+      'Montant (FCFA)',
+      name: 'ownerInvoiceFormAmount',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `À payer avant le`
+  String get ownerInvoiceFormDue {
+    return Intl.message(
+      'À payer avant le',
+      name: 'ownerInvoiceFormDue',
+      desc: 'M24 form',
+      args: [],
+    );
+  }
+
+  /// `Créer la facture`
+  String get ownerInvoiceCreate {
+    return Intl.message(
+      'Créer la facture',
+      name: 'ownerInvoiceCreate',
+      desc: 'M24 form button',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get ownerInvoiceSave {
+    return Intl.message(
+      'Enregistrer',
+      name: 'ownerInvoiceSave',
+      desc: 'M24 form button (edit)',
+      args: [],
+    );
+  }
+
+  /// `Facture créée. Ton locataire la voit dans son espace.`
+  String get ownerInvoiceCreated {
+    return Intl.message(
+      'Facture créée. Ton locataire la voit dans son espace.',
+      name: 'ownerInvoiceCreated',
+      desc: 'M24 toast',
+      args: [],
+    );
+  }
+
+  /// `Facture modifiée`
+  String get ownerInvoiceSaved {
+    return Intl.message(
+      'Facture modifiée',
+      name: 'ownerInvoiceSaved',
+      desc: 'M24 toast',
+      args: [],
+    );
+  }
+
+  /// `Facture marquée payée`
+  String get ownerInvoicePaidToast {
+    return Intl.message(
+      'Facture marquée payée',
+      name: 'ownerInvoicePaidToast',
+      desc: 'M24 toast',
+      args: [],
+    );
+  }
+
+  /// `Facture annulée`
+  String get ownerInvoiceCancelledToast {
+    return Intl.message(
+      'Facture annulée',
+      name: 'ownerInvoiceCancelledToast',
+      desc: 'M24 toast',
+      args: [],
+    );
+  }
+
+  /// `Paiement retiré : la facture est à payer`
+  String get ownerInvoiceReopenedToast {
+    return Intl.message(
+      'Paiement retiré : la facture est à payer',
+      name: 'ownerInvoiceReopenedToast',
+      desc: 'M24 toast',
+      args: [],
+    );
+  }
+
+  /// `L'option Gestion financière n'est plus active : réactive-la pour ajouter ou modifier.`
+  String get financeRefusedAddon {
+    return Intl.message(
+      'L\'option Gestion financière n\'est plus active : réactive-la pour ajouter ou modifier.',
+      name: 'financeRefusedAddon',
+      desc: 'FINANCE_ADDON_REQUIRED',
+      args: [],
+    );
+  }
+
+  /// `Cette facture est déjà payée ou annulée.`
+  String get financeRefusedSettled {
+    return Intl.message(
+      'Cette facture est déjà payée ou annulée.',
+      name: 'financeRefusedSettled',
+      desc: 'INVOICE_SETTLED',
+      args: [],
+    );
+  }
+
+  /// `Réglée par les déclarations du locataire : il n'y a pas de paiement à retirer.`
+  String get financeRefusedNotByHand {
+    return Intl.message(
+      'Réglée par les déclarations du locataire : il n\'y a pas de paiement à retirer.',
+      name: 'financeRefusedNotByHand',
+      desc: 'INVOICE_NOT_DECLARED',
+      args: [],
+    );
+  }
+
+  /// `Donne un libellé à cette charge.`
+  String get financeRefusedLabel {
+    return Intl.message(
+      'Donne un libellé à cette charge.',
+      name: 'financeRefusedLabel',
+      desc: 'INVOICE_LABEL_REQUIRED',
+      args: [],
+    );
+  }
+
+  /// `Ce contrat n'est plus en cours.`
+  String get financeRefusedContract {
+    return Intl.message(
+      'Ce contrat n\'est plus en cours.',
+      name: 'financeRefusedContract',
+      desc: 'CONTRACT_NOT_ACTIVE',
+      args: [],
+    );
+  }
+
+  /// `Cette ligne vient d'un paiement confirmé : elle se corrige à sa source.`
+  String get financeRefusedReadOnly {
+    return Intl.message(
+      'Cette ligne vient d\'un paiement confirmé : elle se corrige à sa source.',
+      name: 'financeRefusedReadOnly',
+      desc: 'LEDGER_ENTRY_READ_ONLY',
+      args: [],
+    );
+  }
+
+  /// `Choisis un bien, une résidence, ou « non affecté » — pas plusieurs.`
+  String get financeRefusedProperty {
+    return Intl.message(
+      'Choisis un bien, une résidence, ou « non affecté » — pas plusieurs.',
+      name: 'financeRefusedProperty',
+      desc: 'LEDGER_PROPERTY_CONFLICT',
+      args: [],
+    );
+  }
+
+  /// `Cet intervenant a des paiements : archive-le plutôt.`
+  String get financeRefusedHasPayments {
+    return Intl.message(
+      'Cet intervenant a des paiements : archive-le plutôt.',
+      name: 'financeRefusedHasPayments',
+      desc: 'SERVICE_PROVIDER_HAS_PAYMENTS',
+      args: [],
+    );
+  }
+
+  /// `Cet intervenant est archivé : restaure-le pour lui déclarer un paiement.`
+  String get financeRefusedArchived {
+    return Intl.message(
+      'Cet intervenant est archivé : restaure-le pour lui déclarer un paiement.',
+      name: 'financeRefusedArchived',
+      desc: 'SERVICE_PROVIDER_ARCHIVED',
+      args: [],
+    );
+  }
+
+  /// `Ce contact est déjà un de tes intervenants.`
+  String get financeRefusedDuplicate {
+    return Intl.message(
+      'Ce contact est déjà un de tes intervenants.',
+      name: 'financeRefusedDuplicate',
+      desc: 'SERVICE_PROVIDER_DUPLICATE',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

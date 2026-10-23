@@ -230,7 +230,7 @@ void main() {
             value: bloc,
             child: FinanceView(
               onBuy: () => bought++,
-              onInvoices: () => opened++,
+              onInvoices: (_) => opened++,
               onLedger: () => opened++,
               onProviders: () => opened++,
             ),

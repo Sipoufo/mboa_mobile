@@ -11,7 +11,6 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../../app/router/app_router.gr.dart';
 import '../bloc/invoice_bloc.dart';
 import '../models/declaration_form.dart';
-import 'widgets/invoice_bits.dart';
 
 /// One invoice, the tenant's (CDC M24, slice E) — what N-36 opens for an
 /// invoice. Paid outside Mboa and declared here, like the rent: the landlord

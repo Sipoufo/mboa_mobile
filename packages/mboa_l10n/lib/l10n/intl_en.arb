@@ -6290,5 +6290,153 @@
   "financeOffline": "Offline: financial management as of your last connection.",
   "@financeOffline": {
     "description": "Finance offline"
+  },
+  "ownerInvoicesEmpty": "Nothing here yet.",
+  "@ownerInvoicesEmpty": {
+    "description": "M24 — an empty filter"
+  },
+  "ownerInvoiceNew": "New invoice",
+  "@ownerInvoiceNew": {
+    "description": "M24 — the list's main action"
+  },
+  "ownerInvoiceMarkPaid": "Mark as paid",
+  "@ownerInvoiceMarkPaid": {
+    "description": "M24 — the detail's main action"
+  },
+  "ownerInvoiceEdit": "Edit",
+  "@ownerInvoiceEdit": {
+    "description": "M24 — behind ⋯"
+  },
+  "ownerInvoiceCancel": "Cancel the invoice",
+  "@ownerInvoiceCancel": {
+    "description": "M24 — behind ⋯, in red"
+  },
+  "ownerInvoiceCancelConfirm": "Cancel this invoice? It stays in the history, no longer due.",
+  "@ownerInvoiceCancelConfirm": {
+    "description": "M24 — confirm a cancellation"
+  },
+  "ownerInvoiceReopen": "Withdraw the declared payment",
+  "@ownerInvoiceReopen": {
+    "description": "M24 — behind ⋯ on an invoice paid by hand"
+  },
+  "ownerInvoiceReopenConfirm": "Withdraw the payment you declared? The invoice is due again.",
+  "@ownerInvoiceReopenConfirm": {
+    "description": "M24 — confirm a reopening"
+  },
+  "ownerInvoicePaidOnTitle": "Paid on",
+  "@ownerInvoicePaidOnTitle": {
+    "description": "M24 — the date asked when marking paid"
+  },
+  "ownerInvoicePastDue": "Past due",
+  "@ownerInvoicePastDue": {
+    "description": "M24 — before the 5 days that make it late (RM-M24-07)"
+  },
+  "ownerInvoiceByDeclaration": "Settled by the tenant's confirmed declarations.",
+  "@ownerInvoiceByDeclaration": {
+    "description": "M24 — paidVia DECLARED"
+  },
+  "ownerInvoiceByHand": "Declared paid by you. Mboa does not check this payment.",
+  "@ownerInvoiceByHand": {
+    "description": "M24 — paidVia MANUAL (RM-M24-05)"
+  },
+  "ownerInvoiceFormTenant": "For which tenant?",
+  "@ownerInvoiceFormTenant": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormNoTenant": "No tenancy running: an invoice goes to the tenant of an active Mboa Contract.",
+  "@ownerInvoiceFormNoTenant": {
+    "description": "RM-M24-02"
+  },
+  "ownerInvoiceFormKind": "Kind of charge",
+  "@ownerInvoiceFormKind": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormLabel": "Label",
+  "@ownerInvoiceFormLabel": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormLabelHint": "E.g. Electricity — September",
+  "@ownerInvoiceFormLabelHint": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormLabelRequired": "Required for another charge.",
+  "@ownerInvoiceFormLabelRequired": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormAmount": "Amount (FCFA)",
+  "@ownerInvoiceFormAmount": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceFormDue": "Due by",
+  "@ownerInvoiceFormDue": {
+    "description": "M24 form"
+  },
+  "ownerInvoiceCreate": "Create the invoice",
+  "@ownerInvoiceCreate": {
+    "description": "M24 form button"
+  },
+  "ownerInvoiceSave": "Save",
+  "@ownerInvoiceSave": {
+    "description": "M24 form button (edit)"
+  },
+  "ownerInvoiceCreated": "Invoice created. Your tenant sees it in their space.",
+  "@ownerInvoiceCreated": {
+    "description": "M24 toast"
+  },
+  "ownerInvoiceSaved": "Invoice updated",
+  "@ownerInvoiceSaved": {
+    "description": "M24 toast"
+  },
+  "ownerInvoicePaidToast": "Invoice marked as paid",
+  "@ownerInvoicePaidToast": {
+    "description": "M24 toast"
+  },
+  "ownerInvoiceCancelledToast": "Invoice cancelled",
+  "@ownerInvoiceCancelledToast": {
+    "description": "M24 toast"
+  },
+  "ownerInvoiceReopenedToast": "Payment withdrawn: the invoice is due",
+  "@ownerInvoiceReopenedToast": {
+    "description": "M24 toast"
+  },
+  "financeRefusedAddon": "The Financial management add-on is no longer active: reactivate it to add or change anything.",
+  "@financeRefusedAddon": {
+    "description": "FINANCE_ADDON_REQUIRED"
+  },
+  "financeRefusedSettled": "This invoice is already paid or cancelled.",
+  "@financeRefusedSettled": {
+    "description": "INVOICE_SETTLED"
+  },
+  "financeRefusedNotByHand": "Settled by the tenant's declarations: there is no payment to withdraw.",
+  "@financeRefusedNotByHand": {
+    "description": "INVOICE_NOT_DECLARED"
+  },
+  "financeRefusedLabel": "Give this charge a label.",
+  "@financeRefusedLabel": {
+    "description": "INVOICE_LABEL_REQUIRED"
+  },
+  "financeRefusedContract": "This contract is no longer running.",
+  "@financeRefusedContract": {
+    "description": "CONTRACT_NOT_ACTIVE"
+  },
+  "financeRefusedReadOnly": "This line comes from a confirmed payment: it is corrected at its source.",
+  "@financeRefusedReadOnly": {
+    "description": "LEDGER_ENTRY_READ_ONLY"
+  },
+  "financeRefusedProperty": "Choose a property, a residence, or « unassigned » — not several.",
+  "@financeRefusedProperty": {
+    "description": "LEDGER_PROPERTY_CONFLICT"
+  },
+  "financeRefusedHasPayments": "This contractor has payments: archive them instead.",
+  "@financeRefusedHasPayments": {
+    "description": "SERVICE_PROVIDER_HAS_PAYMENTS"
+  },
+  "financeRefusedArchived": "This contractor is archived: restore them to declare a payment.",
+  "@financeRefusedArchived": {
+    "description": "SERVICE_PROVIDER_ARCHIVED"
+  },
+  "financeRefusedDuplicate": "This contact is already one of your contractors.",
+  "@financeRefusedDuplicate": {
+    "description": "SERVICE_PROVIDER_DUPLICATE"
   }
 }

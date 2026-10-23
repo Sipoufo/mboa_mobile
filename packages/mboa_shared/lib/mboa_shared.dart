@@ -95,6 +95,7 @@ export 'src/features/homes/models/useful_contact.dart';
 export 'src/features/homes/ui/declaration_view.dart';
 export 'src/features/homes/ui/evidence_compare_view.dart';
 export 'src/features/homes/ui/home_bits.dart';
+export 'src/features/homes/ui/invoice_bits.dart';
 export 'src/features/homes/ui/evidence_view.dart';
 export 'src/features/homes/ui/home_card.dart';
 export 'src/features/homes/ui/home_requests_view.dart';

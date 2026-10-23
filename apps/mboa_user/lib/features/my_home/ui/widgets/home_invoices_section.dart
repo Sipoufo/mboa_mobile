@@ -5,7 +5,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../bloc/home_invoices_bloc.dart';
-import 'invoice_bits.dart';
 
 /// The space's "Factures" tab (slice E): the tenancy's invoices, each
 /// opening where it can be declared paid.

@@ -1704,6 +1704,36 @@ class MessageLookup extends MessageLookupByLibrary {
       "Intervenants",
     ),
     "financeReactivate": m55,
+    "financeRefusedAddon": MessageLookupByLibrary.simpleMessage(
+      "L\'option Gestion financière n\'est plus active : réactive-la pour ajouter ou modifier.",
+    ),
+    "financeRefusedArchived": MessageLookupByLibrary.simpleMessage(
+      "Cet intervenant est archivé : restaure-le pour lui déclarer un paiement.",
+    ),
+    "financeRefusedContract": MessageLookupByLibrary.simpleMessage(
+      "Ce contrat n\'est plus en cours.",
+    ),
+    "financeRefusedDuplicate": MessageLookupByLibrary.simpleMessage(
+      "Ce contact est déjà un de tes intervenants.",
+    ),
+    "financeRefusedHasPayments": MessageLookupByLibrary.simpleMessage(
+      "Cet intervenant a des paiements : archive-le plutôt.",
+    ),
+    "financeRefusedLabel": MessageLookupByLibrary.simpleMessage(
+      "Donne un libellé à cette charge.",
+    ),
+    "financeRefusedNotByHand": MessageLookupByLibrary.simpleMessage(
+      "Réglée par les déclarations du locataire : il n\'y a pas de paiement à retirer.",
+    ),
+    "financeRefusedProperty": MessageLookupByLibrary.simpleMessage(
+      "Choisis un bien, une résidence, ou « non affecté » — pas plusieurs.",
+    ),
+    "financeRefusedReadOnly": MessageLookupByLibrary.simpleMessage(
+      "Cette ligne vient d\'un paiement confirmé : elle se corrige à sa source.",
+    ),
+    "financeRefusedSettled": MessageLookupByLibrary.simpleMessage(
+      "Cette facture est déjà payée ou annulée.",
+    ),
     "hitRating": m56,
     "homeCtaAgentsAction": MessageLookupByLibrary.simpleMessage(
       "Gérer mes agents",
@@ -2182,6 +2212,77 @@ class MessageLookup extends MessageLookupByLibrary {
     "otpResendIn": m79,
     "otpTitle": MessageLookupByLibrary.simpleMessage("Vérification"),
     "otpValidate": MessageLookupByLibrary.simpleMessage("Valider"),
+    "ownerInvoiceByDeclaration": MessageLookupByLibrary.simpleMessage(
+      "Réglée par les déclarations confirmées du locataire.",
+    ),
+    "ownerInvoiceByHand": MessageLookupByLibrary.simpleMessage(
+      "Déclarée payée par toi. Mboa ne vérifie pas ce paiement.",
+    ),
+    "ownerInvoiceCancel": MessageLookupByLibrary.simpleMessage(
+      "Annuler la facture",
+    ),
+    "ownerInvoiceCancelConfirm": MessageLookupByLibrary.simpleMessage(
+      "Annuler cette facture ? Elle reste dans l\'historique, sans être due.",
+    ),
+    "ownerInvoiceCancelledToast": MessageLookupByLibrary.simpleMessage(
+      "Facture annulée",
+    ),
+    "ownerInvoiceCreate": MessageLookupByLibrary.simpleMessage(
+      "Créer la facture",
+    ),
+    "ownerInvoiceCreated": MessageLookupByLibrary.simpleMessage(
+      "Facture créée. Ton locataire la voit dans son espace.",
+    ),
+    "ownerInvoiceEdit": MessageLookupByLibrary.simpleMessage("Modifier"),
+    "ownerInvoiceFormAmount": MessageLookupByLibrary.simpleMessage(
+      "Montant (FCFA)",
+    ),
+    "ownerInvoiceFormDue": MessageLookupByLibrary.simpleMessage(
+      "À payer avant le",
+    ),
+    "ownerInvoiceFormKind": MessageLookupByLibrary.simpleMessage(
+      "Type de charge",
+    ),
+    "ownerInvoiceFormLabel": MessageLookupByLibrary.simpleMessage("Libellé"),
+    "ownerInvoiceFormLabelHint": MessageLookupByLibrary.simpleMessage(
+      "Ex. : Électricité — septembre",
+    ),
+    "ownerInvoiceFormLabelRequired": MessageLookupByLibrary.simpleMessage(
+      "Obligatoire pour une autre charge.",
+    ),
+    "ownerInvoiceFormNoTenant": MessageLookupByLibrary.simpleMessage(
+      "Aucune location en cours : une facture s\'adresse au locataire d\'un Contrat Mboa actif.",
+    ),
+    "ownerInvoiceFormTenant": MessageLookupByLibrary.simpleMessage(
+      "Pour quel locataire ?",
+    ),
+    "ownerInvoiceMarkPaid": MessageLookupByLibrary.simpleMessage(
+      "Marquer payée",
+    ),
+    "ownerInvoiceNew": MessageLookupByLibrary.simpleMessage("Nouvelle facture"),
+    "ownerInvoicePaidOnTitle": MessageLookupByLibrary.simpleMessage("Payée le"),
+    "ownerInvoicePaidToast": MessageLookupByLibrary.simpleMessage(
+      "Facture marquée payée",
+    ),
+    "ownerInvoicePastDue": MessageLookupByLibrary.simpleMessage(
+      "Échéance dépassée",
+    ),
+    "ownerInvoiceReopen": MessageLookupByLibrary.simpleMessage(
+      "Retirer le paiement déclaré",
+    ),
+    "ownerInvoiceReopenConfirm": MessageLookupByLibrary.simpleMessage(
+      "Retirer le paiement que tu as déclaré ? La facture redevient à payer.",
+    ),
+    "ownerInvoiceReopenedToast": MessageLookupByLibrary.simpleMessage(
+      "Paiement retiré : la facture est à payer",
+    ),
+    "ownerInvoiceSave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
+    "ownerInvoiceSaved": MessageLookupByLibrary.simpleMessage(
+      "Facture modifiée",
+    ),
+    "ownerInvoicesEmpty": MessageLookupByLibrary.simpleMessage(
+      "Rien ici pour l\'instant.",
+    ),
     "pastHomeContractOpen": MessageLookupByLibrary.simpleMessage(
       "Voir le contrat signé",
     ),

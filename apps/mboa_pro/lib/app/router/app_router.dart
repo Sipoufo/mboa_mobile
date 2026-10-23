@@ -100,6 +100,10 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: RentsRoute.page, path: 'rents'),
             // M24–M26 — « Gestion financière », the paid add-on.
             AutoRoute(page: FinanceRoute.page, path: 'finance'),
+            AutoRoute(page: OwnerInvoicesRoute.page, path: 'finance/invoices'),
+            // The form carries the invoice it corrects: no deep link.
+            AutoRoute(page: InvoiceFormRoute.page, path: 'finance/invoices/new'),
+            AutoRoute(page: OwnerInvoiceRoute.page, path: 'finance/invoices/:invoiceId'),
             AutoRoute(page: ReceivedDeclarationRoute.page, path: 'rents/declarations/:declarationId'),
             AutoRoute(page: TenantHomeRoute.page, path: 'rents/homes/:contractId'),
             // M30 lot 3 — tenants' requests: the inbox, one home's, one

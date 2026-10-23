@@ -8,6 +8,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../../subscription/models/subscription_models.dart';
 import '../../subscription/ui/payment_flow_sheet.dart';
 import '../../subscription/ui/payment_method_sheet.dart';
@@ -37,6 +38,9 @@ class FinancePage extends StatelessWidget implements AutoRouteWrapper {
           // The webhook opens the period: read where it stands now.
           bloc.add(const FinanceAddonRequested());
         },
+        // Writing needs the add-on running; the list then offers « Nouvelle
+        // facture ».
+        onInvoices: (addon) => context.router.push(OwnerInvoicesRoute(canWrite: addon.canWrite)),
       );
 }
 
@@ -48,7 +52,7 @@ class FinanceView extends StatelessWidget {
   final VoidCallback onBuy;
 
   /// Each part, once it can be read. Null: shown, not opened.
-  final VoidCallback? onInvoices;
+  final ValueChanged<FinanceAddon>? onInvoices;
   final VoidCallback? onLedger;
   final VoidCallback? onProviders;
 
@@ -86,7 +90,12 @@ class FinanceView extends StatelessWidget {
                   ),
                   const SizedBox(height: Dimens.spacingSm),
                   for (final (icon, title, hint, open) in [
-                    (LucideIcons.receiptText, l10n.invoicesTitle, l10n.financeInvoicesHint, onInvoices),
+                    (
+                      LucideIcons.receiptText,
+                      l10n.invoicesTitle,
+                      l10n.financeInvoicesHint,
+                      onInvoices == null ? null : () => onInvoices!(addon),
+                    ),
                     (LucideIcons.bookOpenText, l10n.financeLedgerTitle, l10n.financeLedgerHint, onLedger),
                     (LucideIcons.hardHat, l10n.financeProvidersTitle, l10n.financeProvidersHint, onProviders),
                   ])

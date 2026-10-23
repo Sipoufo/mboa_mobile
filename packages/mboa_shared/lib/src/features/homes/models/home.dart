@@ -758,6 +758,8 @@ class HomeInvoice extends Equatable {
     this.status = InvoiceStatus.unknown,
     this.paidAt,
     this.paidViaDeclaration = false,
+    this.paidManually = false,
+    this.pastDue = false,
     this.confirmedTotal = 0,
     this.remaining = 0,
   });
@@ -776,6 +778,14 @@ class HomeInvoice extends Equatable {
 
   /// Settled by confirmed declarations (`paidVia: DECLARED`).
   final bool paidViaDeclaration;
+
+  /// Declared paid by the landlord himself (`paidVia: MANUAL`) — the one
+  /// payment he may withdraw if it was a mistake (« Rouvrir »).
+  final bool paidManually;
+
+  /// Past its due date, before the 5 days that make it late (RM-M24-07):
+  /// « échéance dépassée ».
+  final bool pastDue;
 
   /// What the confirmed declarations cover, and what is left — the
   /// server's (§31.2); left is 0 once paid or cancelled.
@@ -797,6 +807,8 @@ class HomeInvoice extends Equatable {
         status: InvoiceStatus.fromWire(response.status?.name),
         paidAt: response.paidAt?.toLocal(),
         paidViaDeclaration: response.paidVia?.name == 'DECLARED',
+        paidManually: response.paidVia?.name == 'MANUAL',
+        pastDue: response.pastDue ?? false,
         confirmedTotal: response.confirmedTotal ?? 0,
         remaining: response.remaining ?? 0,
       );
@@ -812,6 +824,8 @@ class HomeInvoice extends Equatable {
         'status': status.name,
         'paidAt': paidAt?.toIso8601String(),
         'declared': paidViaDeclaration,
+        'manual': paidManually,
+        'pastDue': pastDue,
         'confirmed': confirmedTotal,
         'remaining': remaining,
       };
@@ -832,6 +846,8 @@ class HomeInvoice extends Equatable {
       status: InvoiceStatus.values.where((s) => s.name == json['status']).firstOrNull ?? InvoiceStatus.unknown,
       paidAt: _date(json['paidAt']),
       paidViaDeclaration: json['declared'] as bool? ?? false,
+      paidManually: json['manual'] as bool? ?? false,
+      pastDue: json['pastDue'] as bool? ?? false,
       confirmedTotal: json['confirmed'] as int? ?? 0,
       remaining: json['remaining'] as int? ?? 0,
     );
@@ -839,7 +855,22 @@ class HomeInvoice extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, contractId, annonceTitle, kind, label, amount, dueDate, status, paidAt, paidViaDeclaration, confirmedTotal, remaining];
+      [
+        id,
+        contractId,
+        annonceTitle,
+        kind,
+        label,
+        amount,
+        dueDate,
+        status,
+        paidAt,
+        paidViaDeclaration,
+        paidManually,
+        pastDue,
+        confirmedTotal,
+        remaining,
+      ];
 }
 
 /// What a receipt is — its title on the PDF (§29.5): a full rent's

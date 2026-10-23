@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
+
+import '../models/home.dart';
+import 'home_bits.dart';
 
 /// An invoice's kind, as a word and an icon.
 ({String label, IconData icon}) invoiceKindLook(I18n l10n, InvoiceKind kind) => switch (kind) {
@@ -14,15 +16,19 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 /// Where an invoice stands — the server's word.
 class InvoiceStatusChip extends StatelessWidget {
-  const InvoiceStatusChip({super.key, required this.status});
+  const InvoiceStatusChip({super.key, required this.status, this.pastDue = false});
 
   final InvoiceStatus status;
+
+  /// Past its date, within the 5 days before « En retard » (RM-M24-07).
+  final bool pastDue;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
     final (label, tone) = switch (status) {
+      InvoiceStatus.toPay when pastDue => (l10n.ownerInvoicePastDue, colors.warning),
       InvoiceStatus.toPay => (l10n.invoiceStatusToPay, colors.primary),
       InvoiceStatus.overdue => (l10n.invoiceStatusOverdue, colors.error),
       InvoiceStatus.paid => (l10n.invoiceStatusPaid, colors.success),
@@ -57,12 +63,14 @@ class InvoiceKindTile extends StatelessWidget {
   }
 }
 
-/// An invoice in a list: what, until when, how much, where it stands.
+/// An invoice in a list: what, until when, how much, where it stands — and,
+/// in the landlord's list across properties ([showPlace]), for which.
 class InvoiceRow extends StatelessWidget {
-  const InvoiceRow({super.key, required this.invoice, required this.onTap});
+  const InvoiceRow({super.key, required this.invoice, required this.onTap, this.showPlace = false});
 
   final HomeInvoice invoice;
   final VoidCallback onTap;
+  final bool showPlace;
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +99,17 @@ class InvoiceRow extends StatelessWidget {
                 children: [
                   Text(
                     invoice.label ?? kind.label,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.mboaText.label.copyWith(color: colors.ink),
                   ),
+                  if (showPlace && invoice.annonceTitle != null)
+                    Text(
+                      invoice.annonceTitle!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                    ),
                   if (day != null)
                     Text(day, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
                 ],
@@ -106,7 +121,7 @@ class InvoiceRow extends StatelessWidget {
               children: [
                 Text(fcfaOf(context, invoice.amount), style: context.mboaText.label.copyWith(color: colors.ink)),
                 const SizedBox(height: 2),
-                InvoiceStatusChip(status: invoice.status),
+                InvoiceStatusChip(status: invoice.status, pastDue: invoice.pastDue),
               ],
             ),
           ],
