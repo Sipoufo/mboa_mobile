@@ -1450,6 +1450,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "evidenceCommentHint": MessageLookupByLibrary.simpleMessage(
       "A word (optional)",
     ),
+    "evidenceCompareEmpty": MessageLookupByLibrary.simpleMessage(
+      "No photo to compare yet.",
+    ),
+    "evidenceCompareHint": MessageLookupByLibrary.simpleMessage(
+      "Move-in and move-out, room by room",
+    ),
+    "evidenceCompareNone": MessageLookupByLibrary.simpleMessage("No photo"),
+    "evidenceCompareOffline": MessageLookupByLibrary.simpleMessage(
+      "The comparison needs a connection: the photos are loaded each time.",
+    ),
+    "evidenceCompareTitle": MessageLookupByLibrary.simpleMessage(
+      "Before / after",
+    ),
     "evidenceEmptyLandlord": MessageLookupByLibrary.simpleMessage(
       "Your tenant has not sent any photo yet.",
     ),

@@ -59,6 +59,13 @@ final class EvidenceReady extends EvidenceState {
   final List<EvidenceBatch> items;
   final bool isOffline;
 
+  /// Entry and exit photos both exist: there is a before and an after to
+  /// set side by side (CA-M31-04).
+  bool get canCompare {
+    final phases = {for (final batch in items) ...batch.phases};
+    return phases.contains(EvidencePhase.entry) && phases.contains(EvidencePhase.exit);
+  }
+
   @override
   List<Object?> get props => [items, isOffline];
 }

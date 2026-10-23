@@ -203,6 +203,55 @@ class EditProfileRoute extends _i42.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i7.EvidenceComparePage]
+class EvidenceCompareRoute
+    extends _i42.PageRouteInfo<EvidenceCompareRouteArgs> {
+  EvidenceCompareRoute({
+    _i43.Key? key,
+    required String contractId,
+    List<_i42.PageRouteInfo>? children,
+  }) : super(
+         EvidenceCompareRoute.name,
+         args: EvidenceCompareRouteArgs(key: key, contractId: contractId),
+         rawPathParams: {'contractId': contractId},
+         initialChildren: children,
+       );
+
+  static const String name = 'EvidenceCompareRoute';
+
+  static _i42.PageInfo page = _i42.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<EvidenceCompareRouteArgs>(
+        orElse: () => EvidenceCompareRouteArgs(
+          contractId: pathParams.getString('contractId'),
+        ),
+      );
+      return _i42.WrappedRoute(
+        child: _i7.EvidenceComparePage(
+          key: args.key,
+          contractId: args.contractId,
+        ),
+      );
+    },
+  );
+}
+
+class EvidenceCompareRouteArgs {
+  const EvidenceCompareRouteArgs({this.key, required this.contractId});
+
+  final _i43.Key? key;
+
+  final String contractId;
+
+  @override
+  String toString() {
+    return 'EvidenceCompareRouteArgs{key: $key, contractId: $contractId}';
+  }
+}
+
+/// generated route for
 /// [_i7.EvidenceSendPage]
 class EvidenceSendRoute extends _i42.PageRouteInfo<EvidenceSendRouteArgs> {
   EvidenceSendRoute({

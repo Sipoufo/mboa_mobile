@@ -15033,6 +15033,56 @@ class I18n {
       args: [date],
     );
   }
+
+  /// `Avant / après`
+  String get evidenceCompareTitle {
+    return Intl.message(
+      'Avant / après',
+      name: 'evidenceCompareTitle',
+      desc: 'M31 — CA-M31-04: entry and exit photos side by side',
+      args: [],
+    );
+  }
+
+  /// `L'entrée et la sortie, pièce par pièce`
+  String get evidenceCompareHint {
+    return Intl.message(
+      'L\'entrée et la sortie, pièce par pièce',
+      name: 'evidenceCompareHint',
+      desc: 'M31 — under « Avant / après »',
+      args: [],
+    );
+  }
+
+  /// `La comparaison demande une connexion : les photos sont chargées à chaque fois.`
+  String get evidenceCompareOffline {
+    return Intl.message(
+      'La comparaison demande une connexion : les photos sont chargées à chaque fois.',
+      name: 'evidenceCompareOffline',
+      desc: 'M31 — compare failed or offline',
+      args: [],
+    );
+  }
+
+  /// `Aucune photo à comparer pour l'instant.`
+  String get evidenceCompareEmpty {
+    return Intl.message(
+      'Aucune photo à comparer pour l\'instant.',
+      name: 'evidenceCompareEmpty',
+      desc: 'M31 — compare, no room',
+      args: [],
+    );
+  }
+
+  /// `Pas de photo`
+  String get evidenceCompareNone {
+    return Intl.message(
+      'Pas de photo',
+      name: 'evidenceCompareNone',
+      desc: 'M31 — a side with no photo',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

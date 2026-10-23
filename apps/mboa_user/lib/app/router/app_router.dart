@@ -123,6 +123,8 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: HomeContactsRoute.page, path: 'homes/:contractId/contacts'),
             AutoRoute(page: HomeEvidenceRoute.page, path: 'homes/:contractId/evidence'),
             AutoRoute(page: EvidenceSendRoute.page, path: 'homes/:contractId/evidence/new'),
+            // M31 — before / after; ahead of a sending, whose id it would match.
+            AutoRoute(page: EvidenceCompareRoute.page, path: 'homes/:contractId/evidence/compare'),
             AutoRoute(page: HomeEvidenceBatchRoute.page, path: 'homes/:contractId/evidence/:batchId'),
             // M31 — an ended tenancy, kept for the tenant.
             AutoRoute(page: PastHomeRoute.page, path: 'past-homes/:contractId'),

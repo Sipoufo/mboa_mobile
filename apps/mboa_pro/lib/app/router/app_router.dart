@@ -110,6 +110,8 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: ContactFormRoute.page, path: 'contacts/form'),
             // M30 lot 3 — a tenancy's photo proofs (N-39).
             AutoRoute(page: TenantEvidenceRoute.page, path: 'rents/homes/:contractId/evidence'),
+            // M31 — before / after; ahead of a sending, whose id it would match.
+            AutoRoute(page: TenantEvidenceCompareRoute.page, path: 'rents/homes/:contractId/evidence/compare'),
             AutoRoute(page: TenantEvidenceBatchRoute.page, path: 'rents/homes/:contractId/evidence/:batchId'),
             AutoRoute(page: ContractDetailRoute.page, path: 'contracts/:id'),
             // M27 — the review hangs off the contract, so its route does too.

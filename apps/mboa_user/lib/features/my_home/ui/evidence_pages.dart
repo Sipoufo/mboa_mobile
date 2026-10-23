@@ -38,7 +38,25 @@ class HomeEvidencePage extends StatelessWidget implements AutoRouteWrapper {
                 if (sent ?? false) bloc.add(const EvidenceRequested());
               },
         onOpen: (batch) => context.router.push(HomeEvidenceBatchRoute(contractId: contractId, batchId: batch.id)),
+        onCompare: () => context.router.push(EvidenceCompareRoute(contractId: contractId)),
       );
+}
+
+/// Before / after (CA-M31-04) — the shared view.
+@RoutePage()
+class EvidenceComparePage extends StatelessWidget implements AutoRouteWrapper {
+  const EvidenceComparePage({super.key, @PathParam('contractId') required this.contractId});
+
+  final String contractId;
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider<EvidenceCompareBloc>(
+        create: (_) => getIt<EvidenceCompareBloc>()..add(EvidenceCompareRequested(contractId)),
+        child: this,
+      );
+
+  @override
+  Widget build(BuildContext context) => const EvidenceCompareView();
 }
 
 /// One sending — the shared view.

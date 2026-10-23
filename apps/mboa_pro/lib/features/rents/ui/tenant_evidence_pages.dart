@@ -28,7 +28,25 @@ class TenantEvidencePage extends StatelessWidget implements AutoRouteWrapper {
           // Acknowledged there: said here on the way back.
           bloc.add(const EvidenceRequested());
         },
+        onCompare: () => context.router.push(TenantEvidenceCompareRoute(contractId: contractId)),
       );
+}
+
+/// Before / after (CA-M31-04) — the shared view.
+@RoutePage()
+class TenantEvidenceComparePage extends StatelessWidget implements AutoRouteWrapper {
+  const TenantEvidenceComparePage({super.key, @PathParam('contractId') required this.contractId});
+
+  final String contractId;
+
+  @override
+  Widget wrappedRoute(BuildContext context) => BlocProvider<EvidenceCompareBloc>(
+        create: (_) => getIt<EvidenceCompareBloc>()..add(EvidenceCompareRequested(contractId)),
+        child: this,
+      );
+
+  @override
+  Widget build(BuildContext context) => const EvidenceCompareView();
 }
 
 /// One sending — « Accuser réception », once, with a word for the tenant.

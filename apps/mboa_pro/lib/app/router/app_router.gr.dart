@@ -1420,6 +1420,55 @@ class TenantEvidenceBatchRouteArgs {
 }
 
 /// generated route for
+/// [_i49.TenantEvidenceComparePage]
+class TenantEvidenceCompareRoute
+    extends _i53.PageRouteInfo<TenantEvidenceCompareRouteArgs> {
+  TenantEvidenceCompareRoute({
+    _i54.Key? key,
+    required String contractId,
+    List<_i53.PageRouteInfo>? children,
+  }) : super(
+         TenantEvidenceCompareRoute.name,
+         args: TenantEvidenceCompareRouteArgs(key: key, contractId: contractId),
+         rawPathParams: {'contractId': contractId},
+         initialChildren: children,
+       );
+
+  static const String name = 'TenantEvidenceCompareRoute';
+
+  static _i53.PageInfo page = _i53.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<TenantEvidenceCompareRouteArgs>(
+        orElse: () => TenantEvidenceCompareRouteArgs(
+          contractId: pathParams.getString('contractId'),
+        ),
+      );
+      return _i53.WrappedRoute(
+        child: _i49.TenantEvidenceComparePage(
+          key: args.key,
+          contractId: args.contractId,
+        ),
+      );
+    },
+  );
+}
+
+class TenantEvidenceCompareRouteArgs {
+  const TenantEvidenceCompareRouteArgs({this.key, required this.contractId});
+
+  final _i54.Key? key;
+
+  final String contractId;
+
+  @override
+  String toString() {
+    return 'TenantEvidenceCompareRouteArgs{key: $key, contractId: $contractId}';
+  }
+}
+
+/// generated route for
 /// [_i49.TenantEvidencePage]
 class TenantEvidenceRoute extends _i53.PageRouteInfo<TenantEvidenceRouteArgs> {
   TenantEvidenceRoute({

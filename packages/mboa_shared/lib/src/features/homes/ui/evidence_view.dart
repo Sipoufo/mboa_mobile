@@ -24,15 +24,39 @@ String evidencePhaseLabel(I18n l10n, EvidencePhase phase) => switch (phase) {
       EvidencePhase.exit => l10n.evidencePhaseExit,
     };
 
+/// One photo, full screen, to zoom into.
+Future<void> showEvidencePhoto(BuildContext context, EvidencePhoto photo) => showDialog<void>(
+      context: context,
+      builder: (dialogContext) => Dialog.fullscreen(
+        backgroundColor: Colors.black,
+        child: Stack(
+          children: [
+            Center(child: InteractiveViewer(child: MboaNetworkImage(url: photo.downloadUrl))),
+            Positioned(
+              top: Dimens.spacingLg,
+              right: Dimens.spacing,
+              child: IconButton(
+                tooltip: I18n.of(context).commonClose,
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                icon: const Icon(LucideIcons.x, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
 /// A home's photo proofs (CDC M30 lot 3, RM-M30-11/12): each sending as
 /// Mboa recorded it — its time, its phase, how many photos, whether the
 /// landlord saw it. The tenant's one main action is « Envoyer des photos »
-/// ([onAdd]).
+/// ([onAdd]). Once entry and exit photos both exist, « Avant / après »
+/// ([onCompare], CA-M31-04) sets them side by side.
 class EvidenceView extends StatelessWidget {
-  const EvidenceView({super.key, required this.onOpen, this.onAdd});
+  const EvidenceView({super.key, required this.onOpen, this.onAdd, this.onCompare});
 
   final ValueChanged<EvidenceBatch> onOpen;
   final VoidCallback? onAdd;
+  final VoidCallback? onCompare;
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +75,22 @@ class EvidenceView extends StatelessWidget {
                 child: Text(l10n.commonRetry),
               ),
             ),
-          EvidenceReady(:final items, :final isOffline) => RefreshIndicator(
+          final EvidenceReady ready => RefreshIndicator(
               onRefresh: () async => context.read<EvidenceBloc>().add(const EvidenceRequested()),
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
                 children: [
-                  if (isOffline) ...[
+                  if (ready.isOffline) ...[
                     Text(l10n.myHomeOffline, style: context.mboaText.caption.copyWith(color: colors.warning)),
                     const SizedBox(height: Dimens.spacingMd),
                   ],
                   _Notice(text: l10n.evidenceNotice),
                   const SizedBox(height: Dimens.spacing),
-                  if (items.isEmpty)
+                  if (onCompare != null && ready.canCompare) ...[
+                    _CompareCard(onTap: onCompare!),
+                    const SizedBox(height: Dimens.spacing),
+                  ],
+                  if (ready.items.isEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: Dimens.spacingXl),
                       child: Text(
@@ -72,7 +100,7 @@ class EvidenceView extends StatelessWidget {
                       ),
                     )
                   else
-                    for (final batch in items) _BatchRow(batch: batch, onTap: () => onOpen(batch)),
+                    for (final batch in ready.items) _BatchRow(batch: batch, onTap: () => onOpen(batch)),
                 ],
               ),
             ),
@@ -106,6 +134,66 @@ class _Notice extends StatelessWidget {
         const SizedBox(width: Dimens.spacingSm),
         Expanded(child: Text(text, style: context.mboaText.caption.copyWith(color: colors.textSecondary))),
       ],
+    );
+  }
+}
+
+/// « Avant / après » — on the brand colour, the way into the comparison.
+class _CompareCard extends StatelessWidget {
+  const _CompareCard({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Material(
+      color: colors.primary,
+      borderRadius: BorderRadius.circular(Dimens.radiusLg),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Stack(
+          children: [
+            Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.08, scale: 0.6)),
+            Padding(
+              padding: const EdgeInsets.all(Dimens.spacing),
+              child: Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: colors.onBrand.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(Dimens.radius),
+                    ),
+                    child: Icon(LucideIcons.columns2, color: colors.onBrand, size: Dimens.icon),
+                  ),
+                  const SizedBox(width: Dimens.spacingMd),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.evidenceCompareTitle,
+                          style: context.mboaText.label.copyWith(color: colors.onBrand, fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          l10n.evidenceCompareHint,
+                          style: context.mboaText.caption.copyWith(color: colors.onBrand.withValues(alpha: 0.85)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.onBrand),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -305,28 +393,7 @@ class _PhotoTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: photo.downloadUrl == null
-                ? null
-                : () => showDialog<void>(
-                      context: context,
-                      builder: (_) => Dialog.fullscreen(
-                        backgroundColor: Colors.black,
-                        child: Stack(
-                          children: [
-                            Center(child: InteractiveViewer(child: MboaNetworkImage(url: photo.downloadUrl))),
-                            Positioned(
-                              top: Dimens.spacingLg,
-                              right: Dimens.spacing,
-                              child: IconButton(
-                                tooltip: l10n.commonClose,
-                                onPressed: () => Navigator.of(context).pop(),
-                                icon: const Icon(LucideIcons.x, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+            onTap: photo.downloadUrl == null ? null : () => showEvidencePhoto(context, photo),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(Dimens.radius),
               child: SizedBox.square(dimension: 104, child: MboaNetworkImage(url: photo.downloadUrl)),

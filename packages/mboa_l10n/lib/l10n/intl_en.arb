@@ -6062,5 +6062,25 @@
         "type": "String"
       }
     }
+  },
+  "evidenceCompareTitle": "Before / after",
+  "@evidenceCompareTitle": {
+    "description": "M31 — CA-M31-04: entry and exit photos side by side"
+  },
+  "evidenceCompareHint": "Move-in and move-out, room by room",
+  "@evidenceCompareHint": {
+    "description": "M31 — under « Avant / après »"
+  },
+  "evidenceCompareOffline": "The comparison needs a connection: the photos are loaded each time.",
+  "@evidenceCompareOffline": {
+    "description": "M31 — compare failed or offline"
+  },
+  "evidenceCompareEmpty": "No photo to compare yet.",
+  "@evidenceCompareEmpty": {
+    "description": "M31 — compare, no room"
+  },
+  "evidenceCompareNone": "No photo",
+  "@evidenceCompareNone": {
+    "description": "M31 — a side with no photo"
   }
 }

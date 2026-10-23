@@ -323,6 +323,7 @@ void registerAppModule() {
     (contractId, _) => EvidenceBloc(repository: getIt<EvidenceRepository>(), contractId: contractId),
   );
   getIt.registerFactory<EvidenceBatchBloc>(() => EvidenceBatchBloc(repository: getIt<EvidenceRepository>()));
+  getIt.registerFactory<EvidenceCompareBloc>(() => EvidenceCompareBloc(repository: getIt<EvidenceRepository>()));
   getIt.registerLazySingleton<ContactsRepository>(
     () => ContactsRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );
