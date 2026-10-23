@@ -15185,6 +15185,16 @@ class I18n {
       args: [],
     );
   }
+
+  /// `dont {count} ces 7 jours`
+  String annonceStatsViewsWeek(int count) {
+    return Intl.message(
+      'dont $count ces 7 jours',
+      name: 'annonceStatsViewsWeek',
+      desc: 'M14 — under a listing views figure',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

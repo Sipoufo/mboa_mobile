@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1449 tests green, analyze clean.** `mboa_user` 391 · `mboa_pro` 598 ·
-`mboa_core` 19 · `mboa_shared` 413 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1482 tests green, analyze clean.** `mboa_user` 391 · `mboa_pro` 608 ·
+`mboa_core` 29 · `mboa_shared` 426 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **Both apps run on the founder's device** (since 2026-10-20, side by side,
 > against the local backend): reservations, contracts, "Mon logement" and
@@ -37,11 +37,11 @@
 | Module | State |
 |---|---|
 | M01 auth (user phone-OTP, pro credential + 2FA) | ✅ |
-| M02 profile & settings (language, phone, password, deletion, notification switches, **Pro forgotten password**) | ✅ · `searchable` toggle unwired |
+| M02 profile & settings (language, phone, password, deletion, notification switches, **Pro forgotten password**) | ✅ · `searchable` deliberately not shown: the server stores it and nothing reads it (no profile search exists) |
 | M01bis KYC / certifications (pro) | ✅ |
 | Media upload (compress → R2 presigned PUT) | ✅ |
 | Locations (cities, districts, pickers) | ✅ |
-| M14 Pro home dashboard | ✅ the six figures from `/prestataires/me/dashboard`, locked by the server (CA-M14-02) · per-listing figures unused |
+| M14 Pro home dashboard | ✅ the six figures from `/prestataires/me/dashboard`, locked by the server (CA-M14-02) · **a listing's own figures** (views, this week's, contacts, position) in its « Statistiques » card |
 | M13 subscriptions (plans, MoMo checkout, receipts) | ✅ |
 | M03 push notifications | ✅ **Android both apps**, every `PushTarget` routed (CA-M03-02) · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
@@ -59,7 +59,7 @@
 | M08 Contrat Mboa | ✅ **prestataire side** — draw up, send, answer objections, amend, sign, PDF, cancel · the tenant's half is in `mboa_user` |
 | M27 resident review | ✅ write + revise (tenant), reply once (landlord), report either kind · §24 open |
 | M08 Contrat Mboa — tenant half | ✅ list, detail, accept, contest, sign, PDF — the shared views, routed in both apps |
-| M23 signalements | ✅ listing + review from the app · admin queue is out of scope here |
+| M23 signalements | ✅ listing + review from the app · **disputes** (RM-M30-07): « Signaler un litige » behind « ⋯ » on a declaration, a sending of photos and the home, both apps; offered outright on a contested declaration · `ALREADY_REPORTED` said as such · admin queue is out of scope here |
 | M09 Mboa Score | ✅ tenant's own (Compte) · prestataire reads a tenant's from the thread, a request to answer, and his visit sheet (§26) |
 | M29 réservation — lot 1 | ✅ **tenant**: "Réserver" on the fiche, request screen (stay, indicative total, no money), "Ma demande" + ticket, "Mes réservations" (offline) · **Pro**: inbox (timeline), request detail (accept / refuse with reason / extend / cancel), home counter, contract drawn up from a request (RM-M08-10), unreserve by hand (RM-M10-10) · system message in the thread · N-32/33/34 routed |
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
@@ -1146,6 +1146,24 @@ Doc 10's RM-M10-01 still words the profile requirement as "photo + type + ville"
 the API models a prestataire's image as `logoObjectKey`, and the app treats those
 as the same thing.
 
+### Session and codes — what to know before touching (2026-10-23)
+
+- **A refresh token is single-use**: presenting a spent one answers
+  `REFRESH_TOKEN_REUSED` and signs the account out on every device. All
+  refreshing goes through `DioClient.rotateSession()` — one at a time,
+  shared, reading the token stored when it starts, saving before anyone
+  replays. The `AuthInterceptor` and the `SessionExpiryWatcher` never
+  refresh on their own; a 401 whose request carried an already-replaced
+  token is replayed, not refreshed. No answer at refresh time (offline) keeps
+  the session; only a refusal ends it.
+- **A dead OTP** (`OTP_MAX_ATTEMPTS` after 3 wrong codes, or
+  `OTP_INVALID_OR_EXPIRED`) is `OtpCodeBurnt` via `guardOtp`, at every code
+  check: the field is emptied and closed, « Renvoyer le code » offered at
+  once.
+- **Disputes** are reports with `targetType` CONTRACT / DECLARATION /
+  EVIDENCE and the one reason DISPUTE (nothing else fits them). Unlike a
+  report, both parties hear the ruling (N-40, routed as HOME).
+
 ### M31 — what to know before touching (2026-10-23)
 
 - **Nothing new is stored**: the sheet reads M08, M27 and M30 together
@@ -1196,9 +1214,6 @@ Ready to build (the API exists, nothing in the apps):
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
   founder's definition (and backend data); managers / agents on the fiche
   need API data.
-- **M14 per-listing figures** — `/prestataires/me/dashboard/annonces` could
-  fill the empty "Statistiques" card of the Pro listing detail.
-- Settings: the `searchable` toggle is still unwired.
 
 - **M24 tenant invoices** (both apps: the owner issues, the tenant pays or it
   is declared paid) and **M26 payments to contractors** (Pro) — endpoints

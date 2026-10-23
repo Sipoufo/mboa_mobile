@@ -4,13 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_pro/features/annonces/bloc/annonces_bloc.dart';
+import 'package:mboa_pro/features/annonces/bloc/listing_stats_bloc.dart';
 import 'package:mboa_pro/features/annonces/bloc/residences_bloc.dart';
 import 'package:mboa_pro/features/annonces/models/annonce.dart';
 import 'package:mboa_pro/features/annonces/models/annonce_status.dart';
 import 'package:mboa_pro/features/annonces/models/residence.dart';
 import 'package:mboa_pro/features/annonces/ui/annonce_detail_page.dart';
 import 'package:mboa_pro/features/annonces/ui/residence_detail_page.dart';
+import 'package:mboa_pro/features/home/models/dashboard_stats.dart' show DashboardFigure;
+import 'package:mboa_pro/features/home/models/listing_figures.dart';
 import 'package:mboa_pro/features/profile/models/profile_data.dart';
 import 'package:mboa_pro/features/profile/profile_types.dart';
 import 'package:mboa_pro/features/subscription/bloc/subscription_bloc.dart';
@@ -28,6 +32,8 @@ class MockResidencesBloc extends MockBloc<ResidencesEvent, ResidencesState> impl
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState> implements ProProfileBloc {}
 
 class MockSubscriptionBloc extends MockBloc<SubscriptionEvent, SubscriptionState> implements SubscriptionBloc {}
+
+class MockListingStatsBloc extends MockBloc<ListingStatsEvent, ListingStatsState> implements ListingStatsBloc {}
 
 /// The two "détail" screens of M10, as they render.
 void main() {
@@ -144,6 +150,32 @@ void main() {
       find.byType(AnnonceDetailPage),
       matchesGoldenFile('goldens/annonce_detail.png'),
     );
+  });
+
+  testWidgets('M14 — its own figures, locked as the server says', (tester) async {
+    final stats = MockListingStatsBloc();
+    when(() => stats.state).thenReturn(
+      const ListingStatsReady(
+        ListingFigures(
+          views: DashboardFigure(value: 128),
+          viewsLast7Days: DashboardFigure(value: 31),
+          contacts: DashboardFigure(locked: true),
+          averagePosition: DashboardFigure(value: 2.4),
+        ),
+      ),
+    );
+    getIt.registerFactory<ListingStatsBloc>(() => stats);
+    addTearDown(getIt.reset);
+
+    await pump(tester, const AnnonceDetailPage(id: 'a1'));
+    await tester.scrollUntilVisible(find.text('Statistiques'), 300, scrollable: find.byType(Scrollable).first);
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -200));
+    await tester.pumpAndSettle();
+
+    expect(find.text('128'), findsOneWidget);
+    expect(find.text('dont 31 ces 7 jours'), findsOneWidget);
+    expect(find.text('#2.4'), findsOneWidget);
+    await expectLater(find.byType(AnnonceDetailPage), matchesGoldenFile('goldens/annonce_detail_stats.png'));
   });
 
   group('M29 / RM-M10-10 — reserved', () {

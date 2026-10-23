@@ -7,6 +7,17 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../models/dashboard_stats.dart';
 
+/// How each M14 figure is written — the dashboard's and a listing's alike.
+abstract final class MetricFormats {
+  static String count(num value) => value.toInt().toString();
+
+  /// Already a percentage on the wire (contacts per 100 views, one decimal).
+  static String percent(num value) => '${value.toStringAsFixed(1)} %';
+
+  /// 1.0 is always at the top of search.
+  static String rank(num value) => '#${value.toStringAsFixed(1)}';
+}
+
 /// One M14 figure, in whichever of its four states the server put it:
 ///
 ///  * **a value** — plainly;

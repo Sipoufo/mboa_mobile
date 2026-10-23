@@ -6122,5 +6122,14 @@
   "disputePrompt": "A disagreement over this payment? Report a dispute: the Mboa team will review the pieces.",
   "@disputePrompt": {
     "description": "On a contested declaration"
+  },
+  "annonceStatsViewsWeek": "{count} in the last 7 days",
+  "@annonceStatsViewsWeek": {
+    "description": "M14 — under a listing views figure",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../../assignments/models/assignment.dart';
+import '../../home/models/dashboard_stats.dart' show DashboardFigure;
+import '../../home/ui/widgets/metric_tile.dart';
 import '../bloc/annonces_bloc.dart';
+import '../bloc/listing_stats_bloc.dart';
 import '../models/annonce.dart';
 import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';
@@ -155,7 +159,7 @@ class _Body extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(child: _EmptyCard(title: l10n.annonceDetailStats)),
+              Expanded(child: _StatsCard(annonceId: annonce.id)),
               const SizedBox(width: Dimens.spacingMd),
               Expanded(child: _EmptyCard(title: l10n.annonceDetailOccupant)),
             ],
@@ -710,6 +714,51 @@ class _Tag extends StatelessWidget {
 
 /// The design's own empty state, kept verbatim: these three surfaces have no
 /// endpoint yet, and inventing numbers for them would be worse than saying so.
+/// CDC M14 — this listing's own figures, locked or not as the server says
+/// (CA-M14-02); nothing counted yet, the card says it has no information.
+class _StatsCard extends StatelessWidget {
+  const _StatsCard({required this.annonceId});
+
+  final String annonceId;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return BlocProvider<ListingStatsBloc>(
+      create: (_) => getIt<ListingStatsBloc>()..add(ListingStatsRequested(annonceId)),
+      child: BlocBuilder<ListingStatsBloc, ListingStatsState>(
+        builder: (context, state) => _SectionCard(
+          title: l10n.annonceDetailStats,
+          child: switch (state) {
+            ListingStatsLoading() => const Padding(
+                padding: EdgeInsets.symmetric(vertical: Dimens.spacing),
+                child: Center(child: Loader()),
+              ),
+            ListingStatsReady(:final figures?) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MetricTile(label: l10n.homeStatsViews, figure: figures.views, format: MetricFormats.count),
+                  if (figures.viewsLast7Days case DashboardFigure(locked: false, value: final week?))
+                    Text(
+                      l10n.annonceStatsViewsWeek(week.toInt()),
+                      style: context.mboaText.micro.copyWith(color: colors.textTertiary),
+                    ),
+                  const SizedBox(height: Dimens.spacingMd),
+                  MetricTile(label: l10n.homeStatsContacts, figure: figures.contacts, format: MetricFormats.count),
+                  const SizedBox(height: Dimens.spacingMd),
+                  MetricTile(label: l10n.homeStatsRank, figure: figures.averagePosition, format: MetricFormats.rank),
+                ],
+              ),
+            _ => _NoInfo(),
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class _EmptyCard extends StatelessWidget {
   const _EmptyCard({required this.title});
 

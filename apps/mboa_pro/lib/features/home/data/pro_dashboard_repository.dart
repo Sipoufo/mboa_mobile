@@ -1,6 +1,9 @@
 import 'package:mboa_core/mboa_core.dart';
 
+import 'package:mboa_shared/mboa_shared.dart';
+
 import '../models/dashboard_stats.dart';
+import '../models/listing_figures.dart';
 
 /// Loads the prestataire dashboard (CDC M14).
 ///
@@ -69,6 +72,34 @@ class ProDashboardRepository {
 
     await _cache.put(StorageKeys.dashboardBox, _cacheKey, stats.toCache());
     return stats;
+  }
+
+  /// One listing's figures (`GET /prestataires/me/dashboard/annonces`) —
+  /// standing alone, or a unit inside its residence. Null when the server
+  /// does not list it (a draft, say). Offline, the last read.
+  Future<Cached<ListingFigures?>> listingFigures(String annonceId) async {
+    final key = 'listing:$annonceId';
+    try {
+      final page = (await _dioClient.api.getPrestataireDashboardApi().listMyDashboardEntries(
+                pageable: Pageable((b) => b
+                  ..page = 0
+                  ..size = _pageSize),
+              ))
+          .data;
+      final stats = [
+        for (final item in page?.content?.toList() ?? const <DashboardItem>[]) ...[
+          ?item.listing,
+          ...?item.residence?.units,
+        ],
+      ].where((s) => s.annonceId == annonceId).firstOrNull;
+      final figures = stats == null ? null : ListingFigures.fromResponse(stats);
+      if (figures != null) await _cache.put(StorageKeys.dashboardBox, key, figures.toCache());
+      return Cached(figures);
+    } catch (error) {
+      final cached = ListingFigures.fromCache(_cache.get(StorageKeys.dashboardBox, key));
+      if (cached == null) Error.throwWithStackTrace(error, StackTrace.current);
+      return Cached(cached, fromCache: true);
+    }
   }
 
   AnnonceStatus _mapStatus(AnnonceResponseStatusEnum? status) => switch (status) {

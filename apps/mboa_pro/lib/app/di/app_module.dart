@@ -1,6 +1,7 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/annonces/bloc/listing_stats_bloc.dart';
 import '../../features/password_reset/bloc/password_reset_bloc.dart';
 import '../../features/password_reset/data/password_reset_repository.dart';
 import '../../features/agent/bloc/agent_availability_bloc.dart';
@@ -190,6 +191,8 @@ void registerAppModule() {
   getIt.registerLazySingleton<HomeBloc>(
     () => HomeBloc(repository: getIt<ProDashboardRepository>()),
   );
+  // M14 — a listing's own figures, on its detail.
+  getIt.registerFactory<ListingStatsBloc>(() => ListingStatsBloc(repository: getIt<ProDashboardRepository>()));
 
   // Listings (M10). The list blocs are factories — each list screen owns one,
   // and the detail reads the list bloc it was pushed from.

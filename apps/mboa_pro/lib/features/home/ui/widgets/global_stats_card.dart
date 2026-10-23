@@ -29,12 +29,12 @@ class GlobalStatsCard extends StatelessWidget {
     final colors = context.mboaColors;
 
     final metrics = <(String, DashboardFigure?, String Function(num))>[
-      (l10n.homeStatsViews, stats.views, _count),
-      (l10n.homeStatsContacts, stats.contacts, _count),
-      (l10n.homeStatsConversion, stats.conversionRate, _percent),
-      (l10n.homeStatsVisits, stats.agentVisits, _count),
-      (l10n.homeStatsContracts, stats.signedContracts, _count),
-      (l10n.homeStatsRank, stats.averagePosition, _rank),
+      (l10n.homeStatsViews, stats.views, MetricFormats.count),
+      (l10n.homeStatsContacts, stats.contacts, MetricFormats.count),
+      (l10n.homeStatsConversion, stats.conversionRate, MetricFormats.percent),
+      (l10n.homeStatsVisits, stats.agentVisits, MetricFormats.count),
+      (l10n.homeStatsContracts, stats.signedContracts, MetricFormats.count),
+      (l10n.homeStatsRank, stats.averagePosition, MetricFormats.rank),
     ];
     final figures = metrics.map((m) => m.$2).nonNulls;
     final lockedTier = _cheapest(figures.where((f) => f.locked).map((f) => f.requiredTier).nonNulls);
@@ -119,14 +119,6 @@ class GlobalStatsCard extends StatelessWidget {
   /// The cheapest tier that unlocks something — what the single CTA offers.
   static SubscriptionTier? _cheapest(Iterable<SubscriptionTier> tiers) =>
       tiers.isEmpty ? null : tiers.reduce((a, b) => a.index <= b.index ? a : b);
-
-  static String _count(num value) => value.toInt().toString();
-
-  /// Already a percentage on the wire (contacts per 100 views, one decimal).
-  static String _percent(num value) => '${value.toStringAsFixed(1)} %';
-
-  /// 1.0 is always at the top of search.
-  static String _rank(num value) => '#${value.toStringAsFixed(1)}';
 }
 
 class _StatusBreakdown extends StatelessWidget {

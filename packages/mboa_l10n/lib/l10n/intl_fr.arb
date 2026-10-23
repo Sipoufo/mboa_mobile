@@ -6122,5 +6122,14 @@
   "disputePrompt": "Un désaccord sur ce paiement ? Signale un litige : l'équipe Mboa examinera les pièces.",
   "@disputePrompt": {
     "description": "On a contested declaration"
+  },
+  "annonceStatsViewsWeek": "dont {count} ces 7 jours",
+  "@annonceStatsViewsWeek": {
+    "description": "M14 — under a listing views figure",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }
