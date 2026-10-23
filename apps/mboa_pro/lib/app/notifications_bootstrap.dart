@@ -104,6 +104,9 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(TenantRequestRoute(requestId: id));
     case PushType.homeRequest when !isAgent:
       router.push(const ReceivedRequestsRoute());
+    // N-26 — the « Gestion financière » add-on: where it stands.
+    case PushType.financeAddon when !isAgent:
+      router.push(const FinanceRoute());
     case PushType.message:
       // No endpoint reads one conversation by id; the inbox lists it first.
       router.push(const MessagesRoute());
@@ -116,6 +119,7 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
     case PushType.invoice:
     case PushType.homeEvidence:
     case PushType.homeRequest:
+    case PushType.financeAddon:
     case PushType.unknown:
       router.navigate(const AuthenticatedRouter());
   }

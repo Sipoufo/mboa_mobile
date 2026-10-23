@@ -56,7 +56,18 @@ class RentsView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.proRentsTitle)),
+      appBar: AppBar(
+        leading: const MboaHeaderBackButton(),
+        title: Text(l10n.proRentsTitle),
+        actions: [
+          // M24–M26 — next door to the rents: the invoices and the register.
+          IconButton(
+            tooltip: l10n.financeAddonName,
+            icon: Icon(LucideIcons.wallet, color: context.mboaColors.primary),
+            onPressed: () => context.router.push(const FinanceRoute()),
+          ),
+        ],
+      ),
       body: BlocBuilder<RentsBloc, RentsState>(
         builder: (context, state) => switch (state) {
           RentsLoading() => const Center(child: Loader()),

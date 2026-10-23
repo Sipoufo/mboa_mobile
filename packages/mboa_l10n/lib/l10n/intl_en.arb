@@ -6197,5 +6197,98 @@
   "searchLocationOpenSettings": "Open the settings",
   "@searchLocationOpenSettings": {
     "description": "Location sheet button"
+  },
+  "financeAddonName": "Financial management",
+  "@financeAddonName": {
+    "description": "M24–M26 — the paid add-on (RM-M13-09), as a payment names it"
+  },
+  "financeIntro": "Your invoices, your register and your contractors: what is paid and received for your properties, in one place.",
+  "@financeIntro": {
+    "description": "M24–M26 hub — what the add-on is"
+  },
+  "financeInvoicesHint": "Water, electricity, charges: bill your tenants and follow what is paid.",
+  "@financeInvoicesHint": {
+    "description": "M24 row"
+  },
+  "financeLedgerTitle": "Register",
+  "@financeLedgerTitle": {
+    "description": "M25 — the ledger"
+  },
+  "financeLedgerHint": "Your income and expenses, property by property, with the balance and a CSV export.",
+  "@financeLedgerHint": {
+    "description": "M25 row"
+  },
+  "financeProvidersTitle": "Contractors",
+  "@financeProvidersTitle": {
+    "description": "M26 — the service providers"
+  },
+  "financeProvidersHint": "Plumber, cleaning, electrician: what you paid them, and for which property.",
+  "@financeProvidersHint": {
+    "description": "M26 row"
+  },
+  "financeNoMoney": "No money goes through Mboa: you note what is paid between you, Mboa keeps the register.",
+  "@financeNoMoney": {
+    "description": "RM-M24-05 / RM-M25-01"
+  },
+  "financePrice": "{price} for 30 days",
+  "@financePrice": {
+    "description": "Add-on price",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeActivate": "Activate for {price}",
+  "@financeActivate": {
+    "description": "Add-on: the main action, never subscribed",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeReactivate": "Reactivate for {price}",
+  "@financeReactivate": {
+    "description": "Add-on: the main action, expired",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeExtend": "Extend by 30 days",
+  "@financeExtend": {
+    "description": "Add-on: running, add a period after it"
+  },
+  "financeActiveUntil": "Active until {date}",
+  "@financeActiveUntil": {
+    "description": "Add-on running",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financeExpiredOn": "Expired on {date}",
+  "@financeExpiredOn": {
+    "description": "Add-on expired",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financeExpiredBody": "Everything you recorded stays readable and exportable. To add or change anything, reactivate the add-on.",
+  "@financeExpiredBody": {
+    "description": "Add-on expired: what still works"
+  },
+  "financeIncluded": "What is included",
+  "@financeIncluded": {
+    "description": "Add-on: section title"
+  },
+  "financeOffline": "Offline: financial management as of your last connection.",
+  "@financeOffline": {
+    "description": "Finance offline"
   }
 }

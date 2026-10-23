@@ -91,6 +91,12 @@ class ProMenuPage extends StatelessWidget {
                     label: l10n.proRentsTitle,
                     onTap: () => _go(context, RentsRoute()),
                   ),
+                  // M24–M26 — the paid add-on: invoices, register, intervenants.
+                  _MenuEntry(
+                    icon: LucideIcons.wallet,
+                    label: l10n.financeAddonName,
+                    onTap: () => _go(context, const FinanceRoute()),
+                  ),
                   _MenuEntry(
                     icon: LucideIcons.calendarCheck,
                     label: l10n.visitsMineTitle,

@@ -13,13 +13,13 @@ final class SubscribeIdle extends SubscribeState {
 
 /// Calling `POST /subscriptions`.
 final class SubscribeInitiating extends SubscribeState {
-  const SubscribeInitiating({required this.tier, required this.method});
+  const SubscribeInitiating({required this.purchase, required this.method});
 
-  final SubscriptionTier tier;
+  final Purchase purchase;
   final PaymentMethod method;
 
   @override
-  List<Object?> get props => [tier, method];
+  List<Object?> get props => [purchase, method];
 }
 
 /// Payment initiated; the prestataire is finishing it on their handset (USSD or
@@ -33,13 +33,14 @@ final class SubscribeAwaitingConfirmation extends SubscribeState {
   List<Object?> get props => [attempt];
 }
 
-/// The tier is active.
+/// The purchase is active: the tier, or the add-on.
 final class SubscribeConfirmed extends SubscribeState {
   const SubscribeConfirmed({required this.attempt, this.plan});
 
   final PaymentAttempt attempt;
 
-  /// Null when the confirming read failed — the payment is good either way.
+  /// Null when the confirming read failed — the payment is good either way —
+  /// and for the add-on, which changes no plan.
   final SubscriptionPlan? plan;
 
   @override
@@ -61,15 +62,15 @@ final class SubscribePendingHandoff extends SubscribeState {
 /// Carries the inputs so [SubscribeRetryRequested] can replay them.
 final class SubscribeFailure extends SubscribeState {
   const SubscribeFailure({
-    required this.tier,
+    required this.purchase,
     required this.method,
     this.attempt,
   });
 
-  final SubscriptionTier tier;
+  final Purchase purchase;
   final PaymentMethod method;
   final PaymentAttempt? attempt;
 
   @override
-  List<Object?> get props => [tier, method, attempt];
+  List<Object?> get props => [purchase, method, attempt];
 }

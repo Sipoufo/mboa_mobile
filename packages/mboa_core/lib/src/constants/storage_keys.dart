@@ -47,6 +47,10 @@ class StorageKeys {
   // "Mon Logement" (M30) — the spaces, their schedule and declarations, on
   // both sides: read-only offline, an account's own, emptied at sign-out.
   static const String homesBox = 'homesBox';
+  // « Gestion financière » (M24–M26, Pro): the add-on, the invoices, the
+  // register, the intervenants — read-only offline, strictly the landlord's
+  // own (RM-M25-04), emptied at sign-out.
+  static const String financeBox = 'financeBox';
 
   /// Boxes that belong to the **device**, kept across a sign-out on purpose.
   ///
@@ -85,6 +89,7 @@ class StorageKeys {
     savedSearchesBox,
     reservationsBox,
     homesBox,
+    financeBox,
   ];
 
   static const List<String> allBoxes = [

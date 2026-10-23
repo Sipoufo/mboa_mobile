@@ -138,7 +138,7 @@ void main() {
       );
 
       await repository.subscribe(
-        tier: SubscriptionTier.basicPlus,
+        purchase: const TierPurchase(SubscriptionTier.basicPlus),
         method: PaymentMethod.orangeMoney,
         idempotencyKey: 'key-1',
       );
@@ -166,7 +166,7 @@ void main() {
 
       expect(
         () => repository.subscribe(
-          tier: SubscriptionTier.pro,
+          purchase: const TierPurchase(SubscriptionTier.pro),
           method: PaymentMethod.mtnMomo,
           idempotencyKey: 'key-1',
         ),
@@ -201,11 +201,27 @@ void main() {
       final payments = await repository.payments();
 
       expect(payments.map((p) => p.paymentId), ['pay-2', 'pay-1']);
-      expect(payments.first.tier, SubscriptionTier.pro);
+      expect(payments.first.purchase, const TierPurchase(SubscriptionTier.pro));
       expect(payments.first.status, PaymentStatus.confirmed);
       // hasReceipt drives whether a download affordance is shown at all.
       expect(payments.first.hasReceipt, isTrue);
       expect(payments.last.hasReceipt, isFalse);
+    });
+
+    test('the finance add-on reads as such in the history, not as a tier', () async {
+      when(() => api.listMyPayments(pageable: any(named: 'pageable'))).thenAnswer(
+        (_) async => ok(
+          PageResponsePaymentSummary((b) => b
+            ..content = ListBuilder([
+              PaymentSummary((s) => s
+                ..paymentId = 'pay-3'
+                ..purpose = PaymentSummaryPurposeEnum.FINANCE_ADDON
+                ..status = PaymentSummaryStatusEnum.CONFIRMED),
+            ])),
+        ),
+      );
+
+      expect((await repository.payments()).single.purchase, const FinanceAddonPurchase());
     });
 
     test('reads one payment as the settlement source of truth', () async {

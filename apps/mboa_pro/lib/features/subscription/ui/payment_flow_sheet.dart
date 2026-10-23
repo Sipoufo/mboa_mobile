@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/subscribe_bloc.dart';
@@ -15,7 +14,7 @@ import '../models/subscription_models.dart';
 /// leave the prestataire with no idea whether they were charged.
 Future<void> showPaymentFlowSheet(
   BuildContext context, {
-  required SubscriptionTier tier,
+  required Purchase purchase,
   required PaymentMethod method,
 }) {
   return showModalBottomSheet<void>(
@@ -25,7 +24,7 @@ Future<void> showPaymentFlowSheet(
     isScrollControlled: true,
     builder: (_) => BlocProvider<SubscribeBloc>(
       create: (_) => getIt<SubscribeBloc>()
-        ..add(SubscribeRequested(tier: tier, method: method)),
+        ..add(SubscribeRequested(purchase: purchase, method: method)),
       child: const _PaymentFlowView(),
     ),
   );
@@ -145,7 +144,7 @@ class _Confirmed extends StatelessWidget {
         Text(l10n.paymentConfirmedTitle, style: context.mboaText.h3),
         const SizedBox(height: Dimens.spacingSm),
         Text(
-          l10n.paymentConfirmedBody(attempt.tier.label),
+          l10n.paymentConfirmedBody(attempt.purchase.label(l10n)),
           style: context.mboaText.body.copyWith(color: colors.textSecondary),
           textAlign: TextAlign.center,
         ),

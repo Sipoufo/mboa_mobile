@@ -6197,5 +6197,98 @@
   "searchLocationOpenSettings": "Ouvrir les réglages",
   "@searchLocationOpenSettings": {
     "description": "Location sheet button"
+  },
+  "financeAddonName": "Gestion financière",
+  "@financeAddonName": {
+    "description": "M24–M26 — the paid add-on (RM-M13-09), as a payment names it"
+  },
+  "financeIntro": "Tes factures, ton registre et tes intervenants : ce qui se paie et s'encaisse pour tes biens, au même endroit.",
+  "@financeIntro": {
+    "description": "M24–M26 hub — what the add-on is"
+  },
+  "financeInvoicesHint": "Eau, électricité, charges : facture tes locataires et suis les règlements.",
+  "@financeInvoicesHint": {
+    "description": "M24 row"
+  },
+  "financeLedgerTitle": "Registre",
+  "@financeLedgerTitle": {
+    "description": "M25 — the ledger"
+  },
+  "financeLedgerHint": "Tes entrées et sorties, bien par bien, avec le solde et l'export CSV.",
+  "@financeLedgerHint": {
+    "description": "M25 row"
+  },
+  "financeProvidersTitle": "Intervenants",
+  "@financeProvidersTitle": {
+    "description": "M26 — the service providers"
+  },
+  "financeProvidersHint": "Plombier, ménage, électricien : ce que tu leur as payé, et pour quel bien.",
+  "@financeProvidersHint": {
+    "description": "M26 row"
+  },
+  "financeNoMoney": "Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.",
+  "@financeNoMoney": {
+    "description": "RM-M24-05 / RM-M25-01"
+  },
+  "financePrice": "{price} pour 30 jours",
+  "@financePrice": {
+    "description": "Add-on price",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeActivate": "Activer pour {price}",
+  "@financeActivate": {
+    "description": "Add-on: the main action, never subscribed",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeReactivate": "Réactiver pour {price}",
+  "@financeReactivate": {
+    "description": "Add-on: the main action, expired",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeExtend": "Prolonger de 30 jours",
+  "@financeExtend": {
+    "description": "Add-on: running, add a period after it"
+  },
+  "financeActiveUntil": "Active jusqu'au {date}",
+  "@financeActiveUntil": {
+    "description": "Add-on running",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financeExpiredOn": "Expirée le {date}",
+  "@financeExpiredOn": {
+    "description": "Add-on expired",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financeExpiredBody": "Tout ce que tu as noté reste consultable et exportable. Pour ajouter ou modifier, réactive l'option.",
+  "@financeExpiredBody": {
+    "description": "Add-on expired: what still works"
+  },
+  "financeIncluded": "Ce qui est inclus",
+  "@financeIncluded": {
+    "description": "Add-on: section title"
+  },
+  "financeOffline": "Hors ligne : la gestion financière telle qu'à ta dernière connexion.",
+  "@financeOffline": {
+    "description": "Finance offline"
   }
 }

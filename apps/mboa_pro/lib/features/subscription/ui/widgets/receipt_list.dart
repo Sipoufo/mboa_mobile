@@ -120,7 +120,7 @@ class _ReceiptTileState extends State<_ReceiptTile> {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Icon(LucideIcons.receipt, color: colors.primary),
-      title: Text(payment.tier.label, style: context.mboaText.label),
+      title: Text(payment.purchase.label(I18n.of(context)), style: context.mboaText.label),
       subtitle: Text(
         [
           if (payment.amount != null) '${payment.amount} FCFA',

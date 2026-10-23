@@ -98,6 +98,8 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: IncomingReservationRoute.page, path: 'reservations/:id'),
             // M30 — "Loyers": the declared payments and the tenants' spaces.
             AutoRoute(page: RentsRoute.page, path: 'rents'),
+            // M24–M26 — « Gestion financière », the paid add-on.
+            AutoRoute(page: FinanceRoute.page, path: 'finance'),
             AutoRoute(page: ReceivedDeclarationRoute.page, path: 'rents/declarations/:declarationId'),
             AutoRoute(page: TenantHomeRoute.page, path: 'rents/homes/:contractId'),
             // M30 lot 3 — tenants' requests: the inbox, one home's, one

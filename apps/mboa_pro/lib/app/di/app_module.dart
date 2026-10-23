@@ -1,6 +1,8 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/finance/bloc/finance_addon_bloc.dart';
+import '../../features/finance/data/finance_addon_repository.dart';
 import '../../features/annonces/bloc/listing_stats_bloc.dart';
 import '../../features/password_reset/bloc/password_reset_bloc.dart';
 import '../../features/password_reset/data/password_reset_repository.dart';
@@ -432,6 +434,11 @@ void registerAppModule() {
   getIt.registerLazySingleton<SubscriptionBloc>(
     () => SubscriptionBloc(repository: getIt<SubscriptionRepository>()),
   );
+  // M24–M26 — « Gestion financière ».
+  getIt.registerLazySingleton<FinanceAddonRepository>(
+    () => FinanceAddonRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactory<FinanceAddonBloc>(() => FinanceAddonBloc(repository: getIt<FinanceAddonRepository>()));
   getIt.registerFactory<SubscribeBloc>(
     () => SubscribeBloc(repository: getIt<SubscriptionRepository>()),
   );

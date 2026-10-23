@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:clock/clock.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 
 import '../data/subscription_repository.dart';
 import '../models/subscription_models.dart';
@@ -11,8 +10,9 @@ import '../models/subscription_models.dart';
 part 'subscribe_event.dart';
 part 'subscribe_state.dart';
 
-/// The checkout flow (CDC M13): pick a tier, pick a Mobile Money provider, pay
-/// on the handset, wait for confirmation.
+/// The checkout flow (CDC M13): pick a tier — or the « Gestion financière »
+/// add-on (RM-M13-09) —, pick a Mobile Money provider, pay on the handset,
+/// wait for confirmation.
 ///
 /// Separate from `SubscriptionBloc` because it is a transient, multi-step flow —
 /// the same split as `ProfileBloc` vs `ChangePasswordCubit`. Created per flow,
@@ -59,7 +59,7 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
   ) async {
     final current = state;
     if (current is! SubscribeFailure) return;
-    await _run(current.tier, current.method, emit);
+    await _run(current.purchase, current.method, emit);
   }
 
   Future<void> _onRequested(
@@ -68,33 +68,33 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
   ) async {
     // A new purchase is a new charge; a retry of the same one is not.
     _idempotencyKey = SubscriptionRepository.newIdempotencyKey();
-    await _run(event.tier, event.method, emit);
+    await _run(event.purchase, event.method, emit);
   }
 
   Future<void> _run(
-    SubscriptionTier tier,
+    Purchase purchase,
     PaymentMethod method,
     Emitter<SubscribeState> emit,
   ) async {
     _method = method;
-    emit(SubscribeInitiating(tier: tier, method: method));
+    emit(SubscribeInitiating(purchase: purchase, method: method));
 
     final PaymentAttempt attempt;
     try {
       attempt = await _repository.subscribe(
-        tier: tier,
+        purchase: purchase,
         method: method,
         idempotencyKey: _idempotencyKey ??= SubscriptionRepository.newIdempotencyKey(),
       );
     } catch (_) {
-      emit(SubscribeFailure(tier: tier, method: method));
+      emit(SubscribeFailure(purchase: purchase, method: method));
       return;
     }
 
     // The provider can settle synchronously; don't poll if it already has.
     switch (attempt.status) {
       case PaymentStatus.confirmed:
-        emit(SubscribeConfirmed(attempt: attempt, plan: await _safePlan()));
+        emit(SubscribeConfirmed(attempt: attempt, plan: await _planAfter(purchase)));
         return;
       case PaymentStatus.failed:
       case PaymentStatus.cancelled:
@@ -102,19 +102,19 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       // failure in the ledger, identical here: there is nothing left to wait
       // for, so it must not fall through to the poll.
       case PaymentStatus.refunded:
-        emit(SubscribeFailure(tier: tier, method: method, attempt: attempt));
+        emit(SubscribeFailure(purchase: purchase, method: method, attempt: attempt));
         return;
       case PaymentStatus.pending:
         break;
     }
 
     emit(SubscribeAwaitingConfirmation(attempt: attempt));
-    await _awaitConfirmation(tier, attempt, emit);
+    await _awaitConfirmation(purchase, attempt, emit);
   }
 
   /// Polls the payment until it settles, or [pollTimeout] elapses.
   Future<void> _awaitConfirmation(
-    SubscriptionTier tier,
+    Purchase purchase,
     PaymentAttempt attempt,
     Emitter<SubscribeState> emit,
   ) async {
@@ -129,14 +129,14 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       final settled = await _safePayment(attempt.paymentId);
       switch (settled?.status) {
         case PaymentStatus.confirmed:
-          emit(SubscribeConfirmed(attempt: settled!, plan: await _safePlan()));
+          emit(SubscribeConfirmed(attempt: settled!, plan: await _planAfter(purchase)));
           return;
         case PaymentStatus.failed:
         case PaymentStatus.cancelled:
         case PaymentStatus.refunded:
           // Reported now rather than after the full timeout — watching the tier
           // could never tell a rejection from "not yet".
-          emit(SubscribeFailure(tier: tier, method: _method, attempt: settled));
+          emit(SubscribeFailure(purchase: purchase, method: _method, attempt: settled));
           return;
         case PaymentStatus.pending:
         case null:
@@ -158,6 +158,10 @@ class SubscribeBloc extends Bloc<SubscribeEvent, SubscribeState> {
       return null;
     }
   }
+
+  /// A tier changes the plan; the add-on does not.
+  Future<SubscriptionPlan?> _planAfter(Purchase purchase) async =>
+      purchase is TierPurchase ? _safePlan() : null;
 
   Future<SubscriptionPlan?> _safePlan() async {
     try {

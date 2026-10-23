@@ -15316,6 +15316,176 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Gestion financière`
+  String get financeAddonName {
+    return Intl.message(
+      'Gestion financière',
+      name: 'financeAddonName',
+      desc: 'M24–M26 — the paid add-on (RM-M13-09), as a payment names it',
+      args: [],
+    );
+  }
+
+  /// `Tes factures, ton registre et tes intervenants : ce qui se paie et s'encaisse pour tes biens, au même endroit.`
+  String get financeIntro {
+    return Intl.message(
+      'Tes factures, ton registre et tes intervenants : ce qui se paie et s\'encaisse pour tes biens, au même endroit.',
+      name: 'financeIntro',
+      desc: 'M24–M26 hub — what the add-on is',
+      args: [],
+    );
+  }
+
+  /// `Eau, électricité, charges : facture tes locataires et suis les règlements.`
+  String get financeInvoicesHint {
+    return Intl.message(
+      'Eau, électricité, charges : facture tes locataires et suis les règlements.',
+      name: 'financeInvoicesHint',
+      desc: 'M24 row',
+      args: [],
+    );
+  }
+
+  /// `Registre`
+  String get financeLedgerTitle {
+    return Intl.message(
+      'Registre',
+      name: 'financeLedgerTitle',
+      desc: 'M25 — the ledger',
+      args: [],
+    );
+  }
+
+  /// `Tes entrées et sorties, bien par bien, avec le solde et l'export CSV.`
+  String get financeLedgerHint {
+    return Intl.message(
+      'Tes entrées et sorties, bien par bien, avec le solde et l\'export CSV.',
+      name: 'financeLedgerHint',
+      desc: 'M25 row',
+      args: [],
+    );
+  }
+
+  /// `Intervenants`
+  String get financeProvidersTitle {
+    return Intl.message(
+      'Intervenants',
+      name: 'financeProvidersTitle',
+      desc: 'M26 — the service providers',
+      args: [],
+    );
+  }
+
+  /// `Plombier, ménage, électricien : ce que tu leur as payé, et pour quel bien.`
+  String get financeProvidersHint {
+    return Intl.message(
+      'Plombier, ménage, électricien : ce que tu leur as payé, et pour quel bien.',
+      name: 'financeProvidersHint',
+      desc: 'M26 row',
+      args: [],
+    );
+  }
+
+  /// `Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.`
+  String get financeNoMoney {
+    return Intl.message(
+      'Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.',
+      name: 'financeNoMoney',
+      desc: 'RM-M24-05 / RM-M25-01',
+      args: [],
+    );
+  }
+
+  /// `{price} pour 30 jours`
+  String financePrice(String price) {
+    return Intl.message(
+      '$price pour 30 jours',
+      name: 'financePrice',
+      desc: 'Add-on price',
+      args: [price],
+    );
+  }
+
+  /// `Activer pour {price}`
+  String financeActivate(String price) {
+    return Intl.message(
+      'Activer pour $price',
+      name: 'financeActivate',
+      desc: 'Add-on: the main action, never subscribed',
+      args: [price],
+    );
+  }
+
+  /// `Réactiver pour {price}`
+  String financeReactivate(String price) {
+    return Intl.message(
+      'Réactiver pour $price',
+      name: 'financeReactivate',
+      desc: 'Add-on: the main action, expired',
+      args: [price],
+    );
+  }
+
+  /// `Prolonger de 30 jours`
+  String get financeExtend {
+    return Intl.message(
+      'Prolonger de 30 jours',
+      name: 'financeExtend',
+      desc: 'Add-on: running, add a period after it',
+      args: [],
+    );
+  }
+
+  /// `Active jusqu'au {date}`
+  String financeActiveUntil(String date) {
+    return Intl.message(
+      'Active jusqu\'au $date',
+      name: 'financeActiveUntil',
+      desc: 'Add-on running',
+      args: [date],
+    );
+  }
+
+  /// `Expirée le {date}`
+  String financeExpiredOn(String date) {
+    return Intl.message(
+      'Expirée le $date',
+      name: 'financeExpiredOn',
+      desc: 'Add-on expired',
+      args: [date],
+    );
+  }
+
+  /// `Tout ce que tu as noté reste consultable et exportable. Pour ajouter ou modifier, réactive l'option.`
+  String get financeExpiredBody {
+    return Intl.message(
+      'Tout ce que tu as noté reste consultable et exportable. Pour ajouter ou modifier, réactive l\'option.',
+      name: 'financeExpiredBody',
+      desc: 'Add-on expired: what still works',
+      args: [],
+    );
+  }
+
+  /// `Ce qui est inclus`
+  String get financeIncluded {
+    return Intl.message(
+      'Ce qui est inclus',
+      name: 'financeIncluded',
+      desc: 'Add-on: section title',
+      args: [],
+    );
+  }
+
+  /// `Hors ligne : la gestion financière telle qu'à ta dernière connexion.`
+  String get financeOffline {
+    return Intl.message(
+      'Hors ligne : la gestion financière telle qu\'à ta dernière connexion.',
+      name: 'financeOffline',
+      desc: 'Finance offline',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -36,7 +36,7 @@ class _PlansPageState extends State<PlansPage> {
     final method = await showPaymentMethodSheet(context);
     if (method == null || !mounted) return;
 
-    await showPaymentFlowSheet(context, tier: option.tier, method: method);
+    await showPaymentFlowSheet(context, purchase: TierPurchase(option.tier), method: method);
     if (!mounted) return;
 
     // Whatever the outcome, re-read the plan — the tier may have changed.

@@ -16,12 +16,13 @@ void main() {
   late MockSubscriptionRepository repository;
 
   const tier = SubscriptionTier.basicPlus;
+  const purchase = TierPurchase(tier);
   const method = PaymentMethod.mtnMomo;
 
-  const pending = PaymentAttempt(paymentId: 'pay-1', tier: tier);
+  const pending = PaymentAttempt(paymentId: 'pay-1', purchase: purchase);
   const confirmed = PaymentAttempt(
     paymentId: 'pay-1',
-    tier: tier,
+    purchase: purchase,
     status: PaymentStatus.confirmed,
   );
 
@@ -29,6 +30,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(SubscriptionTier.gratuit);
+    registerFallbackValue(const FinanceAddonPurchase());
     registerFallbackValue(PaymentMethod.mtnMomo);
   });
 
@@ -42,7 +44,7 @@ void main() {
   void stubSubscribe(PaymentAttempt attempt) {
     when(
       () => repository.subscribe(
-        tier: any(named: 'tier'),
+        purchase: any(named: 'purchase'),
         method: any(named: 'method'),
         idempotencyKey: any(named: 'idempotencyKey'),
       ),
@@ -64,7 +66,7 @@ void main() {
         final bloc = build();
         final states = <SubscribeState>[];
         bloc.stream.listen(states.add);
-        bloc.add(const SubscribeRequested(tier: tier, method: method));
+        bloc.add(const SubscribeRequested(purchase: purchase, method: method));
         async.elapse(bloc.pollTimeout + bloc.pollInterval);
         unawaited(bloc.close());
         async.flushMicrotasks();
@@ -80,9 +82,9 @@ void main() {
       },
       build: build,
       act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
+          bloc.add(const SubscribeRequested(purchase: purchase, method: method)),
       expect: () => const [
-        SubscribeInitiating(tier: tier, method: method),
+        SubscribeInitiating(purchase: purchase, method: method),
         SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
       ],
     );
@@ -97,7 +99,7 @@ void main() {
       });
 
       expect(purchaseOnFakeTime(), const [
-        SubscribeInitiating(tier: tier, method: method),
+        SubscribeInitiating(purchase: purchase, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
         SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
       ]);
@@ -110,7 +112,7 @@ void main() {
       when(() => repository.payment(any())).thenAnswer(
         (_) async => const PaymentAttempt(
           paymentId: 'pay-1',
-          tier: tier,
+          purchase: purchase,
           status: PaymentStatus.failed,
         ),
       );
@@ -130,7 +132,7 @@ void main() {
         when(() => repository.payment(any())).thenAnswer(
           (_) async => const PaymentAttempt(
             paymentId: 'pay-1',
-            tier: tier,
+            purchase: purchase,
             status: PaymentStatus.refunded,
           ),
         );
@@ -148,7 +150,7 @@ void main() {
       // RM-M13-05 allows 15 minutes; the payment may still succeed, so this is
       // explicitly not a failure state.
       expect(purchaseOnFakeTime(), const [
-        SubscribeInitiating(tier: tier, method: method),
+        SubscribeInitiating(purchase: purchase, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
         SubscribePendingHandoff(attempt: pending),
       ]);
@@ -166,7 +168,7 @@ void main() {
       });
 
       expect(purchaseOnFakeTime(), const [
-        SubscribeInitiating(tier: tier, method: method),
+        SubscribeInitiating(purchase: purchase, method: method),
         SubscribeAwaitingConfirmation(attempt: pending),
         SubscribeConfirmed(attempt: confirmed, plan: paidPlan),
       ]);
@@ -180,7 +182,7 @@ void main() {
       setUp: () {
         when(
           () => repository.subscribe(
-            tier: any(named: 'tier'),
+            purchase: any(named: 'purchase'),
             method: any(named: 'method'),
             idempotencyKey: any(named: 'idempotencyKey'),
           ),
@@ -188,10 +190,10 @@ void main() {
       },
       build: build,
       act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
+          bloc.add(const SubscribeRequested(purchase: purchase, method: method)),
       expect: () => const [
-        SubscribeInitiating(tier: tier, method: method),
-        SubscribeFailure(tier: tier, method: method),
+        SubscribeInitiating(purchase: purchase, method: method),
+        SubscribeFailure(purchase: purchase, method: method),
       ],
     );
 
@@ -200,13 +202,13 @@ void main() {
       setUp: () => stubSubscribe(
         const PaymentAttempt(
           paymentId: 'pay-1',
-          tier: tier,
+          purchase: purchase,
           status: PaymentStatus.failed,
         ),
       ),
       build: build,
       act: (bloc) =>
-          bloc.add(const SubscribeRequested(tier: tier, method: method)),
+          bloc.add(const SubscribeRequested(purchase: purchase, method: method)),
       verify: (_) => verifyNever(() => repository.payment(any())),
     );
   });
@@ -215,14 +217,14 @@ void main() {
     test('reuses the key when retrying the same purchase', () async {
       when(
         () => repository.subscribe(
-          tier: any(named: 'tier'),
+          purchase: any(named: 'purchase'),
           method: any(named: 'method'),
           idempotencyKey: any(named: 'idempotencyKey'),
         ),
       ).thenThrow(Exception('boom'));
 
       final bloc = build()
-        ..add(const SubscribeRequested(tier: tier, method: method));
+        ..add(const SubscribeRequested(purchase: purchase, method: method));
       await expectLater(
         bloc.stream.firstWhere((s) => s is SubscribeFailure),
         completes,
@@ -236,7 +238,7 @@ void main() {
 
       final keys = verify(
         () => repository.subscribe(
-          tier: any(named: 'tier'),
+          purchase: any(named: 'purchase'),
           method: any(named: 'method'),
           idempotencyKey: captureAny(named: 'idempotencyKey'),
         ),
@@ -252,7 +254,7 @@ void main() {
       when(() => repository.myPlan()).thenAnswer((_) async => paidPlan);
 
       final bloc = build()
-        ..add(const SubscribeRequested(tier: tier, method: method));
+        ..add(const SubscribeRequested(purchase: purchase, method: method));
       await expectLater(
         bloc.stream.firstWhere((s) => s is SubscribeConfirmed),
         completes,
@@ -260,7 +262,7 @@ void main() {
 
       bloc.add(
         const SubscribeRequested(
-          tier: SubscriptionTier.pro,
+          purchase: TierPurchase(SubscriptionTier.pro),
           method: PaymentMethod.orangeMoney,
         ),
       );
@@ -271,7 +273,7 @@ void main() {
 
       final keys = verify(
         () => repository.subscribe(
-          tier: any(named: 'tier'),
+          purchase: any(named: 'purchase'),
           method: any(named: 'method'),
           idempotencyKey: captureAny(named: 'idempotencyKey'),
         ),

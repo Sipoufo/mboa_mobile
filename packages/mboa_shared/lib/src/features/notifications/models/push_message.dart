@@ -105,6 +105,9 @@ enum PushType {
   /// answered: `entityId` = the request, for either party.
   homeRequest,
 
+  /// M24–M26 — N-26, about the « Gestion financière » add-on (its period).
+  financeAddon,
+
   unknown;
 
   static PushType parse(String? raw) =>
@@ -122,6 +125,7 @@ enum PushType {
         'INVOICE' => PushType.invoice,
         'HOME_EVIDENCE' => PushType.homeEvidence,
         'HOME_REQUEST' => PushType.homeRequest,
+        'FINANCE_ADDON' => PushType.financeAddon,
         _ => PushType.unknown,
       };
 }

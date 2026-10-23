@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:mboa_core/mboa_core.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 
 import '../models/subscription_models.dart';
 
@@ -42,23 +41,32 @@ class SubscriptionRepository {
   /// request cannot charge twice. Generate one per attempt with
   /// [newIdempotencyKey] and reuse it.
   Future<PaymentAttempt> subscribe({
-    required SubscriptionTier tier,
+    required Purchase purchase,
     required PaymentMethod method,
     required String idempotencyKey,
   }) async {
-    final response = await _api.subscribe(
-      idempotencyKey: idempotencyKey,
-      subscribeRequest: SubscribeRequest((b) => b
-        ..tier = tier.asRequest
-        ..method = method.asRequest),
-    );
+    final response = switch (purchase) {
+      TierPurchase(:final tier) => await _api.subscribe(
+          idempotencyKey: idempotencyKey,
+          subscribeRequest: SubscribeRequest((b) => b
+            ..tier = tier.asRequest
+            ..method = method.asRequest),
+        ),
+      // M24–M26 — the same flow, its own route (RM-M13-09).
+      FinanceAddonPurchase() => await _dioClient.api.getFinanceAddOnApi().subscribeFinanceAddon(
+          idempotencyKey: idempotencyKey,
+          subscribeAddonRequest: SubscribeAddonRequest(
+            (b) => b..method = SubscribeAddonRequestMethodEnum.valueOf(method.asRequest.name),
+          ),
+        ),
+    };
 
     final data = response.data;
     if (data == null) {
       throw StateError('subscribe returned no payment');
     }
 
-    return PaymentAttempt.fromResponse(data, tier: tier);
+    return PaymentAttempt.fromResponse(data, purchase: purchase);
   }
 
   /// A signed URL for the payment receipt (RM-M13-07).

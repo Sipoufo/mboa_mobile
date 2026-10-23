@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 /// Maps the generated tier enums onto the shared [SubscriptionTier] that
@@ -120,11 +121,42 @@ enum PaymentMethod {
 /// promising a notification.
 enum PaymentStatus { pending, confirmed, failed, cancelled, refunded }
 
+/// What a payment buys (CDC M13): a tier, or 30 days of the « Gestion
+/// financière » add-on (RM-M13-09) — the same Mobile Money flow for both.
+sealed class Purchase extends Equatable {
+  const Purchase();
+
+  String label(I18n l10n);
+}
+
+final class TierPurchase extends Purchase {
+  const TierPurchase(this.tier);
+
+  final SubscriptionTier tier;
+
+  @override
+  String label(I18n l10n) => tier.label;
+
+  @override
+  List<Object?> get props => [tier];
+}
+
+/// M24–M26 — added after the running period, if any.
+final class FinanceAddonPurchase extends Purchase {
+  const FinanceAddonPurchase();
+
+  @override
+  String label(I18n l10n) => l10n.financeAddonName;
+
+  @override
+  List<Object?> get props => [];
+}
+
 /// One payment, from initiation or from the server's history.
 class PaymentAttempt extends Equatable {
   const PaymentAttempt({
     required this.paymentId,
-    required this.tier,
+    required this.purchase,
     this.providerRef,
     this.amount,
     this.status = PaymentStatus.pending,
@@ -134,7 +166,7 @@ class PaymentAttempt extends Equatable {
   });
 
   final String paymentId;
-  final SubscriptionTier tier;
+  final Purchase purchase;
 
   /// Provider-side reference, shown so support can trace a payment.
   final String? providerRef;
@@ -149,11 +181,11 @@ class PaymentAttempt extends Equatable {
 
   static PaymentAttempt fromResponse(
     PaymentInitiatedResponse response, {
-    required SubscriptionTier tier,
+    required Purchase purchase,
   }) =>
       PaymentAttempt(
         paymentId: response.paymentId ?? '',
-        tier: tier,
+        purchase: purchase,
         providerRef: response.providerRef,
         amount: response.amount,
         status: switch (response.status) {
@@ -173,12 +205,14 @@ class PaymentAttempt extends Equatable {
   /// replaced the device-local cache.
   static PaymentAttempt fromSummary(PaymentSummary summary) => PaymentAttempt(
         paymentId: summary.paymentId ?? '',
-        tier: switch (summary.tier) {
-          PaymentSummaryTierEnum.BASIC_PLUS => SubscriptionTier.basicPlus,
-          PaymentSummaryTierEnum.PRO => SubscriptionTier.pro,
-          PaymentSummaryTierEnum.PRO_PLUS => SubscriptionTier.proPlus,
-          _ => SubscriptionTier.gratuit,
-        },
+        purchase: summary.purpose == PaymentSummaryPurposeEnum.FINANCE_ADDON
+            ? const FinanceAddonPurchase()
+            : TierPurchase(switch (summary.tier) {
+                PaymentSummaryTierEnum.BASIC_PLUS => SubscriptionTier.basicPlus,
+                PaymentSummaryTierEnum.PRO => SubscriptionTier.pro,
+                PaymentSummaryTierEnum.PRO_PLUS => SubscriptionTier.proPlus,
+                _ => SubscriptionTier.gratuit,
+              }),
         amount: summary.amount,
         status: switch (summary.status) {
           PaymentSummaryStatusEnum.CONFIRMED => PaymentStatus.confirmed,
@@ -197,5 +231,5 @@ class PaymentAttempt extends Equatable {
 
   @override
   List<Object?> get props =>
-      [paymentId, tier, providerRef, amount, status, initiatedAt, hasReceipt];
+      [paymentId, purchase, providerRef, amount, status, initiatedAt, hasReceipt];
 }

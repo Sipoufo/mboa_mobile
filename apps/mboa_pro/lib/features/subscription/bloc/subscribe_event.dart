@@ -9,13 +9,13 @@ sealed class SubscribeEvent extends Equatable {
 
 /// Starts a new purchase — a new charge, so a new idempotency key.
 final class SubscribeRequested extends SubscribeEvent {
-  const SubscribeRequested({required this.tier, required this.method});
+  const SubscribeRequested({required this.purchase, required this.method});
 
-  final SubscriptionTier tier;
+  final Purchase purchase;
   final PaymentMethod method;
 
   @override
-  List<Object?> get props => [tier, method];
+  List<Object?> get props => [purchase, method];
 }
 
 /// Retries the *same* purchase after a failure, reusing the idempotency key so
