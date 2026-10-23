@@ -33,14 +33,14 @@ abstract class SignalementResponse implements Built<SignalementResponse, Signale
 
   @BuiltValueField(wireName: r'targetType')
   SignalementResponseTargetTypeEnum? get targetType;
-  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  };
+  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  CONTRACT,  DECLARATION,  EVIDENCE,  };
 
   @BuiltValueField(wireName: r'targetId')
   String? get targetId;
 
   @BuiltValueField(wireName: r'reason')
   SignalementResponseReasonEnum? get reason;
-  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  };
+  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  DISPUTE,  };
 
   @BuiltValueField(wireName: r'comment')
   String? get comment;
@@ -366,6 +366,12 @@ class SignalementResponseTargetTypeEnum extends EnumClass {
   static const SignalementResponseTargetTypeEnum MESSAGE = _$signalementResponseTargetTypeEnum_MESSAGE;
   @BuiltValueEnumConst(wireName: r'REVIEW')
   static const SignalementResponseTargetTypeEnum REVIEW = _$signalementResponseTargetTypeEnum_REVIEW;
+  @BuiltValueEnumConst(wireName: r'CONTRACT')
+  static const SignalementResponseTargetTypeEnum CONTRACT = _$signalementResponseTargetTypeEnum_CONTRACT;
+  @BuiltValueEnumConst(wireName: r'DECLARATION')
+  static const SignalementResponseTargetTypeEnum DECLARATION = _$signalementResponseTargetTypeEnum_DECLARATION;
+  @BuiltValueEnumConst(wireName: r'EVIDENCE')
+  static const SignalementResponseTargetTypeEnum EVIDENCE = _$signalementResponseTargetTypeEnum_EVIDENCE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const SignalementResponseTargetTypeEnum unknownDefaultOpenApi = _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi;
 
@@ -389,6 +395,8 @@ class SignalementResponseReasonEnum extends EnumClass {
   static const SignalementResponseReasonEnum HARASSMENT = _$signalementResponseReasonEnum_HARASSMENT;
   @BuiltValueEnumConst(wireName: r'ASKED_FOR_MONEY')
   static const SignalementResponseReasonEnum ASKED_FOR_MONEY = _$signalementResponseReasonEnum_ASKED_FOR_MONEY;
+  @BuiltValueEnumConst(wireName: r'DISPUTE')
+  static const SignalementResponseReasonEnum DISPUTE = _$signalementResponseReasonEnum_DISPUTE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const SignalementResponseReasonEnum unknownDefaultOpenApi = _$signalementResponseReasonEnum_unknownDefaultOpenApi;
 

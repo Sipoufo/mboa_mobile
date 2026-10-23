@@ -17,6 +17,7 @@ import 'package:api_client/src/api/admin_kpis_api.dart';
 import 'package:api_client/src/api/admin_kyc_api.dart';
 import 'package:api_client/src/api/admin_mboa_score_api.dart';
 import 'package:api_client/src/api/admin_modration_api.dart';
+import 'package:api_client/src/api/admin_quittances_api.dart';
 import 'package:api_client/src/api/admin_subscriptions_api.dart';
 import 'package:api_client/src/api/admin_type_change_api.dart';
 import 'package:api_client/src/api/admin_utilisateurs_api.dart';
@@ -206,6 +207,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   AdminModrationApi getAdminModrationApi() {
     return AdminModrationApi(dio, serializers);
+  }
+
+  /// Get AdminQuittancesApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminQuittancesApi getAdminQuittancesApi() {
+    return AdminQuittancesApi(dio, serializers);
   }
 
   /// Get AdminSubscriptionsApi instance, base route and serializer can be overridden by a given but be careful,

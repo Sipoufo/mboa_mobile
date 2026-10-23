@@ -12,6 +12,13 @@ const AdminReportLineTargetTypeEnum _$adminReportLineTargetTypeEnum_MESSAGE =
     const AdminReportLineTargetTypeEnum._('MESSAGE');
 const AdminReportLineTargetTypeEnum _$adminReportLineTargetTypeEnum_REVIEW =
     const AdminReportLineTargetTypeEnum._('REVIEW');
+const AdminReportLineTargetTypeEnum _$adminReportLineTargetTypeEnum_CONTRACT =
+    const AdminReportLineTargetTypeEnum._('CONTRACT');
+const AdminReportLineTargetTypeEnum
+_$adminReportLineTargetTypeEnum_DECLARATION =
+    const AdminReportLineTargetTypeEnum._('DECLARATION');
+const AdminReportLineTargetTypeEnum _$adminReportLineTargetTypeEnum_EVIDENCE =
+    const AdminReportLineTargetTypeEnum._('EVIDENCE');
 const AdminReportLineTargetTypeEnum
 _$adminReportLineTargetTypeEnum_unknownDefaultOpenApi =
     const AdminReportLineTargetTypeEnum._('unknownDefaultOpenApi');
@@ -26,6 +33,12 @@ AdminReportLineTargetTypeEnum _$adminReportLineTargetTypeEnumValueOf(
       return _$adminReportLineTargetTypeEnum_MESSAGE;
     case 'REVIEW':
       return _$adminReportLineTargetTypeEnum_REVIEW;
+    case 'CONTRACT':
+      return _$adminReportLineTargetTypeEnum_CONTRACT;
+    case 'DECLARATION':
+      return _$adminReportLineTargetTypeEnum_DECLARATION;
+    case 'EVIDENCE':
+      return _$adminReportLineTargetTypeEnum_EVIDENCE;
     case 'unknownDefaultOpenApi':
       return _$adminReportLineTargetTypeEnum_unknownDefaultOpenApi;
     default:
@@ -39,6 +52,9 @@ _$adminReportLineTargetTypeEnumValues = BuiltSet<AdminReportLineTargetTypeEnum>(
     _$adminReportLineTargetTypeEnum_ANNONCE,
     _$adminReportLineTargetTypeEnum_MESSAGE,
     _$adminReportLineTargetTypeEnum_REVIEW,
+    _$adminReportLineTargetTypeEnum_CONTRACT,
+    _$adminReportLineTargetTypeEnum_DECLARATION,
+    _$adminReportLineTargetTypeEnum_EVIDENCE,
     _$adminReportLineTargetTypeEnum_unknownDefaultOpenApi,
   ],
 );
@@ -54,6 +70,8 @@ const AdminReportLineReasonEnum _$adminReportLineReasonEnum_HARASSMENT =
     const AdminReportLineReasonEnum._('HARASSMENT');
 const AdminReportLineReasonEnum _$adminReportLineReasonEnum_ASKED_FOR_MONEY =
     const AdminReportLineReasonEnum._('ASKED_FOR_MONEY');
+const AdminReportLineReasonEnum _$adminReportLineReasonEnum_DISPUTE =
+    const AdminReportLineReasonEnum._('DISPUTE');
 const AdminReportLineReasonEnum
 _$adminReportLineReasonEnum_unknownDefaultOpenApi =
     const AdminReportLineReasonEnum._('unknownDefaultOpenApi');
@@ -70,6 +88,8 @@ AdminReportLineReasonEnum _$adminReportLineReasonEnumValueOf(String name) {
       return _$adminReportLineReasonEnum_HARASSMENT;
     case 'ASKED_FOR_MONEY':
       return _$adminReportLineReasonEnum_ASKED_FOR_MONEY;
+    case 'DISPUTE':
+      return _$adminReportLineReasonEnum_DISPUTE;
     case 'unknownDefaultOpenApi':
       return _$adminReportLineReasonEnum_unknownDefaultOpenApi;
     default:
@@ -84,6 +104,7 @@ final BuiltSet<AdminReportLineReasonEnum> _$adminReportLineReasonEnumValues =
       _$adminReportLineReasonEnum_INAPPROPRIATE_CONTENT,
       _$adminReportLineReasonEnum_HARASSMENT,
       _$adminReportLineReasonEnum_ASKED_FOR_MONEY,
+      _$adminReportLineReasonEnum_DISPUTE,
       _$adminReportLineReasonEnum_unknownDefaultOpenApi,
     ]);
 
@@ -134,12 +155,18 @@ class _$AdminReportLineTargetTypeEnumSerializer
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
     'REVIEW': 'REVIEW',
+    'CONTRACT': 'CONTRACT',
+    'DECLARATION': 'DECLARATION',
+    'EVIDENCE': 'EVIDENCE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
     'REVIEW': 'REVIEW',
+    'CONTRACT': 'CONTRACT',
+    'DECLARATION': 'DECLARATION',
+    'EVIDENCE': 'EVIDENCE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -173,6 +200,7 @@ class _$AdminReportLineReasonEnumSerializer
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
     'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
+    'DISPUTE': 'DISPUTE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -181,6 +209,7 @@ class _$AdminReportLineReasonEnumSerializer
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
     'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
+    'DISPUTE': 'DISPUTE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

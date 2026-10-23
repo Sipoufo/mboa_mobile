@@ -86,6 +86,7 @@ import 'package:api_client/src/model/declare_invoice_payment_request.dart';
 import 'package:api_client/src/model/declare_payment_request.dart';
 import 'package:api_client/src/model/delete_account_request.dart';
 import 'package:api_client/src/model/deletion_challenge_response.dart';
+import 'package:api_client/src/model/dispute_dossier.dart';
 import 'package:api_client/src/model/due.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/evidence_batch_response.dart';
@@ -96,6 +97,7 @@ import 'package:api_client/src/model/evidence_room_comparison.dart';
 import 'package:api_client/src/model/evidence_upload.dart';
 import 'package:api_client/src/model/evidence_uploads_request.dart';
 import 'package:api_client/src/model/extend_subscription_request.dart';
+import 'package:api_client/src/model/failed_receipt.dart';
 import 'package:api_client/src/model/favori_response.dart';
 import 'package:api_client/src/model/field_error.dart';
 import 'package:api_client/src/model/finance_addon_response.dart';
@@ -149,6 +151,7 @@ import 'package:api_client/src/model/page_response_conversation_response.dart';
 import 'package:api_client/src/model/page_response_dashboard_item.dart';
 import 'package:api_client/src/model/page_response_declaration_response.dart';
 import 'package:api_client/src/model/page_response_evidence_batch_response.dart';
+import 'package:api_client/src/model/page_response_failed_receipt.dart';
 import 'package:api_client/src/model/page_response_favori_response.dart';
 import 'package:api_client/src/model/page_response_historique_response.dart';
 import 'package:api_client/src/model/page_response_home_receipt_response.dart';
@@ -186,6 +189,7 @@ import 'package:api_client/src/model/property_review.dart';
 import 'package:api_client/src/model/provider_card.dart';
 import 'package:api_client/src/model/rate_agent_request.dart';
 import 'package:api_client/src/model/receipt_pdf_response.dart';
+import 'package:api_client/src/model/receipt_regeneration.dart';
 import 'package:api_client/src/model/receipt_response.dart';
 import 'package:api_client/src/model/receipt_verification.dart';
 import 'package:api_client/src/model/record_evidence_request.dart';
@@ -357,6 +361,7 @@ part 'serializers.g.dart';
   DeclarePaymentRequest,
   DeleteAccountRequest,
   DeletionChallengeResponse,
+  DisputeDossier,
   Due,
   ErrorResponse,
   EvidenceBatchResponse,
@@ -367,6 +372,7 @@ part 'serializers.g.dart';
   EvidenceUpload,
   EvidenceUploadsRequest,
   ExtendSubscriptionRequest,
+  FailedReceipt,
   FavoriResponse,
   FieldError,
   FinanceAddonResponse,
@@ -420,6 +426,7 @@ part 'serializers.g.dart';
   PageResponseDashboardItem,
   PageResponseDeclarationResponse,
   PageResponseEvidenceBatchResponse,
+  PageResponseFailedReceipt,
   PageResponseFavoriResponse,
   PageResponseHistoriqueResponse,
   PageResponseHomeReceiptResponse,
@@ -457,6 +464,7 @@ part 'serializers.g.dart';
   ProviderCard,
   RateAgentRequest,
   ReceiptPdfResponse,
+  ReceiptRegeneration,
   ReceiptResponse,
   ReceiptVerification,
   RecordEvidenceRequest,
@@ -665,6 +673,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(AdminUserSummary)]),
         () => ListBuilder<AdminUserSummary>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(FailedReceipt)]),
+        () => ListBuilder<FailedReceipt>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(HomeRequestResponse)]),

@@ -22,6 +22,7 @@ doc/AdminModrationApi.md
 doc/AdminPaymentItem.md
 doc/AdminPhotoVerificationItem.md
 doc/AdminPrestataireBadgesResponse.md
+doc/AdminQuittancesApi.md
 doc/AdminReportLine.md
 doc/AdminSubscriptionDetail.md
 doc/AdminSubscriptionItem.md
@@ -95,6 +96,7 @@ doc/DeclareInvoicePaymentRequest.md
 doc/DeclarePaymentRequest.md
 doc/DeleteAccountRequest.md
 doc/DeletionChallengeResponse.md
+doc/DisputeDossier.md
 doc/Due.md
 doc/ErrorResponse.md
 doc/EvidenceBatchResponse.md
@@ -105,6 +107,7 @@ doc/EvidenceRoomComparison.md
 doc/EvidenceUpload.md
 doc/EvidenceUploadsRequest.md
 doc/ExtendSubscriptionRequest.md
+doc/FailedReceipt.md
 doc/FavoriResponse.md
 doc/FavorisApi.md
 doc/FieldError.md
@@ -173,6 +176,7 @@ doc/PageResponseConversationResponse.md
 doc/PageResponseDashboardItem.md
 doc/PageResponseDeclarationResponse.md
 doc/PageResponseEvidenceBatchResponse.md
+doc/PageResponseFailedReceipt.md
 doc/PageResponseFavoriResponse.md
 doc/PageResponseHistoriqueResponse.md
 doc/PageResponseHomeReceiptResponse.md
@@ -216,6 +220,7 @@ doc/ProviderCard.md
 doc/QuittancesApi.md
 doc/RateAgentRequest.md
 doc/ReceiptPdfResponse.md
+doc/ReceiptRegeneration.md
 doc/ReceiptResponse.md
 doc/ReceiptVerification.md
 doc/RecordEvidenceRequest.md
@@ -333,6 +338,7 @@ lib/src/api/admin_kpis_api.dart
 lib/src/api/admin_kyc_api.dart
 lib/src/api/admin_mboa_score_api.dart
 lib/src/api/admin_modration_api.dart
+lib/src/api/admin_quittances_api.dart
 lib/src/api/admin_subscriptions_api.dart
 lib/src/api/admin_type_change_api.dart
 lib/src/api/admin_utilisateurs_api.dart
@@ -461,6 +467,7 @@ lib/src/model/declare_invoice_payment_request.dart
 lib/src/model/declare_payment_request.dart
 lib/src/model/delete_account_request.dart
 lib/src/model/deletion_challenge_response.dart
+lib/src/model/dispute_dossier.dart
 lib/src/model/due.dart
 lib/src/model/error_response.dart
 lib/src/model/evidence_batch_response.dart
@@ -471,6 +478,7 @@ lib/src/model/evidence_room_comparison.dart
 lib/src/model/evidence_upload.dart
 lib/src/model/evidence_uploads_request.dart
 lib/src/model/extend_subscription_request.dart
+lib/src/model/failed_receipt.dart
 lib/src/model/favori_response.dart
 lib/src/model/field_error.dart
 lib/src/model/finance_addon_response.dart
@@ -524,6 +532,7 @@ lib/src/model/page_response_conversation_response.dart
 lib/src/model/page_response_dashboard_item.dart
 lib/src/model/page_response_declaration_response.dart
 lib/src/model/page_response_evidence_batch_response.dart
+lib/src/model/page_response_failed_receipt.dart
 lib/src/model/page_response_favori_response.dart
 lib/src/model/page_response_historique_response.dart
 lib/src/model/page_response_home_receipt_response.dart
@@ -561,6 +570,7 @@ lib/src/model/property_review.dart
 lib/src/model/provider_card.dart
 lib/src/model/rate_agent_request.dart
 lib/src/model/receipt_pdf_response.dart
+lib/src/model/receipt_regeneration.dart
 lib/src/model/receipt_response.dart
 lib/src/model/receipt_verification.dart
 lib/src/model/record_evidence_request.dart
@@ -679,6 +689,7 @@ test/admin_modration_api_test.dart
 test/admin_payment_item_test.dart
 test/admin_photo_verification_item_test.dart
 test/admin_prestataire_badges_response_test.dart
+test/admin_quittances_api_test.dart
 test/admin_report_line_test.dart
 test/admin_subscription_detail_test.dart
 test/admin_subscription_item_test.dart
@@ -752,6 +763,7 @@ test/declare_invoice_payment_request_test.dart
 test/declare_payment_request_test.dart
 test/delete_account_request_test.dart
 test/deletion_challenge_response_test.dart
+test/dispute_dossier_test.dart
 test/due_test.dart
 test/error_response_test.dart
 test/evidence_batch_response_test.dart
@@ -762,6 +774,7 @@ test/evidence_room_comparison_test.dart
 test/evidence_upload_test.dart
 test/evidence_uploads_request_test.dart
 test/extend_subscription_request_test.dart
+test/failed_receipt_test.dart
 test/favori_response_test.dart
 test/favoris_api_test.dart
 test/field_error_test.dart
@@ -830,6 +843,7 @@ test/page_response_conversation_response_test.dart
 test/page_response_dashboard_item_test.dart
 test/page_response_declaration_response_test.dart
 test/page_response_evidence_batch_response_test.dart
+test/page_response_failed_receipt_test.dart
 test/page_response_favori_response_test.dart
 test/page_response_historique_response_test.dart
 test/page_response_home_receipt_response_test.dart
@@ -873,6 +887,7 @@ test/provider_card_test.dart
 test/quittances_api_test.dart
 test/rate_agent_request_test.dart
 test/receipt_pdf_response_test.dart
+test/receipt_regeneration_test.dart
 test/receipt_response_test.dart
 test/receipt_verification_test.dart
 test/record_evidence_request_test.dart

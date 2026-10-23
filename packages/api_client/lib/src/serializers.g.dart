@@ -149,6 +149,8 @@ Serializers _$serializers =
           ..add(DeclarePaymentRequestMethodEnum.serializer)
           ..add(DeleteAccountRequest.serializer)
           ..add(DeletionChallengeResponse.serializer)
+          ..add(DisputeDossier.serializer)
+          ..add(DisputeDossierRaisedByEnum.serializer)
           ..add(Due.serializer)
           ..add(DueStatusEnum.serializer)
           ..add(ErrorResponse.serializer)
@@ -165,6 +167,8 @@ Serializers _$serializers =
           ..add(EvidenceUpload.serializer)
           ..add(EvidenceUploadsRequest.serializer)
           ..add(ExtendSubscriptionRequest.serializer)
+          ..add(FailedReceipt.serializer)
+          ..add(FailedReceiptKindEnum.serializer)
           ..add(FavoriResponse.serializer)
           ..add(FavoriResponseRentalPeriodEnum.serializer)
           ..add(FieldError.serializer)
@@ -251,6 +255,7 @@ Serializers _$serializers =
           ..add(PageResponseDashboardItem.serializer)
           ..add(PageResponseDeclarationResponse.serializer)
           ..add(PageResponseEvidenceBatchResponse.serializer)
+          ..add(PageResponseFailedReceipt.serializer)
           ..add(PageResponseFavoriResponse.serializer)
           ..add(PageResponseHistoriqueResponse.serializer)
           ..add(PageResponseHomeReceiptResponse.serializer)
@@ -304,6 +309,7 @@ Serializers _$serializers =
           ..add(ProviderCardTypeEnum.serializer)
           ..add(RateAgentRequest.serializer)
           ..add(ReceiptPdfResponse.serializer)
+          ..add(ReceiptRegeneration.serializer)
           ..add(ReceiptResponse.serializer)
           ..add(ReceiptVerification.serializer)
           ..add(ReceiptVerificationKindEnum.serializer)
@@ -618,6 +624,10 @@ Serializers _$serializers =
             () => ListBuilder<EvidencePhotoResponse>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(FailedReceipt)]),
+            () => ListBuilder<FailedReceipt>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(FavoriResponse)]),
             () => ListBuilder<FavoriResponse>(),
           )
@@ -694,6 +704,24 @@ Serializers _$serializers =
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(PaymentSummary)]),
             () => ListBuilder<PaymentSummary>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(PresignedDownload),
+            ]),
+            () => ListBuilder<PresignedDownload>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(DeclarationResponse),
+            ]),
+            () => ListBuilder<DeclarationResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(EvidenceBatchResponse),
+            ]),
+            () => ListBuilder<EvidenceBatchResponse>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(PropertyReview)]),

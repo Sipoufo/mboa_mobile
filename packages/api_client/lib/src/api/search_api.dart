@@ -364,7 +364,7 @@ class SearchApi {
   }
 
   /// Search listings and residences (city/district required; other filters cumulative)
-  /// 
+  /// With &#x60;lat&#x60; and &#x60;lng&#x60; (the user&#39;s position, both or neither), each card carries &#x60;distanceKm&#x60;, measured to the point it shows. &#x60;sort&#x3D;distance&#x60; puts the nearest first (ties by tier then recency); the default, &#x60;relevance&#x60;, is tier then recency. Each card carries its &#x60;rating&#x60;, as on the fiche — a residence&#39;s gathers all its units&#39; reviews.
   ///
   /// Parameters:
   /// * [cityId] 
@@ -380,6 +380,9 @@ class SearchApi {
   /// * [availableNow] 
   /// * [badges] - Doc 10 \"Badges requis\": only listings carrying every one of these
   /// * [amenities] - Only listings offering every one of these équipements
+  /// * [lat] - The user's latitude (WGS 84), with lng — only when they allowed it
+  /// * [lng] - The user's longitude (WGS 84), with lat
+  /// * [sort] - relevance (default: tier, then recency) or distance (nearest first; needs lat/lng)
   /// * [page] 
   /// * [size] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -405,6 +408,9 @@ class SearchApi {
     bool? availableNow,
     BuiltList<String>? badges,
     BuiltList<String>? amenities,
+    double? lat,
+    double? lng,
+    String? sort,
     int? page = 0,
     int? size = 20,
     CancelToken? cancelToken,
@@ -447,6 +453,9 @@ class SearchApi {
       if (availableNow != null) r'availableNow': encodeQueryParameter(_serializers, availableNow, const FullType(bool)),
       if (badges != null) r'badges': encodeCollectionQueryParameter<String>(_serializers, badges, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
       if (amenities != null) r'amenities': encodeCollectionQueryParameter<String>(_serializers, amenities, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
+      if (lat != null) r'lat': encodeQueryParameter(_serializers, lat, const FullType(double)),
+      if (lng != null) r'lng': encodeQueryParameter(_serializers, lng, const FullType(double)),
+      if (sort != null) r'sort': encodeQueryParameter(_serializers, sort, const FullType(String)),
       if (page != null) r'page': encodeQueryParameter(_serializers, page, const FullType(int)),
       if (size != null) r'size': encodeQueryParameter(_serializers, size, const FullType(int)),
     };

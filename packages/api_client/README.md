@@ -88,10 +88,13 @@ Class | Method | HTTP request | Description
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**rejectKycSubmission**](doc/AdminKYCApi.md#rejectkycsubmission) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
 [*AdminMboaScoreApi*](doc/AdminMboaScoreApi.md) | [**adjustMboaScore**](doc/AdminMboaScoreApi.md#adjustmboascore) | **POST** /api/v1/admin/users/{userId}/score/adjustments | Adjust a user&#39;s Mboa Score by hand, with a mandatory reason (RM-M18-05)
 [*AdminMboaScoreApi*](doc/AdminMboaScoreApi.md) | [**getAdminMboaScore**](doc/AdminMboaScoreApi.md#getadminmboascore) | **GET** /api/v1/admin/users/{userId}/score | A user&#39;s Mboa Score with its adjustment trail
+[*AdminModrationApi*](doc/AdminModrationApi.md) | [**getDisputeDossier**](doc/AdminModrationApi.md#getdisputedossier) | **GET** /api/v1/admin/signalements/{id}/dispute | A tenancy dispute&#39;s file: the home, the disputed piece with its proofs, and the home&#39;s record
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**listSignalements**](doc/AdminModrationApi.md#listsignalements) | **GET** /api/v1/admin/signalements | The moderation queue, oldest first; optionally filtered by status
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**rejectSignalement**](doc/AdminModrationApi.md#rejectsignalement) | **POST** /api/v1/admin/signalements/{id}/reject | Dismiss a report as a false positive
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**restoreAnnonce**](doc/AdminModrationApi.md#restoreannonce) | **POST** /api/v1/admin/annonces/{id}/restore | Restore a suspended listing (false positive — RM-M19-04)
 [*AdminModrationApi*](doc/AdminModrationApi.md) | [**validateSignalement**](doc/AdminModrationApi.md#validatesignalement) | **POST** /api/v1/admin/signalements/{id}/validate | Uphold a report; the 3rd upheld one on a listing suspends it automatically
+[*AdminQuittancesApi*](doc/AdminQuittancesApi.md) | [**adminListFailedReceipts**](doc/AdminQuittancesApi.md#adminlistfailedreceipts) | **GET** /api/v1/admin/receipts/failed | Receipts still without their PDF after the three attempts, oldest first
+[*AdminQuittancesApi*](doc/AdminQuittancesApi.md) | [**adminRegenerateReceiptPdf**](doc/AdminQuittancesApi.md#adminregeneratereceiptpdf) | **POST** /api/v1/admin/receipts/{id}/pdf | Try again to produce a receipt&#39;s PDF (CE-M08-02)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**extendSubscription**](doc/AdminSubscriptionsApi.md#extendsubscription) | **POST** /api/v1/admin/subscriptions/{accountId}/extend | Add days to a subscription, same tier, with a mandatory reason (RM-M21-04)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getAdminSubscription**](doc/AdminSubscriptionsApi.md#getadminsubscription) | **GET** /api/v1/admin/subscriptions/{accountId} | One prestataire&#39;s subscription, payments and admin adjustments
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getSubscriptionRecap**](doc/AdminSubscriptionsApi.md#getsubscriptionrecap) | **GET** /api/v1/admin/subscriptions/recap | Monthly recap: revenue, refunds, active prestataires and MRR per tier, exact FCFA (RM-M21-02)
@@ -338,7 +341,7 @@ Class | Method | HTTP request | Description
 [*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**listAnnonceReviews**](doc/SearchApi.md#listannoncereviews) | **GET** /api/v1/search/annonces/{id}/reviews | A property&#39;s reviews — visits and tenancies in one feed (RM-M27-05)
 [*SearchApi*](doc/SearchApi.md) | [**searchListings**](doc/SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
-[*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing, a message or a review; the reason must fit the target
+[*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing, a message or a review, or dispute a home; the reason must fit the target
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getMySubscription**](doc/SubscriptionsApi.md#getmysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPayment**](doc/SubscriptionsApi.md#getpayment) | **GET** /api/v1/subscriptions/payments/{id} | Get one payment&#39;s current status (poll this after initiating a payment)
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getPaymentReceipt**](doc/SubscriptionsApi.md#getpaymentreceipt) | **GET** /api/v1/subscriptions/payments/{id}/receipt | Get a short-lived URL to download a payment&#39;s PDF receipt
@@ -437,6 +440,7 @@ Class | Method | HTTP request | Description
  - [DeclarePaymentRequest](doc/DeclarePaymentRequest.md)
  - [DeleteAccountRequest](doc/DeleteAccountRequest.md)
  - [DeletionChallengeResponse](doc/DeletionChallengeResponse.md)
+ - [DisputeDossier](doc/DisputeDossier.md)
  - [Due](doc/Due.md)
  - [ErrorResponse](doc/ErrorResponse.md)
  - [EvidenceBatchResponse](doc/EvidenceBatchResponse.md)
@@ -447,6 +451,7 @@ Class | Method | HTTP request | Description
  - [EvidenceUpload](doc/EvidenceUpload.md)
  - [EvidenceUploadsRequest](doc/EvidenceUploadsRequest.md)
  - [ExtendSubscriptionRequest](doc/ExtendSubscriptionRequest.md)
+ - [FailedReceipt](doc/FailedReceipt.md)
  - [FavoriResponse](doc/FavoriResponse.md)
  - [FieldError](doc/FieldError.md)
  - [FinanceAddonResponse](doc/FinanceAddonResponse.md)
@@ -500,6 +505,7 @@ Class | Method | HTTP request | Description
  - [PageResponseDashboardItem](doc/PageResponseDashboardItem.md)
  - [PageResponseDeclarationResponse](doc/PageResponseDeclarationResponse.md)
  - [PageResponseEvidenceBatchResponse](doc/PageResponseEvidenceBatchResponse.md)
+ - [PageResponseFailedReceipt](doc/PageResponseFailedReceipt.md)
  - [PageResponseFavoriResponse](doc/PageResponseFavoriResponse.md)
  - [PageResponseHistoriqueResponse](doc/PageResponseHistoriqueResponse.md)
  - [PageResponseHomeReceiptResponse](doc/PageResponseHomeReceiptResponse.md)
@@ -537,6 +543,7 @@ Class | Method | HTTP request | Description
  - [ProviderCard](doc/ProviderCard.md)
  - [RateAgentRequest](doc/RateAgentRequest.md)
  - [ReceiptPdfResponse](doc/ReceiptPdfResponse.md)
+ - [ReceiptRegeneration](doc/ReceiptRegeneration.md)
  - [ReceiptResponse](doc/ReceiptResponse.md)
  - [ReceiptVerification](doc/ReceiptVerification.md)
  - [RecordEvidenceRequest](doc/RecordEvidenceRequest.md)

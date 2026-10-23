@@ -417,6 +417,10 @@ class _$SearchResultItem extends SearchResultItem {
   final BuiltList<SearchResultItemBadgesEnum>? badges;
   @override
   final bool? exactLocation;
+  @override
+  final PropertyRating? rating;
+  @override
+  final double? distanceKm;
 
   factory _$SearchResultItem([
     void Function(SearchResultItemBuilder)? updates,
@@ -442,6 +446,8 @@ class _$SearchResultItem extends SearchResultItem {
     this.availableFrom,
     this.badges,
     this.exactLocation,
+    this.rating,
+    this.distanceKm,
   }) : super._();
   @override
   SearchResultItem rebuild(void Function(SearchResultItemBuilder) updates) =>
@@ -473,7 +479,9 @@ class _$SearchResultItem extends SearchResultItem {
         longitude == other.longitude &&
         availableFrom == other.availableFrom &&
         badges == other.badges &&
-        exactLocation == other.exactLocation;
+        exactLocation == other.exactLocation &&
+        rating == other.rating &&
+        distanceKm == other.distanceKm;
   }
 
   @override
@@ -498,6 +506,8 @@ class _$SearchResultItem extends SearchResultItem {
     _$hash = $jc(_$hash, availableFrom.hashCode);
     _$hash = $jc(_$hash, badges.hashCode);
     _$hash = $jc(_$hash, exactLocation.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, distanceKm.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -523,7 +533,9 @@ class _$SearchResultItem extends SearchResultItem {
           ..add('longitude', longitude)
           ..add('availableFrom', availableFrom)
           ..add('badges', badges)
-          ..add('exactLocation', exactLocation))
+          ..add('exactLocation', exactLocation)
+          ..add('rating', rating)
+          ..add('distanceKm', distanceKm))
         .toString();
   }
 }
@@ -615,6 +627,15 @@ class SearchResultItemBuilder
   set exactLocation(bool? exactLocation) =>
       _$this._exactLocation = exactLocation;
 
+  PropertyRatingBuilder? _rating;
+  PropertyRatingBuilder get rating =>
+      _$this._rating ??= PropertyRatingBuilder();
+  set rating(PropertyRatingBuilder? rating) => _$this._rating = rating;
+
+  double? _distanceKm;
+  double? get distanceKm => _$this._distanceKm;
+  set distanceKm(double? distanceKm) => _$this._distanceKm = distanceKm;
+
   SearchResultItemBuilder() {
     SearchResultItem._defaults(this);
   }
@@ -641,6 +662,8 @@ class SearchResultItemBuilder
       _availableFrom = $v.availableFrom;
       _badges = $v.badges?.toBuilder();
       _exactLocation = $v.exactLocation;
+      _rating = $v.rating?.toBuilder();
+      _distanceKm = $v.distanceKm;
       _$v = null;
     }
     return this;
@@ -684,12 +707,17 @@ class SearchResultItemBuilder
             availableFrom: availableFrom,
             badges: _badges?.build(),
             exactLocation: exactLocation,
+            rating: _rating?.build(),
+            distanceKm: distanceKm,
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'badges';
         _badges?.build();
+
+        _$failedField = 'rating';
+        _rating?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'SearchResultItem',

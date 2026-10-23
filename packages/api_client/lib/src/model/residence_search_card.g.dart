@@ -123,6 +123,10 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
   final BuiltList<ResidenceSearchCardBadgesEnum>? badges;
   @override
   final bool? exactLocation;
+  @override
+  final PropertyRating? rating;
+  @override
+  final double? distanceKm;
 
   factory _$ResidenceSearchCard([
     void Function(ResidenceSearchCardBuilder)? updates,
@@ -143,6 +147,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
     this.longitude,
     this.badges,
     this.exactLocation,
+    this.rating,
+    this.distanceKm,
   }) : super._();
   @override
   ResidenceSearchCard rebuild(
@@ -170,7 +176,9 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
         latitude == other.latitude &&
         longitude == other.longitude &&
         badges == other.badges &&
-        exactLocation == other.exactLocation;
+        exactLocation == other.exactLocation &&
+        rating == other.rating &&
+        distanceKm == other.distanceKm;
   }
 
   @override
@@ -190,6 +198,8 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, badges.hashCode);
     _$hash = $jc(_$hash, exactLocation.hashCode);
+    _$hash = $jc(_$hash, rating.hashCode);
+    _$hash = $jc(_$hash, distanceKm.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -210,7 +220,9 @@ class _$ResidenceSearchCard extends ResidenceSearchCard {
           ..add('latitude', latitude)
           ..add('longitude', longitude)
           ..add('badges', badges)
-          ..add('exactLocation', exactLocation))
+          ..add('exactLocation', exactLocation)
+          ..add('rating', rating)
+          ..add('distanceKm', distanceKm))
         .toString();
   }
 }
@@ -284,6 +296,15 @@ class ResidenceSearchCardBuilder
   set exactLocation(bool? exactLocation) =>
       _$this._exactLocation = exactLocation;
 
+  PropertyRatingBuilder? _rating;
+  PropertyRatingBuilder get rating =>
+      _$this._rating ??= PropertyRatingBuilder();
+  set rating(PropertyRatingBuilder? rating) => _$this._rating = rating;
+
+  double? _distanceKm;
+  double? get distanceKm => _$this._distanceKm;
+  set distanceKm(double? distanceKm) => _$this._distanceKm = distanceKm;
+
   ResidenceSearchCardBuilder() {
     ResidenceSearchCard._defaults(this);
   }
@@ -305,6 +326,8 @@ class ResidenceSearchCardBuilder
       _longitude = $v.longitude;
       _badges = $v.badges?.toBuilder();
       _exactLocation = $v.exactLocation;
+      _rating = $v.rating?.toBuilder();
+      _distanceKm = $v.distanceKm;
       _$v = null;
     }
     return this;
@@ -343,6 +366,8 @@ class ResidenceSearchCardBuilder
             longitude: longitude,
             badges: _badges?.build(),
             exactLocation: exactLocation,
+            rating: _rating?.build(),
+            distanceKm: distanceKm,
           );
     } catch (_) {
       late String _$failedField;
@@ -352,6 +377,9 @@ class ResidenceSearchCardBuilder
 
         _$failedField = 'badges';
         _badges?.build();
+
+        _$failedField = 'rating';
+        _rating?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'ResidenceSearchCard',

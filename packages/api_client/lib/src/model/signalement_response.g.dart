@@ -16,6 +16,15 @@ const SignalementResponseTargetTypeEnum
 _$signalementResponseTargetTypeEnum_REVIEW =
     const SignalementResponseTargetTypeEnum._('REVIEW');
 const SignalementResponseTargetTypeEnum
+_$signalementResponseTargetTypeEnum_CONTRACT =
+    const SignalementResponseTargetTypeEnum._('CONTRACT');
+const SignalementResponseTargetTypeEnum
+_$signalementResponseTargetTypeEnum_DECLARATION =
+    const SignalementResponseTargetTypeEnum._('DECLARATION');
+const SignalementResponseTargetTypeEnum
+_$signalementResponseTargetTypeEnum_EVIDENCE =
+    const SignalementResponseTargetTypeEnum._('EVIDENCE');
+const SignalementResponseTargetTypeEnum
 _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi =
     const SignalementResponseTargetTypeEnum._('unknownDefaultOpenApi');
 
@@ -29,6 +38,12 @@ SignalementResponseTargetTypeEnum _$signalementResponseTargetTypeEnumValueOf(
       return _$signalementResponseTargetTypeEnum_MESSAGE;
     case 'REVIEW':
       return _$signalementResponseTargetTypeEnum_REVIEW;
+    case 'CONTRACT':
+      return _$signalementResponseTargetTypeEnum_CONTRACT;
+    case 'DECLARATION':
+      return _$signalementResponseTargetTypeEnum_DECLARATION;
+    case 'EVIDENCE':
+      return _$signalementResponseTargetTypeEnum_EVIDENCE;
     case 'unknownDefaultOpenApi':
       return _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi;
     default:
@@ -43,6 +58,9 @@ _$signalementResponseTargetTypeEnumValues =
         _$signalementResponseTargetTypeEnum_ANNONCE,
         _$signalementResponseTargetTypeEnum_MESSAGE,
         _$signalementResponseTargetTypeEnum_REVIEW,
+        _$signalementResponseTargetTypeEnum_CONTRACT,
+        _$signalementResponseTargetTypeEnum_DECLARATION,
+        _$signalementResponseTargetTypeEnum_EVIDENCE,
         _$signalementResponseTargetTypeEnum_unknownDefaultOpenApi,
       ],
     );
@@ -61,6 +79,8 @@ const SignalementResponseReasonEnum _$signalementResponseReasonEnum_HARASSMENT =
 const SignalementResponseReasonEnum
 _$signalementResponseReasonEnum_ASKED_FOR_MONEY =
     const SignalementResponseReasonEnum._('ASKED_FOR_MONEY');
+const SignalementResponseReasonEnum _$signalementResponseReasonEnum_DISPUTE =
+    const SignalementResponseReasonEnum._('DISPUTE');
 const SignalementResponseReasonEnum
 _$signalementResponseReasonEnum_unknownDefaultOpenApi =
     const SignalementResponseReasonEnum._('unknownDefaultOpenApi');
@@ -79,6 +99,8 @@ SignalementResponseReasonEnum _$signalementResponseReasonEnumValueOf(
       return _$signalementResponseReasonEnum_HARASSMENT;
     case 'ASKED_FOR_MONEY':
       return _$signalementResponseReasonEnum_ASKED_FOR_MONEY;
+    case 'DISPUTE':
+      return _$signalementResponseReasonEnum_DISPUTE;
     case 'unknownDefaultOpenApi':
       return _$signalementResponseReasonEnum_unknownDefaultOpenApi;
     default:
@@ -94,6 +116,7 @@ _$signalementResponseReasonEnumValues = BuiltSet<SignalementResponseReasonEnum>(
     _$signalementResponseReasonEnum_INAPPROPRIATE_CONTENT,
     _$signalementResponseReasonEnum_HARASSMENT,
     _$signalementResponseReasonEnum_ASKED_FOR_MONEY,
+    _$signalementResponseReasonEnum_DISPUTE,
     _$signalementResponseReasonEnum_unknownDefaultOpenApi,
   ],
 );
@@ -151,12 +174,18 @@ class _$SignalementResponseTargetTypeEnumSerializer
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
     'REVIEW': 'REVIEW',
+    'CONTRACT': 'CONTRACT',
+    'DECLARATION': 'DECLARATION',
+    'EVIDENCE': 'EVIDENCE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'ANNONCE': 'ANNONCE',
     'MESSAGE': 'MESSAGE',
     'REVIEW': 'REVIEW',
+    'CONTRACT': 'CONTRACT',
+    'DECLARATION': 'DECLARATION',
+    'EVIDENCE': 'EVIDENCE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 
@@ -190,6 +219,7 @@ class _$SignalementResponseReasonEnumSerializer
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
     'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
+    'DISPUTE': 'DISPUTE',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -198,6 +228,7 @@ class _$SignalementResponseReasonEnumSerializer
     'INAPPROPRIATE_CONTENT': 'INAPPROPRIATE_CONTENT',
     'HARASSMENT': 'HARASSMENT',
     'ASKED_FOR_MONEY': 'ASKED_FOR_MONEY',
+    'DISPUTE': 'DISPUTE',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

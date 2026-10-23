@@ -38,7 +38,6 @@ class SessionExpiryWatcher {
   final Duration _refreshLeeway;
 
   Timer? _timer;
-  bool _isRefreshing = false;
 
   /// Arms the watcher against the currently stored tokens. Safe to call
   /// repeatedly — each call replaces the pending timer.
@@ -63,11 +62,11 @@ class SessionExpiryWatcher {
 
     final delay = expiresAt.difference(DateTime.now()) - _refreshLeeway;
     if (delay <= Duration.zero) {
-      await _refresh(tokens);
+      await _refresh();
       return;
     }
 
-    _timer = Timer(delay, () => _refresh(tokens));
+    _timer = Timer(delay, _refresh);
   }
 
   /// Cancels any pending refresh. Call on logout.
@@ -76,24 +75,23 @@ class SessionExpiryWatcher {
     _timer = null;
   }
 
-  Future<void> _refresh(AuthTokens tokens) async {
-    // The interceptor may already be refreshing after a 401; don't double up.
-    if (_isRefreshing) return;
-    _isRefreshing = true;
-
+  /// Through [DioClient.rotateSession], never on its own: the tokens read
+  /// when the timer was armed may have been rotated since by a 401, and a
+  /// spent refresh token signs the account out everywhere.
+  Future<void> _refresh() async {
+    final AuthTokens? refreshed;
     try {
-      final refreshed = await _dioClient.refreshSession(tokens.refreshToken);
-      if (refreshed == null || !refreshed.isValid) {
-        await _expire();
-        return;
-      }
-
-      await _tokenStorage.save(refreshed);
-      // Re-arm against the new expiry.
-      await start();
-    } finally {
-      _isRefreshing = false;
+      refreshed = await _dioClient.rotateSession();
+    } catch (_) {
+      // Unreachable: the session stays; the next resume, or a 401, tries again.
+      return;
     }
+    if (refreshed == null || !refreshed.isValid) {
+      await _expire();
+      return;
+    }
+    // Re-arm against the new expiry.
+    await start();
   }
 
   /// Ends the session and says so — a watcher that logs someone out while the

@@ -77,5 +77,15 @@ void main() {
       // TODO
     });
 
+    // PropertyRating rating
+    test('to test the property `rating`', () async {
+      // TODO
+    });
+
+    // double distanceKm
+    test('to test the property `distanceKm`', () async {
+      // TODO
+    });
+
   });
 }

@@ -18,7 +18,7 @@ class DioClient {
     required Future<void> Function() onSessionExpired,
     Dio? dio,
     Dio? retryClient,
-  }) {
+  }) : _storage = storage {
     final baseOptions = BaseOptions(
       baseUrl: Environment.apiBaseUrl,
       headers: {'Accept': 'application/json'},
@@ -36,7 +36,7 @@ class DioClient {
     dio.interceptors.add(
       AuthInterceptor(
         storage: storage,
-        refresher: _refreshTokens,
+        rotate: rotateSession,
         onSessionExpired: onSessionExpired,
         retryClient: _bareDio,
       ),
@@ -57,25 +57,43 @@ class DioClient {
     api = ApiClient(dio: _dio, interceptors: const []);
   }
 
+  final SecureTokenStorage _storage;
   late final Dio _dio;
   late final Dio _bareDio;
+
+  /// The refresh under way, shared by everyone who asks meanwhile.
+  Future<AuthTokens?>? _rotation;
 
   /// The generated, typed API surface.
   late final ApiClient api;
 
   Dio get dio => _dio;
 
-  /// Refreshes the token pair on demand, ahead of expiry.
+  /// Rotates the session — the one way the app refreshes, for the
+  /// [AuthInterceptor] (on a 401) and the [SessionExpiryWatcher] (ahead of
+  /// expiry) alike.
   ///
-  /// The [AuthInterceptor] refreshes *reactively*, on a 401. [SessionExpiryWatcher]
-  /// uses this to refresh *proactively*, before the access token lapses.
-  /// Returns `null` when the refresh token is itself rejected — the caller is
-  /// responsible for the resulting logout.
-  Future<AuthTokens?> refreshSession(String refreshToken) =>
-      _refreshTokens(refreshToken);
+  /// A refresh token is single-use: presenting a spent one signs the account
+  /// out on every device (`REFRESH_TOKEN_REUSED`). So there is one refresh
+  /// at a time — every caller meanwhile shares it —, it reads the refresh
+  /// token stored *when it starts* (never one held since), and the new pair
+  /// is saved before anyone replays.
+  ///
+  /// Returns `null` when the server refuses the refresh token: the session is
+  /// over. Throws when the server could not be reached: the session is kept.
+  Future<AuthTokens?> rotateSession() => _rotation ??= _rotate().whenComplete(() => _rotation = null);
+
+  Future<AuthTokens?> _rotate() async {
+    final refreshToken = await _storage.readRefreshToken();
+    if (refreshToken == null || refreshToken.isEmpty) return null;
+    final tokens = await _refreshTokens(refreshToken);
+    if (tokens != null && tokens.isValid) await _storage.save(tokens);
+    return tokens;
+  }
 
   /// Calls `/auth/refresh` on the bare client and maps the wire type to the
-  /// domain [AuthTokens]. Returns `null` if the refresh token is rejected.
+  /// domain [AuthTokens]. Returns `null` if the refresh token is rejected;
+  /// rethrows when there was no answer at all.
   Future<AuthTokens?> _refreshTokens(String refreshToken) async {
     try {
       final response = await AuthenticationApi(_bareDio, standardSerializers).refreshToken(
@@ -89,8 +107,10 @@ class DioClient {
         accessTokenExpiresAt: pair.accessTokenExpiresAt,
         refreshTokenExpiresAt: pair.refreshTokenExpiresAt,
       );
-    } on DioException {
-      return null;
+    } on DioException catch (error) {
+      // An answer is a verdict on the token; no answer is not.
+      if (error.response != null) return null;
+      rethrow;
     }
   }
 }

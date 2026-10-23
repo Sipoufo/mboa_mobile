@@ -74,6 +74,8 @@ const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N38 =
     const NotificationSettingTypeEnum._('N38');
 const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N39 =
     const NotificationSettingTypeEnum._('N39');
+const NotificationSettingTypeEnum _$notificationSettingTypeEnum_N40 =
+    const NotificationSettingTypeEnum._('N40');
 const NotificationSettingTypeEnum
 _$notificationSettingTypeEnum_unknownDefaultOpenApi =
     const NotificationSettingTypeEnum._('unknownDefaultOpenApi');
@@ -148,6 +150,8 @@ NotificationSettingTypeEnum _$notificationSettingTypeEnumValueOf(String name) {
       return _$notificationSettingTypeEnum_N38;
     case 'N39':
       return _$notificationSettingTypeEnum_N39;
+    case 'N40':
+      return _$notificationSettingTypeEnum_N40;
     case 'unknownDefaultOpenApi':
       return _$notificationSettingTypeEnum_unknownDefaultOpenApi;
     default:
@@ -192,6 +196,7 @@ _$notificationSettingTypeEnumValues =
       _$notificationSettingTypeEnum_N37,
       _$notificationSettingTypeEnum_N38,
       _$notificationSettingTypeEnum_N39,
+      _$notificationSettingTypeEnum_N40,
       _$notificationSettingTypeEnum_unknownDefaultOpenApi,
     ]);
 
@@ -236,6 +241,7 @@ class _$NotificationSettingTypeEnumSerializer
     'N37': 'N37',
     'N38': 'N38',
     'N39': 'N39',
+    'N40': 'N40',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -273,6 +279,7 @@ class _$NotificationSettingTypeEnumSerializer
     'N37': 'N37',
     'N38': 'N38',
     'N39': 'N39',
+    'N40': 'N40',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

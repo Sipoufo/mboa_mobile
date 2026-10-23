@@ -193,9 +193,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **searchListings**
-> PageResponseSearchResult searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, badges, amenities, page, size)
+> PageResponseSearchResult searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, badges, amenities, lat, lng, sort, page, size)
 
 Search listings and residences (city/district required; other filters cumulative)
+
+With `lat` and `lng` (the user's position, both or neither), each card carries `distanceKm`, measured to the point it shows. `sort=distance` puts the nearest first (ties by tier then recency); the default, `relevance`, is tier then recency. Each card carries its `rating`, as on the fiche — a residence's gathers all its units' reviews.
 
 ### Example
 ```dart
@@ -215,11 +217,14 @@ final bool furnished = true; // bool |
 final bool availableNow = true; // bool | 
 final BuiltList<String> badges = ; // BuiltList<String> | Doc 10 \"Badges requis\": only listings carrying every one of these
 final BuiltList<String> amenities = ; // BuiltList<String> | Only listings offering every one of these équipements
+final double lat = 1.2; // double | The user's latitude (WGS 84), with lng — only when they allowed it
+final double lng = 1.2; // double | The user's longitude (WGS 84), with lat
+final String sort = sort_example; // String | relevance (default: tier, then recency) or distance (nearest first; needs lat/lng)
 final int page = 56; // int | 
 final int size = 56; // int | 
 
 try {
-    final response = api.searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, badges, amenities, page, size);
+    final response = api.searchListings(cityId, districtIds, propertyTypes, rentalPeriods, rentMin, rentMax, roomsMin, surfaceMin, surfaceMax, furnished, availableNow, badges, amenities, lat, lng, sort, page, size);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling SearchApi->searchListings: $e\n');
@@ -243,6 +248,9 @@ Name | Type | Description  | Notes
  **availableNow** | **bool**|  | [optional] 
  **badges** | [**BuiltList&lt;String&gt;**](String.md)| Doc 10 \"Badges requis\": only listings carrying every one of these | [optional] 
  **amenities** | [**BuiltList&lt;String&gt;**](String.md)| Only listings offering every one of these équipements | [optional] 
+ **lat** | **double**| The user's latitude (WGS 84), with lng — only when they allowed it | [optional] 
+ **lng** | **double**| The user's longitude (WGS 84), with lat | [optional] 
+ **sort** | **String**| relevance (default: tier, then recency) or distance (nearest first; needs lat/lng) | [optional] 
  **page** | **int**|  | [optional] [default to 0]
  **size** | **int**|  | [optional] [default to 20]
 

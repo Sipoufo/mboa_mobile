@@ -43,7 +43,9 @@ void main() {
 
     // Search listings and residences (city/district required; other filters cumulative)
     //
-    //Future<PageResponseSearchResult> searchListings({ String cityId, BuiltList<String> districtIds, BuiltList<String> propertyTypes, BuiltList<String> rentalPeriods, int rentMin, int rentMax, int roomsMin, int surfaceMin, int surfaceMax, bool furnished, bool availableNow, BuiltList<String> badges, BuiltList<String> amenities, int page, int size }) async
+    // With `lat` and `lng` (the user's position, both or neither), each card carries `distanceKm`, measured to the point it shows. `sort=distance` puts the nearest first (ties by tier then recency); the default, `relevance`, is tier then recency. Each card carries its `rating`, as on the fiche — a residence's gathers all its units' reviews.
+    //
+    //Future<PageResponseSearchResult> searchListings({ String cityId, BuiltList<String> districtIds, BuiltList<String> propertyTypes, BuiltList<String> rentalPeriods, int rentMin, int rentMax, int roomsMin, int surfaceMin, int surfaceMax, bool furnished, bool availableNow, BuiltList<String> badges, BuiltList<String> amenities, double lat, double lng, String sort, int page, int size }) async
     test('test searchListings', () async {
       // TODO
     });

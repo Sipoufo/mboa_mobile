@@ -143,6 +143,9 @@ const UpdateUserSettingsRequestDisabledNotificationsEnum
 _$updateUserSettingsRequestDisabledNotificationsEnum_N39 =
     const UpdateUserSettingsRequestDisabledNotificationsEnum._('N39');
 const UpdateUserSettingsRequestDisabledNotificationsEnum
+_$updateUserSettingsRequestDisabledNotificationsEnum_N40 =
+    const UpdateUserSettingsRequestDisabledNotificationsEnum._('N40');
+const UpdateUserSettingsRequestDisabledNotificationsEnum
 _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi =
     const UpdateUserSettingsRequestDisabledNotificationsEnum._(
       'unknownDefaultOpenApi',
@@ -219,6 +222,8 @@ _$updateUserSettingsRequestDisabledNotificationsEnumValueOf(String name) {
       return _$updateUserSettingsRequestDisabledNotificationsEnum_N38;
     case 'N39':
       return _$updateUserSettingsRequestDisabledNotificationsEnum_N39;
+    case 'N40':
+      return _$updateUserSettingsRequestDisabledNotificationsEnum_N40;
     case 'unknownDefaultOpenApi':
       return _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi;
     default:
@@ -265,6 +270,7 @@ _$updateUserSettingsRequestDisabledNotificationsEnumValues =
       _$updateUserSettingsRequestDisabledNotificationsEnum_N37,
       _$updateUserSettingsRequestDisabledNotificationsEnum_N38,
       _$updateUserSettingsRequestDisabledNotificationsEnum_N39,
+      _$updateUserSettingsRequestDisabledNotificationsEnum_N40,
       _$updateUserSettingsRequestDisabledNotificationsEnum_unknownDefaultOpenApi,
     ]);
 
@@ -352,6 +358,7 @@ class _$UpdateUserSettingsRequestDisabledNotificationsEnumSerializer
     'N37': 'N37',
     'N38': 'N38',
     'N39': 'N39',
+    'N40': 'N40',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
@@ -389,6 +396,7 @@ class _$UpdateUserSettingsRequestDisabledNotificationsEnumSerializer
     'N37': 'N37',
     'N38': 'N38',
     'N39': 'N39',
+    'N40': 'N40',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

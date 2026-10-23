@@ -27,6 +27,8 @@ Name | Type | Description | Notes
 **availableFrom** | [**Date**](Date.md) |  | [optional] 
 **badges** | **BuiltList&lt;String&gt;** |  | [optional] 
 **exactLocation** | **bool** |  | [optional] 
+**rating** | [**PropertyRating**](PropertyRating.md) |  | [optional] 
+**distanceKm** | **double** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

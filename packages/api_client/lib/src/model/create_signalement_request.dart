@@ -20,14 +20,14 @@ part 'create_signalement_request.g.dart';
 abstract class CreateSignalementRequest implements Built<CreateSignalementRequest, CreateSignalementRequestBuilder> {
   @BuiltValueField(wireName: r'targetType')
   CreateSignalementRequestTargetTypeEnum get targetType;
-  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  };
+  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  CONTRACT,  DECLARATION,  EVIDENCE,  };
 
   @BuiltValueField(wireName: r'targetId')
   String get targetId;
 
   @BuiltValueField(wireName: r'reason')
   CreateSignalementRequestReasonEnum get reason;
-  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  };
+  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  DISPUTE,  };
 
   @BuiltValueField(wireName: r'comment')
   String? get comment;
@@ -166,6 +166,12 @@ class CreateSignalementRequestTargetTypeEnum extends EnumClass {
   static const CreateSignalementRequestTargetTypeEnum MESSAGE = _$createSignalementRequestTargetTypeEnum_MESSAGE;
   @BuiltValueEnumConst(wireName: r'REVIEW')
   static const CreateSignalementRequestTargetTypeEnum REVIEW = _$createSignalementRequestTargetTypeEnum_REVIEW;
+  @BuiltValueEnumConst(wireName: r'CONTRACT')
+  static const CreateSignalementRequestTargetTypeEnum CONTRACT = _$createSignalementRequestTargetTypeEnum_CONTRACT;
+  @BuiltValueEnumConst(wireName: r'DECLARATION')
+  static const CreateSignalementRequestTargetTypeEnum DECLARATION = _$createSignalementRequestTargetTypeEnum_DECLARATION;
+  @BuiltValueEnumConst(wireName: r'EVIDENCE')
+  static const CreateSignalementRequestTargetTypeEnum EVIDENCE = _$createSignalementRequestTargetTypeEnum_EVIDENCE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateSignalementRequestTargetTypeEnum unknownDefaultOpenApi = _$createSignalementRequestTargetTypeEnum_unknownDefaultOpenApi;
 
@@ -189,6 +195,8 @@ class CreateSignalementRequestReasonEnum extends EnumClass {
   static const CreateSignalementRequestReasonEnum HARASSMENT = _$createSignalementRequestReasonEnum_HARASSMENT;
   @BuiltValueEnumConst(wireName: r'ASKED_FOR_MONEY')
   static const CreateSignalementRequestReasonEnum ASKED_FOR_MONEY = _$createSignalementRequestReasonEnum_ASKED_FOR_MONEY;
+  @BuiltValueEnumConst(wireName: r'DISPUTE')
+  static const CreateSignalementRequestReasonEnum DISPUTE = _$createSignalementRequestReasonEnum_DISPUTE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const CreateSignalementRequestReasonEnum unknownDefaultOpenApi = _$createSignalementRequestReasonEnum_unknownDefaultOpenApi;
 

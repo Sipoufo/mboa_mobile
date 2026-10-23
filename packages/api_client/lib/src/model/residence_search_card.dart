@@ -5,6 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:api_client/src/model/type_count.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/property_rating.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -27,6 +28,8 @@ part 'residence_search_card.g.dart';
 /// * [longitude] 
 /// * [badges] 
 /// * [exactLocation] 
+/// * [rating] 
+/// * [distanceKm] 
 @BuiltValue()
 abstract class ResidenceSearchCard implements Built<ResidenceSearchCard, ResidenceSearchCardBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -71,6 +74,12 @@ abstract class ResidenceSearchCard implements Built<ResidenceSearchCard, Residen
 
   @BuiltValueField(wireName: r'exactLocation')
   bool? get exactLocation;
+
+  @BuiltValueField(wireName: r'rating')
+  PropertyRating? get rating;
+
+  @BuiltValueField(wireName: r'distanceKm')
+  double? get distanceKm;
 
   ResidenceSearchCard._();
 
@@ -191,6 +200,20 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
       yield serializers.serialize(
         object.exactLocation,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.rating != null) {
+      yield r'rating';
+      yield serializers.serialize(
+        object.rating,
+        specifiedType: const FullType(PropertyRating),
+      );
+    }
+    if (object.distanceKm != null) {
+      yield r'distanceKm';
+      yield serializers.serialize(
+        object.distanceKm,
+        specifiedType: const FullType(double),
       );
     }
   }
@@ -327,6 +350,22 @@ class _$ResidenceSearchCardSerializer implements PrimitiveSerializer<ResidenceSe
           ) as bool?;
           if (valueDes == null) continue;
           result.exactLocation = valueDes;
+          break;
+        case r'rating':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(PropertyRating),
+          ) as PropertyRating?;
+          if (valueDes == null) continue;
+          result.rating.replace(valueDes);
+          break;
+        case r'distanceKm':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(double),
+          ) as double?;
+          if (valueDes == null) continue;
+          result.distanceKm = valueDes;
           break;
         default:
           unhandled.add(key);

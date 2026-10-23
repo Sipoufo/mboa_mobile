@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/annonce_response.dart';
+import 'package:api_client/src/model/dispute_dossier.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/page_response_signalement_response.dart';
 import 'package:api_client/src/model/pageable.dart';
@@ -23,6 +24,87 @@ class AdminModrationApi {
   final Serializers _serializers;
 
   const AdminModrationApi(this._dio, this._serializers);
+
+  /// A tenancy dispute&#39;s file: the home, the disputed piece with its proofs, and the home&#39;s record
+  /// For a report with reason DISPUTE (target CONTRACT, DECLARATION or EVIDENCE). The disputed declaration&#39;s proofs and the disputed sending&#39;s photos come with short-lived links; the other sendings are described without. Mboa keeps the pieces and does not rule on the amount (RM-M30-07). 404 DISPUTE_NOT_FOUND for another kind of report.
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [DisputeDossier] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<DisputeDossier>> getDisputeDossier({ 
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/admin/signalements/{id}/dispute'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    DisputeDossier? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(DisputeDossier),
+      ) as DisputeDossier;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<DisputeDossier>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
 
   /// The moderation queue, oldest first; optionally filtered by status
   /// 

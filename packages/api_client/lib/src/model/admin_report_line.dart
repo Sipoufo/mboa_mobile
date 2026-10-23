@@ -26,14 +26,14 @@ abstract class AdminReportLine implements Built<AdminReportLine, AdminReportLine
 
   @BuiltValueField(wireName: r'targetType')
   AdminReportLineTargetTypeEnum? get targetType;
-  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  };
+  // enum targetTypeEnum {  ANNONCE,  MESSAGE,  REVIEW,  CONTRACT,  DECLARATION,  EVIDENCE,  };
 
   @BuiltValueField(wireName: r'targetId')
   String? get targetId;
 
   @BuiltValueField(wireName: r'reason')
   AdminReportLineReasonEnum? get reason;
-  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  };
+  // enum reasonEnum {  FRAUDULENT_LISTING,  ABNORMAL_PRICE,  INAPPROPRIATE_CONTENT,  HARASSMENT,  ASKED_FOR_MONEY,  DISPUTE,  };
 
   @BuiltValueField(wireName: r'status')
   AdminReportLineStatusEnum? get status;
@@ -233,6 +233,12 @@ class AdminReportLineTargetTypeEnum extends EnumClass {
   static const AdminReportLineTargetTypeEnum MESSAGE = _$adminReportLineTargetTypeEnum_MESSAGE;
   @BuiltValueEnumConst(wireName: r'REVIEW')
   static const AdminReportLineTargetTypeEnum REVIEW = _$adminReportLineTargetTypeEnum_REVIEW;
+  @BuiltValueEnumConst(wireName: r'CONTRACT')
+  static const AdminReportLineTargetTypeEnum CONTRACT = _$adminReportLineTargetTypeEnum_CONTRACT;
+  @BuiltValueEnumConst(wireName: r'DECLARATION')
+  static const AdminReportLineTargetTypeEnum DECLARATION = _$adminReportLineTargetTypeEnum_DECLARATION;
+  @BuiltValueEnumConst(wireName: r'EVIDENCE')
+  static const AdminReportLineTargetTypeEnum EVIDENCE = _$adminReportLineTargetTypeEnum_EVIDENCE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const AdminReportLineTargetTypeEnum unknownDefaultOpenApi = _$adminReportLineTargetTypeEnum_unknownDefaultOpenApi;
 
@@ -256,6 +262,8 @@ class AdminReportLineReasonEnum extends EnumClass {
   static const AdminReportLineReasonEnum HARASSMENT = _$adminReportLineReasonEnum_HARASSMENT;
   @BuiltValueEnumConst(wireName: r'ASKED_FOR_MONEY')
   static const AdminReportLineReasonEnum ASKED_FOR_MONEY = _$adminReportLineReasonEnum_ASKED_FOR_MONEY;
+  @BuiltValueEnumConst(wireName: r'DISPUTE')
+  static const AdminReportLineReasonEnum DISPUTE = _$adminReportLineReasonEnum_DISPUTE;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const AdminReportLineReasonEnum unknownDefaultOpenApi = _$adminReportLineReasonEnum_unknownDefaultOpenApi;
 

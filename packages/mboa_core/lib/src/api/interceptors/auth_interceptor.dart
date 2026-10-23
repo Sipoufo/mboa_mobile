@@ -1,45 +1,48 @@
-import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../models/auth_tokens.dart';
 import '../../storage/secure_token_storage.dart';
 
-/// Refreshes an [AuthTokens] pair given the current refresh token.
-/// Returns `null` when the refresh token is itself rejected.
-typedef TokenRefresher = Future<AuthTokens?> Function(String refreshToken);
+/// Rotates the session: one refresh for the whole app at a time, from the
+/// refresh token stored when it starts, the new pair saved before it returns.
+/// Returns `null` when the server refuses the refresh token (the session is
+/// over); throws when the server could not be reached (the session is kept).
+typedef SessionRotator = Future<AuthTokens?> Function();
 
 /// The one and only place 401s are handled (CLAUDE.md rule: repositories never
 /// handle 401 themselves).
 ///
 /// Behaviour:
 ///  1. Injects `Authorization: Bearer <access>` into every request.
-///  2. On 401 → calls [refresher] with the stored refresh token.
-///     ├─ success → persists new tokens and retries the original request.
-///     └─ failure → clears tokens and invokes [onSessionExpired] (clean logout).
+///  2. On 401:
+///     ├─ the session was rotated since the request left (another 401, the
+///     │  [SessionExpiryWatcher]) → replays it with the new token, no refresh;
+///     ├─ otherwise → [rotate]s, then replays the original request;
+///     ├─ refused → clears tokens and invokes [onSessionExpired] (clean logout);
+///     └─ unreachable → the request fails, the session stays.
 ///
-/// Concurrent 401s are collapsed into a single refresh via [_refreshLock].
+/// A refresh token is single-use: the server signs the account out
+/// everywhere when a spent one comes back (`REFRESH_TOKEN_REUSED`). So no
+/// 401 refreshes twice, and nothing refreshes beside [rotate].
 class AuthInterceptor extends QueuedInterceptor {
   AuthInterceptor({
     required SecureTokenStorage storage,
-    required TokenRefresher refresher,
+    required SessionRotator rotate,
     required Future<void> Function() onSessionExpired,
     required Dio retryClient,
   })  : _storage = storage,
-        _refresher = refresher,
+        _rotate = rotate,
         _onSessionExpired = onSessionExpired,
         _retryClient = retryClient;
 
   final SecureTokenStorage _storage;
-  final TokenRefresher _refresher;
+  final SessionRotator _rotate;
   final Future<void> Function() _onSessionExpired;
 
   /// A bare Dio (no [AuthInterceptor]) used to replay the original request after
   /// a successful refresh, so we never recurse through this interceptor.
   final Dio _retryClient;
-
-  Future<AuthTokens?>? _refreshLock;
 
   @override
   Future<void> onRequest(
@@ -67,29 +70,32 @@ class AuthInterceptor extends QueuedInterceptor {
       return handler.next(err);
     }
 
-    final refreshToken = await _storage.readRefreshToken();
-    if (refreshToken == null) {
-      await _forceLogout(why: 'no refresh token for ${err.requestOptions.path}');
-      return handler.next(err);
-    }
-
-    try {
-      // Single-flight: all queued 401s await the same refresh.
-      final tokens = await (_refreshLock ??= _refresher(refreshToken));
-      _refreshLock = null;
-
+    final current = await _storage.readAccessToken();
+    final String accessToken;
+    if (current != null && current.isNotEmpty && current != _bearerOf(err.requestOptions)) {
+      // Rotated since this request left: its token is simply old.
+      accessToken = current;
+    } else {
+      final AuthTokens? tokens;
+      try {
+        tokens = await _rotate();
+      } catch (error) {
+        // Offline, or the server down: the session is not over for that.
+        if (kDebugMode) debugPrint('[session] refresh unreachable for ${err.requestOptions.path}: $error');
+        return handler.next(err);
+      }
       if (tokens == null || !tokens.isValid) {
         await _forceLogout(why: 'refresh refused for ${err.requestOptions.path}');
         return handler.next(err);
       }
+      accessToken = tokens.accessToken;
+    }
 
-      await _storage.save(tokens);
-      final retried = await _replay(err.requestOptions, tokens.accessToken);
-      return handler.resolve(retried);
-    } catch (error) {
-      _refreshLock = null;
-      await _forceLogout(why: 'refresh threw for ${err.requestOptions.path}: $error');
-      return handler.next(err);
+    try {
+      return handler.resolve(await _replay(err.requestOptions, accessToken));
+    } on DioException catch (replayError) {
+      // The request's own failure, now that it is authorised — not the session's.
+      return handler.next(replayError);
     }
   }
 
@@ -106,6 +112,11 @@ class AuthInterceptor extends QueuedInterceptor {
 
   bool _alreadyRetried(RequestOptions options) =>
       options.extra['mboa_retried'] == true;
+
+  static String? _bearerOf(RequestOptions options) {
+    final header = options.headers['Authorization'];
+    return header is String && header.startsWith('Bearer ') ? header.substring(7) : null;
+  }
 
   Future<Response<dynamic>> _replay(RequestOptions options, String accessToken) {
     final headers = Map<String, dynamic>.from(options.headers)

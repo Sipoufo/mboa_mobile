@@ -51,7 +51,7 @@ void main() {
     await build().start();
 
     expect(expiredCalls, 0);
-    verifyNever(() => dioClient.refreshSession(any()));
+    verifyNever(dioClient.rotateSession);
   });
 
   test('expires the session when the refresh token has already lapsed', () async {
@@ -64,7 +64,7 @@ void main() {
     expect(expiredCalls, 1);
     verify(() => storage.clear()).called(1);
     // A dead refresh token can't be redeemed — don't waste the round-trip.
-    verifyNever(() => dioClient.refreshSession(any()));
+    verifyNever(dioClient.rotateSession);
   });
 
   test('refreshes immediately when the access token is inside the leeway', () async {
@@ -73,24 +73,36 @@ void main() {
     );
     // Second read (the re-arm after a successful refresh) has no expiry, so the
     // watcher settles instead of looping.
-    when(() => dioClient.refreshSession('refresh')).thenAnswer((_) async {
+    when(dioClient.rotateSession).thenAnswer((_) async {
       when(() => storage.readTokens()).thenAnswer((_) async => tokens());
       return tokens(access: 'fresh');
     });
 
     await build().start();
 
-    verify(() => dioClient.refreshSession('refresh')).called(1);
-    final saved = verify(() => storage.save(captureAny())).captured.single;
-    expect((saved as AuthTokens).accessToken, 'fresh');
+    // The rotation saves; the watcher never refreshes on its own.
+    verify(dioClient.rotateSession).called(1);
+    verifyNever(() => storage.save(any()));
     expect(expiredCalls, 0);
+  });
+
+  test('unreachable: the session stays', () async {
+    when(() => storage.readTokens()).thenAnswer(
+      (_) async => tokens(accessIn: const Duration(seconds: 30)),
+    );
+    when(dioClient.rotateSession).thenThrow(Exception('offline'));
+
+    await build().start();
+
+    expect(expiredCalls, 0);
+    verifyNever(() => storage.clear());
   });
 
   test('expires the session when the proactive refresh is rejected', () async {
     when(() => storage.readTokens()).thenAnswer(
       (_) async => tokens(accessIn: const Duration(seconds: 30)),
     );
-    when(() => dioClient.refreshSession(any())).thenAnswer((_) async => null);
+    when(dioClient.rotateSession).thenAnswer((_) async => null);
 
     await build().start();
 
@@ -107,7 +119,7 @@ void main() {
     final watcher = build();
     await watcher.start();
 
-    verifyNever(() => dioClient.refreshSession(any()));
+    verifyNever(dioClient.rotateSession);
     expect(expiredCalls, 0);
     watcher.stop();
   });
@@ -117,7 +129,7 @@ void main() {
 
     await build().start();
 
-    verifyNever(() => dioClient.refreshSession(any()));
+    verifyNever(dioClient.rotateSession);
     expect(expiredCalls, 0);
   });
 }
