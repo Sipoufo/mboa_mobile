@@ -6131,5 +6131,71 @@
         "type": "int"
       }
     }
+  },
+  "searchSortRelevance": "Relevance",
+  "@searchSortRelevance": {
+    "description": "RM-M04-08 — sort chip: the server's order"
+  },
+  "searchSortNearby": "Near you",
+  "@searchSortNearby": {
+    "description": "RM-M04-08 — sort chip: nearest first (the mockup's wording)"
+  },
+  "searchNearbyTitle": "Nearest in {city}",
+  "@searchNearbyTitle": {
+    "description": "RM-M04-08 — list title when sorted by distance",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "searchDistance": "{km} km away",
+  "@searchDistance": {
+    "description": "RM-M04-08 — on a card",
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "hitRating": "{average} ({count})",
+  "@hitRating": {
+    "description": "RM-M04-08 — a card's rating: average and review count",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchLocationDenied": "Without your position, Mboa cannot sort by distance.",
+  "@searchLocationDenied": {
+    "description": "Position refused this time"
+  },
+  "searchLocationUnavailable": "Your position could not be found. Try again in a moment.",
+  "@searchLocationUnavailable": {
+    "description": "No fix in time"
+  },
+  "searchLocationBlockedTitle": "Allow your position",
+  "@searchLocationBlockedTitle": {
+    "description": "Position refused for good: sheet title"
+  },
+  "searchLocationBlockedBody": "To see the nearest places, allow Mboa to use your position in the settings. It serves the search and is never stored.",
+  "@searchLocationBlockedBody": {
+    "description": "Position refused for good: sheet body"
+  },
+  "searchLocationOffTitle": "Turn location on",
+  "@searchLocationOffTitle": {
+    "description": "Location off: sheet title"
+  },
+  "searchLocationOffBody": "Your phone's location is off. Turn it on to see the nearest places.",
+  "@searchLocationOffBody": {
+    "description": "Location off: sheet body"
+  },
+  "searchLocationOpenSettings": "Open the settings",
+  "@searchLocationOpenSettings": {
+    "description": "Location sheet button"
   }
 }

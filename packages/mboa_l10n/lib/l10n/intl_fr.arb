@@ -6131,5 +6131,71 @@
         "type": "int"
       }
     }
+  },
+  "searchSortRelevance": "Pertinence",
+  "@searchSortRelevance": {
+    "description": "RM-M04-08 — sort chip: the server's order"
+  },
+  "searchSortNearby": "Près de toi",
+  "@searchSortNearby": {
+    "description": "RM-M04-08 — sort chip: nearest first (« Proche de vous », said with tu)"
+  },
+  "searchNearbyTitle": "Les plus proches à {city}",
+  "@searchNearbyTitle": {
+    "description": "RM-M04-08 — list title when sorted by distance",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "searchDistance": "à {km} km",
+  "@searchDistance": {
+    "description": "RM-M04-08 — on a card",
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "hitRating": "{average} ({count})",
+  "@hitRating": {
+    "description": "RM-M04-08 — a card's rating: average and review count",
+    "placeholders": {
+      "average": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchLocationDenied": "Sans ta position, Mboa ne peut pas trier par distance.",
+  "@searchLocationDenied": {
+    "description": "Position refused this time"
+  },
+  "searchLocationUnavailable": "Ta position n'a pas pu être trouvée. Réessaie dans un instant.",
+  "@searchLocationUnavailable": {
+    "description": "No fix in time"
+  },
+  "searchLocationBlockedTitle": "Autorise ta position",
+  "@searchLocationBlockedTitle": {
+    "description": "Position refused for good: sheet title"
+  },
+  "searchLocationBlockedBody": "Pour voir les biens les plus proches, autorise Mboa à utiliser ta position dans les réglages. Elle sert à la recherche et n'est jamais enregistrée.",
+  "@searchLocationBlockedBody": {
+    "description": "Position refused for good: sheet body"
+  },
+  "searchLocationOffTitle": "Active la localisation",
+  "@searchLocationOffTitle": {
+    "description": "Location off: sheet title"
+  },
+  "searchLocationOffBody": "La localisation de ton téléphone est désactivée. Active-la pour voir les biens les plus proches.",
+  "@searchLocationOffBody": {
+    "description": "Location off: sheet body"
+  },
+  "searchLocationOpenSettings": "Ouvrir les réglages",
+  "@searchLocationOpenSettings": {
+    "description": "Location sheet button"
   }
 }

@@ -47,6 +47,8 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Mboa utilise ta position pour te montrer les biens les plus proches, seulement quand tu le demandes. Elle n’est jamais enregistrée.</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Mboa utilise l’appareil photo pour prendre votre photo de profil.</string>
 		<key>NSPhotoLibraryUsageDescription</key>

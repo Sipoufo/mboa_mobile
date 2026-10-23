@@ -25,6 +25,8 @@ sealed class SearchHit extends Equatable {
     this.longitude,
     this.exactLocation = false,
     this.badges = const [],
+    this.rating = const PropertyRatingSummary(),
+    this.distanceKm,
   });
 
   final String id;
@@ -57,6 +59,14 @@ sealed class SearchHit extends Equatable {
   /// Shown on the card since the backend started sending them (2026-10-02).
   final List<TrustBadge> badges;
 
+  /// RM-M04-08 — the same rating as the fiche's (a residence's gathers its
+  /// units'). None without reviews: « 0/5 » would read as a bad place.
+  final PropertyRatingSummary rating;
+
+  /// RM-M04-08 — to the point the card shows (the blurred one until
+  /// contact), rounded to 0.1 km; only when the search carried a position.
+  final double? distanceKm;
+
   String? get photoUrl => BaseProfile.mediaUrl(primaryPhotoKey);
 
   bool get hasPosition => latitude != null && longitude != null;
@@ -86,6 +96,8 @@ final class ListingHit extends SearchHit {
     super.longitude,
     super.exactLocation,
     super.badges,
+    super.rating,
+    super.distanceKm,
     this.propertyType = PropertyType.apartment,
     this.price,
     this.rentalPeriod = RentalPeriod.fallback,
@@ -127,6 +139,8 @@ final class ListingHit extends SearchHit {
           item.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
               const <TrustBadge>[],
         ),
+        rating: item.rating == null ? const PropertyRatingSummary() : PropertyRatingSummary.fromResponse(item.rating!),
+        distanceKm: item.distanceKm,
         propertyType: PropertyType.fromSearch(item.propertyType),
         price: item.price,
         rentalPeriod: RentalPeriod.fromSearch(item.rentalPeriod),
@@ -149,6 +163,8 @@ final class ListingHit extends SearchHit {
         longitude,
         exactLocation,
         badges,
+        rating,
+        distanceKm,
         propertyType,
         price,
         rentalPeriod,
@@ -184,6 +200,8 @@ final class ResidenceHit extends SearchHit {
     super.longitude,
     super.exactLocation,
     super.badges,
+    super.rating,
+    super.distanceKm,
     this.availableUnitCount,
     this.reservedUnitCount,
     this.breakdown = const [],
@@ -218,6 +236,8 @@ final class ResidenceHit extends SearchHit {
           card.badges?.map((badge) => TrustBadge.fromWire(badge.name)).nonNulls ??
               const <TrustBadge>[],
         ),
+        rating: card.rating == null ? const PropertyRatingSummary() : PropertyRatingSummary.fromResponse(card.rating!),
+        distanceKm: card.distanceKm,
         availableUnitCount: card.availableUnitCount,
         reservedUnitCount: card.reservedUnitCount,
         breakdown: card.breakdown
@@ -243,6 +263,9 @@ final class ResidenceHit extends SearchHit {
         latitude,
         longitude,
         exactLocation,
+        badges,
+        rating,
+        distanceKm,
         availableUnitCount,
         reservedUnitCount,
         breakdown,

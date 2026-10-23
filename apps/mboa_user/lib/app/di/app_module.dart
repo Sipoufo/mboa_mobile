@@ -25,6 +25,7 @@ import '../../features/saved_searches/bloc/saved_search_results_bloc.dart';
 import '../../features/saved_searches/bloc/saved_searches_bloc.dart';
 import '../../features/saved_searches/data/saved_searches_repository.dart';
 import '../../features/search/bloc/search_bloc.dart';
+import '../../features/search/data/location_service.dart';
 import '../../features/search/data/search_repository.dart';
 import '../../features/visits/bloc/my_visits_bloc.dart';
 import '../../features/visits/bloc/visit_booking_bloc.dart';
@@ -70,8 +71,10 @@ void registerAppModule() {
       network: getIt<NetworkMonitor>(),
     ),
   );
+  // RM-M04-08 — the position for « Proche de vous », asked on the tap.
+  getIt.registerLazySingleton<LocationService>(LocationService.new);
   getIt.registerFactory<SearchBloc>(
-    () => SearchBloc(repository: getIt<SearchRepository>()),
+    () => SearchBloc(repository: getIt<SearchRepository>(), location: getIt<LocationService>()),
   );
 
   // Fiche bien (M05) — public, like the search.

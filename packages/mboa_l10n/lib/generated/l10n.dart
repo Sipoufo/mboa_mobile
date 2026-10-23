@@ -15195,6 +15195,127 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Pertinence`
+  String get searchSortRelevance {
+    return Intl.message(
+      'Pertinence',
+      name: 'searchSortRelevance',
+      desc: 'RM-M04-08 — sort chip: the server\'s order',
+      args: [],
+    );
+  }
+
+  /// `Près de toi`
+  String get searchSortNearby {
+    return Intl.message(
+      'Près de toi',
+      name: 'searchSortNearby',
+      desc:
+          'RM-M04-08 — sort chip: nearest first (« Proche de vous », said with tu)',
+      args: [],
+    );
+  }
+
+  /// `Les plus proches à {city}`
+  String searchNearbyTitle(String city) {
+    return Intl.message(
+      'Les plus proches à $city',
+      name: 'searchNearbyTitle',
+      desc: 'RM-M04-08 — list title when sorted by distance',
+      args: [city],
+    );
+  }
+
+  /// `à {km} km`
+  String searchDistance(String km) {
+    return Intl.message(
+      'à $km km',
+      name: 'searchDistance',
+      desc: 'RM-M04-08 — on a card',
+      args: [km],
+    );
+  }
+
+  /// `{average} ({count})`
+  String hitRating(String average, int count) {
+    return Intl.message(
+      '$average ($count)',
+      name: 'hitRating',
+      desc: 'RM-M04-08 — a card\'s rating: average and review count',
+      args: [average, count],
+    );
+  }
+
+  /// `Sans ta position, Mboa ne peut pas trier par distance.`
+  String get searchLocationDenied {
+    return Intl.message(
+      'Sans ta position, Mboa ne peut pas trier par distance.',
+      name: 'searchLocationDenied',
+      desc: 'Position refused this time',
+      args: [],
+    );
+  }
+
+  /// `Ta position n'a pas pu être trouvée. Réessaie dans un instant.`
+  String get searchLocationUnavailable {
+    return Intl.message(
+      'Ta position n\'a pas pu être trouvée. Réessaie dans un instant.',
+      name: 'searchLocationUnavailable',
+      desc: 'No fix in time',
+      args: [],
+    );
+  }
+
+  /// `Autorise ta position`
+  String get searchLocationBlockedTitle {
+    return Intl.message(
+      'Autorise ta position',
+      name: 'searchLocationBlockedTitle',
+      desc: 'Position refused for good: sheet title',
+      args: [],
+    );
+  }
+
+  /// `Pour voir les biens les plus proches, autorise Mboa à utiliser ta position dans les réglages. Elle sert à la recherche et n'est jamais enregistrée.`
+  String get searchLocationBlockedBody {
+    return Intl.message(
+      'Pour voir les biens les plus proches, autorise Mboa à utiliser ta position dans les réglages. Elle sert à la recherche et n\'est jamais enregistrée.',
+      name: 'searchLocationBlockedBody',
+      desc: 'Position refused for good: sheet body',
+      args: [],
+    );
+  }
+
+  /// `Active la localisation`
+  String get searchLocationOffTitle {
+    return Intl.message(
+      'Active la localisation',
+      name: 'searchLocationOffTitle',
+      desc: 'Location off: sheet title',
+      args: [],
+    );
+  }
+
+  /// `La localisation de ton téléphone est désactivée. Active-la pour voir les biens les plus proches.`
+  String get searchLocationOffBody {
+    return Intl.message(
+      'La localisation de ton téléphone est désactivée. Active-la pour voir les biens les plus proches.',
+      name: 'searchLocationOffBody',
+      desc: 'Location off: sheet body',
+      args: [],
+    );
+  }
+
+  /// `Ouvrir les réglages`
+  String get searchLocationOpenSettings {
+    return Intl.message(
+      'Ouvrir les réglages',
+      name: 'searchLocationOpenSettings',
+      desc: 'Location sheet button',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

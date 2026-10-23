@@ -49,6 +49,9 @@ dependencies:
   # CE-M07-03 — dialling the visitor from the visit, inside four hours. A
   # "call" button that copied the number instead would be a small lie.
   url_launcher: ^6.3.1
+  # M04 / RM-M04-08 — « Proche de vous »: the position, asked on the tap,
+  # sent with the search, never stored.
+  geolocator: ^13.0.4
 
 dev_dependencies:
   flutter_test:

@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**1482 tests green, analyze clean.** `mboa_user` 391 · `mboa_pro` 608 ·
+**1496 tests green, analyze clean.** `mboa_user` 405 · `mboa_pro` 608 ·
 `mboa_core` 29 · `mboa_shared` 426 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **Both apps run on the founder's device** (since 2026-10-20, side by side,
@@ -65,7 +65,7 @@
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
 | M30 Mon Logement — lot 3 | ✅ the space's daily-life tiles, both apps: **Demandes** (ask — remark, repair, question, photos —, follow, reply in the property's thread; the landlord takes it in hand and resolves it; Pro inbox + home nudge; N-38), **État des lieux** (photos by phase and room, compressed and fingerprinted, uploaded with a signed checksum, recorded with Mboa's time, acknowledged once by the landlord; N-39), **Contacts** (the landlord's 15, shared on all or some properties; the tenant calls them) · the space's lists are tabs |
 | M31 Mes anciens logements | ✅ **tenant**: « Mes logements » in two tabs (« En cours » / « Anciens »); an ended tenancy opens its sheet — lease as signed, confirmed total by year with each payment's declaration and receipt, unconfirmed apart, signed contract + code, today's rating, « Mon avis » (M27), requests / photos / schedule read only — and the expenses statement (PDF, share sheet) · **both apps**: « Avant / après » (entry beside exit, room by room) from « État des lieux » |
-| M04 search home | ✅ after the founder's mockup: greeting, city + filters, category tabs, « À la une » (Pro / Pro+), row cards, the map one floating pill away · rating and distance wait for §33 |
+| M04 search home | ✅ after the founder's mockup: greeting, city + filters, category tabs, « À la une » (Pro / Pro+), row cards, the map one floating pill away · **phase 2 (§33, RM-M04-08)**: « ★ 4,2 (7) » on every card (none without reviews), « Pertinence / Près de toi » — the nearest first in the chosen city, « à 2,3 km » on each card once the position is known |
 | M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) and the space's « Quittances et reçus » · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
 
 **Apps & packages.** `apps/mboa_user` (public) · `apps/mboa_pro` (prestataires +
@@ -1146,6 +1146,24 @@ Doc 10's RM-M10-01 still words the profile requirement as "photo + type + ville"
 the API models a prestataire's image as `logoObjectKey`, and the app treats those
 as the same thing.
 
+### Search phase 2 — what to know before touching (2026-10-23)
+
+- **The position** (`LocationService`, geolocator) is asked when the reader
+  taps « Près de toi », never at launch, in the foreground only. It lives in
+  `SearchReady.position` for the screen's searches: never in the saved
+  query, never in the cache — the cached first page drops `distanceKm`.
+- **The distance is to the point the card shows** (the blurred one until
+  contact, RM-M04-06): the server's choice, so the front door cannot be
+  triangulated. Never computed here.
+- `sort=distance` is « the nearest in the chosen city » (the city stays
+  mandatory); « À la une » is hidden then — one list, one order. Back to
+  « Pertinence », the position stays and cards keep their distance.
+- Refused for good, or location off: a sheet with one button to the
+  settings; refused this once, or no fix: a toast. No chips over cached
+  results.
+- The French UI says « Près de toi » where the backend wrote « Proche de
+  vous »: the app tutoies (§37).
+
 ### Session and codes — what to know before touching (2026-10-23)
 
 - **A refresh token is single-use**: presenting a spent one answers
@@ -1202,9 +1220,6 @@ Ready to build (the API exists, nothing in the apps):
 - **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
   (entries, summary, export, attachment) and `/addons/finance/subscribe`.
   Paid option, never started.
-- **§33** (backend): the rating and the distance on search results — then
-  « Proche de vous », « à X km » and the location permission (phase 2 of
-  the search home).
 - **Receipts' 404** (seen on device): R2 answered 404 to a receipt's
   presigned link; the app now reports storage's own code
   (`PdfDownloadFailed`). Waiting for that line to write the backend a precise

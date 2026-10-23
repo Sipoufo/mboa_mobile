@@ -2,6 +2,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import 'location_service.dart';
+
 /// One page of results, plus where they came from.
 class SearchPage {
   const SearchPage({
@@ -18,6 +20,21 @@ class SearchPage {
   /// CE-M04-02 — the screen says so; results an hour old are not a lie, but
   /// pretending they are live would be.
   final bool fromCache;
+}
+
+/// The order of the results (RM-M04-08).
+enum SearchSort {
+  /// The server's: tier, then recency (CA-M04-02).
+  relevance,
+
+  /// Nearest first — every filter still applying, and the city still
+  /// mandatory: « the nearest in the chosen city ». Needs a position.
+  distance;
+
+  String get wire => switch (this) {
+        SearchSort.relevance => 'relevance',
+        SearchSort.distance => 'distance',
+      };
 }
 
 /// Searching for a property (CDC M04).
@@ -54,9 +71,20 @@ class SearchRepository {
   /// Runs the search, and keeps the first page for when the network goes.
   ///
   /// **Results are used in the order they arrive.** The server applies the
-  /// visibility algorithm (Pro+ → Pro → Basic+ → Gratuit, CA-M04-02); sorting
-  /// again here would be a second implementation of that rule.
-  Future<SearchPage> search(SearchQuery query, {int page = 0}) async {
+  /// visibility algorithm (Pro+ → Pro → Basic+ → Gratuit, CA-M04-02) or,
+  /// [SearchSort.distance], the nearest first; sorting again here would be a
+  /// second implementation of either rule.
+  ///
+  /// With a [position], each card says how far it is (RM-M04-08). The
+  /// position goes with the request and nowhere else: not in the cache, not
+  /// in the saved query.
+  Future<SearchPage> search(
+    SearchQuery query, {
+    int page = 0,
+    UserPosition? position,
+    SearchSort sort = SearchSort.relevance,
+  }) async {
+    assert(sort != SearchSort.distance || position != null, 'POSITION_REQUIRED');
     final response = await _api.searchListings(
       cityId: query.cityId,
       districtIds: query.districtIds.isEmpty
@@ -81,6 +109,10 @@ class SearchRepository {
       badges: query.badges.isEmpty
           ? null
           : BuiltList<String>(query.badges.map((b) => b.asSearchParam)),
+      lat: position?.latitude,
+      lng: position?.longitude,
+      // The default needs no saying.
+      sort: sort == SearchSort.relevance ? null : sort.wire,
       page: page,
       size: _pageSize,
     );
@@ -144,7 +176,8 @@ class SearchRepository {
   }
 
   /// Only what a card draws. A cache that stored the whole payload would need
-  /// migrating every time the API grows a field.
+  /// migrating every time the API grows a field. **Never the distance**: it
+  /// says where the reader stood.
   static Map<String, dynamic> _hitToCache(SearchHit hit) => switch (hit) {
         ListingHit() => {
             'kind': 'listing',
@@ -158,6 +191,7 @@ class SearchRepository {
             'type': hit.propertyType.name,
             'rooms': hit.roomCount,
             'surface': hit.surfaceArea,
+            'rating': _ratingToCache(hit.rating),
           },
         ResidenceHit() => {
             'kind': 'residence',
@@ -168,8 +202,16 @@ class SearchRepository {
             'photo': hit.primaryPhotoKey,
             'from': hit.fromMonthlyRent,
             'available': hit.availableUnitCount,
+            'rating': _ratingToCache(hit.rating),
           },
       };
+
+  static List<num>? _ratingToCache(PropertyRatingSummary rating) =>
+      rating.hasRating ? [rating.average!, rating.reviewCount] : null;
+
+  static PropertyRatingSummary _ratingFromCache(Object? raw) => raw is List && raw.length == 2
+      ? PropertyRatingSummary(average: (raw[0] as num).toDouble(), reviewCount: (raw[1] as num).toInt())
+      : const PropertyRatingSummary();
 
   static SearchHit? _hitFromCache(Map<String, dynamic> json) {
     final id = json['id'] as String?;
@@ -184,6 +226,7 @@ class SearchRepository {
         primaryPhotoKey: json['photo'] as String?,
         fromMonthlyRent: json['from'] as int?,
         availableUnitCount: json['available'] as int?,
+        rating: _ratingFromCache(json['rating']),
       );
     }
 
@@ -204,6 +247,7 @@ class SearchRepository {
           PropertyType.apartment,
       roomCount: json['rooms'] as int?,
       surfaceArea: json['surface'] as int?,
+      rating: _ratingFromCache(json['rating']),
     );
   }
 }

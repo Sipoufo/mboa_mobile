@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
@@ -8,6 +9,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../favorites/ui/widgets/favorite_heart.dart';
 import '../../../profile/profile_types.dart';
+import '../../data/search_repository.dart' show SearchSort;
 import 'search_hit_card.dart';
 
 /// The search home's head, after the founder's mockup: two shortcuts on the
@@ -208,6 +210,103 @@ String hitFactsLine(I18n l10n, SearchHit hit) => switch (hit) {
   final ResidenceHit residence => l10n.searchResidenceUnits(residence.availableUnitCount ?? 0),
 };
 
+/// « Deido · à 2,3 km » — the district, and how far once the search carried
+/// a position (RM-M04-08). [withCity]: « Akwa, Douala », where a card stands
+/// alone on a map.
+String? hitPlaceLine(BuildContext context, SearchHit hit, {bool withCity = false}) {
+  final place = withCity
+      ? [hit.district, hit.city].nonNulls.join(', ').ifEmptyNull
+      : hit.district ?? hit.city;
+  final km = hit.distanceKm;
+  final distance = km == null
+      ? null
+      : I18n.of(context).searchDistance(NumberFormat('0.0', Localizations.localeOf(context).toLanguageTag()).format(km));
+  final line = [?place, ?distance].join(' · ');
+  return line.isEmpty ? null : line;
+}
+
+/// « ★ 4,2 (7) » — only with reviews: none reads as new, « 0/5 » as bad
+/// (RM-M04-08, as on the fiche).
+class HitRating extends StatelessWidget {
+  const HitRating({super.key, required this.rating, this.color});
+
+  final PropertyRatingSummary rating;
+
+  /// On a photo, white; on a card, the ink.
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!rating.hasRating) return const SizedBox.shrink();
+    final colors = context.mboaColors;
+    final average = NumberFormat('0.0', Localizations.localeOf(context).toLanguageTag()).format(rating.average);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(LucideIcons.star, size: 14, color: colors.warning),
+        const SizedBox(width: 2),
+        Text(
+          I18n.of(context).hitRating(average, rating.reviewCount),
+          style: context.mboaText.caption.copyWith(color: color ?? colors.ink, fontWeight: FontWeight.w700),
+        ),
+      ],
+    );
+  }
+}
+
+/// RM-M04-08 — the order: the server's, or the nearest first. Choosing the
+/// second asks for the position; while it is sought, the chip says so.
+class SearchSortChips extends StatelessWidget {
+  const SearchSortChips({super.key, required this.sort, required this.isLocating, required this.onChanged});
+
+  final SearchSort sort;
+  final bool isLocating;
+  final ValueChanged<SearchSort> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    Widget chip(SearchSort value, String label, {Widget? avatar}) => ChoiceChip(
+          label: Text(label),
+          avatar: avatar,
+          selected: sort == value,
+          showCheckmark: false,
+          onSelected: isLocating ? null : (_) => onChanged(value),
+          selectedColor: colors.primaryPale,
+          labelStyle: context.mboaText.label.copyWith(
+            color: sort == value ? colors.primaryDark : colors.textSecondary,
+            fontWeight: sort == value ? FontWeight.w700 : FontWeight.w500,
+          ),
+          side: BorderSide(color: sort == value ? colors.primary : colors.border),
+          shape: const StadiumBorder(),
+        );
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, 0, Dimens.screenMargin, Dimens.spacingSm),
+      child: Row(
+        children: [
+          chip(SearchSort.relevance, l10n.searchSortRelevance),
+          const SizedBox(width: Dimens.spacingSm),
+          chip(
+            SearchSort.distance,
+            l10n.searchSortNearby,
+            avatar: isLocating
+                ? const SizedBox.square(dimension: 14, child: CircularProgressIndicator(strokeWidth: 2))
+                : Icon(LucideIcons.navigation, size: 14, color: sort == SearchSort.distance ? colors.primary : colors.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+extension on String {
+  String? get ifEmptyNull => isEmpty ? null : this;
+}
+
 String _kindLabel(I18n l10n, SearchHit hit) => switch (hit) {
   final ListingHit listing => listing.propertyType.label(l10n),
   ResidenceHit() => l10n.searchResidence,
@@ -249,7 +348,7 @@ class FeaturedHitCard extends StatelessWidget {
     const white = Colors.white;
     final price = hitPriceLabel(l10n, hit);
     final facts = hitFactsLine(l10n, hit);
-    final place = hit.district ?? hit.city;
+    final place = hitPlaceLine(context, hit);
     final heart = _heart(hit, background: true);
 
     return SizedBox(
@@ -309,11 +408,22 @@ class FeaturedHitCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (price != null)
-                      Text(
-                        price,
-                        style: context.mboaText.label.copyWith(color: white, fontWeight: FontWeight.w700),
-                      ),
+                    Row(
+                      children: [
+                        if (price != null)
+                          Expanded(
+                            child: Text(
+                              price,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.mboaText.label.copyWith(color: white, fontWeight: FontWeight.w700),
+                            ),
+                          )
+                        else
+                          const Spacer(),
+                        HitRating(rating: hit.rating, color: white),
+                      ],
+                    ),
                     Text(
                       hit.title ?? '',
                       maxLines: 2,
@@ -369,7 +479,7 @@ class HitRowCard extends StatelessWidget {
     final colors = context.mboaColors;
     final price = hitPriceLabel(l10n, hit);
     final facts = hitFactsLine(l10n, hit);
-    final place = hit.district ?? hit.city;
+    final place = hitPlaceLine(context, hit);
     final heart = _heart(hit);
 
     return Padding(
@@ -464,13 +574,20 @@ class HitRowCard extends StatelessWidget {
                       ],
                       // The price on its own line: beside the place, one of
                       // the two was always cut.
-                      if (price != null) ...[
+                      if (price != null || hit.rating.hasRating) ...[
                         const SizedBox(height: 2),
-                        Text(
-                          price,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.mboaText.label.copyWith(color: colors.primary, fontWeight: FontWeight.w700),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                price ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.mboaText.label.copyWith(color: colors.primary, fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                            HitRating(rating: hit.rating),
+                          ],
                         ),
                       ],
                     ],

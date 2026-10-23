@@ -35,3 +35,24 @@ class SearchNextPageRequested extends SearchEvent {
 class SearchFiltersCleared extends SearchEvent {
   const SearchFiltersCleared();
 }
+
+/// RM-M04-08 — « Pertinence » or « Proche de vous ». The nearest first asks
+/// for the position, each time — the reader may have moved.
+class SearchSortChanged extends SearchEvent {
+  const SearchSortChanged(this.sort);
+
+  final SearchSort sort;
+
+  @override
+  List<Object?> get props => [sort];
+}
+
+/// Where the reader can allow the position, after a refusal.
+class SearchLocationSettingsRequested extends SearchEvent {
+  const SearchLocationSettingsRequested(this.reason);
+
+  final LocationRefusal reason;
+
+  @override
+  List<Object?> get props => [reason];
+}

@@ -1,11 +1,14 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_user/features/search/bloc/search_bloc.dart';
+import 'package:mboa_user/features/search/data/location_service.dart';
 import 'package:mboa_user/features/search/data/search_repository.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockSearchRepository extends Mock implements SearchRepository {}
+
+class MockLocationService extends Mock implements LocationService {}
 
 ListingHit hit(String id, {int? tierRank}) => ListingHit(
       id: id,
@@ -22,13 +25,20 @@ SearchPage page(List<SearchHit> hits, {int page = 0, bool isLast = true}) =>
 /// The tenant's search (CDC M04).
 void main() {
   late MockSearchRepository repository;
+  late MockLocationService location;
 
   const douala = SearchQuery(cityId: 'c-1', cityName: 'Douala');
 
-  setUpAll(() => registerFallbackValue(const SearchQuery()));
+  setUpAll(() {
+    registerFallbackValue(const SearchQuery());
+    registerFallbackValue(const UserPosition(0, 0));
+    registerFallbackValue(SearchSort.relevance);
+    registerFallbackValue(LocationRefusal.denied);
+  });
 
   setUp(() {
     repository = MockSearchRepository();
+    location = MockLocationService();
     when(() => repository.lastQuery()).thenReturn(null);
     when(() => repository.cachedFirstPage()).thenReturn(null);
     // Asked only once a search has failed; each test that cares says which
@@ -36,7 +46,7 @@ void main() {
     when(repository.isOffline).thenAnswer((_) async => true);
   });
 
-  SearchBloc build() => SearchBloc(repository: repository);
+  SearchBloc build() => SearchBloc(repository: repository, location: location);
 
   blocTest<SearchBloc, SearchState>(
     'RM-M04-01 — without a city there is nothing to search',
@@ -252,5 +262,85 @@ void main() {
       expect(query.cityId, 'c-1');
       expect(query.activeFilterCount, 0);
     },
+  );
+
+  group('RM-M04-08 — the nearest first', () {
+    const here = UserPosition(4.05, 9.7);
+    const near = ListingHit(id: 'n', title: 'Près', distanceKm: 0.7);
+
+    blocTest<SearchBloc, SearchState>(
+      'asks for the position, then searches nearest first with it',
+      setUp: () {
+        when(location.current).thenAnswer((_) async => here);
+        when(() => repository.search(douala, page: 0, position: here, sort: SearchSort.distance))
+            .thenAnswer((_) async => page([near]));
+      },
+      build: build,
+      seed: () => SearchReady(query: douala, hits: [hit('a')]),
+      act: (bloc) => bloc.add(const SearchSortChanged(SearchSort.distance)),
+      expect: () => [
+        SearchReady(query: douala, hits: [hit('a')], isLocating: true),
+        SearchReady(query: douala, hits: [hit('a')], isLoading: true, sort: SearchSort.distance, position: here),
+        const SearchReady(query: douala, hits: [near], sort: SearchSort.distance, position: here),
+      ],
+    );
+
+    blocTest<SearchBloc, SearchState>(
+      'refused: the order stays, the screen is told why — nothing is searched',
+      setUp: () => when(location.current).thenThrow(const LocationUnavailable(LocationRefusal.deniedForever)),
+      build: build,
+      seed: () => SearchReady(query: douala, hits: [hit('a')]),
+      act: (bloc) => bloc.add(const SearchSortChanged(SearchSort.distance)),
+      expect: () => [
+        SearchReady(query: douala, hits: [hit('a')], isLocating: true),
+        SearchReady(query: douala, hits: [hit('a')], locationRefusal: LocationRefusal.deniedForever),
+      ],
+      verify: (_) => verifyNever(
+        () => repository.search(any(), page: any(named: 'page'), position: any(named: 'position'), sort: any(named: 'sort')),
+      ),
+    );
+
+    blocTest<SearchBloc, SearchState>(
+      'back to relevance: the cards still say how far',
+      setUp: () => when(() => repository.search(douala, page: 0, position: here))
+          .thenAnswer((_) async => page([near])),
+      build: build,
+      seed: () => const SearchReady(query: douala, hits: [near], sort: SearchSort.distance, position: here),
+      act: (bloc) => bloc.add(const SearchSortChanged(SearchSort.relevance)),
+      expect: () => [
+        const SearchReady(query: douala, hits: [near], isLoading: true, position: here),
+        const SearchReady(query: douala, hits: [near], position: here),
+      ],
+    );
+
+    blocTest<SearchBloc, SearchState>(
+      'the next page keeps the order and the position',
+      setUp: () => when(() => repository.search(douala, page: 1, position: here, sort: SearchSort.distance))
+          .thenAnswer((_) async => page([hit('b')], page: 1)),
+      build: build,
+      seed: () => const SearchReady(query: douala, hits: [near], isLast: false, sort: SearchSort.distance, position: here),
+      act: (bloc) => bloc.add(const SearchNextPageRequested()),
+      verify: (bloc) => expect((bloc.state as SearchReady).hits.map((h) => h.id), ['n', 'b']),
+    );
+
+    blocTest<SearchBloc, SearchState>(
+      'the settings, where the reader can change their mind',
+      setUp: () => when(() => location.openSettings(LocationRefusal.serviceOff)).thenAnswer((_) async {}),
+      build: build,
+      act: (bloc) => bloc.add(const SearchLocationSettingsRequested(LocationRefusal.serviceOff)),
+      verify: (_) => verify(() => location.openSettings(LocationRefusal.serviceOff)).called(1),
+    );
+  });
+
+  blocTest<SearchBloc, SearchState>(
+    'CE-M04-03 — « Réessayer » after a failure runs the search again',
+    setUp: () => when(() => repository.search(douala, page: 0)).thenAnswer((_) async => page([hit('a')])),
+    build: build,
+    seed: () => const SearchFailure(query: douala),
+    act: (bloc) => bloc.add(const SearchSubmitted()),
+    expect: () => [
+      const SearchReady(query: douala, isLoading: true),
+      SearchReady(query: douala, hits: [hit('a')]),
+    ],
   );
 }

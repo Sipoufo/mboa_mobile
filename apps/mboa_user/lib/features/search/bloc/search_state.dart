@@ -36,9 +36,29 @@ class SearchReady extends SearchState {
     this.isEmpty = false,
     this.cachedBecause,
     this.loadMoreFailed = false,
+    this.sort = SearchSort.relevance,
+    this.position,
+    this.isLocating = false,
+    this.locationRefusal,
   });
 
   final SearchQuery query;
+
+  /// RM-M04-08 — the order asked for; [SearchSort.distance] only with a
+  /// [position].
+  final SearchSort sort;
+
+  /// Where the reader stood when they asked for « Proche de vous » — in
+  /// memory for this screen's searches, so each card says how far it is.
+  /// Never stored.
+  final UserPosition? position;
+
+  /// The position is being asked for.
+  final bool isLocating;
+
+  /// Once: why there is no position. The screen says so, and offers the
+  /// settings where that helps.
+  final LocationRefusal? locationRefusal;
 
   /// In the server's order — the visibility algorithm's, not ours.
   final List<SearchHit> hits;
@@ -76,6 +96,10 @@ class SearchReady extends SearchState {
     CacheReason? cachedBecause,
     bool loadMoreFailed = false,
     bool clearOutcome = false,
+    SearchSort? sort,
+    UserPosition? position,
+    bool isLocating = false,
+    LocationRefusal? locationRefusal,
   }) =>
       SearchReady(
         query: query ?? this.query,
@@ -88,6 +112,10 @@ class SearchReady extends SearchState {
         cachedBecause:
             cachedBecause ?? (clearOutcome ? null : this.cachedBecause),
         loadMoreFailed: loadMoreFailed,
+        sort: sort ?? this.sort,
+        position: position ?? this.position,
+        isLocating: isLocating,
+        locationRefusal: locationRefusal,
       );
 
   @override
@@ -101,6 +129,10 @@ class SearchReady extends SearchState {
         isEmpty,
         cachedBecause,
         loadMoreFailed,
+        sort,
+        position,
+        isLocating,
+        locationRefusal,
       ];
 }
 

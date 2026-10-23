@@ -12,6 +12,8 @@ import 'package:mboa_user/features/favorites/bloc/favorites_bloc.dart';
 import 'package:mboa_user/features/saved_searches/bloc/saved_searches_bloc.dart';
 import 'package:mboa_user/features/saved_searches/models/saved_search.dart';
 import 'package:mboa_user/features/search/bloc/search_bloc.dart';
+import 'package:mboa_user/features/search/data/location_service.dart';
+import 'package:mboa_user/features/search/data/search_repository.dart' show SearchSort;
 import 'package:mboa_user/features/search/ui/search_page.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -275,6 +277,7 @@ void main() {
             propertyType: PropertyType.apartment,
             tierRank: 3,
             badges: [TrustBadge.trustedProvider],
+            rating: PropertyRatingSummary(average: 4.6, reviewCount: 12),
           ),
           const ResidenceHit(
             id: 'r-2',
@@ -296,6 +299,107 @@ void main() {
     // The featured are not listed twice.
     expect(find.text('Appartement à louer — Deido'), findsOneWidget);
     await expectLater(find.byType(SearchPage), matchesGoldenFile('goldens/search_featured.png'));
+  });
+
+  group('RM-M04-08 — rating, distance, the nearest first', () {
+    const here = UserPosition(4.05, 9.7);
+
+    testWidgets('nearest first: one list, each place with how far and its rating', (tester) async {
+      when(() => bloc.state).thenReturn(
+        const SearchReady(
+          query: douala,
+          sort: SearchSort.distance,
+          position: here,
+          hits: [
+            ListingHit(
+              id: 'p-1',
+              title: 'Appartement à louer — Deido',
+              city: 'Douala',
+              district: 'Deido',
+              price: 110000,
+              roomCount: 4,
+              propertyType: PropertyType.apartment,
+              // Pro+: « à la une » in relevance — not ahead of the nearest.
+              tierRank: 3,
+              distanceKm: 0.7,
+              rating: PropertyRatingSummary(average: 4.2, reviewCount: 7),
+            ),
+            ResidenceHit(
+              id: 'r-1',
+              title: 'Résidence Akwa',
+              city: 'Douala',
+              district: 'Akwa',
+              fromMonthlyRent: 45000,
+              availableUnitCount: 3,
+              distanceKm: 2.3,
+              rating: PropertyRatingSummary(average: 3.9, reviewCount: 3),
+            ),
+            ListingHit(
+              id: 'p-2',
+              title: 'Studio — Bonapriso',
+              city: 'Douala',
+              district: 'Bonapriso',
+              price: 80000,
+              propertyType: PropertyType.studio,
+              distanceKm: 4.1,
+            ),
+          ],
+        ),
+      );
+      await pump(tester);
+
+      expect(find.text('À la une'), findsNothing);
+      expect(find.text('Les plus proches à Douala'), findsOneWidget);
+      expect(find.text('Deido · à 0,7 km'), findsOneWidget);
+      expect(find.text('4,2 (7)'), findsOneWidget);
+      // No reviews, no rating — never « 0/5 ».
+      expect(find.text('Bonapriso · à 4,1 km'), findsOneWidget);
+      expect(find.textContaining('(0)'), findsNothing);
+      await expectLater(find.byType(SearchPage), matchesGoldenFile('goldens/search_nearby.png'));
+    });
+
+    testWidgets('« Près de toi » asks for the order', (tester) async {
+      await pump(tester);
+      await tester.tap(find.text('Près de toi'));
+      verify(() => bloc.add(const SearchSortChanged(SearchSort.distance))).called(1);
+    });
+
+    testWidgets('over cached results, no chips: they carry no distance', (tester) async {
+      when(() => bloc.state).thenReturn(
+        SearchReady(query: douala, hits: [listing('a')], cachedBecause: CacheReason.offline),
+      );
+      await pump(tester);
+      expect(find.text('Près de toi'), findsNothing);
+    });
+
+    testWidgets('refused for good: a sheet with the one way to the settings', (tester) async {
+      whenListen(
+        bloc,
+        Stream.value(
+          SearchReady(query: douala, hits: [listing('a')], locationRefusal: LocationRefusal.deniedForever),
+        ),
+        initialState: SearchReady(query: douala, hits: [listing('a')]),
+      );
+      await pump(tester);
+
+      expect(find.text('Autorise ta position'), findsOneWidget);
+      await tester.tap(find.text('Ouvrir les réglages'));
+      await tester.pumpAndSettle();
+      verify(() => bloc.add(const SearchLocationSettingsRequested(LocationRefusal.deniedForever))).called(1);
+    });
+
+    testWidgets('refused this once: a word, no sheet', (tester) async {
+      whenListen(
+        bloc,
+        Stream.value(SearchReady(query: douala, hits: [listing('a')], locationRefusal: LocationRefusal.denied)),
+        initialState: SearchReady(query: douala, hits: [listing('a')]),
+      );
+      await pump(tester);
+
+      expect(find.textContaining('Sans ta position'), findsOneWidget);
+      expect(find.text('Ouvrir les réglages'), findsNothing);
+      await tester.pumpAndSettle(const Duration(seconds: 6));
+    });
   });
 
   testWidgets('the search screen', (tester) async {

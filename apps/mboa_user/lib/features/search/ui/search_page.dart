@@ -14,6 +14,8 @@ import '../../my_home/ui/widgets/next_rent_banner.dart';
 import '../../saved_searches/bloc/saved_searches_bloc.dart';
 import '../../saved_searches/ui/widgets/save_search_sheet.dart';
 import '../bloc/search_bloc.dart';
+import '../data/location_service.dart';
+import '../data/search_repository.dart';
 import 'widgets/search_filters_sheet.dart';
 import 'widgets/search_home_widgets.dart';
 import 'widgets/search_map_view.dart';
@@ -188,7 +190,11 @@ class _SearchPageState extends State<SearchPage> {
                     : unawaited(context.router.root.push(LoginRoute())),
               ),
               Expanded(
-                child: BlocBuilder<SearchBloc, SearchState>(
+                child: BlocConsumer<SearchBloc, SearchState>(
+                  // RM-M04-08 — no position: said, and where it helps, the
+                  // way to the settings.
+                  listenWhen: (_, curr) => curr is SearchReady && curr.locationRefusal != null,
+                  listener: (context, state) => _sayNoPosition(context, (state as SearchReady).locationRefusal!),
                   builder: (context, state) => switch (state) {
                     SearchInitial() => const Center(child: Loader()),
                     SearchFailure() => _Failure(
@@ -213,6 +219,52 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+}
+
+/// Why there is no position. A refusal for good, or the phone's location
+/// off, only the settings can change: a sheet with that one door. Otherwise
+/// a word — tapping « Près de toi » again asks again.
+Future<void> _sayNoPosition(BuildContext context, LocationRefusal reason) async {
+  final l10n = I18n.of(context);
+  final colors = context.mboaColors;
+  final (title, body) = switch (reason) {
+    LocationRefusal.deniedForever => (l10n.searchLocationBlockedTitle, l10n.searchLocationBlockedBody),
+    LocationRefusal.serviceOff => (l10n.searchLocationOffTitle, l10n.searchLocationOffBody),
+    LocationRefusal.denied => (null, l10n.searchLocationDenied),
+    LocationRefusal.unavailable => (null, l10n.searchLocationUnavailable),
+  };
+  if (title == null) {
+    MboaToast.info(context: context, title: body);
+    return;
+  }
+  final bloc = context.read<SearchBloc>();
+  final open = await showModalBottomSheet<bool>(
+    context: context,
+    backgroundColor: colors.surface,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl))),
+    builder: (sheetContext) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(Dimens.spacingLg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Icon(LucideIcons.mapPinOff, size: Dimens.iconLg, color: colors.primary),
+            const SizedBox(height: Dimens.spacing),
+            Text(title, textAlign: TextAlign.center, style: context.mboaText.h3.copyWith(color: colors.ink)),
+            const SizedBox(height: Dimens.spacingSm),
+            Text(body, textAlign: TextAlign.center, style: context.mboaText.body.copyWith(color: colors.textSecondary)),
+            const SizedBox(height: Dimens.spacingLg),
+            Button.primary(
+              title: l10n.searchLocationOpenSettings,
+              onPressed: () => Navigator.of(sheetContext).pop(true),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+  if (open ?? false) bloc.add(SearchLocationSettingsRequested(reason));
 }
 
 /// The search home under its bloc: the city and the filters, the category
@@ -496,10 +548,14 @@ class _Feed extends StatelessWidget {
     if (!state.query.isValid) return const _NoCityYet();
     if (state.isEmpty) return const _NoResult();
 
-    final featured = [
-      for (final hit in state.hits)
-        if ((hit.tierRank ?? 0) >= _featuredFrom) hit,
-    ].take(_featuredMax).toList();
+    final nearest = state.sort == SearchSort.distance;
+    // Nearest first is one list: a carousel ahead of it would break the order.
+    final featured = nearest
+        ? const <SearchHit>[]
+        : [
+            for (final hit in state.hits)
+              if ((hit.tierRank ?? 0) >= _featuredFrom) hit,
+          ].take(_featuredMax).toList();
     final rest = [for (final hit in state.hits) if (!featured.contains(hit)) hit];
 
     return CustomScrollView(
@@ -508,6 +564,16 @@ class _Feed extends StatelessWidget {
         // M30 — the next rent, while a space is active.
         const SliverToBoxAdapter(child: NextRentBanner()),
         SliverToBoxAdapter(child: _ResultsHeader(count: state.hits.length, onSave: onSave)),
+        // RM-M04-08 — not over cached results: they carry no distance, and
+        // the order cannot be asked again offline.
+        if (!state.isFromCache)
+          SliverToBoxAdapter(
+            child: SearchSortChips(
+              sort: state.sort,
+              isLocating: state.isLocating,
+              onChanged: (sort) => context.read<SearchBloc>().add(SearchSortChanged(sort)),
+            ),
+          ),
         if (featured.isNotEmpty) ...[
           SliverToBoxAdapter(child: SearchSectionTitle(l10n.searchFeatured)),
           SliverToBoxAdapter(
@@ -527,7 +593,11 @@ class _Feed extends StatelessWidget {
         if (rest.isNotEmpty)
           SliverToBoxAdapter(
             child: SearchSectionTitle(
-              state.query.cityName == null ? l10n.searchAllPlaces : l10n.searchInCity(state.query.cityName!),
+              switch ((nearest, state.query.cityName)) {
+                (true, final city?) => l10n.searchNearbyTitle(city),
+                (false, final city?) => l10n.searchInCity(city),
+                (_, null) => l10n.searchAllPlaces,
+              },
             ),
           ),
         SliverPadding(

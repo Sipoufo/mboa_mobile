@@ -5,6 +5,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../favorites/ui/widgets/favorite_heart.dart';
+import 'search_home_widgets.dart' show HitRating, hitPlaceLine, hitPriceLabel;
 
 /// One result (CDC M04 "Vue liste").
 ///
@@ -453,23 +454,20 @@ class _CompactCard extends StatelessWidget {
                     // The same words as the full card, through the same
                     // helpers: a price that reads differently in two places is
                     // two prices to the reader.
-                    Text(
-                      switch (hit) {
-                        final ListingHit listing
-                            when listing.displayPrice != null =>
-                          listing.rentalPeriod
-                              .priceLabel(l10n, listing.displayPrice!),
-                        final ResidenceHit residence
-                            when residence.fromMonthlyRent != null =>
-                          l10n.searchResidenceFrom(
-                            residence.rentFromLabel(l10n, residence.fromMonthlyRent!),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            hitPriceLabel(l10n, hit) ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.mboaText.label
+                                .copyWith(color: colors.primaryDark),
                           ),
-                        _ => '',
-                      },
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.mboaText.label
-                          .copyWith(color: colors.primaryDark),
+                        ),
+                        // RM-M04-08 — as on the list's cards.
+                        HitRating(rating: hit.rating),
+                      ],
                     ),
                     Text(
                       hit.title ?? '',
@@ -478,7 +476,7 @@ class _CompactCard extends StatelessWidget {
                       style: context.mboaText.body.copyWith(color: colors.ink),
                     ),
                     Text(
-                      [hit.district, hit.city].nonNulls.join(', '),
+                      hitPlaceLine(context, hit, withCity: true) ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.mboaText.caption

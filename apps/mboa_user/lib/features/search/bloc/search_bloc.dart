@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../data/location_service.dart';
 import '../data/search_repository.dart';
 
 part 'search_event.dart';
@@ -14,17 +15,21 @@ part 'search_state.dart';
 /// re-sorted (CA-M04-02), and "no result" is a different screen from "no
 /// network" and from "server error" (CE-M04-01 / -02 / -03).
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  SearchBloc({required SearchRepository repository})
+  SearchBloc({required SearchRepository repository, required LocationService location})
       : _repository = repository,
+        _location = location,
         super(const SearchInitial()) {
     on<SearchStarted>(_onStarted);
     on<SearchFilterChanged>(_onFilterChanged);
     on<SearchSubmitted>(_onSubmitted);
     on<SearchNextPageRequested>(_onNextPage);
     on<SearchFiltersCleared>(_onFiltersCleared);
+    on<SearchSortChanged>(_onSortChanged);
+    on<SearchLocationSettingsRequested>((event, _) => _location.openSettings(event.reason));
   }
 
   final SearchRepository _repository;
+  final LocationService _location;
 
   /// RM-M04-02 — the last search comes back pre-filled, and runs itself when
   /// it is complete enough to run.
@@ -62,11 +67,39 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchSubmitted event,
     Emitter<SearchState> emit,
   ) async {
-    final current = state;
-    if (current is! SearchReady || !current.query.isValid) return;
+    final current = switch (state) {
+      final SearchReady ready => ready,
+      // CE-M04-03 — « Réessayer » after a failure runs the same search again.
+      SearchFailure(:final query) => SearchReady(query: query),
+      SearchInitial() => null,
+    };
+    if (current == null || !current.query.isValid) return;
 
     emit(current.copyWith(isLoading: true, clearOutcome: true));
-    await _run(current.query, emit);
+    await _run(current.query, emit, sort: current.sort, position: current.position);
+  }
+
+  /// RM-M04-08 — the nearest first asks where the reader stands, each time;
+  /// relevance keeps the position, so the cards still say how far.
+  Future<void> _onSortChanged(SearchSortChanged event, Emitter<SearchState> emit) async {
+    final current = state;
+    if (current is! SearchReady || !current.query.isValid || current.isLocating) return;
+
+    if (event.sort == SearchSort.relevance) {
+      emit(current.copyWith(sort: SearchSort.relevance, isLoading: true, clearOutcome: true));
+      await _run(current.query, emit, position: current.position);
+      return;
+    }
+
+    emit(current.copyWith(isLocating: true));
+    try {
+      final position = await _location.current();
+      emit(current.copyWith(sort: SearchSort.distance, position: position, isLoading: true, clearOutcome: true));
+      await _run(current.query, emit, sort: SearchSort.distance, position: position);
+    } on LocationUnavailable catch (refused) {
+      // The order stays as it was; the screen says why.
+      emit(current.copyWith(locationRefusal: refused.reason));
+    }
   }
 
   /// RM-M04-03 — 20 per page, loaded as the list is scrolled.
@@ -85,6 +118,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       final page = await _repository.search(
         current.query,
         page: current.page + 1,
+        position: current.position,
+        sort: current.sort,
       );
       emit(
         current.copyWith(
@@ -100,9 +135,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
   }
 
-  Future<void> _run(SearchQuery query, Emitter<SearchState> emit) async {
+  Future<void> _run(
+    SearchQuery query,
+    Emitter<SearchState> emit, {
+    SearchSort sort = SearchSort.relevance,
+    UserPosition? position,
+  }) async {
     try {
-      final page = await _repository.search(query);
+      final page = await _repository.search(query, position: position, sort: sort);
       emit(
         SearchReady(
           query: query,
@@ -112,6 +152,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           // CE-M04-01 — an empty answer is an answer: the screen suggests
           // widening rather than reporting a failure.
           isEmpty: page.hits.isEmpty,
+          sort: sort,
+          position: position,
         ),
       );
     } catch (_) {
@@ -128,6 +170,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             cachedBecause: await _repository.isOffline()
                 ? CacheReason.offline
                 : CacheReason.unreachable,
+            sort: sort,
+            position: position,
           ),
         );
         return;

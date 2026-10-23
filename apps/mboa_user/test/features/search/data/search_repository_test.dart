@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
+import 'package:mboa_user/features/search/data/location_service.dart';
 import 'package:mboa_user/features/search/data/search_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -278,5 +279,132 @@ void main() {
 
     expect(cached!.fromCache, isTrue);
     expect(cached.hits.single.id, 'a');
+  });
+
+  group('RM-M04-08 — the rating and the distance', () {
+    void stub(List<SearchResult> items) => when(
+          () => api.searchListings(
+            cityId: any(named: 'cityId'),
+            districtIds: any(named: 'districtIds'),
+            propertyTypes: any(named: 'propertyTypes'),
+            rentalPeriods: any(named: 'rentalPeriods'),
+            rentMin: any(named: 'rentMin'),
+            rentMax: any(named: 'rentMax'),
+            roomsMin: any(named: 'roomsMin'),
+            surfaceMin: any(named: 'surfaceMin'),
+            surfaceMax: any(named: 'surfaceMax'),
+            furnished: any(named: 'furnished'),
+            availableNow: any(named: 'availableNow'),
+            amenities: any(named: 'amenities'),
+            badges: any(named: 'badges'),
+            lat: any(named: 'lat'),
+            lng: any(named: 'lng'),
+            sort: any(named: 'sort'),
+            page: any(named: 'page'),
+            size: any(named: 'size'),
+          ),
+        ).thenAnswer((_) async => page(items));
+
+    SearchResult rated(String id) => SearchResult(
+          (b) => b
+            ..type = SearchResultTypeEnum.LISTING
+            ..listing = (SearchResultItemBuilder()
+              ..id = id
+              ..title = 'Studio $id'
+              ..city = 'Douala'
+              ..distanceKm = 2.3
+              ..rating = (PropertyRatingBuilder()
+                ..average = 4.2
+                ..reviewCount = 7)),
+        );
+
+    const query = SearchQuery(cityId: 'c-1', cityName: 'Douala');
+
+    test('the position and the order go on the wire; each card reads its rating and distance', () async {
+      stub([rated('a')]);
+
+      final result = await repository.search(
+        query,
+        position: const UserPosition(4.05, 9.7),
+        sort: SearchSort.distance,
+      );
+
+      final hit = result.hits.single;
+      expect(hit.distanceKm, 2.3);
+      expect(hit.rating.average, 4.2);
+      expect(hit.rating.reviewCount, 7);
+      verify(
+        () => api.searchListings(
+          cityId: 'c-1',
+          districtIds: any(named: 'districtIds'),
+          propertyTypes: any(named: 'propertyTypes'),
+          rentalPeriods: any(named: 'rentalPeriods'),
+          rentMin: any(named: 'rentMin'),
+          rentMax: any(named: 'rentMax'),
+          roomsMin: any(named: 'roomsMin'),
+          surfaceMin: any(named: 'surfaceMin'),
+          surfaceMax: any(named: 'surfaceMax'),
+          furnished: any(named: 'furnished'),
+          availableNow: any(named: 'availableNow'),
+          amenities: any(named: 'amenities'),
+          badges: any(named: 'badges'),
+          lat: 4.05,
+          lng: 9.7,
+          sort: 'distance',
+          page: 0,
+          size: 20,
+        ),
+      ).called(1);
+    });
+
+    test('without a position, neither goes — relevance is the default', () async {
+      stub([listing('a')]);
+
+      await repository.search(query);
+
+      verify(
+        () => api.searchListings(
+          cityId: 'c-1',
+          districtIds: any(named: 'districtIds'),
+          propertyTypes: any(named: 'propertyTypes'),
+          rentalPeriods: any(named: 'rentalPeriods'),
+          rentMin: any(named: 'rentMin'),
+          rentMax: any(named: 'rentMax'),
+          roomsMin: any(named: 'roomsMin'),
+          surfaceMin: any(named: 'surfaceMin'),
+          surfaceMax: any(named: 'surfaceMax'),
+          furnished: any(named: 'furnished'),
+          availableNow: any(named: 'availableNow'),
+          amenities: any(named: 'amenities'),
+          badges: any(named: 'badges'),
+          // ignore: avoid_redundant_argument_values
+          lat: null,
+          // ignore: avoid_redundant_argument_values
+          lng: null,
+          // ignore: avoid_redundant_argument_values
+          sort: null,
+          page: 0,
+          size: 20,
+        ),
+      ).called(1);
+    });
+
+    test('the cache keeps the rating, never the distance — it says where the reader stood', () async {
+      stub([rated('a')]);
+      final kept = <String, Map<String, dynamic>>{};
+      when(() => cache.put(any(), any(), any())).thenAnswer((call) async {
+        kept[call.positionalArguments[1] as String] = call.positionalArguments[2] as Map<String, dynamic>;
+      });
+      when(() => cache.get(any(), any(), ttl: any(named: 'ttl')))
+          .thenAnswer((call) => kept[call.positionalArguments[1] as String]);
+
+      await repository.search(query, position: const UserPosition(4.05, 9.7));
+      final cached = repository.cachedFirstPage()!.hits.single;
+
+      expect(cached.rating.average, 4.2);
+      expect(cached.rating.reviewCount, 7);
+      expect(cached.distanceKm, isNull);
+      expect(kept.toString(), isNot(contains('2.3')));
+    });
   });
 }
