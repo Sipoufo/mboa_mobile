@@ -6226,7 +6226,7 @@
   "@financeProvidersHint": {
     "description": "M26 row"
   },
-  "financeNoMoney": "Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.",
+  "financeNoMoney": "Aucun argent ne transite par Mboa : tu notes ce qui se paie entre toi et tes locataires ou intervenants, Mboa tient le registre.",
   "@financeNoMoney": {
     "description": "RM-M24-05 / RM-M25-01"
   },

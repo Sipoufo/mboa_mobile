@@ -15387,10 +15387,10 @@ class I18n {
     );
   }
 
-  /// `Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.`
+  /// `Aucun argent ne transite par Mboa : tu notes ce qui se paie entre toi et tes locataires ou intervenants, Mboa tient le registre.`
   String get financeNoMoney {
     return Intl.message(
-      'Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.',
+      'Aucun argent ne transite par Mboa : tu notes ce qui se paie entre toi et tes locataires ou intervenants, Mboa tient le registre.',
       name: 'financeNoMoney',
       desc: 'RM-M24-05 / RM-M25-01',
       args: [],

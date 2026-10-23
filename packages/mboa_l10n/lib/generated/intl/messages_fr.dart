@@ -1691,7 +1691,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "financeLedgerTitle": MessageLookupByLibrary.simpleMessage("Registre"),
     "financeNoMoney": MessageLookupByLibrary.simpleMessage(
-      "Aucun argent ne transite par Mboa : tu notes ce qui se paie entre vous, Mboa tient le registre.",
+      "Aucun argent ne transite par Mboa : tu notes ce qui se paie entre toi et tes locataires ou intervenants, Mboa tient le registre.",
     ),
     "financeOffline": MessageLookupByLibrary.simpleMessage(
       "Hors ligne : la gestion financière telle qu\'à ta dernière connexion.",
