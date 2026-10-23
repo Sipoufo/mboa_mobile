@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_pro/features/login/bloc/credential_login_bloc.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../_helpers/mocks/mocks.dart';
@@ -81,6 +82,25 @@ void main() {
         CredentialLoginEnterOtp(email: email),
         CredentialLoginEnterOtp(email: email, loading: true),
         CredentialLoginEnterOtp(email: email, error: CredentialLoginError.invalidCode),
+      ],
+    );
+
+    blocTest<CredentialLoginBloc, CredentialLoginState>(
+      'a dead code (three tries, or expired) asks for a new one',
+      setUp: () {
+        stubLoginOk();
+        when(() => repository.verifyOtp(email: any(named: 'email'), code: any(named: 'code')))
+            .thenThrow(const OtpCodeBurnt());
+      },
+      build: () => CredentialLoginBloc(repository: repository),
+      act: (bloc) => bloc
+        ..add(const CredentialLoginSubmitted(email: email, password: password))
+        ..add(const CredentialLoginOtpSubmitted('000000')),
+      expect: () => const [
+        CredentialLoginEnterCredentials(loading: true),
+        CredentialLoginEnterOtp(email: email),
+        CredentialLoginEnterOtp(email: email, loading: true),
+        CredentialLoginEnterOtp(email: email, error: CredentialLoginError.codeBurnt),
       ],
     );
   });

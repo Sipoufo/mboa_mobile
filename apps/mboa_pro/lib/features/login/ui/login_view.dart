@@ -77,7 +77,11 @@ class _LoginFlow extends StatelessWidget {
                 ? () => context.read<CredentialLoginBloc>().add(const CredentialLoginBackToCredentials())
                 : null,
             child: switch (state) {
-              CredentialLoginEnterOtp(:final email) => _OtpStep(email: email, loading: loading),
+              CredentialLoginEnterOtp(:final email, :final error) => _OtpStep(
+                  email: email,
+                  loading: loading,
+                  burnt: error == CredentialLoginError.codeBurnt,
+                ),
               _ => _CredentialsStep(loading: loading, onRegister: onRegister, onForgotPassword: onForgotPassword),
             },
           ),
@@ -89,6 +93,7 @@ class _LoginFlow extends StatelessWidget {
   String _errorText(I18n l10n, CredentialLoginError error) => switch (error) {
         CredentialLoginError.invalidCredentials => l10n.authLoginInvalidCredentials,
         CredentialLoginError.invalidCode => l10n.otpInvalidCode,
+        CredentialLoginError.codeBurnt => l10n.otpCodeBurnt,
         CredentialLoginError.otpResendFailed => l10n.commonError,
       };
 }
@@ -223,10 +228,13 @@ class _RegisterLink extends StatelessWidget {
 }
 
 class _OtpStep extends StatefulWidget {
-  const _OtpStep({required this.email, required this.loading});
+  const _OtpStep({required this.email, required this.loading, this.burnt = false});
 
   final String email;
   final bool loading;
+
+  /// The code is dead: nothing to type until a new one comes.
+  final bool burnt;
 
   @override
   State<_OtpStep> createState() => _OtpStepState();
@@ -244,6 +252,17 @@ class _OtpStepState extends State<_OtpStep> {
   void initState() {
     super.initState();
     _startCooldown();
+  }
+
+  @override
+  void didUpdateWidget(_OtpStep oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Dead even if right: cleared, and a new code may be asked at once.
+    if (widget.burnt && !oldWidget.burnt) {
+      _controller.clear();
+      _timer?.cancel();
+      setState(() => _secondsLeft = 0);
+    }
   }
 
   @override
@@ -304,14 +323,14 @@ class _OtpStepState extends State<_OtpStep> {
         OtpField(
           controller: _controller,
           length: _codeLength,
-          enabled: !widget.loading,
+          enabled: !widget.loading && !widget.burnt,
           onCompleted: (_) => _submit(),
         ),
         const SizedBox(height: Dimens.spacingLg),
         Button.primary(
           title: l10n.otpValidate,
           isLoading: widget.loading,
-          onPressed: widget.loading ? null : _submit,
+          onPressed: widget.loading || widget.burnt ? null : _submit,
         ),
         const SizedBox(height: Dimens.spacingLg),
         Text(

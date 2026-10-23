@@ -98,6 +98,12 @@ class _OtpFormState extends State<_OtpForm> {
             GetIt.I<LoginFlowController>().onLoginSuccess(context);
           case LoginOtpResent():
             MboaToast.info(context: context, title: l10n.authOtpResent);
+          case LoginFailure(error: LoginError.codeBurnt):
+            // Dead even if right: nothing to type until a new code comes.
+            _controller.clear();
+            _timer?.cancel();
+            setState(() => _secondsLeft = 0);
+            MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.otpCodeBurnt);
           case LoginFailure(:final error):
             MboaToast.error(
               context: context,
@@ -110,6 +116,7 @@ class _OtpFormState extends State<_OtpForm> {
       },
       builder: (context, state) {
         final loading = state is LoginInProgress;
+        final burnt = state is LoginFailure && state.error == LoginError.codeBurnt;
         return StackedLoaderView(
           isLoading: loading,
           child: AuthScaffold(
@@ -133,14 +140,14 @@ class _OtpFormState extends State<_OtpForm> {
                 OtpField(
                   controller: _controller,
                   length: _codeLength,
-                  enabled: !loading,
+                  enabled: !loading && !burnt,
                   onCompleted: (_) => _submit(),
                 ),
                 const SizedBox(height: Dimens.spacingLg),
                 Button.primary(
                   title: l10n.otpValidate,
                   isLoading: loading,
-                  onPressed: loading ? null : _submit,
+                  onPressed: loading || burnt ? null : _submit,
                 ),
                 const SizedBox(height: Dimens.spacingLg),
                 _ResendRow(

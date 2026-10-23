@@ -73,7 +73,11 @@ class _RegisterFlow extends StatelessWidget {
                 ? () => context.read<RegisterBloc>().add(const RegisterBackToDetails())
                 : onLogin,
             child: switch (state) {
-              RegisterEnterOtp(:final phone) => _OtpStep(phone: phone, loading: loading),
+              RegisterEnterOtp(:final phone, :final error) => _OtpStep(
+                  phone: phone,
+                  loading: loading,
+                  burnt: error == RegisterError.codeBurnt,
+                ),
               _ => _DetailsStep(loading: loading, onLogin: onLogin),
             },
           ),
@@ -85,6 +89,7 @@ class _RegisterFlow extends StatelessWidget {
   String _errorText(I18n l10n, RegisterError error) => switch (error) {
         RegisterError.registrationFailed => l10n.registerFailed,
         RegisterError.invalidCode => l10n.otpInvalidCode,
+        RegisterError.codeBurnt => l10n.otpCodeBurnt,
         RegisterError.otpResendFailed => l10n.commonError,
       };
 }
@@ -243,10 +248,13 @@ class _LoginLink extends StatelessWidget {
 }
 
 class _OtpStep extends StatefulWidget {
-  const _OtpStep({required this.phone, required this.loading});
+  const _OtpStep({required this.phone, required this.loading, this.burnt = false});
 
   final String phone;
   final bool loading;
+
+  /// The code is dead: nothing to type until a new one comes.
+  final bool burnt;
 
   @override
   State<_OtpStep> createState() => _OtpStepState();
@@ -264,6 +272,17 @@ class _OtpStepState extends State<_OtpStep> {
   void initState() {
     super.initState();
     _startCooldown();
+  }
+
+  @override
+  void didUpdateWidget(_OtpStep oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Dead even if right: cleared, and a new code may be asked at once.
+    if (widget.burnt && !oldWidget.burnt) {
+      _controller.clear();
+      _timer?.cancel();
+      setState(() => _secondsLeft = 0);
+    }
   }
 
   @override
@@ -324,14 +343,14 @@ class _OtpStepState extends State<_OtpStep> {
         OtpField(
           controller: _controller,
           length: _codeLength,
-          enabled: !widget.loading,
+          enabled: !widget.loading && !widget.burnt,
           onCompleted: (_) => _submit(),
         ),
         const SizedBox(height: Dimens.spacingLg),
         Button.primary(
           title: l10n.otpValidate,
           isLoading: widget.loading,
-          onPressed: widget.loading ? null : _submit,
+          onPressed: widget.loading || widget.burnt ? null : _submit,
         ),
         const SizedBox(height: Dimens.spacingLg),
         Text(

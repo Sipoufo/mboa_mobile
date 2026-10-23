@@ -6082,5 +6082,9 @@
   "evidenceCompareNone": "No photo",
   "@evidenceCompareNone": {
     "description": "M31 — a side with no photo"
+  },
+  "otpCodeBurnt": "This code no longer works: too many tries, or it expired. Ask for a new code.",
+  "@otpCodeBurnt": {
+    "description": "OTP_MAX_ATTEMPTS / OTP_INVALID_OR_EXPIRED — the code is dead, a new one is needed"
   }
 }

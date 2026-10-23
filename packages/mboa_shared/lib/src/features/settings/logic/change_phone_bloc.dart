@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../api/otp_guard.dart';
 import '../data/account_repository.dart';
 
 part 'change_phone_event.dart';
@@ -56,6 +57,8 @@ class ChangePhoneBloc extends Bloc<ChangePhoneEvent, ChangePhoneState> {
         newCode: event.newCode,
       );
       emit(const ChangePhoneSuccess());
+    } on OtpCodeBurnt {
+      emit(ChangePhoneEnterCodes(newPhoneNumber: phone, error: ChangePhoneError.codeBurnt));
     } catch (_) {
       emit(ChangePhoneEnterCodes(newPhoneNumber: phone, error: ChangePhoneError.invalidCode));
     }

@@ -1,7 +1,14 @@
 part of 'register_bloc.dart';
 
 /// Why a registration step failed. The UI maps this to a localised message.
-enum RegisterError { registrationFailed, invalidCode, otpResendFailed }
+enum RegisterError {
+  registrationFailed,
+  invalidCode,
+  otpResendFailed,
+
+  /// Three wrong tries, or expired: only a new code helps.
+  codeBurnt,
+}
 
 /// Observable states of the Pro registration flow. The two `Enter*` states
 /// double as the flow's step indicator (which screen to render).

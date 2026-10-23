@@ -2,7 +2,13 @@ part of 'login_bloc.dart';
 
 /// Why the login flow failed. The UI maps this to a localised message — the
 /// logic layer never holds user-facing text.
-enum LoginError { otpRequestFailed, invalidCode }
+enum LoginError {
+  otpRequestFailed,
+  invalidCode,
+
+  /// Three wrong tries, or expired: only a new code helps.
+  codeBurnt,
+}
 
 /// Observable states of the shared login flow.
 sealed class LoginState extends Equatable {

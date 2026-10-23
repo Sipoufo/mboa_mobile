@@ -1,6 +1,12 @@
 part of 'change_phone_bloc.dart';
 
-enum ChangePhoneError { requestFailed, invalidCode }
+enum ChangePhoneError {
+  requestFailed,
+  invalidCode,
+
+  /// Three wrong tries, or expired: only new codes help.
+  codeBurnt,
+}
 
 sealed class ChangePhoneState extends Equatable {
   const ChangePhoneState();

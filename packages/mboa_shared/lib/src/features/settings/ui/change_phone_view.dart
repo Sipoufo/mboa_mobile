@@ -65,8 +65,11 @@ class _ChangePhoneScaffold extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(Dimens.spacingLg),
                 child: switch (state) {
-                  ChangePhoneEnterCodes(:final newPhoneNumber) =>
-                    _CodesStep(newPhoneNumber: newPhoneNumber, loading: loading),
+                  ChangePhoneEnterCodes(:final newPhoneNumber, :final error) => _CodesStep(
+                      newPhoneNumber: newPhoneNumber,
+                      loading: loading,
+                      burnt: error == ChangePhoneError.codeBurnt,
+                    ),
                   _ => _PhoneStep(loading: loading),
                 },
               ),
@@ -79,6 +82,7 @@ class _ChangePhoneScaffold extends StatelessWidget {
 
   String _err(I18n l10n, ChangePhoneError e) => switch (e) {
         ChangePhoneError.invalidCode => l10n.otpInvalidCode,
+        ChangePhoneError.codeBurnt => l10n.otpCodeBurnt,
         ChangePhoneError.requestFailed => l10n.commonError,
       };
 }
@@ -141,10 +145,13 @@ class _PhoneStepState extends State<_PhoneStep> {
 }
 
 class _CodesStep extends StatefulWidget {
-  const _CodesStep({required this.newPhoneNumber, required this.loading});
+  const _CodesStep({required this.newPhoneNumber, required this.loading, this.burnt = false});
 
   final String newPhoneNumber;
   final bool loading;
+
+  /// The codes are dead: nothing to type until new ones come.
+  final bool burnt;
 
   @override
   State<_CodesStep> createState() => _CodesStepState();
@@ -154,6 +161,15 @@ class _CodesStepState extends State<_CodesStep> {
   static const int _codeLength = 6;
   final _oldCode = TextEditingController();
   final _newCode = TextEditingController();
+
+  @override
+  void didUpdateWidget(_CodesStep oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.burnt && !oldWidget.burnt) {
+      _oldCode.clear();
+      _newCode.clear();
+    }
+  }
 
   @override
   void dispose() {
@@ -179,19 +195,24 @@ class _CodesStepState extends State<_CodesStep> {
       children: [
         Text(l10n.changePhoneOldCodeLabel, style: context.mboaText.label.copyWith(color: colors.textSecondary)),
         const SizedBox(height: Dimens.spacingSm),
-        OtpField(controller: _oldCode, length: _codeLength, enabled: !widget.loading, autofocus: true),
+        OtpField(controller: _oldCode, length: _codeLength, enabled: !widget.loading && !widget.burnt, autofocus: true),
         const SizedBox(height: Dimens.spacingLg),
         Text(
           l10n.changePhoneNewCodeLabel(widget.newPhoneNumber),
           style: context.mboaText.label.copyWith(color: colors.textSecondary),
         ),
         const SizedBox(height: Dimens.spacingSm),
-        OtpField(controller: _newCode, length: _codeLength, enabled: !widget.loading, autofocus: false),
+        OtpField(
+          controller: _newCode,
+          length: _codeLength,
+          enabled: !widget.loading && !widget.burnt,
+          autofocus: false,
+        ),
         const SizedBox(height: Dimens.spacingLg),
         Button.primary(
           title: l10n.changePhoneConfirm,
           isLoading: widget.loading,
-          onPressed: widget.loading ? null : _submit,
+          onPressed: widget.loading || widget.burnt ? null : _submit,
         ),
         const SizedBox(height: Dimens.spacingSm),
         TextButton(

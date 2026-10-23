@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_pro/features/register/bloc/register_bloc.dart';
 import 'package:mboa_pro/features/register/models/professional_role.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../_helpers/mocks/mocks.dart';
@@ -101,6 +102,25 @@ void main() {
         RegisterEnterOtp(phone: phone),
         RegisterEnterOtp(phone: phone, loading: true),
         RegisterEnterOtp(phone: phone, error: RegisterError.invalidCode),
+      ],
+    );
+
+    blocTest<RegisterBloc, RegisterState>(
+      'a dead code (three tries, or expired) asks for a new one',
+      setUp: () {
+        stubRegisterOk();
+        when(() => repository.verifyOtp(phone: any(named: 'phone'), code: any(named: 'code')))
+            .thenThrow(const OtpCodeBurnt());
+      },
+      build: build,
+      act: (bloc) => bloc
+        ..add(submit)
+        ..add(const RegisterOtpSubmitted('000000')),
+      expect: () => const [
+        RegisterEnterDetails(loading: true),
+        RegisterEnterOtp(phone: phone),
+        RegisterEnterOtp(phone: phone, loading: true),
+        RegisterEnterOtp(phone: phone, error: RegisterError.codeBurnt),
       ],
     );
   });

@@ -3,6 +3,7 @@ library;
 
 // API error parsing — the spec documents no error schema, so this is defensive.
 export 'src/api/api_error.dart';
+export 'src/api/otp_guard.dart';
 
 // Routing — guards + feature-access policy. The route tables stay app-local
 // (the generated route classes live in each app's `app_router.gr.dart`).

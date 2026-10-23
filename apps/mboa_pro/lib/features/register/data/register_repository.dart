@@ -1,4 +1,5 @@
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 import '../models/professional_role.dart';
 
@@ -45,10 +46,12 @@ class RegisterRepository {
 
   /// Step 2 — verify the phone [code] and persist the issued tokens.
   Future<void> verifyOtp({required String phone, required String code}) async {
-    final response = await _api.verifyOtp(
-      verifyOtpRequest: VerifyOtpRequest((b) => b
-        ..phoneNumber = phone
-        ..code = code),
+    final response = await guardOtp(
+      () => _api.verifyOtp(
+        verifyOtpRequest: VerifyOtpRequest((b) => b
+          ..phoneNumber = phone
+          ..code = code),
+      ),
     );
     final pair = response.data!;
     await _tokenStorage.save(

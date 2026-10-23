@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:equatable/equatable.dart';
 
 import '../data/credential_auth_repository.dart';
@@ -52,6 +53,8 @@ class CredentialLoginBloc extends Bloc<CredentialLoginEvent, CredentialLoginStat
     try {
       await _repository.verifyOtp(email: email, code: event.code);
       emit(const CredentialLoginSuccess());
+    } on OtpCodeBurnt {
+      emit(CredentialLoginEnterOtp(email: email, error: CredentialLoginError.codeBurnt));
     } catch (_) {
       emit(CredentialLoginEnterOtp(email: email, error: CredentialLoginError.invalidCode));
     }

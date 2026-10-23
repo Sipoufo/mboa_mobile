@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../api/otp_guard.dart';
 import '../data/login_repository.dart';
 import '../models/otp_session.dart';
 
@@ -52,6 +53,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await _repository.verifyOtp(session: event.session, code: event.code);
       emit(const LoginSuccess());
+    } on OtpCodeBurnt {
+      emit(LoginFailure(LoginError.codeBurnt, session: event.session));
     } catch (_) {
       emit(LoginFailure(LoginError.invalidCode, session: event.session));
     }

@@ -67,7 +67,12 @@ class ForgotPasswordFlow extends StatelessWidget {
                 ? () => context.read<PasswordResetBloc>().add(const PasswordResetBackToEmail())
                 : () => context.router.maybePop(),
             child: switch (state) {
-              PasswordResetEnterCode(:final email) => _CodeStep(email: email, loading: loading),
+              PasswordResetEnterCode(:final email, :final error) => _CodeStep(
+                  email: email,
+                  loading: loading,
+                  // Dead even if right (OTP_MAX_ATTEMPTS, OTP_INVALID_OR_EXPIRED).
+                  burnt: error == PasswordResetError.tooManyAttempts || error == PasswordResetError.expired,
+                ),
               _ => _EmailStep(initialEmail: email, loading: loading),
             },
           ),
@@ -162,10 +167,13 @@ class _EmailStepState extends State<_EmailStep> {
 }
 
 class _CodeStep extends StatefulWidget {
-  const _CodeStep({required this.email, required this.loading});
+  const _CodeStep({required this.email, required this.loading, this.burnt = false});
 
   final String email;
   final bool loading;
+
+  /// The code is dead: nothing to type until a new one comes.
+  final bool burnt;
 
   @override
   State<_CodeStep> createState() => _CodeStepState();
@@ -191,6 +199,17 @@ class _CodeStepState extends State<_CodeStep> {
   void initState() {
     super.initState();
     _startCooldown();
+  }
+
+  @override
+  void didUpdateWidget(_CodeStep oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Cleared, and a new code may be asked at once.
+    if (widget.burnt && !oldWidget.burnt) {
+      _code.clear();
+      _timer?.cancel();
+      setState(() => _secondsLeft = 0);
+    }
   }
 
   @override
@@ -256,7 +275,7 @@ class _CodeStepState extends State<_CodeStep> {
             style: context.mboaText.body.copyWith(color: colors.textSecondary),
           ),
           const SizedBox(height: Dimens.spacingXl),
-          OtpField(controller: _code, length: _codeLength, enabled: !widget.loading),
+          OtpField(controller: _code, length: _codeLength, enabled: !widget.loading && !widget.burnt),
           const SizedBox(height: Dimens.spacingLg),
           PasswordField(
             controller: _password,
@@ -282,7 +301,7 @@ class _CodeStepState extends State<_CodeStep> {
           Button.primary(
             title: l10n.pwdResetSubmit,
             isLoading: widget.loading,
-            onPressed: widget.loading ? null : _submit,
+            onPressed: widget.loading || widget.burnt ? null : _submit,
           ),
           const SizedBox(height: Dimens.spacingLg),
           Text(

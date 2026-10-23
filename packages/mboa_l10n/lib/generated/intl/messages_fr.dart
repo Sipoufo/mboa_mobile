@@ -2088,6 +2088,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ce réglage n\'a pas été enregistré. Réessaie.",
     ),
     "notifPrefsTitle": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "otpCodeBurnt": MessageLookupByLibrary.simpleMessage(
+      "Ce code ne marche plus : trop d’essais, ou il a expiré. Demande un nouveau code.",
+    ),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("Code à 6 chiffres"),
     "otpCodeSentTo": m71,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(

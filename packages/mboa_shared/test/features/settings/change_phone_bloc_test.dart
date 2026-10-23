@@ -88,5 +88,27 @@ void main() {
         ChangePhoneEnterCodes(newPhoneNumber: phone, error: ChangePhoneError.invalidCode),
       ],
     );
+
+    blocTest<ChangePhoneBloc, ChangePhoneState>(
+      'dead codes (three tries, or expired) ask for new ones',
+      setUp: () {
+        stubRequestOk();
+        when(() => repository.confirmPhoneChange(
+              newPhoneNumber: any(named: 'newPhoneNumber'),
+              oldCode: any(named: 'oldCode'),
+              newCode: any(named: 'newCode'),
+            )).thenThrow(const OtpCodeBurnt());
+      },
+      build: () => ChangePhoneBloc(repository: repository),
+      act: (bloc) => bloc
+        ..add(const ChangePhoneRequested(phone))
+        ..add(const ChangePhoneConfirmed(oldCode: '000000', newCode: '000000')),
+      expect: () => const [
+        ChangePhoneEnterPhone(loading: true),
+        ChangePhoneEnterCodes(newPhoneNumber: phone),
+        ChangePhoneEnterCodes(newPhoneNumber: phone, loading: true),
+        ChangePhoneEnterCodes(newPhoneNumber: phone, error: ChangePhoneError.codeBurnt),
+      ],
+    );
   });
 }

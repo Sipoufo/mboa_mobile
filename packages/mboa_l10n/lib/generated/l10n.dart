@@ -15083,6 +15083,17 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ce code ne marche plus : trop d’essais, ou il a expiré. Demande un nouveau code.`
+  String get otpCodeBurnt {
+    return Intl.message(
+      'Ce code ne marche plus : trop d’essais, ou il a expiré. Demande un nouveau code.',
+      name: 'otpCodeBurnt',
+      desc:
+          'OTP_MAX_ATTEMPTS / OTP_INVALID_OR_EXPIRED — the code is dead, a new one is needed',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

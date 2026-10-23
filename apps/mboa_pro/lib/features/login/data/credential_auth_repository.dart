@@ -1,4 +1,5 @@
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 
 /// The sole network layer for App Mboa Pro's credential login (email + password
 /// with an email OTP as a second factor).
@@ -29,10 +30,12 @@ class CredentialAuthRepository {
 
   /// Step 2 — verify the emailed [code] and persist the issued tokens.
   Future<void> verifyOtp({required String email, required String code}) async {
-    final response = await _api.verifyLoginOtp(
-      loginOtpRequest: LoginOtpRequest((b) => b
-        ..email = email
-        ..code = code),
+    final response = await guardOtp(
+      () => _api.verifyLoginOtp(
+        loginOtpRequest: LoginOtpRequest((b) => b
+          ..email = email
+          ..code = code),
+      ),
     );
     final pair = response.data!;
     await _tokenStorage.save(

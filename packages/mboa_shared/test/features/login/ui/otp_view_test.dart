@@ -60,4 +60,31 @@ void main() {
 
     verify(() => repository.verifyOtp(session: session, code: '123456')).called(1);
   });
+
+  testWidgets('a dead code: the field is emptied and closed, a new code may be asked at once', (tester) async {
+    when(
+      () => repository.verifyOtp(
+        session: any(named: 'session'),
+        code: any(named: 'code'),
+      ),
+    ).thenThrow(const OtpCodeBurnt());
+    when(() => repository.resendOtp(any())).thenAnswer((_) async {});
+
+    await pumpOtp(tester);
+    await tester.enterText(find.byType(TextField), '123456');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.textContaining('trop d’essais'), findsOneWidget);
+    expect(tester.widget<TextField>(find.byType(TextField)).controller!.text, isEmpty);
+    expect(tester.widget<TextField>(find.byType(TextField)).enabled, isFalse);
+    expect(find.textContaining('Renvoyer dans'), findsNothing);
+
+    await tester.ensureVisible(find.text('Renvoyer le code'));
+    await tester.tap(find.text('Renvoyer le code'));
+    await tester.pump();
+    verify(() => repository.resendOtp(session.phoneNumber)).called(1);
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+    expect(tester.widget<TextField>(find.byType(TextField)).enabled, isTrue);
+  });
 }

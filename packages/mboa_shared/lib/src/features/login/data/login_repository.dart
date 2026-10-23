@@ -1,5 +1,7 @@
 import 'package:mboa_core/mboa_core.dart';
 
+import '../../../api/otp_guard.dart';
+
 import '../models/otp_session.dart';
 
 /// The sole network layer for the shared SMS-OTP login flow.
@@ -39,12 +41,15 @@ class LoginRepository {
   }
 
   /// Verifies [code] against [session] and persists the issued tokens.
+  /// Throws [OtpCodeBurnt] once the code can no longer be accepted.
   Future<void> verifyOtp({required OtpSession session, required String code}) async {
-    final response = await _api.verifyOtp(
-      verifyOtpRequest: VerifyOtpRequest(
-        (b) => b
-          ..phoneNumber = session.phoneNumber
-          ..code = code,
+    final response = await guardOtp(
+      () => _api.verifyOtp(
+        verifyOtpRequest: VerifyOtpRequest(
+          (b) => b
+            ..phoneNumber = session.phoneNumber
+            ..code = code,
+        ),
       ),
     );
     final pair = response.data!;

@@ -1978,6 +1978,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "This setting was not saved. Try again.",
     ),
     "notifPrefsTitle": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "otpCodeBurnt": MessageLookupByLibrary.simpleMessage(
+      "This code no longer works: too many tries, or it expired. Ask for a new code.",
+    ),
     "otpCodeLabel": MessageLookupByLibrary.simpleMessage("6-digit code"),
     "otpCodeSentTo": m71,
     "otpInvalidCode": MessageLookupByLibrary.simpleMessage(

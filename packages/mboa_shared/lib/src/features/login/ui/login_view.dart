@@ -139,6 +139,7 @@ class _LoginFormState extends State<_LoginForm> {
   String _errorText(I18n l10n, LoginError error) => switch (error) {
         LoginError.otpRequestFailed => l10n.loginOtpSendError,
         LoginError.invalidCode => l10n.otpInvalidCode,
+        LoginError.codeBurnt => l10n.otpCodeBurnt,
       };
 }
 

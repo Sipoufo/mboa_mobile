@@ -86,5 +86,18 @@ void main() {
         isA<LoginFailure>().having((f) => f.session, 'session', session),
       ],
     );
+
+    blocTest<LoginBloc, LoginState>(
+      'a dead code (three tries, or expired) asks for a new one',
+      setUp: () => when(
+        () => repository.verifyOtp(
+          session: any(named: 'session'),
+          code: any(named: 'code'),
+        ),
+      ).thenThrow(const OtpCodeBurnt()),
+      build: () => LoginBloc(repository: repository),
+      act: (bloc) => bloc.add(LoginCodeSubmitted(session: session, code: '000000')),
+      expect: () => [const LoginInProgress(), LoginFailure(LoginError.codeBurnt, session: session)],
+    );
   });
 }

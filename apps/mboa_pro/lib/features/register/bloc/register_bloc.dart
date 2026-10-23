@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:equatable/equatable.dart';
 
 import '../data/register_repository.dart';
@@ -47,6 +48,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       await _repository.verifyOtp(phone: phone, code: event.code);
       emit(const RegisterSuccess());
+    } on OtpCodeBurnt {
+      emit(RegisterEnterOtp(phone: phone, error: RegisterError.codeBurnt));
     } catch (_) {
       emit(RegisterEnterOtp(phone: phone, error: RegisterError.invalidCode));
     }

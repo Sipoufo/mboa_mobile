@@ -1,7 +1,14 @@
 part of 'credential_login_bloc.dart';
 
 /// Why a credential-login step failed. The UI maps this to a localised message.
-enum CredentialLoginError { invalidCredentials, invalidCode, otpResendFailed }
+enum CredentialLoginError {
+  invalidCredentials,
+  invalidCode,
+  otpResendFailed,
+
+  /// Three wrong tries, or expired: only a new code helps.
+  codeBurnt,
+}
 
 /// Observable states of the Pro credential login flow. The two `Enter*` states
 /// double as the flow's step indicator (which screen to render).

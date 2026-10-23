@@ -1,5 +1,7 @@
 import 'package:mboa_core/mboa_core.dart';
 
+import '../../../api/otp_guard.dart';
+
 /// Account-level operations shared by both apps: deletion (and, later, phone /
 /// password changes).
 class AccountRepository {
@@ -20,17 +22,20 @@ class AccountRepository {
   }
 
   /// Confirms the phone change with both codes (old number + new number).
+  /// Throws [OtpCodeBurnt] once the codes can no longer be accepted.
   Future<void> confirmPhoneChange({
     required String newPhoneNumber,
     required String oldCode,
     required String newCode,
   }) async {
-    await _dioClient.api.getPhoneChangeApi().confirmPhoneChange(
-          confirmPhoneChangeRequest: ConfirmPhoneChangeRequest((b) => b
-            ..newPhoneNumber = newPhoneNumber
-            ..oldCode = oldCode
-            ..newCode = newCode),
-        );
+    await guardOtp(
+      () => _dioClient.api.getPhoneChangeApi().confirmPhoneChange(
+            confirmPhoneChangeRequest: ConfirmPhoneChangeRequest((b) => b
+              ..newPhoneNumber = newPhoneNumber
+              ..oldCode = oldCode
+              ..newCode = newCode),
+          ),
+    );
   }
 
   /// Changes the account password (Pro/admin — email accounts only).
