@@ -24,5 +24,7 @@ class MyDeclarationPage extends StatelessWidget implements AutoRouteWrapper {
       );
 
   @override
-  Widget build(BuildContext context) => const DeclarationView();
+  Widget build(BuildContext context) => DeclarationView(
+        onDispute: (declaration) => showReportSheet(context, target: ReportTarget.declaration(declaration.id), cubit: getIt<ReportCubit>()),
+      );
 }

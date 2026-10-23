@@ -14,6 +14,10 @@ import '../models/report_target.dart';
 ///
 /// RM-M23-05: the confirmation says the report was received and nothing more.
 /// The reporter never learns the outcome, so no copy here hints at one.
+///
+/// A dispute ([ReportTargetKind.isDispute], RM-M30-07) is the exception: it
+/// has one reason, so none is asked; the sheet says what Mboa does with it,
+/// and both parties hear the ruling (N-40).
 Future<void> showReportSheet(
   BuildContext context, {
   required ReportTarget target,
@@ -22,22 +26,33 @@ Future<void> showReportSheet(
 }) async {
   final l10n = I18n.of(context);
 
-  final sent = await showModalBottomSheet<bool>(
+  final outcome = await showModalBottomSheet<_Outcome>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (_) => BlocProvider<ReportCubit>.value(
       value: cubit,
-      child: _ReportSheet(target: target, title: title ?? l10n.reportTitle),
+      child: _ReportSheet(
+        target: target,
+        title: title ?? (target.kind.isDispute ? l10n.disputeTitle : l10n.reportTitle),
+      ),
     ),
   );
 
   if (!context.mounted) return;
 
-  if (sent ?? false) {
-    MboaToast.success(context: context, title: l10n.reportSent);
+  final dispute = target.kind.isDispute;
+  switch (outcome) {
+    case _Outcome.sent:
+      MboaToast.success(context: context, title: dispute ? l10n.disputeSent : l10n.reportSent);
+    case _Outcome.alreadyReported:
+      MboaToast.info(context: context, title: dispute ? l10n.disputeAlready : l10n.reportAlready);
+    case null:
+      break;
   }
 }
+
+enum _Outcome { sent, alreadyReported }
 
 class _ReportSheet extends StatefulWidget {
   const _ReportSheet({required this.target, required this.title});
@@ -51,7 +66,9 @@ class _ReportSheet extends StatefulWidget {
 
 class _ReportSheetState extends State<_ReportSheet> {
   final _comment = TextEditingController();
-  ReportReason? _reason;
+
+  /// Nothing to choose when only one reason fits — a dispute's.
+  late ReportReason? _reason = widget.target.reasons.length == 1 ? widget.target.reasons.single : null;
 
   @override
   void dispose() {
@@ -65,6 +82,7 @@ class _ReportSheetState extends State<_ReportSheet> {
         ReportReason.inappropriateContent => l10n.reportReasonContent,
         ReportReason.harassment => l10n.reportReasonHarassment,
         ReportReason.askedForMoney => l10n.reportReasonAskedForMoney,
+        ReportReason.dispute => l10n.disputeTitle,
       };
 
   @override
@@ -76,7 +94,11 @@ class _ReportSheetState extends State<_ReportSheet> {
       listenWhen: (prev, curr) => curr is ReportSent || curr is ReportFailed,
       listener: (context, state) {
         if (state is ReportSent) {
-          Navigator.of(context).pop(true);
+          Navigator.of(context).pop(_Outcome.sent);
+          return;
+        }
+        if (state case ReportFailed(alreadyReported: true)) {
+          Navigator.of(context).pop(_Outcome.alreadyReported);
           return;
         }
         MboaToast.error(
@@ -87,6 +109,7 @@ class _ReportSheetState extends State<_ReportSheet> {
       },
       builder: (context, state) {
         final isSending = state is ReportSending;
+        final dispute = widget.target.kind.isDispute;
 
         return Container(
           padding: EdgeInsets.only(
@@ -111,52 +134,59 @@ class _ReportSheetState extends State<_ReportSheet> {
                   style: context.mboaText.h3.copyWith(color: colors.ink),
                 ),
                 const SizedBox(height: Dimens.spacing),
-                Text(
-                  l10n.reportReasonLabel,
-                  style: context.mboaText.label.copyWith(color: colors.ink),
-                ),
-                const SizedBox(height: Dimens.spacingSm),
-                // Only the reasons that mean something for this kind of
-                // target — a review cannot be overpriced.
-                RadioGroup<ReportReason>(
-                  groupValue: _reason,
-                  // RadioGroup takes a non-nullable callback, so the guard
-                  // lives inside it. Harmless either way: the request in
-                  // flight already carries the reason it was sent with.
-                  onChanged: (value) {
-                    if (!isSending) setState(() => _reason = value);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (final reason in widget.target.reasons)
-                        RadioListTile<ReportReason>(
-                          value: reason,
-                          title: Text(_label(l10n, reason)),
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                        ),
-                    ],
+                if (dispute) ...[
+                  Text(l10n.disputeBody, style: context.mboaText.body.copyWith(color: colors.textSecondary)),
+                  const SizedBox(height: Dimens.spacing),
+                ],
+                if (widget.target.reasons.length > 1) ...[
+                  Text(
+                    l10n.reportReasonLabel,
+                    style: context.mboaText.label.copyWith(color: colors.ink),
                   ),
-                ),
-                const SizedBox(height: Dimens.spacing),
+                  const SizedBox(height: Dimens.spacingSm),
+                  // Only the reasons that mean something for this kind of
+                  // target — a review cannot be overpriced.
+                  RadioGroup<ReportReason>(
+                    groupValue: _reason,
+                    // RadioGroup takes a non-nullable callback, so the guard
+                    // lives inside it. Harmless either way: the request in
+                    // flight already carries the reason it was sent with.
+                    onChanged: (value) {
+                      if (!isSending) setState(() => _reason = value);
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        for (final reason in widget.target.reasons)
+                          RadioListTile<ReportReason>(
+                            value: reason,
+                            title: Text(_label(l10n, reason)),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacing),
+                ],
                 Text(
-                  l10n.reportCommentLabel,
+                  dispute ? l10n.disputeCommentLabel : l10n.reportCommentLabel,
                   style: context.mboaText.label.copyWith(color: colors.ink),
                 ),
                 const SizedBox(height: Dimens.spacingSm),
                 TextField(
                   controller: _comment,
                   maxLines: 3,
-                  maxLength: 1000,
+                  // The server's limit for a dispute's word.
+                  maxLength: dispute ? 500 : 1000,
                   enabled: !isSending,
-                  decoration: InputDecoration(hintText: l10n.reportCommentHint),
+                  decoration: InputDecoration(hintText: dispute ? l10n.disputeCommentHint : l10n.reportCommentHint),
                 ),
                 const SizedBox(height: Dimens.spacingSm),
                 SizedBox(
                   width: double.infinity,
                   child: Button.primary(
-                    title: l10n.reportSend,
+                    title: dispute ? l10n.disputeSend : l10n.reportSend,
                     isLoading: isSending,
                     // RM-M23-01 records a reason on every report, so there is
                     // no sending one without it.

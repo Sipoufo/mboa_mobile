@@ -6,6 +6,46 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../models/home.dart';
 
+/// « ⋯ » in a home's app bar: the rare actions, in red, behind it (Doc05
+/// §6.1) — « Signaler un litige » (RM-M30-07), for either party, during the
+/// tenancy or after it.
+class HomeMoreButton extends StatelessWidget {
+  const HomeMoreButton({super.key, required this.onDispute});
+
+  final VoidCallback onDispute;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return IconButton(
+      tooltip: l10n.listingMoreActions,
+      icon: Icon(LucideIcons.ellipsis, color: colors.primary),
+      onPressed: () async {
+        final dispute = await showModalBottomSheet<bool>(
+          context: context,
+          backgroundColor: colors.surface,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
+          ),
+          builder: (sheetContext) => SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
+              child: ListTile(
+                leading: Icon(LucideIcons.flag, color: colors.error),
+                title: Text(l10n.disputeTitle, style: context.mboaText.label.copyWith(color: colors.error)),
+                onTap: () => Navigator.of(sheetContext).pop(true),
+              ),
+            ),
+          ),
+        );
+        if ((dispute ?? false) && context.mounted) onDispute();
+      },
+    );
+  }
+}
+
 /// "150 000 FCFA", in the reader's locale.
 String fcfaOf(BuildContext context, int amount) =>
     '${NumberFormat.decimalPattern(Localizations.localeOf(context).toLanguageTag()).format(amount)} '

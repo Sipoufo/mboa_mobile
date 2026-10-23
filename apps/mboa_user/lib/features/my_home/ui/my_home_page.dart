@@ -42,6 +42,7 @@ class MyHomePage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) => HomeSpaceView(
+        onDispute: () => showReportSheet(context, target: ReportTarget.contract(contractId), cubit: getIt<ReportCubit>()),
         onDeclare: (state, due) => _declare(
           context,
           DeclarationForm.rent(state.schedule.dues, preselected: due, today: DateTime.now()),

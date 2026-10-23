@@ -34,10 +34,14 @@ String declarationRefusalText(I18n l10n, DeclarationRefusal reason) => switch (r
 /// action, contest behind "⋯" — appears only where the server says he may
 /// (`canConfirm` / `canContest`), so the tenant never sees it.
 class DeclarationView extends StatelessWidget {
-  const DeclarationView({super.key, this.onAnswered});
+  const DeclarationView({super.key, this.onAnswered, this.onDispute});
 
   /// Told once an answer went through — the Pro app refreshes its counter.
   final VoidCallback? onAnswered;
+
+  /// « Signaler un litige » on this declaration (RM-M30-07): behind « ⋯ »,
+  /// and offered outright once it is contested.
+  final ValueChanged<Declaration>? onDispute;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +78,14 @@ class DeclarationView extends StatelessWidget {
       },
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.declarationTitle)),
+        appBar: AppBar(
+          leading: const MboaHeaderBackButton(),
+          title: Text(l10n.declarationTitle),
+          actions: [
+            if ((onDispute, state) case (final dispute?, DeclarationReady(:final declaration)))
+              HomeMoreButton(onDispute: () => dispute(declaration)),
+          ],
+        ),
         body: switch (state) {
           DeclarationLoading() => const Center(child: Loader()),
           DeclarationFailure(:final id, :final contractId) => Center(
@@ -83,7 +94,7 @@ class DeclarationView extends StatelessWidget {
                 child: Text(l10n.commonRetry),
               ),
             ),
-          final DeclarationReady ready => _Body(state: ready),
+          final DeclarationReady ready => _Body(state: ready, onDispute: onDispute),
         },
         bottomNavigationBar: switch (state) {
           // The landlord's answer while it waits; once confirmed, the receipt
@@ -100,9 +111,10 @@ class DeclarationView extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.state});
+  const _Body({required this.state, this.onDispute});
 
   final DeclarationReady state;
+  final ValueChanged<Declaration>? onDispute;
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +241,26 @@ class _Body extends StatelessWidget {
             ],
           ),
         ),
+        // After a contest, the next step if the two disagree.
+        if ((d.status, onDispute) case (DeclarationStatus.contested, final dispute?)) ...[
+          const SizedBox(height: Dimens.spacing),
+          Container(
+            padding: const EdgeInsets.all(Dimens.spacing),
+            decoration: BoxDecoration(color: colors.surface, borderRadius: BorderRadius.circular(Dimens.radiusMd)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.disputePrompt, style: context.mboaText.body.copyWith(color: colors.ink)),
+                TextButton.icon(
+                  onPressed: () => dispute(d),
+                  style: TextButton.styleFrom(foregroundColor: colors.error, padding: EdgeInsets.zero),
+                  icon: const Icon(LucideIcons.flag, size: Dimens.icon),
+                  label: Text(l10n.disputeTitle),
+                ),
+              ],
+            ),
+          ),
+        ],
         if (d.receiptId != null) ...[
           const SizedBox(height: Dimens.spacing),
           _ReceiptCard(state: state),

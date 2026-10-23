@@ -27,6 +27,7 @@ class HomeSpaceView extends StatelessWidget {
     this.onRequests,
     this.onEvidence,
     this.onContacts,
+    this.onDispute,
   });
 
   /// Declare rent — preselecting [due] when a row was tapped.
@@ -46,6 +47,10 @@ class HomeSpaceView extends StatelessWidget {
   final VoidCallback? onEvidence;
   final VoidCallback? onContacts;
 
+  /// « Signaler un litige » on the home itself — its contract (RM-M30-07),
+  /// behind « ⋯ ».
+  final VoidCallback? onDispute;
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
@@ -63,6 +68,9 @@ class HomeSpaceView extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
+          actions: [
+            if (onDispute case final dispute? when state is HomeSpaceReady) HomeMoreButton(onDispute: dispute),
+          ],
         ),
         body: switch (state) {
           HomeSpaceLoading() => const Center(child: Loader()),

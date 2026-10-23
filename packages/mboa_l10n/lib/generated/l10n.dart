@@ -14122,10 +14122,10 @@ class I18n {
     );
   }
 
-  /// `Ton locataire n'a encore envoyé aucune photo.`
+  /// `Aucune photo pour l'instant. Un locataire qui quitte Mboa emporte ses photos.`
   String get evidenceEmptyLandlord {
     return Intl.message(
-      'Ton locataire n\'a encore envoyé aucune photo.',
+      'Aucune photo pour l\'instant. Un locataire qui quitte Mboa emporte ses photos.',
       name: 'evidenceEmptyLandlord',
       desc: 'Evidence: empty, landlord',
       args: [],
@@ -15091,6 +15091,97 @@ class I18n {
       name: 'otpCodeBurnt',
       desc:
           'OTP_MAX_ATTEMPTS / OTP_INVALID_OR_EXPIRED — the code is dead, a new one is needed',
+      args: [],
+    );
+  }
+
+  /// `Signaler un litige`
+  String get disputeTitle {
+    return Intl.message(
+      'Signaler un litige',
+      name: 'disputeTitle',
+      desc: 'RM-M30-07 — the sheet\'s title and the ⋯ entry',
+      args: [],
+    );
+  }
+
+  /// `L'équipe Mboa examine les pièces gardées dans l'app (déclarations, justificatifs, photos), puis informe les deux parties de sa décision. Un litige ne vise personne : il ne retire aucun point de Mboa Score.`
+  String get disputeBody {
+    return Intl.message(
+      'L\'équipe Mboa examine les pièces gardées dans l\'app (déclarations, justificatifs, photos), puis informe les deux parties de sa décision. Un litige ne vise personne : il ne retire aucun point de Mboa Score.',
+      name: 'disputeBody',
+      desc:
+          'RM-M30-07 — what a dispute does (N-40: both parties hear the ruling)',
+      args: [],
+    );
+  }
+
+  /// `Ce qui s'est passé (facultatif)`
+  String get disputeCommentLabel {
+    return Intl.message(
+      'Ce qui s\'est passé (facultatif)',
+      name: 'disputeCommentLabel',
+      desc: 'Dispute comment label',
+      args: [],
+    );
+  }
+
+  /// `Ex. : j'ai payé en espèces le 3, il dit n'avoir rien reçu.`
+  String get disputeCommentHint {
+    return Intl.message(
+      'Ex. : j\'ai payé en espèces le 3, il dit n\'avoir rien reçu.',
+      name: 'disputeCommentHint',
+      desc: 'Dispute comment hint',
+      args: [],
+    );
+  }
+
+  /// `Envoyer le litige`
+  String get disputeSend {
+    return Intl.message(
+      'Envoyer le litige',
+      name: 'disputeSend',
+      desc: 'Dispute sheet button',
+      args: [],
+    );
+  }
+
+  /// `Litige transmis à l'équipe Mboa`
+  String get disputeSent {
+    return Intl.message(
+      'Litige transmis à l\'équipe Mboa',
+      name: 'disputeSent',
+      desc: 'Dispute sent toast',
+      args: [],
+    );
+  }
+
+  /// `Tu as déjà signalé ce litige : l'équipe Mboa s'en occupe.`
+  String get disputeAlready {
+    return Intl.message(
+      'Tu as déjà signalé ce litige : l\'équipe Mboa s\'en occupe.',
+      name: 'disputeAlready',
+      desc: 'ALREADY_REPORTED on a dispute',
+      args: [],
+    );
+  }
+
+  /// `Tu l'as déjà signalé : l'équipe Mboa s'en occupe.`
+  String get reportAlready {
+    return Intl.message(
+      'Tu l\'as déjà signalé : l\'équipe Mboa s\'en occupe.',
+      name: 'reportAlready',
+      desc: 'ALREADY_REPORTED on a report',
+      args: [],
+    );
+  }
+
+  /// `Un désaccord sur ce paiement ? Signale un litige : l'équipe Mboa examinera les pièces.`
+  String get disputePrompt {
+    return Intl.message(
+      'Un désaccord sur ce paiement ? Signale un litige : l\'équipe Mboa examinera les pièces.',
+      name: 'disputePrompt',
+      desc: 'On a contested declaration',
       args: [],
     );
   }

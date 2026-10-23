@@ -23,6 +23,7 @@ class TenantHomePage extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) => HomeSpaceView(
+        onDispute: () => showReportSheet(context, target: ReportTarget.contract(contractId), cubit: getIt<ReportCubit>()),
         onRequests: () => context.router.push(TenantHomeRequestsRoute(contractId: contractId)),
         onEvidence: () => context.router.push(TenantEvidenceRoute(contractId: contractId)),
         // His contacts — where he chooses what this tenant sees.

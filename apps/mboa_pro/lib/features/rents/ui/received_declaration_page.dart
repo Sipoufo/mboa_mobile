@@ -23,6 +23,7 @@ class ReceivedDeclarationPage extends StatelessWidget implements AutoRouteWrappe
 
   @override
   Widget build(BuildContext context) => DeclarationView(
+        onDispute: (declaration) => showReportSheet(context, target: ReportTarget.declaration(declaration.id), cubit: getIt<ReportCubit>()),
         // Answered: one fewer on the home's counter.
         onAnswered: () {
           if (getIt.isRegistered<WaitingDeclarationsBloc>()) {

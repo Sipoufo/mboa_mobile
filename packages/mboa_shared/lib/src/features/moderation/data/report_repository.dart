@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:mboa_core/mboa_core.dart';
+
+import '../../../api/api_error.dart';
 
 import '../models/report_target.dart';
 
@@ -10,6 +13,12 @@ import '../models/report_target.dart';
 /// There is nothing to read back. RM-M23-05 is explicit that the reporter is
 /// told their report was received and never the outcome — so this repository
 /// writes and returns nothing, and no screen can accidentally promise more.
+/// The same reporter already reported this (`ALREADY_REPORTED`): it is in
+/// the team's hands.
+class AlreadyReported implements Exception {
+  const AlreadyReported();
+}
+
 class ReportRepository {
   ReportRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
@@ -23,14 +32,19 @@ class ReportRepository {
     String? comment,
   }) async {
     final trimmed = comment?.trim();
-    await _api.createSignalement(
-      createSignalementRequest: CreateSignalementRequest(
-        (b) => b
-          ..targetType = target.kind.wire
-          ..targetId = target.id
-          ..reason = reason.wire
-          ..comment = (trimmed?.isEmpty ?? true) ? null : trimmed,
-      ),
-    );
+    try {
+      await _api.createSignalement(
+        createSignalementRequest: CreateSignalementRequest(
+          (b) => b
+            ..targetType = target.kind.wire
+            ..targetId = target.id
+            ..reason = reason.wire
+            ..comment = (trimmed?.isEmpty ?? true) ? null : trimmed,
+        ),
+      );
+    } on DioException catch (error) {
+      if (ApiError.from(error).hasCode('ALREADY_REPORTED')) throw const AlreadyReported();
+      rethrow;
+    }
   }
 }

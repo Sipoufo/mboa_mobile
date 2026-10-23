@@ -25,7 +25,13 @@ class ReportSent extends ReportState {
 }
 
 class ReportFailed extends ReportState {
-  const ReportFailed();
+  const ReportFailed({this.alreadyReported = false});
+
+  /// Already in the team's hands — said as such, not as an error to retry.
+  final bool alreadyReported;
+
+  @override
+  List<Object?> get props => [alreadyReported];
 }
 
 /// Sending one report (CDC M23).
@@ -51,6 +57,8 @@ class ReportCubit extends Cubit<ReportState> {
     try {
       await _repository.report(target, reason: reason, comment: comment);
       emit(const ReportSent());
+    } on AlreadyReported {
+      emit(const ReportFailed(alreadyReported: true));
     } catch (_) {
       emit(const ReportFailed());
     }

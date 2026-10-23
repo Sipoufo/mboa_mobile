@@ -68,5 +68,7 @@ class TenantEvidenceBatchPage extends StatelessWidget implements AutoRouteWrappe
       );
 
   @override
-  Widget build(BuildContext context) => const EvidenceBatchView();
+  Widget build(BuildContext context) => EvidenceBatchView(
+        onDispute: (batch) => showReportSheet(context, target: ReportTarget.evidence(batch.id), cubit: getIt<ReportCubit>()),
+      );
 }

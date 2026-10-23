@@ -1396,6 +1396,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAccountWarning": MessageLookupByLibrary.simpleMessage(
       "This is permanent. Your personal data will be deleted and you will lose access to your account.",
     ),
+    "disputeAlready": MessageLookupByLibrary.simpleMessage(
+      "You already reported this dispute: the Mboa team is on it.",
+    ),
+    "disputeBody": MessageLookupByLibrary.simpleMessage(
+      "The Mboa team reviews the pieces kept in the app (declarations, proofs, photos) then tells both parties its decision. A dispute is against nobody: it costs no Mboa Score point.",
+    ),
+    "disputeCommentHint": MessageLookupByLibrary.simpleMessage(
+      "E.g. I paid cash on the 3rd, they say they received nothing.",
+    ),
+    "disputeCommentLabel": MessageLookupByLibrary.simpleMessage(
+      "What happened (optional)",
+    ),
+    "disputePrompt": MessageLookupByLibrary.simpleMessage(
+      "A disagreement over this payment? Report a dispute: the Mboa team will review the pieces.",
+    ),
+    "disputeSend": MessageLookupByLibrary.simpleMessage("Send the dispute"),
+    "disputeSent": MessageLookupByLibrary.simpleMessage(
+      "Dispute sent to the Mboa team",
+    ),
+    "disputeTitle": MessageLookupByLibrary.simpleMessage("Report a dispute"),
     "dueConfirmed": MessageLookupByLibrary.simpleMessage("Paid"),
     "dueContested": MessageLookupByLibrary.simpleMessage("Contested"),
     "dueDeclared": MessageLookupByLibrary.simpleMessage("Declared, waiting"),
@@ -1464,7 +1484,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Before / after",
     ),
     "evidenceEmptyLandlord": MessageLookupByLibrary.simpleMessage(
-      "Your tenant has not sent any photo yet.",
+      "No photo yet. A tenant who leaves Mboa takes their photos along.",
     ),
     "evidenceEmptyTenant": MessageLookupByLibrary.simpleMessage(
       "No photos yet. At move-in, during the tenancy or at move-out: each sending is time-stamped by Mboa.",
@@ -2443,6 +2463,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "registerRolePrestataire": MessageLookupByLibrary.simpleMessage("Provider"),
     "registerSignInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Create account"),
+    "reportAlready": MessageLookupByLibrary.simpleMessage(
+      "You already reported it: the Mboa team is on it.",
+    ),
     "reportCommentHint": MessageLookupByLibrary.simpleMessage(
       "What the admin needs to know.",
     ),

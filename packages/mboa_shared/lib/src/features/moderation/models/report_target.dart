@@ -9,7 +9,21 @@ import 'package:mboa_core/mboa_core.dart';
 enum ReportTargetKind {
   annonce,
   message,
-  review;
+  review,
+
+  /// RM-M30-07 — a dispute over a home: its contract (= the home's id), one
+  /// declaration, or one sending of photo proofs. Either party, during or
+  /// after the tenancy.
+  contract,
+  declaration,
+  evidence;
+
+  /// A dispute rather than a report: against nobody, it costs no one a Mboa
+  /// Score point, and both parties hear the ruling (N-40).
+  bool get isDispute => switch (this) {
+        ReportTargetKind.contract || ReportTargetKind.declaration || ReportTargetKind.evidence => true,
+        _ => false,
+      };
 
   CreateSignalementRequestTargetTypeEnum get wire => switch (this) {
         ReportTargetKind.annonce =>
@@ -18,6 +32,9 @@ enum ReportTargetKind {
           CreateSignalementRequestTargetTypeEnum.MESSAGE,
         ReportTargetKind.review =>
           CreateSignalementRequestTargetTypeEnum.REVIEW,
+        ReportTargetKind.contract => CreateSignalementRequestTargetTypeEnum.CONTRACT,
+        ReportTargetKind.declaration => CreateSignalementRequestTargetTypeEnum.DECLARATION,
+        ReportTargetKind.evidence => CreateSignalementRequestTargetTypeEnum.EVIDENCE,
       };
 }
 
@@ -37,7 +54,10 @@ enum ReportReason {
 
   /// RM-M29-09 — money asked before the Mboa Contract is signed: Mboa takes
   /// none at reservation, and nobody else should either.
-  askedForMoney;
+  askedForMoney,
+
+  /// RM-M30-07 — the only reason a dispute takes, and only a dispute.
+  dispute;
 
   CreateSignalementRequestReasonEnum get wire => switch (this) {
         ReportReason.fraudulentListing =>
@@ -48,6 +68,7 @@ enum ReportReason {
           CreateSignalementRequestReasonEnum.INAPPROPRIATE_CONTENT,
         ReportReason.harassment => CreateSignalementRequestReasonEnum.HARASSMENT,
         ReportReason.askedForMoney => CreateSignalementRequestReasonEnum.ASKED_FOR_MONEY,
+        ReportReason.dispute => CreateSignalementRequestReasonEnum.DISPUTE,
       };
 }
 
@@ -63,6 +84,14 @@ class ReportTarget extends Equatable {
 
   const ReportTarget.message(String id)
       : this(kind: ReportTargetKind.message, id: id);
+
+  /// A home, by its contract.
+  const ReportTarget.contract(String id) : this(kind: ReportTargetKind.contract, id: id);
+
+  const ReportTarget.declaration(String id) : this(kind: ReportTargetKind.declaration, id: id);
+
+  /// One sending of photo proofs.
+  const ReportTarget.evidence(String id) : this(kind: ReportTargetKind.evidence, id: id);
 
   final ReportTargetKind kind;
   final String id;
@@ -86,6 +115,11 @@ class ReportTarget extends Equatable {
             ReportReason.inappropriateContent,
             ReportReason.harassment,
           ],
+        // The server takes nothing else (REASON_NOT_APPLICABLE).
+        ReportTargetKind.contract ||
+        ReportTargetKind.declaration ||
+        ReportTargetKind.evidence =>
+          const [ReportReason.dispute],
       };
 
   @override

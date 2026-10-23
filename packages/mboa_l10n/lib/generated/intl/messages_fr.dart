@@ -1456,6 +1456,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAccountWarning": MessageLookupByLibrary.simpleMessage(
       "Cette action est définitive. Tes données personnelles seront supprimées et tu perdras l’accès à ton compte.",
     ),
+    "disputeAlready": MessageLookupByLibrary.simpleMessage(
+      "Tu as déjà signalé ce litige : l\'équipe Mboa s\'en occupe.",
+    ),
+    "disputeBody": MessageLookupByLibrary.simpleMessage(
+      "L\'équipe Mboa examine les pièces gardées dans l\'app (déclarations, justificatifs, photos), puis informe les deux parties de sa décision. Un litige ne vise personne : il ne retire aucun point de Mboa Score.",
+    ),
+    "disputeCommentHint": MessageLookupByLibrary.simpleMessage(
+      "Ex. : j\'ai payé en espèces le 3, il dit n\'avoir rien reçu.",
+    ),
+    "disputeCommentLabel": MessageLookupByLibrary.simpleMessage(
+      "Ce qui s\'est passé (facultatif)",
+    ),
+    "disputePrompt": MessageLookupByLibrary.simpleMessage(
+      "Un désaccord sur ce paiement ? Signale un litige : l\'équipe Mboa examinera les pièces.",
+    ),
+    "disputeSend": MessageLookupByLibrary.simpleMessage("Envoyer le litige"),
+    "disputeSent": MessageLookupByLibrary.simpleMessage(
+      "Litige transmis à l\'équipe Mboa",
+    ),
+    "disputeTitle": MessageLookupByLibrary.simpleMessage("Signaler un litige"),
     "dueConfirmed": MessageLookupByLibrary.simpleMessage("Payé"),
     "dueContested": MessageLookupByLibrary.simpleMessage("Contesté"),
     "dueDeclared": MessageLookupByLibrary.simpleMessage("Déclaré, en attente"),
@@ -1528,7 +1548,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Avant / après",
     ),
     "evidenceEmptyLandlord": MessageLookupByLibrary.simpleMessage(
-      "Ton locataire n\'a encore envoyé aucune photo.",
+      "Aucune photo pour l\'instant. Un locataire qui quitte Mboa emporte ses photos.",
     ),
     "evidenceEmptyTenant": MessageLookupByLibrary.simpleMessage(
       "Aucune photo pour l\'instant. À l\'entrée, pendant le bail ou à la sortie : chaque envoi est horodaté par Mboa.",
@@ -2575,6 +2595,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Connecte-toi",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Créer un compte"),
+    "reportAlready": MessageLookupByLibrary.simpleMessage(
+      "Tu l\'as déjà signalé : l\'équipe Mboa s\'en occupe.",
+    ),
     "reportCommentHint": MessageLookupByLibrary.simpleMessage(
       "Ce que l\'admin doit savoir.",
     ),

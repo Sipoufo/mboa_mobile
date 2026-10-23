@@ -5627,7 +5627,7 @@
   "@evidenceEmptyTenant": {
     "description": "Evidence: empty, tenant"
   },
-  "evidenceEmptyLandlord": "Your tenant has not sent any photo yet.",
+  "evidenceEmptyLandlord": "No photo yet. A tenant who leaves Mboa takes their photos along.",
   "@evidenceEmptyLandlord": {
     "description": "Evidence: empty, landlord"
   },
@@ -6086,5 +6086,41 @@
   "otpCodeBurnt": "This code no longer works: too many tries, or it expired. Ask for a new code.",
   "@otpCodeBurnt": {
     "description": "OTP_MAX_ATTEMPTS / OTP_INVALID_OR_EXPIRED — the code is dead, a new one is needed"
+  },
+  "disputeTitle": "Report a dispute",
+  "@disputeTitle": {
+    "description": "RM-M30-07 — the sheet's title and the ⋯ entry"
+  },
+  "disputeBody": "The Mboa team reviews the pieces kept in the app (declarations, proofs, photos) then tells both parties its decision. A dispute is against nobody: it costs no Mboa Score point.",
+  "@disputeBody": {
+    "description": "RM-M30-07 — what a dispute does (N-40: both parties hear the ruling)"
+  },
+  "disputeCommentLabel": "What happened (optional)",
+  "@disputeCommentLabel": {
+    "description": "Dispute comment label"
+  },
+  "disputeCommentHint": "E.g. I paid cash on the 3rd, they say they received nothing.",
+  "@disputeCommentHint": {
+    "description": "Dispute comment hint"
+  },
+  "disputeSend": "Send the dispute",
+  "@disputeSend": {
+    "description": "Dispute sheet button"
+  },
+  "disputeSent": "Dispute sent to the Mboa team",
+  "@disputeSent": {
+    "description": "Dispute sent toast"
+  },
+  "disputeAlready": "You already reported this dispute: the Mboa team is on it.",
+  "@disputeAlready": {
+    "description": "ALREADY_REPORTED on a dispute"
+  },
+  "reportAlready": "You already reported it: the Mboa team is on it.",
+  "@reportAlready": {
+    "description": "ALREADY_REPORTED on a report"
+  },
+  "disputePrompt": "A disagreement over this payment? Report a dispute: the Mboa team will review the pieces.",
+  "@disputePrompt": {
+    "description": "On a contested declaration"
   }
 }

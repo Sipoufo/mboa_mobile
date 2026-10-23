@@ -7,6 +7,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../bloc/evidence_bloc.dart';
 import '../models/evidence.dart';
+import 'home_bits.dart';
 
 String evidenceRoomLabel(I18n l10n, EvidenceRoom room) => switch (room) {
       EvidenceRoom.livingRoom => l10n.evidenceRoomLivingRoom,
@@ -270,7 +271,10 @@ class _BatchRow extends StatelessWidget {
 /// tenant's word; full screen on a tap. The landlord acknowledges it, once,
 /// with a word the tenant reads — he can neither contest nor delete.
 class EvidenceBatchView extends StatelessWidget {
-  const EvidenceBatchView({super.key});
+  const EvidenceBatchView({super.key, this.onDispute});
+
+  /// « Signaler un litige » on this sending (RM-M30-07), behind « ⋯ ».
+  final ValueChanged<EvidenceBatch>? onDispute;
 
   Future<void> _acknowledge(BuildContext context) async {
     final l10n = I18n.of(context);
@@ -296,7 +300,14 @@ class EvidenceBatchView extends StatelessWidget {
       },
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.evidenceTitle)),
+        appBar: AppBar(
+          leading: const MboaHeaderBackButton(),
+          title: Text(l10n.evidenceTitle),
+          actions: [
+            if ((onDispute, state) case (final dispute?, EvidenceBatchReady(:final batch)))
+              HomeMoreButton(onDispute: () => dispute(batch)),
+          ],
+        ),
         body: switch (state) {
           EvidenceBatchLoading() => const Center(child: Loader()),
           EvidenceBatchFailure(:final contractId, :final batchId) => Center(

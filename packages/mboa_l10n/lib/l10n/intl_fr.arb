@@ -5627,7 +5627,7 @@
   "@evidenceEmptyTenant": {
     "description": "Evidence: empty, tenant"
   },
-  "evidenceEmptyLandlord": "Ton locataire n'a encore envoyé aucune photo.",
+  "evidenceEmptyLandlord": "Aucune photo pour l'instant. Un locataire qui quitte Mboa emporte ses photos.",
   "@evidenceEmptyLandlord": {
     "description": "Evidence: empty, landlord"
   },
@@ -6086,5 +6086,41 @@
   "otpCodeBurnt": "Ce code ne marche plus : trop d’essais, ou il a expiré. Demande un nouveau code.",
   "@otpCodeBurnt": {
     "description": "OTP_MAX_ATTEMPTS / OTP_INVALID_OR_EXPIRED — the code is dead, a new one is needed"
+  },
+  "disputeTitle": "Signaler un litige",
+  "@disputeTitle": {
+    "description": "RM-M30-07 — the sheet's title and the ⋯ entry"
+  },
+  "disputeBody": "L'équipe Mboa examine les pièces gardées dans l'app (déclarations, justificatifs, photos), puis informe les deux parties de sa décision. Un litige ne vise personne : il ne retire aucun point de Mboa Score.",
+  "@disputeBody": {
+    "description": "RM-M30-07 — what a dispute does (N-40: both parties hear the ruling)"
+  },
+  "disputeCommentLabel": "Ce qui s'est passé (facultatif)",
+  "@disputeCommentLabel": {
+    "description": "Dispute comment label"
+  },
+  "disputeCommentHint": "Ex. : j'ai payé en espèces le 3, il dit n'avoir rien reçu.",
+  "@disputeCommentHint": {
+    "description": "Dispute comment hint"
+  },
+  "disputeSend": "Envoyer le litige",
+  "@disputeSend": {
+    "description": "Dispute sheet button"
+  },
+  "disputeSent": "Litige transmis à l'équipe Mboa",
+  "@disputeSent": {
+    "description": "Dispute sent toast"
+  },
+  "disputeAlready": "Tu as déjà signalé ce litige : l'équipe Mboa s'en occupe.",
+  "@disputeAlready": {
+    "description": "ALREADY_REPORTED on a dispute"
+  },
+  "reportAlready": "Tu l'as déjà signalé : l'équipe Mboa s'en occupe.",
+  "@reportAlready": {
+    "description": "ALREADY_REPORTED on a report"
+  },
+  "disputePrompt": "Un désaccord sur ce paiement ? Signale un litige : l'équipe Mboa examinera les pièces.",
+  "@disputePrompt": {
+    "description": "On a contested declaration"
   }
 }
