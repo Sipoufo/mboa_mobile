@@ -6602,5 +6602,185 @@
   "ledgerUploadFailed": "The photo could not be sent. Try again.",
   "@ledgerUploadFailed": {
     "description": "M25 upload failed"
+  },
+  "providerKindCleaning": "Cleaning",
+  "@providerKindCleaning": {
+    "description": "M26 kind"
+  },
+  "providerKindPlumbing": "Plumbing",
+  "@providerKindPlumbing": {
+    "description": "M26 kind"
+  },
+  "providerKindElectrical": "Electrical",
+  "@providerKindElectrical": {
+    "description": "M26 kind"
+  },
+  "providerKindOther": "Other",
+  "@providerKindOther": {
+    "description": "M26 kind"
+  },
+  "providersEmpty": "No contractor yet. Add the plumber, the cleaner or the electrician who work on your properties.",
+  "@providersEmpty": {
+    "description": "M26 empty list"
+  },
+  "providersShowArchived": "Show archived",
+  "@providersShowArchived": {
+    "description": "M26 list toggle"
+  },
+  "providersAdd": "Add a contractor",
+  "@providersAdd": {
+    "description": "M26 — the list's main action"
+  },
+  "providerLinked": "On Mboa",
+  "@providerLinked": {
+    "description": "M26 — linked to a Mboa account"
+  },
+  "providerArchivedBadge": "Archived",
+  "@providerArchivedBadge": {
+    "description": "M26 badge"
+  },
+  "providerTotalPaid": "{count, plural, =0{No payment} =1{{total} · 1 payment} other{{total} · {count} payments}}",
+  "@providerTotalPaid": {
+    "description": "M26 row",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "providerPaidTotalTitle": "Paid in total",
+  "@providerPaidTotalTitle": {
+    "description": "M26 detail"
+  },
+  "providerPaymentsTitle": "Payments",
+  "@providerPaymentsTitle": {
+    "description": "M26 detail"
+  },
+  "providerNoPayment": "No payment declared.",
+  "@providerNoPayment": {
+    "description": "M26 detail"
+  },
+  "providerPay": "Declare a payment",
+  "@providerPay": {
+    "description": "M26 — the detail's main action (never paying in the app)"
+  },
+  "providerEdit": "Edit",
+  "@providerEdit": {
+    "description": "M26 ⋯"
+  },
+  "providerArchive": "Archive",
+  "@providerArchive": {
+    "description": "M26 ⋯, in red"
+  },
+  "providerArchiveConfirm": "Archive this contractor? They leave the lists, their history stays.",
+  "@providerArchiveConfirm": {
+    "description": "M26 confirm"
+  },
+  "providerRestore": "Restore",
+  "@providerRestore": {
+    "description": "M26 — an archived one's main action"
+  },
+  "providerDelete": "Delete",
+  "@providerDelete": {
+    "description": "M26 ⋯, in red, without payments"
+  },
+  "providerDeleteConfirm": "Delete this contractor?",
+  "@providerDeleteConfirm": {
+    "description": "M26 confirm"
+  },
+  "providerArchivedToast": "Contractor archived",
+  "@providerArchivedToast": {
+    "description": "M26 toast"
+  },
+  "providerRestoredToast": "Contractor restored",
+  "@providerRestoredToast": {
+    "description": "M26 toast"
+  },
+  "providerDeletedToast": "Contractor deleted",
+  "@providerDeletedToast": {
+    "description": "M26 toast"
+  },
+  "providerFormTitleNew": "New contractor",
+  "@providerFormTitleNew": {
+    "description": "M26 form"
+  },
+  "providerFormTitleEdit": "Edit the contractor",
+  "@providerFormTitleEdit": {
+    "description": "M26 form"
+  },
+  "providerFormFromContacts": "Among your Mboa contacts",
+  "@providerFormFromContacts": {
+    "description": "M26 — people he has a thread with"
+  },
+  "providerFormContactsHint": "Their name follows their profile; their number is never taken.",
+  "@providerFormContactsHint": {
+    "description": "M26 / CA-M12-02"
+  },
+  "providerFormTyped": "Type a name",
+  "@providerFormTyped": {
+    "description": "M26 — a free entry"
+  },
+  "providerFormName": "Name",
+  "@providerFormName": {
+    "description": "M26 form"
+  },
+  "providerFormKind": "Trade",
+  "@providerFormKind": {
+    "description": "M26 form"
+  },
+  "providerFormKindLabel": "Which one?",
+  "@providerFormKindLabel": {
+    "description": "M26 — kind OTHER"
+  },
+  "providerFormKindLabelHint": "E.g. Caretaker",
+  "@providerFormKindLabelHint": {
+    "description": "M26 form"
+  },
+  "providerFormNote": "Note (optional)",
+  "@providerFormNote": {
+    "description": "M26 form"
+  },
+  "providerFormSave": "Save",
+  "@providerFormSave": {
+    "description": "M26 form"
+  },
+  "providerSavedToast": "Contractor saved",
+  "@providerSavedToast": {
+    "description": "M26 toast"
+  },
+  "providerPaymentTitleNew": "Declare a payment",
+  "@providerPaymentTitleNew": {
+    "description": "M26 payment form"
+  },
+  "providerPaymentTitleEdit": "Edit the payment",
+  "@providerPaymentTitleEdit": {
+    "description": "M26 payment form"
+  },
+  "providerPaymentHint": "Paid outside Mboa. It goes into your register as Expense · Contractors.",
+  "@providerPaymentHint": {
+    "description": "RM-M26-02 / RM-M26-04"
+  },
+  "providerPaymentDate": "Paid on",
+  "@providerPaymentDate": {
+    "description": "M26 payment form"
+  },
+  "providerPaymentDelete": "Delete the payment",
+  "@providerPaymentDelete": {
+    "description": "M26 ⋯"
+  },
+  "providerPaymentDeleteConfirm": "Delete this payment and its register line?",
+  "@providerPaymentDeleteConfirm": {
+    "description": "M26 confirm"
+  },
+  "providerPaymentSavedToast": "Payment saved",
+  "@providerPaymentSavedToast": {
+    "description": "M26 toast"
+  },
+  "providerPaymentDeletedToast": "Payment deleted",
+  "@providerPaymentDeletedToast": {
+    "description": "M26 toast"
   }
 }

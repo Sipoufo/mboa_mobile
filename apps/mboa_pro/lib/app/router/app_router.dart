@@ -107,6 +107,11 @@ class AppRouter extends RootStackRouter {
             AutoRoute(page: LedgerRoute.page, path: 'finance/ledger'),
             // The form carries the line it corrects: no deep link.
             AutoRoute(page: LedgerEntryFormRoute.page, path: 'finance/ledger/entry'),
+            AutoRoute(page: ProvidersRoute.page, path: 'finance/providers'),
+            // The forms carry what they correct: no deep link.
+            AutoRoute(page: ProviderFormRoute.page, path: 'finance/providers/new'),
+            AutoRoute(page: ProviderRoute.page, path: 'finance/providers/:providerId'),
+            AutoRoute(page: ProviderPaymentFormRoute.page, path: 'finance/providers/:providerId/payment'),
             AutoRoute(page: ReceivedDeclarationRoute.page, path: 'rents/declarations/:declarationId'),
             AutoRoute(page: TenantHomeRoute.page, path: 'rents/homes/:contractId'),
             // M30 lot 3 — tenants' requests: the inbox, one home's, one

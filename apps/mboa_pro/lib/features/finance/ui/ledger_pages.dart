@@ -32,7 +32,8 @@ String _periodLabel(I18n l10n, LedgerPeriod period) => switch (period) {
       LedgerPeriod.all => l10n.ledgerPeriodAll,
     };
 
-String _propertyLabel(I18n l10n, LedgerProperty property) => switch (property) {
+/// A property as a filter or a form says it.
+String ledgerPropertyLabel(I18n l10n, LedgerProperty property) => switch (property) {
       AllProperties() => l10n.ledgerAllProperties,
       ListingProperty(:final label) || ResidenceProperty(:final label) => label,
       UnassignedProperty() => l10n.ledgerUnassigned,
@@ -94,7 +95,7 @@ class LedgerView extends StatelessWidget {
           children: [
             for (final property in [const AllProperties(), ...state.properties, const UnassignedProperty()])
               ListTile(
-                title: Text(_propertyLabel(l10n, property)),
+                title: Text(ledgerPropertyLabel(l10n, property)),
                 trailing: property == state.scope.property ? Icon(LucideIcons.check, color: context.mboaColors.primary) : null,
                 onTap: () => Navigator.of(sheetContext).pop(property),
               ),
@@ -173,7 +174,7 @@ class LedgerView extends StatelessWidget {
                       alignment: AlignmentDirectional.centerStart,
                       child: ActionChip(
                         avatar: Icon(LucideIcons.building2, size: 16, color: colors.primary),
-                        label: Text(_propertyLabel(l10n, ready.scope.property)),
+                        label: Text(ledgerPropertyLabel(l10n, ready.scope.property)),
                         onPressed: ready.isOffline ? null : () => _pickProperty(context, ready),
                       ),
                     ),
@@ -622,7 +623,7 @@ class _LedgerEntryFormViewState extends State<LedgerEntryFormView> {
               children: [
                 for (final property in [const UnassignedProperty(), ...state.properties])
                   ChoiceChip(
-                    label: Text(_propertyLabel(l10n, property), overflow: TextOverflow.ellipsis),
+                    label: Text(ledgerPropertyLabel(l10n, property), overflow: TextOverflow.ellipsis),
                     selected: state.property == property,
                     showCheckmark: false,
                     selectedColor: colors.primaryPale,

@@ -22,7 +22,7 @@
 
 ## Where things stand
 
-**1496 tests green, analyze clean.** `mboa_user` 405 · `mboa_pro` 608 ·
+**1551 tests green, analyze clean.** `mboa_user` 405 · `mboa_pro` 663 ·
 `mboa_core` 29 · `mboa_shared` 426 · `mboa_ui` 21 · `mboa_l10n` 7.
 
 > **Both apps run on the founder's device** (since 2026-10-20, side by side,
@@ -65,6 +65,7 @@
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
 | M30 Mon Logement — lot 3 | ✅ the space's daily-life tiles, both apps: **Demandes** (ask — remark, repair, question, photos —, follow, reply in the property's thread; the landlord takes it in hand and resolves it; Pro inbox + home nudge; N-38), **État des lieux** (photos by phase and room, compressed and fingerprinted, uploaded with a signed checksum, recorded with Mboa's time, acknowledged once by the landlord; N-39), **Contacts** (the landlord's 15, shared on all or some properties; the tenant calls them) · the space's lists are tabs |
 | M31 Mes anciens logements | ✅ **tenant**: « Mes logements » in two tabs (« En cours » / « Anciens »); an ended tenancy opens its sheet — lease as signed, confirmed total by year with each payment's declaration and receipt, unconfirmed apart, signed contract + code, today's rating, « Mon avis » (M27), requests / photos / schedule read only — and the expenses statement (PDF, share sheet) · **both apps**: « Avant / après » (entry beside exit, room by room) from « État des lieux » |
+| M24–M26 « Gestion financière » (Pro, paid add-on) | ✅ **the add-on** (30 days, MoMo, through the tier checkout; expired: read and export only) · **invoices** (by status, mark paid by hand, correct, cancel, withdraw a payment declared by mistake; only a running contract's tenant) · **the register** (net, in, out, by category over a period and a property; lines kept from confirmed payments locked; CSV) · **intervenants** (a thread's contact or a typed name; payments declared, each a register line; archive / restore / delete) · no money through Mboa |
 | M04 search home | ✅ after the founder's mockup: greeting, city + filters, category tabs, « À la une » (Pro / Pro+), row cards, the map one floating pill away · **phase 2 (§33, RM-M04-08)**: « ★ 4,2 (7) » on every card (none without reviews), « Pertinence / Près de toi » — the nearest first in the chosen city, « à 2,3 km » on each card once the position is known |
 | M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) and the space's « Quittances et reçus » · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
 
@@ -1146,6 +1147,29 @@ Doc 10's RM-M10-01 still words the profile requirement as "photo + type + ville"
 the API models a prestataire's image as `logoObjectKey`, and the app treats those
 as the same thing.
 
+### « Gestion financière » — what to know before touching (2026-10-24)
+
+- **No money moves through Mboa**, here either: invoices are settled by
+  hand or by the tenant's confirmed declarations (paying in the app is shut,
+  DL-04); intervenants' payments are declared. Never « payer » in these
+  screens.
+- **Writing needs the add-on running; reading, having held it once**
+  (`FINANCE_ADDON_REQUIRED`). The hub passes `canWrite` to each part, which
+  then shows or hides its main action; the server still has the last word.
+- The checkout buys a `Purchase` (`TierPurchase` or `FinanceAddonPurchase`):
+  one Mobile Money flow and one polling for both.
+- All finance reads are cached in the account-scoped `financeBox`
+  (RM-M25-04: the landlord's own).
+- The register's lines from confirmed rents and invoices are `readOnly`:
+  corrected at their source (RM-M30-08). M26 payments write their own
+  « Sortie · Intervenants » lines.
+- **§34**: `PUT /finance/ledger/{id}` replaces the attachment with what the
+  request carries, and the key is never returned — a correction drops the
+  photo. The form says so until the backend answers.
+- Server refusals are typed (`FinanceRefused`, `guardFinance`) and said in
+  words (`financeRefusalText`). The « ⋯ » sheet and the one-main-button bar
+  are `showFinanceActions` / `FinanceActionBar`.
+
 ### Search phase 2 — what to know before touching (2026-10-23)
 
 - **The position** (`LocationService`, geolocator) is asked when the reader
@@ -1217,22 +1241,16 @@ Updated 2026-10-24. The client was regenerated from the export carrying M24
 (invoices) and M26 (payments to contractors), `eb848cd`.
 
 Ready to build (the API exists, nothing in the apps):
-- **M25 manual ledger + the finance add-on** (Pro) — `/finance/ledger`
-  (entries, summary, export, attachment) and `/addons/finance/subscribe`.
-  Paid option, never started.
+- **§34** (backend): correcting a register line erases its attachment —
+  the app says so on the form meanwhile.
 - **Receipts' 404** (seen on device): R2 answered 404 to a receipt's
   presigned link; the app now reports storage's own code
   (`PdfDownloadFailed`). Waiting for that line to write the backend a precise
   request.
-- **M24 / M25 landlord side** (issuing invoices, the register) — behind the
-  finance add-on; the register's system-kept lines (`readOnly`) come with it.
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
   founder's definition (and backend data); managers / agents on the fiche
   need API data.
 
-- **M24 tenant invoices** (both apps: the owner issues, the tenant pays or it
-  is declared paid) and **M26 payments to contractors** (Pro) — endpoints
-  arrived with the latest export; same add-on as M25.
 
 Blocked:
 - **iOS push** — the APNs key, nothing else.

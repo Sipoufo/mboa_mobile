@@ -232,7 +232,7 @@ void main() {
               onBuy: () => bought++,
               onInvoices: (_) => opened++,
               onLedger: (_) => opened++,
-              onProviders: () => opened++,
+              onProviders: (_) => opened++,
             ),
           ),
         ),

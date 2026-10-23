@@ -42,6 +42,7 @@ class FinancePage extends StatelessWidget implements AutoRouteWrapper {
         // facture ».
         onInvoices: (addon) => context.router.push(OwnerInvoicesRoute(canWrite: addon.canWrite)),
         onLedger: (addon) => context.router.push(LedgerRoute(canWrite: addon.canWrite)),
+        onProviders: (addon) => context.router.push(ProvidersRoute(canWrite: addon.canWrite)),
       );
 }
 
@@ -55,7 +56,7 @@ class FinanceView extends StatelessWidget {
   /// Each part, once it can be read. Null: shown, not opened.
   final ValueChanged<FinanceAddon>? onInvoices;
   final ValueChanged<FinanceAddon>? onLedger;
-  final VoidCallback? onProviders;
+  final ValueChanged<FinanceAddon>? onProviders;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +104,12 @@ class FinanceView extends StatelessWidget {
                       l10n.financeLedgerHint,
                       onLedger == null ? null : () => onLedger!(addon),
                     ),
-                    (LucideIcons.hardHat, l10n.financeProvidersTitle, l10n.financeProvidersHint, onProviders),
+                    (
+                      LucideIcons.hardHat,
+                      l10n.financeProvidersTitle,
+                      l10n.financeProvidersHint,
+                      onProviders == null ? null : () => onProviders!(addon),
+                    ),
                   ])
                     _PartRow(icon: icon, title: title, hint: hint, onTap: addon.canRead ? open : null),
                   const SizedBox(height: Dimens.spacing),

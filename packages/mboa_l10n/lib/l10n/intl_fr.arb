@@ -6602,5 +6602,185 @@
   "ledgerUploadFailed": "La photo n'a pas pu être envoyée. Réessaie.",
   "@ledgerUploadFailed": {
     "description": "M25 upload failed"
+  },
+  "providerKindCleaning": "Ménage",
+  "@providerKindCleaning": {
+    "description": "M26 kind"
+  },
+  "providerKindPlumbing": "Plomberie",
+  "@providerKindPlumbing": {
+    "description": "M26 kind"
+  },
+  "providerKindElectrical": "Électricité",
+  "@providerKindElectrical": {
+    "description": "M26 kind"
+  },
+  "providerKindOther": "Autre",
+  "@providerKindOther": {
+    "description": "M26 kind"
+  },
+  "providersEmpty": "Aucun intervenant pour l'instant. Ajoute le plombier, la ménagère ou l'électricien qui travaillent sur tes biens.",
+  "@providersEmpty": {
+    "description": "M26 empty list"
+  },
+  "providersShowArchived": "Afficher les archivés",
+  "@providersShowArchived": {
+    "description": "M26 list toggle"
+  },
+  "providersAdd": "Ajouter un intervenant",
+  "@providersAdd": {
+    "description": "M26 — the list's main action"
+  },
+  "providerLinked": "Sur Mboa",
+  "@providerLinked": {
+    "description": "M26 — linked to a Mboa account"
+  },
+  "providerArchivedBadge": "Archivé",
+  "@providerArchivedBadge": {
+    "description": "M26 badge"
+  },
+  "providerTotalPaid": "{count, plural, =0{Aucun paiement} =1{{total} · 1 paiement} other{{total} · {count} paiements}}",
+  "@providerTotalPaid": {
+    "description": "M26 row",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "providerPaidTotalTitle": "Payé au total",
+  "@providerPaidTotalTitle": {
+    "description": "M26 detail"
+  },
+  "providerPaymentsTitle": "Paiements",
+  "@providerPaymentsTitle": {
+    "description": "M26 detail"
+  },
+  "providerNoPayment": "Aucun paiement déclaré.",
+  "@providerNoPayment": {
+    "description": "M26 detail"
+  },
+  "providerPay": "Déclarer un paiement",
+  "@providerPay": {
+    "description": "M26 — the detail's main action (never paying in the app)"
+  },
+  "providerEdit": "Modifier",
+  "@providerEdit": {
+    "description": "M26 ⋯"
+  },
+  "providerArchive": "Archiver",
+  "@providerArchive": {
+    "description": "M26 ⋯, in red"
+  },
+  "providerArchiveConfirm": "Archiver cet intervenant ? Il disparaît des listes, son historique reste.",
+  "@providerArchiveConfirm": {
+    "description": "M26 confirm"
+  },
+  "providerRestore": "Restaurer",
+  "@providerRestore": {
+    "description": "M26 — an archived one's main action"
+  },
+  "providerDelete": "Supprimer",
+  "@providerDelete": {
+    "description": "M26 ⋯, in red, without payments"
+  },
+  "providerDeleteConfirm": "Supprimer cet intervenant ?",
+  "@providerDeleteConfirm": {
+    "description": "M26 confirm"
+  },
+  "providerArchivedToast": "Intervenant archivé",
+  "@providerArchivedToast": {
+    "description": "M26 toast"
+  },
+  "providerRestoredToast": "Intervenant restauré",
+  "@providerRestoredToast": {
+    "description": "M26 toast"
+  },
+  "providerDeletedToast": "Intervenant supprimé",
+  "@providerDeletedToast": {
+    "description": "M26 toast"
+  },
+  "providerFormTitleNew": "Nouvel intervenant",
+  "@providerFormTitleNew": {
+    "description": "M26 form"
+  },
+  "providerFormTitleEdit": "Modifier l'intervenant",
+  "@providerFormTitleEdit": {
+    "description": "M26 form"
+  },
+  "providerFormFromContacts": "Parmi tes contacts Mboa",
+  "@providerFormFromContacts": {
+    "description": "M26 — people he has a thread with"
+  },
+  "providerFormContactsHint": "Son nom suit son profil ; son numéro n'est jamais repris.",
+  "@providerFormContactsHint": {
+    "description": "M26 / CA-M12-02"
+  },
+  "providerFormTyped": "Saisir un nom",
+  "@providerFormTyped": {
+    "description": "M26 — a free entry"
+  },
+  "providerFormName": "Nom",
+  "@providerFormName": {
+    "description": "M26 form"
+  },
+  "providerFormKind": "Métier",
+  "@providerFormKind": {
+    "description": "M26 form"
+  },
+  "providerFormKindLabel": "Lequel ?",
+  "@providerFormKindLabel": {
+    "description": "M26 — kind OTHER"
+  },
+  "providerFormKindLabelHint": "Ex. : Gardien",
+  "@providerFormKindLabelHint": {
+    "description": "M26 form"
+  },
+  "providerFormNote": "Note (facultatif)",
+  "@providerFormNote": {
+    "description": "M26 form"
+  },
+  "providerFormSave": "Enregistrer",
+  "@providerFormSave": {
+    "description": "M26 form"
+  },
+  "providerSavedToast": "Intervenant enregistré",
+  "@providerSavedToast": {
+    "description": "M26 toast"
+  },
+  "providerPaymentTitleNew": "Déclarer un paiement",
+  "@providerPaymentTitleNew": {
+    "description": "M26 payment form"
+  },
+  "providerPaymentTitleEdit": "Modifier le paiement",
+  "@providerPaymentTitleEdit": {
+    "description": "M26 payment form"
+  },
+  "providerPaymentHint": "Payé hors de Mboa. Il s'ajoute à ton registre en Sortie · Intervenants.",
+  "@providerPaymentHint": {
+    "description": "RM-M26-02 / RM-M26-04"
+  },
+  "providerPaymentDate": "Payé le",
+  "@providerPaymentDate": {
+    "description": "M26 payment form"
+  },
+  "providerPaymentDelete": "Supprimer le paiement",
+  "@providerPaymentDelete": {
+    "description": "M26 ⋯"
+  },
+  "providerPaymentDeleteConfirm": "Supprimer ce paiement et sa ligne du registre ?",
+  "@providerPaymentDeleteConfirm": {
+    "description": "M26 confirm"
+  },
+  "providerPaymentSavedToast": "Paiement enregistré",
+  "@providerPaymentSavedToast": {
+    "description": "M26 toast"
+  },
+  "providerPaymentDeletedToast": "Paiement supprimé",
+  "@providerPaymentDeletedToast": {
+    "description": "M26 toast"
   }
 }

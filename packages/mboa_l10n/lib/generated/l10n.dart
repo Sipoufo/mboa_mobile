@@ -16266,6 +16266,439 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ménage`
+  String get providerKindCleaning {
+    return Intl.message(
+      'Ménage',
+      name: 'providerKindCleaning',
+      desc: 'M26 kind',
+      args: [],
+    );
+  }
+
+  /// `Plomberie`
+  String get providerKindPlumbing {
+    return Intl.message(
+      'Plomberie',
+      name: 'providerKindPlumbing',
+      desc: 'M26 kind',
+      args: [],
+    );
+  }
+
+  /// `Électricité`
+  String get providerKindElectrical {
+    return Intl.message(
+      'Électricité',
+      name: 'providerKindElectrical',
+      desc: 'M26 kind',
+      args: [],
+    );
+  }
+
+  /// `Autre`
+  String get providerKindOther {
+    return Intl.message(
+      'Autre',
+      name: 'providerKindOther',
+      desc: 'M26 kind',
+      args: [],
+    );
+  }
+
+  /// `Aucun intervenant pour l'instant. Ajoute le plombier, la ménagère ou l'électricien qui travaillent sur tes biens.`
+  String get providersEmpty {
+    return Intl.message(
+      'Aucun intervenant pour l\'instant. Ajoute le plombier, la ménagère ou l\'électricien qui travaillent sur tes biens.',
+      name: 'providersEmpty',
+      desc: 'M26 empty list',
+      args: [],
+    );
+  }
+
+  /// `Afficher les archivés`
+  String get providersShowArchived {
+    return Intl.message(
+      'Afficher les archivés',
+      name: 'providersShowArchived',
+      desc: 'M26 list toggle',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un intervenant`
+  String get providersAdd {
+    return Intl.message(
+      'Ajouter un intervenant',
+      name: 'providersAdd',
+      desc: 'M26 — the list\'s main action',
+      args: [],
+    );
+  }
+
+  /// `Sur Mboa`
+  String get providerLinked {
+    return Intl.message(
+      'Sur Mboa',
+      name: 'providerLinked',
+      desc: 'M26 — linked to a Mboa account',
+      args: [],
+    );
+  }
+
+  /// `Archivé`
+  String get providerArchivedBadge {
+    return Intl.message(
+      'Archivé',
+      name: 'providerArchivedBadge',
+      desc: 'M26 badge',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Aucun paiement} =1{{total} · 1 paiement} other{{total} · {count} paiements}}`
+  String providerTotalPaid(int count, String total) {
+    return Intl.plural(
+      count,
+      zero: 'Aucun paiement',
+      one: '$total · 1 paiement',
+      other: '$total · $count paiements',
+      name: 'providerTotalPaid',
+      desc: 'M26 row',
+      args: [count, total],
+    );
+  }
+
+  /// `Payé au total`
+  String get providerPaidTotalTitle {
+    return Intl.message(
+      'Payé au total',
+      name: 'providerPaidTotalTitle',
+      desc: 'M26 detail',
+      args: [],
+    );
+  }
+
+  /// `Paiements`
+  String get providerPaymentsTitle {
+    return Intl.message(
+      'Paiements',
+      name: 'providerPaymentsTitle',
+      desc: 'M26 detail',
+      args: [],
+    );
+  }
+
+  /// `Aucun paiement déclaré.`
+  String get providerNoPayment {
+    return Intl.message(
+      'Aucun paiement déclaré.',
+      name: 'providerNoPayment',
+      desc: 'M26 detail',
+      args: [],
+    );
+  }
+
+  /// `Déclarer un paiement`
+  String get providerPay {
+    return Intl.message(
+      'Déclarer un paiement',
+      name: 'providerPay',
+      desc: 'M26 — the detail\'s main action (never paying in the app)',
+      args: [],
+    );
+  }
+
+  /// `Modifier`
+  String get providerEdit {
+    return Intl.message(
+      'Modifier',
+      name: 'providerEdit',
+      desc: 'M26 ⋯',
+      args: [],
+    );
+  }
+
+  /// `Archiver`
+  String get providerArchive {
+    return Intl.message(
+      'Archiver',
+      name: 'providerArchive',
+      desc: 'M26 ⋯, in red',
+      args: [],
+    );
+  }
+
+  /// `Archiver cet intervenant ? Il disparaît des listes, son historique reste.`
+  String get providerArchiveConfirm {
+    return Intl.message(
+      'Archiver cet intervenant ? Il disparaît des listes, son historique reste.',
+      name: 'providerArchiveConfirm',
+      desc: 'M26 confirm',
+      args: [],
+    );
+  }
+
+  /// `Restaurer`
+  String get providerRestore {
+    return Intl.message(
+      'Restaurer',
+      name: 'providerRestore',
+      desc: 'M26 — an archived one\'s main action',
+      args: [],
+    );
+  }
+
+  /// `Supprimer`
+  String get providerDelete {
+    return Intl.message(
+      'Supprimer',
+      name: 'providerDelete',
+      desc: 'M26 ⋯, in red, without payments',
+      args: [],
+    );
+  }
+
+  /// `Supprimer cet intervenant ?`
+  String get providerDeleteConfirm {
+    return Intl.message(
+      'Supprimer cet intervenant ?',
+      name: 'providerDeleteConfirm',
+      desc: 'M26 confirm',
+      args: [],
+    );
+  }
+
+  /// `Intervenant archivé`
+  String get providerArchivedToast {
+    return Intl.message(
+      'Intervenant archivé',
+      name: 'providerArchivedToast',
+      desc: 'M26 toast',
+      args: [],
+    );
+  }
+
+  /// `Intervenant restauré`
+  String get providerRestoredToast {
+    return Intl.message(
+      'Intervenant restauré',
+      name: 'providerRestoredToast',
+      desc: 'M26 toast',
+      args: [],
+    );
+  }
+
+  /// `Intervenant supprimé`
+  String get providerDeletedToast {
+    return Intl.message(
+      'Intervenant supprimé',
+      name: 'providerDeletedToast',
+      desc: 'M26 toast',
+      args: [],
+    );
+  }
+
+  /// `Nouvel intervenant`
+  String get providerFormTitleNew {
+    return Intl.message(
+      'Nouvel intervenant',
+      name: 'providerFormTitleNew',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Modifier l'intervenant`
+  String get providerFormTitleEdit {
+    return Intl.message(
+      'Modifier l\'intervenant',
+      name: 'providerFormTitleEdit',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Parmi tes contacts Mboa`
+  String get providerFormFromContacts {
+    return Intl.message(
+      'Parmi tes contacts Mboa',
+      name: 'providerFormFromContacts',
+      desc: 'M26 — people he has a thread with',
+      args: [],
+    );
+  }
+
+  /// `Son nom suit son profil ; son numéro n'est jamais repris.`
+  String get providerFormContactsHint {
+    return Intl.message(
+      'Son nom suit son profil ; son numéro n\'est jamais repris.',
+      name: 'providerFormContactsHint',
+      desc: 'M26 / CA-M12-02',
+      args: [],
+    );
+  }
+
+  /// `Saisir un nom`
+  String get providerFormTyped {
+    return Intl.message(
+      'Saisir un nom',
+      name: 'providerFormTyped',
+      desc: 'M26 — a free entry',
+      args: [],
+    );
+  }
+
+  /// `Nom`
+  String get providerFormName {
+    return Intl.message(
+      'Nom',
+      name: 'providerFormName',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Métier`
+  String get providerFormKind {
+    return Intl.message(
+      'Métier',
+      name: 'providerFormKind',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Lequel ?`
+  String get providerFormKindLabel {
+    return Intl.message(
+      'Lequel ?',
+      name: 'providerFormKindLabel',
+      desc: 'M26 — kind OTHER',
+      args: [],
+    );
+  }
+
+  /// `Ex. : Gardien`
+  String get providerFormKindLabelHint {
+    return Intl.message(
+      'Ex. : Gardien',
+      name: 'providerFormKindLabelHint',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Note (facultatif)`
+  String get providerFormNote {
+    return Intl.message(
+      'Note (facultatif)',
+      name: 'providerFormNote',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get providerFormSave {
+    return Intl.message(
+      'Enregistrer',
+      name: 'providerFormSave',
+      desc: 'M26 form',
+      args: [],
+    );
+  }
+
+  /// `Intervenant enregistré`
+  String get providerSavedToast {
+    return Intl.message(
+      'Intervenant enregistré',
+      name: 'providerSavedToast',
+      desc: 'M26 toast',
+      args: [],
+    );
+  }
+
+  /// `Déclarer un paiement`
+  String get providerPaymentTitleNew {
+    return Intl.message(
+      'Déclarer un paiement',
+      name: 'providerPaymentTitleNew',
+      desc: 'M26 payment form',
+      args: [],
+    );
+  }
+
+  /// `Modifier le paiement`
+  String get providerPaymentTitleEdit {
+    return Intl.message(
+      'Modifier le paiement',
+      name: 'providerPaymentTitleEdit',
+      desc: 'M26 payment form',
+      args: [],
+    );
+  }
+
+  /// `Payé hors de Mboa. Il s'ajoute à ton registre en Sortie · Intervenants.`
+  String get providerPaymentHint {
+    return Intl.message(
+      'Payé hors de Mboa. Il s\'ajoute à ton registre en Sortie · Intervenants.',
+      name: 'providerPaymentHint',
+      desc: 'RM-M26-02 / RM-M26-04',
+      args: [],
+    );
+  }
+
+  /// `Payé le`
+  String get providerPaymentDate {
+    return Intl.message(
+      'Payé le',
+      name: 'providerPaymentDate',
+      desc: 'M26 payment form',
+      args: [],
+    );
+  }
+
+  /// `Supprimer le paiement`
+  String get providerPaymentDelete {
+    return Intl.message(
+      'Supprimer le paiement',
+      name: 'providerPaymentDelete',
+      desc: 'M26 ⋯',
+      args: [],
+    );
+  }
+
+  /// `Supprimer ce paiement et sa ligne du registre ?`
+  String get providerPaymentDeleteConfirm {
+    return Intl.message(
+      'Supprimer ce paiement et sa ligne du registre ?',
+      name: 'providerPaymentDeleteConfirm',
+      desc: 'M26 confirm',
+      args: [],
+    );
+  }
+
+  /// `Paiement enregistré`
+  String get providerPaymentSavedToast {
+    return Intl.message(
+      'Paiement enregistré',
+      name: 'providerPaymentSavedToast',
+      desc: 'M26 toast',
+      args: [],
+    );
+  }
+
+  /// `Paiement supprimé`
+  String get providerPaymentDeletedToast {
+    return Intl.message(
+      'Paiement supprimé',
+      name: 'providerPaymentDeletedToast',
+      desc: 'M26 toast',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

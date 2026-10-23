@@ -5,6 +5,11 @@ import '../../features/finance/bloc/ledger_bloc.dart';
 import '../../features/finance/bloc/ledger_entry_form_bloc.dart';
 import '../../features/finance/data/finance_properties.dart';
 import '../../features/finance/data/ledger_repository.dart';
+import '../../features/finance/bloc/provider_bloc.dart';
+import '../../features/finance/bloc/provider_form_bloc.dart';
+import '../../features/finance/bloc/provider_payment_form_bloc.dart';
+import '../../features/finance/bloc/providers_bloc.dart';
+import '../../features/finance/data/providers_repository.dart';
 import '../../features/finance/bloc/invoice_form_bloc.dart';
 import '../../features/finance/bloc/owner_invoice_bloc.dart';
 import '../../features/finance/bloc/owner_invoices_bloc.dart';
@@ -467,6 +472,19 @@ void registerAppModule() {
       properties: getIt<FinanceProperties>(),
       uploader: getIt<MediaUploader>(),
     ),
+  );
+  getIt.registerLazySingleton<ProvidersRepository>(
+    () => ProvidersRepository(
+      dioClient: getIt<DioClient>(),
+      cache: getIt<HiveCache>(),
+      messaging: getIt<MessagingRepository>(),
+    ),
+  );
+  getIt.registerFactory<ProvidersBloc>(() => ProvidersBloc(repository: getIt<ProvidersRepository>()));
+  getIt.registerFactory<ProviderBloc>(() => ProviderBloc(repository: getIt<ProvidersRepository>()));
+  getIt.registerFactory<ProviderFormBloc>(() => ProviderFormBloc(repository: getIt<ProvidersRepository>()));
+  getIt.registerFactory<ProviderPaymentFormBloc>(
+    () => ProviderPaymentFormBloc(repository: getIt<ProvidersRepository>(), properties: getIt<FinanceProperties>()),
   );
   getIt.registerFactory<InvoiceFormBloc>(
     () => InvoiceFormBloc(invoices: getIt<OwnerInvoicesRepository>(), homes: getIt<HomesRepository>()),
