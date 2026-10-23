@@ -41,6 +41,7 @@ class FinancePage extends StatelessWidget implements AutoRouteWrapper {
         // Writing needs the add-on running; the list then offers « Nouvelle
         // facture ».
         onInvoices: (addon) => context.router.push(OwnerInvoicesRoute(canWrite: addon.canWrite)),
+        onLedger: (addon) => context.router.push(LedgerRoute(canWrite: addon.canWrite)),
       );
 }
 
@@ -53,7 +54,7 @@ class FinanceView extends StatelessWidget {
 
   /// Each part, once it can be read. Null: shown, not opened.
   final ValueChanged<FinanceAddon>? onInvoices;
-  final VoidCallback? onLedger;
+  final ValueChanged<FinanceAddon>? onLedger;
   final VoidCallback? onProviders;
 
   @override
@@ -96,7 +97,12 @@ class FinanceView extends StatelessWidget {
                       l10n.financeInvoicesHint,
                       onInvoices == null ? null : () => onInvoices!(addon),
                     ),
-                    (LucideIcons.bookOpenText, l10n.financeLedgerTitle, l10n.financeLedgerHint, onLedger),
+                    (
+                      LucideIcons.bookOpenText,
+                      l10n.financeLedgerTitle,
+                      l10n.financeLedgerHint,
+                      onLedger == null ? null : () => onLedger!(addon),
+                    ),
                     (LucideIcons.hardHat, l10n.financeProvidersTitle, l10n.financeProvidersHint, onProviders),
                   ])
                     _PartRow(icon: icon, title: title, hint: hint, onTap: addon.canRead ? open : null),

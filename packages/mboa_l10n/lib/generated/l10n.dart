@@ -15856,6 +15856,416 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Entrées`
+  String get ledgerIncome {
+    return Intl.message(
+      'Entrées',
+      name: 'ledgerIncome',
+      desc: 'M25 summary',
+      args: [],
+    );
+  }
+
+  /// `Sorties`
+  String get ledgerExpense {
+    return Intl.message(
+      'Sorties',
+      name: 'ledgerExpense',
+      desc: 'M25 summary',
+      args: [],
+    );
+  }
+
+  /// `Solde`
+  String get ledgerNet {
+    return Intl.message(
+      'Solde',
+      name: 'ledgerNet',
+      desc: 'M25 summary: income minus expenses (RM-M25-03)',
+      args: [],
+    );
+  }
+
+  /// `Par catégorie`
+  String get ledgerByCategory {
+    return Intl.message(
+      'Par catégorie',
+      name: 'ledgerByCategory',
+      desc: 'M25 summary',
+      args: [],
+    );
+  }
+
+  /// `Ce mois-ci`
+  String get ledgerPeriodThisMonth {
+    return Intl.message(
+      'Ce mois-ci',
+      name: 'ledgerPeriodThisMonth',
+      desc: 'M25 period',
+      args: [],
+    );
+  }
+
+  /// `3 derniers mois`
+  String get ledgerPeriodThreeMonths {
+    return Intl.message(
+      '3 derniers mois',
+      name: 'ledgerPeriodThreeMonths',
+      desc: 'M25 period',
+      args: [],
+    );
+  }
+
+  /// `Cette année`
+  String get ledgerPeriodThisYear {
+    return Intl.message(
+      'Cette année',
+      name: 'ledgerPeriodThisYear',
+      desc: 'M25 period',
+      args: [],
+    );
+  }
+
+  /// `Tout`
+  String get ledgerPeriodAll {
+    return Intl.message(
+      'Tout',
+      name: 'ledgerPeriodAll',
+      desc: 'M25 period',
+      args: [],
+    );
+  }
+
+  /// `Tous les biens`
+  String get ledgerAllProperties {
+    return Intl.message(
+      'Tous les biens',
+      name: 'ledgerAllProperties',
+      desc: 'M25 property filter',
+      args: [],
+    );
+  }
+
+  /// `Non affecté`
+  String get ledgerUnassigned {
+    return Intl.message(
+      'Non affecté',
+      name: 'ledgerUnassigned',
+      desc: 'RM-M25-02 — a general expense',
+      args: [],
+    );
+  }
+
+  /// `Quel bien ?`
+  String get ledgerPropertyTitle {
+    return Intl.message(
+      'Quel bien ?',
+      name: 'ledgerPropertyTitle',
+      desc: 'M25 property picker title',
+      args: [],
+    );
+  }
+
+  /// `Aucun mouvement sur cette période.`
+  String get ledgerEmpty {
+    return Intl.message(
+      'Aucun mouvement sur cette période.',
+      name: 'ledgerEmpty',
+      desc: 'M25 empty list',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un mouvement`
+  String get ledgerAdd {
+    return Intl.message(
+      'Ajouter un mouvement',
+      name: 'ledgerAdd',
+      desc: 'M25 — the main action',
+      args: [],
+    );
+  }
+
+  /// `Exporter en CSV`
+  String get ledgerExport {
+    return Intl.message(
+      'Exporter en CSV',
+      name: 'ledgerExport',
+      desc: 'RM-M25-05',
+      args: [],
+    );
+  }
+
+  /// `Registre Mboa`
+  String get ledgerExportName {
+    return Intl.message(
+      'Registre Mboa',
+      name: 'ledgerExportName',
+      desc: 'M25 — the CSV\'s file name',
+      args: [],
+    );
+  }
+
+  /// `L'export n'a pas pu être préparé. Vérifie ta connexion et réessaie.`
+  String get ledgerExportFailed {
+    return Intl.message(
+      'L\'export n\'a pas pu être préparé. Vérifie ta connexion et réessaie.',
+      name: 'ledgerExportFailed',
+      desc: 'M25 export failed',
+      args: [],
+    );
+  }
+
+  /// `Vient d'un paiement confirmé : se corrige à sa source.`
+  String get ledgerReadOnly {
+    return Intl.message(
+      'Vient d\'un paiement confirmé : se corrige à sa source.',
+      name: 'ledgerReadOnly',
+      desc: 'RM-M30-08 — a kept line',
+      args: [],
+    );
+  }
+
+  /// `Loyer`
+  String get ledgerCategoryRent {
+    return Intl.message(
+      'Loyer',
+      name: 'ledgerCategoryRent',
+      desc: 'M25 category',
+      args: [],
+    );
+  }
+
+  /// `Charges`
+  String get ledgerCategoryCharges {
+    return Intl.message(
+      'Charges',
+      name: 'ledgerCategoryCharges',
+      desc: 'M25 category',
+      args: [],
+    );
+  }
+
+  /// `Travaux`
+  String get ledgerCategoryWorks {
+    return Intl.message(
+      'Travaux',
+      name: 'ledgerCategoryWorks',
+      desc: 'M25 category',
+      args: [],
+    );
+  }
+
+  /// `Impôt foncier`
+  String get ledgerCategoryTax {
+    return Intl.message(
+      'Impôt foncier',
+      name: 'ledgerCategoryTax',
+      desc: 'M25 category',
+      args: [],
+    );
+  }
+
+  /// `Intervenants`
+  String get ledgerCategoryProviders {
+    return Intl.message(
+      'Intervenants',
+      name: 'ledgerCategoryProviders',
+      desc: 'M25 category (M26)',
+      args: [],
+    );
+  }
+
+  /// `Autre`
+  String get ledgerCategoryOther {
+    return Intl.message(
+      'Autre',
+      name: 'ledgerCategoryOther',
+      desc: 'M25 category',
+      args: [],
+    );
+  }
+
+  /// `Nouveau mouvement`
+  String get ledgerFormTitleNew {
+    return Intl.message(
+      'Nouveau mouvement',
+      name: 'ledgerFormTitleNew',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Modifier le mouvement`
+  String get ledgerFormTitleEdit {
+    return Intl.message(
+      'Modifier le mouvement',
+      name: 'ledgerFormTitleEdit',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Catégorie`
+  String get ledgerFormCategory {
+    return Intl.message(
+      'Catégorie',
+      name: 'ledgerFormCategory',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Montant (FCFA)`
+  String get ledgerFormAmount {
+    return Intl.message(
+      'Montant (FCFA)',
+      name: 'ledgerFormAmount',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get ledgerFormDate {
+    return Intl.message(
+      'Date',
+      name: 'ledgerFormDate',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Bien concerné`
+  String get ledgerFormProperty {
+    return Intl.message(
+      'Bien concerné',
+      name: 'ledgerFormProperty',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Note (facultatif)`
+  String get ledgerFormNote {
+    return Intl.message(
+      'Note (facultatif)',
+      name: 'ledgerFormNote',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Justificatif (facultatif)`
+  String get ledgerFormAttachment {
+    return Intl.message(
+      'Justificatif (facultatif)',
+      name: 'ledgerFormAttachment',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Ajouter une photo`
+  String get ledgerFormAttachmentAdd {
+    return Intl.message(
+      'Ajouter une photo',
+      name: 'ledgerFormAttachmentAdd',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Photo ajoutée`
+  String get ledgerFormAttachmentAdded {
+    return Intl.message(
+      'Photo ajoutée',
+      name: 'ledgerFormAttachmentAdded',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `Voir la pièce jointe actuelle`
+  String get ledgerFormAttachmentView {
+    return Intl.message(
+      'Voir la pièce jointe actuelle',
+      name: 'ledgerFormAttachmentView',
+      desc: 'M25 form',
+      args: [],
+    );
+  }
+
+  /// `La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.`
+  String get ledgerFormAttachmentDropped {
+    return Intl.message(
+      'La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.',
+      name: 'ledgerFormAttachmentDropped',
+      desc: '§34 — the server drops it on a correction',
+      args: [],
+    );
+  }
+
+  /// `Enregistrer`
+  String get ledgerFormSave {
+    return Intl.message(
+      'Enregistrer',
+      name: 'ledgerFormSave',
+      desc: 'M25 form button',
+      args: [],
+    );
+  }
+
+  /// `Supprimer le mouvement`
+  String get ledgerFormDelete {
+    return Intl.message(
+      'Supprimer le mouvement',
+      name: 'ledgerFormDelete',
+      desc: 'M25 — behind ⋯, in red',
+      args: [],
+    );
+  }
+
+  /// `Supprimer ce mouvement et sa pièce jointe ?`
+  String get ledgerFormDeleteConfirm {
+    return Intl.message(
+      'Supprimer ce mouvement et sa pièce jointe ?',
+      name: 'ledgerFormDeleteConfirm',
+      desc: 'M25 confirm',
+      args: [],
+    );
+  }
+
+  /// `Mouvement enregistré`
+  String get ledgerSavedToast {
+    return Intl.message(
+      'Mouvement enregistré',
+      name: 'ledgerSavedToast',
+      desc: 'M25 toast',
+      args: [],
+    );
+  }
+
+  /// `Mouvement supprimé`
+  String get ledgerDeletedToast {
+    return Intl.message(
+      'Mouvement supprimé',
+      name: 'ledgerDeletedToast',
+      desc: 'M25 toast',
+      args: [],
+    );
+  }
+
+  /// `La photo n'a pas pu être envoyée. Réessaie.`
+  String get ledgerUploadFailed {
+    return Intl.message(
+      'La photo n\'a pas pu être envoyée. Réessaie.',
+      name: 'ledgerUploadFailed',
+      desc: 'M25 upload failed',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

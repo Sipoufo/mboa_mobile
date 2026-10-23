@@ -542,7 +542,11 @@ class _InvoiceFormViewState extends State<InvoiceFormView> {
                             children: [
                               for (final kind in InvoiceKind.values)
                                 ChoiceChip(
-                                  avatar: Icon(invoiceKindLook(l10n, kind).icon, size: 16),
+                                  avatar: Icon(
+                                    invoiceKindLook(l10n, kind).icon,
+                                    size: 16,
+                                    color: state.kind == kind ? colors.primary : colors.textSecondary,
+                                  ),
                                   label: Text(invoiceKindLook(l10n, kind).label),
                                   selected: state.kind == kind,
                                   showCheckmark: false,

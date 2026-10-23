@@ -1778,6 +1778,81 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycVerso": MessageLookupByLibrary.simpleMessage("Back"),
     "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
     "languageFrench": MessageLookupByLibrary.simpleMessage("Français"),
+    "ledgerAdd": MessageLookupByLibrary.simpleMessage("Add a movement"),
+    "ledgerAllProperties": MessageLookupByLibrary.simpleMessage(
+      "All properties",
+    ),
+    "ledgerByCategory": MessageLookupByLibrary.simpleMessage("By category"),
+    "ledgerCategoryCharges": MessageLookupByLibrary.simpleMessage("Charges"),
+    "ledgerCategoryOther": MessageLookupByLibrary.simpleMessage("Other"),
+    "ledgerCategoryProviders": MessageLookupByLibrary.simpleMessage(
+      "Contractors",
+    ),
+    "ledgerCategoryRent": MessageLookupByLibrary.simpleMessage("Rent"),
+    "ledgerCategoryTax": MessageLookupByLibrary.simpleMessage("Property tax"),
+    "ledgerCategoryWorks": MessageLookupByLibrary.simpleMessage("Works"),
+    "ledgerDeletedToast": MessageLookupByLibrary.simpleMessage(
+      "Movement deleted",
+    ),
+    "ledgerEmpty": MessageLookupByLibrary.simpleMessage(
+      "No movement over this period.",
+    ),
+    "ledgerExpense": MessageLookupByLibrary.simpleMessage("Expenses"),
+    "ledgerExport": MessageLookupByLibrary.simpleMessage("Export as CSV"),
+    "ledgerExportFailed": MessageLookupByLibrary.simpleMessage(
+      "The export could not be prepared. Check your connection and try again.",
+    ),
+    "ledgerExportName": MessageLookupByLibrary.simpleMessage("Mboa register"),
+    "ledgerFormAmount": MessageLookupByLibrary.simpleMessage("Amount (FCFA)"),
+    "ledgerFormAttachment": MessageLookupByLibrary.simpleMessage(
+      "Proof (optional)",
+    ),
+    "ledgerFormAttachmentAdd": MessageLookupByLibrary.simpleMessage(
+      "Add a photo",
+    ),
+    "ledgerFormAttachmentAdded": MessageLookupByLibrary.simpleMessage(
+      "Photo added",
+    ),
+    "ledgerFormAttachmentDropped": MessageLookupByLibrary.simpleMessage(
+      "The current attachment will be removed: add it again to keep it.",
+    ),
+    "ledgerFormAttachmentView": MessageLookupByLibrary.simpleMessage(
+      "See the current attachment",
+    ),
+    "ledgerFormCategory": MessageLookupByLibrary.simpleMessage("Category"),
+    "ledgerFormDate": MessageLookupByLibrary.simpleMessage("Date"),
+    "ledgerFormDelete": MessageLookupByLibrary.simpleMessage(
+      "Delete the movement",
+    ),
+    "ledgerFormDeleteConfirm": MessageLookupByLibrary.simpleMessage(
+      "Delete this movement and its attachment?",
+    ),
+    "ledgerFormNote": MessageLookupByLibrary.simpleMessage("Note (optional)"),
+    "ledgerFormProperty": MessageLookupByLibrary.simpleMessage("Property"),
+    "ledgerFormSave": MessageLookupByLibrary.simpleMessage("Save"),
+    "ledgerFormTitleEdit": MessageLookupByLibrary.simpleMessage(
+      "Edit the movement",
+    ),
+    "ledgerFormTitleNew": MessageLookupByLibrary.simpleMessage("New movement"),
+    "ledgerIncome": MessageLookupByLibrary.simpleMessage("Income"),
+    "ledgerNet": MessageLookupByLibrary.simpleMessage("Balance"),
+    "ledgerPeriodAll": MessageLookupByLibrary.simpleMessage("All time"),
+    "ledgerPeriodThisMonth": MessageLookupByLibrary.simpleMessage("This month"),
+    "ledgerPeriodThisYear": MessageLookupByLibrary.simpleMessage("This year"),
+    "ledgerPeriodThreeMonths": MessageLookupByLibrary.simpleMessage(
+      "Last 3 months",
+    ),
+    "ledgerPropertyTitle": MessageLookupByLibrary.simpleMessage(
+      "Which property?",
+    ),
+    "ledgerReadOnly": MessageLookupByLibrary.simpleMessage(
+      "Comes from a confirmed payment: corrected at its source.",
+    ),
+    "ledgerSavedToast": MessageLookupByLibrary.simpleMessage("Movement saved"),
+    "ledgerUnassigned": MessageLookupByLibrary.simpleMessage("Unassigned"),
+    "ledgerUploadFailed": MessageLookupByLibrary.simpleMessage(
+      "The photo could not be sent. Try again.",
+    ),
     "listingActionsSignIn": MessageLookupByLibrary.simpleMessage(
       "Sign in to contact the provider or book a visit.",
     ),

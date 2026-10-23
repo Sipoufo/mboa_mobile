@@ -1310,3 +1310,24 @@ on `SearchResultItem` (null when unrated, as on the fiche), and on
 
 Meanwhile the app shows neither the rating nor any distance, and the list
 is titled « À Douala » instead of « Proche de vous ».
+
+## §34 — M25: correcting a register line deletes its attachment
+
+`PUT /finance/ledger/{id}` replaces the entry, and `apply()` sets
+`attachmentKey` to whatever the request carries — null when absent — and
+`update()` then **deletes the previous file from storage**. But
+`LedgerEntryResponse` only says `hasAttachment`; it never gives the key.
+So the app cannot send the current attachment back, and **correcting a
+typo in the amount of a line with a photo of its receipt erases the
+photo**, for good.
+
+Asked, one of:
+- **Absent keeps, empty string removes**: `attachmentKey` omitted (null)
+  leaves the attachment as it is; `""` removes it; a new key replaces it.
+  This is the smallest change and matches how the apps already think.
+- or `removeAttachment: true` as the only way to remove it, the key
+  otherwise kept when absent.
+
+Meanwhile the app says it plainly on the form of a line that has one:
+« La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la
+garder. » Nothing is lost silently.

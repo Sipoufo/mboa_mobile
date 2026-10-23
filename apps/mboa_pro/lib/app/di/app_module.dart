@@ -1,6 +1,10 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../features/finance/bloc/ledger_bloc.dart';
+import '../../features/finance/bloc/ledger_entry_form_bloc.dart';
+import '../../features/finance/data/finance_properties.dart';
+import '../../features/finance/data/ledger_repository.dart';
 import '../../features/finance/bloc/invoice_form_bloc.dart';
 import '../../features/finance/bloc/owner_invoice_bloc.dart';
 import '../../features/finance/bloc/owner_invoices_bloc.dart';
@@ -448,6 +452,22 @@ void registerAppModule() {
   );
   getIt.registerFactory<OwnerInvoicesBloc>(() => OwnerInvoicesBloc(repository: getIt<OwnerInvoicesRepository>()));
   getIt.registerFactory<OwnerInvoiceBloc>(() => OwnerInvoiceBloc(repository: getIt<OwnerInvoicesRepository>()));
+  getIt.registerLazySingleton<FinanceProperties>(
+    () => FinanceProperties(annonces: getIt<AnnonceRepository>(), residences: getIt<ResidenceRepository>()),
+  );
+  getIt.registerLazySingleton<LedgerRepository>(
+    () => LedgerRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerFactory<LedgerBloc>(
+    () => LedgerBloc(repository: getIt<LedgerRepository>(), properties: getIt<FinanceProperties>()),
+  );
+  getIt.registerFactory<LedgerEntryFormBloc>(
+    () => LedgerEntryFormBloc(
+      repository: getIt<LedgerRepository>(),
+      properties: getIt<FinanceProperties>(),
+      uploader: getIt<MediaUploader>(),
+    ),
+  );
   getIt.registerFactory<InvoiceFormBloc>(
     () => InvoiceFormBloc(invoices: getIt<OwnerInvoicesRepository>(), homes: getIt<HomesRepository>()),
   );

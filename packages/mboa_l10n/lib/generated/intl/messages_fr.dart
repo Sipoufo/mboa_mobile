@@ -1862,6 +1862,83 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycVerso": MessageLookupByLibrary.simpleMessage("Verso"),
     "languageEnglish": MessageLookupByLibrary.simpleMessage("English"),
     "languageFrench": MessageLookupByLibrary.simpleMessage("Français"),
+    "ledgerAdd": MessageLookupByLibrary.simpleMessage("Ajouter un mouvement"),
+    "ledgerAllProperties": MessageLookupByLibrary.simpleMessage(
+      "Tous les biens",
+    ),
+    "ledgerByCategory": MessageLookupByLibrary.simpleMessage("Par catégorie"),
+    "ledgerCategoryCharges": MessageLookupByLibrary.simpleMessage("Charges"),
+    "ledgerCategoryOther": MessageLookupByLibrary.simpleMessage("Autre"),
+    "ledgerCategoryProviders": MessageLookupByLibrary.simpleMessage(
+      "Intervenants",
+    ),
+    "ledgerCategoryRent": MessageLookupByLibrary.simpleMessage("Loyer"),
+    "ledgerCategoryTax": MessageLookupByLibrary.simpleMessage("Impôt foncier"),
+    "ledgerCategoryWorks": MessageLookupByLibrary.simpleMessage("Travaux"),
+    "ledgerDeletedToast": MessageLookupByLibrary.simpleMessage(
+      "Mouvement supprimé",
+    ),
+    "ledgerEmpty": MessageLookupByLibrary.simpleMessage(
+      "Aucun mouvement sur cette période.",
+    ),
+    "ledgerExpense": MessageLookupByLibrary.simpleMessage("Sorties"),
+    "ledgerExport": MessageLookupByLibrary.simpleMessage("Exporter en CSV"),
+    "ledgerExportFailed": MessageLookupByLibrary.simpleMessage(
+      "L\'export n\'a pas pu être préparé. Vérifie ta connexion et réessaie.",
+    ),
+    "ledgerExportName": MessageLookupByLibrary.simpleMessage("Registre Mboa"),
+    "ledgerFormAmount": MessageLookupByLibrary.simpleMessage("Montant (FCFA)"),
+    "ledgerFormAttachment": MessageLookupByLibrary.simpleMessage(
+      "Justificatif (facultatif)",
+    ),
+    "ledgerFormAttachmentAdd": MessageLookupByLibrary.simpleMessage(
+      "Ajouter une photo",
+    ),
+    "ledgerFormAttachmentAdded": MessageLookupByLibrary.simpleMessage(
+      "Photo ajoutée",
+    ),
+    "ledgerFormAttachmentDropped": MessageLookupByLibrary.simpleMessage(
+      "La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.",
+    ),
+    "ledgerFormAttachmentView": MessageLookupByLibrary.simpleMessage(
+      "Voir la pièce jointe actuelle",
+    ),
+    "ledgerFormCategory": MessageLookupByLibrary.simpleMessage("Catégorie"),
+    "ledgerFormDate": MessageLookupByLibrary.simpleMessage("Date"),
+    "ledgerFormDelete": MessageLookupByLibrary.simpleMessage(
+      "Supprimer le mouvement",
+    ),
+    "ledgerFormDeleteConfirm": MessageLookupByLibrary.simpleMessage(
+      "Supprimer ce mouvement et sa pièce jointe ?",
+    ),
+    "ledgerFormNote": MessageLookupByLibrary.simpleMessage("Note (facultatif)"),
+    "ledgerFormProperty": MessageLookupByLibrary.simpleMessage("Bien concerné"),
+    "ledgerFormSave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
+    "ledgerFormTitleEdit": MessageLookupByLibrary.simpleMessage(
+      "Modifier le mouvement",
+    ),
+    "ledgerFormTitleNew": MessageLookupByLibrary.simpleMessage(
+      "Nouveau mouvement",
+    ),
+    "ledgerIncome": MessageLookupByLibrary.simpleMessage("Entrées"),
+    "ledgerNet": MessageLookupByLibrary.simpleMessage("Solde"),
+    "ledgerPeriodAll": MessageLookupByLibrary.simpleMessage("Tout"),
+    "ledgerPeriodThisMonth": MessageLookupByLibrary.simpleMessage("Ce mois-ci"),
+    "ledgerPeriodThisYear": MessageLookupByLibrary.simpleMessage("Cette année"),
+    "ledgerPeriodThreeMonths": MessageLookupByLibrary.simpleMessage(
+      "3 derniers mois",
+    ),
+    "ledgerPropertyTitle": MessageLookupByLibrary.simpleMessage("Quel bien ?"),
+    "ledgerReadOnly": MessageLookupByLibrary.simpleMessage(
+      "Vient d\'un paiement confirmé : se corrige à sa source.",
+    ),
+    "ledgerSavedToast": MessageLookupByLibrary.simpleMessage(
+      "Mouvement enregistré",
+    ),
+    "ledgerUnassigned": MessageLookupByLibrary.simpleMessage("Non affecté"),
+    "ledgerUploadFailed": MessageLookupByLibrary.simpleMessage(
+      "La photo n\'a pas pu être envoyée. Réessaie.",
+    ),
     "listingActionsSignIn": MessageLookupByLibrary.simpleMessage(
       "Connecte-toi pour contacter le prestataire ou planifier une visite.",
     ),

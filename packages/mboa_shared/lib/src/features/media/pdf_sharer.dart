@@ -35,11 +35,20 @@ class PdfSharer {
     await shareBytes(Uint8List.fromList(bytes), name: name);
   }
 
-  Future<void> shareBytes(Uint8List bytes, {required String name}) async {
+  Future<void> shareBytes(Uint8List bytes, {required String name}) =>
+      shareFile(bytes, name: name, extension: 'pdf', mimeType: 'application/pdf');
+
+  /// Any document the same way — the register's CSV (RM-M25-05), say.
+  Future<void> shareFile(
+    Uint8List bytes, {
+    required String name,
+    required String extension,
+    required String mimeType,
+  }) async {
     final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/${_safe(name)}.pdf');
+    final file = File('${dir.path}/${_safe(name)}.$extension');
     await file.writeAsBytes(bytes, flush: true);
-    await Share.shareXFiles([XFile(file.path, mimeType: 'application/pdf')]);
+    await Share.shareXFiles([XFile(file.path, mimeType: mimeType)]);
   }
 
   /// A file name, not a path: no separators, no reserved characters.

@@ -231,7 +231,7 @@ void main() {
             child: FinanceView(
               onBuy: () => bought++,
               onInvoices: (_) => opened++,
-              onLedger: () => opened++,
+              onLedger: (_) => opened++,
               onProviders: () => opened++,
             ),
           ),

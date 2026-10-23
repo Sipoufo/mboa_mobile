@@ -6438,5 +6438,169 @@
   "financeRefusedDuplicate": "This contact is already one of your contractors.",
   "@financeRefusedDuplicate": {
     "description": "SERVICE_PROVIDER_DUPLICATE"
+  },
+  "ledgerIncome": "Income",
+  "@ledgerIncome": {
+    "description": "M25 summary"
+  },
+  "ledgerExpense": "Expenses",
+  "@ledgerExpense": {
+    "description": "M25 summary"
+  },
+  "ledgerNet": "Balance",
+  "@ledgerNet": {
+    "description": "M25 summary: income minus expenses (RM-M25-03)"
+  },
+  "ledgerByCategory": "By category",
+  "@ledgerByCategory": {
+    "description": "M25 summary"
+  },
+  "ledgerPeriodThisMonth": "This month",
+  "@ledgerPeriodThisMonth": {
+    "description": "M25 period"
+  },
+  "ledgerPeriodThreeMonths": "Last 3 months",
+  "@ledgerPeriodThreeMonths": {
+    "description": "M25 period"
+  },
+  "ledgerPeriodThisYear": "This year",
+  "@ledgerPeriodThisYear": {
+    "description": "M25 period"
+  },
+  "ledgerPeriodAll": "All time",
+  "@ledgerPeriodAll": {
+    "description": "M25 period"
+  },
+  "ledgerAllProperties": "All properties",
+  "@ledgerAllProperties": {
+    "description": "M25 property filter"
+  },
+  "ledgerUnassigned": "Unassigned",
+  "@ledgerUnassigned": {
+    "description": "RM-M25-02 — a general expense"
+  },
+  "ledgerPropertyTitle": "Which property?",
+  "@ledgerPropertyTitle": {
+    "description": "M25 property picker title"
+  },
+  "ledgerEmpty": "No movement over this period.",
+  "@ledgerEmpty": {
+    "description": "M25 empty list"
+  },
+  "ledgerAdd": "Add a movement",
+  "@ledgerAdd": {
+    "description": "M25 — the main action"
+  },
+  "ledgerExport": "Export as CSV",
+  "@ledgerExport": {
+    "description": "RM-M25-05"
+  },
+  "ledgerExportName": "Mboa register",
+  "@ledgerExportName": {
+    "description": "M25 — the CSV's file name"
+  },
+  "ledgerExportFailed": "The export could not be prepared. Check your connection and try again.",
+  "@ledgerExportFailed": {
+    "description": "M25 export failed"
+  },
+  "ledgerReadOnly": "Comes from a confirmed payment: corrected at its source.",
+  "@ledgerReadOnly": {
+    "description": "RM-M30-08 — a kept line"
+  },
+  "ledgerCategoryRent": "Rent",
+  "@ledgerCategoryRent": {
+    "description": "M25 category"
+  },
+  "ledgerCategoryCharges": "Charges",
+  "@ledgerCategoryCharges": {
+    "description": "M25 category"
+  },
+  "ledgerCategoryWorks": "Works",
+  "@ledgerCategoryWorks": {
+    "description": "M25 category"
+  },
+  "ledgerCategoryTax": "Property tax",
+  "@ledgerCategoryTax": {
+    "description": "M25 category"
+  },
+  "ledgerCategoryProviders": "Contractors",
+  "@ledgerCategoryProviders": {
+    "description": "M25 category (M26)"
+  },
+  "ledgerCategoryOther": "Other",
+  "@ledgerCategoryOther": {
+    "description": "M25 category"
+  },
+  "ledgerFormTitleNew": "New movement",
+  "@ledgerFormTitleNew": {
+    "description": "M25 form"
+  },
+  "ledgerFormTitleEdit": "Edit the movement",
+  "@ledgerFormTitleEdit": {
+    "description": "M25 form"
+  },
+  "ledgerFormCategory": "Category",
+  "@ledgerFormCategory": {
+    "description": "M25 form"
+  },
+  "ledgerFormAmount": "Amount (FCFA)",
+  "@ledgerFormAmount": {
+    "description": "M25 form"
+  },
+  "ledgerFormDate": "Date",
+  "@ledgerFormDate": {
+    "description": "M25 form"
+  },
+  "ledgerFormProperty": "Property",
+  "@ledgerFormProperty": {
+    "description": "M25 form"
+  },
+  "ledgerFormNote": "Note (optional)",
+  "@ledgerFormNote": {
+    "description": "M25 form"
+  },
+  "ledgerFormAttachment": "Proof (optional)",
+  "@ledgerFormAttachment": {
+    "description": "M25 form"
+  },
+  "ledgerFormAttachmentAdd": "Add a photo",
+  "@ledgerFormAttachmentAdd": {
+    "description": "M25 form"
+  },
+  "ledgerFormAttachmentAdded": "Photo added",
+  "@ledgerFormAttachmentAdded": {
+    "description": "M25 form"
+  },
+  "ledgerFormAttachmentView": "See the current attachment",
+  "@ledgerFormAttachmentView": {
+    "description": "M25 form"
+  },
+  "ledgerFormAttachmentDropped": "The current attachment will be removed: add it again to keep it.",
+  "@ledgerFormAttachmentDropped": {
+    "description": "§34 — the server drops it on a correction"
+  },
+  "ledgerFormSave": "Save",
+  "@ledgerFormSave": {
+    "description": "M25 form button"
+  },
+  "ledgerFormDelete": "Delete the movement",
+  "@ledgerFormDelete": {
+    "description": "M25 — behind ⋯, in red"
+  },
+  "ledgerFormDeleteConfirm": "Delete this movement and its attachment?",
+  "@ledgerFormDeleteConfirm": {
+    "description": "M25 confirm"
+  },
+  "ledgerSavedToast": "Movement saved",
+  "@ledgerSavedToast": {
+    "description": "M25 toast"
+  },
+  "ledgerDeletedToast": "Movement deleted",
+  "@ledgerDeletedToast": {
+    "description": "M25 toast"
+  },
+  "ledgerUploadFailed": "The photo could not be sent. Try again.",
+  "@ledgerUploadFailed": {
+    "description": "M25 upload failed"
   }
 }
