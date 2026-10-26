@@ -16921,6 +16921,76 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Choisis ta formule`
+  String get plansHeroTitle {
+    return Intl.message(
+      'Choisis ta formule',
+      name: 'plansHeroTitle',
+      desc: 'M13 — the plans\' header',
+      args: [],
+    );
+  }
+
+  /// `Sans engagement, payée par Mobile Money. Elle ne se renouvelle jamais toute seule.`
+  String get plansHeroBody {
+    return Intl.message(
+      'Sans engagement, payée par Mobile Money. Elle ne se renouvelle jamais toute seule.',
+      name: 'plansHeroBody',
+      desc: 'M13 — RM-M13-01, said before choosing',
+      args: [],
+    );
+  }
+
+  /// `Ta formule · jusqu'au {date}`
+  String plansCurrentUntil(String date) {
+    return Intl.message(
+      'Ta formule · jusqu\'au $date',
+      name: 'plansCurrentUntil',
+      desc: 'M13 — the plan held, and its last day',
+      args: [date],
+    );
+  }
+
+  /// `FCFA / mois`
+  String get plansPriceUnit {
+    return Intl.message(
+      'FCFA / mois',
+      name: 'plansPriceUnit',
+      desc: 'M13 — beside a plan\'s price, set large',
+      args: [],
+    );
+  }
+
+  /// `Unités de résidence illimitées`
+  String get plansResidenceUnlimited {
+    return Intl.message(
+      'Unités de résidence illimitées',
+      name: 'plansResidenceUnlimited',
+      desc: 'M13 — a plan without a residence allowance',
+      args: [],
+    );
+  }
+
+  /// `Passer à {plan}`
+  String plansSwitchTo(String plan) {
+    return Intl.message(
+      'Passer à $plan',
+      name: 'plansSwitchTo',
+      desc: 'M13 — a plan card\'s one action',
+      args: [plan],
+    );
+  }
+
+  /// `Une formule supérieure prend effet tout de suite.`
+  String get plansUpgradeNote {
+    return Intl.message(
+      'Une formule supérieure prend effet tout de suite.',
+      name: 'plansUpgradeNote',
+      desc: 'M13 — RM-M13-04',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

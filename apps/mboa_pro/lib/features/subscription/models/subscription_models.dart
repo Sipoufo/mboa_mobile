@@ -79,6 +79,7 @@ class TierOption extends Equatable {
     this.activeListingLimit,
     this.residenceUnitAllowance,
     this.includesFinance = false,
+    this.descriptions = const {},
   });
 
   final SubscriptionTier tier;
@@ -93,6 +94,16 @@ class TierOption extends Equatable {
   /// plan (RM-M13-09). The server's word: the admin sets it per plan.
   final bool includesFinance;
 
+  /// The plan's words by language — the server's, edited by the admin
+  /// without a release (RM-M13-08).
+  final Map<String, String> descriptions;
+
+  /// The words in [languageCode], else in French, else none.
+  String? description(String languageCode) {
+    final text = descriptions[languageCode] ?? descriptions['fr'];
+    return text == null || text.trim().isEmpty ? null : text.trim();
+  }
+
   static TierOption fromResponse(TierInfo info) => TierOption(
         tier: SubscriptionTierMapping.fromTierInfo(info.tier),
         rank: info.rank,
@@ -100,11 +111,12 @@ class TierOption extends Equatable {
         activeListingLimit: info.activeListingLimit,
         residenceUnitAllowance: info.residenceUnitAllowance,
         includesFinance: info.includesFinance ?? false,
+        descriptions: info.descriptions?.toMap() ?? const {},
       );
 
   @override
   List<Object?> get props =>
-      [tier, rank, monthlyPrice, activeListingLimit, residenceUnitAllowance, includesFinance];
+      [tier, rank, monthlyPrice, activeListingLimit, residenceUnitAllowance, includesFinance, descriptions];
 }
 
 /// Mobile Money providers (CDC M13 — MVP payment methods).

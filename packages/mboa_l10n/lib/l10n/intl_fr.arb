@@ -6894,5 +6894,43 @@
   "plansFinanceIncluded": "Suivi financier inclus",
   "@plansFinanceIncluded": {
     "description": "M13 — a plan card, when includesFinance"
+  },
+  "plansHeroTitle": "Choisis ta formule",
+  "@plansHeroTitle": {
+    "description": "M13 — the plans' header"
+  },
+  "plansHeroBody": "Sans engagement, payée par Mobile Money. Elle ne se renouvelle jamais toute seule.",
+  "@plansHeroBody": {
+    "description": "M13 — RM-M13-01, said before choosing"
+  },
+  "plansCurrentUntil": "Ta formule · jusqu'au {date}",
+  "@plansCurrentUntil": {
+    "description": "M13 — the plan held, and its last day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "plansPriceUnit": "FCFA / mois",
+  "@plansPriceUnit": {
+    "description": "M13 — beside a plan's price, set large"
+  },
+  "plansResidenceUnlimited": "Unités de résidence illimitées",
+  "@plansResidenceUnlimited": {
+    "description": "M13 — a plan without a residence allowance"
+  },
+  "plansSwitchTo": "Passer à {plan}",
+  "@plansSwitchTo": {
+    "description": "M13 — a plan card's one action",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "plansUpgradeNote": "Une formule supérieure prend effet tout de suite.",
+  "@plansUpgradeNote": {
+    "description": "M13 — RM-M13-04"
   }
 }

@@ -6894,5 +6894,43 @@
   "plansFinanceIncluded": "Financial tracking included",
   "@plansFinanceIncluded": {
     "description": "M13 — a plan card, when includesFinance"
+  },
+  "plansHeroTitle": "Choose your plan",
+  "@plansHeroTitle": {
+    "description": "M13 — the plans' header"
+  },
+  "plansHeroBody": "No commitment, paid with Mobile Money. It never renews on its own.",
+  "@plansHeroBody": {
+    "description": "M13 — RM-M13-01, said before choosing"
+  },
+  "plansCurrentUntil": "Your plan · until {date}",
+  "@plansCurrentUntil": {
+    "description": "M13 — the plan held, and its last day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "plansPriceUnit": "FCFA / month",
+  "@plansPriceUnit": {
+    "description": "M13 — beside a plan's price, set large"
+  },
+  "plansResidenceUnlimited": "Unlimited residence units",
+  "@plansResidenceUnlimited": {
+    "description": "M13 — a plan without a residence allowance"
+  },
+  "plansSwitchTo": "Switch to {plan}",
+  "@plansSwitchTo": {
+    "description": "M13 — a plan card's one action",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "plansUpgradeNote": "A higher plan takes effect at once.",
+  "@plansUpgradeNote": {
+    "description": "M13 — RM-M13-04"
   }
 }
