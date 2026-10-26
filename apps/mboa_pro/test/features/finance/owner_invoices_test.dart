@@ -158,6 +158,16 @@ void main() {
       expect(offline.value.single.amount, 18500);
     });
 
+    test('never held (RM-M13-09): the read is refused as such, not as « offline »', () async {
+      when(() => api.listOwnerInvoices(pageable: any(named: 'pageable')))
+          .thenThrow(_refused('FINANCE_PLAN_REQUIRED'));
+
+      await expectLater(
+        repository.list(),
+        throwsA(isA<FinanceRefused>().having((r) => r.reason, 'reason', FinanceRefusal.planRequired)),
+      );
+    });
+
     test('bills by hand — paying in the app is shut (DL-04); no words, none sent', () async {
       when(() => api.createInvoice(createInvoiceRequest: any(named: 'createInvoiceRequest')))
           .thenAnswer((_) async => _ok(response()));
@@ -186,10 +196,10 @@ void main() {
         repository.cancel('i-1'),
         throwsA(isA<FinanceRefused>().having((r) => r.reason, 'reason', FinanceRefusal.settled)),
       );
-      when(() => api.reopenInvoice(id: 'i-1')).thenThrow(_refused('FINANCE_ADDON_REQUIRED'));
+      when(() => api.reopenInvoice(id: 'i-1')).thenThrow(_refused('FINANCE_PLAN_REQUIRED'));
       await expectLater(
         repository.reopen('i-1'),
-        throwsA(isA<FinanceRefused>().having((r) => r.reason, 'reason', FinanceRefusal.addonRequired)),
+        throwsA(isA<FinanceRefused>().having((r) => r.reason, 'reason', FinanceRefusal.planRequired)),
       );
     });
   });
@@ -216,6 +226,13 @@ void main() {
       act: (bloc) => bloc.add(const OwnerInvoicesRequested()),
       expect: () => [OwnerInvoicesReady(items: [invoice('a')], filter: InvoiceStatus.overdue)],
     );
+    blocTest<OwnerInvoicesBloc, OwnerInvoicesState>(
+      'never held: the plans, not « Réessayer »',
+      setUp: () => when(() => repository.list()).thenThrow(const FinanceRefused(FinanceRefusal.planRequired)),
+      build: () => OwnerInvoicesBloc(repository: repository),
+      act: (bloc) => bloc.add(const OwnerInvoicesRequested()),
+      expect: () => const [OwnerInvoicesFailure(planRequired: true)],
+    );
   });
 
   group('one invoice', () {
@@ -238,13 +255,13 @@ void main() {
 
     blocTest<OwnerInvoiceBloc, OwnerInvoiceState>(
       'refused: said, the invoice as it was',
-      setUp: () => when(() => repository.cancel('a')).thenThrow(const FinanceRefused(FinanceRefusal.addonRequired)),
+      setUp: () => when(() => repository.cancel('a')).thenThrow(const FinanceRefused(FinanceRefusal.planRequired)),
       build: () => OwnerInvoiceBloc(repository: repository),
       seed: () => OwnerInvoiceReady(invoice('a')),
       act: (bloc) => bloc.add(const OwnerInvoiceCancelled()),
       expect: () => [
         OwnerInvoiceReady(invoice('a'), isBusy: true),
-        OwnerInvoiceReady(invoice('a'), refusal: FinanceRefusal.addonRequired),
+        OwnerInvoiceReady(invoice('a'), refusal: FinanceRefusal.planRequired),
       ],
     );
 

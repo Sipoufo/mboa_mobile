@@ -104,7 +104,8 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(TenantRequestRoute(requestId: id));
     case PushType.homeRequest when !isAgent:
       router.push(const ReceivedRequestsRoute());
-    // N-26 — the « Gestion financière » add-on: where it stands.
+    // N-26 — the add-on's reminder, no longer sent (RM-M13-09); an old one
+    // still opens « Gestion financière ».
     case PushType.financeAddon when !isAgent:
       router.push(const FinanceRoute());
     case PushType.message:

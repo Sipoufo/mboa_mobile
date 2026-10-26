@@ -34,7 +34,6 @@ import 'package:api_client/src/api/badges_api.dart';
 import 'package:api_client/src/api/contrats_api.dart';
 import 'package:api_client/src/api/current_user_api.dart';
 import 'package:api_client/src/api/favoris_api.dart';
-import 'package:api_client/src/api/finance_add_on_api.dart';
 import 'package:api_client/src/api/finance_invoices_owner_api.dart';
 import 'package:api_client/src/api/finance_ledger_api.dart';
 import 'package:api_client/src/api/finance_service_providers_api.dart';
@@ -309,12 +308,6 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   FavorisApi getFavorisApi() {
     return FavorisApi(dio, serializers);
-  }
-
-  /// Get FinanceAddOnApi instance, base route and serializer can be overridden by a given but be careful,
-  /// by doing that all interceptors will not be executed
-  FinanceAddOnApi getFinanceAddOnApi() {
-    return FinanceAddOnApi(dio, serializers);
   }
 
   /// Get FinanceInvoicesOwnerApi instance, base route and serializer can be overridden by a given but be careful,

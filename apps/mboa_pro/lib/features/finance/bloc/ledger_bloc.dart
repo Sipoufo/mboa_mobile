@@ -4,6 +4,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 
 import '../data/finance_properties.dart';
 import '../data/ledger_repository.dart';
+import '../models/finance_refusal.dart';
 import '../models/ledger.dart';
 
 /// The landlord's register (CDC M25): the figures over a period and a
@@ -49,6 +50,10 @@ class LedgerBloc extends Bloc<LedgerEvent, LedgerState> {
         isOffline: entries.fromCache || summary.fromCache,
         properties: current is LedgerReady ? current.properties : const [],
       ));
+    } on FinanceRefused catch (refused) {
+      emit(current is LedgerReady
+          ? current.copyWith(loadFailed: true)
+          : LedgerFailure(planRequired: refused.reason == FinanceRefusal.planRequired));
     } catch (_) {
       emit(current is LedgerReady ? current.copyWith(loadFailed: true) : const LedgerFailure());
     }
@@ -132,7 +137,14 @@ final class LedgerLoading extends LedgerState {
 }
 
 final class LedgerFailure extends LedgerState {
-  const LedgerFailure();
+  const LedgerFailure({this.planRequired = false});
+
+  /// Never held the finance tools: the server refuses even reading
+  /// (`FINANCE_PLAN_REQUIRED`) — the page points at the plans, not at retry.
+  final bool planRequired;
+
+  @override
+  List<Object?> get props => [planRequired];
 }
 
 final class LedgerReady extends LedgerState {

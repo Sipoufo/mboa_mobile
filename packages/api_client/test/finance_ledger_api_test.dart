@@ -7,14 +7,14 @@ void main() {
   final instance = ApiClient().getFinanceLedgerApi();
 
   group(FinanceLedgerApi, () {
-    // Record an income or an expense; needs the add-on running
+    // Record an income or an expense; needs a plan with the finance tools (Pro, Pro+)
     //
     //Future<LedgerEntryResponse> createLedgerEntry(LedgerEntryRequest ledgerEntryRequest) async
     test('test createLedgerEntry', () async {
       // TODO
     });
 
-    // Remove an entry and its attachment; needs the add-on running
+    // Remove an entry and its attachment; needs a plan with the finance tools (Pro, Pro+)
     //
     //Future deleteLedgerEntry(String id) async
     test('test deleteLedgerEntry', () async {
@@ -51,7 +51,7 @@ void main() {
       // TODO
     });
 
-    // Replace an entry; needs the add-on running
+    // Replace an entry; needs a plan with the finance tools (Pro, Pro+)
     //
     // Every field is replaced but the attachment: `attachmentKey` absent or null keeps it, \"\" removes it, a new FINANCE_ATTACHMENT key replaces it (mobile §34). A removed or replaced file is deleted from storage.
     //

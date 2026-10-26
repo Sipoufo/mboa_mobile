@@ -22,8 +22,6 @@ part 'kpi_dashboard_response.g.dart';
 /// * [prestatairesByTier] 
 /// * [paidPrestataires] 
 /// * [mrr] 
-/// * [addonSubscribers] 
-/// * [addonMrr] 
 /// * [newPrestataires] 
 /// * [agentVisitsCompleted] 
 /// * [contractsSigned] 
@@ -47,12 +45,6 @@ abstract class KpiDashboardResponse implements Built<KpiDashboardResponse, KpiDa
 
   @BuiltValueField(wireName: r'mrr')
   int? get mrr;
-
-  @BuiltValueField(wireName: r'addonSubscribers')
-  int? get addonSubscribers;
-
-  @BuiltValueField(wireName: r'addonMrr')
-  int? get addonMrr;
 
   @BuiltValueField(wireName: r'newPrestataires')
   Window? get newPrestataires;
@@ -130,20 +122,6 @@ class _$KpiDashboardResponseSerializer implements PrimitiveSerializer<KpiDashboa
       yield r'mrr';
       yield serializers.serialize(
         object.mrr,
-        specifiedType: const FullType(int),
-      );
-    }
-    if (object.addonSubscribers != null) {
-      yield r'addonSubscribers';
-      yield serializers.serialize(
-        object.addonSubscribers,
-        specifiedType: const FullType(int),
-      );
-    }
-    if (object.addonMrr != null) {
-      yield r'addonMrr';
-      yield serializers.serialize(
-        object.addonMrr,
         specifiedType: const FullType(int),
       );
     }
@@ -258,22 +236,6 @@ class _$KpiDashboardResponseSerializer implements PrimitiveSerializer<KpiDashboa
           ) as int?;
           if (valueDes == null) continue;
           result.mrr = valueDes;
-          break;
-        case r'addonSubscribers':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(int),
-          ) as int?;
-          if (valueDes == null) continue;
-          result.addonSubscribers = valueDes;
-          break;
-        case r'addonMrr':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(int),
-          ) as int?;
-          if (valueDes == null) continue;
-          result.addonMrr = valueDes;
           break;
         case r'newPrestataires':
           final valueDes = serializers.deserialize(

@@ -26,7 +26,7 @@ class FinanceLedgerApi {
 
   const FinanceLedgerApi(this._dio, this._serializers);
 
-  /// Record an income or an expense; needs the add-on running
+  /// Record an income or an expense; needs a plan with the finance tools (Pro, Pro+)
   /// 
   ///
   /// Parameters:
@@ -127,7 +127,7 @@ class FinanceLedgerApi {
     );
   }
 
-  /// Remove an entry and its attachment; needs the add-on running
+  /// Remove an entry and its attachment; needs a plan with the finance tools (Pro, Pro+)
   /// 
   ///
   /// Parameters:
@@ -555,7 +555,7 @@ class FinanceLedgerApi {
     );
   }
 
-  /// Replace an entry; needs the add-on running
+  /// Replace an entry; needs a plan with the finance tools (Pro, Pro+)
   /// Every field is replaced but the attachment: &#x60;attachmentKey&#x60; absent or null keeps it, \&quot;\&quot; removes it, a new FINANCE_ATTACHMENT key replaces it (mobile §34). A removed or replaced file is deleted from storage.
   ///
   /// Parameters:

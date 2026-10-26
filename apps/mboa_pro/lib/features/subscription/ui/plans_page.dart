@@ -182,6 +182,14 @@ class _PlanTile extends StatelessWidget {
               label: l10n.plansResidenceAllowance(units),
             ),
           ],
+          // RM-M13-09 — the finance tools come with the plans, not apart.
+          if (option.includesFinance) ...[
+            const SizedBox(height: Dimens.spacingXs),
+            _Benefit(
+              icon: LucideIcons.wallet,
+              label: l10n.plansFinanceIncluded,
+            ),
+          ],
           if (!isCurrent) ...[
             const SizedBox(height: Dimens.spacing),
             SizedBox(

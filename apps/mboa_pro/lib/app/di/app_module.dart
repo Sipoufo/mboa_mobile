@@ -14,8 +14,8 @@ import '../../features/finance/bloc/invoice_form_bloc.dart';
 import '../../features/finance/bloc/owner_invoice_bloc.dart';
 import '../../features/finance/bloc/owner_invoices_bloc.dart';
 import '../../features/finance/data/owner_invoices_repository.dart';
-import '../../features/finance/bloc/finance_addon_bloc.dart';
-import '../../features/finance/data/finance_addon_repository.dart';
+import '../../features/finance/bloc/finance_access_bloc.dart';
+import '../../features/finance/data/finance_access_repository.dart';
 import '../../features/annonces/bloc/listing_stats_bloc.dart';
 import '../../features/password_reset/bloc/password_reset_bloc.dart';
 import '../../features/password_reset/data/password_reset_repository.dart';
@@ -447,11 +447,11 @@ void registerAppModule() {
   getIt.registerLazySingleton<SubscriptionBloc>(
     () => SubscriptionBloc(repository: getIt<SubscriptionRepository>()),
   );
-  // M24–M26 — « Gestion financière ».
-  getIt.registerLazySingleton<FinanceAddonRepository>(
-    () => FinanceAddonRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  // M24–M26 — « Gestion financière », with the plans that include it.
+  getIt.registerLazySingleton<FinanceAccessRepository>(
+    () => FinanceAccessRepository(subscriptions: getIt<SubscriptionRepository>(), cache: getIt<HiveCache>()),
   );
-  getIt.registerFactory<FinanceAddonBloc>(() => FinanceAddonBloc(repository: getIt<FinanceAddonRepository>()));
+  getIt.registerFactory<FinanceAccessBloc>(() => FinanceAccessBloc(repository: getIt<FinanceAccessRepository>()));
   getIt.registerLazySingleton<OwnerInvoicesRepository>(
     () => OwnerInvoicesRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );

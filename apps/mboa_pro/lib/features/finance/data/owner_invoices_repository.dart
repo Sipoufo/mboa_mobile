@@ -49,7 +49,7 @@ class OwnerInvoicesRepository {
       return Cached(items);
     } catch (error) {
       final raw = _cache.get(StorageKeys.financeBox, _listKey)?['items'];
-      if (raw is! List) Error.throwWithStackTrace(error, StackTrace.current);
+      if (raw is! List) throwIfPlanRequired(error);
       return Cached([for (final i in raw) ?HomeInvoice.fromCache(i)], fromCache: true);
     }
   }

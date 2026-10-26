@@ -111,13 +111,10 @@ doc/FailedReceipt.md
 doc/FavoriResponse.md
 doc/FavorisApi.md
 doc/FieldError.md
-doc/FinanceAddOnApi.md
-doc/FinanceAddonResponse.md
 doc/FinanceInvoicesOwnerApi.md
 doc/FinanceLedgerApi.md
 doc/FinanceServiceProvidersApi.md
 doc/ForgotPasswordRequest.md
-doc/GrantAddonRequest.md
 doc/GrantSubscriptionRequest.md
 doc/HistoriqueApi.md
 doc/HistoriqueResponse.md
@@ -280,7 +277,6 @@ doc/StartVisiteRequest.md
 doc/SubmitKycRequest.md
 doc/SubmitResidentReviewRequest.md
 doc/SubmitReviewRequest.md
-doc/SubscribeAddonRequest.md
 doc/SubscribeRequest.md
 doc/SubscriptionRecapResponse.md
 doc/SubscriptionResponse.md
@@ -298,7 +294,6 @@ doc/TypeChangeReviewResult.md
 doc/TypeCount.md
 doc/UnitGroup.md
 doc/UnitSummary.md
-doc/UpdateAddonPriceRequest.md
 doc/UpdateAgentProfileRequest.md
 doc/UpdateAnnonceRequest.md
 doc/UpdateAvailabilityRequest.md
@@ -355,7 +350,6 @@ lib/src/api/badges_api.dart
 lib/src/api/contrats_api.dart
 lib/src/api/current_user_api.dart
 lib/src/api/favoris_api.dart
-lib/src/api/finance_add_on_api.dart
 lib/src/api/finance_invoices_owner_api.dart
 lib/src/api/finance_ledger_api.dart
 lib/src/api/finance_service_providers_api.dart
@@ -481,9 +475,7 @@ lib/src/model/extend_subscription_request.dart
 lib/src/model/failed_receipt.dart
 lib/src/model/favori_response.dart
 lib/src/model/field_error.dart
-lib/src/model/finance_addon_response.dart
 lib/src/model/forgot_password_request.dart
-lib/src/model/grant_addon_request.dart
 lib/src/model/grant_subscription_request.dart
 lib/src/model/historique_response.dart
 lib/src/model/history_section_admin_contract_line.dart
@@ -624,7 +616,6 @@ lib/src/model/start_visite_request.dart
 lib/src/model/submit_kyc_request.dart
 lib/src/model/submit_resident_review_request.dart
 lib/src/model/submit_review_request.dart
-lib/src/model/subscribe_addon_request.dart
 lib/src/model/subscribe_request.dart
 lib/src/model/subscription_recap_response.dart
 lib/src/model/subscription_response.dart
@@ -641,7 +632,6 @@ lib/src/model/type_change_review_result.dart
 lib/src/model/type_count.dart
 lib/src/model/unit_group.dart
 lib/src/model/unit_summary.dart
-lib/src/model/update_addon_price_request.dart
 lib/src/model/update_agent_profile_request.dart
 lib/src/model/update_annonce_request.dart
 lib/src/model/update_availability_request.dart
@@ -778,13 +768,10 @@ test/failed_receipt_test.dart
 test/favori_response_test.dart
 test/favoris_api_test.dart
 test/field_error_test.dart
-test/finance_add_on_api_test.dart
-test/finance_addon_response_test.dart
 test/finance_invoices_owner_api_test.dart
 test/finance_ledger_api_test.dart
 test/finance_service_providers_api_test.dart
 test/forgot_password_request_test.dart
-test/grant_addon_request_test.dart
 test/grant_subscription_request_test.dart
 test/historique_api_test.dart
 test/historique_response_test.dart
@@ -947,7 +934,6 @@ test/start_visite_request_test.dart
 test/submit_kyc_request_test.dart
 test/submit_resident_review_request_test.dart
 test/submit_review_request_test.dart
-test/subscribe_addon_request_test.dart
 test/subscribe_request_test.dart
 test/subscription_recap_response_test.dart
 test/subscription_response_test.dart
@@ -965,7 +951,6 @@ test/type_change_review_result_test.dart
 test/type_count_test.dart
 test/unit_group_test.dart
 test/unit_summary_test.dart
-test/update_addon_price_request_test.dart
 test/update_agent_profile_request_test.dart
 test/update_annonce_request_test.dart
 test/update_availability_request_test.dart

@@ -100,6 +100,8 @@ class _$TierInfo extends TierInfo {
   final int? residenceUnitAllowance;
   @override
   final BuiltMap<String, String>? descriptions;
+  @override
+  final bool? includesFinance;
 
   factory _$TierInfo([void Function(TierInfoBuilder)? updates]) =>
       (TierInfoBuilder()..update(updates))._build();
@@ -111,6 +113,7 @@ class _$TierInfo extends TierInfo {
     this.activeListingLimit,
     this.residenceUnitAllowance,
     this.descriptions,
+    this.includesFinance,
   }) : super._();
   @override
   TierInfo rebuild(void Function(TierInfoBuilder) updates) =>
@@ -128,7 +131,8 @@ class _$TierInfo extends TierInfo {
         monthlyPrice == other.monthlyPrice &&
         activeListingLimit == other.activeListingLimit &&
         residenceUnitAllowance == other.residenceUnitAllowance &&
-        descriptions == other.descriptions;
+        descriptions == other.descriptions &&
+        includesFinance == other.includesFinance;
   }
 
   @override
@@ -140,6 +144,7 @@ class _$TierInfo extends TierInfo {
     _$hash = $jc(_$hash, activeListingLimit.hashCode);
     _$hash = $jc(_$hash, residenceUnitAllowance.hashCode);
     _$hash = $jc(_$hash, descriptions.hashCode);
+    _$hash = $jc(_$hash, includesFinance.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -152,7 +157,8 @@ class _$TierInfo extends TierInfo {
           ..add('monthlyPrice', monthlyPrice)
           ..add('activeListingLimit', activeListingLimit)
           ..add('residenceUnitAllowance', residenceUnitAllowance)
-          ..add('descriptions', descriptions))
+          ..add('descriptions', descriptions)
+          ..add('includesFinance', includesFinance))
         .toString();
   }
 }
@@ -188,6 +194,11 @@ class TierInfoBuilder implements Builder<TierInfo, TierInfoBuilder> {
   set descriptions(MapBuilder<String, String>? descriptions) =>
       _$this._descriptions = descriptions;
 
+  bool? _includesFinance;
+  bool? get includesFinance => _$this._includesFinance;
+  set includesFinance(bool? includesFinance) =>
+      _$this._includesFinance = includesFinance;
+
   TierInfoBuilder() {
     TierInfo._defaults(this);
   }
@@ -201,6 +212,7 @@ class TierInfoBuilder implements Builder<TierInfo, TierInfoBuilder> {
       _activeListingLimit = $v.activeListingLimit;
       _residenceUnitAllowance = $v.residenceUnitAllowance;
       _descriptions = $v.descriptions?.toBuilder();
+      _includesFinance = $v.includesFinance;
       _$v = null;
     }
     return this;
@@ -231,6 +243,7 @@ class TierInfoBuilder implements Builder<TierInfo, TierInfoBuilder> {
             activeListingLimit: activeListingLimit,
             residenceUnitAllowance: residenceUnitAllowance,
             descriptions: _descriptions?.build(),
+            includesFinance: includesFinance,
           );
     } catch (_) {
       late String _$failedField;

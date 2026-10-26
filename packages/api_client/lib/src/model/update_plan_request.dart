@@ -14,6 +14,7 @@ part 'update_plan_request.g.dart';
 /// * [monthlyPrice] 
 /// * [activeListingLimit] 
 /// * [residenceUnitAllowance] 
+/// * [includesFinance] 
 @BuiltValue()
 abstract class UpdatePlanRequest implements Built<UpdatePlanRequest, UpdatePlanRequestBuilder> {
   @BuiltValueField(wireName: r'monthlyPrice')
@@ -24,6 +25,9 @@ abstract class UpdatePlanRequest implements Built<UpdatePlanRequest, UpdatePlanR
 
   @BuiltValueField(wireName: r'residenceUnitAllowance')
   int? get residenceUnitAllowance;
+
+  @BuiltValueField(wireName: r'includesFinance')
+  bool? get includesFinance;
 
   UpdatePlanRequest._();
 
@@ -67,6 +71,13 @@ class _$UpdatePlanRequestSerializer implements PrimitiveSerializer<UpdatePlanReq
       yield serializers.serialize(
         object.residenceUnitAllowance,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.includesFinance != null) {
+      yield r'includesFinance';
+      yield serializers.serialize(
+        object.includesFinance,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -115,6 +126,14 @@ class _$UpdatePlanRequestSerializer implements PrimitiveSerializer<UpdatePlanReq
           ) as int?;
           if (valueDes == null) continue;
           result.residenceUnitAllowance = valueDes;
+          break;
+        case r'includesFinance':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.includesFinance = valueDes;
           break;
         default:
           unhandled.add(key);

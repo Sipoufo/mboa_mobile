@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **monthlyPrice** | **int** |  | [optional] 
 **activeListingLimit** | **int** |  | [optional] 
 **residenceUnitAllowance** | **int** |  | [optional] 
+**includesFinance** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

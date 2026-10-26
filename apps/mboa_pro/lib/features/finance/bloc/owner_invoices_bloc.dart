@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 import '../data/owner_invoices_repository.dart';
+import '../models/finance_refusal.dart';
 
 /// The landlord's invoices (CDC M24), by where they stand — the server's
 /// word, lateness included (RM-M24-07). Readable offline.
@@ -29,6 +30,10 @@ class OwnerInvoicesBloc extends Bloc<OwnerInvoicesEvent, OwnerInvoicesState> {
           filter: current is OwnerInvoicesReady ? current.filter : InvoiceStatus.toPay,
         ),
       );
+    } on FinanceRefused catch (refused) {
+      if (current is! OwnerInvoicesReady) {
+        emit(OwnerInvoicesFailure(planRequired: refused.reason == FinanceRefusal.planRequired));
+      }
     } catch (_) {
       if (current is! OwnerInvoicesReady) emit(const OwnerInvoicesFailure());
     }
@@ -67,7 +72,14 @@ final class OwnerInvoicesLoading extends OwnerInvoicesState {
 }
 
 final class OwnerInvoicesFailure extends OwnerInvoicesState {
-  const OwnerInvoicesFailure();
+  const OwnerInvoicesFailure({this.planRequired = false});
+
+  /// Never held the finance tools: the server refuses even reading
+  /// (`FINANCE_PLAN_REQUIRED`) — the page points at the plans, not at retry.
+  final bool planRequired;
+
+  @override
+  List<Object?> get props => [planRequired];
 }
 
 final class OwnerInvoicesReady extends OwnerInvoicesState {

@@ -52,13 +52,8 @@ class SubscriptionRepository {
             ..tier = tier.asRequest
             ..method = method.asRequest),
         ),
-      // M24–M26 — the same flow, its own route (RM-M13-09).
-      FinanceAddonPurchase() => await _dioClient.api.getFinanceAddOnApi().subscribeFinanceAddon(
-          idempotencyKey: idempotencyKey,
-          subscribeAddonRequest: SubscribeAddonRequest(
-            (b) => b..method = SubscribeAddonRequestMethodEnum.valueOf(method.asRequest.name),
-          ),
-        ),
+      // No longer sold (RM-M13-09): the finance tools come with Pro and Pro+.
+      FinanceAddonPurchase() => throw UnsupportedError('the finance add-on is no longer sold'),
     };
 
     final data = response.data;

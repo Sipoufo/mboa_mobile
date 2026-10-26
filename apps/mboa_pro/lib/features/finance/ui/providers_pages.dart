@@ -87,11 +87,9 @@ class ProvidersView extends StatelessWidget {
         appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.financeProvidersTitle)),
         body: switch (state) {
           ProvidersLoading() => const Center(child: Loader()),
-          ProvidersFailure() => Center(
-              child: TextButton(
-                onPressed: () => context.read<ProvidersBloc>().add(const ProvidersRequested()),
-                child: Text(l10n.commonRetry),
-              ),
+          ProvidersFailure(:final planRequired) => FinanceLoadFailure(
+              planRequired: planRequired,
+              onRetry: () => context.read<ProvidersBloc>().add(const ProvidersRequested()),
             ),
           final ProvidersReady ready => RefreshIndicator(
               onRefresh: () async => context.read<ProvidersBloc>().add(const ProvidersRequested()),

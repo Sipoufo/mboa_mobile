@@ -4,8 +4,10 @@ import 'package:mboa_shared/mboa_shared.dart';
 /// Why the server turned a finance change down — each said in words by the
 /// screen.
 enum FinanceRefusal {
-  /// The add-on is not running (`FINANCE_ADDON_REQUIRED`): read, not written.
-  addonRequired,
+  /// The plan held now does not include the finance tools
+  /// (`FINANCE_PLAN_REQUIRED`, RM-M13-09): Pro and Pro+ do. On a read, they
+  /// were never held — what was held once stays readable.
+  planRequired,
 
   /// Already paid or cancelled (`INVOICE_SETTLED`).
   settled,
@@ -44,6 +46,15 @@ class FinanceRefused implements Exception {
   final FinanceRefusal reason;
 }
 
+/// A read refused because the finance tools were never held: the screen
+/// says where they are, rather than offering to try again forever.
+Never throwIfPlanRequired(Object error) {
+  if (error is DioException && ApiError.from(error).hasCode('FINANCE_PLAN_REQUIRED')) {
+    throw const FinanceRefused(FinanceRefusal.planRequired);
+  }
+  Error.throwWithStackTrace(error, StackTrace.current);
+}
+
 /// Runs a finance change, turning the server's known refusals into
 /// [FinanceRefused]; anything else goes up as it came.
 Future<T> guardFinance<T>(Future<T> Function() call) async {
@@ -52,7 +63,7 @@ Future<T> guardFinance<T>(Future<T> Function() call) async {
   } on DioException catch (error) {
     final api = ApiError.from(error);
     for (final (code, reason) in const [
-      ('FINANCE_ADDON_REQUIRED', FinanceRefusal.addonRequired),
+      ('FINANCE_PLAN_REQUIRED', FinanceRefusal.planRequired),
       ('INVOICE_SETTLED', FinanceRefusal.settled),
       ('INVOICE_NOT_DECLARED', FinanceRefusal.notDeclaredByHand),
       ('INVOICE_LABEL_REQUIRED', FinanceRefusal.labelRequired),

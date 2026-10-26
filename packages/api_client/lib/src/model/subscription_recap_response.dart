@@ -18,7 +18,6 @@ part 'subscription_recap_response.g.dart';
 /// * [snapshotTakenAt] 
 /// * [tiers] 
 /// * [total] 
-/// * [addon] 
 @BuiltValue()
 abstract class SubscriptionRecapResponse implements Built<SubscriptionRecapResponse, SubscriptionRecapResponseBuilder> {
   @BuiltValueField(wireName: r'month')
@@ -35,9 +34,6 @@ abstract class SubscriptionRecapResponse implements Built<SubscriptionRecapRespo
 
   @BuiltValueField(wireName: r'total')
   Line? get total;
-
-  @BuiltValueField(wireName: r'addon')
-  Line? get addon;
 
   SubscriptionRecapResponse._();
 
@@ -94,13 +90,6 @@ class _$SubscriptionRecapResponseSerializer implements PrimitiveSerializer<Subsc
       yield r'total';
       yield serializers.serialize(
         object.total,
-        specifiedType: const FullType(Line),
-      );
-    }
-    if (object.addon != null) {
-      yield r'addon';
-      yield serializers.serialize(
-        object.addon,
         specifiedType: const FullType(Line),
       );
     }
@@ -166,14 +155,6 @@ class _$SubscriptionRecapResponseSerializer implements PrimitiveSerializer<Subsc
           ) as Line?;
           if (valueDes == null) continue;
           result.total.replace(valueDes);
-          break;
-        case r'addon':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType.nullable(Line),
-          ) as Line?;
-          if (valueDes == null) continue;
-          result.addon.replace(valueDes);
           break;
         default:
           unhandled.add(key);

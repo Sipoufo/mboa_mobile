@@ -13,8 +13,6 @@ Name | Type | Description | Notes
 **prestatairesByTier** | [**BuiltList&lt;TierCount&gt;**](TierCount.md) |  | [optional] 
 **paidPrestataires** | **int** |  | [optional] 
 **mrr** | **int** |  | [optional] 
-**addonSubscribers** | **int** |  | [optional] 
-**addonMrr** | **int** |  | [optional] 
 **newPrestataires** | [**Window**](Window.md) |  | [optional] 
 **agentVisitsCompleted** | [**Window**](Window.md) |  | [optional] 
 **contractsSigned** | [**Window**](Window.md) |  | [optional] 

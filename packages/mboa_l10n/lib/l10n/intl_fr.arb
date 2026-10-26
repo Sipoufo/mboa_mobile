@@ -3389,7 +3389,7 @@
   "@scoreSignalSeniority": {
     "description": "ACCOUNT_SENIORITY."
   },
-  "scoreSignalContracts": "Contrats Mboa signés",
+  "scoreSignalContracts": "Contrats signés sans litige",
   "@scoreSignalContracts": {
     "description": "SIGNED_CONTRACTS."
   },
@@ -3409,7 +3409,7 @@
   "@scoreSignalOther": {
     "description": "A signal newer than this build."
   },
-  "scoreContractsCount": "{count, plural, =0{Aucun contrat signé pour l'instant} =1{1 contrat signé} other{{count} contrats signés}}",
+  "scoreContractsCount": "{count, plural, =0{Aucun contrat sans litige pour l'instant} =1{1 contrat sans litige} other{{count} contrats sans litige}}",
   "@scoreContractsCount": {
     "description": "SIGNED_CONTRACTS count.",
     "placeholders": {
@@ -3443,7 +3443,7 @@
   "@scoreHintSeniority": {
     "description": "Own score hint."
   },
-  "scoreHintContracts": "Chaque contrat signé sur Mboa compte, jusqu'à {max} points.",
+  "scoreHintContracts": "Chaque contrat signé sur Mboa compte, tant qu'aucun litige n'a été retenu à son sujet, jusqu'à {max} points.",
   "@scoreHintContracts": {
     "description": "Own score hint — the ceiling comes from the server (maxPoints).",
     "placeholders": {
@@ -6230,59 +6230,6 @@
   "@financeNoMoney": {
     "description": "RM-M24-05 / RM-M25-01"
   },
-  "financePrice": "{price} pour 30 jours",
-  "@financePrice": {
-    "description": "Add-on price",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "financeActivate": "Activer pour {price}",
-  "@financeActivate": {
-    "description": "Add-on: the main action, never subscribed",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "financeReactivate": "Réactiver pour {price}",
-  "@financeReactivate": {
-    "description": "Add-on: the main action, expired",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "financeExtend": "Prolonger de 30 jours",
-  "@financeExtend": {
-    "description": "Add-on: running, add a period after it"
-  },
-  "financeActiveUntil": "Active jusqu'au {date}",
-  "@financeActiveUntil": {
-    "description": "Add-on running",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "financeExpiredOn": "Expirée le {date}",
-  "@financeExpiredOn": {
-    "description": "Add-on expired",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "financeExpiredBody": "Tout ce que tu as noté reste consultable et exportable. Pour ajouter ou modifier, réactive l'option.",
-  "@financeExpiredBody": {
-    "description": "Add-on expired: what still works"
-  },
   "financeIncluded": "Ce qui est inclus",
   "@financeIncluded": {
     "description": "Add-on: section title"
@@ -6398,10 +6345,6 @@
   "ownerInvoiceReopenedToast": "Paiement retiré : la facture est à payer",
   "@ownerInvoiceReopenedToast": {
     "description": "M24 toast"
-  },
-  "financeRefusedAddon": "L'option Gestion financière n'est plus active : réactive-la pour ajouter ou modifier.",
-  "@financeRefusedAddon": {
-    "description": "FINANCE_ADDON_REQUIRED"
   },
   "financeRefusedSettled": "Cette facture est déjà payée ou annulée.",
   "@financeRefusedSettled": {
@@ -6893,5 +6836,63 @@
   "annonceKindMultipleHint": "Une résidence, un immeuble : plusieurs logements loués séparément.",
   "@annonceKindMultipleHint": {
     "description": "M10bis form — the multiple kind's card"
+  },
+  "financeIncludedIn": "Incluse dans ta formule {plan}",
+  "@financeIncludedIn": {
+    "description": "M24–M26 hub — the plan held includes the finance tools (RM-M13-09)",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "financeIncludedUntil": "Formule {plan} · jusqu'au {date}",
+  "@financeIncludedUntil": {
+    "description": "M24–M26 hub — the plan held, and its last day",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financeNotIncludedBody": "Le suivi financier est inclus dès la formule {plan}. Ce que tu as déjà noté reste consultable et exportable.",
+  "@financeNotIncludedBody": {
+    "description": "M24–M26 hub — the plan held does not include it",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "financeFromPrice": "Formule {plan} : {price} par mois",
+  "@financeFromPrice": {
+    "description": "M24–M26 hub — the cheapest plan that includes it, the server's price",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeSeePlans": "Voir les formules",
+  "@financeSeePlans": {
+    "description": "M24–M26 — the one action when the plan does not include it"
+  },
+  "financeRefusedPlan": "Le suivi financier est inclus dès la formule Pro : change de formule pour ajouter ou modifier.",
+  "@financeRefusedPlan": {
+    "description": "FINANCE_PLAN_REQUIRED on a change"
+  },
+  "financePlanRequiredRead": "Le suivi financier est inclus dès la formule Pro.",
+  "@financePlanRequiredRead": {
+    "description": "FINANCE_PLAN_REQUIRED on a read: never held"
+  },
+  "plansFinanceIncluded": "Suivi financier inclus",
+  "@plansFinanceIncluded": {
+    "description": "M13 — a plan card, when includesFinance"
   }
 }

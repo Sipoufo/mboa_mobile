@@ -80,7 +80,7 @@ class LedgerRepository {
       return Cached(LedgerLines(entries: entries, isLast: data?.last ?? entries.length < _pageSize));
     } catch (error) {
       final raw = _cache.get(StorageKeys.financeBox, key)?['items'];
-      if (page > 0 || raw is! List) Error.throwWithStackTrace(error, StackTrace.current);
+      if (page > 0 || raw is! List) throwIfPlanRequired(error);
       return Cached(LedgerLines(entries: [for (final e in raw) ?LedgerEntry.fromCache(e)], isLast: true), fromCache: true);
     }
   }
@@ -103,7 +103,7 @@ class LedgerRepository {
       return Cached(summary);
     } catch (error) {
       final cached = LedgerSummary.fromCache(_cache.get(StorageKeys.financeBox, key));
-      if (cached == null) Error.throwWithStackTrace(error, StackTrace.current);
+      if (cached == null) throwIfPlanRequired(error);
       return Cached(cached, fromCache: true);
     }
   }

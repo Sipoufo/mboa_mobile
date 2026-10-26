@@ -13,6 +13,8 @@ class _$UpdatePlanRequest extends UpdatePlanRequest {
   final int? activeListingLimit;
   @override
   final int? residenceUnitAllowance;
+  @override
+  final bool? includesFinance;
 
   factory _$UpdatePlanRequest([
     void Function(UpdatePlanRequestBuilder)? updates,
@@ -22,6 +24,7 @@ class _$UpdatePlanRequest extends UpdatePlanRequest {
     this.monthlyPrice,
     this.activeListingLimit,
     this.residenceUnitAllowance,
+    this.includesFinance,
   }) : super._();
   @override
   UpdatePlanRequest rebuild(void Function(UpdatePlanRequestBuilder) updates) =>
@@ -37,7 +40,8 @@ class _$UpdatePlanRequest extends UpdatePlanRequest {
     return other is UpdatePlanRequest &&
         monthlyPrice == other.monthlyPrice &&
         activeListingLimit == other.activeListingLimit &&
-        residenceUnitAllowance == other.residenceUnitAllowance;
+        residenceUnitAllowance == other.residenceUnitAllowance &&
+        includesFinance == other.includesFinance;
   }
 
   @override
@@ -46,6 +50,7 @@ class _$UpdatePlanRequest extends UpdatePlanRequest {
     _$hash = $jc(_$hash, monthlyPrice.hashCode);
     _$hash = $jc(_$hash, activeListingLimit.hashCode);
     _$hash = $jc(_$hash, residenceUnitAllowance.hashCode);
+    _$hash = $jc(_$hash, includesFinance.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -55,7 +60,8 @@ class _$UpdatePlanRequest extends UpdatePlanRequest {
     return (newBuiltValueToStringHelper(r'UpdatePlanRequest')
           ..add('monthlyPrice', monthlyPrice)
           ..add('activeListingLimit', activeListingLimit)
-          ..add('residenceUnitAllowance', residenceUnitAllowance))
+          ..add('residenceUnitAllowance', residenceUnitAllowance)
+          ..add('includesFinance', includesFinance))
         .toString();
   }
 }
@@ -78,6 +84,11 @@ class UpdatePlanRequestBuilder
   set residenceUnitAllowance(int? residenceUnitAllowance) =>
       _$this._residenceUnitAllowance = residenceUnitAllowance;
 
+  bool? _includesFinance;
+  bool? get includesFinance => _$this._includesFinance;
+  set includesFinance(bool? includesFinance) =>
+      _$this._includesFinance = includesFinance;
+
   UpdatePlanRequestBuilder() {
     UpdatePlanRequest._defaults(this);
   }
@@ -88,6 +99,7 @@ class UpdatePlanRequestBuilder
       _monthlyPrice = $v.monthlyPrice;
       _activeListingLimit = $v.activeListingLimit;
       _residenceUnitAllowance = $v.residenceUnitAllowance;
+      _includesFinance = $v.includesFinance;
       _$v = null;
     }
     return this;
@@ -113,6 +125,7 @@ class UpdatePlanRequestBuilder
           monthlyPrice: monthlyPrice,
           activeListingLimit: activeListingLimit,
           residenceUnitAllowance: residenceUnitAllowance,
+          includesFinance: includesFinance,
         );
     replace(_$result);
     return _$result;

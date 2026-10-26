@@ -196,7 +196,7 @@ void main() {
       // TODO
     });
 
-    // Requests on my homes, newest first — status=SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
+    // Requests on my homes, newest first — status=SENT,SEEN,IN_PROGRESS is the inbox (free for every landlord, RM-M30-15)
     //
     //Future<PageResponseHomeRequestResponse> listMyReceivedRequests(Pageable pageable, { BuiltList<String> status, String contractId }) async
     test('test listMyReceivedRequests', () async {

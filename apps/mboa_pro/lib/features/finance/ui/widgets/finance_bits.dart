@@ -1,13 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../../app/router/app_router.gr.dart';
 import '../../models/finance_refusal.dart';
 
 /// A finance refusal, in words.
 String financeRefusalText(I18n l10n, FinanceRefusal reason) => switch (reason) {
-      FinanceRefusal.addonRequired => l10n.financeRefusedAddon,
+      FinanceRefusal.planRequired => l10n.financeRefusedPlan,
       FinanceRefusal.settled => l10n.financeRefusedSettled,
       FinanceRefusal.notDeclaredByHand => l10n.financeRefusedNotByHand,
       FinanceRefusal.labelRequired => l10n.financeRefusedLabel,
@@ -18,6 +20,44 @@ String financeRefusalText(I18n l10n, FinanceRefusal reason) => switch (reason) {
       FinanceRefusal.providerArchived => l10n.financeRefusedArchived,
       FinanceRefusal.providerDuplicate => l10n.financeRefusedDuplicate,
     };
+
+/// A list that could not be read. The finance tools never held
+/// ([planRequired], RM-M13-09): where they are — the plans —, never a retry
+/// that cannot work. Otherwise, try again.
+class FinanceLoadFailure extends StatelessWidget {
+  const FinanceLoadFailure({super.key, required this.planRequired, required this.onRetry});
+
+  final bool planRequired;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    if (!planRequired) {
+      return Center(child: TextButton(onPressed: onRetry, child: Text(l10n.commonRetry)));
+    }
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(Dimens.spacingXl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(LucideIcons.wallet, size: Dimens.iconLg, color: colors.primary),
+            const SizedBox(height: Dimens.spacingMd),
+            Text(
+              l10n.financePlanRequiredRead,
+              textAlign: TextAlign.center,
+              style: context.mboaText.body.copyWith(color: colors.textSecondary),
+            ),
+            const SizedBox(height: Dimens.spacing),
+            Button.primary(title: l10n.financeSeePlans, onPressed: () => context.router.push(const PlansRoute())),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 /// A chosen chip reads in the brand's green, like the search's — the
 /// theme's own selected colour is the coral of alerts.

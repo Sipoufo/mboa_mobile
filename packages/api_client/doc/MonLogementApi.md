@@ -36,7 +36,7 @@ Method | HTTP request | Description
 [**listInvoiceDeclarations**](MonLogementApi.md#listinvoicedeclarations) | **GET** /api/v1/invoices/{invoiceId}/declarations | An invoice&#39;s declared payments, newest first
 [**listMyHomes**](MonLogementApi.md#listmyhomes) | **GET** /api/v1/homes | My homes — one per signed contract, active first, then to come, then ended (RM-M30-01)
 [**listMyReceivedDeclarations**](MonLogementApi.md#listmyreceiveddeclarations) | **GET** /api/v1/prestataires/me/declarations | Declared payments on my homes, oldest first — status&#x3D;DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
-[**listMyReceivedRequests**](MonLogementApi.md#listmyreceivedrequests) | **GET** /api/v1/prestataires/me/requests | Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
+[**listMyReceivedRequests**](MonLogementApi.md#listmyreceivedrequests) | **GET** /api/v1/prestataires/me/requests | Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (free for every landlord, RM-M30-15)
 [**listMyTenantHomes**](MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first — on one listing or one residence&#39;s units (RM-M30-14: mine only)
 [**listMyUsefulContacts**](MonLogementApi.md#listmyusefulcontacts) | **GET** /api/v1/prestataires/me/contacts | My useful contacts — caretaker, cleaner, craftsmen (RM-M30-13)
 [**moveHomeRequest**](MonLogementApi.md#movehomerequest) | **POST** /api/v1/home-requests/{requestId}/status | The landlord takes a request in hand or resolves it, with a word
@@ -1200,7 +1200,7 @@ Name | Type | Description  | Notes
 # **listMyReceivedRequests**
 > PageResponseHomeRequestResponse listMyReceivedRequests(pageable, status, contractId)
 
-Requests on my homes, newest first — status=SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
+Requests on my homes, newest first — status=SENT,SEEN,IN_PROGRESS is the inbox (free for every landlord, RM-M30-15)
 
 ### Example
 ```dart

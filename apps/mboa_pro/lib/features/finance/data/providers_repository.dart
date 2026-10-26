@@ -59,7 +59,7 @@ class ProvidersRepository {
       return Cached(items);
     } catch (error) {
       final raw = _cache.get(StorageKeys.financeBox, key)?['items'];
-      if (raw is! List) Error.throwWithStackTrace(error, StackTrace.current);
+      if (raw is! List) throwIfPlanRequired(error);
       return Cached([for (final p in raw) ?ServiceProvider.fromCache(p)], fromCache: true);
     }
   }

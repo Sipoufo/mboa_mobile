@@ -78,6 +78,7 @@ class TierOption extends Equatable {
     this.monthlyPrice,
     this.activeListingLimit,
     this.residenceUnitAllowance,
+    this.includesFinance = false,
   });
 
   final SubscriptionTier tier;
@@ -88,17 +89,22 @@ class TierOption extends Equatable {
   final int? activeListingLimit;
   final int? residenceUnitAllowance;
 
+  /// The finance tools — invoices, register, intervenants — come with this
+  /// plan (RM-M13-09). The server's word: the admin sets it per plan.
+  final bool includesFinance;
+
   static TierOption fromResponse(TierInfo info) => TierOption(
         tier: SubscriptionTierMapping.fromTierInfo(info.tier),
         rank: info.rank,
         monthlyPrice: info.monthlyPrice,
         activeListingLimit: info.activeListingLimit,
         residenceUnitAllowance: info.residenceUnitAllowance,
+        includesFinance: info.includesFinance ?? false,
       );
 
   @override
   List<Object?> get props =>
-      [tier, rank, monthlyPrice, activeListingLimit, residenceUnitAllowance];
+      [tier, rank, monthlyPrice, activeListingLimit, residenceUnitAllowance, includesFinance];
 }
 
 /// Mobile Money providers (CDC M13 — MVP payment methods).
@@ -121,8 +127,9 @@ enum PaymentMethod {
 /// promising a notification.
 enum PaymentStatus { pending, confirmed, failed, cancelled, refunded }
 
-/// What a payment buys (CDC M13): a tier, or 30 days of the « Gestion
-/// financière » add-on (RM-M13-09) — the same Mobile Money flow for both.
+/// What a payment bought (CDC M13): a tier — the only thing sold — or, in the
+/// history, 30 days of the « Gestion financière » add-on, sold until
+/// 2026-10-26 (RM-M13-09: the finance tools now come with Pro and Pro+).
 sealed class Purchase extends Equatable {
   const Purchase();
 
@@ -141,7 +148,8 @@ final class TierPurchase extends Purchase {
   List<Object?> get props => [tier];
 }
 
-/// M24–M26 — added after the running period, if any.
+/// A past payment for the add-on. Never bought any more: kept so an old
+/// payment still says what it was.
 final class FinanceAddonPurchase extends Purchase {
   const FinanceAddonPurchase();
 

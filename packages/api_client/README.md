@@ -98,13 +98,11 @@ Class | Method | HTTP request | Description
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**extendSubscription**](doc/AdminSubscriptionsApi.md#extendsubscription) | **POST** /api/v1/admin/subscriptions/{accountId}/extend | Add days to a subscription, same tier, with a mandatory reason (RM-M21-04)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getAdminSubscription**](doc/AdminSubscriptionsApi.md#getadminsubscription) | **GET** /api/v1/admin/subscriptions/{accountId} | One prestataire&#39;s subscription, payments and admin adjustments
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**getSubscriptionRecap**](doc/AdminSubscriptionsApi.md#getsubscriptionrecap) | **GET** /api/v1/admin/subscriptions/recap | Monthly recap: revenue, refunds, active prestataires and MRR per tier, exact FCFA (RM-M21-02)
-[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantFinanceAddon**](doc/AdminSubscriptionsApi.md#grantfinanceaddon) | **POST** /api/v1/admin/addons/finance/{accountId}/grant | Give days of the finance add-on, onto the running period or from now, with a reason
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**grantSubscription**](doc/AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier without payment, with a mandatory reason; refused over a paid period (RM-M21-01)
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**listAdminPayments**](doc/AdminSubscriptionsApi.md#listadminpayments) | **GET** /api/v1/admin/payments | Payment history, filtered by status, account and month
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**listAdminSubscriptions**](doc/AdminSubscriptionsApi.md#listadminsubscriptions) | **GET** /api/v1/admin/subscriptions | Subscriptions, filtered by tier and status
 [*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**refundPayment**](doc/AdminSubscriptionsApi.md#refundpayment) | **POST** /api/v1/admin/payments/{id}/refund | Record a refund made outside the platform; access is not cut (RM-M21-03)
-[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updateFinanceAddonPrice**](doc/AdminSubscriptionsApi.md#updatefinanceaddonprice) | **PATCH** /api/v1/admin/addons/finance | Set the finance add-on&#39;s price for 30 days
-[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updatePlan**](doc/AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
+[*AdminSubscriptionsApi*](doc/AdminSubscriptionsApi.md) | [**updatePlan**](doc/AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance, finance tools)
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**approveTypeChangeRequest**](doc/AdminTypeChangeApi.md#approvetypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/approve | Approve a type-change request and apply the new type
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**listPendingTypeChangeRequests**](doc/AdminTypeChangeApi.md#listpendingtypechangerequests) | **GET** /api/v1/admin/type-change-requests | List pending type-change requests
 [*AdminTypeChangeApi*](doc/AdminTypeChangeApi.md) | [**rejectTypeChangeRequest**](doc/AdminTypeChangeApi.md#rejecttypechangerequest) | **POST** /api/v1/admin/type-change-requests/{id}/reject | Reject a type-change request with a reason
@@ -209,8 +207,6 @@ Class | Method | HTTP request | Description
 [*FavorisApi*](doc/FavorisApi.md) | [**addFavori**](doc/FavorisApi.md#addfavori) | **POST** /api/v1/favoris | Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
 [*FavorisApi*](doc/FavorisApi.md) | [**listMyFavoris**](doc/FavorisApi.md#listmyfavoris) | **GET** /api/v1/favoris | List saved listings; unavailable ones stay for 30 days flagged available&#x3D;false
 [*FavorisApi*](doc/FavorisApi.md) | [**removeFavori**](doc/FavorisApi.md#removefavori) | **DELETE** /api/v1/favoris/{annonceId} | Unsave a listing; unsaving one that is not saved is not an error
-[*FinanceAddOnApi*](doc/FinanceAddOnApi.md) | [**getFinanceAddon**](doc/FinanceAddOnApi.md#getfinanceaddon) | **GET** /api/v1/addons/finance | My finance add-on: active, until when, and its price
-[*FinanceAddOnApi*](doc/FinanceAddOnApi.md) | [**subscribeFinanceAddon**](doc/FinanceAddOnApi.md#subscribefinanceaddon) | **POST** /api/v1/addons/finance/subscribe | Buy 30 days of the add-on — added after the running period; same payment flow as a tier
 [*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**cancelInvoice**](doc/FinanceInvoicesOwnerApi.md#cancelinvoice) | **POST** /api/v1/finance/invoices/{id}/cancel | Cancel an open invoice
 [*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**createInvoice**](doc/FinanceInvoicesOwnerApi.md#createinvoice) | **POST** /api/v1/finance/invoices | Bill the tenant of a running Mboa contract — water, electricity or another charge (RM-M24-02)
 [*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**getOwnerInvoice**](doc/FinanceInvoicesOwnerApi.md#getownerinvoice) | **GET** /api/v1/finance/invoices/{id} | One of my invoices
@@ -218,13 +214,13 @@ Class | Method | HTTP request | Description
 [*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**markInvoicePaid**](doc/FinanceInvoicesOwnerApi.md#markinvoicepaid) | **POST** /api/v1/finance/invoices/{id}/mark-paid | Declare an invoice paid — unchecked by Mboa, in force at once (RM-M24-05)
 [*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**reopenInvoice**](doc/FinanceInvoicesOwnerApi.md#reopeninvoice) | **POST** /api/v1/finance/invoices/{id}/reopen | Withdraw a payment you declared by mistake
 [*FinanceInvoicesOwnerApi*](doc/FinanceInvoicesOwnerApi.md) | [**updateInvoice**](doc/FinanceInvoicesOwnerApi.md#updateinvoice) | **PATCH** /api/v1/finance/invoices/{id} | Correct an open invoice; a new due date re-arms the reminders
-[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**createLedgerEntry**](doc/FinanceLedgerApi.md#createledgerentry) | **POST** /api/v1/finance/ledger | Record an income or an expense; needs the add-on running
-[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**deleteLedgerEntry**](doc/FinanceLedgerApi.md#deleteledgerentry) | **DELETE** /api/v1/finance/ledger/{id} | Remove an entry and its attachment; needs the add-on running
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**createLedgerEntry**](doc/FinanceLedgerApi.md#createledgerentry) | **POST** /api/v1/finance/ledger | Record an income or an expense; needs a plan with the finance tools (Pro, Pro+)
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**deleteLedgerEntry**](doc/FinanceLedgerApi.md#deleteledgerentry) | **DELETE** /api/v1/finance/ledger/{id} | Remove an entry and its attachment; needs a plan with the finance tools (Pro, Pro+)
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**exportLedger**](doc/FinanceLedgerApi.md#exportledger) | **GET** /api/v1/finance/ledger/export | The same entries as CSV, for any period (RM-M25-05)
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**getLedgerAttachment**](doc/FinanceLedgerApi.md#getledgerattachment) | **GET** /api/v1/finance/ledger/{id}/attachment | A short-lived link to an entry&#39;s attachment
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**getLedgerSummary**](doc/FinanceLedgerApi.md#getledgersummary) | **GET** /api/v1/finance/ledger/summary | Totals in, out and net, and per category, over the same filters (RM-M25-03)
 [*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**listLedgerEntries**](doc/FinanceLedgerApi.md#listledgerentries) | **GET** /api/v1/finance/ledger | My ledger, newest first — filter by period and by one listing, one residence or the unassigned
-[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**updateLedgerEntry**](doc/FinanceLedgerApi.md#updateledgerentry) | **PUT** /api/v1/finance/ledger/{id} | Replace an entry; needs the add-on running
+[*FinanceLedgerApi*](doc/FinanceLedgerApi.md) | [**updateLedgerEntry**](doc/FinanceLedgerApi.md#updateledgerentry) | **PUT** /api/v1/finance/ledger/{id} | Replace an entry; needs a plan with the finance tools (Pro, Pro+)
 [*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**addServiceProviderPayment**](doc/FinanceServiceProvidersApi.md#addserviceproviderpayment) | **POST** /api/v1/finance/providers/{id}/payments | Declare a payment; it goes into the ledger as Sortie · Prestataires (RM-M26-04)
 [*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**archiveServiceProvider**](doc/FinanceServiceProvidersApi.md#archiveserviceprovider) | **POST** /api/v1/finance/providers/{id}/archive | Hide an intervenant from pickers; history kept
 [*FinanceServiceProvidersApi*](doc/FinanceServiceProvidersApi.md) | [**createServiceProvider**](doc/FinanceServiceProvidersApi.md#createserviceprovider) | **POST** /api/v1/finance/providers | Add an intervenant — a free entry, or linked to a messaging contact (RM-M26-01)
@@ -285,7 +281,7 @@ Class | Method | HTTP request | Description
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listInvoiceDeclarations**](doc/MonLogementApi.md#listinvoicedeclarations) | **GET** /api/v1/invoices/{invoiceId}/declarations | An invoice&#39;s declared payments, newest first
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyHomes**](doc/MonLogementApi.md#listmyhomes) | **GET** /api/v1/homes | My homes — one per signed contract, active first, then to come, then ended (RM-M30-01)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyReceivedDeclarations**](doc/MonLogementApi.md#listmyreceiveddeclarations) | **GET** /api/v1/prestataires/me/declarations | Declared payments on my homes, oldest first — status&#x3D;DECLARED,UNCONFIRMED is the inbox (RM-M30-04)
-[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyReceivedRequests**](doc/MonLogementApi.md#listmyreceivedrequests) | **GET** /api/v1/prestataires/me/requests | Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
+[*MonLogementApi*](doc/MonLogementApi.md) | [**listMyReceivedRequests**](doc/MonLogementApi.md#listmyreceivedrequests) | **GET** /api/v1/prestataires/me/requests | Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (free for every landlord, RM-M30-15)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyTenantHomes**](doc/MonLogementApi.md#listmytenanthomes) | **GET** /api/v1/prestataires/me/homes | The homes on my properties, one per signed contract, active first — on one listing or one residence&#39;s units (RM-M30-14: mine only)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**listMyUsefulContacts**](doc/MonLogementApi.md#listmyusefulcontacts) | **GET** /api/v1/prestataires/me/contacts | My useful contacts — caretaker, cleaner, craftsmen (RM-M30-13)
 [*MonLogementApi*](doc/MonLogementApi.md) | [**moveHomeRequest**](doc/MonLogementApi.md#movehomerequest) | **POST** /api/v1/home-requests/{requestId}/status | The landlord takes a request in hand or resolves it, with a word
@@ -454,9 +450,7 @@ Class | Method | HTTP request | Description
  - [FailedReceipt](doc/FailedReceipt.md)
  - [FavoriResponse](doc/FavoriResponse.md)
  - [FieldError](doc/FieldError.md)
- - [FinanceAddonResponse](doc/FinanceAddonResponse.md)
  - [ForgotPasswordRequest](doc/ForgotPasswordRequest.md)
- - [GrantAddonRequest](doc/GrantAddonRequest.md)
  - [GrantSubscriptionRequest](doc/GrantSubscriptionRequest.md)
  - [HistoriqueResponse](doc/HistoriqueResponse.md)
  - [HistorySectionAdminContractLine](doc/HistorySectionAdminContractLine.md)
@@ -597,7 +591,6 @@ Class | Method | HTTP request | Description
  - [SubmitKycRequest](doc/SubmitKycRequest.md)
  - [SubmitResidentReviewRequest](doc/SubmitResidentReviewRequest.md)
  - [SubmitReviewRequest](doc/SubmitReviewRequest.md)
- - [SubscribeAddonRequest](doc/SubscribeAddonRequest.md)
  - [SubscribeRequest](doc/SubscribeRequest.md)
  - [SubscriptionRecapResponse](doc/SubscriptionRecapResponse.md)
  - [SubscriptionResponse](doc/SubscriptionResponse.md)
@@ -614,7 +607,6 @@ Class | Method | HTTP request | Description
  - [TypeCount](doc/TypeCount.md)
  - [UnitGroup](doc/UnitGroup.md)
  - [UnitSummary](doc/UnitSummary.md)
- - [UpdateAddonPriceRequest](doc/UpdateAddonPriceRequest.md)
  - [UpdateAgentProfileRequest](doc/UpdateAgentProfileRequest.md)
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
  - [UpdateAvailabilityRequest](doc/UpdateAvailabilityRequest.md)

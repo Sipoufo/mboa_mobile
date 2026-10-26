@@ -32,10 +32,5 @@ void main() {
       // TODO
     });
 
-    // Line addon
-    test('to test the property `addon`', () async {
-      // TODO
-    });
-
   });
 }

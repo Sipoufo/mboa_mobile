@@ -69,11 +69,9 @@ class OwnerInvoicesView extends StatelessWidget {
         appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.invoicesTitle)),
         body: switch (state) {
           OwnerInvoicesLoading() => const Center(child: Loader()),
-          OwnerInvoicesFailure() => Center(
-              child: TextButton(
-                onPressed: () => context.read<OwnerInvoicesBloc>().add(const OwnerInvoicesRequested()),
-                child: Text(l10n.commonRetry),
-              ),
+          OwnerInvoicesFailure(:final planRequired) => FinanceLoadFailure(
+              planRequired: planRequired,
+              onRetry: () => context.read<OwnerInvoicesBloc>().add(const OwnerInvoicesRequested()),
             ),
           final OwnerInvoicesReady ready => RefreshIndicator(
               onRefresh: () async => context.read<OwnerInvoicesBloc>().add(const OwnerInvoicesRequested()),

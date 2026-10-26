@@ -9,74 +9,70 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import '../../subscription/models/subscription_models.dart';
-import '../../subscription/ui/payment_flow_sheet.dart';
-import '../../subscription/ui/payment_method_sheet.dart';
-import '../bloc/finance_addon_bloc.dart';
-import '../models/finance_addon.dart';
+import '../bloc/finance_access_bloc.dart';
+import '../models/finance_access.dart';
 
-/// « Gestion financière » (M24–M26): the add-on and what it opens — the
-/// invoices, the register, the intervenants. No money moves through Mboa:
-/// the landlord notes what is paid, Mboa keeps the register.
+/// « Gestion financière » (M24–M26): the invoices, the register, the
+/// intervenants — included in the plans that carry them (RM-M13-09). No
+/// money moves through Mboa: the landlord notes what is paid, Mboa keeps the
+/// register.
 @RoutePage()
 class FinancePage extends StatelessWidget implements AutoRouteWrapper {
   const FinancePage({super.key});
 
   @override
-  Widget wrappedRoute(BuildContext context) => BlocProvider<FinanceAddonBloc>(
-        create: (_) => getIt<FinanceAddonBloc>()..add(const FinanceAddonRequested()),
+  Widget wrappedRoute(BuildContext context) => BlocProvider<FinanceAccessBloc>(
+        create: (_) => getIt<FinanceAccessBloc>()..add(const FinanceAccessRequested()),
         child: this,
       );
 
   @override
   Widget build(BuildContext context) => FinanceView(
-        onBuy: () async {
-          final bloc = context.read<FinanceAddonBloc>();
-          final method = await showPaymentMethodSheet(context);
-          if (method == null || !context.mounted) return;
-          await showPaymentFlowSheet(context, purchase: const FinanceAddonPurchase(), method: method);
-          // The webhook opens the period: read where it stands now.
-          bloc.add(const FinanceAddonRequested());
+        onPlans: () async {
+          final bloc = context.read<FinanceAccessBloc>();
+          await context.router.push(const PlansRoute());
+          // A new plan is what opens writing: read where it stands now.
+          bloc.add(const FinanceAccessRequested());
         },
-        // Writing needs the add-on running; the list then offers « Nouvelle
-        // facture ».
-        onInvoices: (addon) => context.router.push(OwnerInvoicesRoute(canWrite: addon.canWrite)),
-        onLedger: (addon) => context.router.push(LedgerRoute(canWrite: addon.canWrite)),
-        onProviders: (addon) => context.router.push(ProvidersRoute(canWrite: addon.canWrite)),
+        // Writing needs a plan that includes it; the lists then offer their
+        // main action. Reading is the server's to refuse.
+        onInvoices: (access) => context.router.push(OwnerInvoicesRoute(canWrite: access.canWrite)),
+        onLedger: (access) => context.router.push(LedgerRoute(canWrite: access.canWrite)),
+        onProviders: (access) => context.router.push(ProvidersRoute(canWrite: access.canWrite)),
       );
 }
 
 /// The hub under its bloc — public so it can be pumped with a mock one.
 class FinanceView extends StatelessWidget {
-  const FinanceView({super.key, required this.onBuy, this.onInvoices, this.onLedger, this.onProviders});
+  const FinanceView({super.key, required this.onPlans, this.onInvoices, this.onLedger, this.onProviders});
 
-  /// Buy 30 days: the first, the next, or again.
-  final VoidCallback onBuy;
+  /// The plans screen, where the plans that include it are.
+  final VoidCallback onPlans;
 
-  /// Each part, once it can be read. Null: shown, not opened.
-  final ValueChanged<FinanceAddon>? onInvoices;
-  final ValueChanged<FinanceAddon>? onLedger;
-  final ValueChanged<FinanceAddon>? onProviders;
+  /// Each part. Null: shown, not opened.
+  final ValueChanged<FinanceAccess>? onInvoices;
+  final ValueChanged<FinanceAccess>? onLedger;
+  final ValueChanged<FinanceAccess>? onProviders;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
 
-    return BlocBuilder<FinanceAddonBloc, FinanceAddonState>(
+    return BlocBuilder<FinanceAccessBloc, FinanceAccessState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.financeAddonName)),
         body: switch (state) {
-          FinanceAddonLoading() => const Center(child: Loader()),
-          FinanceAddonFailure() => Center(
+          FinanceAccessLoading() => const Center(child: Loader()),
+          FinanceAccessFailure() => Center(
               child: TextButton(
-                onPressed: () => context.read<FinanceAddonBloc>().add(const FinanceAddonRequested()),
+                onPressed: () => context.read<FinanceAccessBloc>().add(const FinanceAccessRequested()),
                 child: Text(l10n.commonRetry),
               ),
             ),
-          FinanceAddonReady(:final addon, :final isOffline) => RefreshIndicator(
-              onRefresh: () async => context.read<FinanceAddonBloc>().add(const FinanceAddonRequested()),
+          FinanceAccessReady(:final access, :final isOffline) => RefreshIndicator(
+              onRefresh: () async => context.read<FinanceAccessBloc>().add(const FinanceAccessRequested()),
               child: ListView(
                 padding: const EdgeInsets.all(Dimens.screenMargin),
                 children: [
@@ -84,7 +80,7 @@ class FinanceView extends StatelessWidget {
                     Text(l10n.financeOffline, style: context.mboaText.caption.copyWith(color: colors.warning)),
                     const SizedBox(height: Dimens.spacingMd),
                   ],
-                  _StatusCard(addon: addon, onExtend: isOffline ? null : onBuy),
+                  _StatusCard(access: access),
                   const SizedBox(height: Dimens.spacingLg),
                   Text(
                     l10n.financeIncluded,
@@ -96,22 +92,24 @@ class FinanceView extends StatelessWidget {
                       LucideIcons.receiptText,
                       l10n.invoicesTitle,
                       l10n.financeInvoicesHint,
-                      onInvoices == null ? null : () => onInvoices!(addon),
+                      onInvoices == null ? null : () => onInvoices!(access),
                     ),
                     (
                       LucideIcons.bookOpenText,
                       l10n.financeLedgerTitle,
                       l10n.financeLedgerHint,
-                      onLedger == null ? null : () => onLedger!(addon),
+                      onLedger == null ? null : () => onLedger!(access),
                     ),
                     (
                       LucideIcons.hardHat,
                       l10n.financeProvidersTitle,
                       l10n.financeProvidersHint,
-                      onProviders == null ? null : () => onProviders!(addon),
+                      onProviders == null ? null : () => onProviders!(access),
                     ),
                   ])
-                    _PartRow(icon: icon, title: title, hint: hint, onTap: addon.canRead ? open : null),
+                    // Always open: what was held once still reads, and a
+                    // never-held read is refused, and said, on its page.
+                    _PartRow(icon: icon, title: title, hint: hint, onTap: open),
                   const SizedBox(height: Dimens.spacing),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,10 +128,16 @@ class FinanceView extends StatelessWidget {
               ),
             ),
         },
-        // Only while it is not running: then buying is what the page is for.
+        // Only while the plan does not include it: then the plans are what the
+        // page is for.
         bottomNavigationBar: switch (state) {
-          FinanceAddonReady(:final addon, isOffline: false) when !addon.active && addon.monthlyPrice != null =>
-            _BuyBar(addon: addon, onBuy: onBuy),
+          FinanceAccessReady(:final access, isOffline: false) when !access.canWrite => Container(
+              decoration: BoxDecoration(color: colors.surface, border: Border(top: BorderSide(color: colors.border))),
+              child: SafeArea(
+                minimum: const EdgeInsets.all(Dimens.spacing),
+                child: Button.primary(title: l10n.financeSeePlans, onPressed: onPlans),
+              ),
+            ),
           _ => null,
         },
       ),
@@ -141,20 +145,20 @@ class FinanceView extends StatelessWidget {
   }
 }
 
-/// The add-on on the brand colour: what it is, and where it stands.
+/// The finance tools on the brand colour: what they are, and whether the plan
+/// held includes them.
 class _StatusCard extends StatelessWidget {
-  const _StatusCard({required this.addon, required this.onExtend});
+  const _StatusCard({required this.access});
 
-  final FinanceAddon addon;
-  final VoidCallback? onExtend;
+  final FinanceAccess access;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
     final locale = Localizations.localeOf(context).toLanguageTag();
-    String day(DateTime d) => DateFormat.yMMMMd(locale).format(d);
-    final end = addon.periodEnd;
+    final end = access.periodEnd;
+    final from = access.includedFromTier;
 
     return Material(
       color: colors.primary,
@@ -181,36 +185,27 @@ class _StatusCard extends StatelessWidget {
                   ],
                 ),
                 // Its own line: beside the title, a long date crushed it.
-                if (end != null && (addon.active || addon.everSubscribed)) ...[
+                if (access.canWrite) ...[
                   const SizedBox(height: Dimens.spacingSm),
                   _Pill(
-                    text: addon.active ? l10n.financeActiveUntil(day(end)) : l10n.financeExpiredOn(day(end)),
-                    active: addon.active,
+                    text: end == null
+                        ? l10n.financeIncludedIn(access.tier.label)
+                        : l10n.financeIncludedUntil(access.tier.label, DateFormat.yMMMd(locale).format(end)),
+                    active: true,
                   ),
                 ],
                 const SizedBox(height: Dimens.spacingSm),
                 Text(
-                  addon.active || !addon.everSubscribed ? l10n.financeIntro : l10n.financeExpiredBody,
+                  access.canWrite || from == null ? l10n.financeIntro : l10n.financeNotIncludedBody(from.label),
                   style: context.mboaText.body.copyWith(color: colors.onBrand.withValues(alpha: 0.9)),
                 ),
-                if (addon.monthlyPrice case final price?) ...[
+                if (!access.canWrite && from != null && access.includedFromPrice != null) ...[
                   const SizedBox(height: Dimens.spacing),
                   Text(
-                    l10n.financePrice(fcfaOf(context, price)),
+                    l10n.financeFromPrice(from.label, fcfaOf(context, access.includedFromPrice!)),
                     style: context.mboaText.label.copyWith(color: colors.onBrand, fontWeight: FontWeight.w700),
                   ),
                 ],
-                // Running: adding 30 more is possible, never expected.
-                if (addon.active && onExtend != null)
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: TextButton.icon(
-                      onPressed: onExtend,
-                      style: TextButton.styleFrom(foregroundColor: colors.onBrand, padding: EdgeInsets.zero),
-                      icon: const Icon(LucideIcons.calendarPlus, size: Dimens.icon),
-                      label: Text(l10n.financeExtend),
-                    ),
-                  ),
               ],
             ),
           ),
@@ -287,31 +282,6 @@ class _PartRow extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _BuyBar extends StatelessWidget {
-  const _BuyBar({required this.addon, required this.onBuy});
-
-  final FinanceAddon addon;
-  final VoidCallback onBuy;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-    final price = fcfaOf(context, addon.monthlyPrice!);
-
-    return Container(
-      decoration: BoxDecoration(color: colors.surface, border: Border(top: BorderSide(color: colors.border))),
-      child: SafeArea(
-        minimum: const EdgeInsets.all(Dimens.spacing),
-        child: Button.primary(
-          title: addon.everSubscribed ? l10n.financeReactivate(price) : l10n.financeActivate(price),
-          onPressed: onBuy,
         ),
       ),
     );

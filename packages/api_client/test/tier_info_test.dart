@@ -37,5 +37,10 @@ void main() {
       // TODO
     });
 
+    // bool includesFinance
+    test('to test the property `includesFinance`', () async {
+      // TODO
+    });
+
   });
 }

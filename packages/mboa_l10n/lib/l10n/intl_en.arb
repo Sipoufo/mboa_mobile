@@ -3389,7 +3389,7 @@
   "@scoreSignalSeniority": {
     "description": "ACCOUNT_SENIORITY."
   },
-  "scoreSignalContracts": "Mboa contracts signed",
+  "scoreSignalContracts": "Contracts signed without a dispute",
   "@scoreSignalContracts": {
     "description": "SIGNED_CONTRACTS."
   },
@@ -3409,7 +3409,7 @@
   "@scoreSignalOther": {
     "description": "A signal newer than this build."
   },
-  "scoreContractsCount": "{count, plural, =0{No signed contract yet} =1{1 signed contract} other{{count} signed contracts}}",
+  "scoreContractsCount": "{count, plural, =0{No contract without a dispute yet} =1{1 contract without a dispute} other{{count} contracts without a dispute}}",
   "@scoreContractsCount": {
     "description": "SIGNED_CONTRACTS count.",
     "placeholders": {
@@ -3443,7 +3443,7 @@
   "@scoreHintSeniority": {
     "description": "Own score hint."
   },
-  "scoreHintContracts": "Each contract signed on Mboa counts, up to {max} points.",
+  "scoreHintContracts": "Each contract signed on Mboa counts, as long as no dispute about it was upheld, up to {max} points.",
   "@scoreHintContracts": {
     "description": "Own score hint — the ceiling comes from the server (maxPoints).",
     "placeholders": {
@@ -6230,59 +6230,6 @@
   "@financeNoMoney": {
     "description": "RM-M24-05 / RM-M25-01"
   },
-  "financePrice": "{price} for 30 days",
-  "@financePrice": {
-    "description": "Add-on price",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "financeActivate": "Activate for {price}",
-  "@financeActivate": {
-    "description": "Add-on: the main action, never subscribed",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "financeReactivate": "Reactivate for {price}",
-  "@financeReactivate": {
-    "description": "Add-on: the main action, expired",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "financeExtend": "Extend by 30 days",
-  "@financeExtend": {
-    "description": "Add-on: running, add a period after it"
-  },
-  "financeActiveUntil": "Active until {date}",
-  "@financeActiveUntil": {
-    "description": "Add-on running",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "financeExpiredOn": "Expired on {date}",
-  "@financeExpiredOn": {
-    "description": "Add-on expired",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "financeExpiredBody": "Everything you recorded stays readable and exportable. To add or change anything, reactivate the add-on.",
-  "@financeExpiredBody": {
-    "description": "Add-on expired: what still works"
-  },
   "financeIncluded": "What is included",
   "@financeIncluded": {
     "description": "Add-on: section title"
@@ -6398,10 +6345,6 @@
   "ownerInvoiceReopenedToast": "Payment withdrawn: the invoice is due",
   "@ownerInvoiceReopenedToast": {
     "description": "M24 toast"
-  },
-  "financeRefusedAddon": "The Financial management add-on is no longer active: reactivate it to add or change anything.",
-  "@financeRefusedAddon": {
-    "description": "FINANCE_ADDON_REQUIRED"
   },
   "financeRefusedSettled": "This invoice is already paid or cancelled.",
   "@financeRefusedSettled": {
@@ -6893,5 +6836,63 @@
   "annonceKindMultipleHint": "A residence, a building: several units let separately.",
   "@annonceKindMultipleHint": {
     "description": "M10bis form — the multiple kind's card"
+  },
+  "financeIncludedIn": "Included in your {plan} plan",
+  "@financeIncludedIn": {
+    "description": "M24–M26 hub — the plan held includes the finance tools (RM-M13-09)",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "financeIncludedUntil": "{plan} plan · until {date}",
+  "@financeIncludedUntil": {
+    "description": "M24–M26 hub — the plan held, and its last day",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financeNotIncludedBody": "Financial tracking comes with the {plan} plan. What you already recorded stays readable and exportable.",
+  "@financeNotIncludedBody": {
+    "description": "M24–M26 hub — the plan held does not include it",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "financeFromPrice": "{plan} plan: {price} a month",
+  "@financeFromPrice": {
+    "description": "M24–M26 hub — the cheapest plan that includes it, the server's price",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "financeSeePlans": "See the plans",
+  "@financeSeePlans": {
+    "description": "M24–M26 — the one action when the plan does not include it"
+  },
+  "financeRefusedPlan": "Financial tracking comes with the Pro plan: change plans to add or edit.",
+  "@financeRefusedPlan": {
+    "description": "FINANCE_PLAN_REQUIRED on a change"
+  },
+  "financePlanRequiredRead": "Financial tracking comes with the Pro plan.",
+  "@financePlanRequiredRead": {
+    "description": "FINANCE_PLAN_REQUIRED on a read: never held"
+  },
+  "plansFinanceIncluded": "Financial tracking included",
+  "@plansFinanceIncluded": {
+    "description": "M13 — a plan card, when includesFinance"
   }
 }

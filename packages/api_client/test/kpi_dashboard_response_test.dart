@@ -32,16 +32,6 @@ void main() {
       // TODO
     });
 
-    // int addonSubscribers
-    test('to test the property `addonSubscribers`', () async {
-      // TODO
-    });
-
-    // int addonMrr
-    test('to test the property `addonMrr`', () async {
-      // TODO
-    });
-
     // Window newPrestataires
     test('to test the property `newPrestataires`', () async {
       // TODO

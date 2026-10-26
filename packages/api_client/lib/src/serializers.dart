@@ -100,9 +100,7 @@ import 'package:api_client/src/model/extend_subscription_request.dart';
 import 'package:api_client/src/model/failed_receipt.dart';
 import 'package:api_client/src/model/favori_response.dart';
 import 'package:api_client/src/model/field_error.dart';
-import 'package:api_client/src/model/finance_addon_response.dart';
 import 'package:api_client/src/model/forgot_password_request.dart';
-import 'package:api_client/src/model/grant_addon_request.dart';
 import 'package:api_client/src/model/grant_subscription_request.dart';
 import 'package:api_client/src/model/historique_response.dart';
 import 'package:api_client/src/model/history_section_admin_contract_line.dart';
@@ -243,7 +241,6 @@ import 'package:api_client/src/model/start_visite_request.dart';
 import 'package:api_client/src/model/submit_kyc_request.dart';
 import 'package:api_client/src/model/submit_resident_review_request.dart';
 import 'package:api_client/src/model/submit_review_request.dart';
-import 'package:api_client/src/model/subscribe_addon_request.dart';
 import 'package:api_client/src/model/subscribe_request.dart';
 import 'package:api_client/src/model/subscription_recap_response.dart';
 import 'package:api_client/src/model/subscription_response.dart';
@@ -260,7 +257,6 @@ import 'package:api_client/src/model/type_change_review_result.dart';
 import 'package:api_client/src/model/type_count.dart';
 import 'package:api_client/src/model/unit_group.dart';
 import 'package:api_client/src/model/unit_summary.dart';
-import 'package:api_client/src/model/update_addon_price_request.dart';
 import 'package:api_client/src/model/update_agent_profile_request.dart';
 import 'package:api_client/src/model/update_annonce_request.dart';
 import 'package:api_client/src/model/update_availability_request.dart';
@@ -375,9 +371,7 @@ part 'serializers.g.dart';
   FailedReceipt,
   FavoriResponse,
   FieldError,
-  FinanceAddonResponse,
   ForgotPasswordRequest,
-  GrantAddonRequest,
   GrantSubscriptionRequest,
   HistoriqueResponse,
   HistorySectionAdminContractLine,
@@ -518,7 +512,6 @@ part 'serializers.g.dart';
   SubmitKycRequest,
   SubmitResidentReviewRequest,
   SubmitReviewRequest,
-  SubscribeAddonRequest,
   SubscribeRequest,
   SubscriptionRecapResponse,
   SubscriptionResponse,
@@ -535,7 +528,6 @@ part 'serializers.g.dart';
   TypeCount,
   UnitGroup,
   UnitSummary,
-  UpdateAddonPriceRequest,
   UpdateAgentProfileRequest,
   UpdateAnnonceRequest,
   UpdateAvailabilityRequest,

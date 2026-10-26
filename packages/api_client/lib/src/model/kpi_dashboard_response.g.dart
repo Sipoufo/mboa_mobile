@@ -18,10 +18,6 @@ class _$KpiDashboardResponse extends KpiDashboardResponse {
   @override
   final int? mrr;
   @override
-  final int? addonSubscribers;
-  @override
-  final int? addonMrr;
-  @override
   final Window? newPrestataires;
   @override
   final Window? agentVisitsCompleted;
@@ -46,8 +42,6 @@ class _$KpiDashboardResponse extends KpiDashboardResponse {
     this.prestatairesByTier,
     this.paidPrestataires,
     this.mrr,
-    this.addonSubscribers,
-    this.addonMrr,
     this.newPrestataires,
     this.agentVisitsCompleted,
     this.contractsSigned,
@@ -74,8 +68,6 @@ class _$KpiDashboardResponse extends KpiDashboardResponse {
         prestatairesByTier == other.prestatairesByTier &&
         paidPrestataires == other.paidPrestataires &&
         mrr == other.mrr &&
-        addonSubscribers == other.addonSubscribers &&
-        addonMrr == other.addonMrr &&
         newPrestataires == other.newPrestataires &&
         agentVisitsCompleted == other.agentVisitsCompleted &&
         contractsSigned == other.contractsSigned &&
@@ -93,8 +85,6 @@ class _$KpiDashboardResponse extends KpiDashboardResponse {
     _$hash = $jc(_$hash, prestatairesByTier.hashCode);
     _$hash = $jc(_$hash, paidPrestataires.hashCode);
     _$hash = $jc(_$hash, mrr.hashCode);
-    _$hash = $jc(_$hash, addonSubscribers.hashCode);
-    _$hash = $jc(_$hash, addonMrr.hashCode);
     _$hash = $jc(_$hash, newPrestataires.hashCode);
     _$hash = $jc(_$hash, agentVisitsCompleted.hashCode);
     _$hash = $jc(_$hash, contractsSigned.hashCode);
@@ -114,8 +104,6 @@ class _$KpiDashboardResponse extends KpiDashboardResponse {
           ..add('prestatairesByTier', prestatairesByTier)
           ..add('paidPrestataires', paidPrestataires)
           ..add('mrr', mrr)
-          ..add('addonSubscribers', addonSubscribers)
-          ..add('addonMrr', addonMrr)
           ..add('newPrestataires', newPrestataires)
           ..add('agentVisitsCompleted', agentVisitsCompleted)
           ..add('contractsSigned', contractsSigned)
@@ -154,15 +142,6 @@ class KpiDashboardResponseBuilder
   int? _mrr;
   int? get mrr => _$this._mrr;
   set mrr(int? mrr) => _$this._mrr = mrr;
-
-  int? _addonSubscribers;
-  int? get addonSubscribers => _$this._addonSubscribers;
-  set addonSubscribers(int? addonSubscribers) =>
-      _$this._addonSubscribers = addonSubscribers;
-
-  int? _addonMrr;
-  int? get addonMrr => _$this._addonMrr;
-  set addonMrr(int? addonMrr) => _$this._addonMrr = addonMrr;
 
   WindowBuilder? _newPrestataires;
   WindowBuilder get newPrestataires =>
@@ -214,8 +193,6 @@ class KpiDashboardResponseBuilder
       _prestatairesByTier = $v.prestatairesByTier?.toBuilder();
       _paidPrestataires = $v.paidPrestataires;
       _mrr = $v.mrr;
-      _addonSubscribers = $v.addonSubscribers;
-      _addonMrr = $v.addonMrr;
       _newPrestataires = $v.newPrestataires?.toBuilder();
       _agentVisitsCompleted = $v.agentVisitsCompleted?.toBuilder();
       _contractsSigned = $v.contractsSigned?.toBuilder();
@@ -252,8 +229,6 @@ class KpiDashboardResponseBuilder
             prestatairesByTier: _prestatairesByTier?.build(),
             paidPrestataires: paidPrestataires,
             mrr: mrr,
-            addonSubscribers: addonSubscribers,
-            addonMrr: addonMrr,
             newPrestataires: _newPrestataires?.build(),
             agentVisitsCompleted: _agentVisitsCompleted?.build(),
             contractsSigned: _contractsSigned?.build(),

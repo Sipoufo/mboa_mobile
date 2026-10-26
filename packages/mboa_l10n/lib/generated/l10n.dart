@@ -9288,10 +9288,10 @@ class I18n {
     );
   }
 
-  /// `Contrats Mboa signés`
+  /// `Contrats signés sans litige`
   String get scoreSignalContracts {
     return Intl.message(
-      'Contrats Mboa signés',
+      'Contrats signés sans litige',
       name: 'scoreSignalContracts',
       desc: 'SIGNED_CONTRACTS.',
       args: [],
@@ -9338,13 +9338,13 @@ class I18n {
     );
   }
 
-  /// `{count, plural, =0{Aucun contrat signé pour l'instant} =1{1 contrat signé} other{{count} contrats signés}}`
+  /// `{count, plural, =0{Aucun contrat sans litige pour l'instant} =1{1 contrat sans litige} other{{count} contrats sans litige}}`
   String scoreContractsCount(int count) {
     return Intl.plural(
       count,
-      zero: 'Aucun contrat signé pour l\'instant',
-      one: '1 contrat signé',
-      other: '$count contrats signés',
+      zero: 'Aucun contrat sans litige pour l\'instant',
+      one: '1 contrat sans litige',
+      other: '$count contrats sans litige',
       name: 'scoreContractsCount',
       desc: 'SIGNED_CONTRACTS count.',
       args: [count],
@@ -9404,10 +9404,10 @@ class I18n {
     );
   }
 
-  /// `Chaque contrat signé sur Mboa compte, jusqu'à {max} points.`
+  /// `Chaque contrat signé sur Mboa compte, tant qu'aucun litige n'a été retenu à son sujet, jusqu'à {max} points.`
   String scoreHintContracts(int max) {
     return Intl.message(
-      'Chaque contrat signé sur Mboa compte, jusqu\'à $max points.',
+      'Chaque contrat signé sur Mboa compte, tant qu\'aucun litige n\'a été retenu à son sujet, jusqu\'à $max points.',
       name: 'scoreHintContracts',
       desc: 'Own score hint — the ceiling comes from the server (maxPoints).',
       args: [max],
@@ -15397,76 +15397,6 @@ class I18n {
     );
   }
 
-  /// `{price} pour 30 jours`
-  String financePrice(String price) {
-    return Intl.message(
-      '$price pour 30 jours',
-      name: 'financePrice',
-      desc: 'Add-on price',
-      args: [price],
-    );
-  }
-
-  /// `Activer pour {price}`
-  String financeActivate(String price) {
-    return Intl.message(
-      'Activer pour $price',
-      name: 'financeActivate',
-      desc: 'Add-on: the main action, never subscribed',
-      args: [price],
-    );
-  }
-
-  /// `Réactiver pour {price}`
-  String financeReactivate(String price) {
-    return Intl.message(
-      'Réactiver pour $price',
-      name: 'financeReactivate',
-      desc: 'Add-on: the main action, expired',
-      args: [price],
-    );
-  }
-
-  /// `Prolonger de 30 jours`
-  String get financeExtend {
-    return Intl.message(
-      'Prolonger de 30 jours',
-      name: 'financeExtend',
-      desc: 'Add-on: running, add a period after it',
-      args: [],
-    );
-  }
-
-  /// `Active jusqu'au {date}`
-  String financeActiveUntil(String date) {
-    return Intl.message(
-      'Active jusqu\'au $date',
-      name: 'financeActiveUntil',
-      desc: 'Add-on running',
-      args: [date],
-    );
-  }
-
-  /// `Expirée le {date}`
-  String financeExpiredOn(String date) {
-    return Intl.message(
-      'Expirée le $date',
-      name: 'financeExpiredOn',
-      desc: 'Add-on expired',
-      args: [date],
-    );
-  }
-
-  /// `Tout ce que tu as noté reste consultable et exportable. Pour ajouter ou modifier, réactive l'option.`
-  String get financeExpiredBody {
-    return Intl.message(
-      'Tout ce que tu as noté reste consultable et exportable. Pour ajouter ou modifier, réactive l\'option.',
-      name: 'financeExpiredBody',
-      desc: 'Add-on expired: what still works',
-      args: [],
-    );
-  }
-
   /// `Ce qui est inclus`
   String get financeIncluded {
     return Intl.message(
@@ -15753,16 +15683,6 @@ class I18n {
       'Paiement retiré : la facture est à payer',
       name: 'ownerInvoiceReopenedToast',
       desc: 'M24 toast',
-      args: [],
-    );
-  }
-
-  /// `L'option Gestion financière n'est plus active : réactive-la pour ajouter ou modifier.`
-  String get financeRefusedAddon {
-    return Intl.message(
-      'L\'option Gestion financière n\'est plus active : réactive-la pour ajouter ou modifier.',
-      name: 'financeRefusedAddon',
-      desc: 'FINANCE_ADDON_REQUIRED',
       args: [],
     );
   }
@@ -16916,6 +16836,88 @@ class I18n {
       'Une résidence, un immeuble : plusieurs logements loués séparément.',
       name: 'annonceKindMultipleHint',
       desc: 'M10bis form — the multiple kind\'s card',
+      args: [],
+    );
+  }
+
+  /// `Incluse dans ta formule {plan}`
+  String financeIncludedIn(String plan) {
+    return Intl.message(
+      'Incluse dans ta formule $plan',
+      name: 'financeIncludedIn',
+      desc:
+          'M24–M26 hub — the plan held includes the finance tools (RM-M13-09)',
+      args: [plan],
+    );
+  }
+
+  /// `Formule {plan} · jusqu'au {date}`
+  String financeIncludedUntil(String plan, String date) {
+    return Intl.message(
+      'Formule $plan · jusqu\'au $date',
+      name: 'financeIncludedUntil',
+      desc: 'M24–M26 hub — the plan held, and its last day',
+      args: [plan, date],
+    );
+  }
+
+  /// `Le suivi financier est inclus dès la formule {plan}. Ce que tu as déjà noté reste consultable et exportable.`
+  String financeNotIncludedBody(String plan) {
+    return Intl.message(
+      'Le suivi financier est inclus dès la formule $plan. Ce que tu as déjà noté reste consultable et exportable.',
+      name: 'financeNotIncludedBody',
+      desc: 'M24–M26 hub — the plan held does not include it',
+      args: [plan],
+    );
+  }
+
+  /// `Formule {plan} : {price} par mois`
+  String financeFromPrice(String plan, String price) {
+    return Intl.message(
+      'Formule $plan : $price par mois',
+      name: 'financeFromPrice',
+      desc:
+          'M24–M26 hub — the cheapest plan that includes it, the server\'s price',
+      args: [plan, price],
+    );
+  }
+
+  /// `Voir les formules`
+  String get financeSeePlans {
+    return Intl.message(
+      'Voir les formules',
+      name: 'financeSeePlans',
+      desc: 'M24–M26 — the one action when the plan does not include it',
+      args: [],
+    );
+  }
+
+  /// `Le suivi financier est inclus dès la formule Pro : change de formule pour ajouter ou modifier.`
+  String get financeRefusedPlan {
+    return Intl.message(
+      'Le suivi financier est inclus dès la formule Pro : change de formule pour ajouter ou modifier.',
+      name: 'financeRefusedPlan',
+      desc: 'FINANCE_PLAN_REQUIRED on a change',
+      args: [],
+    );
+  }
+
+  /// `Le suivi financier est inclus dès la formule Pro.`
+  String get financePlanRequiredRead {
+    return Intl.message(
+      'Le suivi financier est inclus dès la formule Pro.',
+      name: 'financePlanRequiredRead',
+      desc: 'FINANCE_PLAN_REQUIRED on a read: never held',
+      args: [],
+    );
+  }
+
+  /// `Suivi financier inclus`
+  String get plansFinanceIncluded {
+    return Intl.message(
+      'Suivi financier inclus',
+      name: 'plansFinanceIncluded',
+      desc: 'M13 — a plan card, when includesFinance',
       args: [],
     );
   }

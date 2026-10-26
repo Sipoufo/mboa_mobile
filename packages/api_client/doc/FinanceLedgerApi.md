@@ -9,19 +9,19 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createLedgerEntry**](FinanceLedgerApi.md#createledgerentry) | **POST** /api/v1/finance/ledger | Record an income or an expense; needs the add-on running
-[**deleteLedgerEntry**](FinanceLedgerApi.md#deleteledgerentry) | **DELETE** /api/v1/finance/ledger/{id} | Remove an entry and its attachment; needs the add-on running
+[**createLedgerEntry**](FinanceLedgerApi.md#createledgerentry) | **POST** /api/v1/finance/ledger | Record an income or an expense; needs a plan with the finance tools (Pro, Pro+)
+[**deleteLedgerEntry**](FinanceLedgerApi.md#deleteledgerentry) | **DELETE** /api/v1/finance/ledger/{id} | Remove an entry and its attachment; needs a plan with the finance tools (Pro, Pro+)
 [**exportLedger**](FinanceLedgerApi.md#exportledger) | **GET** /api/v1/finance/ledger/export | The same entries as CSV, for any period (RM-M25-05)
 [**getLedgerAttachment**](FinanceLedgerApi.md#getledgerattachment) | **GET** /api/v1/finance/ledger/{id}/attachment | A short-lived link to an entry&#39;s attachment
 [**getLedgerSummary**](FinanceLedgerApi.md#getledgersummary) | **GET** /api/v1/finance/ledger/summary | Totals in, out and net, and per category, over the same filters (RM-M25-03)
 [**listLedgerEntries**](FinanceLedgerApi.md#listledgerentries) | **GET** /api/v1/finance/ledger | My ledger, newest first — filter by period and by one listing, one residence or the unassigned
-[**updateLedgerEntry**](FinanceLedgerApi.md#updateledgerentry) | **PUT** /api/v1/finance/ledger/{id} | Replace an entry; needs the add-on running
+[**updateLedgerEntry**](FinanceLedgerApi.md#updateledgerentry) | **PUT** /api/v1/finance/ledger/{id} | Replace an entry; needs a plan with the finance tools (Pro, Pro+)
 
 
 # **createLedgerEntry**
 > LedgerEntryResponse createLedgerEntry(ledgerEntryRequest)
 
-Record an income or an expense; needs the add-on running
+Record an income or an expense; needs a plan with the finance tools (Pro, Pro+)
 
 ### Example
 ```dart
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 # **deleteLedgerEntry**
 > deleteLedgerEntry(id)
 
-Remove an entry and its attachment; needs the add-on running
+Remove an entry and its attachment; needs a plan with the finance tools (Pro, Pro+)
 
 ### Example
 ```dart
@@ -294,7 +294,7 @@ Name | Type | Description  | Notes
 # **updateLedgerEntry**
 > LedgerEntryResponse updateLedgerEntry(id, ledgerEntryRequest)
 
-Replace an entry; needs the add-on running
+Replace an entry; needs a plan with the finance tools (Pro, Pro+)
 
 Every field is replaced but the attachment: `attachmentKey` absent or null keeps it, \"\" removes it, a new FINANCE_ATTACHMENT key replaces it (mobile §34). A removed or replaced file is deleted from storage.
 

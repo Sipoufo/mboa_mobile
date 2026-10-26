@@ -126,11 +126,9 @@ class LedgerView extends StatelessWidget {
         appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.financeLedgerTitle)),
         body: switch (state) {
           LedgerLoading() => const Center(child: Loader()),
-          LedgerFailure() => Center(
-              child: TextButton(
-                onPressed: () => context.read<LedgerBloc>().add(const LedgerStarted()),
-                child: Text(l10n.commonRetry),
-              ),
+          LedgerFailure(:final planRequired) => FinanceLoadFailure(
+              planRequired: planRequired,
+              onRetry: () => context.read<LedgerBloc>().add(const LedgerStarted()),
             ),
           final LedgerReady ready => NotificationListener<ScrollEndNotification>(
               onNotification: (notification) {

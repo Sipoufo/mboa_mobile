@@ -12,13 +12,11 @@ Method | HTTP request | Description
 [**extendSubscription**](AdminSubscriptionsApi.md#extendsubscription) | **POST** /api/v1/admin/subscriptions/{accountId}/extend | Add days to a subscription, same tier, with a mandatory reason (RM-M21-04)
 [**getAdminSubscription**](AdminSubscriptionsApi.md#getadminsubscription) | **GET** /api/v1/admin/subscriptions/{accountId} | One prestataire&#39;s subscription, payments and admin adjustments
 [**getSubscriptionRecap**](AdminSubscriptionsApi.md#getsubscriptionrecap) | **GET** /api/v1/admin/subscriptions/recap | Monthly recap: revenue, refunds, active prestataires and MRR per tier, exact FCFA (RM-M21-02)
-[**grantFinanceAddon**](AdminSubscriptionsApi.md#grantfinanceaddon) | **POST** /api/v1/admin/addons/finance/{accountId}/grant | Give days of the finance add-on, onto the running period or from now, with a reason
 [**grantSubscription**](AdminSubscriptionsApi.md#grantsubscription) | **POST** /api/v1/admin/subscriptions | Grant a tier without payment, with a mandatory reason; refused over a paid period (RM-M21-01)
 [**listAdminPayments**](AdminSubscriptionsApi.md#listadminpayments) | **GET** /api/v1/admin/payments | Payment history, filtered by status, account and month
 [**listAdminSubscriptions**](AdminSubscriptionsApi.md#listadminsubscriptions) | **GET** /api/v1/admin/subscriptions | Subscriptions, filtered by tier and status
 [**refundPayment**](AdminSubscriptionsApi.md#refundpayment) | **POST** /api/v1/admin/payments/{id}/refund | Record a refund made outside the platform; access is not cut (RM-M21-03)
-[**updateFinanceAddonPrice**](AdminSubscriptionsApi.md#updatefinanceaddonprice) | **PATCH** /api/v1/admin/addons/finance | Set the finance add-on&#39;s price for 30 days
-[**updatePlan**](AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance)
+[**updatePlan**](AdminSubscriptionsApi.md#updateplan) | **PATCH** /api/v1/admin/plans/{tier} | Update a tier&#39;s parameters (price, listing limit, residence unit allowance, finance tools)
 
 
 # **extendSubscription**
@@ -142,49 +140,6 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **grantFinanceAddon**
-> FinanceAddonResponse grantFinanceAddon(accountId, grantAddonRequest)
-
-Give days of the finance add-on, onto the running period or from now, with a reason
-
-### Example
-```dart
-import 'package:api_client/api.dart';
-
-final api = ApiClient().getAdminSubscriptionsApi();
-final String accountId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final GrantAddonRequest grantAddonRequest = ; // GrantAddonRequest | 
-
-try {
-    final response = api.grantFinanceAddon(accountId, grantAddonRequest);
-    print(response);
-} on DioException catch (e) {
-    print('Exception when calling AdminSubscriptionsApi->grantFinanceAddon: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **accountId** | **String**|  | 
- **grantAddonRequest** | [**GrantAddonRequest**](GrantAddonRequest.md)|  | 
-
-### Return type
-
-[**FinanceAddonResponse**](FinanceAddonResponse.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -365,51 +320,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **updateFinanceAddonPrice**
-> UpdateAddonPriceRequest updateFinanceAddonPrice(updateAddonPriceRequest)
-
-Set the finance add-on's price for 30 days
-
-### Example
-```dart
-import 'package:api_client/api.dart';
-
-final api = ApiClient().getAdminSubscriptionsApi();
-final UpdateAddonPriceRequest updateAddonPriceRequest = ; // UpdateAddonPriceRequest | 
-
-try {
-    final response = api.updateFinanceAddonPrice(updateAddonPriceRequest);
-    print(response);
-} on DioException catch (e) {
-    print('Exception when calling AdminSubscriptionsApi->updateFinanceAddonPrice: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateAddonPriceRequest** | [**UpdateAddonPriceRequest**](UpdateAddonPriceRequest.md)|  | 
-
-### Return type
-
-[**UpdateAddonPriceRequest**](UpdateAddonPriceRequest.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*, application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **updatePlan**
 > TierInfo updatePlan(tier, updatePlanRequest)
 
-Update a tier's parameters (price, listing limit, residence unit allowance)
+Update a tier's parameters (price, listing limit, residence unit allowance, finance tools)
+
+What the founder adjusts to the market without a release: the entry prices set by V076 (3 000 / 7 500 / 10 000 FCFA), the allowances, and which plans include the finance tools (M24–M26). A price applies to the payments that follow; a period already paid is untouched.
 
 ### Example
 ```dart

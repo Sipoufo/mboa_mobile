@@ -18,6 +18,7 @@ part 'tier_info.g.dart';
 /// * [activeListingLimit] 
 /// * [residenceUnitAllowance] 
 /// * [descriptions] 
+/// * [includesFinance] 
 @BuiltValue()
 abstract class TierInfo implements Built<TierInfo, TierInfoBuilder> {
   @BuiltValueField(wireName: r'tier')
@@ -38,6 +39,9 @@ abstract class TierInfo implements Built<TierInfo, TierInfoBuilder> {
 
   @BuiltValueField(wireName: r'descriptions')
   BuiltMap<String, String>? get descriptions;
+
+  @BuiltValueField(wireName: r'includesFinance')
+  bool? get includesFinance;
 
   TierInfo._();
 
@@ -102,6 +106,13 @@ class _$TierInfoSerializer implements PrimitiveSerializer<TierInfo> {
       yield serializers.serialize(
         object.descriptions,
         specifiedType: const FullType(BuiltMap, [FullType(String), FullType(String)]),
+      );
+    }
+    if (object.includesFinance != null) {
+      yield r'includesFinance';
+      yield serializers.serialize(
+        object.includesFinance,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -174,6 +185,14 @@ class _$TierInfoSerializer implements PrimitiveSerializer<TierInfo> {
           ) as BuiltMap<String, String>?;
           if (valueDes == null) continue;
           result.descriptions.replace(valueDes);
+          break;
+        case r'includesFinance':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.includesFinance = valueDes;
           break;
         default:
           unhandled.add(key);

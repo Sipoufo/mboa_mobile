@@ -25,31 +25,35 @@ void main() {
   late MockSubscriptionRepository repository;
   late MockSubscriptionBloc bloc;
 
+  // The entry prices of 2026-10-26 (RM-M13-09) — the server's, never the app's.
   const tiers = [
     TierOption(
       tier: SubscriptionTier.gratuit,
       rank: 0,
       monthlyPrice: 0,
       activeListingLimit: 1,
+      residenceUnitAllowance: 5,
     ),
     TierOption(
       tier: SubscriptionTier.basicPlus,
       rank: 1,
-      monthlyPrice: 5000,
+      monthlyPrice: 3000,
       activeListingLimit: 3,
+      residenceUnitAllowance: 10,
     ),
     TierOption(
       tier: SubscriptionTier.pro,
       rank: 2,
-      monthlyPrice: 10000,
+      monthlyPrice: 7500,
       activeListingLimit: 10,
-      residenceUnitAllowance: 5,
+      residenceUnitAllowance: 50,
+      includesFinance: true,
     ),
     TierOption(
       tier: SubscriptionTier.proPlus,
       rank: 3,
-      monthlyPrice: 15000,
-      residenceUnitAllowance: 20,
+      monthlyPrice: 10000,
+      includesFinance: true,
     ),
   ];
 
@@ -98,6 +102,8 @@ void main() {
     expect(find.text('Formule actuelle'), findsOneWidget);
     // The current plan offers no "Choisir" button; the other three do.
     expect(find.text('Choisir'), findsNWidgets(3));
+    // RM-M13-09 — the finance tools come with the plans that include them.
+    expect(find.text('Suivi financier inclus'), findsNWidgets(2));
 
     await expectLater(
       find.byType(PlansPage),

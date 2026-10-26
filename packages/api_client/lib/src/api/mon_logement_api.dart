@@ -2458,7 +2458,7 @@ class MonLogementApi {
     );
   }
 
-  /// Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (no add-on, RM-M30-15)
+  /// Requests on my homes, newest first — status&#x3D;SENT,SEEN,IN_PROGRESS is the inbox (free for every landlord, RM-M30-15)
   /// 
   ///
   /// Parameters:

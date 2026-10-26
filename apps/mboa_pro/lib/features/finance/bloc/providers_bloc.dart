@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../data/providers_repository.dart';
+import '../models/finance_refusal.dart';
 import '../models/service_provider.dart';
 
 /// The landlord's intervenants (CDC M26), by name, with what each was paid —
@@ -21,6 +22,8 @@ class ProvidersBloc extends Bloc<ProvidersEvent, ProvidersState> {
     try {
       final read = await _repository.list(includeArchived: includeArchived);
       emit(ProvidersReady(items: read.value, includeArchived: includeArchived, isOffline: read.fromCache));
+    } on FinanceRefused catch (refused) {
+      if (state is! ProvidersReady) emit(ProvidersFailure(planRequired: refused.reason == FinanceRefusal.planRequired));
     } catch (_) {
       if (state is! ProvidersReady) emit(const ProvidersFailure());
     }
@@ -56,7 +59,14 @@ final class ProvidersLoading extends ProvidersState {
 }
 
 final class ProvidersFailure extends ProvidersState {
-  const ProvidersFailure();
+  const ProvidersFailure({this.planRequired = false});
+
+  /// Never held the finance tools: the server refuses even reading
+  /// (`FINANCE_PLAN_REQUIRED`) — the page points at the plans, not at retry.
+  final bool planRequired;
+
+  @override
+  List<Object?> get props => [planRequired];
 }
 
 final class ProvidersReady extends ProvidersState {
