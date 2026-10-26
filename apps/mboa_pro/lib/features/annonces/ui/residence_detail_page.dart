@@ -164,6 +164,7 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
                   Input(
                     controller: _searchController,
                     hintText: l10n.residenceUnitsSearchHint,
+                    autocorrect: false,
                     prefixIcon: Icon(
                       LucideIcons.search,
                       size: Dimens.icon,

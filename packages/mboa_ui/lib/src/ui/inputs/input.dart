@@ -51,6 +51,11 @@ class Input extends StatelessWidget {
   final Color? focusedBorderColor;
   final InputVariant variant;
 
+  /// Off for a field that filters a list as you type: the keyboard's
+  /// correction rewrites the query (« Dou » → « D'où ») and its bubble
+  /// swallows the tap on the result underneath.
+  final bool autocorrect;
+
   const Input({
     super.key,
     this.focusNode,
@@ -87,6 +92,7 @@ class Input extends StatelessWidget {
     this.focusedBorderColor,
     this.variant = InputVariant.outlined,
     this.helpText,
+    this.autocorrect = true,
   });
 
   @override
@@ -109,6 +115,8 @@ class Input extends StatelessWidget {
       minLines: minLines ?? 1,
       maxLines: maxLines ?? 1,
       keyboardType: keyboardType,
+      autocorrect: autocorrect,
+      enableSuggestions: autocorrect,
       textInputAction: textInputAction,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();

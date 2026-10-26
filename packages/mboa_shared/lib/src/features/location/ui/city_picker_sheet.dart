@@ -69,6 +69,7 @@ class _CityPickerSheetState extends State<_CityPickerSheet> {
                 Input(
                   controller: _searchController,
                   hintText: l10n.cityPickerSearchHint,
+                  autocorrect: false,
                   prefixIcon: Icon(LucideIcons.search, color: colors.textSecondary, size: Dimens.icon),
                   onChanged: (v) => setState(() => _query = v.trim().toLowerCase()),
                 ),
