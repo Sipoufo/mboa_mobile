@@ -7,6 +7,7 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../assignments/models/assignment.dart';
 import '../bloc/annonces_bloc.dart';
 import '../models/annonce.dart';
 import '../models/annonce_draft.dart';
@@ -143,7 +144,10 @@ class _Loaded extends StatelessWidget {
                         onDelete: () => _confirmDelete(context, annonce),
                         onEdit: () => _edit(context, annonce),
                         onHistory: () => _comingSoon(context),
-                        onAttributions: () => _comingSoon(context),
+                        // M11 — this listing's agents, as its detail opens them.
+                        onAttributions: () => context.router.push(
+                          AgentAssignmentRoute(target: AnnonceTarget(annonce.id)),
+                        ),
                       );
                     },
                   ),

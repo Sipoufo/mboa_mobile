@@ -78,13 +78,15 @@ class MesBiensPage extends StatelessWidget {
             icon: LucideIcons.keyRound,
             title: l10n.mesBiensAttributions,
             subtitle: l10n.mesBiensAttributionsBody,
-            onTap: () => _comingSoon(context),
+            // M11 — the agents and what they are assigned to.
+            onTap: () => context.router.push(const MesAgentsRoute()),
           ),
           _EntryRow(
             icon: LucideIcons.clipboardList,
             title: l10n.mesBiensReservations,
             subtitle: l10n.mesBiensReservationsBody,
-            onTap: () => _comingSoon(context),
+            // M29 — the requests received on his listings.
+            onTap: () => context.router.push(IncomingReservationsRoute()),
           ),
           _EntryRow(
             icon: LucideIcons.radar,

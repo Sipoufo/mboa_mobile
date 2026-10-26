@@ -127,7 +127,8 @@ class HomeHeader extends StatelessWidget {
                 _HeaderIcon(
                   icon: LucideIcons.messageSquare,
                   tooltip: l10n.menuMessages,
-                  onPressed: () => _comingSoon(context),
+                  // M12 — the inbox, the one the menu opens too.
+                  onPressed: () => context.router.push(const MessagesRoute()),
                 ),
                 const SizedBox(width: Dimens.spacingSm),
                 MboaAvatar(

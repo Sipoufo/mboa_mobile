@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
+import 'package:mboa_pro/app/router/app_router.gr.dart';
 import 'package:mboa_pro/features/annonces/ui/mes_biens_page.dart';
 import 'package:mboa_pro/features/home/bloc/home_bloc.dart';
 import 'package:mboa_pro/features/home/models/dashboard_stats.dart';
@@ -10,6 +12,10 @@ import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHomeBloc extends MockBloc<HomeEvent, HomeState> implements HomeBloc {}
+
+class MockStackRouter extends Mock implements StackRouter {}
+
+class _FakeRoute extends Fake implements PageRouteInfo<dynamic> {}
 
 /// Regression cover for a ProviderNotFoundException.
 ///
@@ -60,6 +66,32 @@ void main() {
     expect(find.text('Attributions'), findsOneWidget);
     expect(find.text('Reservations'), findsOneWidget);
     expect(find.text('Prospections'), findsOneWidget);
+  });
+
+  testWidgets('« Attributions » and « Reservations » open the screens that exist — not « Bientôt »', (tester) async {
+    registerFallbackValue(_FakeRoute());
+    final router = MockStackRouter();
+    when(() => router.push<Object?>(any())).thenAnswer((_) async => null);
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('fr'),
+        theme: MboaTheme.light(),
+        localizationsDelegates: MboaLocalizations.delegates,
+        supportedLocales: MboaLocalizations.supportedLocales,
+        home: StackRouterScope(
+          controller: router,
+          stateHash: 0,
+          child: BlocProvider<HomeBloc>.value(value: homeBloc, child: const MesBiensPage()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Attributions'));
+    await tester.tap(find.text('Reservations'));
+
+    final opened = verify(() => router.push<Object?>(captureAny())).captured.cast<PageRouteInfo>();
+    expect([for (final route in opened) route.routeName], [MesAgentsRoute.name, IncomingReservationsRoute.name]);
   });
 
   testWidgets('shows the dashboard figures from the shared bloc', (tester) async {
