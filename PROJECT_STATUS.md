@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-26.
+> Last updated: 2026-10-26 (evening).
 
 ## How to resume
 
@@ -65,7 +65,7 @@
 | M08 résiliation (RM-M08-11/12) | ✅ shared: "Location" card, propose / notify alone, answer, withdraw |
 | M30 Mon Logement — lot 3 | ✅ the space's daily-life tiles, both apps: **Demandes** (ask — remark, repair, question, photos —, follow, reply in the property's thread; the landlord takes it in hand and resolves it; Pro inbox + home nudge; N-38), **État des lieux** (photos by phase and room, compressed and fingerprinted, uploaded with a signed checksum, recorded with Mboa's time, acknowledged once by the landlord; N-39), **Contacts** (the landlord's 15, shared on all or some properties; the tenant calls them) · the space's lists are tabs |
 | M31 Mes anciens logements | ✅ **tenant**: « Mes logements » in two tabs (« En cours » / « Anciens »); an ended tenancy opens its sheet — lease as signed, confirmed total by year with each payment's declaration and receipt, unconfirmed apart, signed contract + code, today's rating, « Mon avis » (M27), requests / photos / schedule read only — and the expenses statement (PDF, share sheet) · **both apps**: « Avant / après » (entry beside exit, room by room) from « État des lieux » |
-| M24–M26 « Gestion financière » (Pro, paid add-on) | ✅ **the add-on** (30 days, MoMo, through the tier checkout; expired: read and export only) · **invoices** (by status, mark paid by hand, correct, cancel, withdraw a payment declared by mistake; only a running contract's tenant) · **the register** (net, in, out, by category over a period and a property; lines kept from confirmed payments locked; CSV) · **intervenants** (a thread's contact or a typed name; payments declared, each a register line; archive / restore / delete) · no money through Mboa |
+| M24–M26 « Gestion financière » (Pro, **included in Pro and Pro+** since 2026-10-26, RM-M13-09) | ✅ **access** from the plan held (`includesFinance`; never held: reads refused and said, « Voir les formules ») · **invoices** (by status, mark paid by hand, correct, cancel, withdraw a payment declared by mistake; only a running contract's tenant) · **the register** (net, in, out, by category over a period and a property; lines kept from confirmed payments locked; CSV) · **intervenants** (a thread's contact or a typed name; payments declared, each a register line; archive / restore / delete) · no money through Mboa |
 | M04 search home | ✅ after the founder's mockup: greeting, city + filters, category tabs, « À la une » (Pro / Pro+), row cards, the map one floating pill away · **phase 2 (§33, RM-M04-08)**: « ★ 4,2 (7) » on every card (none without reviews), « Pertinence / Près de toi » — the nearest first in the chosen city, « à 2,3 km » on each card once the position is known |
 | M30 Mon Logement — lot 2 | ✅ **tenant**: "Mon logement" (Compte) + "Prochain loyer" banner (search tab), the space (header, totals, timeline of échéances, declarations), declare a payment made outside Mboa (consecutive échéances, deposit, MoMo / others, reference, up to 3 compressed proofs) · **Pro "Loyers"**: inbox "À confirmer" (timeline) + "Locataires", confirm / contest, home counter, from a listing or a residence · N-35 / N-36 routed · **slice D**: the receipt on a confirmed payment (« en préparation », then the PDF on the share sheet, both parties) and the space's « Quittances et reçus » · **slice E**: the tenant's invoices (space section, invoice screen) declared paid, N-36 for an invoice |
 
@@ -592,8 +592,11 @@ status breakdown, the sum covers **one page** of listings, so a portfolio past
 100 undercounts. It stays **null — not 0 — when no listing carries the field**,
 so an older backend renders "Bientôt" rather than claiming nobody has looked.
 
-Contacts, conversion, visits, contracts and ranking still **have no source
-data**. They land with M12/M05, M08, M16, M04.
+**Update 2026-10-26: every Doc 10 metric has its source now** — views (total
+and 7 days), contacts, conversion, agent visits, signed contracts (the six of
+`GET /prestataires/me/dashboard`) and the average position (Pro+). The
+backend never marks one unavailable any more; « Bientôt » only shows for an
+older cache. Nothing is missing on M14.
 
 `DashboardStats` models them nullable and the UI renders "Bientôt". The backend
 explicitly endorsed this over fabricating zeroes. Tier-gated metrics show the
@@ -1260,10 +1263,24 @@ To answer the backend:
   it — it can be removed.
 
 Ready to build (the API exists, nothing in the apps):
-- **Receipts' 404** (seen on device): R2 answered 404 to a receipt's
-  presigned link; the app now reports storage's own code
-  (`PdfDownloadFailed`). Waiting for that line to write the backend a precise
-  request.
+- **Receipts** (reproduced 2026-10-26): a rent receipt marked ready whose
+  PDF is missing from R2 (`NoSuchKey`) — backend, §35. The other failure was
+  the app's: iOS refused every share sheet without an origin — fixed,
+  `b177040`.
+
+Found missing, 2026-10-26 (the founder's MVP check):
+- **Notifications page** (both apps): neither Doc 10 nor the API has an
+  in-app list — only push and device registration. Needs a rule and an API.
+- **M06 Historique** (tenant): the API exists (`listMyHistorique`,
+  `clearMyHistorique`), nothing in the app.
+- **M01 Google / Apple sign-in**: buttons shown disabled; the API exists
+  (`/auth/social/login`); needs the provider configuration.
+- **« Bientôt » in Pro wired to screens that exist**: the home header's
+  messages icon, « Réservations » and « Attributions » in Mes biens and on a
+  listing card. Others are not in Doc 10 (menu Recherche / Explorer /
+  Signets / Autres, Prospections) or need the backend (KYC NUI, adresse).
+- **M04 neighbourhood filter**: `districtIds` exists in the API.
+- **M09 « Note des propriétaires »**: the server marks it unavailable.
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
   founder's definition (and backend data); managers / agents on the fiche
   need API data.
@@ -1271,7 +1288,6 @@ Ready to build (the API exists, nothing in the apps):
 
 Blocked:
 - **iOS push** — the APNs key, nothing else.
-- **M14** — five dashboard metrics have no source.
 
 ---
 
