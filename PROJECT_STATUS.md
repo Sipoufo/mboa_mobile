@@ -47,7 +47,7 @@
 | M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
 | M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache, saved searches + N-01 (read-only offline), **exact point once contacted (RM-M04-06)** |
 | M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur · **redesigned after the founder's mockup** (photo hero, gallery, fact chips, provider row, map card) |
-| M06 favoris | ✅ cœur partout, plafond 50, grâce de 30 jours |
+| M06 favoris + historique | ✅ cœur partout, plafond 50, grâce de 30 jours · **historique** (2026-10-26): onglet « Favoris \| Historique », jour par jour, effacé depuis Paramètres (RM-M06-05) |
 | M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur, motif d'annulation |
 | M07bis rapport (locataire) | ✅ écriture, verrouillé une fois publié · la fiche montre points +/− et photos |
 | M12 messagerie | ✅ **both apps** — list, thread, attachments, offline queue · shared views |
@@ -1271,14 +1271,12 @@ Ready to build (the API exists, nothing in the apps):
 Found missing, 2026-10-26 (the founder's MVP check):
 - **Notifications page** (both apps): neither Doc 10 nor the API has an
   in-app list — only push and device registration. Needs a rule and an API.
-- **M06 Historique** (tenant): the API exists (`listMyHistorique`,
-  `clearMyHistorique`), nothing in the app.
 - **M01 Google / Apple sign-in**: buttons shown disabled; the API exists
   (`/auth/social/login`); needs the provider configuration.
-- **« Bientôt » in Pro wired to screens that exist**: the home header's
-  messages icon, « Réservations » and « Attributions » in Mes biens and on a
-  listing card. Others are not in Doc 10 (menu Recherche / Explorer /
-  Signets / Autres, Prospections) or need the backend (KYC NUI, adresse).
+- **« Bientôt » left in Pro** (the four with a screen behind them are wired,
+  `f221b93`): a listing's « Historique », « En attente de validation »,
+  Prospections, the menu's Recherche / Explorer / Signets / Autres — none in
+  Doc 10 — and KYC NUI / adresse (backend).
 - **M04 neighbourhood filter**: `districtIds` exists in the API.
 - **M09 « Note des propriétaires »**: the server marks it unavailable.
 - **Fiche** — "Réservable sous condition — Avance et caution" needs the
