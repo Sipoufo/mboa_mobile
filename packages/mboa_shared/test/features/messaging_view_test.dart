@@ -3,6 +3,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
@@ -160,6 +161,24 @@ void main() {
     // The history stays readable; only writing stops, and the screen says why.
     expect(find.byType(TextField), findsNothing);
     expect(find.textContaining('n\'est plus disponible'), findsOneWidget);
+  });
+
+  testWidgets('an attached image can be taken off — with a cross, not a missing glyph', (tester) async {
+    when(() => uploader.captureAndUpload(source: ImageSource.camera, category: api.CreateUploadRequestCategoryEnum.MESSAGE_ATTACHMENT))
+        .thenAnswer((_) async => 'messages/1.jpg');
+    await pump(tester, ThreadView(uploader: uploader));
+
+    await tester.tap(find.byTooltip('Joindre une image'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Prendre une photo'));
+    await tester.pumpAndSettle();
+
+    // The app ships no Material icons: the default delete glyph was a box.
+    final chip = tester.widget<Chip>(find.byType(Chip));
+    expect((chip.deleteIcon as Icon?)?.icon, LucideIcons.x);
+    await tester.tap(find.byIcon(LucideIcons.x));
+    await tester.pumpAndSettle();
+    expect(find.byType(Chip), findsNothing);
   });
 
   testWidgets('writing goes through the bloc', (tester) async {
