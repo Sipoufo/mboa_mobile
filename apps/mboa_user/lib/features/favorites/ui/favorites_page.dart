@@ -8,6 +8,8 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../history/bloc/history_bloc.dart';
+import '../../history/ui/history_view.dart';
 import '../bloc/favorites_bloc.dart';
 import '../data/favorites_repository.dart';
 import 'widgets/favorite_heart.dart';
@@ -24,7 +26,18 @@ class FavoritesPage extends StatefulWidget {
   State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
+enum _Tab { favorites, history }
+
 class _FavoritesPageState extends State<FavoritesPage> {
+  /// Which list is shown — the screen's own choice, not data.
+  _Tab _tab = _Tab.favorites;
+
+  void _show(_Tab tab) {
+    setState(() => _tab = tab);
+    // Every fiche opened since adds a row: read it again on the way in.
+    if (tab == _Tab.history) getIt<HistoryBloc>().add(const HistoryRequested());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +71,35 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(title: Text(l10n.navFavorites)),
-      body: BlocConsumer<FavoritesBloc, FavoritesState>(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // M06 — « Favoris & Historique ».
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Dimens.spacing, Dimens.spacingSm, Dimens.spacing, 0),
+            child: MboaSegmentedControl<_Tab>(
+              value: _tab,
+              onChanged: _show,
+              segments: [
+                MboaSegment(value: _Tab.favorites, label: l10n.navFavorites),
+                MboaSegment(value: _Tab.history, label: l10n.historyTab),
+              ],
+            ),
+          ),
+          Expanded(
+            child: switch (_tab) {
+              _Tab.history => BlocProvider<HistoryBloc>.value(value: getIt<HistoryBloc>(), child: const HistoryView()),
+              _Tab.favorites => _favorites(context),
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _favorites(BuildContext context) {
+    final l10n = I18n.of(context);
+    return BlocConsumer<FavoritesBloc, FavoritesState>(
         listenWhen: (prev, curr) =>
             curr is FavoritesReady &&
             (curr.limitReached || curr.lastActionFailed),
@@ -86,8 +127,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           final FavoritesReady ready =>
             ready.items.isEmpty ? const _Empty() : _List(state: ready),
         },
-      ),
-    );
+      );
   }
 }
 

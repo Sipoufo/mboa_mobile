@@ -6932,5 +6932,54 @@
   "plansUpgradeNote": "Une formule supérieure prend effet tout de suite.",
   "@plansUpgradeNote": {
     "description": "M13 — RM-M13-04"
+  },
+  "historyTab": "Historique",
+  "@historyTab": {
+    "description": "M06 — the Favoris screen's second tab"
+  },
+  "historyEmptyTitle": "Aucune fiche consultée",
+  "@historyEmptyTitle": {
+    "description": "M06 — the history is empty"
+  },
+  "historyEmptyBody": "Les biens que tu ouvres s'affichent ici, les 30 derniers.",
+  "@historyEmptyBody": {
+    "description": "M06 — RM-M06-05"
+  },
+  "historyToday": "Aujourd'hui",
+  "@historyToday": {
+    "description": "M06 — a day heading"
+  },
+  "historyYesterday": "Hier",
+  "@historyYesterday": {
+    "description": "M06 — a day heading"
+  },
+  "historyViewedAt": "Vu à {time}",
+  "@historyViewedAt": {
+    "description": "M06 — when the fiche was opened",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "historyUnavailable": "Plus disponible",
+  "@historyUnavailable": {
+    "description": "M06 — the listing was deleted"
+  },
+  "settingsClearHistory": "Effacer l'historique",
+  "@settingsClearHistory": {
+    "description": "M06 — RM-M06-05, tenant settings"
+  },
+  "settingsClearHistoryConfirm": "Effacer la liste des biens que tu as consultés ? Tes favoris ne sont pas touchés.",
+  "@settingsClearHistoryConfirm": {
+    "description": "M06 — asked once more"
+  },
+  "historyCleared": "Historique effacé",
+  "@historyCleared": {
+    "description": "M06 — toast"
+  },
+  "historyClearFailed": "L'historique n'a pas pu être effacé. Réessaie une fois connecté.",
+  "@historyClearFailed": {
+    "description": "M06 — offline or refused"
   }
 }

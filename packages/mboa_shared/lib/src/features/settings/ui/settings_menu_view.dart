@@ -18,6 +18,7 @@ class SettingsMenuView extends StatelessWidget {
     this.onNotifications,
     this.onChangePhone,
     this.onChangePassword,
+    this.onClearHistory,
     super.key,
   });
 
@@ -25,6 +26,10 @@ class SettingsMenuView extends StatelessWidget {
   final VoidCallback onDeleteAccount;
   final VoidCallback? onNotifications;
   final VoidCallback? onChangePhone;
+
+  /// M06 — the tenant's consultation history (RM-M06-05). Null: not offered
+  /// (the Pro app keeps none).
+  final VoidCallback? onClearHistory;
   final VoidCallback? onChangePassword;
 
   @override
@@ -90,6 +95,14 @@ class SettingsMenuView extends StatelessWidget {
                       icon: LucideIcons.keyRound,
                       title: l10n.settingsChangePassword,
                       onTap: onChangePassword,
+                    ),
+                  ],
+                  if (onClearHistory != null) ...[
+                    const SizedBox(height: Dimens.spacing),
+                    MboaTileCard(
+                      icon: LucideIcons.history,
+                      title: l10n.settingsClearHistory,
+                      onTap: onClearHistory,
                     ),
                   ],
                 ],

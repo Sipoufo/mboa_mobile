@@ -16991,6 +16991,116 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Historique`
+  String get historyTab {
+    return Intl.message(
+      'Historique',
+      name: 'historyTab',
+      desc: 'M06 — the Favoris screen\'s second tab',
+      args: [],
+    );
+  }
+
+  /// `Aucune fiche consultée`
+  String get historyEmptyTitle {
+    return Intl.message(
+      'Aucune fiche consultée',
+      name: 'historyEmptyTitle',
+      desc: 'M06 — the history is empty',
+      args: [],
+    );
+  }
+
+  /// `Les biens que tu ouvres s'affichent ici, les 30 derniers.`
+  String get historyEmptyBody {
+    return Intl.message(
+      'Les biens que tu ouvres s\'affichent ici, les 30 derniers.',
+      name: 'historyEmptyBody',
+      desc: 'M06 — RM-M06-05',
+      args: [],
+    );
+  }
+
+  /// `Aujourd'hui`
+  String get historyToday {
+    return Intl.message(
+      'Aujourd\'hui',
+      name: 'historyToday',
+      desc: 'M06 — a day heading',
+      args: [],
+    );
+  }
+
+  /// `Hier`
+  String get historyYesterday {
+    return Intl.message(
+      'Hier',
+      name: 'historyYesterday',
+      desc: 'M06 — a day heading',
+      args: [],
+    );
+  }
+
+  /// `Vu à {time}`
+  String historyViewedAt(String time) {
+    return Intl.message(
+      'Vu à $time',
+      name: 'historyViewedAt',
+      desc: 'M06 — when the fiche was opened',
+      args: [time],
+    );
+  }
+
+  /// `Plus disponible`
+  String get historyUnavailable {
+    return Intl.message(
+      'Plus disponible',
+      name: 'historyUnavailable',
+      desc: 'M06 — the listing was deleted',
+      args: [],
+    );
+  }
+
+  /// `Effacer l'historique`
+  String get settingsClearHistory {
+    return Intl.message(
+      'Effacer l\'historique',
+      name: 'settingsClearHistory',
+      desc: 'M06 — RM-M06-05, tenant settings',
+      args: [],
+    );
+  }
+
+  /// `Effacer la liste des biens que tu as consultés ? Tes favoris ne sont pas touchés.`
+  String get settingsClearHistoryConfirm {
+    return Intl.message(
+      'Effacer la liste des biens que tu as consultés ? Tes favoris ne sont pas touchés.',
+      name: 'settingsClearHistoryConfirm',
+      desc: 'M06 — asked once more',
+      args: [],
+    );
+  }
+
+  /// `Historique effacé`
+  String get historyCleared {
+    return Intl.message(
+      'Historique effacé',
+      name: 'historyCleared',
+      desc: 'M06 — toast',
+      args: [],
+    );
+  }
+
+  /// `L'historique n'a pas pu être effacé. Réessaie une fois connecté.`
+  String get historyClearFailed {
+    return Intl.message(
+      'L\'historique n\'a pas pu être effacé. Réessaie une fois connecté.',
+      name: 'historyClearFailed',
+      desc: 'M06 — offline or refused',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

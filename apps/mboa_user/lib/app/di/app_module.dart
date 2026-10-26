@@ -15,6 +15,8 @@ import '../../features/past_homes/bloc/past_homes_bloc.dart';
 import '../../features/profile/profile_types.dart';
 import '../../features/favorites/bloc/favorites_bloc.dart';
 import '../../features/favorites/data/favorites_repository.dart';
+import '../../features/history/bloc/history_bloc.dart';
+import '../../features/history/data/history_repository.dart';
 import '../../features/listing/bloc/listing_detail_bloc.dart';
 import '../../features/listing/data/listing_repository.dart';
 import '../../features/reservations/bloc/my_reservations_bloc.dart';
@@ -95,6 +97,14 @@ void registerAppModule() {
   );
   getIt.registerLazySingleton<FavoritesBloc>(
     () => FavoritesBloc(repository: getIt<FavoritesRepository>()),
+  );
+  // Historique (M06) — read in « Favoris », cleared from « Paramètres »: one
+  // instance for both.
+  getIt.registerLazySingleton<HistoryRepository>(
+    () => HistoryRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<HistoryBloc>(
+    () => HistoryBloc(repository: getIt<HistoryRepository>()),
   );
 
   // Planification de visite (M07) — booking is a sheet over the fiche, the
@@ -366,6 +376,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<MyHomesBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<HistoryBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
 }

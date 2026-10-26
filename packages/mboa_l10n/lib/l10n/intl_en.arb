@@ -6932,5 +6932,54 @@
   "plansUpgradeNote": "A higher plan takes effect at once.",
   "@plansUpgradeNote": {
     "description": "M13 — RM-M13-04"
+  },
+  "historyTab": "History",
+  "@historyTab": {
+    "description": "M06 — the Favoris screen's second tab"
+  },
+  "historyEmptyTitle": "No listing viewed yet",
+  "@historyEmptyTitle": {
+    "description": "M06 — the history is empty"
+  },
+  "historyEmptyBody": "The listings you open show up here, the last 30.",
+  "@historyEmptyBody": {
+    "description": "M06 — RM-M06-05"
+  },
+  "historyToday": "Today",
+  "@historyToday": {
+    "description": "M06 — a day heading"
+  },
+  "historyYesterday": "Yesterday",
+  "@historyYesterday": {
+    "description": "M06 — a day heading"
+  },
+  "historyViewedAt": "Viewed at {time}",
+  "@historyViewedAt": {
+    "description": "M06 — when the fiche was opened",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "historyUnavailable": "No longer available",
+  "@historyUnavailable": {
+    "description": "M06 — the listing was deleted"
+  },
+  "settingsClearHistory": "Clear the history",
+  "@settingsClearHistory": {
+    "description": "M06 — RM-M06-05, tenant settings"
+  },
+  "settingsClearHistoryConfirm": "Clear the list of listings you viewed? Your favorites are not touched.",
+  "@settingsClearHistoryConfirm": {
+    "description": "M06 — asked once more"
+  },
+  "historyCleared": "History cleared",
+  "@historyCleared": {
+    "description": "M06 — toast"
+  },
+  "historyClearFailed": "The history could not be cleared. Try again once online.",
+  "@historyClearFailed": {
+    "description": "M06 — offline or refused"
   }
 }
