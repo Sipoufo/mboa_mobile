@@ -266,6 +266,14 @@ Two rules came out of it:
 - **A rejection clears the tokens.** Concluding "no session" while leaving
   usable ones in storage is what let the two layers disagree at all.
 
+It came back on 2026-10-26 by two doors this rule had not closed (`fb9ef83`):
+**every** rejection now clears, the « no tokens » one included (half a pair
+— an access token without its refresh token — reads as « no tokens »); and
+**iOS keeps the Keychain across an uninstall**, so a reinstall inherited the
+last install's session. `forgetTokensOfPreviousInstall` clears once per
+install, its marker in the device-scoped `appSettings` box (gone on
+uninstall, kept on sign-out).
+
 ### A route provides every bloc it reads — all of them
 Three times now a screen pushed outside its provider has thrown
 `ProviderNotFoundException`: the fiche's heart, the visit detail's list, and
