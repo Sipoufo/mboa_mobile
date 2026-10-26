@@ -1739,7 +1739,7 @@
   "@annonceFormTitleNew": {},
   "annonceFormTitleEdit": "Modifier le bien",
   "@annonceFormTitleEdit": {},
-  "annonceFormKindSingle": "Bien Unique",
+  "annonceFormKindSingle": "Bien unique",
   "@annonceFormKindSingle": {},
   "annonceFormKindMultiple": "Bien multiple",
   "@annonceFormKindMultiple": {},
@@ -1767,7 +1767,7 @@
   "@annonceFormFieldFurnished": {},
   "annonceFormFieldLocation": "Localisation",
   "@annonceFormFieldLocation": {},
-  "annonceFormFieldAvailability": "Disponibilté",
+  "annonceFormFieldAvailability": "Disponibilité",
   "@annonceFormFieldAvailability": {},
   "annonceFormFieldDescription": "Description",
   "@annonceFormFieldDescription": {},
@@ -6861,5 +6861,37 @@
   "ledgerFormAttachmentReplacing": "Elle remplacera la pièce jointe actuelle.",
   "@ledgerFormAttachmentReplacing": {
     "description": "M25 form — a new photo while the line had one (§34)"
+  },
+  "annonceStepBasics": "Quel est ce bien ?",
+  "@annonceStepBasics": {
+    "description": "M10 form — step 1's title"
+  },
+  "annonceStepPlace": "Où se trouve-t-il ?",
+  "@annonceStepPlace": {
+    "description": "M10 form — step 2's title"
+  },
+  "annonceStepDetails": "Comment est le logement ?",
+  "@annonceStepDetails": {
+    "description": "M10 form — step 3's title (single)"
+  },
+  "annonceStepUnits": "Quels logements contient-elle ?",
+  "@annonceStepUnits": {
+    "description": "M10bis form — step 3's title (residence)"
+  },
+  "annonceStepRent": "Combien, et à partir de quand ?",
+  "@annonceStepRent": {
+    "description": "M10 form — step 4's title (single)"
+  },
+  "annonceStepMedia": "À quoi ressemble-t-il ?",
+  "@annonceStepMedia": {
+    "description": "M10 form — the last step's title"
+  },
+  "annonceKindSingleHint": "Un appartement, un studio, une villa… loué d'un seul tenant.",
+  "@annonceKindSingleHint": {
+    "description": "M10 form — the single kind's card"
+  },
+  "annonceKindMultipleHint": "Une résidence, un immeuble : plusieurs logements loués séparément.",
+  "@annonceKindMultipleHint": {
+    "description": "M10bis form — the multiple kind's card"
   }
 }

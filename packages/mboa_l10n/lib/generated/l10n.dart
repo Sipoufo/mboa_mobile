@@ -5174,10 +5174,10 @@ class I18n {
     );
   }
 
-  /// `Bien Unique`
+  /// `Bien unique`
   String get annonceFormKindSingle {
     return Intl.message(
-      'Bien Unique',
+      'Bien unique',
       name: 'annonceFormKindSingle',
       desc: '',
       args: [],
@@ -5284,10 +5284,10 @@ class I18n {
     );
   }
 
-  /// `Disponibilté`
+  /// `Disponibilité`
   String get annonceFormFieldAvailability {
     return Intl.message(
-      'Disponibilté',
+      'Disponibilité',
       name: 'annonceFormFieldAvailability',
       desc: '',
       args: [],
@@ -16836,6 +16836,86 @@ class I18n {
       'Elle remplacera la pièce jointe actuelle.',
       name: 'ledgerFormAttachmentReplacing',
       desc: 'M25 form — a new photo while the line had one (§34)',
+      args: [],
+    );
+  }
+
+  /// `Quel est ce bien ?`
+  String get annonceStepBasics {
+    return Intl.message(
+      'Quel est ce bien ?',
+      name: 'annonceStepBasics',
+      desc: 'M10 form — step 1\'s title',
+      args: [],
+    );
+  }
+
+  /// `Où se trouve-t-il ?`
+  String get annonceStepPlace {
+    return Intl.message(
+      'Où se trouve-t-il ?',
+      name: 'annonceStepPlace',
+      desc: 'M10 form — step 2\'s title',
+      args: [],
+    );
+  }
+
+  /// `Comment est le logement ?`
+  String get annonceStepDetails {
+    return Intl.message(
+      'Comment est le logement ?',
+      name: 'annonceStepDetails',
+      desc: 'M10 form — step 3\'s title (single)',
+      args: [],
+    );
+  }
+
+  /// `Quels logements contient-elle ?`
+  String get annonceStepUnits {
+    return Intl.message(
+      'Quels logements contient-elle ?',
+      name: 'annonceStepUnits',
+      desc: 'M10bis form — step 3\'s title (residence)',
+      args: [],
+    );
+  }
+
+  /// `Combien, et à partir de quand ?`
+  String get annonceStepRent {
+    return Intl.message(
+      'Combien, et à partir de quand ?',
+      name: 'annonceStepRent',
+      desc: 'M10 form — step 4\'s title (single)',
+      args: [],
+    );
+  }
+
+  /// `À quoi ressemble-t-il ?`
+  String get annonceStepMedia {
+    return Intl.message(
+      'À quoi ressemble-t-il ?',
+      name: 'annonceStepMedia',
+      desc: 'M10 form — the last step\'s title',
+      args: [],
+    );
+  }
+
+  /// `Un appartement, un studio, une villa… loué d'un seul tenant.`
+  String get annonceKindSingleHint {
+    return Intl.message(
+      'Un appartement, un studio, une villa… loué d\'un seul tenant.',
+      name: 'annonceKindSingleHint',
+      desc: 'M10 form — the single kind\'s card',
+      args: [],
+    );
+  }
+
+  /// `Une résidence, un immeuble : plusieurs logements loués séparément.`
+  String get annonceKindMultipleHint {
+    return Intl.message(
+      'Une résidence, un immeuble : plusieurs logements loués séparément.',
+      name: 'annonceKindMultipleHint',
+      desc: 'M10bis form — the multiple kind\'s card',
       args: [],
     );
   }

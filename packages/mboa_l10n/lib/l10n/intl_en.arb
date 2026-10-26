@@ -6861,5 +6861,37 @@
   "ledgerFormAttachmentReplacing": "It will replace the current attachment.",
   "@ledgerFormAttachmentReplacing": {
     "description": "M25 form — a new photo while the line had one (§34)"
+  },
+  "annonceStepBasics": "What is this property?",
+  "@annonceStepBasics": {
+    "description": "M10 form — step 1's title"
+  },
+  "annonceStepPlace": "Where is it?",
+  "@annonceStepPlace": {
+    "description": "M10 form — step 2's title"
+  },
+  "annonceStepDetails": "What is it like inside?",
+  "@annonceStepDetails": {
+    "description": "M10 form — step 3's title (single)"
+  },
+  "annonceStepUnits": "Which units does it hold?",
+  "@annonceStepUnits": {
+    "description": "M10bis form — step 3's title (residence)"
+  },
+  "annonceStepRent": "How much, and from when?",
+  "@annonceStepRent": {
+    "description": "M10 form — step 4's title (single)"
+  },
+  "annonceStepMedia": "What does it look like?",
+  "@annonceStepMedia": {
+    "description": "M10 form — the last step's title"
+  },
+  "annonceKindSingleHint": "An apartment, a studio, a villa… let as one.",
+  "@annonceKindSingleHint": {
+    "description": "M10 form — the single kind's card"
+  },
+  "annonceKindMultipleHint": "A residence, a building: several units let separately.",
+  "@annonceKindMultipleHint": {
+    "description": "M10bis form — the multiple kind's card"
   }
 }

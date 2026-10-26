@@ -17,9 +17,12 @@ import 'form_text_field.dart';
 /// units. Rents live here, not on the residence, which is why the multi-unit
 /// form has no single price field.
 class UnitGroupEditor extends StatelessWidget {
-  const UnitGroupEditor({super.key, required this.units});
+  const UnitGroupEditor({super.key, required this.units, this.showTitle = true});
 
   final List<UnitGroupDraft> units;
+
+  /// Off under a step that already asks for the units.
+  final bool showTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +32,10 @@ class UnitGroupEditor extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n.annonceFormUnitsTitle, style: context.mboaText.h3),
-        const SizedBox(height: Dimens.spacingSm),
+        if (showTitle) ...[
+          Text(l10n.annonceFormUnitsTitle, style: context.mboaText.h3),
+          const SizedBox(height: Dimens.spacingSm),
+        ],
         for (var index = 0; index < units.length; index++)
           _UnitGroupRow(
             key: ValueKey(index),
@@ -102,6 +107,7 @@ class _UnitGroupRow extends StatelessWidget {
               child: DropdownButton<PropertyType>(
                 value: group.propertyType,
                 isExpanded: true,
+                icon: Icon(LucideIcons.chevronDown, size: Dimens.icon, color: colors.textSecondary),
                 isDense: true,
                 style: context.mboaText.label.copyWith(fontWeight: FontWeight.w500),
                 items: [
@@ -145,6 +151,7 @@ class _UnitGroupRow extends StatelessWidget {
               child: DropdownButton<RentalPeriod>(
                 value: group.rentalPeriod,
                 isExpanded: true,
+                icon: Icon(LucideIcons.chevronDown, size: Dimens.icon, color: colors.textSecondary),
                 items: [
                   for (final period in RentalPeriod.values)
                     DropdownMenuItem(

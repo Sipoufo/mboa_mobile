@@ -6,6 +6,10 @@ import 'annonce.dart';
 /// Which of the two creation flows the form is running.
 enum AnnonceKind { single, residence }
 
+/// The form's steps, in order — a residence skips [rent]: its rents live in
+/// its unit groups, and its availability goes with them.
+enum AnnonceFormStep { basics, place, details, rent, media }
+
 /// A geographic point plus the district it sits in.
 ///
 /// `latitude`/`longitude` are **required** by the create endpoints, but the
@@ -187,17 +191,35 @@ class AnnonceDraft extends Equatable {
 
   bool get canAddPhoto => photoKeys.length < maxPhotos;
 
+  /// The steps this kind walks.
+  List<AnnonceFormStep> get steps => switch (kind) {
+        AnnonceKind.single => AnnonceFormStep.values,
+        AnnonceKind.residence => const [
+            AnnonceFormStep.basics,
+            AnnonceFormStep.place,
+            AnnonceFormStep.details,
+            AnnonceFormStep.media,
+          ],
+      };
+
+  /// What a step needs before the next one: the fields the create endpoints
+  /// require, each on its own step. Photos are not among them — a draft may
+  /// be saved without the three, publishing is what enforces them.
+  bool isStepComplete(AnnonceFormStep step) => switch (step) {
+        AnnonceFormStep.basics => title.trim().isNotEmpty,
+        AnnonceFormStep.place => location != null,
+        AnnonceFormStep.details => switch (kind) {
+            AnnonceKind.single => true,
+            AnnonceKind.residence =>
+              units.isNotEmpty && units.every((u) => u.isValid) && availableFrom != null,
+          },
+        AnnonceFormStep.rent => (price ?? 0) > 0 && availableFrom != null,
+        AnnonceFormStep.media => true,
+      };
+
   /// Fields the create endpoints require. Photos are checked separately so the
   /// UI can explain the two failures differently.
-  bool get hasRequiredFields {
-    if (location == null || title.trim().isEmpty || availableFrom == null) {
-      return false;
-    }
-    return switch (kind) {
-      AnnonceKind.single => (price ?? 0) > 0,
-      AnnonceKind.residence => units.isNotEmpty && units.every((u) => u.isValid),
-    };
-  }
+  bool get hasRequiredFields => steps.every(isStepComplete);
 
   /// A draft may be saved incomplete on photos; publishing may not.
   bool get canSave => hasRequiredFields;

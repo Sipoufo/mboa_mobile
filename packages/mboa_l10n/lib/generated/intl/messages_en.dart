@@ -814,6 +814,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Add a unit group",
     ),
     "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Units"),
+    "annonceKindMultipleHint": MessageLookupByLibrary.simpleMessage(
+      "A residence, a building: several units let separately.",
+    ),
+    "annonceKindSingleHint": MessageLookupByLibrary.simpleMessage(
+      "An apartment, a studio, a villa… let as one.",
+    ),
     "annoncePeriodDay": MessageLookupByLibrary.simpleMessage("day"),
     "annoncePeriodDayInline": MessageLookupByLibrary.simpleMessage("day"),
     "annoncePeriodMonth": MessageLookupByLibrary.simpleMessage("month"),
@@ -856,6 +862,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "annonceStatusPublished": MessageLookupByLibrary.simpleMessage("Available"),
     "annonceStatusRented": MessageLookupByLibrary.simpleMessage("Rented"),
     "annonceStatusReserved": MessageLookupByLibrary.simpleMessage("Reserved"),
+    "annonceStepBasics": MessageLookupByLibrary.simpleMessage(
+      "What is this property?",
+    ),
+    "annonceStepDetails": MessageLookupByLibrary.simpleMessage(
+      "What is it like inside?",
+    ),
+    "annonceStepMedia": MessageLookupByLibrary.simpleMessage(
+      "What does it look like?",
+    ),
+    "annonceStepPlace": MessageLookupByLibrary.simpleMessage("Where is it?"),
+    "annonceStepRent": MessageLookupByLibrary.simpleMessage(
+      "How much, and from when?",
+    ),
+    "annonceStepUnits": MessageLookupByLibrary.simpleMessage(
+      "Which units does it hold?",
+    ),
     "annoncesActionEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "annoncesActionHistory": MessageLookupByLibrary.simpleMessage("History"),
     "annoncesActionMore": MessageLookupByLibrary.simpleMessage("More actions"),

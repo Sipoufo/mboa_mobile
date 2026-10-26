@@ -728,7 +728,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Équipements",
     ),
     "annonceFormFieldAvailability": MessageLookupByLibrary.simpleMessage(
-      "Disponibilté",
+      "Disponibilité",
     ),
     "annonceFormFieldBathrooms": MessageLookupByLibrary.simpleMessage(
       "Salles de bain",
@@ -802,7 +802,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bien multiple",
     ),
     "annonceFormKindSingle": MessageLookupByLibrary.simpleMessage(
-      "Bien Unique",
+      "Bien unique",
     ),
     "annonceFormLoadFailed": MessageLookupByLibrary.simpleMessage(
       "Impossible de charger ce bien.",
@@ -843,6 +843,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ajouter un groupe d’unités",
     ),
     "annonceFormUnitsTitle": MessageLookupByLibrary.simpleMessage("Unités"),
+    "annonceKindMultipleHint": MessageLookupByLibrary.simpleMessage(
+      "Une résidence, un immeuble : plusieurs logements loués séparément.",
+    ),
+    "annonceKindSingleHint": MessageLookupByLibrary.simpleMessage(
+      "Un appartement, un studio, une villa… loué d\'un seul tenant.",
+    ),
     "annoncePeriodDay": MessageLookupByLibrary.simpleMessage("Jour"),
     "annoncePeriodDayInline": MessageLookupByLibrary.simpleMessage("jour"),
     "annoncePeriodMonth": MessageLookupByLibrary.simpleMessage("Mois"),
@@ -889,6 +895,24 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "annonceStatusRented": MessageLookupByLibrary.simpleMessage("Loué"),
     "annonceStatusReserved": MessageLookupByLibrary.simpleMessage("Réservé"),
+    "annonceStepBasics": MessageLookupByLibrary.simpleMessage(
+      "Quel est ce bien ?",
+    ),
+    "annonceStepDetails": MessageLookupByLibrary.simpleMessage(
+      "Comment est le logement ?",
+    ),
+    "annonceStepMedia": MessageLookupByLibrary.simpleMessage(
+      "À quoi ressemble-t-il ?",
+    ),
+    "annonceStepPlace": MessageLookupByLibrary.simpleMessage(
+      "Où se trouve-t-il ?",
+    ),
+    "annonceStepRent": MessageLookupByLibrary.simpleMessage(
+      "Combien, et à partir de quand ?",
+    ),
+    "annonceStepUnits": MessageLookupByLibrary.simpleMessage(
+      "Quels logements contient-elle ?",
+    ),
     "annoncesActionEdit": MessageLookupByLibrary.simpleMessage("Modifier"),
     "annoncesActionHistory": MessageLookupByLibrary.simpleMessage("Historique"),
     "annoncesActionMore": MessageLookupByLibrary.simpleMessage(

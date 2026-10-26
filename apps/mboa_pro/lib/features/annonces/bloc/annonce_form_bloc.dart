@@ -36,6 +36,7 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
     on<AnnonceFormUnitGroupAdded>(_onUnitGroupAdded);
     on<AnnonceFormUnitGroupUpdated>(_onUnitGroupUpdated);
     on<AnnonceFormUnitGroupRemoved>(_onUnitGroupRemoved);
+    on<AnnonceFormStepRequested>(_onStepRequested);
     on<AnnonceFormSubmitted>(_onSubmitted);
   }
 
@@ -181,6 +182,28 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
     emit(current.copyWith(draft: current.draft.copyWith(units: units)));
   }
 
+  void _onStepRequested(
+    AnnonceFormStepRequested event,
+    Emitter<AnnonceFormState> emit,
+  ) {
+    final current = _editing;
+    if (current == null) return;
+
+    final steps = current.draft.steps;
+    final from = steps.indexOf(current.step);
+    final to = steps.indexOf(event.step);
+    if (to < 0 || to == from) return;
+    // Creating: back always; forward one step at a time, past a step done.
+    // Correcting: anywhere — a rent fixed without walking the five steps.
+    final forward = to > from;
+    if (!current.draft.isEditing &&
+        forward &&
+        (to != from + 1 || !current.draft.isStepComplete(current.step))) {
+      return;
+    }
+    emit(current.copyWith(step: event.step, clearError: true));
+  }
+
   Future<void> _onSubmitted(
     AnnonceFormSubmitted event,
     Emitter<AnnonceFormState> emit,
@@ -194,7 +217,7 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
       return;
     }
 
-    emit(AnnonceFormSubmitting(draft));
+    emit(AnnonceFormSubmitting(draft, step: current.step));
 
     try {
       final id = switch (draft.kind) {

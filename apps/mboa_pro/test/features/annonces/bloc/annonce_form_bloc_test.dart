@@ -340,4 +340,99 @@ void main() {
       expect: () => const <AnnonceFormState>[],
     );
   });
+
+  group('steps', () {
+    test('a single listing walks five; a residence four — its rents are in its units', () {
+      expect(const AnnonceDraft(kind: AnnonceKind.single).steps, AnnonceFormStep.values);
+      expect(const AnnonceDraft(kind: AnnonceKind.residence).steps, [
+        AnnonceFormStep.basics,
+        AnnonceFormStep.place,
+        AnnonceFormStep.details,
+        AnnonceFormStep.media,
+      ]);
+    });
+
+    test('each step asks for its own required fields; together, what saving needs', () {
+      const empty = AnnonceDraft(kind: AnnonceKind.single);
+      expect(empty.isStepComplete(AnnonceFormStep.basics), isFalse);
+      expect(empty.copyWith(title: 'Studio').isStepComplete(AnnonceFormStep.basics), isTrue);
+      expect(empty.isStepComplete(AnnonceFormStep.place), isFalse);
+      expect(empty.copyWith(location: location).isStepComplete(AnnonceFormStep.place), isTrue);
+      // What is inside is optional; the photos too, for a draft.
+      expect(empty.isStepComplete(AnnonceFormStep.details), isTrue);
+      expect(empty.isStepComplete(AnnonceFormStep.media), isTrue);
+      expect(empty.copyWith(price: 120000).isStepComplete(AnnonceFormStep.rent), isFalse);
+      expect(
+        empty.copyWith(price: 120000, availableFrom: DateTime(2026, 9)).isStepComplete(AnnonceFormStep.rent),
+        isTrue,
+      );
+      expect(completeSingle().steps.every(completeSingle().isStepComplete), completeSingle().canSave);
+
+      final residence = const AnnonceDraft(kind: AnnonceKind.residence)
+          .copyWith(units: const [UnitGroupDraft(namePrefix: 'Chambre', price: 45000)]);
+      expect(residence.isStepComplete(AnnonceFormStep.details), isFalse, reason: 'its availability goes with its units');
+      expect(residence.copyWith(availableFrom: DateTime(2026, 9)).isStepComplete(AnnonceFormStep.details), isTrue);
+    });
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'creating: forward only past a step done, one at a time; back always',
+      build: build,
+      seed: () => const AnnonceFormEditing(AnnonceDraft(kind: AnnonceKind.single)),
+      act: (bloc) => bloc
+        // No title yet.
+        ..add(const AnnonceFormStepRequested(AnnonceFormStep.place))
+        ..add(AnnonceFormChanged((d) => d.copyWith(title: 'Studio Akwa')))
+        // Not two steps at once.
+        ..add(const AnnonceFormStepRequested(AnnonceFormStep.details))
+        ..add(const AnnonceFormStepRequested(AnnonceFormStep.place))
+        // No address yet.
+        ..add(const AnnonceFormStepRequested(AnnonceFormStep.details))
+        ..add(const AnnonceFormStepRequested(AnnonceFormStep.basics)),
+      expect: () => [
+        isA<AnnonceFormEditing>().having((s) => s.draft.title, 'title', 'Studio Akwa'),
+        isA<AnnonceFormEditing>().having((s) => s.step, 'step', AnnonceFormStep.place),
+        isA<AnnonceFormEditing>().having((s) => s.step, 'step', AnnonceFormStep.basics),
+      ],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'correcting: any step, straight away',
+      build: build,
+      seed: () => AnnonceFormEditing(completeSingle().copyWith(id: 'existing')),
+      act: (bloc) => bloc.add(const AnnonceFormStepRequested(AnnonceFormStep.rent)),
+      expect: () => [
+        isA<AnnonceFormEditing>().having((s) => s.step, 'step', AnnonceFormStep.rent),
+      ],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'a residence has no rent step to go to',
+      build: build,
+      seed: () => const AnnonceFormEditing(
+        AnnonceDraft(kind: AnnonceKind.residence, id: 'r'),
+        step: AnnonceFormStep.details,
+      ),
+      act: (bloc) => bloc.add(const AnnonceFormStepRequested(AnnonceFormStep.rent)),
+      expect: () => const <AnnonceFormState>[],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'saving stays on the step it was asked from',
+      setUp: () => when(() => annonces.create(any())).thenAnswer(
+        (_) async => const Annonce(
+          id: 'new-1',
+          title: 'Appartement à louer',
+          status: AnnonceStatus.draft,
+          propertyType: PropertyType.apartment,
+        ),
+      ),
+      build: build,
+      seed: () => AnnonceFormEditing(completeSingle(), step: AnnonceFormStep.media),
+      act: (bloc) => bloc.add(const AnnonceFormSubmitted()),
+      expect: () => [
+        AnnonceFormSubmitting(completeSingle(), step: AnnonceFormStep.media),
+        const AnnonceFormSaved(id: 'new-1', kind: AnnonceKind.single),
+      ],
+    );
+  });
 }

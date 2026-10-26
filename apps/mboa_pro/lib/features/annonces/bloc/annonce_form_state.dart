@@ -37,12 +37,14 @@ final class AnnonceFormLoadFailure extends AnnonceFormState {
 final class AnnonceFormEditing extends AnnonceFormState {
   const AnnonceFormEditing(
     this.draft, {
+    this.step = AnnonceFormStep.basics,
     this.uploadingPhoto = false,
     this.error,
     this.apiError,
   });
 
   final AnnonceDraft draft;
+  final AnnonceFormStep step;
   final bool uploadingPhoto;
   final AnnonceFormError? error;
 
@@ -57,6 +59,7 @@ final class AnnonceFormEditing extends AnnonceFormState {
 
   AnnonceFormEditing copyWith({
     AnnonceDraft? draft,
+    AnnonceFormStep? step,
     bool? uploadingPhoto,
     AnnonceFormError? error,
     ApiError? apiError,
@@ -64,22 +67,26 @@ final class AnnonceFormEditing extends AnnonceFormState {
   }) =>
       AnnonceFormEditing(
         draft ?? this.draft,
+        step: step ?? this.step,
         uploadingPhoto: uploadingPhoto ?? this.uploadingPhoto,
         error: clearError ? null : (error ?? this.error),
         apiError: clearError ? null : (apiError ?? this.apiError),
       );
 
   @override
-  List<Object?> get props => [draft, uploadingPhoto, error, apiError];
+  List<Object?> get props => [draft, step, uploadingPhoto, error, apiError];
 }
 
 final class AnnonceFormSubmitting extends AnnonceFormState {
-  const AnnonceFormSubmitting(this.draft);
+  const AnnonceFormSubmitting(this.draft, {this.step = AnnonceFormStep.basics});
 
   final AnnonceDraft draft;
 
+  /// The step saved from — the screen stays on it while the save runs.
+  final AnnonceFormStep step;
+
   @override
-  List<Object?> get props => [draft];
+  List<Object?> get props => [draft, step];
 }
 
 final class AnnonceFormSaved extends AnnonceFormState {

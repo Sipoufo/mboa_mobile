@@ -77,6 +77,17 @@ final class AnnonceFormUnitGroupRemoved extends AnnonceFormEvent {
   List<Object?> get props => [index];
 }
 
+/// Back to a step, or on to another. Creating, only the next one and only
+/// past a step done; correcting, any — the listing is whole already.
+final class AnnonceFormStepRequested extends AnnonceFormEvent {
+  const AnnonceFormStepRequested(this.step);
+
+  final AnnonceFormStep step;
+
+  @override
+  List<Object?> get props => [step];
+}
+
 /// Saves as a draft. Publishing is a separate action on the list/detail.
 final class AnnonceFormSubmitted extends AnnonceFormEvent {
   const AnnonceFormSubmitted();
