@@ -165,6 +165,8 @@ class _NavSlot extends StatelessWidget {
         // (well over 48 × 48).
         containedInkWell: true,
         highlightShape: BoxShape.rectangle,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
         child: Column(
           children: [
             SizedBox(

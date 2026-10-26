@@ -65,32 +65,39 @@ class _SearchGreetingState extends State<SearchGreeting> {
       children: [
         shortcut(LucideIcons.bookmark, l10n.savedSearchesTitle, widget.onSavedSearches),
         shortcut(LucideIcons.messageSquareText, l10n.navMessages, widget.onMessages),
-        const Spacer(),
-        Flexible(
-          flex: 4,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+        // The greeting and the avatar as one group, against the right edge;
+        // the words take what the shortcuts leave.
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(l10n.searchHello, style: context.mboaText.h3.copyWith(color: colors.primaryDark)),
-              Text(
-                data == null ? l10n.searchWelcome : (data.firstName ?? data.fullName),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(l10n.searchHello, style: context.mboaText.h3.copyWith(color: colors.primaryDark)),
+                    Text(
+                      data == null ? l10n.searchWelcome : (data.firstName ?? data.fullName),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Semantics(
+                button: true,
+                label: data == null ? l10n.loginTitle : l10n.navAccount,
+                child: GestureDetector(
+                  onTap: widget.onAvatar,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(Dimens.radiusMd),
+                    child: MboaAvatar(imageUrl: data?.photoUrl, initials: data?.initials ?? '', size: 44),
+                  ),
+                ),
               ),
             ],
-          ),
-        ),
-        const SizedBox(width: Dimens.spacingMd),
-        Semantics(
-          button: true,
-          label: data == null ? l10n.loginTitle : l10n.navAccount,
-          child: GestureDetector(
-            onTap: widget.onAvatar,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(Dimens.radiusMd),
-              child: MboaAvatar(imageUrl: data?.photoUrl, initials: data?.initials ?? '', size: 44),
-            ),
           ),
         ),
       ],
