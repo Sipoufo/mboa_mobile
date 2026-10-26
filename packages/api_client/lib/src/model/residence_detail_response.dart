@@ -5,6 +5,8 @@
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
 import 'package:api_client/src/model/search_result_item.dart';
+import 'package:api_client/src/model/property_rating.dart';
+import 'package:api_client/src/model/provider_card.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -23,6 +25,9 @@ part 'residence_detail_response.g.dart';
 /// * [longitude] 
 /// * [units] 
 /// * [exactLocation] 
+/// * [provider] 
+/// * [badges] 
+/// * [rating] 
 @BuiltValue()
 abstract class ResidenceDetailResponse implements Built<ResidenceDetailResponse, ResidenceDetailResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -54,6 +59,16 @@ abstract class ResidenceDetailResponse implements Built<ResidenceDetailResponse,
 
   @BuiltValueField(wireName: r'exactLocation')
   bool? get exactLocation;
+
+  @BuiltValueField(wireName: r'provider')
+  ProviderCard? get provider;
+
+  @BuiltValueField(wireName: r'badges')
+  BuiltList<ResidenceDetailResponseBadgesEnum>? get badges;
+  // enum badgesEnum {  TRUSTED,  RECERTIFIED,  IDENTITY_VERIFIED,  PHOTOS_VERIFIED,  };
+
+  @BuiltValueField(wireName: r'rating')
+  PropertyRating? get rating;
 
   ResidenceDetailResponse._();
 
@@ -146,6 +161,27 @@ class _$ResidenceDetailResponseSerializer implements PrimitiveSerializer<Residen
       yield serializers.serialize(
         object.exactLocation,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.provider != null) {
+      yield r'provider';
+      yield serializers.serialize(
+        object.provider,
+        specifiedType: const FullType(ProviderCard),
+      );
+    }
+    if (object.badges != null) {
+      yield r'badges';
+      yield serializers.serialize(
+        object.badges,
+        specifiedType: const FullType(BuiltList, [FullType(ResidenceDetailResponseBadgesEnum)]),
+      );
+    }
+    if (object.rating != null) {
+      yield r'rating';
+      yield serializers.serialize(
+        object.rating,
+        specifiedType: const FullType(PropertyRating),
       );
     }
   }
@@ -251,6 +287,30 @@ class _$ResidenceDetailResponseSerializer implements PrimitiveSerializer<Residen
           if (valueDes == null) continue;
           result.exactLocation = valueDes;
           break;
+        case r'provider':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(ProviderCard),
+          ) as ProviderCard?;
+          if (valueDes == null) continue;
+          result.provider.replace(valueDes);
+          break;
+        case r'badges':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltList, [FullType(ResidenceDetailResponseBadgesEnum)]),
+          ) as BuiltList<ResidenceDetailResponseBadgesEnum>?;
+          if (valueDes == null) continue;
+          result.badges.replace(valueDes);
+          break;
+        case r'rating':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(PropertyRating),
+          ) as PropertyRating?;
+          if (valueDes == null) continue;
+          result.rating.replace(valueDes);
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -278,5 +338,26 @@ class _$ResidenceDetailResponseSerializer implements PrimitiveSerializer<Residen
     );
     return result.build();
   }
+}
+
+class ResidenceDetailResponseBadgesEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'TRUSTED')
+  static const ResidenceDetailResponseBadgesEnum TRUSTED = _$residenceDetailResponseBadgesEnum_TRUSTED;
+  @BuiltValueEnumConst(wireName: r'RECERTIFIED')
+  static const ResidenceDetailResponseBadgesEnum RECERTIFIED = _$residenceDetailResponseBadgesEnum_RECERTIFIED;
+  @BuiltValueEnumConst(wireName: r'IDENTITY_VERIFIED')
+  static const ResidenceDetailResponseBadgesEnum IDENTITY_VERIFIED = _$residenceDetailResponseBadgesEnum_IDENTITY_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'PHOTOS_VERIFIED')
+  static const ResidenceDetailResponseBadgesEnum PHOTOS_VERIFIED = _$residenceDetailResponseBadgesEnum_PHOTOS_VERIFIED;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const ResidenceDetailResponseBadgesEnum unknownDefaultOpenApi = _$residenceDetailResponseBadgesEnum_unknownDefaultOpenApi;
+
+  static Serializer<ResidenceDetailResponseBadgesEnum> get serializer => _$residenceDetailResponseBadgesEnumSerializer;
+
+  const ResidenceDetailResponseBadgesEnum._(String name): super(name);
+
+  static BuiltSet<ResidenceDetailResponseBadgesEnum> get values => _$residenceDetailResponseBadgesEnumValues;
+  static ResidenceDetailResponseBadgesEnum valueOf(String name) => _$residenceDetailResponseBadgesEnumValueOf(name);
 }
 

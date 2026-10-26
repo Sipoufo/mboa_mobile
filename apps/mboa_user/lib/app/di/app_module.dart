@@ -18,6 +18,7 @@ import '../../features/favorites/data/favorites_repository.dart';
 import '../../features/history/bloc/history_bloc.dart';
 import '../../features/history/data/history_repository.dart';
 import '../../features/listing/bloc/listing_detail_bloc.dart';
+import '../../features/listing/bloc/residence_detail_bloc.dart';
 import '../../features/listing/data/listing_repository.dart';
 import '../../features/reservations/bloc/my_reservations_bloc.dart';
 import '../../features/reservations/bloc/reservation_bloc.dart';
@@ -88,6 +89,9 @@ void registerAppModule() {
   );
   getIt.registerFactory<ListingDetailBloc>(
     () => ListingDetailBloc(repository: getIt<ListingRepository>()),
+  );
+  getIt.registerFactory<ResidenceDetailBloc>(
+    () => ResidenceDetailBloc(repository: getIt<ListingRepository>()),
   );
 
   // Favoris (M06) — session-scoped and read from three screens, so a single

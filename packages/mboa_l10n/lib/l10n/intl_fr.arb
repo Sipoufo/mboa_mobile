@@ -6981,5 +6981,88 @@
   "historyClearFailed": "L'historique n'a pas pu être effacé. Réessaie une fois connecté.",
   "@historyClearFailed": {
     "description": "M06 — offline or refused"
+  },
+  "residenceGoneTitle": "Cette résidence n'est plus en ligne",
+  "@residenceGoneTitle": {
+    "description": "M10bis — 404 on the fiche"
+  },
+  "residenceGoneBody": "Elle a été retirée. Essaie une nouvelle recherche.",
+  "@residenceGoneBody": {
+    "description": "M10bis — 404 on the fiche"
+  },
+  "residenceReviewsTitle": "Avis sur la résidence",
+  "@residenceReviewsTitle": {
+    "description": "§36 — every unit's reviews"
+  },
+  "residenceNoUnits": "Aucune unité disponible pour l'instant.",
+  "@residenceNoUnits": {
+    "description": "M10bis — a residence with no live unit"
+  },
+  "residenceGroupApartment": "{count, plural, one{1 appartement} other{{count} appartements}}",
+  "@residenceGroupApartment": {
+    "description": "M10bis — units of one type",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceGroupStudio": "{count, plural, one{1 studio} other{{count} studios}}",
+  "@residenceGroupStudio": {
+    "description": "M10bis — units of one type",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceGroupVilla": "{count, plural, one{1 villa} other{{count} villas}}",
+  "@residenceGroupVilla": {
+    "description": "M10bis — units of one type",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceGroupRoom": "{count, plural, one{1 chambre} other{{count} chambres}}",
+  "@residenceGroupRoom": {
+    "description": "M10bis — units of one type",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceGroupOffice": "{count, plural, one{1 bureau} other{{count} bureaux}}",
+  "@residenceGroupOffice": {
+    "description": "M10bis — units of one type",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceGroupCommercialSpace": "{count, plural, one{1 local commercial} other{{count} locaux commerciaux}}",
+  "@residenceGroupCommercialSpace": {
+    "description": "M10bis — units of one type",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "residenceGroupSeeAll": "Voir les {units}",
+  "@residenceGroupSeeAll": {
+    "description": "M10bis — opens a group: « Voir les 50 chambres »",
+    "placeholders": {
+      "units": {
+        "type": "String"
+      }
+    }
+  },
+  "residenceGroupSeeLess": "Voir moins",
+  "@residenceGroupSeeLess": {
+    "description": "M10bis — folds a group back to three"
   }
 }

@@ -16,18 +16,72 @@ const _star = Color(0xFFFFC83D);
 /// gallery and the heart.
 ///
 /// RM-M05-01 — three photos in the carousel, every one behind the gallery.
-class ListingHero extends StatefulWidget {
+class ListingHero extends StatelessWidget {
   const ListingHero({super.key, required this.detail});
 
   final ListingDetail detail;
 
+  static const double height = FicheHero.height;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final price = detail.displayPrice;
+
+    return FicheHero(
+      photoUrls: detail.photoUrls,
+      title: detail.title,
+      place: [detail.district, detail.city].nonNulls.join(', '),
+      rating: detail.rating,
+      price: price == null ? null : detail.rentalPeriod.priceLabel(l10n, price),
+      trailing: FavoriteHeart(
+        annonceId: detail.id,
+        background: true,
+        optimistic: optimisticFavorite(
+          annonceId: detail.id,
+          title: detail.title,
+          photoKey: detail.photoKeys.firstOrNull,
+          price: detail.displayPrice,
+          rentalPeriod: detail.rentalPeriod,
+          city: detail.city,
+          district: detail.district,
+        ),
+      ),
+    );
+  }
+}
+
+/// A fiche's photo with its words laid over it — a listing's or a residence's.
+/// Three photos in the carousel; the gallery button opens every one.
+class FicheHero extends StatefulWidget {
+  const FicheHero({
+    super.key,
+    required this.photoUrls,
+    this.title,
+    this.place = '',
+    this.rating = const PropertyRatingSummary(),
+    this.price,
+    this.trailing,
+  });
+
+  final List<String> photoUrls;
+  final String? title;
+  final String place;
+  final PropertyRatingSummary rating;
+
+  /// Already worded: « 110 000 FCFA / mois », « À partir de … ».
+  final String? price;
+
+  /// Beside the gallery button — the listing's heart.
+  final Widget? trailing;
+
   static const double height = 320;
 
   @override
-  State<ListingHero> createState() => _ListingHeroState();
+  State<FicheHero> createState() => _FicheHeroState();
 }
 
-class _ListingHeroState extends State<ListingHero> {
+class _FicheHeroState extends State<FicheHero> {
   final _controller = PageController();
   int _page = 0;
 
@@ -41,11 +95,12 @@ class _ListingHeroState extends State<ListingHero> {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
-    final detail = widget.detail;
-    final urls = detail.photoUrls;
+    final urls = widget.photoUrls;
     final shown = urls.take(ListingDetail.carouselPhotos).toList();
-    final price = detail.displayPrice;
-    final place = [detail.district, detail.city].nonNulls.join(', ');
+    final rating = widget.rating;
+    final price = widget.price;
+    final place = widget.place;
+    final trailing = widget.trailing;
 
     Widget placeholder() => ColoredBox(
           color: colors.primaryPale,
@@ -55,7 +110,7 @@ class _ListingHeroState extends State<ListingHero> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Dimens.radiusLg),
       child: SizedBox(
-        height: ListingHero.height,
+        height: FicheHero.height,
         child: Stack(
           children: [
             Positioned.fill(
@@ -85,7 +140,8 @@ class _ListingHeroState extends State<ListingHero> {
             ),
             Positioned(
               left: Dimens.spacing,
-              right: 104,
+              // Clear of the buttons: one, or two with the heart.
+              right: trailing == null ? 72 : 104,
               bottom: Dimens.spacingLg,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,9 +149,9 @@ class _ListingHeroState extends State<ListingHero> {
                   Row(
                     children: [
                       // RM-M05-08 — no rating, no number.
-                      if (detail.rating.hasRating) ...[
+                      if (rating.hasRating) ...[
                         Text(
-                          detail.rating.average!.toStringAsFixed(1),
+                          rating.average!.toStringAsFixed(1),
                           style: context.mboaText.label.copyWith(color: colors.onBrand),
                         ),
                         const SizedBox(width: 2),
@@ -105,7 +161,7 @@ class _ListingHeroState extends State<ListingHero> {
                       if (price != null)
                         Flexible(
                           child: Text(
-                            detail.rentalPeriod.priceLabel(l10n, price),
+                            price,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: context.mboaText.caption.copyWith(color: colors.onBrand),
@@ -115,7 +171,7 @@ class _ListingHeroState extends State<ListingHero> {
                   ),
                   const SizedBox(height: Dimens.spacingXs),
                   Text(
-                    detail.title ?? '',
+                    widget.title ?? '',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.mboaText.h2.copyWith(color: colors.onBrand),
@@ -151,20 +207,10 @@ class _ListingHeroState extends State<ListingHero> {
                       icon: LucideIcons.images,
                       onPressed: () => showListingGallery(context, urls: urls, initial: _page),
                     ),
-                  const SizedBox(width: Dimens.spacingSm),
-                  FavoriteHeart(
-                    annonceId: detail.id,
-                    background: true,
-                    optimistic: optimisticFavorite(
-                      annonceId: detail.id,
-                      title: detail.title,
-                      photoKey: detail.photoKeys.firstOrNull,
-                      price: detail.displayPrice,
-                      rentalPeriod: detail.rentalPeriod,
-                      city: detail.city,
-                      district: detail.district,
-                    ),
-                  ),
+                  if (trailing != null) ...[
+                    const SizedBox(width: Dimens.spacingSm),
+                    trailing,
+                  ],
                 ],
               ),
             ),
@@ -319,13 +365,14 @@ class ListingFactChips extends StatelessWidget {
     return Wrap(
       spacing: Dimens.spacingSm,
       runSpacing: Dimens.spacingSm,
-      children: [for (final (icon, label) in facts) _Pill(icon: icon, label: label)],
+      children: [for (final (icon, label) in facts) FichePill(icon: icon, label: label)],
     );
   }
 }
 
-class _Pill extends StatelessWidget {
-  const _Pill({required this.icon, required this.label});
+/// One characteristic, as a pill.
+class FichePill extends StatelessWidget {
+  const FichePill({super.key, required this.icon, required this.label});
 
   final IconData icon;
   final String label;
@@ -408,9 +455,16 @@ class ListingProviderRow extends StatelessWidget {
 /// Either may be absent — no position, no map; no rating, no reviews card
 /// (RM-M05-08) — and the other then takes the row.
 class ListingCardsRow extends StatelessWidget {
-  const ListingCardsRow({super.key, required this.detail, required this.onOpenMap, required this.onOpenReviews});
+  const ListingCardsRow({
+    super.key,
+    required this.hasPosition,
+    required this.rating,
+    required this.onOpenMap,
+    required this.onOpenReviews,
+  });
 
-  final ListingDetail detail;
+  final bool hasPosition;
+  final PropertyRatingSummary rating;
   final VoidCallback onOpenMap;
   final VoidCallback onOpenReviews;
 
@@ -420,10 +474,9 @@ class ListingCardsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
-    final rating = detail.rating;
 
     final cards = <Widget>[
-      if (detail.hasPosition)
+      if (hasPosition)
         _Card(
           title: l10n.listingLocationCard,
           onTap: onOpenMap,

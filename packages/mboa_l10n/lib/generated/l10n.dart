@@ -17101,6 +17101,138 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Cette résidence n'est plus en ligne`
+  String get residenceGoneTitle {
+    return Intl.message(
+      'Cette résidence n\'est plus en ligne',
+      name: 'residenceGoneTitle',
+      desc: 'M10bis — 404 on the fiche',
+      args: [],
+    );
+  }
+
+  /// `Elle a été retirée. Essaie une nouvelle recherche.`
+  String get residenceGoneBody {
+    return Intl.message(
+      'Elle a été retirée. Essaie une nouvelle recherche.',
+      name: 'residenceGoneBody',
+      desc: 'M10bis — 404 on the fiche',
+      args: [],
+    );
+  }
+
+  /// `Avis sur la résidence`
+  String get residenceReviewsTitle {
+    return Intl.message(
+      'Avis sur la résidence',
+      name: 'residenceReviewsTitle',
+      desc: '§36 — every unit\'s reviews',
+      args: [],
+    );
+  }
+
+  /// `Aucune unité disponible pour l'instant.`
+  String get residenceNoUnits {
+    return Intl.message(
+      'Aucune unité disponible pour l\'instant.',
+      name: 'residenceNoUnits',
+      desc: 'M10bis — a residence with no live unit',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one{1 appartement} other{{count} appartements}}`
+  String residenceGroupApartment(int count) {
+    return Intl.plural(
+      count,
+      one: '1 appartement',
+      other: '$count appartements',
+      name: 'residenceGroupApartment',
+      desc: 'M10bis — units of one type',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{1 studio} other{{count} studios}}`
+  String residenceGroupStudio(int count) {
+    return Intl.plural(
+      count,
+      one: '1 studio',
+      other: '$count studios',
+      name: 'residenceGroupStudio',
+      desc: 'M10bis — units of one type',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{1 villa} other{{count} villas}}`
+  String residenceGroupVilla(int count) {
+    return Intl.plural(
+      count,
+      one: '1 villa',
+      other: '$count villas',
+      name: 'residenceGroupVilla',
+      desc: 'M10bis — units of one type',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{1 chambre} other{{count} chambres}}`
+  String residenceGroupRoom(int count) {
+    return Intl.plural(
+      count,
+      one: '1 chambre',
+      other: '$count chambres',
+      name: 'residenceGroupRoom',
+      desc: 'M10bis — units of one type',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{1 bureau} other{{count} bureaux}}`
+  String residenceGroupOffice(int count) {
+    return Intl.plural(
+      count,
+      one: '1 bureau',
+      other: '$count bureaux',
+      name: 'residenceGroupOffice',
+      desc: 'M10bis — units of one type',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{1 local commercial} other{{count} locaux commerciaux}}`
+  String residenceGroupCommercialSpace(int count) {
+    return Intl.plural(
+      count,
+      one: '1 local commercial',
+      other: '$count locaux commerciaux',
+      name: 'residenceGroupCommercialSpace',
+      desc: 'M10bis — units of one type',
+      args: [count],
+    );
+  }
+
+  /// `Voir les {units}`
+  String residenceGroupSeeAll(String units) {
+    return Intl.message(
+      'Voir les $units',
+      name: 'residenceGroupSeeAll',
+      desc: 'M10bis — opens a group: « Voir les 50 chambres »',
+      args: [units],
+    );
+  }
+
+  /// `Voir moins`
+  String get residenceGroupSeeLess {
+    return Intl.message(
+      'Voir moins',
+      name: 'residenceGroupSeeLess',
+      desc: 'M10bis — folds a group back to three',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

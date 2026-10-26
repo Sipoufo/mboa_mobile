@@ -363,6 +363,97 @@ class SearchApi {
     );
   }
 
+  /// A residence&#39;s reviews — all its units&#39;, visits and tenancies in one feed (RM-M27-05)
+  /// Public, like the residence fiche. The same items as a listing&#39;s feed; each keeps its &#x60;annonceId&#x60;, the unit it describes. Every unit counts, whatever its status now. &#x60;?type&#x3D;&#x60; keeps one kind. 404 RESIDENCE_NOT_FOUND (mobile §36).
+  ///
+  /// Parameters:
+  /// * [id] 
+  /// * [pageable] 
+  /// * [type] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [PageResponsePropertyReview] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<PageResponsePropertyReview>> listResidenceReviews({ 
+    required String id,
+    required Pageable pageable,
+    String? type,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/api/v1/search/residences/{id}/reviews'.replaceAll('{' r'id' '}', encodeQueryParameter(_serializers, id, const FullType(String)).toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (type != null) r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+      r'pageable': encodeQueryParameter(_serializers, pageable, const FullType(Pageable)),
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    PageResponsePropertyReview? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(PageResponsePropertyReview),
+      ) as PageResponsePropertyReview;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<PageResponsePropertyReview>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// Search listings and residences (city/district required; other filters cumulative)
   /// With &#x60;lat&#x60; and &#x60;lng&#x60; (the user&#39;s position, both or neither), each card carries &#x60;distanceKm&#x60;, measured to the point it shows. &#x60;sort&#x3D;distance&#x60; puts the nearest first (ties by tier then recency); the default, &#x60;relevance&#x60;, is tier then recency. Each card carries its &#x60;rating&#x60;, as on the fiche — a residence&#39;s gathers all its units&#39; reviews.
   ///

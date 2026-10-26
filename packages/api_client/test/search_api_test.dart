@@ -41,6 +41,15 @@ void main() {
       // TODO
     });
 
+    // A residence's reviews — all its units', visits and tenancies in one feed (RM-M27-05)
+    //
+    // Public, like the residence fiche. The same items as a listing's feed; each keeps its `annonceId`, the unit it describes. Every unit counts, whatever its status now. `?type=` keeps one kind. 404 RESIDENCE_NOT_FOUND (mobile §36).
+    //
+    //Future<PageResponsePropertyReview> listResidenceReviews(String id, Pageable pageable, { String type }) async
+    test('test listResidenceReviews', () async {
+      // TODO
+    });
+
     // Search listings and residences (city/district required; other filters cumulative)
     //
     // With `lat` and `lng` (the user's position, both or neither), each card carries `distanceKm`, measured to the point it shows. `sort=distance` puts the nearest first (ties by tier then recency); the default, `relevance`, is tier then recency. Each card carries its `rating`, as on the fiche — a residence's gathers all its units' reviews.

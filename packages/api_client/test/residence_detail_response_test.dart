@@ -57,5 +57,20 @@ void main() {
       // TODO
     });
 
+    // ProviderCard provider
+    test('to test the property `provider`', () async {
+      // TODO
+    });
+
+    // BuiltList<String> badges
+    test('to test the property `badges`', () async {
+      // TODO
+    });
+
+    // PropertyRating rating
+    test('to test the property `rating`', () async {
+      // TODO
+    });
+
   });
 }

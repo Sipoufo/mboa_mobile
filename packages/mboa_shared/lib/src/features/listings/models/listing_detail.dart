@@ -411,6 +411,23 @@ class ListingUnit extends Equatable {
       ];
 }
 
+/// The units of one type in a residence — how its fiche lists them, so fifty
+/// rooms read as one choice rather than fifty rows.
+class ResidenceUnitGroup extends Equatable {
+  const ResidenceUnitGroup({required this.type, required this.units});
+
+  final PropertyType type;
+
+  /// In the server's order: « Chambre 1, Chambre 2… » stays a sequence.
+  final List<ListingUnit> units;
+
+  /// The lowest rent among them, in the period most of them are let by.
+  (int, RentalPeriod)? get from => ResidenceDetail.lowestRent(units);
+
+  @override
+  List<Object?> get props => [type, units];
+}
+
 /// The public fiche of a residence, with its live units.
 class ResidenceDetail extends Equatable {
   const ResidenceDetail({
@@ -424,6 +441,8 @@ class ResidenceDetail extends Equatable {
     this.longitude,
     this.exactLocation = false,
     this.units = const [],
+    this.provider,
+    this.rating = const PropertyRatingSummary(),
   });
 
   final String id;
@@ -442,8 +461,51 @@ class ResidenceDetail extends Equatable {
   /// identity the pro app relies on.
   final List<ListingUnit> units;
 
+  /// §36 — as on a listing's fiche. Its badges are the residence's: the
+  /// prestataire's, plus 📸 when the shared photos were verified.
+  final ProviderSummary? provider;
+
+  /// §36 — every unit's reviews, whatever the units' status now.
+  final PropertyRatingSummary rating;
+
   List<String> get photoUrls =>
       photoKeys.map(BaseProfile.mediaUrl).nonNulls.toList();
+
+  bool get hasPosition => latitude != null && longitude != null;
+
+  /// The units by type, in the catalogue's order.
+  List<ResidenceUnitGroup> get groups {
+    final byType = <PropertyType, List<ListingUnit>>{};
+    for (final unit in units) {
+      (byType[unit.propertyType] ??= []).add(unit);
+    }
+    return [
+      for (final type in PropertyType.values)
+        if (byType[type] case final units?) ResidenceUnitGroup(type: type, units: units),
+    ];
+  }
+
+  /// What the residence starts at — see [lowestRent].
+  (int, RentalPeriod)? get from => lowestRent(units);
+
+  /// The lowest rent in the period most [units] are let by: a room by the night
+  /// and a flat by the month are not on one scale, so the cheapest of all would
+  /// be a night's price passed off as the residence's.
+  static (int, RentalPeriod)? lowestRent(Iterable<ListingUnit> units) {
+    final priced = units.where((unit) => unit.displayPrice != null).toList();
+    if (priced.isEmpty) return null;
+
+    final counts = <RentalPeriod, int>{};
+    for (final unit in priced) {
+      counts[unit.rentalPeriod] = (counts[unit.rentalPeriod] ?? 0) + 1;
+    }
+    final period = counts.entries.reduce((a, b) => b.value > a.value ? b : a).key;
+    final lowest = priced
+        .where((unit) => unit.rentalPeriod == period)
+        .map((unit) => unit.displayPrice!)
+        .reduce((a, b) => a < b ? a : b);
+    return (lowest, period);
+  }
 
   static ResidenceDetail fromResponse(ResidenceDetailResponse response) =>
       ResidenceDetail(
@@ -458,6 +520,12 @@ class ResidenceDetail extends Equatable {
         exactLocation: response.exactLocation ?? false,
         units:
             response.units?.map(ListingUnit.fromResponse).toList() ?? const [],
+        provider: response.provider == null
+            ? null
+            : ProviderSummary.fromResponse(response.provider!),
+        rating: response.rating == null
+            ? const PropertyRatingSummary()
+            : PropertyRatingSummary.fromResponse(response.rating!),
       );
 
   @override
@@ -472,5 +540,7 @@ class ResidenceDetail extends Equatable {
         longitude,
         exactLocation,
         units,
+        provider,
+        rating,
       ];
 }

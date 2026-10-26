@@ -336,6 +336,7 @@ Class | Method | HTTP request | Description
 [*SearchApi*](doc/SearchApi.md) | [**getAnnonceDetail**](doc/SearchApi.md#getannoncedetail) | **GET** /api/v1/search/annonces/{id} | Public fiche of a listing (M05)
 [*SearchApi*](doc/SearchApi.md) | [**getResidenceDetail**](doc/SearchApi.md#getresidencedetail) | **GET** /api/v1/search/residences/{id} | Public detail of a residence with its live units
 [*SearchApi*](doc/SearchApi.md) | [**listAnnonceReviews**](doc/SearchApi.md#listannoncereviews) | **GET** /api/v1/search/annonces/{id}/reviews | A property&#39;s reviews — visits and tenancies in one feed (RM-M27-05)
+[*SearchApi*](doc/SearchApi.md) | [**listResidenceReviews**](doc/SearchApi.md#listresidencereviews) | **GET** /api/v1/search/residences/{id}/reviews | A residence&#39;s reviews — all its units&#39;, visits and tenancies in one feed (RM-M27-05)
 [*SearchApi*](doc/SearchApi.md) | [**searchListings**](doc/SearchApi.md#searchlistings) | **GET** /api/v1/search | Search listings and residences (city/district required; other filters cumulative)
 [*SignalementsApi*](doc/SignalementsApi.md) | [**createSignalement**](doc/SignalementsApi.md#createsignalement) | **POST** /api/v1/signalements | Report a listing, a message or a review, or dispute a home; the reason must fit the target
 [*SubscriptionsApi*](doc/SubscriptionsApi.md) | [**getMySubscription**](doc/SubscriptionsApi.md#getmysubscription) | **GET** /api/v1/subscriptions/me | Get the authenticated account&#39;s current subscription

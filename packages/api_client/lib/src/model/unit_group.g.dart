@@ -307,6 +307,8 @@ class _$UnitGroup extends UnitGroup {
   final String? description;
   @override
   final BuiltSet<UnitGroupAmenitiesEnum>? amenities;
+  @override
+  final BuiltList<String>? photoKeys;
 
   factory _$UnitGroup([void Function(UnitGroupBuilder)? updates]) =>
       (UnitGroupBuilder()..update(updates))._build();
@@ -326,6 +328,7 @@ class _$UnitGroup extends UnitGroup {
     this.furnished,
     this.description,
     this.amenities,
+    this.photoKeys,
   }) : super._();
   @override
   UnitGroup rebuild(void Function(UnitGroupBuilder) updates) =>
@@ -351,7 +354,8 @@ class _$UnitGroup extends UnitGroup {
         bathroomCount == other.bathroomCount &&
         furnished == other.furnished &&
         description == other.description &&
-        amenities == other.amenities;
+        amenities == other.amenities &&
+        photoKeys == other.photoKeys;
   }
 
   @override
@@ -371,6 +375,7 @@ class _$UnitGroup extends UnitGroup {
     _$hash = $jc(_$hash, furnished.hashCode);
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, amenities.hashCode);
+    _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -391,7 +396,8 @@ class _$UnitGroup extends UnitGroup {
           ..add('bathroomCount', bathroomCount)
           ..add('furnished', furnished)
           ..add('description', description)
-          ..add('amenities', amenities))
+          ..add('amenities', amenities)
+          ..add('photoKeys', photoKeys))
         .toString();
   }
 }
@@ -462,6 +468,12 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
   set amenities(SetBuilder<UnitGroupAmenitiesEnum>? amenities) =>
       _$this._amenities = amenities;
 
+  ListBuilder<String>? _photoKeys;
+  ListBuilder<String> get photoKeys =>
+      _$this._photoKeys ??= ListBuilder<String>();
+  set photoKeys(ListBuilder<String>? photoKeys) =>
+      _$this._photoKeys = photoKeys;
+
   UnitGroupBuilder() {
     UnitGroup._defaults(this);
   }
@@ -483,6 +495,7 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
       _furnished = $v.furnished;
       _description = $v.description;
       _amenities = $v.amenities?.toBuilder();
+      _photoKeys = $v.photoKeys?.toBuilder();
       _$v = null;
     }
     return this;
@@ -533,12 +546,15 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
             furnished: furnished,
             description: description,
             amenities: _amenities?.build(),
+            photoKeys: _photoKeys?.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'amenities';
         _amenities?.build();
+        _$failedField = 'photoKeys';
+        _photoKeys?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
           r'UnitGroup',

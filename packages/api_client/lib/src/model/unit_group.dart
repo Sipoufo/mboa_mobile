@@ -26,6 +26,7 @@ part 'unit_group.g.dart';
 /// * [furnished] 
 /// * [description] 
 /// * [amenities] 
+/// * [photoKeys] 
 @BuiltValue()
 abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -72,6 +73,9 @@ abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
   @BuiltValueField(wireName: r'amenities')
   BuiltSet<UnitGroupAmenitiesEnum>? get amenities;
   // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
+
+  @BuiltValueField(wireName: r'photoKeys')
+  BuiltList<String>? get photoKeys;
 
   UnitGroup._();
 
@@ -186,6 +190,13 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
       yield serializers.serialize(
         object.amenities,
         specifiedType: const FullType(BuiltSet, [FullType(UnitGroupAmenitiesEnum)]),
+      );
+    }
+    if (object.photoKeys != null) {
+      yield r'photoKeys';
+      yield serializers.serialize(
+        object.photoKeys,
+        specifiedType: const FullType(BuiltList, [FullType(String)]),
       );
     }
   }
@@ -319,6 +330,14 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
           ) as BuiltSet<UnitGroupAmenitiesEnum>?;
           if (valueDes == null) continue;
           result.amenities.replace(valueDes);
+          break;
+        case r'photoKeys':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(BuiltList, [FullType(String)]),
+          ) as BuiltList<String>?;
+          if (valueDes == null) continue;
+          result.photoKeys.replace(valueDes);
           break;
         default:
           unhandled.add(key);

@@ -109,7 +109,7 @@ class AdminQuittancesApi {
   }
 
   /// Try again to produce a receipt&#39;s PDF (CE-M08-02)
-  /// Gives the receipt three attempts again and makes the first one now. &#x60;ready: false&#x60; means it failed again; the sweep makes the next two. 409 PDF_ALREADY_GENERATED if it has its PDF.
+  /// Gives the receipt three attempts again and makes the first one now. &#x60;ready: false&#x60; means it failed again; the sweep makes the next two. 409 PDF_ALREADY_GENERATED if its PDF is in storage — a receipt marked ready whose file is gone is retried too (mobile §35).
   ///
   /// Parameters:
   /// * [id] 

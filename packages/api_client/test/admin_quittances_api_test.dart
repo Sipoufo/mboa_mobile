@@ -16,7 +16,7 @@ void main() {
 
     // Try again to produce a receipt's PDF (CE-M08-02)
     //
-    // Gives the receipt three attempts again and makes the first one now. `ready: false` means it failed again; the sweep makes the next two. 409 PDF_ALREADY_GENERATED if it has its PDF.
+    // Gives the receipt three attempts again and makes the first one now. `ready: false` means it failed again; the sweep makes the next two. 409 PDF_ALREADY_GENERATED if its PDF is in storage — a receipt marked ready whose file is gone is retried too (mobile §35).
     //
     //Future<ReceiptRegeneration> adminRegenerateReceiptPdf(String id) async
     test('test adminRegenerateReceiptPdf', () async {

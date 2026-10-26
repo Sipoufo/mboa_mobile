@@ -18,6 +18,9 @@ Name | Type | Description | Notes
 **longitude** | **double** |  | [optional] 
 **units** | [**BuiltList&lt;SearchResultItem&gt;**](SearchResultItem.md) |  | [optional] 
 **exactLocation** | **bool** |  | [optional] 
+**provider** | [**ProviderCard**](ProviderCard.md) |  | [optional] 
+**badges** | **BuiltList&lt;String&gt;** |  | [optional] 
+**rating** | [**PropertyRating**](PropertyRating.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

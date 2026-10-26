@@ -77,5 +77,10 @@ void main() {
       // TODO
     });
 
+    // BuiltList<String> photoKeys
+    test('to test the property `photoKeys`', () async {
+      // TODO
+    });
+
   });
 }

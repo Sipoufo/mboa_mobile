@@ -341,6 +341,7 @@ Serializers _$serializers =
           ..add(ResidenceAssignmentSummaryInitiatedByEnum.serializer)
           ..add(ResidenceAssignmentSummaryStatusEnum.serializer)
           ..add(ResidenceDetailResponse.serializer)
+          ..add(ResidenceDetailResponseBadgesEnum.serializer)
           ..add(ResidenceOpportunity.serializer)
           ..add(ResidenceOpportunityFromRentalPeriodEnum.serializer)
           ..add(ResidenceResponse.serializer)
@@ -861,6 +862,12 @@ Serializers _$serializers =
             () => ListBuilder<SearchResultItem>(),
           )
           ..addBuilderFactory(
+            const FullType(BuiltList, const [
+              const FullType(ResidenceDetailResponseBadgesEnum),
+            ]),
+            () => ListBuilder<ResidenceDetailResponseBadgesEnum>(),
+          )
+          ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
             () => ListBuilder<String>(),
           )
@@ -1130,6 +1137,10 @@ Serializers _$serializers =
               const FullType(UnitGroupAmenitiesEnum),
             ]),
             () => SetBuilder<UnitGroupAmenitiesEnum>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(String)]),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [
