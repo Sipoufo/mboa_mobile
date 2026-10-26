@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
@@ -136,13 +137,13 @@ class _WeekHeader extends StatelessWidget {
           tooltip: l10n.visitsAgendaPreviousWeek,
           onPressed: () =>
               onWeekChanged(state.weekStart.subtract(const Duration(days: 7))),
-          icon: Icon(Icons.chevron_left, color: colors.textSecondary),
+          icon: Icon(LucideIcons.chevronLeft, color: colors.textSecondary),
         ),
         IconButton(
           tooltip: l10n.visitsAgendaNextWeek,
           onPressed: () =>
               onWeekChanged(state.weekStart.add(const Duration(days: 7))),
-          icon: Icon(Icons.chevron_right, color: colors.textSecondary),
+          icon: Icon(LucideIcons.chevronRight, color: colors.textSecondary),
         ),
       ],
     );

@@ -57,4 +57,32 @@ void main() {
     expect(find.text('Douala'), findsOneWidget);
     expect(find.text('Yaoundé'), findsNothing);
   });
+
+  // The same bug in the district picker, which filters as you type too.
+  testWidgets('the district picker\'s search neither corrects nor suggests', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: MboaTheme.light(),
+        home: Builder(
+          builder: (context) => Scaffold(
+            body: TextButton(
+              onPressed: () => showOptionPicker(
+                context,
+                title: 'Quartier',
+                options: const [CityOption(id: 'd-1', name: 'Deido'), CityOption(id: 'd-2', name: 'Akwa')],
+              ),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(field.autocorrect, isFalse);
+    expect(field.enableSuggestions, isFalse);
+  });
 }
+

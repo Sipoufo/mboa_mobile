@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../models/city_option.dart';
@@ -63,7 +64,11 @@ class _OptionPickerSheetState extends State<_OptionPickerSheet> {
             const SizedBox(height: Dimens.spacingMd),
             TextField(
               onChanged: _filter,
-              decoration: const InputDecoration(prefixIcon: Icon(Icons.search)),
+              // It filters the list as you type: a correction would rewrite
+              // the query and its bubble swallow the tap on the result.
+              autocorrect: false,
+              enableSuggestions: false,
+              decoration: const InputDecoration(prefixIcon: Icon(LucideIcons.search)),
             ),
             const SizedBox(height: Dimens.spacingSm),
             Expanded(

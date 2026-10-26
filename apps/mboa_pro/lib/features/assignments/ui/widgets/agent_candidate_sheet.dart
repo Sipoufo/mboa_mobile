@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
@@ -107,7 +108,7 @@ class _AgentCandidateSheet extends StatelessWidget {
           photoUrl: candidate.photoUrl,
           initials: candidate.initials,
           onTap: () => Navigator.of(context).pop(candidate),
-          trailing: Icon(Icons.chevron_right, color: colors.textTertiary),
+          trailing: Icon(LucideIcons.chevronRight, size: Dimens.iconSm, color: colors.textTertiary),
         ),
       );
     }
