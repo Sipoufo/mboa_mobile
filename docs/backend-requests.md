@@ -1360,3 +1360,62 @@ Asked:
    already says « en préparation » and polls, so it would heal on its own.
 3. Meanwhile, re-render this one (`POST /admin/receipts/{id}/pdf` answers
    `PDF_ALREADY_GENERATED`, since the row says it has its PDF).
+
+## §36 — M10bis / M05 / M27: a residence's fiche, and photos per unit group
+
+Two asks about residences, both found while filming post E02.
+
+### A. The residence fiche says who rents it, how they are vouched for, and how it is rated
+
+`GET /search/residences/{id}` (`ResidenceDetailResponse`) returns the name,
+place, description, photos and units — and **nothing about the provider,
+the badges or the rating**. The search card of the same residence carries
+`badges` and `rating`; a listing's fiche carries `provider` (with its
+`badges`). So a tenant sees « ✓ 📷 ★ 5,0 (2) » on the card, opens it, and
+the fiche shows none of it (RM-M05: badges on the fiche; RM-M27: a rating
+per property).
+
+Asked, on `ResidenceDetailResponse`, the same shapes the apps already read:
+1. **`provider`** — as on `AnnonceDetail` (`accountId`, `displayName`,
+   `logoObjectKey`, `type`, `tierRank`, `badges`).
+2. **`badges`** — the residence's own, as on its search card
+   (`IDENTITY_VERIFIED`, `PHOTOS_VERIFIED`, …).
+3. **`rating`** — `PropertyRating`, as on the card (`average`,
+   `reviewCount`, `visitCount`, `residentCount`).
+4. **`GET /search/residences/{id}/reviews`** — the residence's review feed,
+   visits and tenancies of all its units in one feed, newest first, in the
+   shape of `GET /search/annonces/{id}/reviews` (RM-M27-05). The fiche's
+   « Avis » card opens it.
+
+Public like the rest of the fiche; nothing account-specific in it (the exact
+position already has its own rule, RM-M04-06).
+
+### B. Photos per unit group, at creation
+
+Today a residence's units are created **without photos of their own**: they
+show the residence's shared photos, and giving « the 50 rooms » their own
+means editing them one by one. The founder wants a group's photos set at
+creation, next to the residence's.
+
+Asked, on `UnitGroup` (`POST /residences`):
+1. **`photoKeys`** (optional, `LISTING_PHOTO` uploads, 15 at most) — every
+   unit the group creates gets them.
+2. **Absent or empty**: as today — the units show the residence's photos.
+3. **One set of files, many units**: the keys are shared, not copied.
+   Deleting a photo from one unit (or a unit) must not delete the object
+   while another unit still points at it — a reference count, or a check
+   before deleting.
+4. **Publishing** (`INSUFFICIENT_PHOTOS`): a unit counts the group's photos
+   it was given, else the residence's — 3 at least, as now.
+5. **The 📸 badge** (RM-M10-06): a set verified once is verified for every
+   unit sharing it; changing one unit's photos drops that unit's badge
+   only, as a listing's does today.
+6. On `ResidenceDetailResponse.units[]`, `primaryPhotoKey` is then the
+   unit's own first photo when it has one (it already is, as far as the
+   apps can tell — to confirm).
+
+Not asked now: editing « the photos of all the rooms » after creation (the
+groups no longer exist once expanded). A bulk action can come later.
+
+Doc 10 needs a rule for B (M10bis) — the founder's to write.
+
