@@ -31,6 +31,9 @@ Future<void> main() async {
       getIt<AuthBloc>().add(const AuthLogoutRequested());
     },
   );
+  // iOS keeps the Keychain across an uninstall: a reinstall must not inherit
+  // the last install's session.
+  await forgetTokensOfPreviousInstall(cache: getIt<HiveCache>(), tokens: getIt<SecureTokenStorage>());
   registerAppModule();
 
   // Apply the persisted language before the first frame.

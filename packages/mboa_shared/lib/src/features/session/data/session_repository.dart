@@ -8,7 +8,7 @@ import '../models/session_result.dart';
 /// Resolves the startup session status, shared by both apps' splash features.
 ///
 /// Strategy (layered — a cheap local pre-filter, then offline-aware /me):
-///  - no token                       → [SessionUnauthenticated]
+///  - no token, or half a pair       → [SessionUnauthenticated], storage cleared
 ///  - refresh token already expired  → [SessionUnauthenticated] (local, no call)
 ///  - token + offline                → [SessionAuthenticated] (fromCache: true)
 ///  - token + online                 → validate with `GET /me`
@@ -37,7 +37,10 @@ class SessionRepository {
   Future<SessionResult> resolve() async {
     final tokens = await _tokenStorage.readTokens();
     if (tokens == null) {
-      return _rejected(NoSessionReason.noTokens);
+      // Not « nothing stored »: half a pair (an access token without its
+      // refresh token) also reads as null, and left in place the interceptor
+      // kept sending it — signed out on screen, signed in on the wire.
+      return _rejectAndClear(NoSessionReason.noTokens);
     }
 
     // Fast-path: reject locally only when the pair is **definitively** dead —

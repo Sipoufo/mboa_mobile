@@ -62,6 +62,16 @@ void main() {
     verifyNever(() => dioClient.api);
   });
 
+  test('half a pair (an access token, no refresh token) → unauthenticated, and cleared', () async {
+    // The bug: « no session » was concluded and the access token left in
+    // place — the interceptor kept sending it. The reader saw « Se connecter »
+    // while the server answered as the previous account.
+    when(storage.readTokens).thenAnswer((_) async => null);
+
+    expect(await repository.resolve(), isA<SessionUnauthenticated>());
+    verify(storage.clear).called(1);
+  });
+
   test('both tokens expired → unauthenticated locally (no call)', () async {
     when(storage.readTokens).thenAnswer(
       (_) async => _tokens(refreshExpiry: past, accessExpiry: past),

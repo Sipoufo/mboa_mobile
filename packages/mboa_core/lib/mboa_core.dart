@@ -14,6 +14,7 @@ export 'src/models/auth_tokens.dart';
 // Storage
 export 'src/storage/secure_token_storage.dart';
 export 'src/storage/hive_cache.dart';
+export 'src/storage/install_guard.dart';
 
 // Network
 export 'src/network/network_monitor.dart';
