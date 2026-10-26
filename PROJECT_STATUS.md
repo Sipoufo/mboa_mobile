@@ -1292,9 +1292,9 @@ Blocked:
   regenerated or excluded.
 - **Goldens do not load the Material icon font** (both apps ship it,
   `uses-material-design: true`): a Material icon draws as an empty box in a
-  golden and fine on a phone. `FieldHelp`'s `Icons.info_outline` is the one
-  left on the M10 form — swapping it for Lucide (project rule) will touch
-  every golden that shows a field help.
+  golden and fine on a phone. `FieldHelp` is Lucide's now (2026-10-26); four
+  Material icons remain (`agent_candidate_sheet`, `visits_agenda_view` ×2,
+  `option_picker_sheet`).
 - `url_launcher` is unwired: tapping a receipt surfaces the URL in a toast.
 - `sentry_flutter` had to go 8.x → 9.x to unbreak the Android build (Kotlin 1.6
   vs the 2.x compiler). Nothing caught it because nothing ran an Android build.

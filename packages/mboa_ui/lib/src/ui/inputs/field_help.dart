@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 /// An info affordance next to a form field's label.
@@ -33,7 +34,7 @@ class FieldHelp extends StatelessWidget {
           width: _tapTarget,
           height: _tapTarget,
           child: Icon(
-            Icons.info_outline,
+            LucideIcons.info,
             size: Dimens.iconSm,
             color: colors.textTertiary,
           ),

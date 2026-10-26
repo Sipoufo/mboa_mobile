@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_pro/features/annonces/ui/widgets/form_field_shell.dart';
@@ -31,11 +32,11 @@ void main() {
       ),
     );
 
-    expect(find.byIcon(Icons.info_outline), findsOneWidget);
+    expect(find.byIcon(LucideIcons.info), findsOneWidget);
     // The copy is behind the icon, not on the form.
     expect(find.text('Le loyer mensuel en FCFA.'), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.info_outline));
+    await tester.tap(find.byIcon(LucideIcons.info));
     await tester.pumpAndSettle();
 
     expect(find.text('Le loyer mensuel en FCFA.'), findsOneWidget);
@@ -55,7 +56,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byIcon(Icons.info_outline));
+    await tester.tap(find.byIcon(LucideIcons.info));
     await tester.pumpAndSettle();
 
     expect(
@@ -71,7 +72,7 @@ void main() {
 
     // An icon on every label becomes wallpaper; only the fields whose answer is
     // not obvious carry one.
-    expect(find.byIcon(Icons.info_outline), findsNothing);
+    expect(find.byIcon(LucideIcons.info), findsNothing);
   });
 
   testWidgets('the tap target is large enough to hit', (tester) async {
