@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_pro/features/finance/bloc/invoice_form_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:mboa_pro/features/finance/bloc/owner_invoice_bloc.dart';
 import 'package:mboa_pro/features/finance/bloc/owner_invoices_bloc.dart';
 import 'package:mboa_pro/features/finance/data/owner_invoices_repository.dart';
 import 'package:mboa_pro/features/finance/models/finance_refusal.dart';
+import 'package:mboa_pro/features/finance/ui/invoice_form_page.dart';
 import 'package:mboa_pro/features/finance/ui/owner_invoices_pages.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -64,6 +66,46 @@ void main() {
         paidManually: manual,
         pastDue: pastDue,
       );
+
+  // Two standalone listings let, three units in two residences.
+  const tenancies = [
+    Home(
+      contractId: 'c-1',
+      annonceTitle: 'Studio Akwa',
+      state: HomeStage.active,
+      tenant: ContractParticipant(displayName: 'Awa Nkeng'),
+    ),
+    Home(
+      contractId: 'c-2',
+      annonceTitle: 'Chambre 3',
+      residenceId: 'res-1',
+      residenceName: 'Résidence Deido',
+      state: HomeStage.active,
+      tenant: ContractParticipant(displayName: 'Paul Etoga'),
+    ),
+    Home(
+      contractId: 'c-3',
+      annonceTitle: 'Chambre 1',
+      residenceId: 'res-1',
+      residenceName: 'Résidence Deido',
+      state: HomeStage.active,
+      tenant: ContractParticipant(displayName: 'Éloïse Mbarga'),
+    ),
+    Home(
+      contractId: 'c-4',
+      annonceTitle: 'Studio B2',
+      residenceId: 'res-2',
+      residenceName: 'Résidence Bonapriso',
+      state: HomeStage.active,
+      tenant: ContractParticipant(displayName: 'Jean Fotso'),
+    ),
+    Home(
+      contractId: 'c-5',
+      annonceTitle: 'Appartement Bonamoussadi',
+      state: HomeStage.active,
+      tenant: ContractParticipant(displayName: 'Brice Kamga'),
+    ),
+  ];
 
   setUpAll(() {
     registerFallbackValue(_FakeCreate());
@@ -231,14 +273,94 @@ void main() {
     });
 
     blocTest<InvoiceFormBloc, InvoiceFormState>(
-      'offers the running tenancies only (RM-M24-02) — one, already chosen',
-      setUp: () => when(() => homes.tenantHomes()).thenAnswer((_) async => const Cached([running, ended])),
+      'offers the running tenancies only (RM-M24-02) — one, already chosen: straight to the charge',
+      setUp: () => when(() => homes.activeTenantHomes()).thenAnswer((_) async => const Cached([running, ended])),
       build: () => InvoiceFormBloc(invoices: invoices, homes: homes),
       act: (bloc) => bloc.add(const InvoiceFormStarted()),
       expect: () => const [
         InvoiceFormState(isLoadingTenancies: true),
-        InvoiceFormState(tenancies: [running], contractId: 'c-1'),
+        InvoiceFormState(tenancies: [running], contractId: 'c-1', step: InvoiceFormStep.charge),
       ],
+      verify: (bloc) => expect(bloc.state.steps, [InvoiceFormStep.charge, InvoiceFormStep.amount]),
+    );
+
+    blocTest<InvoiceFormBloc, InvoiceFormState>(
+      'several: the tenant first — on the residences\' tab when no standalone listing is let',
+      setUp: () => when(() => homes.activeTenantHomes()).thenAnswer((_) async => Cached([tenancies[1], tenancies[3]])),
+      build: () => InvoiceFormBloc(invoices: invoices, homes: homes),
+      act: (bloc) => bloc.add(const InvoiceFormStarted()),
+      verify: (bloc) {
+        expect(bloc.state.step, InvoiceFormStep.tenant);
+        expect(bloc.state.group, TenancyGroup.multiple);
+        expect(bloc.state.contractId, isNull);
+        expect(bloc.state.steps, InvoiceFormStep.values);
+      },
+    );
+
+    group('the tenant step', () {
+      const state = InvoiceFormState(tenancies: tenancies);
+      List<String> ids(List<Home> homes) => [for (final h in homes) h.contractId];
+
+      test('standalone listings apart from residences, by name; residences by name, their tenants too', () {
+        expect(ids(state.singles), ['c-1', 'c-5']);
+        expect([for (final r in state.residences) r.name], ['Résidence Bonapriso', 'Résidence Deido']);
+        expect(ids(state.residences.last.homes), ['c-3', 'c-2']);
+        expect(state.residencesCount, 3);
+      });
+
+      test('the search finds a person, a unit or a residence — accents and case aside, in both tabs', () {
+        expect(ids(state.copyWith(query: 'ELOISE').residences.single.homes), ['c-3']);
+        expect(state.copyWith(query: 'eloise').singles, isEmpty);
+        expect(ids(state.copyWith(query: 'akwa').singles), ['c-1']);
+        expect(state.copyWith(query: 'deido').residencesCount, 2);
+        // Every word, anywhere: a person in a residence.
+        expect(ids(state.copyWith(query: 'paul deido').residences.single.homes), ['c-2']);
+        expect(state.copyWith(query: 'paul bonapriso').residencesCount, 0);
+      });
+    });
+
+    blocTest<InvoiceFormBloc, InvoiceFormState>(
+      'a row chosen: on to the charge',
+      build: () => InvoiceFormBloc(invoices: invoices, homes: homes),
+      seed: () => const InvoiceFormState(tenancies: tenancies),
+      act: (bloc) => bloc.add(const InvoiceFormTenantChosen('c-2')),
+      expect: () => const [InvoiceFormState(tenancies: tenancies, contractId: 'c-2', step: InvoiceFormStep.charge)],
+      verify: (bloc) => expect(bloc.state.tenancy?.placeTitle, 'Chambre 3 · Résidence Deido'),
+    );
+
+    blocTest<InvoiceFormBloc, InvoiceFormState>(
+      'forward only past a step done; back always',
+      build: () => InvoiceFormBloc(invoices: invoices, homes: homes),
+      seed: () => const InvoiceFormState(tenancies: tenancies),
+      act: (bloc) => bloc
+        // No tenant yet: not past the first step.
+        ..add(const InvoiceFormStepRequested(InvoiceFormStep.charge))
+        ..add(const InvoiceFormTenantChosen('c-1'))
+        ..add(const InvoiceFormChanged(kind: InvoiceKind.other))
+        // « Autre » without its words: not past the charge.
+        ..add(const InvoiceFormStepRequested(InvoiceFormStep.amount))
+        ..add(const InvoiceFormChanged(label: 'Gardiennage'))
+        ..add(const InvoiceFormStepRequested(InvoiceFormStep.amount))
+        ..add(const InvoiceFormStepRequested(InvoiceFormStep.tenant)),
+      expect: () => [
+        isA<InvoiceFormState>().having((s) => s.step, 'step', InvoiceFormStep.charge),
+        isA<InvoiceFormState>().having((s) => s.kind, 'kind', InvoiceKind.other),
+        isA<InvoiceFormState>().having((s) => s.label, 'label', 'Gardiennage'),
+        isA<InvoiceFormState>().having((s) => s.step, 'step', InvoiceFormStep.amount),
+        isA<InvoiceFormState>().having((s) => s.step, 'step', InvoiceFormStep.tenant),
+      ],
+      verify: (bloc) {
+        expect(bloc.state.contractId, 'c-1');
+        expect(bloc.state.label, 'Gardiennage');
+      },
+    );
+
+    blocTest<InvoiceFormBloc, InvoiceFormState>(
+      'not two steps at once',
+      build: () => InvoiceFormBloc(invoices: invoices, homes: homes),
+      seed: () => const InvoiceFormState(tenancies: tenancies, contractId: 'c-1'),
+      act: (bloc) => bloc.add(const InvoiceFormStepRequested(InvoiceFormStep.amount)),
+      expect: () => const <InvoiceFormState>[],
     );
 
     test('an « Autre » charge says what it is', () {
@@ -250,17 +372,21 @@ void main() {
     });
 
     blocTest<InvoiceFormBloc, InvoiceFormState>(
-      'correcting: the words, the amount and the date go — the server\'s answer closes the form',
+      'correcting: no tenant to pick — the words, the amount and the date go, the server\'s answer closes the form',
       setUp: () => when(() => invoices.update('a', label: any(named: 'label'), amount: 20000, dueDate: any(named: 'dueDate')))
           .thenAnswer((_) async => invoice('a')),
       build: () => InvoiceFormBloc(invoices: invoices, homes: homes),
       act: (bloc) => bloc
         ..add(InvoiceFormStarted(editing: invoice('a')))
+        ..add(const InvoiceFormTenantChosen('c-9'))
+        ..add(const InvoiceFormStepRequested(InvoiceFormStep.tenant))
         ..add(const InvoiceFormChanged(amount: 20000))
         ..add(const InvoiceFormSubmitted()),
       verify: (bloc) {
+        expect(bloc.state.steps, [InvoiceFormStep.charge, InvoiceFormStep.amount]);
+        expect(bloc.state.contractId, 'c-1');
         expect(bloc.state.saved, invoice('a'));
-        verifyNever(() => homes.tenantHomes());
+        verifyNever(() => homes.activeTenantHomes());
       },
     );
   });
@@ -342,33 +468,108 @@ void main() {
       expect(find.text('Retirer le paiement déclaré'), findsOneWidget);
     });
 
-    testWidgets('the form', (tester) async {
-      final bloc = MockInvoiceFormBloc();
-      when(() => bloc.state).thenReturn(
-        InvoiceFormState(
-          tenancies: const [
-            Home(
-              contractId: 'c-1',
-              annonceTitle: 'Studio Akwa',
-              state: HomeStage.active,
-              tenant: ContractParticipant(displayName: 'Awa Nkeng'),
-            ),
-            Home(
-              contractId: 'c-2',
-              annonceTitle: 'Chambre 3',
-              residenceName: 'Résidence Deido',
-              state: HomeStage.active,
-              tenant: ContractParticipant(displayName: 'Paul Etoga'),
-            ),
-          ],
-          contractId: 'c-1',
-          kind: InvoiceKind.electricity,
-          dueDate: DateTime(2026, 10, 30),
-        ),
-      );
-      await pump(tester, BlocProvider<InvoiceFormBloc>.value(value: bloc, child: const InvoiceFormView()));
+    group('the form, step by step', () {
+      late MockInvoiceFormBloc bloc;
 
-      await expectLater(find.byType(InvoiceFormView), matchesGoldenFile('goldens/invoice_form.png'));
+      setUp(() => bloc = MockInvoiceFormBloc());
+
+      Future<void> form(WidgetTester tester, InvoiceFormState state) async {
+        when(() => bloc.state).thenReturn(state);
+        await pump(tester, BlocProvider<InvoiceFormBloc>.value(value: bloc, child: const InvoiceFormView()));
+      }
+
+      testWidgets('1 — the tenant: one search, two tabs that count; the row is the choice, no bar', (tester) async {
+        await form(tester, const InvoiceFormState(tenancies: tenancies));
+
+        expect(find.text('Étape 1 sur 3'), findsOneWidget);
+        expect(find.text('Biens uniques (2)'), findsOneWidget);
+        expect(find.text('Biens multiples (3)'), findsOneWidget);
+        expect(find.byType(Button), findsNothing);
+        await expectLater(find.byType(InvoiceFormView), matchesGoldenFile('goldens/invoice_form_tenant.png'));
+
+        await tester.tap(find.text('Brice Kamga'));
+        verify(() => bloc.add(const InvoiceFormTenantChosen('c-5'))).called(1);
+        await tester.enterText(find.byType(TextField), 'deido');
+        verify(() => bloc.add(const InvoiceFormSearchChanged('deido'))).called(1);
+        await tester.tap(find.text('Biens multiples (3)'));
+        verify(() => bloc.add(const InvoiceFormGroupChanged(TenancyGroup.multiple))).called(1);
+      });
+
+      testWidgets('1 — the residences: each under its name, its tenants with their unit', (tester) async {
+        await form(tester, const InvoiceFormState(tenancies: tenancies, group: TenancyGroup.multiple, contractId: 'c-2'));
+
+        expect(find.text('Résidence Deido'), findsOneWidget);
+        expect(find.text('Chambre 3'), findsOneWidget);
+        await expectLater(find.byType(InvoiceFormView), matchesGoldenFile('goldens/invoice_form_residences.png'));
+      });
+
+      testWidgets('1 — nothing here for the search: said, and the other tab still counts its matches', (tester) async {
+        await form(tester, const InvoiceFormState(tenancies: tenancies, query: 'deido'));
+
+        expect(find.text('Aucun locataire ne correspond à « deido » ici.'), findsOneWidget);
+        expect(find.text('Biens multiples (2)'), findsOneWidget);
+      });
+
+      testWidgets('2 — the charge: whom on top, the kinds as cards, « Continuer »; back is the step before',
+          (tester) async {
+        await form(
+          tester,
+          const InvoiceFormState(
+            tenancies: tenancies,
+            contractId: 'c-2',
+            step: InvoiceFormStep.charge,
+            kind: InvoiceKind.electricity,
+            label: 'Électricité — octobre',
+          ),
+        );
+
+        expect(find.text('Étape 2 sur 3'), findsOneWidget);
+        expect(find.text('Chambre 3 · Résidence Deido'), findsOneWidget);
+        await expectLater(find.byType(InvoiceFormView), matchesGoldenFile('goldens/invoice_form_charge.png'));
+
+        await tester.tap(find.text('Eau'));
+        verify(() => bloc.add(const InvoiceFormChanged(kind: InvoiceKind.water))).called(1);
+        await tester.tap(find.text('Continuer'));
+        verify(() => bloc.add(const InvoiceFormStepRequested(InvoiceFormStep.amount))).called(1);
+        await tester.tap(find.byIcon(LucideIcons.arrowLeft));
+        verify(() => bloc.add(const InvoiceFormStepRequested(InvoiceFormStep.tenant))).called(1);
+        await tester.tap(find.text('Changer'));
+        verify(() => bloc.add(const InvoiceFormStepRequested(InvoiceFormStep.tenant))).called(1);
+      });
+
+      testWidgets('3 — the amount and the date, under whom and what; « Créer la facture »', (tester) async {
+        await form(
+          tester,
+          InvoiceFormState(
+            tenancies: tenancies,
+            contractId: 'c-2',
+            step: InvoiceFormStep.amount,
+            kind: InvoiceKind.electricity,
+            label: 'Électricité — octobre',
+            amount: 18500,
+            dueDate: DateTime(2026, 11, 5),
+          ),
+        );
+
+        expect(find.text('Étape 3 sur 3'), findsOneWidget);
+        expect(find.text('Électricité — octobre'), findsOneWidget);
+        await expectLater(find.byType(InvoiceFormView), matchesGoldenFile('goldens/invoice_form_amount.png'));
+
+        await tester.tap(find.text('Créer la facture'));
+        verify(() => bloc.add(const InvoiceFormSubmitted())).called(1);
+      });
+
+      testWidgets('correcting: two steps, the tenant and the kind fixed', (tester) async {
+        await form(
+          tester,
+          InvoiceFormState(editing: invoice('a'), contractId: 'c-1', step: InvoiceFormStep.charge, kind: InvoiceKind.electricity),
+        );
+
+        expect(find.text('Étape 1 sur 2'), findsOneWidget);
+        expect(find.text('Changer'), findsNothing);
+        await tester.tap(find.text('Eau'));
+        verifyNever(() => bloc.add(const InvoiceFormChanged(kind: InvoiceKind.water)));
+      });
     });
 
     testWidgets('no tenancy running: said, nothing to fill', (tester) async {

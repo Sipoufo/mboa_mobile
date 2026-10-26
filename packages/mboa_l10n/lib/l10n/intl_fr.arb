@@ -6782,5 +6782,72 @@
   "providerPaymentDeletedToast": "Paiement supprimé",
   "@providerPaymentDeletedToast": {
     "description": "M26 toast"
+  },
+  "commonStepOf": "Étape {current} sur {total}",
+  "@commonStepOf": {
+    "description": "A multi-step flow's progress",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "commonContinue": "Continuer",
+  "@commonContinue": {
+    "description": "A multi-step flow's main action, before the last step"
+  },
+  "ownerInvoiceStepCharge": "Quelle charge ?",
+  "@ownerInvoiceStepCharge": {
+    "description": "M24 form — step 2's title"
+  },
+  "ownerInvoiceStepAmount": "Combien, et pour quand ?",
+  "@ownerInvoiceStepAmount": {
+    "description": "M24 form — step 3's title"
+  },
+  "ownerInvoiceSearchHint": "Nom du locataire ou du bien",
+  "@ownerInvoiceSearchHint": {
+    "description": "M24 form — step 1's search"
+  },
+  "ownerInvoiceGroupSingle": "Biens uniques ({count})",
+  "@ownerInvoiceGroupSingle": {
+    "description": "M24 form — the standalone listings' tab, with its matches",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ownerInvoiceGroupMultiple": "Biens multiples ({count})",
+  "@ownerInvoiceGroupMultiple": {
+    "description": "M24 form — the residences' tab, with its matches",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ownerInvoiceSearchEmpty": "Aucun locataire ne correspond à « {query} » ici.",
+  "@ownerInvoiceSearchEmpty": {
+    "description": "M24 form — nothing found in this tab",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "ownerInvoiceGroupEmptySingle": "Aucun locataire dans un bien unique.",
+  "@ownerInvoiceGroupEmptySingle": {
+    "description": "M24 form — the tab is empty"
+  },
+  "ownerInvoiceGroupEmptyMultiple": "Aucun locataire dans une résidence.",
+  "@ownerInvoiceGroupEmptyMultiple": {
+    "description": "M24 form — the tab is empty"
+  },
+  "ownerInvoiceChangeTenant": "Changer",
+  "@ownerInvoiceChangeTenant": {
+    "description": "M24 form — back to the tenant from the recap"
   }
 }

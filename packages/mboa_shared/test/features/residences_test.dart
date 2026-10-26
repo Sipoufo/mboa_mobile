@@ -126,6 +126,50 @@ void main() {
       verify(() => cache.put(StorageKeys.homesBox, 'tenants:all:residence:res-1', any())).called(1);
     });
 
+    group('every running tenancy — the invoice form\'s list (RM-M24-02)', () {
+      api.PageResponseHomeSummary page(List<String> ids, {required bool last}) => api.PageResponseHomeSummary(
+            (b) => b
+              ..content = ListBuilder([for (final id in ids) api.HomeSummary((h) => h..contractId = id)])
+              ..last = last,
+          );
+
+      test('reads page after page until the last, the running ones only', () async {
+        final asked = <int>[];
+        when(
+          () => monLogement.listMyTenantHomes(pageable: any(named: 'pageable'), state: any(named: 'state')),
+        ).thenAnswer((invocation) async {
+          final pageable = invocation.namedArguments[#pageable] as api.Pageable;
+          asked.add(pageable.page!);
+          expect(invocation.namedArguments[#state], BuiltList<String>(const ['ACTIVE']));
+          return _ok(switch (pageable.page) {
+            0 => page(['c-1', 'c-2'], last: false),
+            1 => page(['c-3'], last: false),
+            _ => page(['c-4'], last: true),
+          });
+        });
+
+        final read = await repository.activeTenantHomes();
+
+        expect([for (final h in read.value) h.contractId], ['c-1', 'c-2', 'c-3', 'c-4']);
+        expect(asked, [0, 1, 2]);
+        verify(() => cache.put(StorageKeys.homesBox, 'tenants:active', any())).called(1);
+      });
+
+      test('offline: the copy kept from the last read', () async {
+        when(
+          () => monLogement.listMyTenantHomes(pageable: any(named: 'pageable'), state: any(named: 'state')),
+        ).thenThrow(DioException(requestOptions: RequestOptions(path: '/x')));
+        when(() => cache.get(StorageKeys.homesBox, 'tenants:active')).thenReturn({
+          'items': [const Home(contractId: 'c-9', state: HomeStage.active).toCache()],
+        });
+
+        final read = await repository.activeTenantHomes();
+
+        expect(read.fromCache, isTrue);
+        expect(read.value.single.contractId, 'c-9');
+      });
+    });
+
     test('a residence\'s declarations waiting — kept apart too', () async {
       when(
         () => monLogement.listMyReceivedDeclarations(

@@ -311,6 +311,31 @@ class HomesRepository {
             ?.content,
       );
 
+  /// Every running tenancy (RM-M24-02) — **all of them**, page after page: a
+  /// landlord with hundreds of tenants bills any one, and the API has no text
+  /// search, so the invoice form searches them on the device.
+  Future<Cached<List<Home>>> activeTenantHomes() => _cachedList('tenants:active', () async {
+        final all = <HomeSummary>[];
+        // A bound, not a loop on trust: 100 pages of 100 is far past any
+        // landlord, and a server that never says « last » cannot hang the form.
+        for (var page = 0; page < _maxPages; page++) {
+          final read = (await _api.listMyTenantHomes(
+            pageable: Pageable((b) => b
+              ..page = page
+              ..size = 100),
+            state: BuiltList(const ['ACTIVE']),
+          ))
+              .data;
+          final content = read?.content;
+          if (content == null || content.isEmpty) break;
+          all.addAll(content);
+          if (read?.last ?? true) break;
+        }
+        return BuiltList(all);
+      });
+
+  static const _maxPages = 100;
+
   /// Declarations waiting for his answer, oldest first — one residence's
   /// units' with [residenceId] (§32).
   Future<Cached<List<Declaration>>> waitingDeclarations({String? residenceId}) async {

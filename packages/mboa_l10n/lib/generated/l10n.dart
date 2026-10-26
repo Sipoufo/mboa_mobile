@@ -16699,6 +16699,116 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Étape {current} sur {total}`
+  String commonStepOf(int current, int total) {
+    return Intl.message(
+      'Étape $current sur $total',
+      name: 'commonStepOf',
+      desc: 'A multi-step flow\'s progress',
+      args: [current, total],
+    );
+  }
+
+  /// `Continuer`
+  String get commonContinue {
+    return Intl.message(
+      'Continuer',
+      name: 'commonContinue',
+      desc: 'A multi-step flow\'s main action, before the last step',
+      args: [],
+    );
+  }
+
+  /// `Quelle charge ?`
+  String get ownerInvoiceStepCharge {
+    return Intl.message(
+      'Quelle charge ?',
+      name: 'ownerInvoiceStepCharge',
+      desc: 'M24 form — step 2\'s title',
+      args: [],
+    );
+  }
+
+  /// `Combien, et pour quand ?`
+  String get ownerInvoiceStepAmount {
+    return Intl.message(
+      'Combien, et pour quand ?',
+      name: 'ownerInvoiceStepAmount',
+      desc: 'M24 form — step 3\'s title',
+      args: [],
+    );
+  }
+
+  /// `Nom du locataire ou du bien`
+  String get ownerInvoiceSearchHint {
+    return Intl.message(
+      'Nom du locataire ou du bien',
+      name: 'ownerInvoiceSearchHint',
+      desc: 'M24 form — step 1\'s search',
+      args: [],
+    );
+  }
+
+  /// `Biens uniques ({count})`
+  String ownerInvoiceGroupSingle(int count) {
+    return Intl.message(
+      'Biens uniques ($count)',
+      name: 'ownerInvoiceGroupSingle',
+      desc: 'M24 form — the standalone listings\' tab, with its matches',
+      args: [count],
+    );
+  }
+
+  /// `Biens multiples ({count})`
+  String ownerInvoiceGroupMultiple(int count) {
+    return Intl.message(
+      'Biens multiples ($count)',
+      name: 'ownerInvoiceGroupMultiple',
+      desc: 'M24 form — the residences\' tab, with its matches',
+      args: [count],
+    );
+  }
+
+  /// `Aucun locataire ne correspond à « {query} » ici.`
+  String ownerInvoiceSearchEmpty(String query) {
+    return Intl.message(
+      'Aucun locataire ne correspond à « $query » ici.',
+      name: 'ownerInvoiceSearchEmpty',
+      desc: 'M24 form — nothing found in this tab',
+      args: [query],
+    );
+  }
+
+  /// `Aucun locataire dans un bien unique.`
+  String get ownerInvoiceGroupEmptySingle {
+    return Intl.message(
+      'Aucun locataire dans un bien unique.',
+      name: 'ownerInvoiceGroupEmptySingle',
+      desc: 'M24 form — the tab is empty',
+      args: [],
+    );
+  }
+
+  /// `Aucun locataire dans une résidence.`
+  String get ownerInvoiceGroupEmptyMultiple {
+    return Intl.message(
+      'Aucun locataire dans une résidence.',
+      name: 'ownerInvoiceGroupEmptyMultiple',
+      desc: 'M24 form — the tab is empty',
+      args: [],
+    );
+  }
+
+  /// `Changer`
+  String get ownerInvoiceChangeTenant {
+    return Intl.message(
+      'Changer',
+      name: 'ownerInvoiceChangeTenant',
+      desc: 'M24 form — back to the tenant from the recap',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {
