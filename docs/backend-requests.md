@@ -1331,3 +1331,32 @@ Asked, one of:
 Meanwhile the app says it plainly on the form of a line that has one:
 « La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la
 garder. » Nothing is lost silently.
+
+## §35 — M30: a receipt « ready » whose PDF is not in storage
+
+Reproduced on 2026-10-26 in the simulator, against the local backend, with
+the demo tenant of « New Appart »:
+
+- Rent receipt `1382cc80-295f-48e8-8604-890b8c88980c` (21 Oct, contract
+  `d5c24b16-9f22-4394-bfc0-b74b947ef533`) reads **ready**, and
+  `GET /receipts/{id}/pdf` signs a link. R2 answers **404 `NoSuchKey`** for
+  `mboa-media/receipts/d5c24b16-…/1382cc80-….pdf`.
+- The invoice receipt of 23 Oct, same home, downloads fine. (It then failed
+  to *share* on iOS — an app bug, fixed in `b177040`.)
+
+So the server holds a receipt as made while its file is gone, or was never
+written. One lead: Consolidation B's live check ran on a **copy of the dev
+database** and then « deleted both test PDFs from R2 ». The copy has the dev
+database's ids, so its receipts' keys are the dev receipts' keys; deleting
+the copy's files deletes the dev ones. Worth checking whether this receipt
+was one of them.
+
+Asked:
+1. **Why this file is missing** (the lead above, or an upload that failed
+   after the receipt was marked ready).
+2. **That it cannot happen silently again**: `ready` only once the object
+   is written; and when signing a link, a missing object (`HEAD` 404) puts
+   the receipt back to not ready and queues a new rendering — the app
+   already says « en préparation » and polls, so it would heal on its own.
+3. Meanwhile, re-render this one (`POST /admin/receipts/{id}/pdf` answers
+   `PDF_ALREADY_GENERATED`, since the row says it has its PDF).
