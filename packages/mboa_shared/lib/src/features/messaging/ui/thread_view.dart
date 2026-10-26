@@ -384,7 +384,7 @@ class _Composer extends StatelessWidget {
                         padding: const EdgeInsets.only(right: Dimens.spacingXs),
                         child: Chip(
                           label: Text(l10n.messagingAttachment),
-                          // Lucide's: without it, Material's missing glyph shows as a box.
+                          // Lucide's, like every icon in the apps — not Material's default.
                           deleteIcon: const Icon(LucideIcons.x, size: 16),
                           onDeleted: () => onRemoveAttachment(key),
                           visualDensity: VisualDensity.compact,

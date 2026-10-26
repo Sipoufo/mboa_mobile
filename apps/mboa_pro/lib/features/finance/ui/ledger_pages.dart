@@ -665,7 +665,7 @@ class _LedgerEntryFormViewState extends State<LedgerEntryFormView> {
                   child: InputChip(
                     avatar: Icon(LucideIcons.paperclip, size: 16, color: colors.primary),
                     label: Text(l10n.ledgerFormAttachmentAdded),
-                    // Lucide's, not Material's: the app ships no Material icons.
+                    // Lucide's, like every icon in the apps — not Material's default.
                     deleteIcon: Icon(LucideIcons.x, size: 16, color: colors.textSecondary),
                     onDeleted: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentRemoved()),
                   ),
@@ -680,7 +680,7 @@ class _LedgerEntryFormViewState extends State<LedgerEntryFormView> {
                     label: Text(l10n.ledgerFormAttachmentView),
                     onPressed: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentViewed()),
                     deleteButtonTooltipMessage: l10n.ledgerFormAttachmentRemove,
-                    // Lucide's, not Material's: the app ships no Material icons.
+                    // Lucide's, like every icon in the apps — not Material's default.
                     deleteIcon: Icon(LucideIcons.x, size: 16, color: colors.textSecondary),
                     onDeleted: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentRemoved()),
                   ),

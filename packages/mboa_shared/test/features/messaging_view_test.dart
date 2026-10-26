@@ -163,7 +163,7 @@ void main() {
     expect(find.textContaining('n\'est plus disponible'), findsOneWidget);
   });
 
-  testWidgets('an attached image can be taken off — with a cross, not a missing glyph', (tester) async {
+  testWidgets('an attached image can be taken off — with a Lucide cross', (tester) async {
     when(() => uploader.captureAndUpload(source: ImageSource.camera, category: api.CreateUploadRequestCategoryEnum.MESSAGE_ATTACHMENT))
         .thenAnswer((_) async => 'messages/1.jpg');
     await pump(tester, ThreadView(uploader: uploader));
@@ -173,7 +173,7 @@ void main() {
     await tester.tap(find.text('Prendre une photo'));
     await tester.pumpAndSettle();
 
-    // The app ships no Material icons: the default delete glyph was a box.
+    // Lucide icons only: not the chip's Material default.
     final chip = tester.widget<Chip>(find.byType(Chip));
     expect((chip.deleteIcon as Icon?)?.icon, LucideIcons.x);
     await tester.tap(find.byIcon(LucideIcons.x));
