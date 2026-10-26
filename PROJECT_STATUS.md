@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-24.
+> Last updated: 2026-10-26.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1551 tests green, analyze clean.** `mboa_user` 405 · `mboa_pro` 663 ·
-`mboa_core` 29 · `mboa_shared` 426 · `mboa_ui` 21 · `mboa_l10n` 7.
+**1586 tests green, analyze clean.** `mboa_user` 405 · `mboa_pro` 691 ·
+`mboa_core` 29 · `mboa_shared` 431 · `mboa_ui` 23 · `mboa_l10n` 7.
 
 > **Both apps run on the founder's device** (since 2026-10-20, side by side,
 > against the local backend): reservations, contracts, "Mon logement" and
@@ -670,6 +670,15 @@ trip.
 - An unknown or failed plan read resolves **down** to Gratuit, never up.
 
 ### M10 listings
+- **« Ajouter un bien » is a step-by-step form** (2026-10-26): five steps for
+  a single listing, four for a residence (its rents live in its unit groups,
+  its availability goes with them). `AnnonceDraft.steps` /
+  `isStepComplete` are the one source of truth — `hasRequiredFields` is
+  every step complete. Creating moves forward one step at a time past a step
+  done; correcting saves from any step and jumps to any. The step travels in
+  `AnnonceFormEditing` **and** `AnnonceFormSubmitting`, or the screen jumps to
+  step 1 while saving. The step bar is the shared `MboaStepHeader` (mboa_ui),
+  also used by the invoice form.
 - Photos: **min 3, max 15** (Doc 10). The mockup's "5 photos" is wrong.
   `INSUFFICIENT_PHOTOS` is enforced server-side at publish too.
 - **Enregistrer saves a draft.** Publishing is separate, because only publishing
@@ -1163,9 +1172,15 @@ as the same thing.
 - The register's lines from confirmed rents and invoices are `readOnly`:
   corrected at their source (RM-M30-08). M26 payments write their own
   « Sortie · Intervenants » lines.
-- **§34**: `PUT /finance/ledger/{id}` replaces the attachment with what the
-  request carries, and the key is never returned — a correction drops the
-  photo. The form says so until the backend answers.
+- **§34** (shipped 2026-10-26): a correction keeps the line's attachment
+  unless told otherwise — `attachmentKey` absent keeps it, `""` removes it, a
+  new key replaces it. The form's `attachmentToSend` is the only place that
+  decides; « Retirer la pièce jointe » can be taken back.
+- **A new invoice is three steps** (tenant → charge → amount and date). The
+  tenant step reads **every** running tenancy (`activeTenantHomes`: all
+  `ACTIVE` pages, bounded, cached) because the API has no text search — the
+  search (accents and case aside, every word anywhere) runs on the device,
+  standalone listings and residences in two tabs that count their matches.
 - Server refusals are typed (`FinanceRefused`, `guardFinance`) and said in
   words (`financeRefusalText`). The « ⋯ » sheet and the one-main-button bar
   are `showFinanceActions` / `FinanceActionBar`.
@@ -1240,9 +1255,11 @@ as the same thing.
 Updated 2026-10-24. The client was regenerated from the export carrying M24
 (invoices) and M26 (payments to contractors), `eb848cd`.
 
+To answer the backend:
+- **`AgentOpportunity.alreadyApplied`** (asked 2026-10-24): neither app reads
+  it — it can be removed.
+
 Ready to build (the API exists, nothing in the apps):
-- **§34** (backend): correcting a register line erases its attachment —
-  the app says so on the form meanwhile.
 - **Receipts' 404** (seen on device): R2 answered 404 to a receipt's
   presigned link; the app now reports storage's own code
   (`PdfDownloadFailed`). Waiting for that line to write the backend a precise
@@ -1273,6 +1290,11 @@ Blocked:
   `annonces/ui/goldens/`). They have caught real bugs — an overflowing metric
   grid, unformatted prices, a `1 annonces` plural — but a Linux CI will need them
   regenerated or excluded.
+- **Goldens do not load the Material icon font** (both apps ship it,
+  `uses-material-design: true`): a Material icon draws as an empty box in a
+  golden and fine on a phone. `FieldHelp`'s `Icons.info_outline` is the one
+  left on the M10 form — swapping it for Lucide (project rule) will touch
+  every golden that shows a field help.
 - `url_launcher` is unwired: tapping a receipt surfaces the URL in a toast.
 - `sentry_flutter` had to go 8.x → 9.x to unbreak the Android build (Kotlin 1.6
   vs the 2.x compiler). Nothing caught it because nothing ran an Android build.
