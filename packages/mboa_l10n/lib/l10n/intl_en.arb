@@ -6575,10 +6575,6 @@
   "@ledgerFormAttachmentView": {
     "description": "M25 form"
   },
-  "ledgerFormAttachmentDropped": "The current attachment will be removed: add it again to keep it.",
-  "@ledgerFormAttachmentDropped": {
-    "description": "§34 — the server drops it on a correction"
-  },
   "ledgerFormSave": "Save",
   "@ledgerFormSave": {
     "description": "M25 form button"
@@ -6849,5 +6845,21 @@
   "ownerInvoiceChangeTenant": "Change",
   "@ownerInvoiceChangeTenant": {
     "description": "M24 form — back to the tenant from the recap"
+  },
+  "ledgerFormAttachmentRemove": "Remove the attachment",
+  "@ledgerFormAttachmentRemove": {
+    "description": "M25 form — the cross on the current attachment (§34)"
+  },
+  "ledgerFormAttachmentRemoved": "The attachment will be removed when you save.",
+  "@ledgerFormAttachmentRemoved": {
+    "description": "M25 form — the current attachment, asked to go (§34)"
+  },
+  "ledgerFormAttachmentReplace": "Replace the photo",
+  "@ledgerFormAttachmentReplace": {
+    "description": "M25 form — a new photo over the current one (§34)"
+  },
+  "ledgerFormAttachmentReplacing": "It will replace the current attachment.",
+  "@ledgerFormAttachmentReplacing": {
+    "description": "M25 form — a new photo while the line had one (§34)"
   }
 }

@@ -508,6 +508,7 @@ class _LedgerEntryFormViewState extends State<LedgerEntryFormView> {
           padding: const EdgeInsets.only(top: Dimens.spacing, bottom: Dimens.spacingSm),
           child: Text(text, style: context.mboaText.label.copyWith(color: colors.ink)),
         );
+    final bloc = context.read<LedgerEntryFormBloc>();
 
     return BlocConsumer<LedgerEntryFormBloc, LedgerEntryFormState>(
       listenWhen: (previous, current) =>
@@ -549,155 +550,182 @@ class _LedgerEntryFormViewState extends State<LedgerEntryFormView> {
           MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.commonError);
         }
       },
-      builder: (context, state) => Scaffold(
-        backgroundColor: colors.background,
-        appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
-          title: Text(state.isEditing ? l10n.ledgerFormTitleEdit : l10n.ledgerFormTitleNew),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
-          children: [
-            MboaSegmentedControl<LedgerDirection>(
-              value: state.direction,
-              enabled: !state.isSubmitting,
-              onChanged: (direction) => _change(LedgerEntryFormChanged(direction: direction)),
-              segments: [
-                MboaSegment(value: LedgerDirection.expense, label: l10n.ledgerExpense),
-                MboaSegment(value: LedgerDirection.income, label: l10n.ledgerIncome),
-              ],
-            ),
-            label(l10n.ledgerFormCategory),
-            Wrap(
-              spacing: Dimens.spacingSm,
-              runSpacing: Dimens.spacingXs,
-              children: [
-                for (final category in LedgerEntryFormState.categoriesFor(state.direction))
-                  ChoiceChip(
-                    avatar: Icon(
-                      ledgerCategoryLook(l10n, category).icon,
-                      size: 16,
-                      color: state.category == category ? colors.primary : colors.textSecondary,
-                    ),
-                    label: Text(ledgerCategoryLook(l10n, category).label),
-                    selected: state.category == category,
-                    showCheckmark: false,
-                    selectedColor: colors.primaryPale,
-                    labelStyle: financeChipLabel(context, selected: state.category == category),
-                    side: financeChipSide(context, selected: state.category == category),
-                    onSelected: state.isSubmitting ? null : (_) => _change(LedgerEntryFormChanged(category: category)),
-                  ),
-              ],
-            ),
-            label(l10n.ledgerFormAmount),
-            TextField(
-              controller: _amount,
-              enabled: !state.isSubmitting,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              style: context.mboaText.h2.copyWith(color: colors.ink),
-              onChanged: (value) => _change(LedgerEntryFormChanged(amount: int.tryParse(value) ?? 0)),
-            ),
-            label(l10n.ledgerFormDate),
-            InkWell(
-              onTap: state.isSubmitting ? null : () => _pickDate(state),
-              borderRadius: BorderRadius.circular(Dimens.radius),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: Dimens.spacingSm),
-                child: Row(
-                  children: [
-                    Icon(LucideIcons.calendar, size: Dimens.icon, color: colors.primary),
-                    const SizedBox(width: Dimens.spacingSm),
-                    Text(
-                      state.date == null ? l10n.reservationPickDate : DateFormat.yMMMMd(locale).format(state.date!),
-                      style: context.mboaText.label.copyWith(color: colors.ink),
-                    ),
-                  ],
-                ),
+      builder: (context, state) {
+        Widget addPhoto(String text) => Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                onPressed: state.isBusy ? null : _addPhoto,
+                icon: state.isUploading
+                    ? const SizedBox.square(dimension: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Icon(LucideIcons.camera, size: Dimens.icon),
+                label: Text(text),
               ),
-            ),
-            label(l10n.ledgerFormProperty),
-            Wrap(
-              spacing: Dimens.spacingSm,
-              runSpacing: Dimens.spacingXs,
-              children: [
-                for (final property in [const UnassignedProperty(), ...state.properties])
-                  ChoiceChip(
-                    label: Text(ledgerPropertyLabel(l10n, property), overflow: TextOverflow.ellipsis),
-                    selected: state.property == property,
-                    showCheckmark: false,
-                    selectedColor: colors.primaryPale,
-                    labelStyle: financeChipLabel(context, selected: state.property == property),
-                    side: financeChipSide(context, selected: state.property == property),
-                    onSelected: state.isSubmitting ? null : (_) => _change(LedgerEntryFormChanged(property: property)),
-                  ),
-              ],
-            ),
-            label(l10n.ledgerFormNote),
-            TextField(
-              controller: _note,
-              enabled: !state.isSubmitting,
-              maxLength: 500,
-              minLines: 1,
-              maxLines: 3,
-              textCapitalization: TextCapitalization.sentences,
-              onChanged: (value) => _change(LedgerEntryFormChanged(note: value)),
-            ),
-            label(l10n.ledgerFormAttachment),
-            if (state.attachmentKey != null)
-              InputChip(
-                avatar: Icon(LucideIcons.paperclip, size: 16, color: colors.primary),
-                label: Text(l10n.ledgerFormAttachmentAdded),
-                onDeleted: state.isBusy ? null : () => context.read<LedgerEntryFormBloc>().add(const LedgerEntryAttachmentRemoved()),
-              )
-            else
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: TextButton.icon(
-                  onPressed: state.isBusy ? null : _addPhoto,
-                  icon: state.isUploading
-                      ? const SizedBox.square(dimension: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Icon(LucideIcons.camera, size: Dimens.icon),
-                  label: Text(l10n.ledgerFormAttachmentAdd),
-                ),
-              ),
-            if (state.hadAttachment) ...[
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: TextButton.icon(
-                  onPressed: state.isBusy
-                      ? null
-                      : () => context.read<LedgerEntryFormBloc>().add(const LedgerEntryAttachmentViewed()),
-                  icon: const Icon(LucideIcons.image, size: Dimens.icon),
-                  label: Text(l10n.ledgerFormAttachmentView),
-                ),
-              ),
-              // §34 — said, rather than lost without a word.
-              if (state.dropsAttachment)
-                Text(l10n.ledgerFormAttachmentDropped, style: context.mboaText.caption.copyWith(color: colors.warning)),
-            ],
-          ],
-        ),
-        bottomNavigationBar: FinanceActionBar(
-          isBusy: state.isBusy,
-          main: Button.primary(
-            title: l10n.ledgerFormSave,
-            isLoading: state.isSubmitting,
-            onPressed: state.canSubmit ? () => context.read<LedgerEntryFormBloc>().add(const LedgerEntryFormSubmitted()) : null,
+            );
+
+        return Scaffold(
+          backgroundColor: colors.background,
+          appBar: AppBar(
+            leading: const MboaHeaderBackButton(),
+            title: Text(state.isEditing ? l10n.ledgerFormTitleEdit : l10n.ledgerFormTitleNew),
           ),
-          onMore: state.isEditing
-              ? () async {
-                  final bloc = context.read<LedgerEntryFormBloc>();
-                  final choice = await showFinanceActions<bool>(context, [
-                    (icon: LucideIcons.trash2, label: l10n.ledgerFormDelete, value: true, destructive: true),
-                  ]);
-                  if ((choice ?? false) && context.mounted && await confirmFinance(context, l10n.ledgerFormDeleteConfirm)) {
-                    bloc.add(const LedgerEntryDeleted());
+          body: ListView(
+            padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
+            children: [
+              MboaSegmentedControl<LedgerDirection>(
+                value: state.direction,
+                enabled: !state.isSubmitting,
+                onChanged: (direction) => _change(LedgerEntryFormChanged(direction: direction)),
+                segments: [
+                  MboaSegment(value: LedgerDirection.expense, label: l10n.ledgerExpense),
+                  MboaSegment(value: LedgerDirection.income, label: l10n.ledgerIncome),
+                ],
+              ),
+              label(l10n.ledgerFormCategory),
+              Wrap(
+                spacing: Dimens.spacingSm,
+                runSpacing: Dimens.spacingXs,
+                children: [
+                  for (final category in LedgerEntryFormState.categoriesFor(state.direction))
+                    ChoiceChip(
+                      avatar: Icon(
+                        ledgerCategoryLook(l10n, category).icon,
+                        size: 16,
+                        color: state.category == category ? colors.primary : colors.textSecondary,
+                      ),
+                      label: Text(ledgerCategoryLook(l10n, category).label),
+                      selected: state.category == category,
+                      showCheckmark: false,
+                      selectedColor: colors.primaryPale,
+                      labelStyle: financeChipLabel(context, selected: state.category == category),
+                      side: financeChipSide(context, selected: state.category == category),
+                      onSelected: state.isSubmitting ? null : (_) => _change(LedgerEntryFormChanged(category: category)),
+                    ),
+                ],
+              ),
+              label(l10n.ledgerFormAmount),
+              TextField(
+                controller: _amount,
+                enabled: !state.isSubmitting,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                style: context.mboaText.h2.copyWith(color: colors.ink),
+                onChanged: (value) => _change(LedgerEntryFormChanged(amount: int.tryParse(value) ?? 0)),
+              ),
+              label(l10n.ledgerFormDate),
+              InkWell(
+                onTap: state.isSubmitting ? null : () => _pickDate(state),
+                borderRadius: BorderRadius.circular(Dimens.radius),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: Dimens.spacingSm),
+                  child: Row(
+                    children: [
+                      Icon(LucideIcons.calendar, size: Dimens.icon, color: colors.primary),
+                      const SizedBox(width: Dimens.spacingSm),
+                      Text(
+                        state.date == null ? l10n.reservationPickDate : DateFormat.yMMMMd(locale).format(state.date!),
+                        style: context.mboaText.label.copyWith(color: colors.ink),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              label(l10n.ledgerFormProperty),
+              Wrap(
+                spacing: Dimens.spacingSm,
+                runSpacing: Dimens.spacingXs,
+                children: [
+                  for (final property in [const UnassignedProperty(), ...state.properties])
+                    ChoiceChip(
+                      label: Text(ledgerPropertyLabel(l10n, property), overflow: TextOverflow.ellipsis),
+                      selected: state.property == property,
+                      showCheckmark: false,
+                      selectedColor: colors.primaryPale,
+                      labelStyle: financeChipLabel(context, selected: state.property == property),
+                      side: financeChipSide(context, selected: state.property == property),
+                      onSelected: state.isSubmitting ? null : (_) => _change(LedgerEntryFormChanged(property: property)),
+                    ),
+                ],
+              ),
+              label(l10n.ledgerFormNote),
+              TextField(
+                controller: _note,
+                enabled: !state.isSubmitting,
+                maxLength: 500,
+                minLines: 1,
+                maxLines: 3,
+                textCapitalization: TextCapitalization.sentences,
+                onChanged: (value) => _change(LedgerEntryFormChanged(note: value)),
+              ),
+              label(l10n.ledgerFormAttachment),
+              // §34 — a correction keeps the line's photo unless it is removed
+              // or replaced here.
+              if (state.attachmentKey != null) ...[
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: InputChip(
+                    avatar: Icon(LucideIcons.paperclip, size: 16, color: colors.primary),
+                    label: Text(l10n.ledgerFormAttachmentAdded),
+                    // Lucide's, not Material's: the app ships no Material icons.
+                    deleteIcon: Icon(LucideIcons.x, size: 16, color: colors.textSecondary),
+                    onDeleted: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentRemoved()),
+                  ),
+                ),
+                if (state.hadAttachment)
+                  Text(l10n.ledgerFormAttachmentReplacing, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
+              ] else if (state.hadAttachment && !state.removesAttachment) ...[
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: InputChip(
+                    avatar: Icon(LucideIcons.image, size: 16, color: colors.primary),
+                    label: Text(l10n.ledgerFormAttachmentView),
+                    onPressed: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentViewed()),
+                    deleteButtonTooltipMessage: l10n.ledgerFormAttachmentRemove,
+                    // Lucide's, not Material's: the app ships no Material icons.
+                    deleteIcon: Icon(LucideIcons.x, size: 16, color: colors.textSecondary),
+                    onDeleted: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentRemoved()),
+                  ),
+                ),
+                addPhoto(l10n.ledgerFormAttachmentReplace),
+              ] else ...[
+                if (state.removesAttachment)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          l10n.ledgerFormAttachmentRemoved,
+                          style: context.mboaText.caption.copyWith(color: colors.warning),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: state.isBusy ? null : () => bloc.add(const LedgerEntryAttachmentKept()),
+                        child: Text(l10n.commonCancel),
+                      ),
+                    ],
+                  ),
+                addPhoto(l10n.ledgerFormAttachmentAdd),
+              ],
+            ],
+          ),
+          bottomNavigationBar: FinanceActionBar(
+            isBusy: state.isBusy,
+            main: Button.primary(
+              title: l10n.ledgerFormSave,
+              isLoading: state.isSubmitting,
+              onPressed: state.canSubmit ? () => bloc.add(const LedgerEntryFormSubmitted()) : null,
+            ),
+            onMore: state.isEditing
+                ? () async {
+                    final choice = await showFinanceActions<bool>(context, [
+                      (icon: LucideIcons.trash2, label: l10n.ledgerFormDelete, value: true, destructive: true),
+                    ]);
+                    if ((choice ?? false) && context.mounted && await confirmFinance(context, l10n.ledgerFormDeleteConfirm)) {
+                      bloc.add(const LedgerEntryDeleted());
+                    }
                   }
-                }
-              : null,
-        ),
-      ),
+                : null,
+          ),
+        );
+      },
     );
   }
 }

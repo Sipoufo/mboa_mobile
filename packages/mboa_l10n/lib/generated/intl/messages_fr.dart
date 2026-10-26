@@ -1911,8 +1911,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "ledgerFormAttachmentAdded": MessageLookupByLibrary.simpleMessage(
       "Photo ajoutée",
     ),
-    "ledgerFormAttachmentDropped": MessageLookupByLibrary.simpleMessage(
-      "La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.",
+    "ledgerFormAttachmentRemove": MessageLookupByLibrary.simpleMessage(
+      "Retirer la pièce jointe",
+    ),
+    "ledgerFormAttachmentRemoved": MessageLookupByLibrary.simpleMessage(
+      "La pièce jointe sera retirée à l\'enregistrement.",
+    ),
+    "ledgerFormAttachmentReplace": MessageLookupByLibrary.simpleMessage(
+      "Remplacer la photo",
+    ),
+    "ledgerFormAttachmentReplacing": MessageLookupByLibrary.simpleMessage(
+      "Elle remplacera la pièce jointe actuelle.",
     ),
     "ledgerFormAttachmentView": MessageLookupByLibrary.simpleMessage(
       "Voir la pièce jointe actuelle",

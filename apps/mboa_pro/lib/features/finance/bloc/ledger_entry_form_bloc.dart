@@ -45,7 +45,14 @@ class LedgerEntryFormBloc extends Bloc<LedgerEntryFormEvent, LedgerEntryFormStat
     });
     on<LedgerEntryAttachmentAdded>(_onAttachment);
     on<LedgerEntryAttachmentRemoved>((event, emit) {
-      if (!state.isBusy) emit(state.copyWith(clearAttachment: true));
+      if (state.isBusy) return;
+      // A new photo goes first, back to the one the line had; then that one.
+      emit(state.attachmentKey != null
+          ? state.copyWith(clearAttachment: true)
+          : state.copyWith(removesAttachment: state.hadAttachment));
+    });
+    on<LedgerEntryAttachmentKept>((event, emit) {
+      if (!state.isBusy) emit(state.copyWith(removesAttachment: false));
     });
     on<LedgerEntryAttachmentViewed>(_onViewed);
     on<LedgerEntryFormSubmitted>(_onSubmitted);
@@ -82,7 +89,8 @@ class LedgerEntryFormBloc extends Bloc<LedgerEntryFormEvent, LedgerEntryFormStat
         source: event.source,
         category: CreateUploadRequestCategoryEnum.FINANCE_ATTACHMENT,
       );
-      emit(key == null ? state.copyWith() : state.copyWith(attachmentKey: key));
+      // A new photo replaces the line's, removed or not.
+      emit(key == null ? state.copyWith() : state.copyWith(attachmentKey: key, removesAttachment: false));
     } catch (_) {
       emit(state.copyWith(uploadFailed: true));
     }
@@ -109,7 +117,7 @@ class LedgerEntryFormBloc extends Bloc<LedgerEntryFormEvent, LedgerEntryFormStat
       date: state.date!,
       property: state.property,
       note: state.note,
-      attachmentKey: state.attachmentKey,
+      attachmentKey: state.attachmentToSend,
     );
     try {
       final editing = state.editing;
@@ -186,6 +194,11 @@ final class LedgerEntryAttachmentRemoved extends LedgerEntryFormEvent {
   const LedgerEntryAttachmentRemoved();
 }
 
+/// Undoes removing the line's own attachment.
+final class LedgerEntryAttachmentKept extends LedgerEntryFormEvent {
+  const LedgerEntryAttachmentKept();
+}
+
 final class LedgerEntryAttachmentViewed extends LedgerEntryFormEvent {
   const LedgerEntryAttachmentViewed();
 }
@@ -209,6 +222,7 @@ class LedgerEntryFormState extends Equatable {
     this.note,
     this.attachmentKey,
     this.hadAttachment = false,
+    this.removesAttachment = false,
     this.properties = const [],
     this.isUploading = false,
     this.isSubmitting = false,
@@ -230,10 +244,12 @@ class LedgerEntryFormState extends Equatable {
   /// A new photo, uploaded.
   final String? attachmentKey;
 
-  /// Correcting a line that had one. It cannot be kept: the server replaces
-  /// the attachment with what the correction carries, and never gives its
-  /// key back (§34) — the form says so.
+  /// Correcting a line that had one. The server keeps it unless the
+  /// correction says otherwise (§34): a new key replaces it, `""` removes it.
   final bool hadAttachment;
+
+  /// The landlord asked for the line's own attachment to go.
+  final bool removesAttachment;
   final List<LedgerProperty> properties;
   final bool isUploading;
   final bool isSubmitting;
@@ -248,8 +264,9 @@ class LedgerEntryFormState extends Equatable {
   bool get isEditing => editing != null;
   bool get isBusy => isUploading || isSubmitting;
 
-  /// Saving this correction would drop the attachment the line had.
-  bool get dropsAttachment => hadAttachment && attachmentKey == null;
+  /// What the line goes with (§34): a new photo; `""` to remove the line's
+  /// own; nothing to keep it as it is.
+  String? get attachmentToSend => attachmentKey ?? (removesAttachment ? '' : null);
 
   /// The categories of a side: a rent comes in, works go out.
   static List<LedgerCategory> categoriesFor(LedgerDirection direction) => switch (direction) {
@@ -275,6 +292,7 @@ class LedgerEntryFormState extends Equatable {
     String? note,
     String? attachmentKey,
     bool clearAttachment = false,
+    bool? removesAttachment,
     List<LedgerProperty>? properties,
     bool isUploading = false,
     bool isSubmitting = false,
@@ -294,6 +312,7 @@ class LedgerEntryFormState extends Equatable {
         note: note ?? this.note,
         attachmentKey: clearAttachment ? null : attachmentKey ?? this.attachmentKey,
         hadAttachment: hadAttachment,
+        removesAttachment: removesAttachment ?? this.removesAttachment,
         properties: properties ?? this.properties,
         isUploading: isUploading,
         isSubmitting: isSubmitting,
@@ -315,6 +334,7 @@ class LedgerEntryFormState extends Equatable {
         note,
         attachmentKey,
         hadAttachment,
+        removesAttachment,
         properties,
         isUploading,
         isSubmitting,

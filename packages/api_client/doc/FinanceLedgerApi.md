@@ -296,6 +296,8 @@ Name | Type | Description  | Notes
 
 Replace an entry; needs the add-on running
 
+Every field is replaced but the attachment: `attachmentKey` absent or null keeps it, \"\" removes it, a new FINANCE_ATTACHMENT key replaces it (mobile §34). A removed or replaced file is deleted from storage.
+
 ### Example
 ```dart
 import 'package:api_client/api.dart';

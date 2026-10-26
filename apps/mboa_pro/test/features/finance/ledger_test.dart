@@ -337,16 +337,44 @@ void main() {
       },
     );
 
-    blocTest<LedgerEntryFormBloc, LedgerEntryFormState>(
-      'correcting a line with a photo says the photo goes, unless a new one comes (§34)',
-      build: build,
-      act: (bloc) => bloc.add(LedgerEntryFormStarted(editing: entry('a'))),
-      verify: (bloc) {
-        expect(bloc.state.hadAttachment, isTrue);
-        expect(bloc.state.dropsAttachment, isTrue);
-        expect(bloc.state.copyWith(attachmentKey: 'k').dropsAttachment, isFalse);
-      },
-    );
+    group('correcting a line that had a photo (§34)', () {
+      Future<String?> sent(LedgerEntryFormBloc bloc, List<LedgerEntryFormEvent> events) async {
+        when(() => repository.update(any(), any())).thenAnswer((_) async => entry('a'));
+        bloc.add(LedgerEntryFormStarted(editing: entry('a')));
+        await Future<void>.delayed(Duration.zero);
+        for (final event in events) {
+          bloc.add(event);
+        }
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+        bloc.add(const LedgerEntryFormSubmitted());
+        await Future<void>.delayed(Duration.zero);
+        final draft = verify(() => repository.update('a', captureAny())).captured.single as LedgerDraft;
+        await bloc.close();
+        return draft.attachmentKey;
+      }
+
+      test('untouched, it stays: nothing said about it', () async {
+        expect(await sent(build(), const []), isNull);
+      });
+
+      test('removed, it goes: « "" »; taken back, it stays', () async {
+        expect(await sent(build(), const [LedgerEntryAttachmentRemoved()]), '');
+        expect(await sent(build(), const [LedgerEntryAttachmentRemoved(), LedgerEntryAttachmentKept()]), isNull);
+      });
+
+      test('a new photo replaces it, even after removing it; dropping the new one keeps the old', () async {
+        when(() => uploader.captureAndUpload(source: ImageSource.camera, category: CreateUploadRequestCategoryEnum.FINANCE_ATTACHMENT))
+            .thenAnswer((_) async => 'finance/acc/2.jpg');
+        expect(
+          await sent(build(), const [LedgerEntryAttachmentRemoved(), LedgerEntryAttachmentAdded(ImageSource.camera)]),
+          'finance/acc/2.jpg',
+        );
+        expect(
+          await sent(build(), const [LedgerEntryAttachmentAdded(ImageSource.camera), LedgerEntryAttachmentRemoved()]),
+          isNull,
+        );
+      });
+    });
   });
 
   group('the screens', () {
@@ -424,8 +452,33 @@ void main() {
       );
       await pump(tester, BlocProvider<LedgerEntryFormBloc>.value(value: bloc, child: const LedgerEntryFormView()), height: 1000);
 
-      expect(find.textContaining('ajoute-la à nouveau'), findsOneWidget);
+      // §34 — kept unless removed: no warning, the photo to look at, a cross to remove it.
+      expect(find.textContaining('sera retirée'), findsNothing);
+      expect(find.text('Remplacer la photo'), findsOneWidget);
       await expectLater(find.byType(LedgerEntryFormView), matchesGoldenFile('goldens/ledger_form.png'));
+      await tester.tap(find.text('Voir la pièce jointe actuelle'));
+      verify(() => bloc.add(const LedgerEntryAttachmentViewed())).called(1);
+      await tester.tap(find.byTooltip('Retirer la pièce jointe'));
+      verify(() => bloc.add(const LedgerEntryAttachmentRemoved())).called(1);
+    });
+
+    testWidgets('the form, the line\'s photo asked to go: said, and it can be taken back', (tester) async {
+      final bloc = MockLedgerEntryFormBloc();
+      when(() => bloc.state).thenReturn(
+        LedgerEntryFormState(
+          editing: entry('a'),
+          amount: 45000,
+          date: DateTime(2026, 10, 12),
+          hadAttachment: true,
+          removesAttachment: true,
+        ),
+      );
+      await pump(tester, BlocProvider<LedgerEntryFormBloc>.value(value: bloc, child: const LedgerEntryFormView()), height: 1000);
+
+      expect(find.text("La pièce jointe sera retirée à l'enregistrement."), findsOneWidget);
+      expect(find.text('Voir la pièce jointe actuelle'), findsNothing);
+      await tester.tap(find.text('Annuler'));
+      verify(() => bloc.add(const LedgerEntryAttachmentKept())).called(1);
     });
   });
 }

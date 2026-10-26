@@ -1826,8 +1826,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "ledgerFormAttachmentAdded": MessageLookupByLibrary.simpleMessage(
       "Photo added",
     ),
-    "ledgerFormAttachmentDropped": MessageLookupByLibrary.simpleMessage(
-      "The current attachment will be removed: add it again to keep it.",
+    "ledgerFormAttachmentRemove": MessageLookupByLibrary.simpleMessage(
+      "Remove the attachment",
+    ),
+    "ledgerFormAttachmentRemoved": MessageLookupByLibrary.simpleMessage(
+      "The attachment will be removed when you save.",
+    ),
+    "ledgerFormAttachmentReplace": MessageLookupByLibrary.simpleMessage(
+      "Replace the photo",
+    ),
+    "ledgerFormAttachmentReplacing": MessageLookupByLibrary.simpleMessage(
+      "It will replace the current attachment.",
     ),
     "ledgerFormAttachmentView": MessageLookupByLibrary.simpleMessage(
       "See the current attachment",

@@ -16197,16 +16197,6 @@ class I18n {
     );
   }
 
-  /// `La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.`
-  String get ledgerFormAttachmentDropped {
-    return Intl.message(
-      'La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.',
-      name: 'ledgerFormAttachmentDropped',
-      desc: '§34 — the server drops it on a correction',
-      args: [],
-    );
-  }
-
   /// `Enregistrer`
   String get ledgerFormSave {
     return Intl.message(
@@ -16806,6 +16796,46 @@ class I18n {
       'Changer',
       name: 'ownerInvoiceChangeTenant',
       desc: 'M24 form — back to the tenant from the recap',
+      args: [],
+    );
+  }
+
+  /// `Retirer la pièce jointe`
+  String get ledgerFormAttachmentRemove {
+    return Intl.message(
+      'Retirer la pièce jointe',
+      name: 'ledgerFormAttachmentRemove',
+      desc: 'M25 form — the cross on the current attachment (§34)',
+      args: [],
+    );
+  }
+
+  /// `La pièce jointe sera retirée à l'enregistrement.`
+  String get ledgerFormAttachmentRemoved {
+    return Intl.message(
+      'La pièce jointe sera retirée à l\'enregistrement.',
+      name: 'ledgerFormAttachmentRemoved',
+      desc: 'M25 form — the current attachment, asked to go (§34)',
+      args: [],
+    );
+  }
+
+  /// `Remplacer la photo`
+  String get ledgerFormAttachmentReplace {
+    return Intl.message(
+      'Remplacer la photo',
+      name: 'ledgerFormAttachmentReplace',
+      desc: 'M25 form — a new photo over the current one (§34)',
+      args: [],
+    );
+  }
+
+  /// `Elle remplacera la pièce jointe actuelle.`
+  String get ledgerFormAttachmentReplacing {
+    return Intl.message(
+      'Elle remplacera la pièce jointe actuelle.',
+      name: 'ledgerFormAttachmentReplacing',
+      desc: 'M25 form — a new photo while the line had one (§34)',
       args: [],
     );
   }

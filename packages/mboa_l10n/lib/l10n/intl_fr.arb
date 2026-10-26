@@ -6575,10 +6575,6 @@
   "@ledgerFormAttachmentView": {
     "description": "M25 form"
   },
-  "ledgerFormAttachmentDropped": "La pièce jointe actuelle sera retirée : ajoute-la à nouveau pour la garder.",
-  "@ledgerFormAttachmentDropped": {
-    "description": "§34 — the server drops it on a correction"
-  },
   "ledgerFormSave": "Enregistrer",
   "@ledgerFormSave": {
     "description": "M25 form button"
@@ -6849,5 +6845,21 @@
   "ownerInvoiceChangeTenant": "Changer",
   "@ownerInvoiceChangeTenant": {
     "description": "M24 form — back to the tenant from the recap"
+  },
+  "ledgerFormAttachmentRemove": "Retirer la pièce jointe",
+  "@ledgerFormAttachmentRemove": {
+    "description": "M25 form — the cross on the current attachment (§34)"
+  },
+  "ledgerFormAttachmentRemoved": "La pièce jointe sera retirée à l'enregistrement.",
+  "@ledgerFormAttachmentRemoved": {
+    "description": "M25 form — the current attachment, asked to go (§34)"
+  },
+  "ledgerFormAttachmentReplace": "Remplacer la photo",
+  "@ledgerFormAttachmentReplace": {
+    "description": "M25 form — a new photo over the current one (§34)"
+  },
+  "ledgerFormAttachmentReplacing": "Elle remplacera la pièce jointe actuelle.",
+  "@ledgerFormAttachmentReplacing": {
+    "description": "M25 form — a new photo while the line had one (§34)"
   }
 }

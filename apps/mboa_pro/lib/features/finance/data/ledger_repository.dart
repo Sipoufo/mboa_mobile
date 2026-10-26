@@ -30,7 +30,8 @@ class LedgerDraft {
   final LedgerProperty property;
   final String? note;
 
-  /// A compressed `FINANCE_ATTACHMENT` upload — a receipt, a quote.
+  /// A compressed `FINANCE_ATTACHMENT` upload — a receipt, a quote. On a
+  /// correction (§34): null keeps the line's own, `""` removes it.
   final String? attachmentKey;
 }
 

@@ -556,7 +556,7 @@ class FinanceLedgerApi {
   }
 
   /// Replace an entry; needs the add-on running
-  /// 
+  /// Every field is replaced but the attachment: &#x60;attachmentKey&#x60; absent or null keeps it, \&quot;\&quot; removes it, a new FINANCE_ATTACHMENT key replaces it (mobile §34). A removed or replaced file is deleted from storage.
   ///
   /// Parameters:
   /// * [id] 
