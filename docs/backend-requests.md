@@ -1390,32 +1390,38 @@ Asked, on `ResidenceDetailResponse`, the same shapes the apps already read:
 Public like the rest of the fiche; nothing account-specific in it (the exact
 position already has its own rule, RM-M04-06).
 
-### B. Photos per unit group, at creation
+### B. Photos per unit group, at creation — entered by group, stored per unit
 
 Today a residence's units are created **without photos of their own**: they
 show the residence's shared photos, and giving « the 50 rooms » their own
 means editing them one by one. The founder wants a group's photos set at
 creation, next to the residence's.
 
+**The group is only how they are entered** (the founder's decision): once
+created, each unit has its own photos, and nothing ties the units of a group
+together. Editing one unit's photos changes that unit only.
+
 Asked, on `UnitGroup` (`POST /residences`):
-1. **`photoKeys`** (optional, `LISTING_PHOTO` uploads, 15 at most) — every
-   unit the group creates gets them.
-2. **Absent or empty**: as today — the units show the residence's photos.
-3. **One set of files, many units**: the keys are shared, not copied.
-   Deleting a photo from one unit (or a unit) must not delete the object
-   while another unit still points at it — a reference count, or a check
-   before deleting.
-4. **Publishing** (`INSUFFICIENT_PHOTOS`): a unit counts the group's photos
-   it was given, else the residence's — 3 at least, as now.
-5. **The 📸 badge** (RM-M10-06): a set verified once is verified for every
-   unit sharing it; changing one unit's photos drops that unit's badge
-   only, as a listing's does today.
+1. **`photoKeys`** (optional, `LISTING_PHOTO` uploads, 15 at most). The app
+   uploads a group's photos **once** — not 50 times over a phone's data.
+2. **Each unit gets its own copy**: at creation, the server copies each
+   file for each unit the group creates (a storage-side copy, no new
+   upload) and gives the unit its own keys. No unit shares a file with
+   another, so editing or deleting one unit's photos never touches another
+   — no reference counting needed. The uploaded originals can then go.
+3. **Absent or empty**: as today — the units show the residence's photos.
+4. **Publishing** (`INSUFFICIENT_PHOTOS`): a unit counts its own photos,
+   else the residence's — 3 at least, as now.
+5. **The 📸 badge** (RM-M10-06): per unit, as for any listing. Fifty copies
+   of one set would then mean fifty verifications — if that is too heavy
+   for the admin, the backend may verify identical copies together (same
+   content hash); its call.
 6. On `ResidenceDetailResponse.units[]`, `primaryPhotoKey` is then the
    unit's own first photo when it has one (it already is, as far as the
    apps can tell — to confirm).
 
-Not asked now: editing « the photos of all the rooms » after creation (the
-groups no longer exist once expanded). A bulk action can come later.
+Not asked now: changing the photos of several units at once after
+creation. A bulk action can come later.
 
 Doc 10 needs a rule for B (M10bis) — the founder's to write.
 
