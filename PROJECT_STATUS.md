@@ -1289,6 +1289,19 @@ Done 2026-10-27 — §36:
   Dev data: Cite blanc's rooms are named « ST 1… » like its studios, and its
   two reviews are on a unit no longer live (so they name no unit).
 
+Done 2026-10-27 — the founder's decisions:
+- **M04 district filter + lighter filters** (`66c4cbb`): districts per city
+  (cached offline), « Douala · Akwa » in the bar, the sheet in cards with
+  « Plus de filtres » folded.
+- **Pro « Bientôt » removed** (`be05cac`): « En attente de validation »,
+  « Prospections », a listing's « Historique », menu Recherche / Explorer /
+  Signets / Autres. « Notifications » and KYC NUI / adresse stay (coming).
+- **Sent to the backend** (`docs/backend-requests.md`): §37 A landlord rates
+  the tenant (M09), §37 B NUI + address in KYC (NUI required to sign a
+  contract), §37 C advance and deposit on a listing (« Réservable sous
+  condition »), §38 the notifications page. Doc 10 to update (founder).
+- « Attributions » = the agents: confirmed.
+
 Found missing, 2026-10-26 (the founder's MVP check):
 - **Notifications page** (both apps): neither Doc 10 nor the API has an
   in-app list — only push and device registration. Needs a rule and an API.
