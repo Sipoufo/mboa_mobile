@@ -1430,9 +1430,10 @@ Doc 10 needs a rule for B (M10bis) — the founder's to write.
 
 ## §37 — M09 / M01bis: a landlord rates their tenant; NUI and address in KYC
 
-Two « Bientôt » the apps still show because nothing exists behind them. Both
-need a rule first: **the rules below are proposals, to be confirmed by the
-founder before work starts** (and then written into Doc 10, which is theirs).
+Two « Bientôt » the apps still show because nothing exists behind them, and
+one line of the founder's fiche mockup that no field carries. **The rules
+below were confirmed by the founder on 2026-10-27** (Doc 10 is theirs to
+update).
 
 ### A. M09 — « Note moyenne reçue des prestataires » (`PROVIDER_RATING`)
 
@@ -1483,9 +1484,13 @@ read « Bientôt ».
 
 Proposed rule:
 1. **NUI** (Numéro d'Identifiant Unique, the DGI's tax number): declared as
-   text. **Optional** for a particulier, **required** for an agence or a
-   promoteur (they invoice as a business). The server checks its format;
-   it knows the DGI's format better than the app.
+   text. **Optional** in the KYC for a particulier, **required** for an
+   agence or a promoteur (they invoice as a business). The server checks its
+   format; it knows the DGI's format better than the app.
+   **And required to sign a Mboa contract** (the founder's addition): a
+   prestataire without a NUI on file cannot sign one, whatever their kind.
+   (Only the prestataire goes through KYC; the tenant's signature does not
+   change.)
 2. **Address:** the city and district from the catalogue (`districtId`),
    plus a landmark in free text (« derrière la pharmacie du marché »,
    200 characters). **Optional** for everyone at MVP. No proof document.
@@ -1500,3 +1505,63 @@ Asked:
 2. `KycStatusResponse`: the same two fields as submitted, so the app can
    show them again.
 3. The admin's KYC detail shows them.
+4. Signing a contract (M08) as the prestataire without a NUI on file:
+   `409 NUI_REQUIRED`. **`ContractResponse.nuiRequired`** (true for the
+   prestataire when it is missing), so the app says why before the tap
+   and opens the KYC, rather than letting the signature fail. A NUI can
+   be added after an approved KYC without sending it back for review.
+
+### C. M05 / M10 — the landlord's conditions: advance and deposit
+
+The founder's fiche mockup reads « Réservable sous condition — Avance et
+caution ». In Cameroon a landlord commonly asks for an **advance** (months of
+rent paid up front) and a **deposit** (caution). Today the deposit exists
+only on a contract (`depositAmount`, RM-M08-06), so a tenant learns the
+conditions only once a contract is drawn up.
+
+Rule (confirmed): the landlord **declares** them on the listing; the fiche
+shows them. **No money goes through Mboa** (RM-M29-09): both are paid
+directly between the parties after the contract is signed, and the fiche
+says so.
+
+Asked:
+1. On a listing (create / update, and on `UnitGroup` for a residence):
+   **`advanceMonths`** and **`depositMonths`**, optional integers 0–24.
+   Absent means « not said ».
+2. Both on `AnnonceDetailResponse` (the fiche) and on the Pro's own
+   `AnnonceResponse`.
+3. A contract drawn up from that listing (or from a reservation request on
+   it, RM-M08-10) is pre-filled with `depositAmount` = `depositMonths` × the
+   monthly rent. The landlord can still change it.
+
+---
+
+## §38 — M03: a notifications page in both apps
+
+Today a notification exists only as a push. Once it is dismissed, or if
+the phone hid it (M03), it is gone: nothing in the apps lists what Mboa
+said. The bell in both apps' headers has nowhere to open. The founder
+asked for the page on 2026-10-27.
+
+Rule (proposed for Doc 10, M03):
+1. **Every notification sent to an account is also kept in the app**: the
+   same title, text, `type`, `entityId` and `deepLink` as the push.
+2. **Kept 30 days**, newest first. Deleted with the account (RM-M02-04).
+3. **The opt-out silences the push, not the list**: a notification whose
+   push the user turned off (M02 settings) is still listed, so nothing is
+   lost by asking for quiet.
+4. **Read / unread:** an item is read once opened; « Tout marquer comme
+   lu »; the bell shows the number unread.
+5. **Opening an item** goes where its push goes (CA-M03-02), and to the
+   same « this is gone » screen when its entity no longer exists.
+
+Asked:
+1. `GET /notifications?page=&size=`: the account's notifications, newest
+   first: `id`, `type`, `title`, `body`, `entityId`, `deepLink`,
+   `createdAt`, `readAt` (null if unread).
+2. `GET /notifications/unread-count` → `{count}`, cheap (the bell asks
+   for it on each return to the home screen).
+3. `POST /notifications/{id}/read` and `POST /notifications/read-all`.
+   Idempotent; another account's id is a 404.
+4. Both apps, and both roles in the Pro app (prestataire, agent), use the
+   same routes.
