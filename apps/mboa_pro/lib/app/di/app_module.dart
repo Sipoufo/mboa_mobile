@@ -315,6 +315,14 @@ void registerAppModule() {
   getIt.registerLazySingleton<PendingReservationsBloc>(
     () => PendingReservationsBloc(repository: getIt<IncomingReservationsRepository>()),
   );
+
+  // §38 — the notifications page and the bell: one instance per session.
+  getIt.registerLazySingleton<InboxRepository>(
+    () => InboxRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<InboxBloc>(
+    () => InboxBloc(repository: getIt<InboxRepository>()),
+  );
   getIt.registerFactoryParam<IncomingReservationsBloc, String?, String?>(
     (annonceId, residenceId) => IncomingReservationsBloc(
       repository: getIt<IncomingReservationsRepository>(),
@@ -517,6 +525,9 @@ void registerAppModule() {
 /// holding these are already gone.
 Future<void> resetSessionScopedBlocs() async {
   await getIt.resetLazySingleton<ProProfileBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<InboxBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<HomeBloc>(

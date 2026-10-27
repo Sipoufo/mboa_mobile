@@ -17444,6 +17444,59 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Tout marquer comme lu`
+  String get notificationsMarkAllRead {
+    return Intl.message(
+      'Tout marquer comme lu',
+      name: 'notificationsMarkAllRead',
+      desc: '§38',
+      args: [],
+    );
+  }
+
+  /// `Impossible pour le moment. Réessaie une fois connecté.`
+  String get notificationsMarkAllFailed {
+    return Intl.message(
+      'Impossible pour le moment. Réessaie une fois connecté.',
+      name: 'notificationsMarkAllFailed',
+      desc: '§38 — mark all failed',
+      args: [],
+    );
+  }
+
+  /// `Rien de neuf`
+  String get notificationsEmptyTitle {
+    return Intl.message(
+      'Rien de neuf',
+      name: 'notificationsEmptyTitle',
+      desc: '§38 — empty list',
+      args: [],
+    );
+  }
+
+  /// `Ce que Mboa te signale s'affiche ici pendant 30 jours.`
+  String get notificationsEmptyBody {
+    return Intl.message(
+      'Ce que Mboa te signale s\'affiche ici pendant 30 jours.',
+      name: 'notificationsEmptyBody',
+      desc: '§38 — empty list',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Notifications} one{Notifications, 1 non lue} other{Notifications, {count} non lues}}`
+  String notificationsBellLabel(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Notifications',
+      one: 'Notifications, 1 non lue',
+      other: 'Notifications, $count non lues',
+      name: 'notificationsBellLabel',
+      desc: '§38 — the bell, read aloud',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

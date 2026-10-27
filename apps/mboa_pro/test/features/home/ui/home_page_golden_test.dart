@@ -33,6 +33,8 @@ class MockWaitingDeclarationsBloc extends MockBloc<WaitingDeclarationsEvent, Wai
 
 class MockOpenRequestsBloc extends MockBloc<OpenRequestsEvent, OpenRequestsState> implements OpenRequestsBloc {}
 
+class MockInboxBloc extends MockBloc<InboxEvent, InboxState> implements InboxBloc {}
+
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
 
@@ -98,6 +100,10 @@ void main() {
     if (!getIt.isRegistered<AccessPolicy>()) {
       getIt.registerLazySingleton<AccessPolicy>(AccessPolicy.new);
     }
+    // §38 — the bell reads the session's inbox; nothing unread here.
+    final inbox = MockInboxBloc();
+    when(() => inbox.state).thenReturn(const InboxInitial());
+    getIt.registerSingleton<InboxBloc>(inbox);
   });
 
   tearDown(() => getIt.reset());

@@ -7174,5 +7174,30 @@
   "contractDepositPrefillHint": "Empty: the listing's deposit",
   "@contractDepositPrefillHint": {
     "description": "§37 C — the server pre-fills it"
+  },
+  "notificationsMarkAllRead": "Mark all as read",
+  "@notificationsMarkAllRead": {
+    "description": "§38"
+  },
+  "notificationsMarkAllFailed": "Not possible right now. Try again once online.",
+  "@notificationsMarkAllFailed": {
+    "description": "§38 — mark all failed"
+  },
+  "notificationsEmptyTitle": "Nothing new",
+  "@notificationsEmptyTitle": {
+    "description": "§38 — empty list"
+  },
+  "notificationsEmptyBody": "What Mboa tells you shows here for 30 days.",
+  "@notificationsEmptyBody": {
+    "description": "§38 — empty list"
+  },
+  "notificationsBellLabel": "{count, plural, =0{Notifications} one{Notifications, 1 unread} other{Notifications, {count} unread}}",
+  "@notificationsBellLabel": {
+    "description": "§38 — the bell, read aloud",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

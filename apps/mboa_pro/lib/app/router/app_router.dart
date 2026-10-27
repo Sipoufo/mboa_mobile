@@ -89,6 +89,8 @@ class AppRouter extends RootStackRouter {
             // cannot start a thread, only answer one.
             AutoRoute(page: MessagesRoute.page, path: 'messages'),
             AutoRoute(page: ThreadRoute.page, path: 'messages/:id'),
+            // §38 — what Mboa said, 30 days back; the home's bell and the menu.
+            AutoRoute(page: NotificationsRoute.page, path: 'notifications'),
 
             // Contrat Mboa (M08). The list is a shell tab — the menu entry
             // points at that tab rather than pushing a second copy of it.

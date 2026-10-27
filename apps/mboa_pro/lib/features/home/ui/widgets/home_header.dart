@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -118,11 +119,18 @@ class HomeHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                _HeaderIcon(
-                  icon: LucideIcons.bell,
-                  tooltip: l10n.menuNotifications,
-                  onPressed: () => _comingSoon(context),
-                ),
+                // §38 — the page, and how many are unread.
+                if (getIt.isRegistered<InboxBloc>())
+                  NotificationBell(
+                    bloc: getIt<InboxBloc>(),
+                    onPressed: () => context.router.push(const NotificationsRoute()),
+                    builder: (context, icon, onPressed) => IconButton(
+                      tooltip: l10n.menuNotifications,
+                      onPressed: onPressed,
+                      visualDensity: VisualDensity.compact,
+                      icon: icon,
+                    ),
+                  ),
                 const SizedBox(width: Dimens.spacingSm),
                 _HeaderIcon(
                   icon: LucideIcons.messageSquare,
@@ -143,10 +151,6 @@ class HomeHeader extends StatelessWidget {
       ],
     );
   }
-
-  void _comingSoon(BuildContext context) => context.router.push(
-        AccessRestrictedRoute(restriction: AccessRestriction.comingSoon),
-      );
 }
 
 class _HeaderIcon extends StatelessWidget {

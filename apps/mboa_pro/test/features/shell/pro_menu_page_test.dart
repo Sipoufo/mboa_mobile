@@ -84,9 +84,8 @@ void main() {
       for (final route in [
         SettingsMenuRoute.name,
         CertificationsRoute.name,
-        // Notifications is a coming-soon stub for both personas, but it must
-        // still be *reachable* — the hub is the product's map.
-        AccessRestrictedRoute.name,
+        // §38 — the notifications page, for both personas.
+        NotificationsRoute.name,
       ]) {
         expect(
           reachedFromAgentUi(route),

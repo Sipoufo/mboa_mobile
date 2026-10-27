@@ -185,6 +185,9 @@ class _SearchPageState extends State<SearchPage> {
               SearchGreeting(
                 onSavedSearches: _openSavedSearches,
                 onMessages: () => _openTab(2),
+                onNotifications: () => context.router.root.push(
+                  const AuthenticatedRouter(children: [NotificationsRoute()]),
+                ),
                 onAvatar: () => getIt<SessionSnapshot>().hasSession
                     ? _openTab(3)
                     : unawaited(context.router.root.push(LoginRoute())),

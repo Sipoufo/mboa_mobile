@@ -17,9 +17,14 @@ export 'src/routing/guards/session_guard.dart';
 export 'src/routing/session_snapshot.dart';
 
 // Notifications (M03) — FCM registration + payload intake, shared by both apps.
+export 'src/features/notifications/bloc/inbox_bloc.dart';
+export 'src/features/notifications/data/inbox_repository.dart';
 export 'src/features/notifications/data/notifications_repository.dart';
+export 'src/features/notifications/models/inbox_item.dart';
 export 'src/features/notifications/models/push_message.dart';
 export 'src/features/notifications/notifications_background.dart';
+export 'src/features/notifications/ui/notification_bell.dart';
+export 'src/features/notifications/ui/notifications_view.dart';
 
 // Contracts (M08) — the same endpoints serve both parties, so the model and
 // the repository are shared; each app builds its own screens on top.

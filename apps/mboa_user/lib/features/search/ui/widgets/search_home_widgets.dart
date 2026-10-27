@@ -24,11 +24,15 @@ class SearchGreeting extends StatefulWidget {
     required this.onSavedSearches,
     required this.onMessages,
     required this.onAvatar,
+    this.onNotifications,
   });
 
   final VoidCallback onSavedSearches;
   final VoidCallback onMessages;
   final VoidCallback onAvatar;
+
+  /// §38 — the bell, for a signed-in reader: a guest has no notifications.
+  final VoidCallback? onNotifications;
 
   @override
   State<SearchGreeting> createState() => _SearchGreetingState();
@@ -65,6 +69,8 @@ class _SearchGreetingState extends State<SearchGreeting> {
       children: [
         shortcut(LucideIcons.bookmark, l10n.savedSearchesTitle, widget.onSavedSearches),
         shortcut(LucideIcons.messageSquareText, l10n.navMessages, widget.onMessages),
+        if (widget.onNotifications case final onNotifications? when profile != null && getIt.isRegistered<InboxBloc>())
+          NotificationBell(bloc: getIt<InboxBloc>(), onPressed: onNotifications),
         // The greeting and the avatar as one group, against the right edge;
         // the words take what the shortcuts leave.
         Expanded(

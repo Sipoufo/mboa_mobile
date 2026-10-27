@@ -23,6 +23,9 @@ Future<void> startNotifications({
 
 /// Foreground messages aren't drawn by the OS, so surface them in-app.
 void _showInApp(BuildContext context, PushMessage message) {
+  // §38 — the bell counts it at once.
+  if (getIt.isRegistered<InboxBloc>()) getIt<InboxBloc>().add(const InboxUnreadCountRequested());
+
   // N-36 — a payment confirmed or contested: the next rent and the late
   // count move, so "Mon logement" is read again.
   if (message.type == PushType.home && getIt.isRegistered<MyHomesBloc>()) {
@@ -38,8 +41,8 @@ void _showInApp(BuildContext context, PushMessage message) {
 /// CA-M03-02: a tap opens the screen the notification is about.
 ///
 /// The payload is `{type, entityId}`, the backend's append-only `PushTarget`.
-/// No id, or a type this build does not know, lands on the shell.
-@visibleForTesting
+/// No id, or a type this build does not know, lands on the shell. The
+/// notifications page opens its items through here too (§38).
 void routeNotificationTap(AppRouter router, PushMessage message) {
   final id = message.entityId;
 

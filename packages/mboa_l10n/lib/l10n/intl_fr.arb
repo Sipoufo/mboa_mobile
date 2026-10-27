@@ -7174,5 +7174,30 @@
   "contractDepositPrefillHint": "Vide : la caution de l'annonce",
   "@contractDepositPrefillHint": {
     "description": "§37 C — the server pre-fills it"
+  },
+  "notificationsMarkAllRead": "Tout marquer comme lu",
+  "@notificationsMarkAllRead": {
+    "description": "§38"
+  },
+  "notificationsMarkAllFailed": "Impossible pour le moment. Réessaie une fois connecté.",
+  "@notificationsMarkAllFailed": {
+    "description": "§38 — mark all failed"
+  },
+  "notificationsEmptyTitle": "Rien de neuf",
+  "@notificationsEmptyTitle": {
+    "description": "§38 — empty list"
+  },
+  "notificationsEmptyBody": "Ce que Mboa te signale s'affiche ici pendant 30 jours.",
+  "@notificationsEmptyBody": {
+    "description": "§38 — empty list"
+  },
+  "notificationsBellLabel": "{count, plural, =0{Notifications} one{Notifications, 1 non lue} other{Notifications, {count} non lues}}",
+  "@notificationsBellLabel": {
+    "description": "§38 — the bell, read aloud",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

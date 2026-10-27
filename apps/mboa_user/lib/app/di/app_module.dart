@@ -107,6 +107,13 @@ void registerAppModule() {
   getIt.registerLazySingleton<HistoryRepository>(
     () => HistoryRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );
+  // §38 — the notifications page and the bell: one instance per session.
+  getIt.registerLazySingleton<InboxRepository>(
+    () => InboxRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
+  );
+  getIt.registerLazySingleton<InboxBloc>(
+    () => InboxBloc(repository: getIt<InboxRepository>()),
+  );
   getIt.registerLazySingleton<HistoryBloc>(
     () => HistoryBloc(repository: getIt<HistoryRepository>()),
   );
@@ -383,6 +390,9 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<HistoryBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<InboxBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
 }

@@ -117,14 +117,8 @@ class _AgentProfilePageState extends State<AgentProfilePage> {
                   MboaTileCard(
                     icon: LucideIcons.bell,
                     title: l10n.menuNotifications,
-                    // Coming-soon, exactly as on the prestataire menu: push
-                    // notifications are delivered, but there is no preferences
-                    // screen for either persona yet.
-                    onTap: () => context.router.push(
-                      AccessRestrictedRoute(
-                        restriction: AccessRestriction.comingSoon,
-                      ),
-                    ),
+                    // §38 — the same page as the prestataire's.
+                    onTap: () => context.router.push(const NotificationsRoute()),
                   ),
                   const SizedBox(height: Dimens.spacingSm),
                   MboaTileCard(

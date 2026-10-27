@@ -12,8 +12,7 @@ import '../../profile/profile_types.dart';
 
 /// Full-screen slide menu, pushed as a modal over the active tab.
 ///
-/// Every entry opens a screen that exists, except « Notifications », which
-/// waits for its page (§38). Recherche, Explorer, Signets and Autres came from
+/// Every entry opens a screen that exists. Recherche, Explorer, Signets and Autres came from
 /// the mockup with nothing in Doc 10 behind them; the founder had them removed
 /// (2026-10-27).
 @RoutePage()
@@ -56,7 +55,7 @@ class ProMenuPage extends StatelessWidget {
                   _MenuEntry(
                     icon: LucideIcons.bell,
                     label: l10n.menuNotifications,
-                    onTap: () => _comingSoon(context),
+                    onTap: () => _go(context, const NotificationsRoute()),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.messageSquare,
@@ -146,11 +145,6 @@ class ProMenuPage extends StatelessWidget {
       ..maybePop()
       ..push(route);
   }
-
-  void _comingSoon(BuildContext context) => _go(
-        context,
-        AccessRestrictedRoute(restriction: AccessRestriction.comingSoon),
-      );
 }
 
 class _MenuHeader extends StatelessWidget {
