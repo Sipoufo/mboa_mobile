@@ -68,6 +68,7 @@ class UnitGroupDraft extends Equatable {
     this.chargesIncluded,
     this.chargesAmount,
     this.description,
+    this.photoKeys = const [],
   });
 
   final PropertyType propertyType;
@@ -83,8 +84,14 @@ class UnitGroupDraft extends Equatable {
   final int? chargesAmount;
   final String? description;
 
+  /// RM-M10bis-13 — entered once for the group, uploaded once; the server
+  /// gives each unit its own copy. Empty: the units show the residence's.
+  final List<String> photoKeys;
+
   bool get isValid =>
       count > 0 && namePrefix.trim().isNotEmpty && (price ?? 0) > 0;
+
+  bool get canAddPhoto => photoKeys.length < AnnonceDraft.maxPhotos;
 
   UnitGroupDraft copyWith({
     PropertyType? propertyType,
@@ -99,6 +106,7 @@ class UnitGroupDraft extends Equatable {
     bool? chargesIncluded,
     int? chargesAmount,
     String? description,
+    List<String>? photoKeys,
   }) =>
       UnitGroupDraft(
         propertyType: propertyType ?? this.propertyType,
@@ -113,11 +121,12 @@ class UnitGroupDraft extends Equatable {
         chargesIncluded: chargesIncluded ?? this.chargesIncluded,
         chargesAmount: chargesAmount ?? this.chargesAmount,
         description: description ?? this.description,
+        photoKeys: photoKeys ?? this.photoKeys,
       );
 
   @override
   List<Object?> get props =>
-      [propertyType, count, namePrefix, price, rentalPeriod, surfaceArea, roomCount];
+      [propertyType, count, namePrefix, price, rentalPeriod, surfaceArea, roomCount, photoKeys];
 }
 
 /// The in-progress listing the form edits, for either kind.

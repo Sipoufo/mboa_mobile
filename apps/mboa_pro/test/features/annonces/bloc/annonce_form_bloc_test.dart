@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
@@ -165,6 +167,89 @@ void main() {
       expect: () =>
           [AnnonceFormEditing(completeSingle().copyWith(photoKeys: ['b']))],
     );
+  });
+
+  group('photos of a unit group (RM-M10bis-13)', () {
+    AnnonceDraft residence({List<String> groupPhotos = const []}) => AnnonceDraft(
+          kind: AnnonceKind.residence,
+          title: 'Cité blanche',
+          availableFrom: DateTime(2026, 11, 1),
+          location: location,
+          photoKeys: const ['shared-1'],
+          units: [
+            const UnitGroupDraft(count: 4, namePrefix: 'Studio', price: 90000),
+            UnitGroupDraft(count: 12, namePrefix: 'Chambre', price: 35000, photoKeys: groupPhotos),
+          ],
+        );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'lands in its group, and only its strip spins',
+      setUp: () => stubUpload('room-1'),
+      build: build,
+      seed: () => AnnonceFormEditing(residence()),
+      act: (bloc) => bloc.add(const AnnonceFormPhotoAdded(ImageSource.camera, group: 1)),
+      expect: () => [
+        AnnonceFormEditing(residence(), uploadingPhoto: true, uploadingGroup: 1),
+        AnnonceFormEditing(residence(groupPhotos: ['room-1'])),
+      ],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'removes one of its photos by key, the residence\'s untouched',
+      build: build,
+      seed: () => AnnonceFormEditing(residence(groupPhotos: ['room-1', 'room-2'])),
+      act: (bloc) => bloc.add(const AnnonceFormPhotoRemoved('room-1', group: 1)),
+      expect: () => [AnnonceFormEditing(residence(groupPhotos: ['room-2']))],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'refuses a sixteenth photo in a group',
+      build: build,
+      seed: () => AnnonceFormEditing(residence(groupPhotos: List.generate(15, (i) => 'room-$i'))),
+      act: (bloc) => bloc.add(const AnnonceFormPhotoAdded(ImageSource.camera, group: 1)),
+      expect: () => const <AnnonceFormState>[],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'a group cannot be removed while its photo uploads — the photo would land on another',
+      build: build,
+      seed: () => AnnonceFormEditing(residence(), uploadingPhoto: true, uploadingGroup: 1),
+      act: (bloc) => bloc.add(const AnnonceFormUnitGroupRemoved(0)),
+      expect: () => const <AnnonceFormState>[],
+    );
+
+    blocTest<AnnonceFormBloc, AnnonceFormState>(
+      'one upload at a time',
+      build: build,
+      seed: () => AnnonceFormEditing(residence(), uploadingPhoto: true),
+      act: (bloc) => bloc.add(const AnnonceFormPhotoAdded(ImageSource.camera, group: 1)),
+      expect: () => const <AnnonceFormState>[],
+      verify: (_) => verifyNever(
+        () => uploader.captureAndUpload(source: any(named: 'source'), category: any(named: 'category')),
+      ),
+    );
+  });
+
+  // Regression: the photo landing put back the draft as it was when the upload
+  // started, so whatever was typed meanwhile was silently dropped.
+  test('what is typed while a photo uploads is kept when it lands', () async {
+    final upload = Completer<String?>();
+    when(() => uploader.captureAndUpload(source: any(named: 'source'), category: any(named: 'category')))
+        .thenAnswer((_) => upload.future);
+
+    final bloc = build()..emit(AnnonceFormEditing(completeSingle()));
+    bloc
+      ..add(const AnnonceFormPhotoAdded(ImageSource.camera))
+      ..add(AnnonceFormChanged((d) => d.copyWith(description: 'Lumineux, au calme.')));
+    await bloc.stream.firstWhere((s) => s is AnnonceFormEditing && s.draft.description != null);
+    upload.complete('photo-1');
+    final landed = await bloc.stream.firstWhere(
+      (s) => s is AnnonceFormEditing && s.draft.photoKeys.isNotEmpty,
+    ) as AnnonceFormEditing;
+
+    expect(landed.draft.photoKeys, ['photo-1']);
+    expect(landed.draft.description, 'Lumineux, au calme.');
+    await bloc.close();
   });
 
   group('validation', () {

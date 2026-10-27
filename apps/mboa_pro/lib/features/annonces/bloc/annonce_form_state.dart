@@ -39,6 +39,7 @@ final class AnnonceFormEditing extends AnnonceFormState {
     this.draft, {
     this.step = AnnonceFormStep.basics,
     this.uploadingPhoto = false,
+    this.uploadingGroup,
     this.error,
     this.apiError,
   });
@@ -46,6 +47,11 @@ final class AnnonceFormEditing extends AnnonceFormState {
   final AnnonceDraft draft;
   final AnnonceFormStep step;
   final bool uploadingPhoto;
+
+  /// Which unit group the upload is for, so only its strip spins; null for
+  /// the listing's own photos.
+  final int? uploadingGroup;
+
   final AnnonceFormError? error;
 
   /// The backend's own error, when it sent one. Lets the UI say *why* a save
@@ -61,6 +67,7 @@ final class AnnonceFormEditing extends AnnonceFormState {
     AnnonceDraft? draft,
     AnnonceFormStep? step,
     bool? uploadingPhoto,
+    int? uploadingGroup,
     AnnonceFormError? error,
     ApiError? apiError,
     bool clearError = false,
@@ -69,12 +76,14 @@ final class AnnonceFormEditing extends AnnonceFormState {
         draft ?? this.draft,
         step: step ?? this.step,
         uploadingPhoto: uploadingPhoto ?? this.uploadingPhoto,
+        // Meaningless once no upload runs.
+        uploadingGroup: (uploadingPhoto ?? this.uploadingPhoto) ? (uploadingGroup ?? this.uploadingGroup) : null,
         error: clearError ? null : (error ?? this.error),
         apiError: clearError ? null : (apiError ?? this.apiError),
       );
 
   @override
-  List<Object?> get props => [draft, step, uploadingPhoto, error, apiError];
+  List<Object?> get props => [draft, step, uploadingPhoto, uploadingGroup, error, apiError];
 }
 
 final class AnnonceFormSubmitting extends AnnonceFormState {

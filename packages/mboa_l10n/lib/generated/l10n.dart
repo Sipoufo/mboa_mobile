@@ -17233,6 +17233,26 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Photos de ces unités (facultatif)`
+  String get annonceFormUnitPhotosLabel {
+    return Intl.message(
+      'Photos de ces unités (facultatif)',
+      name: 'annonceFormUnitPhotosLabel',
+      desc: 'RM-M10bis-13 — a unit group\'s photos',
+      args: [],
+    );
+  }
+
+  /// `Chaque unité en reçoit sa copie. Sans photo, elles montrent celles de la résidence ; avec, {min} minimum.`
+  String annonceFormUnitPhotosHint(int min) {
+    return Intl.message(
+      'Chaque unité en reçoit sa copie. Sans photo, elles montrent celles de la résidence ; avec, $min minimum.',
+      name: 'annonceFormUnitPhotosHint',
+      desc: 'RM-M10bis-13 — under a unit group\'s photos',
+      args: [min],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

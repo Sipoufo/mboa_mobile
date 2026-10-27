@@ -82,9 +82,16 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
     Emitter<AnnonceFormState> emit,
   ) async {
     final current = _editing;
-    if (current == null || !current.draft.canAddPhoto) return;
+    final group = event.group;
+    if (current == null || current.uploadingPhoto) return;
+    if (group != null) {
+      final units = current.draft.units;
+      if (group < 0 || group >= units.length || !units[group].canAddPhoto) return;
+    } else if (!current.draft.canAddPhoto) {
+      return;
+    }
 
-    emit(current.copyWith(uploadingPhoto: true, clearError: true));
+    emit(current.copyWith(uploadingPhoto: true, uploadingGroup: group, clearError: true));
 
     for (var attempt = 1; attempt <= uploadRetries; attempt++) {
       try {
@@ -92,25 +99,22 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
           source: event.source,
           category: CreateUploadRequestCategoryEnum.LISTING_PHOTO,
         );
+        // Read again: the form may have been edited during the upload, and
+        // those edits must not be lost to the photo landing.
+        final latest = _editing ?? current;
 
         // Null means the picker was cancelled — not a failure.
         if (key == null) {
-          emit(current.copyWith(uploadingPhoto: false));
+          emit(latest.copyWith(uploadingPhoto: false));
           return;
         }
 
-        emit(
-          current.copyWith(
-            draft: current.draft
-                .copyWith(photoKeys: [...current.draft.photoKeys, key]),
-            uploadingPhoto: false,
-          ),
-        );
+        emit(latest.copyWith(draft: _withPhoto(latest.draft, key, group), uploadingPhoto: false));
         return;
       } catch (_) {
         if (attempt == uploadRetries) {
           emit(
-            current.copyWith(
+            (_editing ?? current).copyWith(
               uploadingPhoto: false,
               error: AnnonceFormError.photoUpload,
             ),
@@ -120,21 +124,33 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
     }
   }
 
+  /// [key] added to the listing's photos, or to [group]'s — unless that group
+  /// was removed while the photo uploaded.
+  static AnnonceDraft _withPhoto(AnnonceDraft draft, String key, int? group) {
+    if (group == null) return draft.copyWith(photoKeys: [...draft.photoKeys, key]);
+    if (group >= draft.units.length) return draft;
+    final units = [...draft.units];
+    units[group] = units[group].copyWith(photoKeys: [...units[group].photoKeys, key]);
+    return draft.copyWith(units: units);
+  }
+
   void _onPhotoRemoved(
     AnnonceFormPhotoRemoved event,
     Emitter<AnnonceFormState> emit,
   ) {
     final current = _editing;
     if (current == null) return;
+    final draft = current.draft;
+    final group = event.group;
 
-    emit(
-      current.copyWith(
-        draft: current.draft.copyWith(
-          photoKeys:
-              current.draft.photoKeys.where((k) => k != event.key).toList(),
-        ),
-      ),
-    );
+    if (group == null) {
+      emit(current.copyWith(draft: draft.copyWith(photoKeys: draft.photoKeys.where((k) => k != event.key).toList())));
+      return;
+    }
+    if (group < 0 || group >= draft.units.length) return;
+    final units = [...draft.units];
+    units[group] = units[group].copyWith(photoKeys: units[group].photoKeys.where((k) => k != event.key).toList());
+    emit(current.copyWith(draft: draft.copyWith(units: units)));
   }
 
   void _onChanged(AnnonceFormChanged event, Emitter<AnnonceFormState> emit) {
@@ -177,6 +193,9 @@ class AnnonceFormBloc extends Bloc<AnnonceFormEvent, AnnonceFormState> {
   ) {
     final current = _editing;
     if (current == null) return;
+    // A group photo in flight is addressed by its group's place in the list;
+    // removing a group now would land it on another.
+    if (current.uploadingGroup != null) return;
 
     final units = [...current.draft.units]..removeAt(event.index);
     emit(current.copyWith(draft: current.draft.copyWith(units: units)));

@@ -177,6 +177,56 @@ void main() {
     await golden('annonce_form_units');
   });
 
+  testWidgets('RM-M10bis-13 — each group takes its own photos, once for all its units', (tester) async {
+    await form(
+      tester,
+      const AnnonceFormEditing(
+        AnnonceDraft(
+          kind: AnnonceKind.residence,
+          title: 'Résidence Deido',
+          location: location,
+          units: [
+            UnitGroupDraft(count: 6, namePrefix: 'Chambre', price: 45000, photoKeys: ['room-1', 'room-2']),
+          ],
+        ),
+        step: AnnonceFormStep.details,
+      ),
+      kind: AnnonceKind.residence,
+    );
+
+    await tester.scrollUntilVisible(
+      find.text('Photos de ces unités (facultatif)'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -200));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Chaque unité en reçoit sa copie'), findsOneWidget);
+    await golden('annonce_form_unit_photos');
+  });
+
+  testWidgets('correcting a residence: its units already exist, so no group photos', (tester) async {
+    await form(
+      tester,
+      const AnnonceFormEditing(
+        AnnonceDraft(
+          kind: AnnonceKind.residence,
+          id: 'r-1',
+          title: 'Résidence Deido',
+          location: location,
+          units: [UnitGroupDraft(count: 6, namePrefix: 'Chambre', price: 45000)],
+        ),
+        step: AnnonceFormStep.details,
+      ),
+      kind: AnnonceKind.residence,
+    );
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -2000));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Photos de ces unités (facultatif)'), findsNothing);
+  });
+
   testWidgets('correcting: no kind to choose, saved from any step, any step a tap away', (tester) async {
     await form(
       tester,

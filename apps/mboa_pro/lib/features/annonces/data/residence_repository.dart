@@ -100,5 +100,7 @@ class ResidenceRepository {
     ..roomCount = draft.roomCount
     ..bathroomCount = draft.bathroomCount
     ..furnished = draft.furnished
-    ..description = draft.description);
+    ..description = draft.description
+    // RM-M10bis-13 — uploaded once; the server copies them to each unit.
+    ..photoKeys = draft.photoKeys.isEmpty ? null : ListBuilder<String>(draft.photoKeys));
 }

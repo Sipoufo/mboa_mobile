@@ -17,12 +17,16 @@ class PhotoStrip extends StatelessWidget {
     required this.onAdd,
     required this.onRemove,
     this.isUploading = false,
+    this.hint,
   });
 
   final List<String> photoKeys;
   final VoidCallback onAdd;
   final ValueChanged<String> onRemove;
   final bool isUploading;
+
+  /// Under the strip; the listing's « 3 photos minimum » by default.
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +64,9 @@ class PhotoStrip extends StatelessWidget {
         const SizedBox(height: Dimens.spacingSm),
         Center(
           child: Text(
-            l10n.annonceFormPhotosHint(AnnonceDraft.minPhotos),
+            hint ?? l10n.annonceFormPhotosHint(AnnonceDraft.minPhotos),
+            // A longer hint wraps; centred like the line it replaces.
+            textAlign: hint == null ? null : TextAlign.center,
             style: context.mboaText.caption.copyWith(
               // Turns neutral once the minimum is met.
               color: photoKeys.length >= AnnonceDraft.minPhotos

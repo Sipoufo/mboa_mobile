@@ -380,7 +380,12 @@ class _StepBody extends StatelessWidget {
   /// A residence's units, by groups — their rents with them —, and when
   /// they are free.
   List<Widget> _units(BuildContext context) => [
-    UnitGroupEditor(units: draft.units, showTitle: false),
+    UnitGroupEditor(
+      units: draft.units,
+      showTitle: false,
+      withPhotos: draft.id == null,
+      uploadingGroup: state.uploadingGroup,
+    ),
     const SizedBox(height: Dimens.spacing),
     _AvailabilityField(
       value: draft.availableFrom,
@@ -450,7 +455,7 @@ class _StepBody extends StatelessWidget {
       ),
       PhotoStrip(
         photoKeys: draft.photoKeys,
-        isUploading: state.uploadingPhoto,
+        isUploading: state.uploadingPhoto && state.uploadingGroup == null,
         onAdd: () => _addPhoto(context),
         onRemove: (key) => context.read<AnnonceFormBloc>().add(AnnonceFormPhotoRemoved(key)),
       ),

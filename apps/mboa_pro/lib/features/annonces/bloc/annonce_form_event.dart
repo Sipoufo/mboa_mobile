@@ -24,21 +24,25 @@ final class AnnonceFormStarted extends AnnonceFormEvent {
 }
 
 final class AnnonceFormPhotoAdded extends AnnonceFormEvent {
-  const AnnonceFormPhotoAdded(this.source);
+  const AnnonceFormPhotoAdded(this.source, {this.group});
 
   final ImageSource source;
 
+  /// A unit group's photos (RM-M10bis-13) rather than the listing's own.
+  final int? group;
+
   @override
-  List<Object?> get props => [source];
+  List<Object?> get props => [source, group];
 }
 
 final class AnnonceFormPhotoRemoved extends AnnonceFormEvent {
-  const AnnonceFormPhotoRemoved(this.key);
+  const AnnonceFormPhotoRemoved(this.key, {this.group});
 
   final String key;
+  final int? group;
 
   @override
-  List<Object?> get props => [key];
+  List<Object?> get props => [key, group];
 }
 
 /// A single field edit, expressed as a transform.

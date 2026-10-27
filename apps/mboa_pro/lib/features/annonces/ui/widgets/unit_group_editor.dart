@@ -9,6 +9,7 @@ import '../../bloc/annonce_form_bloc.dart';
 import '../../models/annonce_draft.dart';
 import 'form_field_shell.dart';
 import 'form_text_field.dart';
+import 'photo_strip.dart';
 
 /// Editor for a residence's unit groups.
 ///
@@ -17,12 +18,25 @@ import 'form_text_field.dart';
 /// units. Rents live here, not on the residence, which is why the multi-unit
 /// form has no single price field.
 class UnitGroupEditor extends StatelessWidget {
-  const UnitGroupEditor({super.key, required this.units, this.showTitle = true});
+  const UnitGroupEditor({
+    super.key,
+    required this.units,
+    this.showTitle = true,
+    this.withPhotos = false,
+    this.uploadingGroup,
+  });
 
   final List<UnitGroupDraft> units;
 
   /// Off under a step that already asks for the units.
   final bool showTitle;
+
+  /// RM-M10bis-13 — each group's own photos, on creation only: once created,
+  /// the units are listings and each keeps its photos on its own.
+  final bool withPhotos;
+
+  /// The group whose photo is uploading.
+  final int? uploadingGroup;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +55,16 @@ class UnitGroupEditor extends StatelessWidget {
             key: ValueKey(index),
             index: index,
             group: units[index],
+            withPhotos: withPhotos,
+            isUploading: uploadingGroup == index,
             onChanged: (group) => bloc.add(AnnonceFormUnitGroupUpdated(index, group)),
-            onRemove: () => bloc.add(AnnonceFormUnitGroupRemoved(index)),
+            // Not while a group photo uploads: it lands by the group's place.
+            onRemove: uploadingGroup == null ? () => bloc.add(AnnonceFormUnitGroupRemoved(index)) : null,
+            onAddPhoto: () async {
+              final source = await showCaptureSourceSheet(context);
+              if (source != null) bloc.add(AnnonceFormPhotoAdded(source, group: index));
+            },
+            onRemovePhoto: (key) => bloc.add(AnnonceFormPhotoRemoved(key, group: index)),
           ),
         const SizedBox(height: Dimens.spacingSm),
         Button.outline(
@@ -61,14 +83,22 @@ class _UnitGroupRow extends StatelessWidget {
     super.key,
     required this.index,
     required this.group,
+    required this.withPhotos,
+    required this.isUploading,
     required this.onChanged,
     required this.onRemove,
+    required this.onAddPhoto,
+    required this.onRemovePhoto,
   });
 
   final int index;
   final UnitGroupDraft group;
+  final bool withPhotos;
+  final bool isUploading;
   final ValueChanged<UnitGroupDraft> onChanged;
-  final VoidCallback onRemove;
+  final VoidCallback? onRemove;
+  final VoidCallback onAddPhoto;
+  final ValueChanged<String> onRemovePhoto;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +126,7 @@ class _UnitGroupRow extends StatelessWidget {
               ),
               IconButton(
                 onPressed: onRemove,
-                icon: Icon(LucideIcons.trash2, color: colors.error),
+                icon: Icon(LucideIcons.trash2, color: onRemove == null ? colors.textTertiary : colors.error),
               ),
             ],
           ),
@@ -229,6 +259,24 @@ class _UnitGroupRow extends StatelessWidget {
               keyboardType: TextInputType.number,
               initialValue: group.chargesAmount?.toString() ?? '',
               onChanged: (value) => onChanged(group.copyWith(chargesAmount: int.tryParse(value))),
+            ),
+          ],
+          if (withPhotos) ...[
+            const SizedBox(height: Dimens.spacingMd),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                l10n.annonceFormUnitPhotosLabel,
+                style: context.mboaText.label.copyWith(color: colors.ink),
+              ),
+            ),
+            const SizedBox(height: Dimens.spacingSm),
+            PhotoStrip(
+              photoKeys: group.photoKeys,
+              isUploading: isUploading,
+              onAdd: onAddPhoto,
+              onRemove: onRemovePhoto,
+              hint: l10n.annonceFormUnitPhotosHint(AnnonceDraft.minPhotos),
             ),
           ],
         ],

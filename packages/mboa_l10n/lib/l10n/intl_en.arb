@@ -7064,5 +7064,18 @@
   "residenceGroupSeeLess": "See less",
   "@residenceGroupSeeLess": {
     "description": "M10bis — folds a group back to three"
+  },
+  "annonceFormUnitPhotosLabel": "Photos of these units (optional)",
+  "@annonceFormUnitPhotosLabel": {
+    "description": "RM-M10bis-13 — a unit group's photos"
+  },
+  "annonceFormUnitPhotosHint": "Each unit gets its own copy. Without photos they show the residence's; with them, {min} at least.",
+  "@annonceFormUnitPhotosHint": {
+    "description": "RM-M10bis-13 — under a unit group's photos",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
   }
 }
