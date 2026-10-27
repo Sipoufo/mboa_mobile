@@ -16,6 +16,7 @@ import 'widgets/form_field_shell.dart';
 import 'widgets/form_text_field.dart';
 import 'widgets/location_field.dart';
 import 'widgets/photo_strip.dart';
+import 'widgets/rent_conditions_fields.dart';
 import 'widgets/unit_group_editor.dart';
 
 /// Creation and editing for both listing kinds (CDC M10).
@@ -437,6 +438,19 @@ class _StepBody extends StatelessWidget {
           ),
         ),
       ],
+      const SizedBox(height: Dimens.spacing),
+      RentConditionsFields(
+        advanceMonths: draft.advanceMonths,
+        depositMonths: draft.depositMonths,
+        onAdvanceChanged: (months) => _change(
+          context,
+          (d) => months == null ? d.copyWith(clearAdvance: true) : d.copyWith(advanceMonths: months),
+        ),
+        onDepositChanged: (months) => _change(
+          context,
+          (d) => months == null ? d.copyWith(clearDeposit: true) : d.copyWith(depositMonths: months),
+        ),
+      ),
       const SizedBox(height: Dimens.spacing),
       _AvailabilityField(
         value: draft.availableFrom,

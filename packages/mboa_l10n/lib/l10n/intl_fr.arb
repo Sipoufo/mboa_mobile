@@ -7128,5 +7128,51 @@
         "type": "int"
       }
     }
+  },
+  "annonceFormFieldAdvance": "Avance",
+  "@annonceFormFieldAdvance": {
+    "description": "§37 C — months of rent asked at entry"
+  },
+  "annonceFormFieldDeposit": "Caution",
+  "@annonceFormFieldDeposit": {
+    "description": "§37 C — the deposit, in months"
+  },
+  "annonceFormMonths": "mois",
+  "@annonceFormMonths": {
+    "description": "§37 C — unit inside the field"
+  },
+  "annonceFormHelpConditions": "En mois de loyer, ce que tu demandes à l'entrée. Le locataire te les paie directement après la signature du contrat, jamais via Mboa. Laisse vide pour ne rien préciser.",
+  "@annonceFormHelpConditions": {
+    "description": "§37 C — help on the two fields"
+  },
+  "listingConditionsTitle": "Réservable sous condition",
+  "@listingConditionsTitle": {
+    "description": "§37 C — the fiche's block"
+  },
+  "listingConditionAdvance": "{count, plural, =0{Sans avance} one{Avance d'1 mois} other{Avance de {count} mois}}",
+  "@listingConditionAdvance": {
+    "description": "§37 C",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingConditionDeposit": "{count, plural, =0{Sans caution} one{Caution d'1 mois} other{Caution de {count} mois}}",
+  "@listingConditionDeposit": {
+    "description": "§37 C",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingConditionsNote": "Payées directement au propriétaire après la signature du contrat, jamais via Mboa.",
+  "@listingConditionsNote": {
+    "description": "§37 C — RM-M29-09"
+  },
+  "contractDepositPrefillHint": "Vide : la caution de l'annonce",
+  "@contractDepositPrefillHint": {
+    "description": "§37 C — the server pre-fills it"
   }
 }

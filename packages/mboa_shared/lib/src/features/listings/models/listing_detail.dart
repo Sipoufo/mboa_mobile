@@ -191,6 +191,8 @@ class ListingDetail extends Equatable {
     this.monthlyRent,
     this.chargesIncluded,
     this.chargesAmount,
+    this.advanceMonths,
+    this.depositMonths,
     this.city,
     this.district,
     this.latitude,
@@ -229,6 +231,11 @@ class ListingDetail extends Equatable {
   final int? monthlyRent;
   final bool? chargesIncluded;
   final int? chargesAmount;
+
+  /// §37 C — what the landlord asks at entry, in months of rent. Declared;
+  /// paid to them after the contract, never through Mboa (RM-M29-09).
+  final int? advanceMonths;
+  final int? depositMonths;
   final String? city;
   final String? district;
   final double? latitude;
@@ -293,6 +300,8 @@ class ListingDetail extends Equatable {
         monthlyRent: response.monthlyRent,
         chargesIncluded: response.chargesIncluded,
         chargesAmount: response.chargesAmount,
+        advanceMonths: response.advanceMonths,
+        depositMonths: response.depositMonths,
         city: response.city,
         district: response.district,
         latitude: response.latitude,
@@ -333,6 +342,8 @@ class ListingDetail extends Equatable {
         monthlyRent,
         chargesIncluded,
         chargesAmount,
+        advanceMonths,
+        depositMonths,
         city,
         district,
         latitude,

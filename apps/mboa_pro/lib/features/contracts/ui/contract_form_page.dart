@@ -262,6 +262,7 @@ class _Form extends StatelessWidget {
               Input(
                 controller: deposit,
                 labelText: l10n.contractTermDeposit,
+                hintText: l10n.contractDepositPrefillHint,
                 keyboardType: TextInputType.number,
                 variant: InputVariant.underline,
                 onChanged: (value) => onChanged(

@@ -17348,6 +17348,102 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Avance`
+  String get annonceFormFieldAdvance {
+    return Intl.message(
+      'Avance',
+      name: 'annonceFormFieldAdvance',
+      desc: '§37 C — months of rent asked at entry',
+      args: [],
+    );
+  }
+
+  /// `Caution`
+  String get annonceFormFieldDeposit {
+    return Intl.message(
+      'Caution',
+      name: 'annonceFormFieldDeposit',
+      desc: '§37 C — the deposit, in months',
+      args: [],
+    );
+  }
+
+  /// `mois`
+  String get annonceFormMonths {
+    return Intl.message(
+      'mois',
+      name: 'annonceFormMonths',
+      desc: '§37 C — unit inside the field',
+      args: [],
+    );
+  }
+
+  /// `En mois de loyer, ce que tu demandes à l'entrée. Le locataire te les paie directement après la signature du contrat, jamais via Mboa. Laisse vide pour ne rien préciser.`
+  String get annonceFormHelpConditions {
+    return Intl.message(
+      'En mois de loyer, ce que tu demandes à l\'entrée. Le locataire te les paie directement après la signature du contrat, jamais via Mboa. Laisse vide pour ne rien préciser.',
+      name: 'annonceFormHelpConditions',
+      desc: '§37 C — help on the two fields',
+      args: [],
+    );
+  }
+
+  /// `Réservable sous condition`
+  String get listingConditionsTitle {
+    return Intl.message(
+      'Réservable sous condition',
+      name: 'listingConditionsTitle',
+      desc: '§37 C — the fiche\'s block',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Sans avance} one{Avance d'1 mois} other{Avance de {count} mois}}`
+  String listingConditionAdvance(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Sans avance',
+      one: 'Avance d\'1 mois',
+      other: 'Avance de $count mois',
+      name: 'listingConditionAdvance',
+      desc: '§37 C',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =0{Sans caution} one{Caution d'1 mois} other{Caution de {count} mois}}`
+  String listingConditionDeposit(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Sans caution',
+      one: 'Caution d\'1 mois',
+      other: 'Caution de $count mois',
+      name: 'listingConditionDeposit',
+      desc: '§37 C',
+      args: [count],
+    );
+  }
+
+  /// `Payées directement au propriétaire après la signature du contrat, jamais via Mboa.`
+  String get listingConditionsNote {
+    return Intl.message(
+      'Payées directement au propriétaire après la signature du contrat, jamais via Mboa.',
+      name: 'listingConditionsNote',
+      desc: '§37 C — RM-M29-09',
+      args: [],
+    );
+  }
+
+  /// `Vide : la caution de l'annonce`
+  String get contractDepositPrefillHint {
+    return Intl.message(
+      'Vide : la caution de l\'annonce',
+      name: 'contractDepositPrefillHint',
+      desc: '§37 C — the server pre-fills it',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

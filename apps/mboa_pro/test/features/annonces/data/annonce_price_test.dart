@@ -225,4 +225,59 @@ void main() {
     expect(sent.amenities, isEmpty);
   });
 
+  group('§37 C — advance and deposit', () {
+    AnnonceDraft listing({String? id}) => AnnonceDraft(
+          kind: AnnonceKind.single,
+          id: id,
+          title: 'Studio Akwa',
+          price: 80000,
+          rentalPeriod: RentalPeriod.month,
+          location: location,
+          availableFrom: availableFrom,
+          advanceMonths: 3,
+          depositMonths: 2,
+        );
+
+    test('a listing says them on creation', () async {
+      await AnnonceRepository(dioClient: dioClient).create(listing());
+
+      final sent = verify(() => annoncesApi.createAnnonce(
+                createAnnonceRequest: captureAny(named: 'createAnnonceRequest'),
+              )).captured.single as CreateAnnonceRequest;
+      expect(sent.advanceMonths, 3);
+      expect(sent.depositMonths, 2);
+    });
+
+    test('an emptied field reaches the server as null — an update replaces the listing', () async {
+      await AnnonceRepository(dioClient: dioClient)
+          .update(listing(id: 'a1').copyWith(clearAdvance: true));
+
+      final sent = verify(() => annoncesApi.updateAnnonce(
+                id: 'a1',
+                updateAnnonceRequest: captureAny(named: 'updateAnnonceRequest'),
+              )).captured.single as UpdateAnnonceRequest;
+      expect(sent.advanceMonths, isNull);
+      expect(sent.depositMonths, 2);
+    });
+
+    test('a unit group says them for each unit it creates', () async {
+      await ResidenceRepository(dioClient: dioClient).create(
+        AnnonceDraft(
+          kind: AnnonceKind.residence,
+          title: 'Résidence Deido',
+          location: location,
+          availableFrom: availableFrom,
+          units: const [
+            UnitGroupDraft(count: 4, namePrefix: 'Chambre', price: 45000, advanceMonths: 1, depositMonths: 1),
+          ],
+        ),
+      );
+
+      final sent = verify(() => residencesApi.createResidence(
+                createResidenceRequest: captureAny(named: 'createResidenceRequest'),
+              )).captured.single as CreateResidenceRequest;
+      expect(sent.units.single.advanceMonths, 1);
+      expect(sent.units.single.depositMonths, 1);
+    });
+  });
 }

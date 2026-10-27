@@ -10,6 +10,7 @@ import '../../models/annonce_draft.dart';
 import 'form_field_shell.dart';
 import 'form_text_field.dart';
 import 'photo_strip.dart';
+import 'rent_conditions_fields.dart';
 
 /// Editor for a residence's unit groups.
 ///
@@ -261,6 +262,17 @@ class _UnitGroupRow extends StatelessWidget {
               onChanged: (value) => onChanged(group.copyWith(chargesAmount: int.tryParse(value))),
             ),
           ],
+          const SizedBox(height: Dimens.spacingSm),
+          RentConditionsFields(
+            advanceMonths: group.advanceMonths,
+            depositMonths: group.depositMonths,
+            onAdvanceChanged: (months) => onChanged(
+              months == null ? group.copyWith(clearAdvance: true) : group.copyWith(advanceMonths: months),
+            ),
+            onDepositChanged: (months) => onChanged(
+              months == null ? group.copyWith(clearDeposit: true) : group.copyWith(depositMonths: months),
+            ),
+          ),
           if (withPhotos) ...[
             const SizedBox(height: Dimens.spacingMd),
             Align(

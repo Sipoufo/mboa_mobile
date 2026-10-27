@@ -169,6 +169,12 @@ class _BodyState extends State<_Body> {
         ],
         const SizedBox(height: Dimens.spacing),
         ListingFactChips(detail: detail),
+        // §37 C — the founder's « Réservable sous condition », only when the
+        // landlord said something.
+        if (detail.advanceMonths != null || detail.depositMonths != null) ...[
+          const SizedBox(height: Dimens.spacing),
+          ListingConditions(advanceMonths: detail.advanceMonths, depositMonths: detail.depositMonths),
+        ],
         if (detail.description case final description? when description.trim().isNotEmpty) ...[
           const SizedBox(height: Dimens.spacingLg),
           Text(l10n.listingDescription, style: context.mboaText.h3.copyWith(color: colors.primaryDark)),

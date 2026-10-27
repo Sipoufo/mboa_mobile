@@ -37,6 +37,8 @@ void main() {
     List<String> photoKeys = const ['p1', 'p2', 'p3', 'p4'],
     double? latitude,
     double? longitude,
+    int? advanceMonths,
+    int? depositMonths,
   }) =>
       ListingDetail(
         id: 'a-1',
@@ -56,6 +58,8 @@ void main() {
         photoKeys: photoKeys,
         latitude: latitude,
         longitude: longitude,
+        advanceMonths: advanceMonths,
+        depositMonths: depositMonths,
         provider: const ProviderSummary(
           displayName: 'Agence Deido',
           type: PrestataireKind.agence,
@@ -507,6 +511,35 @@ void main() {
 
     expect(find.textContaining('hors ligne'), findsOneWidget);
     expect(find.byType(Button), findsNothing);
+  });
+
+  testWidgets('§37 C — the landlord\'s conditions, and that they never go through Mboa', (tester) async {
+    when(() => bloc.state)
+        .thenReturn(ListingDetailReady(detail: detail(advanceMonths: 3, depositMonths: 2, photoKeys: const [])));
+    await pump(tester);
+    await scrollTo(tester, find.text('Réservable sous condition'));
+
+    expect(find.text('Avance de 3 mois · Caution de 2 mois'), findsOneWidget);
+    expect(find.textContaining('jamais via Mboa'), findsOneWidget);
+    await tester.drag(pageList(), const Offset(0, -200));
+    await tester.pumpAndSettle();
+    await expectLater(find.byType(ListingDetailPage), matchesGoldenFile('goldens/listing_detail_conditions.png'));
+  });
+
+  testWidgets('§37 C — « 0 » is said as none, and only what was said is shown', (tester) async {
+    when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail(depositMonths: 0)));
+    await pump(tester);
+    await scrollTo(tester, find.text('Réservable sous condition'));
+
+    expect(find.text('Sans caution'), findsOneWidget);
+    expect(find.textContaining('Avance'), findsNothing);
+  });
+
+  testWidgets('§37 C — nothing said, no block', (tester) async {
+    await pump(tester);
+    await scrollTo(tester, find.text('Charges en sus'));
+
+    expect(find.text('Réservable sous condition'), findsNothing);
   });
 
   testWidgets('the fiche', (tester) async {

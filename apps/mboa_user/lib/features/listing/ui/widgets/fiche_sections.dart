@@ -399,6 +399,57 @@ class FichePill extends StatelessWidget {
   }
 }
 
+/// §37 C — « Réservable sous condition »: the advance and the deposit the
+/// landlord asks, and who they are paid to. RM-M29-09: never through Mboa,
+/// and the block says so in as many words.
+class ListingConditions extends StatelessWidget {
+  const ListingConditions({super.key, this.advanceMonths, this.depositMonths});
+
+  final int? advanceMonths;
+  final int? depositMonths;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final terms = [
+      if (advanceMonths case final months?) l10n.listingConditionAdvance(months),
+      if (depositMonths case final months?) l10n.listingConditionDeposit(months),
+    ];
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(Dimens.spacing),
+      decoration: BoxDecoration(color: colors.primaryPale, borderRadius: BorderRadius.circular(Dimens.radiusLg)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(LucideIcons.handCoins, size: Dimens.icon, color: colors.primary),
+          const SizedBox(width: Dimens.spacingMd),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.listingConditionsTitle,
+                  style: context.mboaText.label.copyWith(color: colors.primaryDark, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 2),
+                Text(terms.join(' · '), style: context.mboaText.body.copyWith(color: colors.ink)),
+                const SizedBox(height: Dimens.spacingXs),
+                Text(
+                  l10n.listingConditionsNote,
+                  style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// Who rents it out — the mockup's "Managers" row: the face, the name, what
 /// kind of prestataire, and the badges in prestige order (RM-M05-03).
 class ListingProviderRow extends StatelessWidget {

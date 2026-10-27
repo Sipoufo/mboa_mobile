@@ -109,6 +109,18 @@ void main() {
           ),
         );
 
+    test('§37 C — no deposit typed is complete: the server takes the listing\'s', () {
+      final noDeposit = ContractTerms(
+        annonceId: 'a-1',
+        reservationRequestId: 'r-1',
+        price: 110000,
+        startDate: DateTime(2026, 11, 1),
+        durationUnits: 6,
+      );
+
+      expect(noDeposit.isComplete, isTrue);
+    });
+
     test('the request names the tenant, so none needs typing', () {
       expect(fromRequest.isComplete, isTrue);
       expect(fromRequest.copyWith(price: 120000).reservationRequestId, 'r-1');

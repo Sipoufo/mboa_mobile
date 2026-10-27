@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 /// [Input] with an owned controller and an optional unit suffix.
@@ -18,6 +19,7 @@ class FormTextField extends StatefulWidget {
     this.minLines,
     this.suffixText,
     this.helpText,
+    this.inputFormatters,
   });
 
   final String label;
@@ -36,6 +38,9 @@ class FormTextField extends StatefulWidget {
   /// Unit shown inside the field — m², FCFA. Belongs here rather than in the
   /// label so the value and its unit read together.
   final String? suffixText;
+
+  /// What the keyboard may type — digits only, two at most, for a count.
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<FormTextField> createState() => _FormTextFieldState();
@@ -77,6 +82,7 @@ class _FormTextFieldState extends State<FormTextField> {
       labelText: widget.label,
       helpText: widget.helpText,
       keyboardType: widget.keyboardType,
+      inputFormatters: widget.inputFormatters,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       variant: InputVariant.underline,

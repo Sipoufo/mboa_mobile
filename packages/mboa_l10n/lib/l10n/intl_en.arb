@@ -7128,5 +7128,51 @@
         "type": "int"
       }
     }
+  },
+  "annonceFormFieldAdvance": "Advance",
+  "@annonceFormFieldAdvance": {
+    "description": "§37 C — months of rent asked at entry"
+  },
+  "annonceFormFieldDeposit": "Deposit",
+  "@annonceFormFieldDeposit": {
+    "description": "§37 C — the deposit, in months"
+  },
+  "annonceFormMonths": "months",
+  "@annonceFormMonths": {
+    "description": "§37 C — unit inside the field"
+  },
+  "annonceFormHelpConditions": "In months of rent, what you ask at entry. The tenant pays you directly after the contract is signed, never through Mboa. Leave empty to say nothing.",
+  "@annonceFormHelpConditions": {
+    "description": "§37 C — help on the two fields"
+  },
+  "listingConditionsTitle": "Bookable on conditions",
+  "@listingConditionsTitle": {
+    "description": "§37 C — the fiche's block"
+  },
+  "listingConditionAdvance": "{count, plural, =0{No advance} one{1 month's advance} other{{count} months' advance}}",
+  "@listingConditionAdvance": {
+    "description": "§37 C",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingConditionDeposit": "{count, plural, =0{No deposit} one{1 month's deposit} other{{count} months' deposit}}",
+  "@listingConditionDeposit": {
+    "description": "§37 C",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingConditionsNote": "Paid directly to the landlord after the contract is signed, never through Mboa.",
+  "@listingConditionsNote": {
+    "description": "§37 C — RM-M29-09"
+  },
+  "contractDepositPrefillHint": "Empty: the listing's deposit",
+  "@contractDepositPrefillHint": {
+    "description": "§37 C — the server pre-fills it"
   }
 }

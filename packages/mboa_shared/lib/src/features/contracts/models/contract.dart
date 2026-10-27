@@ -572,12 +572,13 @@ class ContractTerms extends Equatable {
   /// `TENANT_FROM_RESERVATION`).
   final String? reservationRequestId;
 
-  /// What `POST /contracts` requires, before the server is asked.
+  /// What `POST /contracts` requires, before the server is asked. Not the
+  /// deposit (§37 C): left empty, the server takes the listing's
+  /// `depositMonths` × the monthly rent, or 0.
   bool get isComplete =>
       annonceId != null &&
       (reservationRequestId != null || tenantAccountId != null || (tenantPhone?.isNotEmpty ?? false)) &&
       (price ?? 0) > 0 &&
-      depositAmount != null &&
       startDate != null &&
       (durationUnits ?? 0) > 0;
 

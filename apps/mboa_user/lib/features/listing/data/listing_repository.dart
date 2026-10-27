@@ -103,6 +103,8 @@ class ListingRepository {
         bathroomCount: raw['bathrooms'] as int?,
         surfaceArea: raw['surface'] as int?,
         furnished: raw['furnished'] as bool?,
+        advanceMonths: raw['advance'] as int?,
+        depositMonths: raw['deposit'] as int?,
         description: raw['description'] as String?,
         photoKeys:
             (raw['photos'] as List?)?.whereType<String>().toList() ?? const [],
@@ -241,6 +243,8 @@ class ListingRepository {
           'bathrooms': detail.bathroomCount,
           'surface': detail.surfaceArea,
           'furnished': detail.furnished,
+          'advance': detail.advanceMonths,
+          'deposit': detail.depositMonths,
           'description': detail.description,
           'photos': detail.photoKeys,
         },
