@@ -339,6 +339,12 @@ class _$ContractResponse extends ContractResponse {
   final ContractTenancyResponse? tenancy;
   @override
   final String? reservationRequestId;
+  @override
+  final bool? canRateTenant;
+  @override
+  final int? tenantRating;
+  @override
+  final bool? nuiRequired;
 
   factory _$ContractResponse([
     void Function(ContractResponseBuilder)? updates,
@@ -375,6 +381,9 @@ class _$ContractResponse extends ContractResponse {
     this.updatedAt,
     this.tenancy,
     this.reservationRequestId,
+    this.canRateTenant,
+    this.tenantRating,
+    this.nuiRequired,
   }) : super._();
   @override
   ContractResponse rebuild(void Function(ContractResponseBuilder) updates) =>
@@ -417,7 +426,10 @@ class _$ContractResponse extends ContractResponse {
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         tenancy == other.tenancy &&
-        reservationRequestId == other.reservationRequestId;
+        reservationRequestId == other.reservationRequestId &&
+        canRateTenant == other.canRateTenant &&
+        tenantRating == other.tenantRating &&
+        nuiRequired == other.nuiRequired;
   }
 
   @override
@@ -453,6 +465,9 @@ class _$ContractResponse extends ContractResponse {
     _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jc(_$hash, tenancy.hashCode);
     _$hash = $jc(_$hash, reservationRequestId.hashCode);
+    _$hash = $jc(_$hash, canRateTenant.hashCode);
+    _$hash = $jc(_$hash, tenantRating.hashCode);
+    _$hash = $jc(_$hash, nuiRequired.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -489,7 +504,10 @@ class _$ContractResponse extends ContractResponse {
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('tenancy', tenancy)
-          ..add('reservationRequestId', reservationRequestId))
+          ..add('reservationRequestId', reservationRequestId)
+          ..add('canRateTenant', canRateTenant)
+          ..add('tenantRating', tenantRating)
+          ..add('nuiRequired', nuiRequired))
         .toString();
   }
 }
@@ -635,6 +653,19 @@ class ContractResponseBuilder
   set reservationRequestId(String? reservationRequestId) =>
       _$this._reservationRequestId = reservationRequestId;
 
+  bool? _canRateTenant;
+  bool? get canRateTenant => _$this._canRateTenant;
+  set canRateTenant(bool? canRateTenant) =>
+      _$this._canRateTenant = canRateTenant;
+
+  int? _tenantRating;
+  int? get tenantRating => _$this._tenantRating;
+  set tenantRating(int? tenantRating) => _$this._tenantRating = tenantRating;
+
+  bool? _nuiRequired;
+  bool? get nuiRequired => _$this._nuiRequired;
+  set nuiRequired(bool? nuiRequired) => _$this._nuiRequired = nuiRequired;
+
   ContractResponseBuilder() {
     ContractResponse._defaults(this);
   }
@@ -672,6 +703,9 @@ class ContractResponseBuilder
       _updatedAt = $v.updatedAt;
       _tenancy = $v.tenancy?.toBuilder();
       _reservationRequestId = $v.reservationRequestId;
+      _canRateTenant = $v.canRateTenant;
+      _tenantRating = $v.tenantRating;
+      _nuiRequired = $v.nuiRequired;
       _$v = null;
     }
     return this;
@@ -726,6 +760,9 @@ class ContractResponseBuilder
             updatedAt: updatedAt,
             tenancy: _tenancy?.build(),
             reservationRequestId: reservationRequestId,
+            canRateTenant: canRateTenant,
+            tenantRating: tenantRating,
+            nuiRequired: nuiRequired,
           );
     } catch (_) {
       late String _$failedField;

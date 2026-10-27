@@ -47,6 +47,9 @@ part 'contract_response.g.dart';
 /// * [updatedAt] 
 /// * [tenancy] 
 /// * [reservationRequestId] 
+/// * [canRateTenant] 
+/// * [tenantRating] 
+/// * [nuiRequired] 
 @BuiltValue()
 abstract class ContractResponse implements Built<ContractResponse, ContractResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -141,6 +144,15 @@ abstract class ContractResponse implements Built<ContractResponse, ContractRespo
 
   @BuiltValueField(wireName: r'reservationRequestId')
   String? get reservationRequestId;
+
+  @BuiltValueField(wireName: r'canRateTenant')
+  bool? get canRateTenant;
+
+  @BuiltValueField(wireName: r'tenantRating')
+  int? get tenantRating;
+
+  @BuiltValueField(wireName: r'nuiRequired')
+  bool? get nuiRequired;
 
   ContractResponse._();
 
@@ -373,6 +385,27 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
       yield serializers.serialize(
         object.reservationRequestId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.canRateTenant != null) {
+      yield r'canRateTenant';
+      yield serializers.serialize(
+        object.canRateTenant,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.tenantRating != null) {
+      yield r'tenantRating';
+      yield serializers.serialize(
+        object.tenantRating,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.nuiRequired != null) {
+      yield r'nuiRequired';
+      yield serializers.serialize(
+        object.nuiRequired,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -637,6 +670,30 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
           ) as String?;
           if (valueDes == null) continue;
           result.reservationRequestId = valueDes;
+          break;
+        case r'canRateTenant':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.canRateTenant = valueDes;
+          break;
+        case r'tenantRating':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.tenantRating = valueDes;
+          break;
+        case r'nuiRequired':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.nuiRequired = valueDes;
           break;
         default:
           unhandled.add(key);

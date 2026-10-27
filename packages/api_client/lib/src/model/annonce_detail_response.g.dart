@@ -480,6 +480,10 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
   final bool? canRequestReservation;
   @override
   final String? myReservationRequestId;
+  @override
+  final int? advanceMonths;
+  @override
+  final int? depositMonths;
 
   factory _$AnnonceDetailResponse([
     void Function(AnnonceDetailResponseBuilder)? updates,
@@ -516,6 +520,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     this.exactLocation,
     this.canRequestReservation,
     this.myReservationRequestId,
+    this.advanceMonths,
+    this.depositMonths,
   }) : super._();
   @override
   AnnonceDetailResponse rebuild(
@@ -559,7 +565,9 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
         viewCount == other.viewCount &&
         exactLocation == other.exactLocation &&
         canRequestReservation == other.canRequestReservation &&
-        myReservationRequestId == other.myReservationRequestId;
+        myReservationRequestId == other.myReservationRequestId &&
+        advanceMonths == other.advanceMonths &&
+        depositMonths == other.depositMonths;
   }
 
   @override
@@ -595,6 +603,8 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
     _$hash = $jc(_$hash, exactLocation.hashCode);
     _$hash = $jc(_$hash, canRequestReservation.hashCode);
     _$hash = $jc(_$hash, myReservationRequestId.hashCode);
+    _$hash = $jc(_$hash, advanceMonths.hashCode);
+    _$hash = $jc(_$hash, depositMonths.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -631,7 +641,9 @@ class _$AnnonceDetailResponse extends AnnonceDetailResponse {
           ..add('viewCount', viewCount)
           ..add('exactLocation', exactLocation)
           ..add('canRequestReservation', canRequestReservation)
-          ..add('myReservationRequestId', myReservationRequestId))
+          ..add('myReservationRequestId', myReservationRequestId)
+          ..add('advanceMonths', advanceMonths)
+          ..add('depositMonths', depositMonths))
         .toString();
   }
 }
@@ -778,6 +790,16 @@ class AnnonceDetailResponseBuilder
   set myReservationRequestId(String? myReservationRequestId) =>
       _$this._myReservationRequestId = myReservationRequestId;
 
+  int? _advanceMonths;
+  int? get advanceMonths => _$this._advanceMonths;
+  set advanceMonths(int? advanceMonths) =>
+      _$this._advanceMonths = advanceMonths;
+
+  int? _depositMonths;
+  int? get depositMonths => _$this._depositMonths;
+  set depositMonths(int? depositMonths) =>
+      _$this._depositMonths = depositMonths;
+
   AnnonceDetailResponseBuilder() {
     AnnonceDetailResponse._defaults(this);
   }
@@ -815,6 +837,8 @@ class AnnonceDetailResponseBuilder
       _exactLocation = $v.exactLocation;
       _canRequestReservation = $v.canRequestReservation;
       _myReservationRequestId = $v.myReservationRequestId;
+      _advanceMonths = $v.advanceMonths;
+      _depositMonths = $v.depositMonths;
       _$v = null;
     }
     return this;
@@ -869,6 +893,8 @@ class AnnonceDetailResponseBuilder
             exactLocation: exactLocation,
             canRequestReservation: canRequestReservation,
             myReservationRequestId: myReservationRequestId,
+            advanceMonths: advanceMonths,
+            depositMonths: depositMonths,
           );
     } catch (_) {
       late String _$failedField;

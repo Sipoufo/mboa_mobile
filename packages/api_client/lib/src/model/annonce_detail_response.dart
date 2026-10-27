@@ -45,6 +45,8 @@ part 'annonce_detail_response.g.dart';
 /// * [exactLocation] 
 /// * [canRequestReservation] 
 /// * [myReservationRequestId] 
+/// * [advanceMonths] 
+/// * [depositMonths] 
 @BuiltValue()
 abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, AnnonceDetailResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -140,6 +142,12 @@ abstract class AnnonceDetailResponse implements Built<AnnonceDetailResponse, Ann
 
   @BuiltValueField(wireName: r'myReservationRequestId')
   String? get myReservationRequestId;
+
+  @BuiltValueField(wireName: r'advanceMonths')
+  int? get advanceMonths;
+
+  @BuiltValueField(wireName: r'depositMonths')
+  int? get depositMonths;
 
   AnnonceDetailResponse._();
 
@@ -372,6 +380,20 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
       yield serializers.serialize(
         object.myReservationRequestId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.advanceMonths != null) {
+      yield r'advanceMonths';
+      yield serializers.serialize(
+        object.advanceMonths,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.depositMonths != null) {
+      yield r'depositMonths';
+      yield serializers.serialize(
+        object.depositMonths,
+        specifiedType: const FullType(int),
       );
     }
   }
@@ -636,6 +658,22 @@ class _$AnnonceDetailResponseSerializer implements PrimitiveSerializer<AnnonceDe
           ) as String?;
           if (valueDes == null) continue;
           result.myReservationRequestId = valueDes;
+          break;
+        case r'advanceMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.advanceMonths = valueDes;
+          break;
+        case r'depositMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.depositMonths = valueDes;
           break;
         default:
           unhandled.add(key);

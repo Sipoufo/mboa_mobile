@@ -7,6 +7,13 @@ void main() {
   final instance = ApiClient().getKYCApi();
 
   group(KYCApi, () {
+    // Add the NUI to an approved KYC, without a new review
+    //
+    //Future<KycStatusResponse> addMyNui(AddNuiRequest addNuiRequest) async
+    test('test addMyNui', () async {
+      // TODO
+    });
+
     // Get the authenticated account's KYC status
     //
     //Future<KycStatusResponse> getMyKycStatus() async

@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:api_client/src/model/kyc_address_request.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,6 +15,8 @@ part 'submit_kyc_request.g.dart';
 /// * [idDocumentFrontKey] 
 /// * [idDocumentBackKey] 
 /// * [selfieKey] 
+/// * [nui] 
+/// * [address] 
 @BuiltValue()
 abstract class SubmitKycRequest implements Built<SubmitKycRequest, SubmitKycRequestBuilder> {
   @BuiltValueField(wireName: r'idDocumentFrontKey')
@@ -24,6 +27,12 @@ abstract class SubmitKycRequest implements Built<SubmitKycRequest, SubmitKycRequ
 
   @BuiltValueField(wireName: r'selfieKey')
   String get selfieKey;
+
+  @BuiltValueField(wireName: r'nui')
+  String? get nui;
+
+  @BuiltValueField(wireName: r'address')
+  KycAddressRequest? get address;
 
   SubmitKycRequest._();
 
@@ -63,6 +72,20 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
       object.selfieKey,
       specifiedType: const FullType(String),
     );
+    if (object.nui != null) {
+      yield r'nui';
+      yield serializers.serialize(
+        object.nui,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.address != null) {
+      yield r'address';
+      yield serializers.serialize(
+        object.address,
+        specifiedType: const FullType(KycAddressRequest),
+      );
+    }
   }
 
   @override
@@ -106,6 +129,22 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
             specifiedType: const FullType(String),
           ) as String;
           result.selfieKey = valueDes;
+          break;
+        case r'nui':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.nui = valueDes;
+          break;
+        case r'address':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(KycAddressRequest),
+          ) as KycAddressRequest?;
+          if (valueDes == null) continue;
+          result.address.replace(valueDes);
           break;
         default:
           unhandled.add(key);

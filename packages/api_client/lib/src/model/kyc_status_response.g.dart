@@ -15,6 +15,10 @@ class _$KycStatusResponse extends KycStatusResponse {
   final DateTime? reviewedAt;
   @override
   final String? rejectionReason;
+  @override
+  final String? nui;
+  @override
+  final KycAddress? address;
 
   factory _$KycStatusResponse([
     void Function(KycStatusResponseBuilder)? updates,
@@ -25,6 +29,8 @@ class _$KycStatusResponse extends KycStatusResponse {
     this.submittedAt,
     this.reviewedAt,
     this.rejectionReason,
+    this.nui,
+    this.address,
   }) : super._();
   @override
   KycStatusResponse rebuild(void Function(KycStatusResponseBuilder) updates) =>
@@ -41,7 +47,9 @@ class _$KycStatusResponse extends KycStatusResponse {
         status == other.status &&
         submittedAt == other.submittedAt &&
         reviewedAt == other.reviewedAt &&
-        rejectionReason == other.rejectionReason;
+        rejectionReason == other.rejectionReason &&
+        nui == other.nui &&
+        address == other.address;
   }
 
   @override
@@ -51,6 +59,8 @@ class _$KycStatusResponse extends KycStatusResponse {
     _$hash = $jc(_$hash, submittedAt.hashCode);
     _$hash = $jc(_$hash, reviewedAt.hashCode);
     _$hash = $jc(_$hash, rejectionReason.hashCode);
+    _$hash = $jc(_$hash, nui.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -61,7 +71,9 @@ class _$KycStatusResponse extends KycStatusResponse {
           ..add('status', status)
           ..add('submittedAt', submittedAt)
           ..add('reviewedAt', reviewedAt)
-          ..add('rejectionReason', rejectionReason))
+          ..add('rejectionReason', rejectionReason)
+          ..add('nui', nui)
+          ..add('address', address))
         .toString();
   }
 }
@@ -87,6 +99,14 @@ class KycStatusResponseBuilder
   set rejectionReason(String? rejectionReason) =>
       _$this._rejectionReason = rejectionReason;
 
+  String? _nui;
+  String? get nui => _$this._nui;
+  set nui(String? nui) => _$this._nui = nui;
+
+  KycAddressBuilder? _address;
+  KycAddressBuilder get address => _$this._address ??= KycAddressBuilder();
+  set address(KycAddressBuilder? address) => _$this._address = address;
+
   KycStatusResponseBuilder() {
     KycStatusResponse._defaults(this);
   }
@@ -98,6 +118,8 @@ class KycStatusResponseBuilder
       _submittedAt = $v.submittedAt;
       _reviewedAt = $v.reviewedAt;
       _rejectionReason = $v.rejectionReason;
+      _nui = $v.nui;
+      _address = $v.address?.toBuilder();
       _$v = null;
     }
     return this;
@@ -117,14 +139,32 @@ class KycStatusResponseBuilder
   KycStatusResponse build() => _build();
 
   _$KycStatusResponse _build() {
-    final _$result =
-        _$v ??
-        _$KycStatusResponse._(
-          status: status,
-          submittedAt: submittedAt,
-          reviewedAt: reviewedAt,
-          rejectionReason: rejectionReason,
+    _$KycStatusResponse _$result;
+    try {
+      _$result =
+          _$v ??
+          _$KycStatusResponse._(
+            status: status,
+            submittedAt: submittedAt,
+            reviewedAt: reviewedAt,
+            rejectionReason: rejectionReason,
+            nui: nui,
+            address: _address?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'address';
+        _address?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'KycStatusResponse',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -357,6 +357,10 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
   final BuiltSet<UpdateAnnonceRequestAmenitiesEnum>? amenities;
   @override
   final bool? ownerVisitsEnabled;
+  @override
+  final int? advanceMonths;
+  @override
+  final int? depositMonths;
 
   factory _$UpdateAnnonceRequest([
     void Function(UpdateAnnonceRequestBuilder)? updates,
@@ -383,6 +387,8 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
     this.photoKeys,
     this.amenities,
     this.ownerVisitsEnabled,
+    this.advanceMonths,
+    this.depositMonths,
   }) : super._();
   @override
   UpdateAnnonceRequest rebuild(
@@ -416,7 +422,9 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
         description == other.description &&
         photoKeys == other.photoKeys &&
         amenities == other.amenities &&
-        ownerVisitsEnabled == other.ownerVisitsEnabled;
+        ownerVisitsEnabled == other.ownerVisitsEnabled &&
+        advanceMonths == other.advanceMonths &&
+        depositMonths == other.depositMonths;
   }
 
   @override
@@ -442,6 +450,8 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
     _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jc(_$hash, amenities.hashCode);
     _$hash = $jc(_$hash, ownerVisitsEnabled.hashCode);
+    _$hash = $jc(_$hash, advanceMonths.hashCode);
+    _$hash = $jc(_$hash, depositMonths.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -468,7 +478,9 @@ class _$UpdateAnnonceRequest extends UpdateAnnonceRequest {
           ..add('description', description)
           ..add('photoKeys', photoKeys)
           ..add('amenities', amenities)
-          ..add('ownerVisitsEnabled', ownerVisitsEnabled))
+          ..add('ownerVisitsEnabled', ownerVisitsEnabled)
+          ..add('advanceMonths', advanceMonths)
+          ..add('depositMonths', depositMonths))
         .toString();
   }
 }
@@ -570,6 +582,16 @@ class UpdateAnnonceRequestBuilder
   set ownerVisitsEnabled(bool? ownerVisitsEnabled) =>
       _$this._ownerVisitsEnabled = ownerVisitsEnabled;
 
+  int? _advanceMonths;
+  int? get advanceMonths => _$this._advanceMonths;
+  set advanceMonths(int? advanceMonths) =>
+      _$this._advanceMonths = advanceMonths;
+
+  int? _depositMonths;
+  int? get depositMonths => _$this._depositMonths;
+  set depositMonths(int? depositMonths) =>
+      _$this._depositMonths = depositMonths;
+
   UpdateAnnonceRequestBuilder() {
     UpdateAnnonceRequest._defaults(this);
   }
@@ -597,6 +619,8 @@ class UpdateAnnonceRequestBuilder
       _photoKeys = $v.photoKeys?.toBuilder();
       _amenities = $v.amenities?.toBuilder();
       _ownerVisitsEnabled = $v.ownerVisitsEnabled;
+      _advanceMonths = $v.advanceMonths;
+      _depositMonths = $v.depositMonths;
       _$v = null;
     }
     return this;
@@ -641,6 +665,8 @@ class UpdateAnnonceRequestBuilder
             photoKeys: _photoKeys?.build(),
             amenities: _amenities?.build(),
             ownerVisitsEnabled: ownerVisitsEnabled,
+            advanceMonths: advanceMonths,
+            depositMonths: depositMonths,
           );
     } catch (_) {
       late String _$failedField;

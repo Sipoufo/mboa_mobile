@@ -19,7 +19,7 @@ part 'notification_setting.g.dart';
 abstract class NotificationSetting implements Built<NotificationSetting, NotificationSettingBuilder> {
   @BuiltValueField(wireName: r'type')
   NotificationSettingTypeEnum? get type;
-  // enum typeEnum {  N01,  N02,  N03,  N04,  N05,  N06,  N07,  N08,  N09,  N10,  N11,  N12,  N13,  N14,  N15,  N16,  N17,  N18,  N19,  N20,  N21,  N22,  N23,  N24,  N25,  N26,  N32,  N33,  N34,  N35,  N36,  N37,  N38,  N39,  N40,  };
+  // enum typeEnum {  N01,  N02,  N03,  N04,  N05,  N06,  N07,  N08,  N09,  N10,  N11,  N12,  N13,  N14,  N15,  N16,  N17,  N18,  N19,  N20,  N21,  N22,  N23,  N24,  N25,  N26,  N32,  N33,  N34,  N35,  N36,  N37,  N38,  N39,  N40,  N41,  };
 
   @BuiltValueField(wireName: r'enabled')
   bool? get enabled;
@@ -219,6 +219,8 @@ class NotificationSettingTypeEnum extends EnumClass {
   static const NotificationSettingTypeEnum N39 = _$notificationSettingTypeEnum_N39;
   @BuiltValueEnumConst(wireName: r'N40')
   static const NotificationSettingTypeEnum N40 = _$notificationSettingTypeEnum_N40;
+  @BuiltValueEnumConst(wireName: r'N41')
+  static const NotificationSettingTypeEnum N41 = _$notificationSettingTypeEnum_N41;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const NotificationSettingTypeEnum unknownDefaultOpenApi = _$notificationSettingTypeEnum_unknownDefaultOpenApi;
 

@@ -17,6 +17,7 @@ Serializers _$serializers =
           ..add(AccountVisitHistory.serializer)
           ..add(AcknowledgeEvidenceRequest.serializer)
           ..add(AddFavoriRequest.serializer)
+          ..add(AddNuiRequest.serializer)
           ..add(AdjustmentResponse.serializer)
           ..add(AdjustmentResponseKindEnum.serializer)
           ..add(AdjustmentResponseProductEnum.serializer)
@@ -44,6 +45,7 @@ Serializers _$serializers =
           ..add(AdminSubscriptionItemEffectiveTierEnum.serializer)
           ..add(AdminSubscriptionItemStatusEnum.serializer)
           ..add(AdminSubscriptionItemTierEnum.serializer)
+          ..add(AdminTenantRatingResponse.serializer)
           ..add(AdminUserDetail.serializer)
           ..add(AdminUserSummary.serializer)
           ..add(AdminUserSummaryRoleEnum.serializer)
@@ -205,6 +207,8 @@ Serializers _$serializers =
           ..add(InvoiceResponseStatusEnum.serializer)
           ..add(KpiDashboardResponse.serializer)
           ..add(KpiDayResponse.serializer)
+          ..add(KycAddress.serializer)
+          ..add(KycAddressRequest.serializer)
           ..add(KycReviewItem.serializer)
           ..add(KycReviewItemRoleEnum.serializer)
           ..add(KycStatusResponse.serializer)
@@ -236,6 +240,8 @@ Serializers _$serializers =
           ..add(MessageResponseSystemEventEnum.serializer)
           ..add(MyBadgesResponse.serializer)
           ..add(MyBadgesResponseBadgesEnum.serializer)
+          ..add(NotificationItem.serializer)
+          ..add(NotificationItemTypeEnum.serializer)
           ..add(NotificationSetting.serializer)
           ..add(NotificationSettingTypeEnum.serializer)
           ..add(OpportunityItem.serializer)
@@ -263,6 +269,7 @@ Serializers _$serializers =
           ..add(PageResponseKycReviewItem.serializer)
           ..add(PageResponseLedgerEntryResponse.serializer)
           ..add(PageResponseMessageResponse.serializer)
+          ..add(PageResponseNotificationItem.serializer)
           ..add(PageResponsePaymentSummary.serializer)
           ..add(PageResponsePropertyReview.serializer)
           ..add(PageResponseReservationResponse.serializer)
@@ -306,6 +313,7 @@ Serializers _$serializers =
           ..add(ProviderCardBadgesEnum.serializer)
           ..add(ProviderCardTypeEnum.serializer)
           ..add(RateAgentRequest.serializer)
+          ..add(RateTenantRequest.serializer)
           ..add(ReceiptPdfResponse.serializer)
           ..add(ReceiptRegeneration.serializer)
           ..add(ReceiptResponse.serializer)
@@ -402,6 +410,7 @@ Serializers _$serializers =
           ..add(SuspendAccountRequest.serializer)
           ..add(SuspendAnnonceRequest.serializer)
           ..add(Targets.serializer)
+          ..add(TenantRatingResponse.serializer)
           ..add(TerminateContractRequest.serializer)
           ..add(TerminationResponse.serializer)
           ..add(TerminationResponseRequestedByEnum.serializer)
@@ -428,6 +437,7 @@ Serializers _$serializers =
           ..add(UnitSummaryPropertyTypeEnum.serializer)
           ..add(UnitSummaryRentalPeriodEnum.serializer)
           ..add(UnitSummaryStatusEnum.serializer)
+          ..add(UnreadCount.serializer)
           ..add(UpdateAgentProfileRequest.serializer)
           ..add(UpdateAnnonceRequest.serializer)
           ..add(UpdateAnnonceRequestAmenitiesEnum.serializer)
@@ -690,6 +700,10 @@ Serializers _$serializers =
               const FullType(PhotoVerificationResponse),
             ]),
             () => ListBuilder<PhotoVerificationResponse>(),
+          )
+          ..addBuilderFactory(
+            const FullType(BuiltList, const [const FullType(NotificationItem)]),
+            () => ListBuilder<NotificationItem>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [

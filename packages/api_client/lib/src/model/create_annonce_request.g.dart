@@ -355,6 +355,10 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
   final BuiltList<String>? photoKeys;
   @override
   final BuiltSet<CreateAnnonceRequestAmenitiesEnum>? amenities;
+  @override
+  final int? advanceMonths;
+  @override
+  final int? depositMonths;
 
   factory _$CreateAnnonceRequest([
     void Function(CreateAnnonceRequestBuilder)? updates,
@@ -380,6 +384,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     this.description,
     this.photoKeys,
     this.amenities,
+    this.advanceMonths,
+    this.depositMonths,
   }) : super._();
   @override
   CreateAnnonceRequest rebuild(
@@ -412,7 +418,9 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
         availableFrom == other.availableFrom &&
         description == other.description &&
         photoKeys == other.photoKeys &&
-        amenities == other.amenities;
+        amenities == other.amenities &&
+        advanceMonths == other.advanceMonths &&
+        depositMonths == other.depositMonths;
   }
 
   @override
@@ -437,6 +445,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
     _$hash = $jc(_$hash, amenities.hashCode);
+    _$hash = $jc(_$hash, advanceMonths.hashCode);
+    _$hash = $jc(_$hash, depositMonths.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -462,7 +472,9 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
           ..add('availableFrom', availableFrom)
           ..add('description', description)
           ..add('photoKeys', photoKeys)
-          ..add('amenities', amenities))
+          ..add('amenities', amenities)
+          ..add('advanceMonths', advanceMonths)
+          ..add('depositMonths', depositMonths))
         .toString();
   }
 }
@@ -559,6 +571,16 @@ class CreateAnnonceRequestBuilder
   set amenities(SetBuilder<CreateAnnonceRequestAmenitiesEnum>? amenities) =>
       _$this._amenities = amenities;
 
+  int? _advanceMonths;
+  int? get advanceMonths => _$this._advanceMonths;
+  set advanceMonths(int? advanceMonths) =>
+      _$this._advanceMonths = advanceMonths;
+
+  int? _depositMonths;
+  int? get depositMonths => _$this._depositMonths;
+  set depositMonths(int? depositMonths) =>
+      _$this._depositMonths = depositMonths;
+
   CreateAnnonceRequestBuilder() {
     CreateAnnonceRequest._defaults(this);
   }
@@ -585,6 +607,8 @@ class CreateAnnonceRequestBuilder
       _description = $v.description;
       _photoKeys = $v.photoKeys?.toBuilder();
       _amenities = $v.amenities?.toBuilder();
+      _advanceMonths = $v.advanceMonths;
+      _depositMonths = $v.depositMonths;
       _$v = null;
     }
     return this;
@@ -656,6 +680,8 @@ class CreateAnnonceRequestBuilder
             description: description,
             photoKeys: _photoKeys?.build(),
             amenities: _amenities?.build(),
+            advanceMonths: advanceMonths,
+            depositMonths: depositMonths,
           );
     } catch (_) {
       late String _$failedField;

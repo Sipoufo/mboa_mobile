@@ -21,6 +21,13 @@ void main() {
       // TODO
     });
 
+    // The landlord's rating of the tenant on this contract, with the comment only the admin reads (mobile §37 A); 404 RATING_NOT_FOUND when none was sent
+    //
+    //Future<AdminTenantRatingResponse> adminGetTenantRating(String id) async
+    test('test adminGetTenantRating', () async {
+      // TODO
+    });
+
     // The contract archive, filterable by status
     //
     //Future<PageResponseContractResponse> adminListContracts(Pageable pageable, { BuiltList<String> status }) async

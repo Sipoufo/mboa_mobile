@@ -32,6 +32,8 @@ part 'create_annonce_request.g.dart';
 /// * [description] 
 /// * [photoKeys] 
 /// * [amenities] 
+/// * [advanceMonths] 
+/// * [depositMonths] 
 @BuiltValue()
 abstract class CreateAnnonceRequest implements Built<CreateAnnonceRequest, CreateAnnonceRequestBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -93,6 +95,12 @@ abstract class CreateAnnonceRequest implements Built<CreateAnnonceRequest, Creat
   @BuiltValueField(wireName: r'amenities')
   BuiltSet<CreateAnnonceRequestAmenitiesEnum>? get amenities;
   // enum amenitiesEnum {  AIR_CONDITIONING,  HOT_WATER,  GENERATOR,  SECURITY_GUARD,  PARKING,  WIFI,  };
+
+  @BuiltValueField(wireName: r'advanceMonths')
+  int? get advanceMonths;
+
+  @BuiltValueField(wireName: r'depositMonths')
+  int? get depositMonths;
 
   CreateAnnonceRequest._();
 
@@ -234,6 +242,20 @@ class _$CreateAnnonceRequestSerializer implements PrimitiveSerializer<CreateAnno
       yield serializers.serialize(
         object.amenities,
         specifiedType: const FullType(BuiltSet, [FullType(CreateAnnonceRequestAmenitiesEnum)]),
+      );
+    }
+    if (object.advanceMonths != null) {
+      yield r'advanceMonths';
+      yield serializers.serialize(
+        object.advanceMonths,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.depositMonths != null) {
+      yield r'depositMonths';
+      yield serializers.serialize(
+        object.depositMonths,
+        specifiedType: const FullType(int),
       );
     }
   }
@@ -403,6 +425,22 @@ class _$CreateAnnonceRequestSerializer implements PrimitiveSerializer<CreateAnno
           ) as BuiltSet<CreateAnnonceRequestAmenitiesEnum>?;
           if (valueDes == null) continue;
           result.amenities.replace(valueDes);
+          break;
+        case r'advanceMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.advanceMonths = valueDes;
+          break;
+        case r'depositMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.depositMonths = valueDes;
           break;
         default:
           unhandled.add(key);

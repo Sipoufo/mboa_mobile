@@ -27,6 +27,8 @@ part 'unit_group.g.dart';
 /// * [description] 
 /// * [amenities] 
 /// * [photoKeys] 
+/// * [advanceMonths] 
+/// * [depositMonths] 
 @BuiltValue()
 abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -76,6 +78,12 @@ abstract class UnitGroup implements Built<UnitGroup, UnitGroupBuilder> {
 
   @BuiltValueField(wireName: r'photoKeys')
   BuiltList<String>? get photoKeys;
+
+  @BuiltValueField(wireName: r'advanceMonths')
+  int? get advanceMonths;
+
+  @BuiltValueField(wireName: r'depositMonths')
+  int? get depositMonths;
 
   UnitGroup._();
 
@@ -197,6 +205,20 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
       yield serializers.serialize(
         object.photoKeys,
         specifiedType: const FullType(BuiltList, [FullType(String)]),
+      );
+    }
+    if (object.advanceMonths != null) {
+      yield r'advanceMonths';
+      yield serializers.serialize(
+        object.advanceMonths,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.depositMonths != null) {
+      yield r'depositMonths';
+      yield serializers.serialize(
+        object.depositMonths,
+        specifiedType: const FullType(int),
       );
     }
   }
@@ -338,6 +360,22 @@ class _$UnitGroupSerializer implements PrimitiveSerializer<UnitGroup> {
           ) as BuiltList<String>?;
           if (valueDes == null) continue;
           result.photoKeys.replace(valueDes);
+          break;
+        case r'advanceMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.advanceMonths = valueDes;
+          break;
+        case r'depositMonths':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.depositMonths = valueDes;
           break;
         default:
           unhandled.add(key);

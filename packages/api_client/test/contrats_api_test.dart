@@ -63,6 +63,15 @@ void main() {
       // TODO
     });
 
+    // The landlord rates the tenant, once, within 30 days after the tenancy ended (mobile §37 A)
+    //
+    // 1 to 5 stars and an optional comment only the admin reads. Never shown publicly, never revised: it feeds the tenant's Mboa Score (PROVIDER_RATING). 409 RATING_NOT_OPEN outside the window, 409 ALREADY_RATED the second time; 404 for another's contract.
+    //
+    //Future<TenantRatingResponse> rateTenant(String id, RateTenantRequest rateTenantRequest) async
+    test('test rateTenant', () async {
+      // TODO
+    });
+
     // Ask the landlord to change the terms, with a comment (CE-M08-03)
     //
     //Future<ContractResponse> requestContractChanges(String id, RequestChangesRequest requestChangesRequest) async

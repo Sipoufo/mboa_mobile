@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **idDocumentFrontKey** | **String** |  | 
 **idDocumentBackKey** | **String** |  | 
 **selfieKey** | **String** |  | 
+**nui** | **String** |  | [optional] 
+**address** | [**KycAddressRequest**](KycAddressRequest.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

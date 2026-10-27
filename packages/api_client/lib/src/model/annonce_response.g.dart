@@ -545,6 +545,10 @@ class _$AnnonceResponse extends AnnonceResponse {
   final String? reservationRequestId;
   @override
   final DateTime? reservedUntil;
+  @override
+  final int? advanceMonths;
+  @override
+  final int? depositMonths;
 
   factory _$AnnonceResponse([void Function(AnnonceResponseBuilder)? updates]) =>
       (AnnonceResponseBuilder()..update(updates))._build();
@@ -585,6 +589,8 @@ class _$AnnonceResponse extends AnnonceResponse {
     this.archivedReason,
     this.reservationRequestId,
     this.reservedUntil,
+    this.advanceMonths,
+    this.depositMonths,
   }) : super._();
   @override
   AnnonceResponse rebuild(void Function(AnnonceResponseBuilder) updates) =>
@@ -631,7 +637,9 @@ class _$AnnonceResponse extends AnnonceResponse {
         createdAt == other.createdAt &&
         archivedReason == other.archivedReason &&
         reservationRequestId == other.reservationRequestId &&
-        reservedUntil == other.reservedUntil;
+        reservedUntil == other.reservedUntil &&
+        advanceMonths == other.advanceMonths &&
+        depositMonths == other.depositMonths;
   }
 
   @override
@@ -672,6 +680,8 @@ class _$AnnonceResponse extends AnnonceResponse {
     _$hash = $jc(_$hash, archivedReason.hashCode);
     _$hash = $jc(_$hash, reservationRequestId.hashCode);
     _$hash = $jc(_$hash, reservedUntil.hashCode);
+    _$hash = $jc(_$hash, advanceMonths.hashCode);
+    _$hash = $jc(_$hash, depositMonths.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -713,7 +723,9 @@ class _$AnnonceResponse extends AnnonceResponse {
           ..add('createdAt', createdAt)
           ..add('archivedReason', archivedReason)
           ..add('reservationRequestId', reservationRequestId)
-          ..add('reservedUntil', reservedUntil))
+          ..add('reservedUntil', reservedUntil)
+          ..add('advanceMonths', advanceMonths)
+          ..add('depositMonths', depositMonths))
         .toString();
   }
 }
@@ -878,6 +890,16 @@ class AnnonceResponseBuilder
   set reservedUntil(DateTime? reservedUntil) =>
       _$this._reservedUntil = reservedUntil;
 
+  int? _advanceMonths;
+  int? get advanceMonths => _$this._advanceMonths;
+  set advanceMonths(int? advanceMonths) =>
+      _$this._advanceMonths = advanceMonths;
+
+  int? _depositMonths;
+  int? get depositMonths => _$this._depositMonths;
+  set depositMonths(int? depositMonths) =>
+      _$this._depositMonths = depositMonths;
+
   AnnonceResponseBuilder() {
     AnnonceResponse._defaults(this);
   }
@@ -920,6 +942,8 @@ class AnnonceResponseBuilder
       _archivedReason = $v.archivedReason;
       _reservationRequestId = $v.reservationRequestId;
       _reservedUntil = $v.reservedUntil;
+      _advanceMonths = $v.advanceMonths;
+      _depositMonths = $v.depositMonths;
       _$v = null;
     }
     return this;
@@ -979,6 +1003,8 @@ class AnnonceResponseBuilder
             archivedReason: archivedReason,
             reservationRequestId: reservationRequestId,
             reservedUntil: reservedUntil,
+            advanceMonths: advanceMonths,
+            depositMonths: depositMonths,
           );
     } catch (_) {
       late String _$failedField;

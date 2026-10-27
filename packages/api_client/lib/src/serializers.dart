@@ -22,6 +22,7 @@ import 'package:api_client/src/model/account_reservation_history.dart';
 import 'package:api_client/src/model/account_visit_history.dart';
 import 'package:api_client/src/model/acknowledge_evidence_request.dart';
 import 'package:api_client/src/model/add_favori_request.dart';
+import 'package:api_client/src/model/add_nui_request.dart';
 import 'package:api_client/src/model/adjustment_response.dart';
 import 'package:api_client/src/model/admin_contract_line.dart';
 import 'package:api_client/src/model/admin_mboa_score_response.dart';
@@ -31,6 +32,7 @@ import 'package:api_client/src/model/admin_prestataire_badges_response.dart';
 import 'package:api_client/src/model/admin_report_line.dart';
 import 'package:api_client/src/model/admin_subscription_detail.dart';
 import 'package:api_client/src/model/admin_subscription_item.dart';
+import 'package:api_client/src/model/admin_tenant_rating_response.dart';
 import 'package:api_client/src/model/admin_user_detail.dart';
 import 'package:api_client/src/model/admin_user_summary.dart';
 import 'package:api_client/src/model/admin_visit_line.dart';
@@ -119,6 +121,8 @@ import 'package:api_client/src/model/home_summary.dart';
 import 'package:api_client/src/model/invoice_response.dart';
 import 'package:api_client/src/model/kpi_dashboard_response.dart';
 import 'package:api_client/src/model/kpi_day_response.dart';
+import 'package:api_client/src/model/kyc_address.dart';
+import 'package:api_client/src/model/kyc_address_request.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
 import 'package:api_client/src/model/ledger_entry_request.dart';
@@ -135,6 +139,7 @@ import 'package:api_client/src/model/mboa_score_response.dart';
 import 'package:api_client/src/model/me_response.dart';
 import 'package:api_client/src/model/message_response.dart';
 import 'package:api_client/src/model/my_badges_response.dart';
+import 'package:api_client/src/model/notification_item.dart';
 import 'package:api_client/src/model/notification_setting.dart';
 import 'package:api_client/src/model/opportunity_item.dart';
 import 'package:api_client/src/model/owner_decision_request.dart';
@@ -159,6 +164,7 @@ import 'package:api_client/src/model/page_response_invoice_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
 import 'package:api_client/src/model/page_response_ledger_entry_response.dart';
 import 'package:api_client/src/model/page_response_message_response.dart';
+import 'package:api_client/src/model/page_response_notification_item.dart';
 import 'package:api_client/src/model/page_response_payment_summary.dart';
 import 'package:api_client/src/model/page_response_property_review.dart';
 import 'package:api_client/src/model/page_response_reservation_response.dart';
@@ -186,6 +192,7 @@ import 'package:api_client/src/model/property_rating.dart';
 import 'package:api_client/src/model/property_review.dart';
 import 'package:api_client/src/model/provider_card.dart';
 import 'package:api_client/src/model/rate_agent_request.dart';
+import 'package:api_client/src/model/rate_tenant_request.dart';
 import 'package:api_client/src/model/receipt_pdf_response.dart';
 import 'package:api_client/src/model/receipt_regeneration.dart';
 import 'package:api_client/src/model/receipt_response.dart';
@@ -247,6 +254,7 @@ import 'package:api_client/src/model/subscription_response.dart';
 import 'package:api_client/src/model/suspend_account_request.dart';
 import 'package:api_client/src/model/suspend_annonce_request.dart';
 import 'package:api_client/src/model/targets.dart';
+import 'package:api_client/src/model/tenant_rating_response.dart';
 import 'package:api_client/src/model/terminate_contract_request.dart';
 import 'package:api_client/src/model/termination_response.dart';
 import 'package:api_client/src/model/tier_count.dart';
@@ -257,6 +265,7 @@ import 'package:api_client/src/model/type_change_review_result.dart';
 import 'package:api_client/src/model/type_count.dart';
 import 'package:api_client/src/model/unit_group.dart';
 import 'package:api_client/src/model/unit_summary.dart';
+import 'package:api_client/src/model/unread_count.dart';
 import 'package:api_client/src/model/update_agent_profile_request.dart';
 import 'package:api_client/src/model/update_annonce_request.dart';
 import 'package:api_client/src/model/update_availability_request.dart';
@@ -293,6 +302,7 @@ part 'serializers.g.dart';
   AccountVisitHistory,
   AcknowledgeEvidenceRequest,
   AddFavoriRequest,
+  AddNuiRequest,
   AdjustmentResponse,
   AdminContractLine,
   AdminMboaScoreResponse,
@@ -302,6 +312,7 @@ part 'serializers.g.dart';
   AdminReportLine,
   AdminSubscriptionDetail,
   AdminSubscriptionItem,
+  AdminTenantRatingResponse,
   AdminUserDetail,
   AdminUserSummary,
   AdminVisitLine,
@@ -390,6 +401,8 @@ part 'serializers.g.dart';
   InvoiceResponse,
   KpiDashboardResponse,
   KpiDayResponse,
+  KycAddress,
+  KycAddressRequest,
   KycReviewItem,
   KycStatusResponse,
   LedgerEntryRequest,
@@ -406,6 +419,7 @@ part 'serializers.g.dart';
   MeResponse,
   MessageResponse,
   MyBadgesResponse,
+  NotificationItem,
   NotificationSetting,
   OpportunityItem,
   OwnerDecisionRequest,
@@ -430,6 +444,7 @@ part 'serializers.g.dart';
   PageResponseKycReviewItem,
   PageResponseLedgerEntryResponse,
   PageResponseMessageResponse,
+  PageResponseNotificationItem,
   PageResponsePaymentSummary,
   PageResponsePropertyReview,
   PageResponseReservationResponse,
@@ -457,6 +472,7 @@ part 'serializers.g.dart';
   PropertyReview,
   ProviderCard,
   RateAgentRequest,
+  RateTenantRequest,
   ReceiptPdfResponse,
   ReceiptRegeneration,
   ReceiptResponse,
@@ -518,6 +534,7 @@ part 'serializers.g.dart';
   SuspendAccountRequest,
   SuspendAnnonceRequest,
   Targets,
+  TenantRatingResponse,
   TerminateContractRequest,
   TerminationResponse,
   TierCount,
@@ -528,6 +545,7 @@ part 'serializers.g.dart';
   TypeCount,
   UnitGroup,
   UnitSummary,
+  UnreadCount,
   UpdateAgentProfileRequest,
   UpdateAnnonceRequest,
   UpdateAvailabilityRequest,
@@ -633,6 +651,10 @@ Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(ResidenceResponse)]),
         () => ListBuilder<ResidenceResponse>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(NotificationItem)]),
+        () => ListBuilder<NotificationItem>(),
       )
       ..addBuilderFactory(
         const FullType(BuiltList, [FullType(HomeRequestEventResponse)]),

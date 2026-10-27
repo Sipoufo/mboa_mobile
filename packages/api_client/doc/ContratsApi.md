@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**getContract**](ContratsApi.md#getcontract) | **GET** /api/v1/contracts/{id} | One contract; its exact address appears only once signed (CA-M08-02)
 [**getContractPdf**](ContratsApi.md#getcontractpdf) | **GET** /api/v1/contracts/{id}/pdf | A short-lived URL to download the signed contract&#39;s PDF (CA-M08-01)
 [**listMyContracts**](ContratsApi.md#listmycontracts) | **GET** /api/v1/contracts | Your contracts, as landlord or as tenant
+[**rateTenant**](ContratsApi.md#ratetenant) | **POST** /api/v1/contracts/{id}/tenant-rating | The landlord rates the tenant, once, within 30 days after the tenancy ended (mobile §37 A)
 [**requestContractChanges**](ContratsApi.md#requestcontractchanges) | **POST** /api/v1/contracts/{id}/changes | Ask the landlord to change the terms, with a comment (CE-M08-03)
 [**respondToContractChange**](ContratsApi.md#respondtocontractchange) | **POST** /api/v1/contracts/{id}/changes/{changeId}/response | Answer one objection — whether or not you amend the terms (CE-M08-03)
 [**sendContract**](ContratsApi.md#sendcontract) | **POST** /api/v1/contracts/{id}/send | Send the draft to the tenant for signature (N-07)
@@ -354,6 +355,51 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **rateTenant**
+> TenantRatingResponse rateTenant(id, rateTenantRequest)
+
+The landlord rates the tenant, once, within 30 days after the tenancy ended (mobile §37 A)
+
+1 to 5 stars and an optional comment only the admin reads. Never shown publicly, never revised: it feeds the tenant's Mboa Score (PROVIDER_RATING). 409 RATING_NOT_OPEN outside the window, 409 ALREADY_RATED the second time; 404 for another's contract.
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getContratsApi();
+final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final RateTenantRequest rateTenantRequest = ; // RateTenantRequest | 
+
+try {
+    final response = api.rateTenant(id, rateTenantRequest);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling ContratsApi->rateTenant: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**|  | 
+ **rateTenantRequest** | [**RateTenantRequest**](RateTenantRequest.md)|  | 
+
+### Return type
+
+[**TenantRatingResponse**](TenantRatingResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

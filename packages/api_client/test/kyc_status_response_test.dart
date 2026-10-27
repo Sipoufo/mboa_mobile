@@ -27,5 +27,15 @@ void main() {
       // TODO
     });
 
+    // String nui
+    test('to test the property `nui`', () async {
+      // TODO
+    });
+
+    // KycAddress address
+    test('to test the property `address`', () async {
+      // TODO
+    });
+
   });
 }

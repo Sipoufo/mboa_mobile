@@ -157,5 +157,20 @@ void main() {
       // TODO
     });
 
+    // bool canRateTenant
+    test('to test the property `canRateTenant`', () async {
+      // TODO
+    });
+
+    // int tenantRating
+    test('to test the property `tenantRating`', () async {
+      // TODO
+    });
+
+    // bool nuiRequired
+    test('to test the property `nuiRequired`', () async {
+      // TODO
+    });
+
   });
 }

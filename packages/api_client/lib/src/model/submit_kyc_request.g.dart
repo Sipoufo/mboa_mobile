@@ -13,6 +13,10 @@ class _$SubmitKycRequest extends SubmitKycRequest {
   final String idDocumentBackKey;
   @override
   final String selfieKey;
+  @override
+  final String? nui;
+  @override
+  final KycAddressRequest? address;
 
   factory _$SubmitKycRequest([
     void Function(SubmitKycRequestBuilder)? updates,
@@ -22,6 +26,8 @@ class _$SubmitKycRequest extends SubmitKycRequest {
     required this.idDocumentFrontKey,
     required this.idDocumentBackKey,
     required this.selfieKey,
+    this.nui,
+    this.address,
   }) : super._();
   @override
   SubmitKycRequest rebuild(void Function(SubmitKycRequestBuilder) updates) =>
@@ -37,7 +43,9 @@ class _$SubmitKycRequest extends SubmitKycRequest {
     return other is SubmitKycRequest &&
         idDocumentFrontKey == other.idDocumentFrontKey &&
         idDocumentBackKey == other.idDocumentBackKey &&
-        selfieKey == other.selfieKey;
+        selfieKey == other.selfieKey &&
+        nui == other.nui &&
+        address == other.address;
   }
 
   @override
@@ -46,6 +54,8 @@ class _$SubmitKycRequest extends SubmitKycRequest {
     _$hash = $jc(_$hash, idDocumentFrontKey.hashCode);
     _$hash = $jc(_$hash, idDocumentBackKey.hashCode);
     _$hash = $jc(_$hash, selfieKey.hashCode);
+    _$hash = $jc(_$hash, nui.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -55,7 +65,9 @@ class _$SubmitKycRequest extends SubmitKycRequest {
     return (newBuiltValueToStringHelper(r'SubmitKycRequest')
           ..add('idDocumentFrontKey', idDocumentFrontKey)
           ..add('idDocumentBackKey', idDocumentBackKey)
-          ..add('selfieKey', selfieKey))
+          ..add('selfieKey', selfieKey)
+          ..add('nui', nui)
+          ..add('address', address))
         .toString();
   }
 }
@@ -78,6 +90,15 @@ class SubmitKycRequestBuilder
   String? get selfieKey => _$this._selfieKey;
   set selfieKey(String? selfieKey) => _$this._selfieKey = selfieKey;
 
+  String? _nui;
+  String? get nui => _$this._nui;
+  set nui(String? nui) => _$this._nui = nui;
+
+  KycAddressRequestBuilder? _address;
+  KycAddressRequestBuilder get address =>
+      _$this._address ??= KycAddressRequestBuilder();
+  set address(KycAddressRequestBuilder? address) => _$this._address = address;
+
   SubmitKycRequestBuilder() {
     SubmitKycRequest._defaults(this);
   }
@@ -88,6 +109,8 @@ class SubmitKycRequestBuilder
       _idDocumentFrontKey = $v.idDocumentFrontKey;
       _idDocumentBackKey = $v.idDocumentBackKey;
       _selfieKey = $v.selfieKey;
+      _nui = $v.nui;
+      _address = $v.address?.toBuilder();
       _$v = null;
     }
     return this;
@@ -107,25 +130,43 @@ class SubmitKycRequestBuilder
   SubmitKycRequest build() => _build();
 
   _$SubmitKycRequest _build() {
-    final _$result =
-        _$v ??
-        _$SubmitKycRequest._(
-          idDocumentFrontKey: BuiltValueNullFieldError.checkNotNull(
-            idDocumentFrontKey,
-            r'SubmitKycRequest',
-            'idDocumentFrontKey',
-          ),
-          idDocumentBackKey: BuiltValueNullFieldError.checkNotNull(
-            idDocumentBackKey,
-            r'SubmitKycRequest',
-            'idDocumentBackKey',
-          ),
-          selfieKey: BuiltValueNullFieldError.checkNotNull(
-            selfieKey,
-            r'SubmitKycRequest',
-            'selfieKey',
-          ),
+    _$SubmitKycRequest _$result;
+    try {
+      _$result =
+          _$v ??
+          _$SubmitKycRequest._(
+            idDocumentFrontKey: BuiltValueNullFieldError.checkNotNull(
+              idDocumentFrontKey,
+              r'SubmitKycRequest',
+              'idDocumentFrontKey',
+            ),
+            idDocumentBackKey: BuiltValueNullFieldError.checkNotNull(
+              idDocumentBackKey,
+              r'SubmitKycRequest',
+              'idDocumentBackKey',
+            ),
+            selfieKey: BuiltValueNullFieldError.checkNotNull(
+              selfieKey,
+              r'SubmitKycRequest',
+              'selfieKey',
+            ),
+            nui: nui,
+            address: _address?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'address';
+        _address?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'SubmitKycRequest',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

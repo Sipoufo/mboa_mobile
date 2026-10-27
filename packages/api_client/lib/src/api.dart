@@ -47,6 +47,7 @@ import 'package:api_client/src/api/mes_anciens_logements_api.dart';
 import 'package:api_client/src/api/messagerie_api.dart';
 import 'package:api_client/src/api/mon_logement_api.dart';
 import 'package:api_client/src/api/notification_devices_api.dart';
+import 'package:api_client/src/api/notifications_api.dart';
 import 'package:api_client/src/api/password_api.dart';
 import 'package:api_client/src/api/phone_change_api.dart';
 import 'package:api_client/src/api/prestataire_dashboard_api.dart';
@@ -386,6 +387,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   NotificationDevicesApi getNotificationDevicesApi() {
     return NotificationDevicesApi(dio, serializers);
+  }
+
+  /// Get NotificationsApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  NotificationsApi getNotificationsApi() {
+    return NotificationsApi(dio, serializers);
   }
 
   /// Get PasswordApi instance, base route and serializer can be overridden by a given but be careful,

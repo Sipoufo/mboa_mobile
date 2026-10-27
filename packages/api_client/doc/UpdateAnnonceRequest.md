@@ -28,6 +28,8 @@ Name | Type | Description | Notes
 **photoKeys** | **BuiltList&lt;String&gt;** |  | [optional] 
 **amenities** | **BuiltSet&lt;String&gt;** |  | [optional] 
 **ownerVisitsEnabled** | **bool** |  | [optional] 
+**advanceMonths** | **int** |  | [optional] 
+**depositMonths** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

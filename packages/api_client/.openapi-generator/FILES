@@ -9,6 +9,7 @@ doc/AccountReservationHistory.md
 doc/AccountVisitHistory.md
 doc/AcknowledgeEvidenceRequest.md
 doc/AddFavoriRequest.md
+doc/AddNuiRequest.md
 doc/AdjustmentResponse.md
 doc/AdminAnnoncesApi.md
 doc/AdminBadgesApi.md
@@ -27,6 +28,7 @@ doc/AdminReportLine.md
 doc/AdminSubscriptionDetail.md
 doc/AdminSubscriptionItem.md
 doc/AdminSubscriptionsApi.md
+doc/AdminTenantRatingResponse.md
 doc/AdminTypeChangeApi.md
 doc/AdminUserDetail.md
 doc/AdminUserSummary.md
@@ -136,6 +138,8 @@ doc/InvoicesTenantApi.md
 doc/KYCApi.md
 doc/KpiDashboardResponse.md
 doc/KpiDayResponse.md
+doc/KycAddress.md
+doc/KycAddressRequest.md
 doc/KycReviewItem.md
 doc/KycStatusResponse.md
 doc/LedgerEntryRequest.md
@@ -159,7 +163,9 @@ doc/MessagerieApi.md
 doc/MonLogementApi.md
 doc/MyBadgesResponse.md
 doc/NotificationDevicesApi.md
+doc/NotificationItem.md
 doc/NotificationSetting.md
+doc/NotificationsApi.md
 doc/OpportunityItem.md
 doc/OwnerDecisionRequest.md
 doc/PageResponseAdminPaymentItem.md
@@ -183,6 +189,7 @@ doc/PageResponseInvoiceResponse.md
 doc/PageResponseKycReviewItem.md
 doc/PageResponseLedgerEntryResponse.md
 doc/PageResponseMessageResponse.md
+doc/PageResponseNotificationItem.md
 doc/PageResponsePaymentSummary.md
 doc/PageResponsePropertyReview.md
 doc/PageResponseReservationResponse.md
@@ -216,6 +223,7 @@ doc/PropertyReview.md
 doc/ProviderCard.md
 doc/QuittancesApi.md
 doc/RateAgentRequest.md
+doc/RateTenantRequest.md
 doc/ReceiptPdfResponse.md
 doc/ReceiptRegeneration.md
 doc/ReceiptResponse.md
@@ -284,6 +292,7 @@ doc/SubscriptionsApi.md
 doc/SuspendAccountRequest.md
 doc/SuspendAnnonceRequest.md
 doc/Targets.md
+doc/TenantRatingResponse.md
 doc/TerminateContractRequest.md
 doc/TerminationResponse.md
 doc/TierCount.md
@@ -294,6 +303,7 @@ doc/TypeChangeReviewResult.md
 doc/TypeCount.md
 doc/UnitGroup.md
 doc/UnitSummary.md
+doc/UnreadCount.md
 doc/UpdateAgentProfileRequest.md
 doc/UpdateAnnonceRequest.md
 doc/UpdateAvailabilityRequest.md
@@ -363,6 +373,7 @@ lib/src/api/mes_anciens_logements_api.dart
 lib/src/api/messagerie_api.dart
 lib/src/api/mon_logement_api.dart
 lib/src/api/notification_devices_api.dart
+lib/src/api/notifications_api.dart
 lib/src/api/password_api.dart
 lib/src/api/phone_change_api.dart
 lib/src/api/prestataire_dashboard_api.dart
@@ -396,6 +407,7 @@ lib/src/model/account_reservation_history.dart
 lib/src/model/account_visit_history.dart
 lib/src/model/acknowledge_evidence_request.dart
 lib/src/model/add_favori_request.dart
+lib/src/model/add_nui_request.dart
 lib/src/model/adjustment_response.dart
 lib/src/model/admin_contract_line.dart
 lib/src/model/admin_mboa_score_response.dart
@@ -405,6 +417,7 @@ lib/src/model/admin_prestataire_badges_response.dart
 lib/src/model/admin_report_line.dart
 lib/src/model/admin_subscription_detail.dart
 lib/src/model/admin_subscription_item.dart
+lib/src/model/admin_tenant_rating_response.dart
 lib/src/model/admin_user_detail.dart
 lib/src/model/admin_user_summary.dart
 lib/src/model/admin_visit_line.dart
@@ -494,6 +507,8 @@ lib/src/model/home_summary.dart
 lib/src/model/invoice_response.dart
 lib/src/model/kpi_dashboard_response.dart
 lib/src/model/kpi_day_response.dart
+lib/src/model/kyc_address.dart
+lib/src/model/kyc_address_request.dart
 lib/src/model/kyc_review_item.dart
 lib/src/model/kyc_status_response.dart
 lib/src/model/ledger_entry_request.dart
@@ -510,6 +525,7 @@ lib/src/model/mboa_score_response.dart
 lib/src/model/me_response.dart
 lib/src/model/message_response.dart
 lib/src/model/my_badges_response.dart
+lib/src/model/notification_item.dart
 lib/src/model/notification_setting.dart
 lib/src/model/opportunity_item.dart
 lib/src/model/owner_decision_request.dart
@@ -534,6 +550,7 @@ lib/src/model/page_response_invoice_response.dart
 lib/src/model/page_response_kyc_review_item.dart
 lib/src/model/page_response_ledger_entry_response.dart
 lib/src/model/page_response_message_response.dart
+lib/src/model/page_response_notification_item.dart
 lib/src/model/page_response_payment_summary.dart
 lib/src/model/page_response_property_review.dart
 lib/src/model/page_response_reservation_response.dart
@@ -561,6 +578,7 @@ lib/src/model/property_rating.dart
 lib/src/model/property_review.dart
 lib/src/model/provider_card.dart
 lib/src/model/rate_agent_request.dart
+lib/src/model/rate_tenant_request.dart
 lib/src/model/receipt_pdf_response.dart
 lib/src/model/receipt_regeneration.dart
 lib/src/model/receipt_response.dart
@@ -622,6 +640,7 @@ lib/src/model/subscription_response.dart
 lib/src/model/suspend_account_request.dart
 lib/src/model/suspend_annonce_request.dart
 lib/src/model/targets.dart
+lib/src/model/tenant_rating_response.dart
 lib/src/model/terminate_contract_request.dart
 lib/src/model/termination_response.dart
 lib/src/model/tier_count.dart
@@ -632,6 +651,7 @@ lib/src/model/type_change_review_result.dart
 lib/src/model/type_count.dart
 lib/src/model/unit_group.dart
 lib/src/model/unit_summary.dart
+lib/src/model/unread_count.dart
 lib/src/model/update_agent_profile_request.dart
 lib/src/model/update_annonce_request.dart
 lib/src/model/update_availability_request.dart
@@ -666,6 +686,7 @@ test/account_reservation_history_test.dart
 test/account_visit_history_test.dart
 test/acknowledge_evidence_request_test.dart
 test/add_favori_request_test.dart
+test/add_nui_request_test.dart
 test/adjustment_response_test.dart
 test/admin_annonces_api_test.dart
 test/admin_badges_api_test.dart
@@ -684,6 +705,7 @@ test/admin_report_line_test.dart
 test/admin_subscription_detail_test.dart
 test/admin_subscription_item_test.dart
 test/admin_subscriptions_api_test.dart
+test/admin_tenant_rating_response_test.dart
 test/admin_type_change_api_test.dart
 test/admin_user_detail_test.dart
 test/admin_user_summary_test.dart
@@ -792,6 +814,8 @@ test/invoice_response_test.dart
 test/invoices_tenant_api_test.dart
 test/kpi_dashboard_response_test.dart
 test/kpi_day_response_test.dart
+test/kyc_address_request_test.dart
+test/kyc_address_test.dart
 test/kyc_api_test.dart
 test/kyc_review_item_test.dart
 test/kyc_status_response_test.dart
@@ -816,7 +840,9 @@ test/messagerie_api_test.dart
 test/mon_logement_api_test.dart
 test/my_badges_response_test.dart
 test/notification_devices_api_test.dart
+test/notification_item_test.dart
 test/notification_setting_test.dart
+test/notifications_api_test.dart
 test/opportunity_item_test.dart
 test/owner_decision_request_test.dart
 test/page_response_admin_payment_item_test.dart
@@ -840,6 +866,7 @@ test/page_response_invoice_response_test.dart
 test/page_response_kyc_review_item_test.dart
 test/page_response_ledger_entry_response_test.dart
 test/page_response_message_response_test.dart
+test/page_response_notification_item_test.dart
 test/page_response_payment_summary_test.dart
 test/page_response_property_review_test.dart
 test/page_response_reservation_response_test.dart
@@ -873,6 +900,7 @@ test/property_review_test.dart
 test/provider_card_test.dart
 test/quittances_api_test.dart
 test/rate_agent_request_test.dart
+test/rate_tenant_request_test.dart
 test/receipt_pdf_response_test.dart
 test/receipt_regeneration_test.dart
 test/receipt_response_test.dart
@@ -941,6 +969,7 @@ test/subscriptions_api_test.dart
 test/suspend_account_request_test.dart
 test/suspend_annonce_request_test.dart
 test/targets_test.dart
+test/tenant_rating_response_test.dart
 test/terminate_contract_request_test.dart
 test/termination_response_test.dart
 test/tier_count_test.dart
@@ -951,6 +980,7 @@ test/type_change_review_result_test.dart
 test/type_count_test.dart
 test/unit_group_test.dart
 test/unit_summary_test.dart
+test/unread_count_test.dart
 test/update_agent_profile_request_test.dart
 test/update_annonce_request_test.dart
 test/update_availability_request_test.dart

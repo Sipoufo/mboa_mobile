@@ -78,6 +78,7 @@ Class | Method | HTTP request | Description
 [*AdminBadgesApi*](doc/AdminBadgesApi.md) | [**revokePhotoVerification**](doc/AdminBadgesApi.md#revokephotoverification) | **POST** /api/v1/admin/badges/photo-verifications/{id}/revoke | Withdraw a granted badge (RM-M20-04)
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminGetContract**](doc/AdminContratsApi.md#admingetcontract) | **GET** /api/v1/admin/contracts/{id} | One archived contract, in full
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminGetContractPdf**](doc/AdminContratsApi.md#admingetcontractpdf) | **GET** /api/v1/admin/contracts/{id}/pdf | A short-lived URL to download its PDF
+[*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminGetTenantRating**](doc/AdminContratsApi.md#admingettenantrating) | **GET** /api/v1/admin/contracts/{id}/tenant-rating | The landlord&#39;s rating of the tenant on this contract, with the comment only the admin reads (mobile §37 A); 404 RATING_NOT_FOUND when none was sent
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminListContracts**](doc/AdminContratsApi.md#adminlistcontracts) | **GET** /api/v1/admin/contracts | The contract archive, filterable by status
 [*AdminContratsApi*](doc/AdminContratsApi.md) | [**adminRegenerateContractPdf**](doc/AdminContratsApi.md#adminregeneratecontractpdf) | **POST** /api/v1/admin/contracts/{id}/pdf | Try again to produce a document that never arrived (CE-M08-02)
 [*AdminKPIsApi*](doc/AdminKPIsApi.md) | [**exportAdminKpis**](doc/AdminKPIsApi.md#exportadminkpis) | **GET** /api/v1/admin/kpis/export | The daily series as CSV for any period up to 366 days (RM-M22-02)
@@ -193,6 +194,7 @@ Class | Method | HTTP request | Description
 [*ContratsApi*](doc/ContratsApi.md) | [**getContract**](doc/ContratsApi.md#getcontract) | **GET** /api/v1/contracts/{id} | One contract; its exact address appears only once signed (CA-M08-02)
 [*ContratsApi*](doc/ContratsApi.md) | [**getContractPdf**](doc/ContratsApi.md#getcontractpdf) | **GET** /api/v1/contracts/{id}/pdf | A short-lived URL to download the signed contract&#39;s PDF (CA-M08-01)
 [*ContratsApi*](doc/ContratsApi.md) | [**listMyContracts**](doc/ContratsApi.md#listmycontracts) | **GET** /api/v1/contracts | Your contracts, as landlord or as tenant
+[*ContratsApi*](doc/ContratsApi.md) | [**rateTenant**](doc/ContratsApi.md#ratetenant) | **POST** /api/v1/contracts/{id}/tenant-rating | The landlord rates the tenant, once, within 30 days after the tenancy ended (mobile §37 A)
 [*ContratsApi*](doc/ContratsApi.md) | [**requestContractChanges**](doc/ContratsApi.md#requestcontractchanges) | **POST** /api/v1/contracts/{id}/changes | Ask the landlord to change the terms, with a comment (CE-M08-03)
 [*ContratsApi*](doc/ContratsApi.md) | [**respondToContractChange**](doc/ContratsApi.md#respondtocontractchange) | **POST** /api/v1/contracts/{id}/changes/{changeId}/response | Answer one objection — whether or not you amend the terms (CE-M08-03)
 [*ContratsApi*](doc/ContratsApi.md) | [**sendContract**](doc/ContratsApi.md#sendcontract) | **POST** /api/v1/contracts/{id}/send | Send the draft to the tenant for signature (N-07)
@@ -237,6 +239,7 @@ Class | Method | HTTP request | Description
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**getMyInvoice**](doc/InvoicesTenantApi.md#getmyinvoice) | **GET** /api/v1/invoices/{id} | One of my invoices
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**listMyInvoices**](doc/InvoicesTenantApi.md#listmyinvoices) | **GET** /api/v1/invoices | My invoices, current and past, latest due first (RM-M24-06)
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**payInvoice**](doc/InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app (RM-M24-04) — 409 INVOICE_IN_APP_DISABLED while that is shut, as at the MVP
+[*KYCApi*](doc/KYCApi.md) | [**addMyNui**](doc/KYCApi.md#addmynui) | **PUT** /api/v1/kyc/me/nui | Add the NUI to an approved KYC, without a new review
 [*KYCApi*](doc/KYCApi.md) | [**getMyKycStatus**](doc/KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
 [*KYCApi*](doc/KYCApi.md) | [**submitKyc**](doc/KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
 [*LocationsApi*](doc/LocationsApi.md) | [**listCities**](doc/LocationsApi.md#listcities) | **GET** /api/v1/locations/cities | List cities (optionally filtered by region)
@@ -290,6 +293,10 @@ Class | Method | HTTP request | Description
 [*MonLogementApi*](doc/MonLogementApi.md) | [**updateUsefulContact**](doc/MonLogementApi.md#updateusefulcontact) | **PUT** /api/v1/prestataires/me/contacts/{contactId} | Replace a useful contact
 [*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**registerDevice**](doc/NotificationDevicesApi.md#registerdevice) | **POST** /api/v1/notifications/devices | Register or refresh a device push token, with whether the phone shows notifications (RM-M03-02)
 [*NotificationDevicesApi*](doc/NotificationDevicesApi.md) | [**unregisterDevice**](doc/NotificationDevicesApi.md#unregisterdevice) | **DELETE** /api/v1/notifications/devices/{token} | Unregister a device push token
+[*NotificationsApi*](doc/NotificationsApi.md) | [**countMyUnreadNotifications**](doc/NotificationsApi.md#countmyunreadnotifications) | **GET** /api/v1/notifications/unread-count | How many are unread — what the bell shows
+[*NotificationsApi*](doc/NotificationsApi.md) | [**listMyNotifications**](doc/NotificationsApi.md#listmynotifications) | **GET** /api/v1/notifications | My notifications, newest first — the push&#39;s title, text, type, entity and link (30 days)
+[*NotificationsApi*](doc/NotificationsApi.md) | [**markAllNotificationsRead**](doc/NotificationsApi.md#markallnotificationsread) | **POST** /api/v1/notifications/read-all | « Tout marquer comme lu » (idempotent)
+[*NotificationsApi*](doc/NotificationsApi.md) | [**markNotificationRead**](doc/NotificationsApi.md#marknotificationread) | **POST** /api/v1/notifications/{id}/read | Mark one read (idempotent); another account&#39;s id is 404 NOTIFICATION_NOT_FOUND
 [*PasswordApi*](doc/PasswordApi.md) | [**changePassword**](doc/PasswordApi.md#changepassword) | **POST** /api/v1/account/password | Change the password (revokes other sessions)
 [*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**confirmPhoneChange**](doc/PhoneChangeApi.md#confirmphonechange) | **POST** /api/v1/account/phone/verify | Step 2: verify both codes and switch the number
 [*PhoneChangeApi*](doc/PhoneChangeApi.md) | [**requestPhoneChange**](doc/PhoneChangeApi.md#requestphonechange) | **POST** /api/v1/account/phone/change | Step 1: request OTPs on the current and the new number
@@ -373,6 +380,7 @@ Class | Method | HTTP request | Description
  - [AccountVisitHistory](doc/AccountVisitHistory.md)
  - [AcknowledgeEvidenceRequest](doc/AcknowledgeEvidenceRequest.md)
  - [AddFavoriRequest](doc/AddFavoriRequest.md)
+ - [AddNuiRequest](doc/AddNuiRequest.md)
  - [AdjustmentResponse](doc/AdjustmentResponse.md)
  - [AdminContractLine](doc/AdminContractLine.md)
  - [AdminMboaScoreResponse](doc/AdminMboaScoreResponse.md)
@@ -382,6 +390,7 @@ Class | Method | HTTP request | Description
  - [AdminReportLine](doc/AdminReportLine.md)
  - [AdminSubscriptionDetail](doc/AdminSubscriptionDetail.md)
  - [AdminSubscriptionItem](doc/AdminSubscriptionItem.md)
+ - [AdminTenantRatingResponse](doc/AdminTenantRatingResponse.md)
  - [AdminUserDetail](doc/AdminUserDetail.md)
  - [AdminUserSummary](doc/AdminUserSummary.md)
  - [AdminVisitLine](doc/AdminVisitLine.md)
@@ -470,6 +479,8 @@ Class | Method | HTTP request | Description
  - [InvoiceResponse](doc/InvoiceResponse.md)
  - [KpiDashboardResponse](doc/KpiDashboardResponse.md)
  - [KpiDayResponse](doc/KpiDayResponse.md)
+ - [KycAddress](doc/KycAddress.md)
+ - [KycAddressRequest](doc/KycAddressRequest.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
  - [LedgerEntryRequest](doc/LedgerEntryRequest.md)
@@ -486,6 +497,7 @@ Class | Method | HTTP request | Description
  - [MeResponse](doc/MeResponse.md)
  - [MessageResponse](doc/MessageResponse.md)
  - [MyBadgesResponse](doc/MyBadgesResponse.md)
+ - [NotificationItem](doc/NotificationItem.md)
  - [NotificationSetting](doc/NotificationSetting.md)
  - [OpportunityItem](doc/OpportunityItem.md)
  - [OwnerDecisionRequest](doc/OwnerDecisionRequest.md)
@@ -510,6 +522,7 @@ Class | Method | HTTP request | Description
  - [PageResponseKycReviewItem](doc/PageResponseKycReviewItem.md)
  - [PageResponseLedgerEntryResponse](doc/PageResponseLedgerEntryResponse.md)
  - [PageResponseMessageResponse](doc/PageResponseMessageResponse.md)
+ - [PageResponseNotificationItem](doc/PageResponseNotificationItem.md)
  - [PageResponsePaymentSummary](doc/PageResponsePaymentSummary.md)
  - [PageResponsePropertyReview](doc/PageResponsePropertyReview.md)
  - [PageResponseReservationResponse](doc/PageResponseReservationResponse.md)
@@ -537,6 +550,7 @@ Class | Method | HTTP request | Description
  - [PropertyReview](doc/PropertyReview.md)
  - [ProviderCard](doc/ProviderCard.md)
  - [RateAgentRequest](doc/RateAgentRequest.md)
+ - [RateTenantRequest](doc/RateTenantRequest.md)
  - [ReceiptPdfResponse](doc/ReceiptPdfResponse.md)
  - [ReceiptRegeneration](doc/ReceiptRegeneration.md)
  - [ReceiptResponse](doc/ReceiptResponse.md)
@@ -598,6 +612,7 @@ Class | Method | HTTP request | Description
  - [SuspendAccountRequest](doc/SuspendAccountRequest.md)
  - [SuspendAnnonceRequest](doc/SuspendAnnonceRequest.md)
  - [Targets](doc/Targets.md)
+ - [TenantRatingResponse](doc/TenantRatingResponse.md)
  - [TerminateContractRequest](doc/TerminateContractRequest.md)
  - [TerminationResponse](doc/TerminationResponse.md)
  - [TierCount](doc/TierCount.md)
@@ -608,6 +623,7 @@ Class | Method | HTTP request | Description
  - [TypeCount](doc/TypeCount.md)
  - [UnitGroup](doc/UnitGroup.md)
  - [UnitSummary](doc/UnitSummary.md)
+ - [UnreadCount](doc/UnreadCount.md)
  - [UpdateAgentProfileRequest](doc/UpdateAgentProfileRequest.md)
  - [UpdateAnnonceRequest](doc/UpdateAnnonceRequest.md)
  - [UpdateAvailabilityRequest](doc/UpdateAvailabilityRequest.md)

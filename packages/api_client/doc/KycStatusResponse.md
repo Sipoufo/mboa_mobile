@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **submittedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **reviewedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **rejectionReason** | **String** |  | [optional] 
+**nui** | **String** |  | [optional] 
+**address** | [**KycAddress**](KycAddress.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

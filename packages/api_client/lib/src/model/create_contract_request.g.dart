@@ -117,7 +117,7 @@ class _$CreateContractRequest extends CreateContractRequest {
   @override
   final CreateContractRequestRentalPeriodEnum? rentalPeriod;
   @override
-  final int depositAmount;
+  final int? depositAmount;
   @override
   final bool? chargesIncluded;
   @override
@@ -139,7 +139,7 @@ class _$CreateContractRequest extends CreateContractRequest {
     this.tenantPhone,
     this.price,
     this.rentalPeriod,
-    required this.depositAmount,
+    this.depositAmount,
     this.chargesIncluded,
     this.startDate,
     this.durationUnits,
@@ -312,11 +312,7 @@ class CreateContractRequestBuilder
           tenantPhone: tenantPhone,
           price: price,
           rentalPeriod: rentalPeriod,
-          depositAmount: BuiltValueNullFieldError.checkNotNull(
-            depositAmount,
-            r'CreateContractRequest',
-            'depositAmount',
-          ),
+          depositAmount: depositAmount,
           chargesIncluded: chargesIncluded,
           startDate: startDate,
           durationUnits: durationUnits,

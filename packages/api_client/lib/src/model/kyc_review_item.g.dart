@@ -108,6 +108,10 @@ class _$KycReviewItem extends KycReviewItem {
   final DateTime? dueAt;
   @override
   final bool? overdue;
+  @override
+  final String? nui;
+  @override
+  final KycAddress? address;
 
   factory _$KycReviewItem([void Function(KycReviewItemBuilder)? updates]) =>
       (KycReviewItemBuilder()..update(updates))._build();
@@ -124,6 +128,8 @@ class _$KycReviewItem extends KycReviewItem {
     this.displayName,
     this.dueAt,
     this.overdue,
+    this.nui,
+    this.address,
   }) : super._();
   @override
   KycReviewItem rebuild(void Function(KycReviewItemBuilder) updates) =>
@@ -146,7 +152,9 @@ class _$KycReviewItem extends KycReviewItem {
         role == other.role &&
         displayName == other.displayName &&
         dueAt == other.dueAt &&
-        overdue == other.overdue;
+        overdue == other.overdue &&
+        nui == other.nui &&
+        address == other.address;
   }
 
   @override
@@ -163,6 +171,8 @@ class _$KycReviewItem extends KycReviewItem {
     _$hash = $jc(_$hash, displayName.hashCode);
     _$hash = $jc(_$hash, dueAt.hashCode);
     _$hash = $jc(_$hash, overdue.hashCode);
+    _$hash = $jc(_$hash, nui.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -180,7 +190,9 @@ class _$KycReviewItem extends KycReviewItem {
           ..add('role', role)
           ..add('displayName', displayName)
           ..add('dueAt', dueAt)
-          ..add('overdue', overdue))
+          ..add('overdue', overdue)
+          ..add('nui', nui)
+          ..add('address', address))
         .toString();
   }
 }
@@ -235,6 +247,14 @@ class KycReviewItemBuilder
   bool? get overdue => _$this._overdue;
   set overdue(bool? overdue) => _$this._overdue = overdue;
 
+  String? _nui;
+  String? get nui => _$this._nui;
+  set nui(String? nui) => _$this._nui = nui;
+
+  KycAddressBuilder? _address;
+  KycAddressBuilder get address => _$this._address ??= KycAddressBuilder();
+  set address(KycAddressBuilder? address) => _$this._address = address;
+
   KycReviewItemBuilder() {
     KycReviewItem._defaults(this);
   }
@@ -253,6 +273,8 @@ class KycReviewItemBuilder
       _displayName = $v.displayName;
       _dueAt = $v.dueAt;
       _overdue = $v.overdue;
+      _nui = $v.nui;
+      _address = $v.address?.toBuilder();
       _$v = null;
     }
     return this;
@@ -272,21 +294,39 @@ class KycReviewItemBuilder
   KycReviewItem build() => _build();
 
   _$KycReviewItem _build() {
-    final _$result =
-        _$v ??
-        _$KycReviewItem._(
-          id: id,
-          accountId: accountId,
-          status: status,
-          submittedAt: submittedAt,
-          idDocumentFrontUrl: idDocumentFrontUrl,
-          idDocumentBackUrl: idDocumentBackUrl,
-          selfieUrl: selfieUrl,
-          role: role,
-          displayName: displayName,
-          dueAt: dueAt,
-          overdue: overdue,
+    _$KycReviewItem _$result;
+    try {
+      _$result =
+          _$v ??
+          _$KycReviewItem._(
+            id: id,
+            accountId: accountId,
+            status: status,
+            submittedAt: submittedAt,
+            idDocumentFrontUrl: idDocumentFrontUrl,
+            idDocumentBackUrl: idDocumentBackUrl,
+            selfieUrl: selfieUrl,
+            role: role,
+            displayName: displayName,
+            dueAt: dueAt,
+            overdue: overdue,
+            nui: nui,
+            address: _address?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'address';
+        _address?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'KycReviewItem',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

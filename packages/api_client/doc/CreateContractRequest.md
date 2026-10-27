@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **tenantPhone** | **String** |  | [optional] 
 **price** | **int** |  | [optional] 
 **rentalPeriod** | **String** |  | [optional] 
-**depositAmount** | **int** |  | 
+**depositAmount** | **int** |  | [optional] 
 **chargesIncluded** | **bool** |  | [optional] 
 **startDate** | [**Date**](Date.md) |  | [optional] 
 **durationUnits** | **int** |  | [optional] 

@@ -43,7 +43,7 @@ abstract class CreateContractRequest implements Built<CreateContractRequest, Cre
   // enum rentalPeriodEnum {  DAY,  WEEK,  MONTH,  QUARTER,  YEAR,  };
 
   @BuiltValueField(wireName: r'depositAmount')
-  int get depositAmount;
+  int? get depositAmount;
 
   @BuiltValueField(wireName: r'chargesIncluded')
   bool? get chargesIncluded;
@@ -116,11 +116,13 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
         specifiedType: const FullType(CreateContractRequestRentalPeriodEnum),
       );
     }
-    yield r'depositAmount';
-    yield serializers.serialize(
-      object.depositAmount,
-      specifiedType: const FullType(int),
-    );
+    if (object.depositAmount != null) {
+      yield r'depositAmount';
+      yield serializers.serialize(
+        object.depositAmount,
+        specifiedType: const FullType(int),
+      );
+    }
     if (object.chargesIncluded != null) {
       yield r'chargesIncluded';
       yield serializers.serialize(
@@ -221,8 +223,9 @@ class _$CreateContractRequestSerializer implements PrimitiveSerializer<CreateCon
         case r'depositAmount':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(int),
-          ) as int;
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
           result.depositAmount = valueDes;
           break;
         case r'chargesIncluded':

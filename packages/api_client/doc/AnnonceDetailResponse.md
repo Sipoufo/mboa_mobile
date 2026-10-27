@@ -38,6 +38,8 @@ Name | Type | Description | Notes
 **exactLocation** | **bool** |  | [optional] 
 **canRequestReservation** | **bool** |  | [optional] 
 **myReservationRequestId** | **String** |  | [optional] 
+**advanceMonths** | **int** |  | [optional] 
+**depositMonths** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

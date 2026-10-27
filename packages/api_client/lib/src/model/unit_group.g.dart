@@ -309,6 +309,10 @@ class _$UnitGroup extends UnitGroup {
   final BuiltSet<UnitGroupAmenitiesEnum>? amenities;
   @override
   final BuiltList<String>? photoKeys;
+  @override
+  final int? advanceMonths;
+  @override
+  final int? depositMonths;
 
   factory _$UnitGroup([void Function(UnitGroupBuilder)? updates]) =>
       (UnitGroupBuilder()..update(updates))._build();
@@ -329,6 +333,8 @@ class _$UnitGroup extends UnitGroup {
     this.description,
     this.amenities,
     this.photoKeys,
+    this.advanceMonths,
+    this.depositMonths,
   }) : super._();
   @override
   UnitGroup rebuild(void Function(UnitGroupBuilder) updates) =>
@@ -355,7 +361,9 @@ class _$UnitGroup extends UnitGroup {
         furnished == other.furnished &&
         description == other.description &&
         amenities == other.amenities &&
-        photoKeys == other.photoKeys;
+        photoKeys == other.photoKeys &&
+        advanceMonths == other.advanceMonths &&
+        depositMonths == other.depositMonths;
   }
 
   @override
@@ -376,6 +384,8 @@ class _$UnitGroup extends UnitGroup {
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, amenities.hashCode);
     _$hash = $jc(_$hash, photoKeys.hashCode);
+    _$hash = $jc(_$hash, advanceMonths.hashCode);
+    _$hash = $jc(_$hash, depositMonths.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -397,7 +407,9 @@ class _$UnitGroup extends UnitGroup {
           ..add('furnished', furnished)
           ..add('description', description)
           ..add('amenities', amenities)
-          ..add('photoKeys', photoKeys))
+          ..add('photoKeys', photoKeys)
+          ..add('advanceMonths', advanceMonths)
+          ..add('depositMonths', depositMonths))
         .toString();
   }
 }
@@ -474,6 +486,16 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
   set photoKeys(ListBuilder<String>? photoKeys) =>
       _$this._photoKeys = photoKeys;
 
+  int? _advanceMonths;
+  int? get advanceMonths => _$this._advanceMonths;
+  set advanceMonths(int? advanceMonths) =>
+      _$this._advanceMonths = advanceMonths;
+
+  int? _depositMonths;
+  int? get depositMonths => _$this._depositMonths;
+  set depositMonths(int? depositMonths) =>
+      _$this._depositMonths = depositMonths;
+
   UnitGroupBuilder() {
     UnitGroup._defaults(this);
   }
@@ -496,6 +518,8 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
       _description = $v.description;
       _amenities = $v.amenities?.toBuilder();
       _photoKeys = $v.photoKeys?.toBuilder();
+      _advanceMonths = $v.advanceMonths;
+      _depositMonths = $v.depositMonths;
       _$v = null;
     }
     return this;
@@ -547,6 +571,8 @@ class UnitGroupBuilder implements Builder<UnitGroup, UnitGroupBuilder> {
             description: description,
             amenities: _amenities?.build(),
             photoKeys: _photoKeys?.build(),
+            advanceMonths: advanceMonths,
+            depositMonths: depositMonths,
           );
     } catch (_) {
       late String _$failedField;
