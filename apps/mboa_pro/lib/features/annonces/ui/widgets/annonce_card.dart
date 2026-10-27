@@ -20,7 +20,6 @@ class AnnonceCard extends StatelessWidget {
     super.key,
     required this.annonce,
     required this.onEdit,
-    required this.onHistory,
     required this.onAttributions,
     required this.onTransition,
     required this.onDelete,
@@ -31,7 +30,6 @@ class AnnonceCard extends StatelessWidget {
 
   final Annonce annonce;
   final VoidCallback onEdit;
-  final VoidCallback onHistory;
   final VoidCallback onAttributions;
   final ValueChanged<AnnonceTransition> onTransition;
   final VoidCallback onDelete;
@@ -91,9 +89,7 @@ class AnnonceCard extends StatelessWidget {
             else
               _Actions(
                 onAttributions: onAttributions,
-                onHistory: onHistory,
                 onEdit: onEdit,
-                historyLabel: l10n.annoncesActionHistory,
                 editLabel: l10n.annoncesActionEdit,
                 attributionsLabel: l10n.mesBiensAttributions,
               ),
@@ -208,18 +204,14 @@ class _Summary extends StatelessWidget {
 class _Actions extends StatelessWidget {
   const _Actions({
     required this.onAttributions,
-    required this.onHistory,
     required this.onEdit,
     required this.attributionsLabel,
-    required this.historyLabel,
     required this.editLabel,
   });
 
   final VoidCallback onAttributions;
-  final VoidCallback onHistory;
   final VoidCallback onEdit;
   final String attributionsLabel;
-  final String historyLabel;
   final String editLabel;
 
   @override
@@ -234,11 +226,6 @@ class _Actions extends StatelessWidget {
             icon: LucideIcons.keyRound,
             label: attributionsLabel,
             onTap: onAttributions,
-          ),
-          _Action(
-            icon: LucideIcons.receiptText,
-            label: historyLabel,
-            onTap: onHistory,
           ),
           _Action(
             icon: LucideIcons.squarePen,

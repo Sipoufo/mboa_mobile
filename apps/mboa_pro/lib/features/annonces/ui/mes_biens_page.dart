@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
@@ -13,10 +12,10 @@ import '../models/annonce_draft.dart';
 
 /// "Mes biens" hub (CDC M10).
 ///
-/// The two entry cards are real; Attributions, Réservations, Prospections and
-/// "En attente de validation" have no endpoints, so they route to the
-/// coming-soon explainer rather than being hidden — the hub is the map of the
-/// product, and quietly dropping half of it would misrepresent it.
+/// The two kinds of property, then the agents and the reservations received.
+/// « En attente de validation » and « Prospections » were « Bientôt » tiles
+/// from the mockup with nothing in Doc 10 behind them; the founder had them
+/// removed (2026-10-27) rather than promise screens that do not exist.
 @RoutePage()
 class MesBiensPage extends StatelessWidget {
   const MesBiensPage({super.key});
@@ -40,38 +39,24 @@ class MesBiensPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(Dimens.spacing),
         children: [
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: _PendingCard(
-                    onTap: () => _comingSoon(context),
-                    label: l10n.mesBiensPending,
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: _KindCard(
+                  icon: LucideIcons.house,
+                  label: l10n.mesBiensSingle,
+                  onTap: () => context.router.push(const AnnoncesListRoute()),
                 ),
-                const SizedBox(width: Dimens.spacingMd),
-                Expanded(
-                  child: Column(
-                    children: [
-                      _KindCard(
-                        icon: LucideIcons.house,
-                        label: l10n.mesBiensSingle,
-                        onTap: () =>
-                            context.router.push(const AnnoncesListRoute()),
-                      ),
-                      const SizedBox(height: Dimens.spacingMd),
-                      _KindCard(
-                        icon: LucideIcons.layers,
-                        label: l10n.mesBiensMultiple,
-                        onTap: () =>
-                            context.router.push(const ResidencesListRoute()),
-                      ),
-                    ],
-                  ),
+              ),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: _KindCard(
+                  icon: LucideIcons.layers,
+                  label: l10n.mesBiensMultiple,
+                  onTap: () => context.router.push(const ResidencesListRoute()),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: Dimens.spacing),
           _EntryRow(
@@ -88,22 +73,12 @@ class MesBiensPage extends StatelessWidget {
             // M29 — the requests received on his listings.
             onTap: () => context.router.push(IncomingReservationsRoute()),
           ),
-          _EntryRow(
-            icon: LucideIcons.radar,
-            title: l10n.mesBiensProspections,
-            subtitle: l10n.mesBiensProspectionsBody,
-            onTap: () => _comingSoon(context),
-          ),
           const SizedBox(height: Dimens.spacing),
           const _Stats(),
         ],
       ),
     );
   }
-
-  void _comingSoon(BuildContext context) => context.router.push(
-        AccessRestrictedRoute(restriction: AccessRestriction.comingSoon),
-      );
 }
 
 /// Reuses the home dashboard card — the design shows the same figures here.
@@ -117,49 +92,6 @@ class _Stats extends StatelessWidget {
         HomeReady(:final stats) => GlobalStatsCard(stats: stats),
         _ => const SizedBox.shrink(),
       },
-    );
-  }
-}
-
-class _PendingCard extends StatelessWidget {
-  const _PendingCard({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-
-    return Material(
-      color: colors.surface,
-      borderRadius: BorderRadius.circular(Dimens.radiusLg),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(Dimens.radiusLg),
-        child: Padding(
-          padding: const EdgeInsets.all(Dimens.spacing),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(Dimens.spacingMd),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: colors.actionPale,
-                ),
-                child: Icon(LucideIcons.clock, color: colors.action),
-              ),
-              const SizedBox(height: Dimens.spacingLg),
-              Text(
-                label,
-                style: context.mboaText.h3.copyWith(color: colors.primary),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

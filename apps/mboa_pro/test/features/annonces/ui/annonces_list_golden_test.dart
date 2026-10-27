@@ -85,7 +85,6 @@ void main() {
                   onTransition: (_) {},
                   onDelete: () {},
                   onEdit: () {},
-                  onHistory: () {},
                   onAttributions: () {},
                 ),
             ],

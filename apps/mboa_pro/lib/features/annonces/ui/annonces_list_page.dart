@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
@@ -143,7 +142,6 @@ class _Loaded extends StatelessWidget {
                             .push(AnnonceDetailRoute(id: annonce.id)),
                         onDelete: () => _confirmDelete(context, annonce),
                         onEdit: () => _edit(context, annonce),
-                        onHistory: () => _comingSoon(context),
                         // M11 — this listing's agents, as its detail opens them.
                         onAttributions: () => context.router.push(
                           AgentAssignmentRoute(target: AnnonceTarget(annonce.id)),
@@ -159,10 +157,6 @@ class _Loaded extends StatelessWidget {
 
   void _edit(BuildContext context, Annonce annonce) => context.router.push(
         AnnonceFormRoute(kind: AnnonceKind.single, annonceId: annonce.id),
-      );
-
-  void _comingSoon(BuildContext context) => context.router.push(
-        AccessRestrictedRoute(restriction: AccessRestriction.comingSoon),
       );
 
   /// RM-M10-07 — deletion is permanent, so it is confirmed before dispatch.

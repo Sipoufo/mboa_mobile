@@ -61,11 +61,12 @@ void main() {
 
     expect(tester.takeException(), isNull);
 
-    expect(find.textContaining('En attente'), findsOneWidget);
     expect(find.textContaining('Biens'), findsWidgets);
     expect(find.text('Attributions'), findsOneWidget);
     expect(find.text('Reservations'), findsOneWidget);
-    expect(find.text('Prospections'), findsOneWidget);
+    // Removed on the founder's call (2026-10-27): nothing in Doc 10 behind them.
+    expect(find.textContaining('En attente'), findsNothing);
+    expect(find.text('Prospections'), findsNothing);
   });
 
   testWidgets('« Attributions » and « Reservations » open the screens that exist — not « Bientôt »', (tester) async {

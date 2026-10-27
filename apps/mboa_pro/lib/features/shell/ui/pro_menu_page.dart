@@ -12,9 +12,10 @@ import '../../profile/profile_types.dart';
 
 /// Full-screen slide menu, pushed as a modal over the active tab.
 ///
-/// Entries whose module isn't built yet route to [AccessRestrictedRoute] with
-/// [AccessRestriction.comingSoon] rather than being hidden — the menu is the
-/// product's map, so the surface stays visible and honest about its state.
+/// Every entry opens a screen that exists, except « Notifications », which
+/// waits for its page (§38). Recherche, Explorer, Signets and Autres came from
+/// the mockup with nothing in Doc 10 behind them; the founder had them removed
+/// (2026-10-27).
 @RoutePage()
 class ProMenuPage extends StatelessWidget {
   const ProMenuPage({super.key});
@@ -106,24 +107,9 @@ class ProMenuPage extends StatelessWidget {
                     onTap: () => _go(context, const PrestataireVisitsRoute()),
                   ),
                   _MenuEntry(
-                    icon: LucideIcons.search,
-                    label: l10n.menuSearch,
-                    onTap: () => _comingSoon(context),
-                  ),
-                  _MenuEntry(
-                    icon: LucideIcons.compass,
-                    label: l10n.menuExplore,
-                    onTap: () => _comingSoon(context),
-                  ),
-                  _MenuEntry(
                     icon: LucideIcons.fileText,
                     label: l10n.contractsTitle,
                     onTap: () => _go(context, const ContractsListRoute()),
-                  ),
-                  _MenuEntry(
-                    icon: LucideIcons.bookmark,
-                    label: l10n.menuBookmarks,
-                    onTap: () => _comingSoon(context),
                   ),
                   _MenuEntry(
                     icon: LucideIcons.user,
@@ -141,11 +127,6 @@ class ProMenuPage extends StatelessWidget {
                     icon: LucideIcons.sparkles,
                     label: l10n.subscriptionTitle,
                     onTap: () => _go(context, const SubscriptionRoute()),
-                  ),
-                  _MenuEntry(
-                    icon: LucideIcons.circleEllipsis,
-                    label: l10n.menuOther,
-                    onTap: () => _comingSoon(context),
                   ),
                 ],
               ),
@@ -247,11 +228,13 @@ class _MenuEntry extends StatelessWidget {
           children: [
             Icon(icon, size: Dimens.iconMd, color: foreground),
             const SizedBox(width: Dimens.spacing),
-            Text(
-              label,
-              style: context.mboaText.bodyLarge.copyWith(
-                color: foreground,
-                fontWeight: isCurrent ? FontWeight.w700 : FontWeight.w500,
+            Flexible(
+              child: Text(
+                label,
+                style: context.mboaText.bodyLarge.copyWith(
+                  color: foreground,
+                  fontWeight: isCurrent ? FontWeight.w700 : FontWeight.w500,
+                ),
               ),
             ),
           ],
