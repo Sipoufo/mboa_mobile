@@ -16,18 +16,35 @@ class KycRepository {
     return _map(response.data);
   }
 
-  /// Submits the three uploaded document keys and returns the resulting status.
+  /// Submits the three uploaded document keys — with the NUI and the address
+  /// when declared (§37 B) — and returns the resulting status.
   Future<KycStatusData> submit({
     required String selfieKey,
     required String idFrontKey,
     required String idBackKey,
+    String? nui,
+    DeclaredAddress? address,
   }) async {
     final response = await _api.submitKyc(
-      submitKycRequest: SubmitKycRequest((b) => b
-        ..selfieKey = selfieKey
-        ..idDocumentFrontKey = idFrontKey
-        ..idDocumentBackKey = idBackKey),
+      submitKycRequest: SubmitKycRequest((b) {
+        b
+          ..selfieKey = selfieKey
+          ..idDocumentFrontKey = idFrontKey
+          ..idDocumentBackKey = idBackKey
+          ..nui = nui;
+        if (address != null) {
+          b.address
+            ..districtId = address.districtId
+            ..details = (address.details?.trim().isEmpty ?? true) ? null : address.details!.trim();
+        }
+      }),
     );
+    return _map(response.data);
+  }
+
+  /// RM-M01bis-10 — a NUI added to an approved KYC, without a new review.
+  Future<KycStatusData> addNui(String nui) async {
+    final response = await _api.addMyNui(addNuiRequest: AddNuiRequest((b) => b..nui = nui));
     return _map(response.data);
   }
 
@@ -36,5 +53,15 @@ class KycRepository {
         submittedAt: data?.submittedAt,
         reviewedAt: data?.reviewedAt,
         rejectionReason: data?.rejectionReason,
+        nui: data?.nui,
+        address: switch (data?.address) {
+          final address? when address.districtId != null => DeclaredAddress(
+              districtId: address.districtId!,
+              city: address.city,
+              district: address.district,
+              details: address.details,
+            ),
+          _ => null,
+        },
       );
 }

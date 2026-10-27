@@ -7249,5 +7249,61 @@
         "type": "int"
       }
     }
+  },
+  "commonSave": "Enregistrer",
+  "@commonSave": {
+    "description": "generic"
+  },
+  "kycOptional": "Facultatif",
+  "@kycOptional": {
+    "description": "§37 B — tile subtitle"
+  },
+  "kycNuiRequiredHint": "Obligatoire pour une agence ou un promoteur",
+  "@kycNuiRequiredHint": {
+    "description": "§37 B — tile subtitle"
+  },
+  "kycNuiTitle": "Ton NUI",
+  "@kycNuiTitle": {
+    "description": "§37 B — sheet"
+  },
+  "kycNuiBody": "Le Numéro d'Identifiant Unique de la DGI : 14 lettres et chiffres. Tape-le comme sur ta carte, espaces compris.",
+  "@kycNuiBody": {
+    "description": "§37 B — sheet"
+  },
+  "kycNuiAddBody": "Ton identité est déjà vérifiée : le NUI s'ajoute sans nouvelle revue. Une fois enregistré, il ne se modifie plus depuis l'app.",
+  "@kycNuiAddBody": {
+    "description": "§37 B — adding to an approved KYC"
+  },
+  "kycNuiInvalid": "Un NUI compte 14 lettres et chiffres.",
+  "@kycNuiInvalid": {
+    "description": "§37 B — INVALID_NUI"
+  },
+  "kycNuiRequiredError": "Une agence ou un promoteur doit déclarer son NUI.",
+  "@kycNuiRequiredError": {
+    "description": "§37 B — NUI_REQUIRED"
+  },
+  "kycAddNui": "Ajouter mon NUI",
+  "@kycAddNui": {
+    "description": "§37 B"
+  },
+  "kycAddressTitle": "Ton adresse",
+  "@kycAddressTitle": {
+    "description": "§37 B — sheet"
+  },
+  "kycAddressBody": "Ton quartier et un point de repère. Seul Mboa la voit, jamais sur une fiche publique.",
+  "@kycAddressBody": {
+    "description": "§37 B — sheet"
+  },
+  "kycAddressDetails": "Point de repère (facultatif)",
+  "@kycAddressDetails": {
+    "description": "§37 B"
+  },
+  "kycAddressRemove": "Retirer l'adresse",
+  "@kycAddressRemove": {
+    "description": "§37 B"
+  },
+  "kycUnknownDistrict": "Ce quartier n'est plus au catalogue. Choisis-en un autre.",
+  "@kycUnknownDistrict": {
+    "description": "§37 B — UNKNOWN_DISTRICT"
   }
 }

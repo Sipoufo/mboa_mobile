@@ -2,14 +2,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
+import '../../profile/models/prestataire_type.dart';
+import '../../profile/profile_types.dart';
 import '../logic/kyc_cubit.dart';
 import '../models/kyc_draft.dart';
 import '../models/kyc_status.dart';
+import 'kyc_declarations.dart';
 
 /// Certifications (CDC M01bis): a Statut tab (account verification state) and an
 /// Identification tab (documents to provide). Adapts to the loaded [KycStatus];
@@ -45,9 +49,13 @@ class _CertificationsViewState extends State<CertificationsView> {
               MboaToast.error(
                 context: context,
                 title: l10n.commonErrorTitle,
-                description: state.error == KycError.uploadFailed
-                    ? l10n.kycUploadError
-                    : l10n.commonError,
+                description: switch (state.error!) {
+                  KycError.uploadFailed => l10n.kycUploadError,
+                  KycError.invalidNui => l10n.kycNuiInvalid,
+                  KycError.nuiRequired => l10n.kycNuiRequiredError,
+                  KycError.unknownDistrict => l10n.kycUnknownDistrict,
+                  KycError.submitFailed => l10n.commonError,
+                },
               );
             }
           },
@@ -169,6 +177,27 @@ class _IdentificationTab extends StatelessWidget {
     final idDone = state.draft.has(KycSlot.idFront) && state.draft.has(KycSlot.idBack);
     final idChip = rowChip(idDone);
 
+    // RM-M01bis-10 — an agence or a promoteur owes a NUI; the profile says
+    // which they are. The server holds the rule (`NUI_REQUIRED`) either way.
+    final profile = getIt.isRegistered<ProProfileBloc>() ? getIt<ProProfileBloc>().state : null;
+    final type = profile is ProProfileReady ? profile.data.type : null;
+    final nuiRequired = type == PrestataireType.agence || type == PrestataireType.promoteur;
+    final nui = KycDraft.normalizeNui(state.draft.nui);
+
+    Future<void> editNui() async {
+      final cubit = context.read<KycCubit>();
+      final adding = state.status.canAddNui;
+      final typed = await showNuiSheet(context, initial: state.draft.nui, required: nuiRequired, isAddition: adding);
+      if (typed == null) return;
+      adding ? await cubit.addNui(typed) : cubit.setNui(typed);
+    }
+
+    Future<void> editAddress() async {
+      final cubit = context.read<KycCubit>();
+      final choice = await showAddressSheet(context, initial: state.draft.address);
+      if (choice != null) cubit.setAddress(choice.address);
+    }
+
     Future<void> captureSelfie() async {
       final source = await showCaptureSourceSheet(context);
       if (source != null && context.mounted) {
@@ -213,18 +242,24 @@ class _IdentificationTab extends StatelessWidget {
                 onTap: () => context.router.push(const IdDocumentRoute()),
               ),
               const SizedBox(height: Dimens.spacing),
+              // §37 B — declared beside the documents, seen by the admin alone.
               MboaTileCard(
                 icon: LucideIcons.hash,
                 title: l10n.kycItemNui,
-                subtitle: l10n.commonComingSoon,
-                enabled: false,
+                subtitle: nui ?? (nuiRequired ? l10n.kycNuiRequiredHint : l10n.kycOptional),
+                subtitleColor: nui == null && nuiRequired ? colors.warning : null,
+                // RM-M01bis-10 — an approved KYC may still receive one.
+                enabled: (editable || state.status.canAddNui) && !state.busy,
+                trailing: state.status.canAddNui ? Text(l10n.kycAddNui, style: context.mboaText.caption.copyWith(color: colors.primary)) : null,
+                onTap: () => editNui(),
               ),
               const SizedBox(height: Dimens.spacing),
               MboaTileCard(
                 icon: LucideIcons.mapPin,
                 title: l10n.kycItemAddress,
-                subtitle: l10n.commonComingSoon,
-                enabled: false,
+                subtitle: state.draft.address?.label ?? l10n.kycOptional,
+                enabled: editable && !state.busy,
+                onTap: () => editAddress(),
               ),
             ],
           ),
@@ -235,7 +270,7 @@ class _IdentificationTab extends StatelessWidget {
             child: Button.primary(
               title: l10n.kycSubmit,
               isLoading: state.submitting,
-              onPressed: state.draft.isComplete && !state.busy
+              onPressed: state.draft.canSubmit(nuiRequired: nuiRequired) && !state.busy
                   ? () => context.read<KycCubit>().submit()
                   : null,
             ),

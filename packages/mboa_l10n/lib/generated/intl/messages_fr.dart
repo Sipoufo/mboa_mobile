@@ -1083,6 +1083,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonNo": MessageLookupByLibrary.simpleMessage("Non"),
     "commonOr": MessageLookupByLibrary.simpleMessage("Ou"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Réessayer"),
+    "commonSave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
     "commonStepOf": m27,
     "commonYes": MessageLookupByLibrary.simpleMessage("Oui"),
     "contactsAdd": MessageLookupByLibrary.simpleMessage("Ajouter un contact"),
@@ -1961,7 +1962,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycAccountStandard": MessageLookupByLibrary.simpleMessage(
       "Compte Standard",
     ),
+    "kycAddNui": MessageLookupByLibrary.simpleMessage("Ajouter mon NUI"),
     "kycAdded": MessageLookupByLibrary.simpleMessage("Ajouté"),
+    "kycAddressBody": MessageLookupByLibrary.simpleMessage(
+      "Ton quartier et un point de repère. Seul Mboa la voit, jamais sur une fiche publique.",
+    ),
+    "kycAddressDetails": MessageLookupByLibrary.simpleMessage(
+      "Point de repère (facultatif)",
+    ),
+    "kycAddressRemove": MessageLookupByLibrary.simpleMessage(
+      "Retirer l\'adresse",
+    ),
+    "kycAddressTitle": MessageLookupByLibrary.simpleMessage("Ton adresse"),
     "kycDocCni": MessageLookupByLibrary.simpleMessage("Carte d’identité"),
     "kycDocPassport": MessageLookupByLibrary.simpleMessage("Passeport"),
     "kycDocRecepisse": MessageLookupByLibrary.simpleMessage("Recépissé"),
@@ -1979,6 +1991,23 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
+    "kycNuiAddBody": MessageLookupByLibrary.simpleMessage(
+      "Ton identité est déjà vérifiée : le NUI s\'ajoute sans nouvelle revue. Une fois enregistré, il ne se modifie plus depuis l\'app.",
+    ),
+    "kycNuiBody": MessageLookupByLibrary.simpleMessage(
+      "Le Numéro d\'Identifiant Unique de la DGI : 14 lettres et chiffres. Tape-le comme sur ta carte, espaces compris.",
+    ),
+    "kycNuiInvalid": MessageLookupByLibrary.simpleMessage(
+      "Un NUI compte 14 lettres et chiffres.",
+    ),
+    "kycNuiRequiredError": MessageLookupByLibrary.simpleMessage(
+      "Une agence ou un promoteur doit déclarer son NUI.",
+    ),
+    "kycNuiRequiredHint": MessageLookupByLibrary.simpleMessage(
+      "Obligatoire pour une agence ou un promoteur",
+    ),
+    "kycNuiTitle": MessageLookupByLibrary.simpleMessage("Ton NUI"),
+    "kycOptional": MessageLookupByLibrary.simpleMessage("Facultatif"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Recto"),
     "kycRejectionReason": m64,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Vérifié"),
@@ -1996,6 +2025,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycTabStatut": MessageLookupByLibrary.simpleMessage("Statut"),
     "kycTakePhoto": MessageLookupByLibrary.simpleMessage("Prendre une photo"),
+    "kycUnknownDistrict": MessageLookupByLibrary.simpleMessage(
+      "Ce quartier n\'est plus au catalogue. Choisis-en un autre.",
+    ),
     "kycUploadError": MessageLookupByLibrary.simpleMessage(
       "Échec de l’envoi. Réessaie.",
     ),

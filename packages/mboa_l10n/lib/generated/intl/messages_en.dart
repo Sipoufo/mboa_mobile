@@ -1034,6 +1034,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonNo": MessageLookupByLibrary.simpleMessage("No"),
     "commonOr": MessageLookupByLibrary.simpleMessage("Or"),
     "commonRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "commonSave": MessageLookupByLibrary.simpleMessage("Save"),
     "commonStepOf": m27,
     "commonYes": MessageLookupByLibrary.simpleMessage("Yes"),
     "contactsAdd": MessageLookupByLibrary.simpleMessage("Add a contact"),
@@ -1880,7 +1881,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycAccountStandard": MessageLookupByLibrary.simpleMessage(
       "Standard account",
     ),
+    "kycAddNui": MessageLookupByLibrary.simpleMessage("Add my NUI"),
     "kycAdded": MessageLookupByLibrary.simpleMessage("Added"),
+    "kycAddressBody": MessageLookupByLibrary.simpleMessage(
+      "Your district and a landmark. Only Mboa sees it, never on a public page.",
+    ),
+    "kycAddressDetails": MessageLookupByLibrary.simpleMessage(
+      "Landmark (optional)",
+    ),
+    "kycAddressRemove": MessageLookupByLibrary.simpleMessage(
+      "Remove the address",
+    ),
+    "kycAddressTitle": MessageLookupByLibrary.simpleMessage("Your address"),
     "kycDocCni": MessageLookupByLibrary.simpleMessage("ID card"),
     "kycDocPassport": MessageLookupByLibrary.simpleMessage("Passport"),
     "kycDocRecepisse": MessageLookupByLibrary.simpleMessage("Receipt"),
@@ -1894,6 +1906,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycItemIdDocument": MessageLookupByLibrary.simpleMessage("ID Document"),
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),
     "kycItemSelfie": MessageLookupByLibrary.simpleMessage("Selfie"),
+    "kycNuiAddBody": MessageLookupByLibrary.simpleMessage(
+      "Your identity is already verified: the NUI is added without a new review. Once saved, it cannot be changed from the app.",
+    ),
+    "kycNuiBody": MessageLookupByLibrary.simpleMessage(
+      "The DGI\'s Unique Identification Number: 14 letters and digits. Type it as printed, spaces included.",
+    ),
+    "kycNuiInvalid": MessageLookupByLibrary.simpleMessage(
+      "A NUI has 14 letters and digits.",
+    ),
+    "kycNuiRequiredError": MessageLookupByLibrary.simpleMessage(
+      "An agency or a developer must declare its NUI.",
+    ),
+    "kycNuiRequiredHint": MessageLookupByLibrary.simpleMessage(
+      "Required for an agency or a developer",
+    ),
+    "kycNuiTitle": MessageLookupByLibrary.simpleMessage("Your NUI"),
+    "kycOptional": MessageLookupByLibrary.simpleMessage("Optional"),
     "kycRecto": MessageLookupByLibrary.simpleMessage("Front"),
     "kycRejectionReason": m64,
     "kycStatusApproved": MessageLookupByLibrary.simpleMessage("Verified"),
@@ -1909,6 +1938,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycTabStatut": MessageLookupByLibrary.simpleMessage("Status"),
     "kycTakePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
+    "kycUnknownDistrict": MessageLookupByLibrary.simpleMessage(
+      "This district is no longer listed. Pick another one.",
+    ),
     "kycUploadError": MessageLookupByLibrary.simpleMessage(
       "Upload failed. Try again.",
     ),

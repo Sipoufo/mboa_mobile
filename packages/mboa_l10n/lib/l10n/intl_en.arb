@@ -7249,5 +7249,61 @@
         "type": "int"
       }
     }
+  },
+  "commonSave": "Save",
+  "@commonSave": {
+    "description": "generic"
+  },
+  "kycOptional": "Optional",
+  "@kycOptional": {
+    "description": "§37 B — tile subtitle"
+  },
+  "kycNuiRequiredHint": "Required for an agency or a developer",
+  "@kycNuiRequiredHint": {
+    "description": "§37 B — tile subtitle"
+  },
+  "kycNuiTitle": "Your NUI",
+  "@kycNuiTitle": {
+    "description": "§37 B — sheet"
+  },
+  "kycNuiBody": "The DGI's Unique Identification Number: 14 letters and digits. Type it as printed, spaces included.",
+  "@kycNuiBody": {
+    "description": "§37 B — sheet"
+  },
+  "kycNuiAddBody": "Your identity is already verified: the NUI is added without a new review. Once saved, it cannot be changed from the app.",
+  "@kycNuiAddBody": {
+    "description": "§37 B — adding to an approved KYC"
+  },
+  "kycNuiInvalid": "A NUI has 14 letters and digits.",
+  "@kycNuiInvalid": {
+    "description": "§37 B — INVALID_NUI"
+  },
+  "kycNuiRequiredError": "An agency or a developer must declare its NUI.",
+  "@kycNuiRequiredError": {
+    "description": "§37 B — NUI_REQUIRED"
+  },
+  "kycAddNui": "Add my NUI",
+  "@kycAddNui": {
+    "description": "§37 B"
+  },
+  "kycAddressTitle": "Your address",
+  "@kycAddressTitle": {
+    "description": "§37 B — sheet"
+  },
+  "kycAddressBody": "Your district and a landmark. Only Mboa sees it, never on a public page.",
+  "@kycAddressBody": {
+    "description": "§37 B — sheet"
+  },
+  "kycAddressDetails": "Landmark (optional)",
+  "@kycAddressDetails": {
+    "description": "§37 B"
+  },
+  "kycAddressRemove": "Remove the address",
+  "@kycAddressRemove": {
+    "description": "§37 B"
+  },
+  "kycUnknownDistrict": "This district is no longer listed. Pick another one.",
+  "@kycUnknownDistrict": {
+    "description": "§37 B — UNKNOWN_DISTRICT"
   }
 }

@@ -25,13 +25,37 @@ extension KycStatusX on KycStatus {
   }
 }
 
-/// The KYC status view: overall [status] plus review metadata.
+/// RM-M01bis-11 — where the prestataire is: a district of the catalogue and a
+/// landmark. Seen by the admin alone.
+class DeclaredAddress extends Equatable {
+  const DeclaredAddress({required this.districtId, this.city, this.district, this.details});
+
+  final String districtId;
+  final String? city;
+  final String? district;
+
+  /// « derrière la pharmacie du marché » — 200 characters at most.
+  final String? details;
+
+  static const int maxDetails = 200;
+
+  /// « Akwa, Douala ».
+  String get label => [district, city].nonNulls.join(', ');
+
+  @override
+  List<Object?> get props => [districtId, city, district, details];
+}
+
+/// The KYC status view: overall [status] plus review metadata, and what the
+/// prestataire declared beside the documents (§37 B).
 class KycStatusData extends Equatable {
   const KycStatusData({
     required this.status,
     this.submittedAt,
     this.reviewedAt,
     this.rejectionReason,
+    this.nui,
+    this.address,
   });
 
   final KycStatus status;
@@ -39,6 +63,14 @@ class KycStatusData extends Equatable {
   final DateTime? reviewedAt;
   final String? rejectionReason;
 
+  /// RM-M01bis-10 — declared, not verified; normalised by the server.
+  final String? nui;
+  final DeclaredAddress? address;
+
+  /// An approved KYC without a NUI may still receive one, without a new
+  /// review (`PUT /kyc/me/nui`).
+  bool get canAddNui => status == KycStatus.approved && nui == null;
+
   @override
-  List<Object?> get props => [status, submittedAt, reviewedAt, rejectionReason];
+  List<Object?> get props => [status, submittedAt, reviewedAt, rejectionReason, nui, address];
 }

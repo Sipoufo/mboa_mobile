@@ -17603,6 +17603,146 @@ class I18n {
       args: [count],
     );
   }
+
+  /// `Enregistrer`
+  String get commonSave {
+    return Intl.message(
+      'Enregistrer',
+      name: 'commonSave',
+      desc: 'generic',
+      args: [],
+    );
+  }
+
+  /// `Facultatif`
+  String get kycOptional {
+    return Intl.message(
+      'Facultatif',
+      name: 'kycOptional',
+      desc: '§37 B — tile subtitle',
+      args: [],
+    );
+  }
+
+  /// `Obligatoire pour une agence ou un promoteur`
+  String get kycNuiRequiredHint {
+    return Intl.message(
+      'Obligatoire pour une agence ou un promoteur',
+      name: 'kycNuiRequiredHint',
+      desc: '§37 B — tile subtitle',
+      args: [],
+    );
+  }
+
+  /// `Ton NUI`
+  String get kycNuiTitle {
+    return Intl.message(
+      'Ton NUI',
+      name: 'kycNuiTitle',
+      desc: '§37 B — sheet',
+      args: [],
+    );
+  }
+
+  /// `Le Numéro d'Identifiant Unique de la DGI : 14 lettres et chiffres. Tape-le comme sur ta carte, espaces compris.`
+  String get kycNuiBody {
+    return Intl.message(
+      'Le Numéro d\'Identifiant Unique de la DGI : 14 lettres et chiffres. Tape-le comme sur ta carte, espaces compris.',
+      name: 'kycNuiBody',
+      desc: '§37 B — sheet',
+      args: [],
+    );
+  }
+
+  /// `Ton identité est déjà vérifiée : le NUI s'ajoute sans nouvelle revue. Une fois enregistré, il ne se modifie plus depuis l'app.`
+  String get kycNuiAddBody {
+    return Intl.message(
+      'Ton identité est déjà vérifiée : le NUI s\'ajoute sans nouvelle revue. Une fois enregistré, il ne se modifie plus depuis l\'app.',
+      name: 'kycNuiAddBody',
+      desc: '§37 B — adding to an approved KYC',
+      args: [],
+    );
+  }
+
+  /// `Un NUI compte 14 lettres et chiffres.`
+  String get kycNuiInvalid {
+    return Intl.message(
+      'Un NUI compte 14 lettres et chiffres.',
+      name: 'kycNuiInvalid',
+      desc: '§37 B — INVALID_NUI',
+      args: [],
+    );
+  }
+
+  /// `Une agence ou un promoteur doit déclarer son NUI.`
+  String get kycNuiRequiredError {
+    return Intl.message(
+      'Une agence ou un promoteur doit déclarer son NUI.',
+      name: 'kycNuiRequiredError',
+      desc: '§37 B — NUI_REQUIRED',
+      args: [],
+    );
+  }
+
+  /// `Ajouter mon NUI`
+  String get kycAddNui {
+    return Intl.message(
+      'Ajouter mon NUI',
+      name: 'kycAddNui',
+      desc: '§37 B',
+      args: [],
+    );
+  }
+
+  /// `Ton adresse`
+  String get kycAddressTitle {
+    return Intl.message(
+      'Ton adresse',
+      name: 'kycAddressTitle',
+      desc: '§37 B — sheet',
+      args: [],
+    );
+  }
+
+  /// `Ton quartier et un point de repère. Seul Mboa la voit, jamais sur une fiche publique.`
+  String get kycAddressBody {
+    return Intl.message(
+      'Ton quartier et un point de repère. Seul Mboa la voit, jamais sur une fiche publique.',
+      name: 'kycAddressBody',
+      desc: '§37 B — sheet',
+      args: [],
+    );
+  }
+
+  /// `Point de repère (facultatif)`
+  String get kycAddressDetails {
+    return Intl.message(
+      'Point de repère (facultatif)',
+      name: 'kycAddressDetails',
+      desc: '§37 B',
+      args: [],
+    );
+  }
+
+  /// `Retirer l'adresse`
+  String get kycAddressRemove {
+    return Intl.message(
+      'Retirer l\'adresse',
+      name: 'kycAddressRemove',
+      desc: '§37 B',
+      args: [],
+    );
+  }
+
+  /// `Ce quartier n'est plus au catalogue. Choisis-en un autre.`
+  String get kycUnknownDistrict {
+    return Intl.message(
+      'Ce quartier n\'est plus au catalogue. Choisis-en un autre.',
+      name: 'kycUnknownDistrict',
+      desc: '§37 B — UNKNOWN_DISTRICT',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

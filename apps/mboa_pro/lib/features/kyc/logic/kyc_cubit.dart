@@ -24,9 +24,41 @@ class KycCubit extends Cubit<KycState> {
   Future<void> load() async {
     if (state is! KycReady) emit(const KycLoadInProgress());
     try {
-      emit(KycReady(await _repository.loadStatus(), const KycDraft()));
+      final status = await _repository.loadStatus();
+      emit(KycReady(status, KycDraft.of(status)));
     } catch (_) {
       if (state is! KycReady) emit(const KycLoadFailure());
+    }
+  }
+
+  /// §37 B — as typed; checked on submit.
+  void setNui(String nui) {
+    final s = state;
+    if (s is KycReady) emit(s.copyWith(draft: s.draft.withNui(nui)));
+  }
+
+  /// §37 B — the address, or none.
+  void setAddress(DeclaredAddress? address) {
+    final s = state;
+    if (s is KycReady) emit(s.copyWith(draft: s.draft.withAddress(address)));
+  }
+
+  /// RM-M01bis-10 — a NUI added to an approved KYC; the status read back.
+  Future<void> addNui(String raw) async {
+    final start = state;
+    final nui = KycDraft.normalizeNui(raw);
+    if (start is! KycReady || start.busy || nui == null) return;
+    if (!KycDraft.isValidNui(nui)) {
+      emit(start.copyWith(error: KycError.invalidNui));
+      return;
+    }
+    emit(start.copyWith(submitting: true));
+    try {
+      final status = await _repository.addNui(nui);
+      emit(KycReady(status, KycDraft.of(status), justSubmitted: true));
+    } catch (error) {
+      final s = state;
+      if (s is KycReady) emit(s.copyWith(submitting: false, error: _errorOf(error)));
     }
   }
 
@@ -58,21 +90,36 @@ class KycCubit extends Cubit<KycState> {
     }
   }
 
-  /// Submits the completed draft.
+  /// Submits the completed draft. A malformed NUI is said before asking; an
+  /// agence or a promoteur without one is the server's to refuse.
   Future<void> submit() async {
     final start = state;
     if (start is! KycReady || !start.draft.isComplete || start.busy) return;
+    if (!start.draft.nuiIsValid) {
+      emit(start.copyWith(error: KycError.invalidNui));
+      return;
+    }
     emit(start.copyWith(submitting: true));
     try {
       final status = await _repository.submit(
         selfieKey: start.draft.selfieKey!,
         idFrontKey: start.draft.idFrontKey!,
         idBackKey: start.draft.idBackKey!,
+        nui: KycDraft.normalizeNui(start.draft.nui),
+        address: start.draft.address,
       );
-      emit(KycReady(status, const KycDraft(), justSubmitted: true));
-    } catch (_) {
+      emit(KycReady(status, KycDraft.of(status), justSubmitted: true));
+    } catch (error) {
       final s = state;
-      if (s is KycReady) emit(s.copyWith(submitting: false, error: KycError.submitFailed));
+      if (s is KycReady) emit(s.copyWith(submitting: false, error: _errorOf(error)));
     }
+  }
+
+  static KycError _errorOf(Object error) {
+    final api = ApiError.from(error);
+    if (api.hasCode('INVALID_NUI')) return KycError.invalidNui;
+    if (api.hasCode('NUI_REQUIRED')) return KycError.nuiRequired;
+    if (api.hasCode('UNKNOWN_DISTRICT')) return KycError.unknownDistrict;
+    return KycError.submitFailed;
   }
 }

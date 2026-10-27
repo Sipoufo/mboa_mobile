@@ -1,7 +1,19 @@
 part of 'kyc_cubit.dart';
 
 /// Why a KYC action failed (one-shot; surfaced as a toast).
-enum KycError { uploadFailed, submitFailed }
+enum KycError {
+  uploadFailed,
+  submitFailed,
+
+  /// §37 B — `INVALID_NUI`: not 14 letters and digits.
+  invalidNui,
+
+  /// §37 B — `NUI_REQUIRED`: an agence or a promoteur without one.
+  nuiRequired,
+
+  /// §37 B — `UNKNOWN_DISTRICT`: the catalogue moved under the address.
+  unknownDistrict,
+}
 
 /// Observable states of the Certifications screen.
 sealed class KycState extends Equatable {
