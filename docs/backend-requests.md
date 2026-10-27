@@ -1425,3 +1425,78 @@ creation. A bulk action can come later.
 
 Doc 10 needs a rule for B (M10bis) — the founder's to write.
 
+
+---
+
+## §37 — M09 / M01bis: a landlord rates their tenant; NUI and address in KYC
+
+Two « Bientôt » the apps still show because nothing exists behind them. Both
+need a rule first: **the rules below are proposals, to be confirmed by the
+founder before work starts** (and then written into Doc 10, which is theirs).
+
+### A. M09 — « Note moyenne reçue des prestataires » (`PROVIDER_RATING`)
+
+Doc 10 M09 counts it (≥ 4/5 → +20, 3/5 → +10, < 3 → 0) and says itself
+that **no mechanism lets a prestataire rate a tenant yet**. So the signal
+comes back `available: false`, and the tenant's Mboa Score shows
+« Les propriétaires pourront bientôt te noter ». Up to 20 of the 100 points
+can never be earned today.
+
+Proposed rule:
+1. **Who:** the prestataire of a signed Mboa contract rates that contract's
+   tenant, **once per contract**.
+2. **When:** once the tenancy has ended (contract ended or terminated,
+   M08 / RM-M08-11), within **30 days**. During a tenancy the landlord has
+   other tools (requests, disputes); a rating mid-lease would weigh on a
+   relationship still running.
+3. **What:** 1 to 5 stars, and an optional comment (500 characters) that
+   **only the admin reads** (moderation). Neither the stars nor the comment
+   are public, and no review feed shows them: they only feed the score.
+4. **The tenant sees** the signal in their score: the average and how many
+   ratings (`count`), never who gave which.
+5. **Not revisable** once sent: a correction would turn into a negotiation
+   with the tenant.
+
+Asked:
+1. `POST /contracts/{id}/tenant-rating` `{stars, comment?}`, the landlord
+   only. Refused with `409 RATING_NOT_OPEN` outside the window and
+   `409 ALREADY_RATED` the second time.
+2. On `ContractResponse`: **`canRateTenant`** (server-computed, like the
+   other `can*`) and **`tenantRating`** (the stars given, for the landlord
+   only, null otherwise).
+3. `ScoreSignal` `PROVIDER_RATING`: `available: true`, `count` = number of
+   ratings, `points` per Doc 10's table. With no rating yet, `points: 0`
+   and `count: 0`: the app then says « Pas encore de note ».
+4. A push to the landlord when the window opens, with `type: CONTRACT` and
+   `entityId` = the contract (« Comment s'est passée la location de X ? »).
+   If an N-id is needed, it is the founder's to give.
+
+The apps will then show « Noter le locataire » on the ended contract (Pro)
+and the real signal in the score (tenant).
+
+### B. M01bis — the NUI and the address
+
+The founder's KYC mockup has four tiles: selfie, ID document, **NUI**,
+**address**. Doc 10 M01bis lists only the ID document and the selfie, and
+`SubmitKycRequest` carries only those three keys. So the last two tiles
+read « Bientôt ».
+
+Proposed rule:
+1. **NUI** (Numéro d'Identifiant Unique, the DGI's tax number): declared as
+   text. **Optional** for a particulier, **required** for an agence or a
+   promoteur (they invoice as a business). The server checks its format;
+   it knows the DGI's format better than the app.
+2. **Address:** the city and district from the catalogue (`districtId`),
+   plus a landmark in free text (« derrière la pharmacie du marché »,
+   200 characters). **Optional** for everyone at MVP. No proof document.
+3. **Admin only:** shown on the KYC review screen, never on a public fiche.
+4. Like the documents: editable while the KYC is not submitted or was
+   rejected, frozen while pending or once approved.
+
+Asked:
+1. `SubmitKycRequest`: **`nui`** (optional) and **`address`**
+   `{districtId, details?}` (optional). `400 NUI_REQUIRED` for an agence or
+   promoteur without it, `400 INVALID_NUI` for a malformed one.
+2. `KycStatusResponse`: the same two fields as submitted, so the app can
+   show them again.
+3. The admin's KYC detail shows them.
