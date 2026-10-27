@@ -117,9 +117,14 @@ class _BodyState extends State<_Body> {
     final hasReviews = residence.rating.hasRating || state.reviews.isNotEmpty;
     final unitTitles = {for (final unit in residence.units) unit.id: unit.title};
 
-    return ListView(
+    // Not a lazy ListView: on a large residence the reviews sit far below the
+    // units, and an unbuilt section is one the « Avis » card cannot scroll to.
+    // Three rows per group keep the page short enough to build whole.
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(Dimens.spacing, Dimens.spacing, Dimens.spacing, Dimens.spacingXl),
-      children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         // No action to switch off here: the banner only says the copy is old.
         if (state.isOffline) FicheOfflineBanner(text: l10n.homeOfflineBanner),
         FicheHero(
@@ -203,7 +208,8 @@ class _BodyState extends State<_Body> {
               unitOf: (review) => unitTitles[review.annonceId],
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }

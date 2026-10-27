@@ -178,6 +178,34 @@ void main() {
     expect(find.text('Chambre 4'), findsOneWidget);
   });
 
+  // Regression: the page was a lazy ListView, and on a large residence the
+  // reviews sat too far below to be built — the « Avis » card had nowhere to
+  // scroll to, and did nothing (seen on « Cite blanc », 79 units).
+  testWidgets('the « Avis » card brings the reviews into view, however many units', (tester) async {
+    when(() => bloc.state).thenReturn(
+      ResidenceDetailReady(
+        detail: residence(
+          units: [
+            for (var n = 1; n <= 9; n++)
+              ListingUnit(id: 'a-$n', title: 'AP $n', propertyType: PropertyType.apartment, price: 200000),
+            for (var n = 1; n <= 20; n++)
+              ListingUnit(id: 's-$n', title: 'ST $n', propertyType: PropertyType.studio, price: 100000),
+            for (var n = 1; n <= 50; n++) room(n),
+          ],
+        ),
+        reviews: reviews,
+      ),
+    );
+    await pump(tester);
+    await scrollTo(tester, find.text('2 avis'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('2 avis'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Awa Nkeng').hitTestable(), findsOneWidget);
+  });
+
   testWidgets('no rating, no reviews block', (tester) async {
     when(() => bloc.state)
         .thenReturn(ResidenceDetailReady(detail: residence(rating: const PropertyRatingSummary())));

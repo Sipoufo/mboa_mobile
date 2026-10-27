@@ -151,7 +151,7 @@ class _FicheHeroState extends State<FicheHero> {
                       // RM-M05-08 — no rating, no number.
                       if (rating.hasRating) ...[
                         Text(
-                          rating.average!.toStringAsFixed(1),
+                          NumberFormat('0.0', Localizations.localeOf(context).toLanguageTag()).format(rating.average),
                           style: context.mboaText.label.copyWith(color: colors.onBrand),
                         ),
                         const SizedBox(width: 2),
@@ -507,7 +507,7 @@ class ListingCardsRow extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      rating.average!.toStringAsFixed(1),
+                      NumberFormat('0.0', Localizations.localeOf(context).toLanguageTag()).format(rating.average),
                       style: context.mboaText.h1.copyWith(color: colors.primaryDark),
                     ),
                     const SizedBox(width: Dimens.spacingXs),

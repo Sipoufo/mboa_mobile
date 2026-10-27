@@ -73,7 +73,7 @@ class FicheReviews extends StatelessWidget {
                 Text(
                   l10n.listingRatingSummary(
                     rating.reviewCount,
-                    rating.average!.toStringAsFixed(1),
+                    NumberFormat('0.0', Localizations.localeOf(context).toLanguageTag()).format(rating.average),
                   ),
                   style: context.mboaText.label.copyWith(color: colors.ink),
                 ),

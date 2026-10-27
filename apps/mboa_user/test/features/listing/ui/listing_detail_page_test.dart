@@ -272,7 +272,8 @@ void main() {
     expect(find.text('Avis'), findsOneWidget);
     await scrollTo(tester, find.text('Avis sur le bien'));
 
-    expect(find.textContaining('4.2'), findsWidgets);
+    // In the reader's language: « 4,2 », as on the search card.
+    expect(find.textContaining('4,2'), findsWidgets);
     // RG-06 — the kind of testimony is named, since they do not weigh the same.
     expect(find.text('Locataire'), findsOneWidget);
   });

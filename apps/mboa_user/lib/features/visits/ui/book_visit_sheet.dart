@@ -562,7 +562,7 @@ class _VisitorCard extends StatelessWidget {
                         Icon(LucideIcons.star, size: 12, color: colors.warning),
                         const SizedBox(width: 2),
                         Text(
-                          visitor.averageRating!.toStringAsFixed(1),
+                          NumberFormat('0.0', Localizations.localeOf(context).toLanguageTag()).format(visitor.averageRating),
                           style: context.mboaText.caption
                               .copyWith(color: colors.textSecondary),
                         ),
