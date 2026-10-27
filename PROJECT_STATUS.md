@@ -1302,6 +1302,18 @@ Done 2026-10-27 — the founder's decisions:
   condition »), §38 the notifications page. Doc 10 to update (founder).
 - « Attributions » = the agents: confirmed.
 
+Done 2026-10-27 — §37 and §38 in the apps:
+- **§37 C advance and deposit** (`f90d20a`): Pro form (« Loyer » step, unit
+  groups), « Réservable sous condition » on the fiche, contract deposit
+  pre-filled by the server when left empty.
+- **§38 notifications page** (`1e121c6`): shared page + bell (InboxBloc, one
+  per session), both apps; items open through each app's routeNotificationTap.
+- **§37 A tenant rating** (`7e1d1ef`): « Noter le locataire » on an ended
+  contract (Pro), N-41 switch, the score's « Note des propriétaires » real.
+- **§37 B NUI + address** (`d39712d`): Pro KYC tiles. The « NUI required to
+  sign » part is corrected by §39 (identity at signing, tenant KYC) —
+  waiting for the backend.
+
 Found missing, 2026-10-26 (the founder's MVP check):
 - **Notifications page** (both apps): neither Doc 10 nor the API has an
   in-app list — only push and device registration. Needs a rule and an API.
