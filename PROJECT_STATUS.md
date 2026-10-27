@@ -6,7 +6,7 @@
 > repo). Doc 10 is authoritative for module numbers and RM-IDs — the M-numbers in
 > `CLAUDE.md` diverge, ignore those.
 >
-> Last updated: 2026-10-26 (evening).
+> Last updated: 2026-10-27.
 
 ## How to resume
 
@@ -22,8 +22,8 @@
 
 ## Where things stand
 
-**1586 tests green, analyze clean.** `mboa_user` 405 · `mboa_pro` 691 ·
-`mboa_core` 29 · `mboa_shared` 431 · `mboa_ui` 23 · `mboa_l10n` 7.
+**1642 tests green, analyze clean.** `mboa_user` 439 · `mboa_pro` 704 ·
+`mboa_core` 32 · `mboa_shared` 436 · `mboa_ui` 24 · `mboa_l10n` 7.
 
 > **Both apps run on the founder's device** (since 2026-10-20, side by side,
 > against the local backend): reservations, contracts, "Mon logement" and
@@ -1284,6 +1284,10 @@ Done 2026-10-27 — §36:
 - **Group photos** (Pro, `ad9008a`): « Ajouter un bien » step 3, each group
   takes its own photos on creation (RM-M10bis-13); the server copies them to
   each unit. Also fixed: edits typed during a photo upload were lost.
+- Seen on the simulator (`b5f628b`): the « Avis » card did nothing on a
+  79-unit residence (lazy list), and fiches wrote « 5.0 » — both fixed.
+  Dev data: Cite blanc's rooms are named « ST 1… » like its studios, and its
+  two reviews are on a unit no longer live (so they name no unit).
 
 Found missing, 2026-10-26 (the founder's MVP check):
 - **Notifications page** (both apps): neither Doc 10 nor the API has an
