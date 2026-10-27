@@ -3452,7 +3452,7 @@
       }
     }
   },
-  "scoreHintRating": "Landlords will soon be able to rate you.",
+  "scoreHintRating": "Your landlords rate you when a tenancy ends: an average of 4/5 or more is worth 20 points.",
   "@scoreHintRating": {
     "description": "Own score hint."
   },
@@ -7194,6 +7194,56 @@
   "notificationsBellLabel": "{count, plural, =0{Notifications} one{Notifications, 1 unread} other{Notifications, {count} unread}}",
   "@notificationsBellLabel": {
     "description": "§38 — the bell, read aloud",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contractRateTenant": "Rate the tenant",
+  "@contractRateTenant": {
+    "description": "§37 A"
+  },
+  "contractRateTenantTitle": "How did the tenancy go?",
+  "@contractRateTenantTitle": {
+    "description": "§37 A — the sheet"
+  },
+  "contractRateTenantBody": "Your rating counts in the tenant's Mboa Score. It is never public, and cannot be changed once sent.",
+  "@contractRateTenantBody": {
+    "description": "§37 A — the sheet"
+  },
+  "contractRateTenantComment": "A word for Mboa (optional)",
+  "@contractRateTenantComment": {
+    "description": "§37 A"
+  },
+  "contractRateTenantCommentNote": "Only Mboa reads this comment.",
+  "@contractRateTenantCommentNote": {
+    "description": "§37 A — the comment is the admin's"
+  },
+  "contractRateTenantSend": "Send the rating",
+  "@contractRateTenantSend": {
+    "description": "§37 A"
+  },
+  "contractTenantRatingTitle": "Your rating of the tenant",
+  "@contractTenantRatingTitle": {
+    "description": "§37 A — once given"
+  },
+  "contractRateStars": "{count, plural, =0{No star} one{1 star out of 5} other{{count} stars out of 5}}",
+  "@contractRateStars": {
+    "description": "§37 A — read aloud",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notifPrefN41": "Rate my tenants when a tenancy ends",
+  "@notifPrefN41": {
+    "description": "N-41"
+  },
+  "scoreRatingCount": "{count, plural, =0{No rating yet} one{1 rating} other{{count} ratings}}",
+  "@scoreRatingCount": {
+    "description": "§37 A — under « Note des propriétaires »",
     "placeholders": {
       "count": {
         "type": "int"

@@ -367,6 +367,8 @@ class Contract extends Equatable {
     this.canSign = false,
     this.canAccept = false,
     this.residentReviewEligible = false,
+    this.canRateTenant = false,
+    this.tenantRating,
     this.tenancy,
     this.reservationRequestId,
     this.lockedAt,
@@ -425,6 +427,13 @@ class Contract extends Equatable {
   final bool canAccept;
 
   final bool residentReviewEligible;
+
+  /// §37 A — server-computed, the landlord's view only: the tenancy ended
+  /// less than 30 days ago and they have not rated the tenant yet.
+  final bool canRateTenant;
+
+  /// §37 A — the stars the landlord gave, in their view only. Never revised.
+  final int? tenantRating;
 
   /// RM-M08-11 / RM-M08-12 — once signed: where the tenancy stands, and how
   /// it can end. Null before the signatures.
@@ -492,6 +501,8 @@ class Contract extends Equatable {
         canSign: response.canSign ?? false,
         canAccept: response.canAccept ?? false,
         residentReviewEligible: response.residentReviewEligible ?? false,
+        canRateTenant: response.canRateTenant ?? false,
+        tenantRating: response.tenantRating,
         tenancy: response.tenancy == null ? null : Tenancy.fromResponse(response.tenancy!),
         reservationRequestId: response.reservationRequestId,
         lockedAt: response.lockedAt?.toLocal(),
@@ -528,6 +539,8 @@ class Contract extends Equatable {
         canSign,
         canAccept,
         residentReviewEligible,
+        canRateTenant,
+        tenantRating,
         tenancy,
         reservationRequestId,
         lockedAt,

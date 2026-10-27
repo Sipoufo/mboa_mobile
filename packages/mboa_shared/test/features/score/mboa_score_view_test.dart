@@ -124,7 +124,8 @@ void main() {
 
       await tester.scrollUntilVisible(find.text('Celui-là vient tout seul, avec le temps.'), 200);
       expect(find.text('Celui-là vient tout seul, avec le temps.'), findsOneWidget);
-      expect(find.text('Les propriétaires pourront bientôt te noter.'), findsOneWidget);
+      // §37 A — no longer « bientôt »: the hint says how it is earned.
+      expect(find.textContaining('Tes propriétaires te notent'), findsOneWidget);
     });
   });
 

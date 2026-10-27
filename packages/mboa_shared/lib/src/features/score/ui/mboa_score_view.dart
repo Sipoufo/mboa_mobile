@@ -381,6 +381,8 @@ class SignalRow extends StatelessWidget {
   String? _subtitle(I18n l10n) => switch (signal.kind) {
         ScoreSignalKind.signedContracts => l10n.scoreContractsCount(signal.count ?? 0),
         ScoreSignalKind.validatedReports => l10n.scoreReportsCount(signal.count ?? 0),
+        // §37 A — real since 2026-10-27: how many landlords rated, never who.
+        ScoreSignalKind.providerRating when signal.available => l10n.scoreRatingCount(signal.count ?? 0),
         _ => null,
       };
 

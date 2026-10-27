@@ -135,6 +135,19 @@ class ContractRepository {
         'sign',
       );
 
+  /// §37 A — the landlord rates the tenant once the tenancy has ended. The
+  /// answer is the rating, so the contract is read again for the screen.
+  /// The comment is read by Mboa alone.
+  Future<Contract> rateTenant(String id, {required int stars, String? comment}) async {
+    await _api.rateTenant(
+      id: id,
+      rateTenantRequest: RateTenantRequest((b) => b
+        ..stars = stars
+        ..comment = (comment?.trim().isEmpty ?? true) ? null : comment!.trim()),
+    );
+    return one(id);
+  }
+
   /// CE-M08-03 — the tenant contests, naming the terms.
   Future<Contract> requestChanges(
     String id, {

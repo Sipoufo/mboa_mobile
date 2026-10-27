@@ -34,6 +34,7 @@ class ContractDetailBloc
     on<ContractTerminationRequested>(_onTerminationRequested);
     on<ContractTerminationAnswered>(_onTerminationAnswered);
     on<ContractTerminationWithdrawn>(_onTerminationWithdrawn);
+    on<ContractTenantRated>(_onTenantRated);
   }
 
   final ContractRepository _repository;
@@ -222,6 +223,13 @@ class ContractDetailBloc
     } catch (_) {
       emit(current.copyWith(isBusy: false, lastActionFailed: true));
     }
+  }
+
+  /// §37 A — once, 1 to 5 stars; the server owns the window (`RATING_NOT_OPEN`)
+  /// and the « once » (`ALREADY_RATED`).
+  Future<void> _onTenantRated(ContractTenantRated event, Emitter<ContractDetailState> emit) {
+    if (event.stars < 1 || event.stars > 5) return Future.value();
+    return _run(emit, (contract) => _repository.rateTenant(contract.id, stars: event.stars, comment: event.comment));
   }
 
   Future<void> _run(

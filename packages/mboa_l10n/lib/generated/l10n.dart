@@ -9414,10 +9414,10 @@ class I18n {
     );
   }
 
-  /// `Les propriétaires pourront bientôt te noter.`
+  /// `Tes propriétaires te notent à la fin d'une location : 4/5 de moyenne ou plus vaut 20 points.`
   String get scoreHintRating {
     return Intl.message(
-      'Les propriétaires pourront bientôt te noter.',
+      'Tes propriétaires te notent à la fin d\'une location : 4/5 de moyenne ou plus vaut 20 points.',
       name: 'scoreHintRating',
       desc: 'Own score hint.',
       args: [],
@@ -17494,6 +17494,112 @@ class I18n {
       other: 'Notifications, $count non lues',
       name: 'notificationsBellLabel',
       desc: '§38 — the bell, read aloud',
+      args: [count],
+    );
+  }
+
+  /// `Noter le locataire`
+  String get contractRateTenant {
+    return Intl.message(
+      'Noter le locataire',
+      name: 'contractRateTenant',
+      desc: '§37 A',
+      args: [],
+    );
+  }
+
+  /// `Comment s'est passée la location ?`
+  String get contractRateTenantTitle {
+    return Intl.message(
+      'Comment s\'est passée la location ?',
+      name: 'contractRateTenantTitle',
+      desc: '§37 A — the sheet',
+      args: [],
+    );
+  }
+
+  /// `Ta note compte dans le Mboa Score du locataire. Elle n'est jamais publique, et ne se modifie plus une fois envoyée.`
+  String get contractRateTenantBody {
+    return Intl.message(
+      'Ta note compte dans le Mboa Score du locataire. Elle n\'est jamais publique, et ne se modifie plus une fois envoyée.',
+      name: 'contractRateTenantBody',
+      desc: '§37 A — the sheet',
+      args: [],
+    );
+  }
+
+  /// `Un mot pour Mboa (facultatif)`
+  String get contractRateTenantComment {
+    return Intl.message(
+      'Un mot pour Mboa (facultatif)',
+      name: 'contractRateTenantComment',
+      desc: '§37 A',
+      args: [],
+    );
+  }
+
+  /// `Seul Mboa lit ce commentaire.`
+  String get contractRateTenantCommentNote {
+    return Intl.message(
+      'Seul Mboa lit ce commentaire.',
+      name: 'contractRateTenantCommentNote',
+      desc: '§37 A — the comment is the admin\'s',
+      args: [],
+    );
+  }
+
+  /// `Envoyer la note`
+  String get contractRateTenantSend {
+    return Intl.message(
+      'Envoyer la note',
+      name: 'contractRateTenantSend',
+      desc: '§37 A',
+      args: [],
+    );
+  }
+
+  /// `Ta note du locataire`
+  String get contractTenantRatingTitle {
+    return Intl.message(
+      'Ta note du locataire',
+      name: 'contractTenantRatingTitle',
+      desc: '§37 A — once given',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Aucune étoile} one{1 étoile sur 5} other{{count} étoiles sur 5}}`
+  String contractRateStars(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Aucune étoile',
+      one: '1 étoile sur 5',
+      other: '$count étoiles sur 5',
+      name: 'contractRateStars',
+      desc: '§37 A — read aloud',
+      args: [count],
+    );
+  }
+
+  /// `Noter mes locataires en fin de location`
+  String get notifPrefN41 {
+    return Intl.message(
+      'Noter mes locataires en fin de location',
+      name: 'notifPrefN41',
+      desc: 'N-41',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Pas encore de note} one{1 note} other{{count} notes}}`
+  String scoreRatingCount(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Pas encore de note',
+      one: '1 note',
+      other: '$count notes',
+      name: 'scoreRatingCount',
+      desc: '§37 A — under « Note des propriétaires »',
       args: [count],
     );
   }

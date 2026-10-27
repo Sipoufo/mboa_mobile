@@ -109,3 +109,14 @@ class ContractTerminationAnswered extends ContractDetailEvent {
 class ContractTerminationWithdrawn extends ContractDetailEvent {
   const ContractTerminationWithdrawn();
 }
+
+/// §37 A — the landlord's stars for the tenant, and an optional word for Mboa.
+class ContractTenantRated extends ContractDetailEvent {
+  const ContractTenantRated({required this.stars, this.comment});
+
+  final int stars;
+  final String? comment;
+
+  @override
+  List<Object?> get props => [stars, comment];
+}

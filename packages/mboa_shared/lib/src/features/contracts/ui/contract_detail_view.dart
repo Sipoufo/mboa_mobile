@@ -11,6 +11,7 @@ import '../data/contract_repository.dart';
 import '../models/contract.dart';
 import 'widgets/contract_bits.dart';
 import 'widgets/sign_contract_sheet.dart';
+import 'widgets/tenant_rating_bits.dart';
 import 'widgets/termination_bits.dart';
 
 /// One Contrat Mboa, and everything either party may do to it (CDC M08).
@@ -156,6 +157,12 @@ class _Body extends StatelessWidget {
             title: l10n.contractTenancyTitle,
             child: TenancyCard(contract: contract, viewer: viewer, isBusy: state.isBusy),
           ),
+          const SizedBox(height: Dimens.spacing),
+        ],
+        // §37 A — the landlord's own rating of the tenant, once given. The
+        // server sends it to the landlord only.
+        if (contract.tenantRating case final stars?) ...[
+          _Card(title: l10n.contractTenantRatingTitle, child: TenantStars(stars: stars)),
           const SizedBox(height: Dimens.spacing),
         ],
         _Card(title: l10n.contractTermsTitle, child: _Terms(contract: contract)),
@@ -821,10 +828,14 @@ class _ActionBar extends StatelessWidget {
   }
 }
 
-enum _SignedMore { review, terminate }
+enum _SignedMore { pdf, review, terminate }
 
 /// A signed contract's bar: the PDF, and "⋯" for the M27 review and the
 /// termination (RM-M08-11) — each where the server allows it.
+///
+/// §37 A — while the landlord may rate the tenant, that is what the screen
+/// expects (N-41 opens it): « Noter le locataire » takes the main place and
+/// the PDF moves behind "⋯".
 class _SignedBar extends StatelessWidget {
   const _SignedBar({required this.state, this.onReview, this.viewer = ContractParty.unknown});
 
@@ -852,7 +863,18 @@ class _SignedBar extends StatelessWidget {
             _ => null,
           };
     final canTerminate = contract.tenancy?.canTerminate ?? false;
-    final hasMore = reviewLabel != null || canTerminate;
+    final rate = contract.canRateTenant;
+    final hasMore = rate || reviewLabel != null || canTerminate;
+
+    void pdf() => context.read<ContractDetailBloc>().add(
+          ContractPdfRequested(name: [l10n.contractPdfFileName, ?contract.annonceTitle].join(' — ')),
+        );
+
+    Future<void> rateTenant() async {
+      final bloc = context.read<ContractDetailBloc>();
+      final draft = await showTenantRatingSheet(context);
+      if (draft != null) bloc.add(ContractTenantRated(stars: draft.stars, comment: draft.comment));
+    }
 
     Future<void> more() async {
       final bloc = context.read<ContractDetailBloc>();
@@ -868,6 +890,12 @@ class _SignedBar extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (rate)
+                  ListTile(
+                    leading: Icon(LucideIcons.fileDown, color: colors.primary),
+                    title: Text(l10n.contractPdf, style: context.mboaText.label.copyWith(color: colors.ink)),
+                    onTap: () => Navigator.of(sheetContext).pop(_SignedMore.pdf),
+                  ),
                 if (reviewLabel != null)
                   ListTile(
                     leading: Icon(LucideIcons.star, color: colors.primary),
@@ -887,6 +915,8 @@ class _SignedBar extends StatelessWidget {
       );
       if (choice == null || !context.mounted) return;
       switch (choice) {
+        case _SignedMore.pdf:
+          pdf();
         case _SignedMore.review:
           onReview!(contract);
         case _SignedMore.terminate:
@@ -908,15 +938,9 @@ class _SignedBar extends StatelessWidget {
           children: [
             Expanded(
               child: Button.primary(
-                title: l10n.contractPdf,
+                title: rate ? l10n.contractRateTenant : l10n.contractPdf,
                 isLoading: state.isBusy,
-                onPressed: state.isBusy
-                    ? null
-                    : () => context.read<ContractDetailBloc>().add(
-                          ContractPdfRequested(
-                            name: [l10n.contractPdfFileName, ?state.contract.annonceTitle].join(' — '),
-                          ),
-                        ),
+                onPressed: state.isBusy ? null : (rate ? rateTenant : pdf),
               ),
             ),
             if (hasMore) ...[

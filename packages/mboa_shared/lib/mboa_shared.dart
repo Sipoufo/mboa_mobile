@@ -43,6 +43,7 @@ export 'src/features/contracts/ui/resident_reply_view.dart';
 export 'src/features/contracts/ui/resident_review_view.dart';
 export 'src/features/contracts/ui/contracts_list_view.dart';
 export 'src/features/contracts/ui/widgets/contract_bits.dart';
+export 'src/features/contracts/ui/widgets/tenant_rating_bits.dart';
 export 'src/features/contracts/ui/widgets/termination_bits.dart';
 export 'src/features/contracts/models/contract.dart';
 

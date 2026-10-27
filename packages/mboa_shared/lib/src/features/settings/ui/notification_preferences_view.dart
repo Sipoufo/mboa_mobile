@@ -158,5 +158,6 @@ String notificationLabel(I18n l10n, String code) => switch (code) {
       'N23' => l10n.notifPrefN23,
       'N25' => l10n.notifPrefN25,
       'N26' => l10n.notifPrefN26,
+      'N41' => l10n.notifPrefN41,
       _ => code,
     };

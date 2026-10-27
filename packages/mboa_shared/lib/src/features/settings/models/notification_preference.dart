@@ -36,7 +36,9 @@ class NotificationPreference extends Equatable {
   /// Mandatory types are left out — there is nothing to choose.
   static const Map<NotificationAudience, List<String>> optOuts = {
     NotificationAudience.tenant: ['N01', 'N03', 'N05', 'N18', 'N21', 'N23'],
-    NotificationAudience.prestataire: ['N02', 'N03', 'N04', 'N05', 'N10', 'N15', 'N25', 'N26'],
+    // N-41 (§37 A) — the invitation to rate a tenant: an invitation, not an
+    // alert, so it can be turned off.
+    NotificationAudience.prestataire: ['N02', 'N03', 'N04', 'N05', 'N10', 'N15', 'N25', 'N26', 'N41'],
     NotificationAudience.agent: ['N04', 'N05', 'N15'],
   };
 

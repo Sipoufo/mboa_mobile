@@ -164,4 +164,11 @@ void main() {
     );
     expect(NotificationPreference.visibleTo(NotificationAudience.tenant, all), isEmpty);
   });
+
+  test('N-41 — the invitation to rate a tenant is the prestataire\'s to turn off', () {
+    const all = [NotificationPreference(code: 'N41', enabled: true)];
+
+    expect(NotificationPreference.visibleTo(NotificationAudience.prestataire, all).map((p) => p.code), ['N41']);
+    expect(NotificationPreference.visibleTo(NotificationAudience.tenant, all), isEmpty);
+  });
 }
