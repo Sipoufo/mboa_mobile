@@ -1565,3 +1565,84 @@ Asked:
    Idempotent; another account's id is a 404.
 4. Both apps, and both roles in the Pro app (prestataire, agent), use the
    same routes.
+
+---
+
+## §39 — M01bis / M08: correcting §37 B — identity at signing, and the tenant's KYC
+
+**§37 B was misread by us, not by you.** The founder's « le NUI doit être
+obligatoire quand on veut signer un contrat » meant the **identity**, not
+the NUI. Their rule (2026-10-27), which replaces the NUI part of §37 B:
+
+### A. The NUI no longer blocks a signature
+
+- **Keep:** the NUI is required in the KYC of an **agence** or a
+  **promoteur** (`NUI_REQUIRED` on `POST /kyc`), optional otherwise, and
+  `PUT /kyc/me/nui` still adds it to an approved KYC.
+- **Remove:** `409 NUI_REQUIRED` on signing a contract, and
+  `ContractResponse.nuiRequired` (or keep it always `false` until the next
+  breaking change; your call).
+- Doc 10: RM-M01bis-10 and RM-M08-02 lose their « requis pour signer » —
+  the founder's to edit.
+
+### B. The KYC records what is on the document
+
+To print a party's identity on the contract without asking for it again,
+the KYC has to hold the document's details. The person types them in the
+KYC form, and the admin checks them against the photo when reviewing.
+
+On `SubmitKycRequest`, required:
+- **`idDocumentType`**: `CNI` · `PASSPORT` · `DRIVING_LICENCE` (Doc 10 M01bis
+  list; the tenant app offers the first two);
+- **`idNumber`** (50 characters);
+- **`issuedOn`** (date, not in the future);
+- **`expiresOn`** (date, after today: an expired document gets
+  `400 ID_DOCUMENT_EXPIRED`);
+- **`issuedAt`**: the place of issue, free text (100 characters).
+
+`KycStatusResponse` returns them. The admin's review shows them beside the
+photos, and may correct a typo when approving (traced).
+
+### C. The KYC is open to tenants (App Mboa)
+
+- **Optional.** The same routes (`POST /kyc`, `GET /kyc/me`) for the `USER`
+  role: the document (front, and back for a CNI) and **a photo of the person
+  holding it** (the selfie, required here as for an agent). No NUI, no
+  address for a tenant.
+- **Once approved:** the tenant's Mboa Score gets `IDENTITY_VERIFIED` (the
+  signal already exists), the result is pushed as for a prestataire
+  (`type: KYC`), and their identity fills their contracts by itself (D).
+- The admin queue (`GET /admin/kyc`) lists tenants too, with their role.
+- Doc 10 M01bis says « ne concerne pas les utilisateurs de l'App Mboa »:
+  the founder updates it.
+
+### D. Signing with one's identity — verified, or typed
+
+Doc 10 M08 prints each party's identity on the contract (« prénom, nom,
+numéro CNI »). Today the tenant's comes from the profile's `cniNumber`,
+typed and never checked. From now on, **each party signs with their
+identity**:
+1. **KYC approved:** the identity is the KYC's (B), and the PDF says it was
+   **verified by Mboa**.
+2. **No approved KYC (either party):** the signature carries the identity,
+   typed at that moment, and the PDF says it is **declared**:
+   `POST /contracts/{id}/sign` gains an optional
+   **`identity`** `{idDocumentType, idNumber, issuedOn, expiresOn, issuedAt}`.
+   - Required when the signer has no approved KYC: `409 IDENTITY_REQUIRED`.
+   - Ignored when they have one (the KYC's wins).
+   - Same validation as B (`ID_DOCUMENT_EXPIRED`…).
+3. **The owner is no longer blocked** by `OWNER_NOT_VERIFIED`: without an
+   approved KYC they sign by typing their identity, like a tenant (the
+   founder's call). Signing stays one act per party, and the contract is
+   signed once both have signed.
+4. On `ContractResponse`, for the reader: **`identityRequired`** (true when
+   they have no approved KYC, so the app shows the identity form before
+   « Signer »), and per party **`identity`** `{idDocumentType, idNumber
+   (masked but for the last 4 to the other party), issuedOn, expiresOn,
+   issuedAt, verified}` once signed.
+5. The profile's `cniNumber` pre-fills the form; it no longer goes on the
+   contract by itself.
+
+The apps then: the tenant's « Vérifier mon identité » in « Compte »; the
+identity sheet before « Signer » for whoever has no approved KYC; and the
+four fields added to the Pro KYC form.
