@@ -46,7 +46,7 @@
 | M03 push notifications | ✅ **Android both apps**, every `PushTarget` routed (CA-M03-02) · iOS blocked on APNs key |
 | M10 listings + residences | ✅ complete for everything the API supports, incl. archive reason + J+30 countdown |
 | M04 search | ✅ public shell, filters (incl. équipements + badges requis), list, map, offline cache, saved searches + N-01 (read-only offline), **exact point once contacted (RM-M04-06)** |
-| M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur · **redesigned after the founder's mockup** (photo hero, gallery, fact chips, provider row, map card) |
+| M05 fiche bien + fiche résidence | ✅ badges, note et avis, actions gardées serveur · **redesigned after the founder's mockup** (photo hero, gallery, fact chips, provider row, map card) · résidence on the same shape since §36 (units by type, offline cache) |
 | M06 favoris + historique | ✅ cœur partout, plafond 50, grâce de 30 jours · **historique** (2026-10-26): onglet « Favoris \| Historique », jour par jour, effacé depuis Paramètres (RM-M06-05) |
 | M07 visites (locataire) | ✅ réservation, agenda filtré, détail, présence, annulation, note du visiteur, motif d'annulation |
 | M07bis rapport (locataire) | ✅ écriture, verrouillé une fois publié · la fiche montre points +/− et photos |
@@ -1271,10 +1271,19 @@ To answer the backend:
   it — it can be removed.
 
 Ready to build (the API exists, nothing in the apps):
-- **Receipts** (reproduced 2026-10-26): a rent receipt marked ready whose
-  PDF is missing from R2 (`NoSuchKey`) — backend, §35. The other failure was
-  the app's: iOS refused every share sheet without an origin — fixed,
-  `b177040`.
+- **Receipts** ✅ (2026-10-26): the missing PDF was the backend's (§35,
+  shipped — `GET /receipts/{id}/pdf` now re-renders a lost file and answers
+  `RECEIPT_NOT_READY` meanwhile). The app's part, iOS refusing share sheets
+  without an origin, was fixed in `b177040`.
+
+Done 2026-10-27 — §36:
+- **Residence page** (tenant, `cd3a3b5`): a BLoC with a 24h cache
+  (`viewedBox`, key `residence:<id>`, no `exactLocation`), the listing's hero
+  and gallery, provider and badges, units by type (three, then « Voir les N
+  chambres »), « Avis sur la résidence » naming each unit. No action bar.
+- **Group photos** (Pro, `ad9008a`): « Ajouter un bien » step 3, each group
+  takes its own photos on creation (RM-M10bis-13); the server copies them to
+  each unit. Also fixed: edits typed during a photo upload were lost.
 
 Found missing, 2026-10-26 (the founder's MVP check):
 - **Notifications page** (both apps): neither Doc 10 nor the API has an
