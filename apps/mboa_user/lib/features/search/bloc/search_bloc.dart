@@ -31,6 +31,29 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchRepository _repository;
   final LocationService _location;
 
+  /// The city [SearchReady.districts] were read for.
+  String? _districtsFor;
+
+  List<CityOption> get _districts => switch (state) {
+        final SearchReady ready => ready.districts,
+        _ => const [],
+      };
+
+  /// Doc 10 M04 « Quartier(s) » — the city's districts, read once per city.
+  /// Failing leaves the filter without them; the search itself is untouched.
+  Future<void> _loadDistricts(String? cityId, Emitter<SearchState> emit) async {
+    if (cityId == null || cityId == _districtsFor) return;
+    _districtsFor = cityId;
+    try {
+      final districts = await _repository.districts(cityId);
+      final current = state;
+      // The city may have changed again while they loaded.
+      if (current is SearchReady && current.query.cityId == cityId) emit(current.copyWith(districts: districts));
+    } catch (_) {
+      _districtsFor = null;
+    }
+  }
+
   /// RM-M04-02 — the last search comes back pre-filled, and runs itself when
   /// it is complete enough to run.
   Future<void> _onStarted(
@@ -43,15 +66,22 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       return;
     }
     emit(SearchReady(query: restored, isLoading: true));
-    await _run(restored, emit);
+    await Future.wait([_run(restored, emit), _loadDistricts(restored.cityId, emit)]);
   }
 
-  void _onFilterChanged(SearchFilterChanged event, Emitter<SearchState> emit) {
+  Future<void> _onFilterChanged(SearchFilterChanged event, Emitter<SearchState> emit) async {
     final current = state;
     if (current is! SearchReady) return;
+    final cityChanged = event.query.cityId != current.query.cityId;
     // Editing filters does not fire a request: the sheet has its own button,
     // and a search per keystroke would page the backend for nothing.
-    emit(current.copyWith(query: event.query, clearOutcome: true));
+    emit(current.copyWith(
+      query: event.query,
+      clearOutcome: true,
+      // Another city's districts mean nothing here.
+      districts: cityChanged ? const [] : null,
+    ));
+    if (cityChanged) await _loadDistricts(event.query.cityId, emit);
   }
 
   void _onFiltersCleared(
@@ -76,7 +106,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     if (current == null || !current.query.isValid) return;
 
     emit(current.copyWith(isLoading: true, clearOutcome: true));
-    await _run(current.query, emit, sort: current.sort, position: current.position);
+    await Future.wait([
+      _run(current.query, emit, sort: current.sort, position: current.position),
+      // After a failure the districts went with the state; read them again.
+      _loadDistricts(current.query.cityId, emit),
+    ]);
   }
 
   /// RM-M04-08 — the nearest first asks where the reader stands, each time;
@@ -154,6 +188,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           isEmpty: page.hits.isEmpty,
           sort: sort,
           position: position,
+          districts: _districts,
         ),
       );
     } catch (_) {
@@ -172,10 +207,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
                 : CacheReason.unreachable,
             sort: sort,
             position: position,
+            districts: _districts,
           ),
         );
         return;
       }
+      _districtsFor = null;
       emit(SearchFailure(query: query));
     }
   }

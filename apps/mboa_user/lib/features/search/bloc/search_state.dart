@@ -40,9 +40,20 @@ class SearchReady extends SearchState {
     this.position,
     this.isLocating = false,
     this.locationRefusal,
+    this.districts = const [],
   });
 
   final SearchQuery query;
+
+  /// The chosen city's neighbourhoods, for the filter — empty until read, and
+  /// for a city the catalogue has none for.
+  final List<CityOption> districts;
+
+  /// The names of the districts the search is on, in the catalogue's order.
+  List<String> get districtNames => [
+        for (final district in districts)
+          if (query.districtIds.contains(district.id)) district.name,
+      ];
 
   /// RM-M04-08 — the order asked for; [SearchSort.distance] only with a
   /// [position].
@@ -100,6 +111,7 @@ class SearchReady extends SearchState {
     UserPosition? position,
     bool isLocating = false,
     LocationRefusal? locationRefusal,
+    List<CityOption>? districts,
   }) =>
       SearchReady(
         query: query ?? this.query,
@@ -116,6 +128,7 @@ class SearchReady extends SearchState {
         position: position ?? this.position,
         isLocating: isLocating,
         locationRefusal: locationRefusal,
+        districts: districts ?? this.districts,
       );
 
   @override
@@ -133,6 +146,7 @@ class SearchReady extends SearchState {
         position,
         isLocating,
         locationRefusal,
+        districts,
       ];
 }
 

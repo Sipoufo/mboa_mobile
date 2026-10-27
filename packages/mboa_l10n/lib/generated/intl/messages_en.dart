@@ -380,36 +380,44 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m151(km) => "${km} km away";
 
-  static String m152(city) => "In ${city}";
+  static String m152(count) =>
+      "${Intl.plural(count, one: '1 neighbourhood', other: '${count} neighbourhoods')}";
 
-  static String m153(city) => "Nearest in ${city}";
+  static String m153(count) => "+${count}";
 
-  static String m154(price) => "From ${price}";
+  static String m154(count) =>
+      "${Intl.plural(count, zero: 'Refine your search', one: '1 active filter', other: '${count} active filters')}";
 
-  static String m155(count) =>
+  static String m155(city) => "In ${city}";
+
+  static String m156(city) => "Nearest in ${city}";
+
+  static String m157(price) => "From ${price}";
+
+  static String m158(count) =>
       "${Intl.plural(count, one: '1 unit available', other: '${count} units available')}";
 
-  static String m156(count) =>
+  static String m159(count) =>
       "${Intl.plural(count, zero: 'No property', one: '1 property', other: '${count} properties')}";
 
-  static String m157(count) =>
+  static String m160(count) =>
       "${Intl.plural(count, one: '1 room', other: '${count} rooms')}";
 
-  static String m158(count) => "${count}+";
+  static String m161(count) => "${count}+";
 
-  static String m159(count) =>
+  static String m162(count) =>
       "${Intl.plural(count, zero: 'No active listing', one: '1 active listing', other: '${count} active listings')}";
 
-  static String m160(date) => "Valid until ${date}";
+  static String m163(date) => "Valid until ${date}";
 
-  static String m161(count) =>
+  static String m164(count) =>
       "${Intl.plural(count, zero: 'No visits', one: '1 visit', other: '${count} visits')}";
 
-  static String m162(from, to) => "${from} to ${to}";
+  static String m165(from, to) => "${from} to ${to}";
 
-  static String m163(time) => "Confirmed at ${time}";
+  static String m166(time) => "Confirmed at ${time}";
 
-  static String m164(distance) =>
+  static String m167(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -3558,6 +3566,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchApply": MessageLookupByLibrary.simpleMessage("See results"),
     "searchAvailableNow": MessageLookupByLibrary.simpleMessage("Available now"),
     "searchBadges": MessageLookupByLibrary.simpleMessage("Required badges"),
+    "searchBudget": MessageLookupByLibrary.simpleMessage("Budget"),
     "searchCategoryAll": MessageLookupByLibrary.simpleMessage("All"),
     "searchCategoryApartment": MessageLookupByLibrary.simpleMessage(
       "Apartments",
@@ -3570,6 +3579,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchCityPrompt": MessageLookupByLibrary.simpleMessage("Choose a city"),
     "searchClearFilters": MessageLookupByLibrary.simpleMessage("Reset"),
     "searchDistance": m151,
+    "searchDistricts": MessageLookupByLibrary.simpleMessage("Neighbourhoods"),
+    "searchDistrictsCount": m152,
+    "searchDistrictsLess": MessageLookupByLibrary.simpleMessage("Less"),
+    "searchDistrictsMore": m153,
     "searchEmptyBody": MessageLookupByLibrary.simpleMessage(
       "Try another district, a higher rent, or another property type.",
     ),
@@ -3578,8 +3591,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "searchFeatured": MessageLookupByLibrary.simpleMessage("Featured"),
     "searchFilters": MessageLookupByLibrary.simpleMessage("Filters"),
+    "searchFiltersActive": m154,
     "searchHello": MessageLookupByLibrary.simpleMessage("Hello!"),
-    "searchInCity": m152,
+    "searchHousing": MessageLookupByLibrary.simpleMessage("The place"),
+    "searchInCity": m155,
     "searchLocationBlockedBody": MessageLookupByLibrary.simpleMessage(
       "To see the nearest places, allow Mboa to use your position in the settings. It serves the search and is never stored.",
     ),
@@ -3633,19 +3648,23 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "searchMax": MessageLookupByLibrary.simpleMessage("Max"),
     "searchMin": MessageLookupByLibrary.simpleMessage("Min"),
-    "searchNearbyTitle": m153,
+    "searchMoreFilters": MessageLookupByLibrary.simpleMessage("More filters"),
+    "searchNearbyTitle": m156,
     "searchOfflineBanner": MessageLookupByLibrary.simpleMessage(
       "Offline results — from your last search.",
     ),
     "searchRentRange": MessageLookupByLibrary.simpleMessage("Rent (FCFA)"),
     "searchResidence": MessageLookupByLibrary.simpleMessage("Residence"),
     "searchResidenceBadge": MessageLookupByLibrary.simpleMessage("Residence"),
-    "searchResidenceFrom": m154,
-    "searchResidenceUnits": m155,
-    "searchResultCount": m156,
-    "searchRooms": m157,
+    "searchResidenceFrom": m157,
+    "searchResidenceUnits": m158,
+    "searchResultCount": m159,
+    "searchRooms": m160,
+    "searchRoomsAtLeast": MessageLookupByLibrary.simpleMessage(
+      "Rooms (at least)",
+    ),
     "searchRoomsMin": MessageLookupByLibrary.simpleMessage("Minimum rooms"),
-    "searchRoomsPlus": m158,
+    "searchRoomsPlus": m161,
     "searchSortNearby": MessageLookupByLibrary.simpleMessage("Near you"),
     "searchSortRelevance": MessageLookupByLibrary.simpleMessage("Relevance"),
     "searchStaleBanner": MessageLookupByLibrary.simpleMessage(
@@ -3696,7 +3715,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionExpired": MessageLookupByLibrary.simpleMessage(
       "Your subscription has expired",
     ),
-    "subscriptionListingLimit": m159,
+    "subscriptionListingLimit": m162,
     "subscriptionListingLimitUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited listings",
     ),
@@ -3711,7 +3730,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionReceiptsLocalHint": MessageLookupByLibrary.simpleMessage(
       "Receipts are tied to this device for now.",
     ),
-    "subscriptionRenewsOn": m160,
+    "subscriptionRenewsOn": m163,
     "subscriptionTitle": MessageLookupByLibrary.simpleMessage(
       "My subscription",
     ),
@@ -3840,13 +3859,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitVisitorAgent": MessageLookupByLibrary.simpleMessage("Mboa agent"),
     "visitVisitorOwner": MessageLookupByLibrary.simpleMessage("The owner"),
-    "visitVisitorRecord": m161,
+    "visitVisitorRecord": m164,
     "visitWaitingVisitor": MessageLookupByLibrary.simpleMessage(
       "You are confirmed on site. Waiting for the visitor.",
     ),
     "visitWeekNext": MessageLookupByLibrary.simpleMessage("Next week"),
     "visitWeekPrev": MessageLookupByLibrary.simpleMessage("Previous week"),
-    "visitWeekRange": m162,
+    "visitWeekRange": m165,
     "visitWithdraw": MessageLookupByLibrary.simpleMessage(
       "Withdraw my request",
     ),
@@ -3946,7 +3965,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsPast": MessageLookupByLibrary.simpleMessage("Past"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m163,
+    "visitsPresenceConfirmedAt": m166,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -3981,7 +4000,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m164,
+    "visitsTooFarBody": m167,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

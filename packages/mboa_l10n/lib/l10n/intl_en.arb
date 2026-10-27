@@ -7077,5 +7077,56 @@
         "type": "int"
       }
     }
+  },
+  "searchDistricts": "Neighbourhoods",
+  "@searchDistricts": {
+    "description": "M04 — the filter's districts"
+  },
+  "searchDistrictsMore": "+{count}",
+  "@searchDistrictsMore": {
+    "description": "M04 — shows the districts folded away",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchDistrictsLess": "Less",
+  "@searchDistrictsLess": {
+    "description": "M04 — folds the districts back"
+  },
+  "searchDistrictsCount": "{count, plural, one{1 neighbourhood} other{{count} neighbourhoods}}",
+  "@searchDistrictsCount": {
+    "description": "M04 — the city bar, three districts or more",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchBudget": "Budget",
+  "@searchBudget": {
+    "description": "M04 — the period and the rent, one card"
+  },
+  "searchHousing": "The place",
+  "@searchHousing": {
+    "description": "M04 — rooms, furnished, available"
+  },
+  "searchRoomsAtLeast": "Rooms (at least)",
+  "@searchRoomsAtLeast": {
+    "description": "M04 — rooms segment"
+  },
+  "searchMoreFilters": "More filters",
+  "@searchMoreFilters": {
+    "description": "M04 — surface, amenities, badges, folded"
+  },
+  "searchFiltersActive": "{count, plural, =0{Refine your search} one{1 active filter} other{{count} active filters}}",
+  "@searchFiltersActive": {
+    "description": "M04 — under the sheet's title",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

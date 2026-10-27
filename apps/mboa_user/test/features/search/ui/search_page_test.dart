@@ -107,6 +107,24 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  testWidgets('Doc 10 M04 — the bar says the districts, and the filters offer them', (tester) async {
+    when(() => bloc.state).thenReturn(
+      SearchReady(
+        query: douala.copyWith(districtIds: ['d-akwa']),
+        districts: const [CityOption(id: 'd-akwa', name: 'Akwa'), CityOption(id: 'd-deido', name: 'Deïdo')],
+      ),
+    );
+    await pump(tester);
+
+    expect(find.text('Douala · Akwa'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Filtres'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Quartiers'), findsOneWidget);
+    expect(find.text('Deïdo'), findsOneWidget);
+  });
+
   testWidgets('a listing and a residence are not the same card',
       (tester) async {
     await pump(tester);

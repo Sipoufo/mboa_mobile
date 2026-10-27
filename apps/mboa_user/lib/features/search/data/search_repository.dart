@@ -62,6 +62,33 @@ class SearchRepository {
   /// network works — the request itself is the first.
   Future<bool> isOffline() async => !await _network.isOnline;
 
+  /// The city's neighbourhoods, for the filter (Doc 10 M04 « Quartier(s) »).
+  ///
+  /// The catalogue barely moves, so the last list read stands in offline,
+  /// however old: a filter that vanishes with the network would drop the
+  /// districts already chosen from view.
+  Future<List<CityOption>> districts(String cityId) async {
+    final key = 'districts:$cityId';
+    try {
+      final response = await _dioClient.api.getLocationsApi().listDistricts(cityId: cityId);
+      final districts = [
+        for (final d in response.data ?? BuiltList<LocationOption>())
+          if (d.id != null && d.name != null) CityOption(id: d.id!, name: d.name!),
+      ];
+      await _cache.put(StorageKeys.searchBox, key, {
+        'items': [for (final d in districts) {'id': d.id, 'name': d.name}],
+      });
+      return districts;
+    } catch (_) {
+      final raw = _cache.get(StorageKeys.searchBox, key)?['items'];
+      if (raw is! List) rethrow;
+      return [
+        for (final item in raw.whereType<Map<dynamic, dynamic>>())
+          CityOption(id: item['id'] as String, name: item['name'] as String),
+      ];
+    }
+  }
+
   static const int _pageSize = 20; // RM-M04-03
   static const String _lastQueryKey = 'lastQuery';
   static const String _lastResultsKey = 'lastResults';

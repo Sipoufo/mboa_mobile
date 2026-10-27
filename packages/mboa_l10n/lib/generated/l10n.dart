@@ -17253,6 +17253,101 @@ class I18n {
       args: [min],
     );
   }
+
+  /// `Quartiers`
+  String get searchDistricts {
+    return Intl.message(
+      'Quartiers',
+      name: 'searchDistricts',
+      desc: 'M04 — the filter\'s districts',
+      args: [],
+    );
+  }
+
+  /// `+{count}`
+  String searchDistrictsMore(int count) {
+    return Intl.message(
+      '+$count',
+      name: 'searchDistrictsMore',
+      desc: 'M04 — shows the districts folded away',
+      args: [count],
+    );
+  }
+
+  /// `Moins`
+  String get searchDistrictsLess {
+    return Intl.message(
+      'Moins',
+      name: 'searchDistrictsLess',
+      desc: 'M04 — folds the districts back',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, one{1 quartier} other{{count} quartiers}}`
+  String searchDistrictsCount(int count) {
+    return Intl.plural(
+      count,
+      one: '1 quartier',
+      other: '$count quartiers',
+      name: 'searchDistrictsCount',
+      desc: 'M04 — the city bar, three districts or more',
+      args: [count],
+    );
+  }
+
+  /// `Budget`
+  String get searchBudget {
+    return Intl.message(
+      'Budget',
+      name: 'searchBudget',
+      desc: 'M04 — the period and the rent, one card',
+      args: [],
+    );
+  }
+
+  /// `Le logement`
+  String get searchHousing {
+    return Intl.message(
+      'Le logement',
+      name: 'searchHousing',
+      desc: 'M04 — rooms, furnished, available',
+      args: [],
+    );
+  }
+
+  /// `Pièces (minimum)`
+  String get searchRoomsAtLeast {
+    return Intl.message(
+      'Pièces (minimum)',
+      name: 'searchRoomsAtLeast',
+      desc: 'M04 — rooms segment',
+      args: [],
+    );
+  }
+
+  /// `Plus de filtres`
+  String get searchMoreFilters {
+    return Intl.message(
+      'Plus de filtres',
+      name: 'searchMoreFilters',
+      desc: 'M04 — surface, amenities, badges, folded',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{Affine ta recherche} one{1 filtre actif} other{{count} filtres actifs}}`
+  String searchFiltersActive(int count) {
+    return Intl.plural(
+      count,
+      zero: 'Affine ta recherche',
+      one: '1 filtre actif',
+      other: '$count filtres actifs',
+      name: 'searchFiltersActive',
+      desc: 'M04 — under the sheet\'s title',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -101,7 +101,7 @@ class _SearchPageState extends State<SearchPage> {
     final state = bloc.state;
     if (state is! SearchReady) return;
 
-    final query = await showSearchFiltersSheet(context, query: state.query);
+    final query = await showSearchFiltersSheet(context, query: state.query, districts: state.districts);
     if (query == null) return;
 
     bloc
@@ -401,6 +401,16 @@ class _SearchBar extends StatelessWidget {
   final VoidCallback onPickCity;
   final VoidCallback onOpenFilters;
 
+  /// « Douala · Akwa, Bonapriso » — the districts with the city, so the bar
+  /// says where the search really is; from three on, how many.
+  String _place(I18n l10n) {
+    final city = state.query.cityName;
+    if (city == null) return l10n.searchCityPrompt;
+    final names = state.districtNames;
+    if (names.isEmpty) return city;
+    return '$city · ${names.length <= 2 ? names.join(', ') : l10n.searchDistrictsCount(names.length)}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
@@ -438,7 +448,7 @@ class _SearchBar extends StatelessWidget {
                     const SizedBox(width: Dimens.spacingSm),
                     Expanded(
                       child: Text(
-                        state.query.cityName ?? l10n.searchCityPrompt,
+                        _place(l10n),
                         style: state.query.cityName == null
                             ? context.mboaText.body.copyWith(color: colors.textTertiary)
                             : context.mboaText.label.copyWith(color: colors.ink),
