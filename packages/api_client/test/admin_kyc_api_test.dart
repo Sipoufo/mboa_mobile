@@ -9,7 +9,7 @@ void main() {
   group(AdminKYCApi, () {
     // Approve a KYC submission and activate the account
     //
-    //Future<KycStatusResponse> approveKycSubmission(String id) async
+    //Future<KycStatusResponse> approveKycSubmission(String id, { ApproveKycRequest approveKycRequest }) async
     test('test approveKycSubmission', () async {
       // TODO
     });

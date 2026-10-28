@@ -7305,5 +7305,45 @@
   "kycUnknownDistrict": "Ce quartier n'est plus au catalogue. Choisis-en un autre.",
   "@kycUnknownDistrict": {
     "description": "§37 B — UNKNOWN_DISTRICT"
+  },
+  "kycDocDrivingLicence": "Permis de conduire",
+  "@kycDocDrivingLicence": {
+    "description": "§39 B"
+  },
+  "kycDocumentDetails": "Les informations de la pièce",
+  "@kycDocumentDetails": {
+    "description": "§39 B"
+  },
+  "kycIdNumber": "Numéro de la pièce",
+  "@kycIdNumber": {
+    "description": "§39 B"
+  },
+  "kycIssuedOn": "Délivrée le",
+  "@kycIssuedOn": {
+    "description": "§39 B"
+  },
+  "kycExpiresOn": "Valable jusqu'au",
+  "@kycExpiresOn": {
+    "description": "§39 B"
+  },
+  "kycIssuedAt": "Lieu de délivrance",
+  "@kycIssuedAt": {
+    "description": "§39 B"
+  },
+  "kycIssuedInFuture": "Pas après aujourd'hui.",
+  "@kycIssuedInFuture": {
+    "description": "§39 B — INVALID_ISSUE_DATE"
+  },
+  "kycDocumentExpired": "Cette pièce a expiré.",
+  "@kycDocumentExpired": {
+    "description": "§39 B — ID_DOCUMENT_EXPIRED"
+  },
+  "kycBackRequired": "Photographie aussi le verso de la pièce.",
+  "@kycBackRequired": {
+    "description": "§39 B — ID_DOCUMENT_BACK_REQUIRED"
+  },
+  "kycChangeDocument": "Changer de pièce",
+  "@kycChangeDocument": {
+    "description": "§39 B"
   }
 }

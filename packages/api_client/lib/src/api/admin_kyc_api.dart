@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
+import 'package:api_client/src/model/approve_kyc_request.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
 import 'package:api_client/src/model/page_response_kyc_review_item.dart';
@@ -28,6 +29,7 @@ class AdminKYCApi {
   ///
   /// Parameters:
   /// * [id] 
+  /// * [approveKycRequest] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -39,6 +41,7 @@ class AdminKYCApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<KycStatusResponse>> approveKycSubmission({ 
     required String id,
+    ApproveKycRequest? approveKycRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -62,11 +65,31 @@ class AdminKYCApi {
         ],
         ...?extra,
       },
+      contentType: 'application/json',
       validateStatus: validateStatus,
     );
 
+    dynamic _bodyData;
+
+    try {
+      const _type = FullType(ApproveKycRequest);
+      _bodyData = approveKycRequest == null ? null : _serializers.serialize(approveKycRequest, specifiedType: _type);
+
+    } catch(error, stackTrace) {
+      throw DioException(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
     final _response = await _dio.request<Object>(
       _path,
+      data: _bodyData,
       options: _options,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,

@@ -2,12 +2,13 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mboa_core/mboa_core.dart';
-import 'package:mboa_pro/features/kyc/logic/kyc_cubit.dart';
-import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
-import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../_helpers/mocks/mocks.dart';
+
+class MockKycRepository extends Mock implements KycRepository {}
+
+class MockMediaUploader extends Mock implements MediaUploader {}
 
 void main() {
   late MockKycRepository repository;
@@ -19,6 +20,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(CreateUploadRequestCategoryEnum.KYC_DOCUMENT);
     registerFallbackValue(ImageSource.camera);
+    registerFallbackValue(const DocumentIdentity());
   });
 
   setUp(() {
@@ -87,7 +89,14 @@ void main() {
   });
 
   group('submit', () {
-    const complete = KycDraft(selfieKey: 's', idFrontKey: 'f', idBackKey: 'b');
+    final doc = DocumentIdentity(
+      type: KycDocType.cni,
+      number: 'CM1234567',
+      issuedOn: DateTime(2020, 3, 1),
+      expiresOn: DateTime(2035, 3, 1),
+      issuedAt: 'Douala',
+    );
+    final complete = KycDraft(selfieKey: 's', idFrontKey: 'f', idBackKey: 'b', identity: doc);
 
     blocTest<KycCubit, KycState>(
       'submits the complete draft and reflects the new status',
@@ -96,17 +105,19 @@ void main() {
           selfieKey: any(named: 'selfieKey'),
           idFrontKey: any(named: 'idFrontKey'),
           idBackKey: any(named: 'idBackKey'),
+          identity: any(named: 'identity'),
         ),
       ).thenAnswer((_) async => pending),
       build: build,
-      seed: () => const KycReady(notSubmitted, complete),
+      seed: () => KycReady(notSubmitted, complete),
       act: (cubit) => cubit.submit(),
-      expect: () => const [
+      expect: () => [
         KycReady(notSubmitted, complete, submitting: true),
-        KycReady(pending, KycDraft(), justSubmitted: true),
+        const KycReady(pending, KycDraft(), justSubmitted: true),
       ],
-      verify: (_) =>
-          verify(() => repository.submit(selfieKey: 's', idFrontKey: 'f', idBackKey: 'b')).called(1),
+      verify: (_) => verify(
+        () => repository.submit(selfieKey: 's', idFrontKey: 'f', idBackKey: 'b', identity: doc),
+      ).called(1),
     );
 
     blocTest<KycCubit, KycState>(

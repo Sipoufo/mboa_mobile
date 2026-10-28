@@ -1,15 +1,11 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
-import '../../../app/router/app_router.gr.dart';
-import '../../profile/models/prestataire_type.dart';
-import '../../profile/profile_types.dart';
+import '../../media/capture_source_sheet.dart';
+import '../../profile/models/account_role.dart';
 import '../logic/kyc_cubit.dart';
 import '../models/kyc_draft.dart';
 import '../models/kyc_status.dart';
@@ -18,10 +14,27 @@ import 'kyc_declarations.dart';
 /// Certifications (CDC M01bis): a Statut tab (account verification state) and an
 /// Identification tab (documents to provide). Adapts to the loaded [KycStatus];
 /// captures the selfie inline and delegates the ID document to its own screen.
+///
+/// Both apps (§39 C): the tenant's has no NUI and no address
+/// ([withDeclarations] off), and each app opens its own ID document route.
 class CertificationsView extends StatefulWidget {
-  const CertificationsView({super.key, this.accountRole = AccountRole.user});
+  const CertificationsView({
+    super.key,
+    this.accountRole = AccountRole.user,
+    required this.onOpenIdDocument,
+    this.withDeclarations = false,
+    this.nuiRequired = false,
+  });
 
   final AccountRole accountRole;
+  final VoidCallback onOpenIdDocument;
+
+  /// §37 B — the NUI and the address: a prestataire's or an agent's only.
+  final bool withDeclarations;
+
+  /// RM-M01bis-10 — an agence or a promoteur owes a NUI; the app knows which
+  /// it is. The server holds the rule (`NUI_REQUIRED`) either way.
+  final bool nuiRequired;
 
   @override
   State<CertificationsView> createState() => _CertificationsViewState();
@@ -54,6 +67,9 @@ class _CertificationsViewState extends State<CertificationsView> {
                   KycError.invalidNui => l10n.kycNuiInvalid,
                   KycError.nuiRequired => l10n.kycNuiRequiredError,
                   KycError.unknownDistrict => l10n.kycUnknownDistrict,
+                  KycError.documentExpired => l10n.kycDocumentExpired,
+                  KycError.issuedInFuture => l10n.kycIssuedInFuture,
+                  KycError.backRequired => l10n.kycBackRequired,
                   KycError.submitFailed => l10n.commonError,
                 },
               );
@@ -91,7 +107,12 @@ class _CertificationsViewState extends State<CertificationsView> {
                           sizing: StackFit.expand,
                           children: [
                             _StatutTab(state: state, accountRole: widget.accountRole),
-                            _IdentificationTab(state: state),
+                            _IdentificationTab(
+                              state: state,
+                              onOpenIdDocument: widget.onOpenIdDocument,
+                              withDeclarations: widget.withDeclarations,
+                              nuiRequired: widget.nuiRequired,
+                            ),
                           ],
                         ),
                       KycLoadFailure() => _ErrorRetry(onRetry: () => context.read<KycCubit>().load()),
@@ -156,9 +177,17 @@ class _StatutTab extends StatelessWidget {
 }
 
 class _IdentificationTab extends StatelessWidget {
-  const _IdentificationTab({required this.state});
+  const _IdentificationTab({
+    required this.state,
+    required this.onOpenIdDocument,
+    required this.withDeclarations,
+    required this.nuiRequired,
+  });
 
   final KycReady state;
+  final VoidCallback onOpenIdDocument;
+  final bool withDeclarations;
+  final bool nuiRequired;
 
   @override
   Widget build(BuildContext context) {
@@ -174,14 +203,10 @@ class _IdentificationTab extends StatelessWidget {
         : chip;
 
     final selfie = rowChip(state.draft.has(KycSlot.selfie));
-    final idDone = state.draft.has(KycSlot.idFront) && state.draft.has(KycSlot.idBack);
+    // Photographed, and what it says filled in (§39 B).
+    final idDone = state.draft.documentDoneOn(DateTime.now());
     final idChip = rowChip(idDone);
 
-    // RM-M01bis-10 — an agence or a promoteur owes a NUI; the profile says
-    // which they are. The server holds the rule (`NUI_REQUIRED`) either way.
-    final profile = getIt.isRegistered<ProProfileBloc>() ? getIt<ProProfileBloc>().state : null;
-    final type = profile is ProProfileReady ? profile.data.type : null;
-    final nuiRequired = type == PrestataireType.agence || type == PrestataireType.promoteur;
     final nui = KycDraft.normalizeNui(state.draft.nui);
 
     Future<void> editNui() async {
@@ -239,10 +264,11 @@ class _IdentificationTab extends StatelessWidget {
                 subtitle: idChip.label,
                 subtitleColor: idChip.color,
                 enabled: editable && !state.busy,
-                onTap: () => context.router.push(const IdDocumentRoute()),
+                onTap: onOpenIdDocument,
               ),
-              const SizedBox(height: Dimens.spacing),
               // §37 B — declared beside the documents, seen by the admin alone.
+              if (withDeclarations) ...[
+              const SizedBox(height: Dimens.spacing),
               MboaTileCard(
                 icon: LucideIcons.hash,
                 title: l10n.kycItemNui,
@@ -261,6 +287,7 @@ class _IdentificationTab extends StatelessWidget {
                 enabled: editable && !state.busy,
                 onTap: () => editAddress(),
               ),
+              ],
             ],
           ),
         ),
@@ -270,7 +297,7 @@ class _IdentificationTab extends StatelessWidget {
             child: Button.primary(
               title: l10n.kycSubmit,
               isLoading: state.submitting,
-              onPressed: state.draft.canSubmit(nuiRequired: nuiRequired) && !state.busy
+              onPressed: state.draft.canSubmit(nuiRequired: withDeclarations && nuiRequired) && !state.busy
                   ? () => context.read<KycCubit>().submit()
                   : null,
             ),

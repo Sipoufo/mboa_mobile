@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../media/capture_source_sheet.dart';
 import '../logic/kyc_cubit.dart';
+import '../models/document_identity.dart';
 import '../models/kyc_draft.dart';
+import 'document_identity_fields.dart';
 
-/// ID document capture: first the document-type grid, then front/back capture.
+/// ID document capture: first the document-type grid, then its photos and
+/// what is printed on it (§39 B).
 class IdDocumentView extends StatelessWidget {
-  const IdDocumentView({super.key});
+  const IdDocumentView({super.key, this.types = KycDocType.values});
+
+  /// What this app offers: the Pro app all three, the tenant app the CNI and
+  /// the passport (§39 C).
+  final List<KycDocType> types;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class IdDocumentView extends StatelessWidget {
           builder: (context, state) {
             if (state is! KycReady) return const SizedBox.shrink();
             final body = state.draft.docType == null
-                ? _TypePicker(state: state)
+                ? _TypePicker(state: state, types: types)
                 : _SideCapture(state: state);
             return Column(
               children: [
@@ -40,21 +47,21 @@ class IdDocumentView extends StatelessWidget {
 }
 
 class _TypePicker extends StatelessWidget {
-  const _TypePicker({required this.state});
+  const _TypePicker({required this.state, required this.types});
 
   final KycReady state;
+  final List<KycDocType> types;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final cubit = context.read<KycCubit>();
 
-    final types = <(KycDocType, IconData, String)>[
-      (KycDocType.cni, LucideIcons.idCard, l10n.kycDocCni),
-      (KycDocType.recepisse, LucideIcons.bookOpen, l10n.kycDocRecepisse),
-      (KycDocType.passport, LucideIcons.bookMarked, l10n.kycDocPassport),
-      (KycDocType.residencePermit, LucideIcons.creditCard, l10n.kycDocResidence),
-    ];
+    IconData icon(KycDocType type) => switch (type) {
+          KycDocType.cni => LucideIcons.idCard,
+          KycDocType.passport => LucideIcons.bookMarked,
+          KycDocType.drivingLicence => LucideIcons.car,
+        };
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(Dimens.spacingLg),
@@ -75,8 +82,12 @@ class _TypePicker extends StatelessWidget {
             crossAxisSpacing: Dimens.spacing,
             childAspectRatio: 1.2,
             children: [
-              for (final (type, icon, label) in types)
-                _TypeTile(icon: icon, label: label, onTap: () => cubit.selectDocType(type)),
+              for (final type in types)
+                _TypeTile(
+                  icon: icon(type),
+                  label: kycDocTypeLabel(l10n, type),
+                  onTap: () => cubit.selectDocType(type),
+                ),
             ],
           ),
         ],
@@ -143,7 +154,8 @@ class _SideCapture extends StatelessWidget {
       if (source != null && context.mounted) await cubit.capture(slot, source);
     }
 
-    final bothCaptured = state.draft.has(KycSlot.idFront) && state.draft.has(KycSlot.idBack);
+    final type = state.draft.docType!;
+    final done = state.draft.documentDoneOn(DateTime.now());
 
     return Column(
       children: [
@@ -151,6 +163,22 @@ class _SideCapture extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(Dimens.spacingLg),
             children: [
+              // The type chosen, and the way back to the grid.
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      kycDocTypeLabel(l10n, type),
+                      style: context.mboaText.label.copyWith(color: context.mboaColors.primaryDark),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: state.busy ? null : cubit.clearDocType,
+                    child: Text(l10n.kycChangeDocument),
+                  ),
+                ],
+              ),
+              const SizedBox(height: Dimens.spacingSm),
               _SideTile(
                 label: l10n.kycRecto,
                 captured: state.draft.has(KycSlot.idFront),
@@ -158,14 +186,24 @@ class _SideCapture extends StatelessWidget {
                 enabled: !state.busy,
                 onTap: () => capture(KycSlot.idFront),
               ),
-              const SizedBox(height: Dimens.spacing),
-              _SideTile(
-                label: l10n.kycVerso,
-                captured: state.draft.has(KycSlot.idBack),
-                uploading: state.uploading == KycSlot.idBack,
-                enabled: !state.busy,
-                onTap: () => capture(KycSlot.idBack),
+              // A passport has no back (§39 B).
+              if (type.hasBack) ...[
+                const SizedBox(height: Dimens.spacing),
+                _SideTile(
+                  label: l10n.kycVerso,
+                  captured: state.draft.has(KycSlot.idBack),
+                  uploading: state.uploading == KycSlot.idBack,
+                  enabled: !state.busy,
+                  onTap: () => capture(KycSlot.idBack),
+                ),
+              ],
+              const SizedBox(height: Dimens.spacingLg),
+              Text(
+                l10n.kycDocumentDetails,
+                style: context.mboaText.label.copyWith(color: context.mboaColors.primaryDark),
               ),
+              const SizedBox(height: Dimens.spacingSm),
+              DocumentIdentityFields(value: state.draft.identity, onChanged: cubit.setIdentity),
             ],
           ),
         ),
@@ -173,7 +211,7 @@ class _SideCapture extends StatelessWidget {
           padding: const EdgeInsets.all(Dimens.spacingLg),
           child: Button.primary(
             title: l10n.kycDone,
-            onPressed: bothCaptured ? () => Navigator.of(context).maybePop() : null,
+            onPressed: done ? () => Navigator.of(context).maybePop() : null,
           ),
         ),
       ],

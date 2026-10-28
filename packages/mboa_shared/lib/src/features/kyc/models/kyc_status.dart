@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'document_identity.dart';
+
 /// Overall KYC state (CDC M01bis). The backend returns a free-form status
 /// string; [KycStatusX.parse] maps it defensively.
 enum KycStatus { notSubmitted, pending, approved, rejected }
@@ -56,6 +58,7 @@ class KycStatusData extends Equatable {
     this.rejectionReason,
     this.nui,
     this.address,
+    this.identity,
   });
 
   final KycStatus status;
@@ -67,10 +70,14 @@ class KycStatusData extends Equatable {
   final String? nui;
   final DeclaredAddress? address;
 
+  /// §39 B — what is printed on the document, as typed (and corrected by the
+  /// admin when approving). Absent on a KYC submitted before 2026-10-28.
+  final DocumentIdentity? identity;
+
   /// An approved KYC without a NUI may still receive one, without a new
   /// review (`PUT /kyc/me/nui`).
   bool get canAddNui => status == KycStatus.approved && nui == null;
 
   @override
-  List<Object?> get props => [status, submittedAt, reviewedAt, rejectionReason, nui, address];
+  List<Object?> get props => [status, submittedAt, reviewedAt, rejectionReason, nui, address, identity];
 }

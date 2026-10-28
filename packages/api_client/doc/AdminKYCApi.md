@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 
 # **approveKycSubmission**
-> KycStatusResponse approveKycSubmission(id)
+> KycStatusResponse approveKycSubmission(id, approveKycRequest)
 
 Approve a KYC submission and activate the account
 
@@ -25,9 +25,10 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminKYCApi();
 final String id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final ApproveKycRequest approveKycRequest = ; // ApproveKycRequest | 
 
 try {
-    final response = api.approveKycSubmission(id);
+    final response = api.approveKycSubmission(id, approveKycRequest);
     print(response);
 } on DioException catch (e) {
     print('Exception when calling AdminKYCApi->approveKycSubmission: $e\n');
@@ -39,6 +40,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**|  | 
+ **approveKycRequest** | [**ApproveKycRequest**](ApproveKycRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -50,7 +52,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

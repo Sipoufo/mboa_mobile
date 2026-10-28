@@ -1,6 +1,5 @@
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_pro/features/auth/data/auth_repository.dart';
-import 'package:mboa_pro/features/kyc/data/kyc_repository.dart';
 import 'package:mboa_pro/features/login/data/credential_auth_repository.dart';
 import 'package:mboa_pro/features/profile/data/profile_repository.dart';
 import 'package:mboa_pro/features/register/data/register_repository.dart';

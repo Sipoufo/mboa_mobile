@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_element
 import 'package:api_client/src/model/kyc_address_request.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/date.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -17,13 +19,18 @@ part 'submit_kyc_request.g.dart';
 /// * [selfieKey] 
 /// * [nui] 
 /// * [address] 
+/// * [idDocumentType] 
+/// * [idNumber] 
+/// * [issuedOn] 
+/// * [expiresOn] 
+/// * [issuedAt] 
 @BuiltValue()
 abstract class SubmitKycRequest implements Built<SubmitKycRequest, SubmitKycRequestBuilder> {
   @BuiltValueField(wireName: r'idDocumentFrontKey')
   String get idDocumentFrontKey;
 
   @BuiltValueField(wireName: r'idDocumentBackKey')
-  String get idDocumentBackKey;
+  String? get idDocumentBackKey;
 
   @BuiltValueField(wireName: r'selfieKey')
   String get selfieKey;
@@ -33,6 +40,22 @@ abstract class SubmitKycRequest implements Built<SubmitKycRequest, SubmitKycRequ
 
   @BuiltValueField(wireName: r'address')
   KycAddressRequest? get address;
+
+  @BuiltValueField(wireName: r'idDocumentType')
+  SubmitKycRequestIdDocumentTypeEnum get idDocumentType;
+  // enum idDocumentTypeEnum {  CNI,  PASSPORT,  DRIVING_LICENCE,  };
+
+  @BuiltValueField(wireName: r'idNumber')
+  String get idNumber;
+
+  @BuiltValueField(wireName: r'issuedOn')
+  Date get issuedOn;
+
+  @BuiltValueField(wireName: r'expiresOn')
+  Date get expiresOn;
+
+  @BuiltValueField(wireName: r'issuedAt')
+  String get issuedAt;
 
   SubmitKycRequest._();
 
@@ -62,11 +85,13 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
       object.idDocumentFrontKey,
       specifiedType: const FullType(String),
     );
-    yield r'idDocumentBackKey';
-    yield serializers.serialize(
-      object.idDocumentBackKey,
-      specifiedType: const FullType(String),
-    );
+    if (object.idDocumentBackKey != null) {
+      yield r'idDocumentBackKey';
+      yield serializers.serialize(
+        object.idDocumentBackKey,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'selfieKey';
     yield serializers.serialize(
       object.selfieKey,
@@ -86,6 +111,31 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
         specifiedType: const FullType(KycAddressRequest),
       );
     }
+    yield r'idDocumentType';
+    yield serializers.serialize(
+      object.idDocumentType,
+      specifiedType: const FullType(SubmitKycRequestIdDocumentTypeEnum),
+    );
+    yield r'idNumber';
+    yield serializers.serialize(
+      object.idNumber,
+      specifiedType: const FullType(String),
+    );
+    yield r'issuedOn';
+    yield serializers.serialize(
+      object.issuedOn,
+      specifiedType: const FullType(Date),
+    );
+    yield r'expiresOn';
+    yield serializers.serialize(
+      object.expiresOn,
+      specifiedType: const FullType(Date),
+    );
+    yield r'issuedAt';
+    yield serializers.serialize(
+      object.issuedAt,
+      specifiedType: const FullType(String),
+    );
   }
 
   @override
@@ -119,8 +169,9 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
         case r'idDocumentBackKey':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
           result.idDocumentBackKey = valueDes;
           break;
         case r'selfieKey':
@@ -145,6 +196,41 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
           ) as KycAddressRequest?;
           if (valueDes == null) continue;
           result.address.replace(valueDes);
+          break;
+        case r'idDocumentType':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(SubmitKycRequestIdDocumentTypeEnum),
+          ) as SubmitKycRequestIdDocumentTypeEnum;
+          result.idDocumentType = valueDes;
+          break;
+        case r'idNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.idNumber = valueDes;
+          break;
+        case r'issuedOn':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Date),
+          ) as Date;
+          result.issuedOn = valueDes;
+          break;
+        case r'expiresOn':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(Date),
+          ) as Date;
+          result.expiresOn = valueDes;
+          break;
+        case r'issuedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.issuedAt = valueDes;
           break;
         default:
           unhandled.add(key);
@@ -173,5 +259,24 @@ class _$SubmitKycRequestSerializer implements PrimitiveSerializer<SubmitKycReque
     );
     return result.build();
   }
+}
+
+class SubmitKycRequestIdDocumentTypeEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'CNI')
+  static const SubmitKycRequestIdDocumentTypeEnum CNI = _$submitKycRequestIdDocumentTypeEnum_CNI;
+  @BuiltValueEnumConst(wireName: r'PASSPORT')
+  static const SubmitKycRequestIdDocumentTypeEnum PASSPORT = _$submitKycRequestIdDocumentTypeEnum_PASSPORT;
+  @BuiltValueEnumConst(wireName: r'DRIVING_LICENCE')
+  static const SubmitKycRequestIdDocumentTypeEnum DRIVING_LICENCE = _$submitKycRequestIdDocumentTypeEnum_DRIVING_LICENCE;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const SubmitKycRequestIdDocumentTypeEnum unknownDefaultOpenApi = _$submitKycRequestIdDocumentTypeEnum_unknownDefaultOpenApi;
+
+  static Serializer<SubmitKycRequestIdDocumentTypeEnum> get serializer => _$submitKycRequestIdDocumentTypeEnumSerializer;
+
+  const SubmitKycRequestIdDocumentTypeEnum._(String name): super(name);
+
+  static BuiltSet<SubmitKycRequestIdDocumentTypeEnum> get values => _$submitKycRequestIdDocumentTypeEnumValues;
+  static SubmitKycRequestIdDocumentTypeEnum valueOf(String name) => _$submitKycRequestIdDocumentTypeEnumValueOf(name);
 }
 

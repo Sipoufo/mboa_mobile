@@ -13,6 +13,15 @@ enum KycError {
 
   /// §37 B — `UNKNOWN_DISTRICT`: the catalogue moved under the address.
   unknownDistrict,
+
+  /// §39 B — `ID_DOCUMENT_EXPIRED`: expires today or before.
+  documentExpired,
+
+  /// §39 B — `INVALID_ISSUE_DATE`: issued after today.
+  issuedInFuture,
+
+  /// §39 B — `ID_DOCUMENT_BACK_REQUIRED`: a CNI or a licence without its back.
+  backRequired,
 }
 
 /// Observable states of the Certifications screen.

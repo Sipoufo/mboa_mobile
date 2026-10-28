@@ -9,7 +9,6 @@ import '../../../features/assignments/bloc/my_agents_bloc.dart';
 import '../../../features/annonces/bloc/annonces_bloc.dart';
 import '../../../features/annonces/bloc/residences_bloc.dart';
 import '../../../features/home/bloc/home_bloc.dart';
-import '../../../features/kyc/logic/kyc_cubit.dart';
 import '../../../features/profile/profile_types.dart';
 import '../../../features/rents/bloc/waiting_declarations_bloc.dart';
 import '../../../features/tenant_requests/bloc/open_requests_bloc.dart';

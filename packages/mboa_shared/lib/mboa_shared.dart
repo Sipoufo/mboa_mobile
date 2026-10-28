@@ -127,6 +127,15 @@ export 'src/features/settings/ui/notification_preferences_view.dart';
 export 'src/features/settings/ui/settings_menu_view.dart';
 
 // Locations — cities catalogue + city picker (shared).
+export 'src/features/kyc/data/kyc_repository.dart';
+export 'src/features/kyc/logic/kyc_cubit.dart';
+export 'src/features/kyc/models/document_identity.dart';
+export 'src/features/kyc/models/kyc_draft.dart';
+export 'src/features/kyc/models/kyc_status.dart';
+export 'src/features/kyc/ui/certifications_view.dart';
+export 'src/features/kyc/ui/document_identity_fields.dart';
+export 'src/features/kyc/ui/id_document_view.dart';
+export 'src/features/kyc/ui/kyc_declarations.dart';
 export 'src/features/location/data/location_repository.dart';
 export 'src/features/location/models/city_option.dart';
 export 'src/features/location/ui/city_picker_sheet.dart';

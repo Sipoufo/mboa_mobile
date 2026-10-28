@@ -6,6 +6,89 @@ part of 'kyc_status_response.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const KycStatusResponseIdDocumentTypeEnum
+_$kycStatusResponseIdDocumentTypeEnum_CNI =
+    const KycStatusResponseIdDocumentTypeEnum._('CNI');
+const KycStatusResponseIdDocumentTypeEnum
+_$kycStatusResponseIdDocumentTypeEnum_PASSPORT =
+    const KycStatusResponseIdDocumentTypeEnum._('PASSPORT');
+const KycStatusResponseIdDocumentTypeEnum
+_$kycStatusResponseIdDocumentTypeEnum_DRIVING_LICENCE =
+    const KycStatusResponseIdDocumentTypeEnum._('DRIVING_LICENCE');
+const KycStatusResponseIdDocumentTypeEnum
+_$kycStatusResponseIdDocumentTypeEnum_unknownDefaultOpenApi =
+    const KycStatusResponseIdDocumentTypeEnum._('unknownDefaultOpenApi');
+
+KycStatusResponseIdDocumentTypeEnum
+_$kycStatusResponseIdDocumentTypeEnumValueOf(String name) {
+  switch (name) {
+    case 'CNI':
+      return _$kycStatusResponseIdDocumentTypeEnum_CNI;
+    case 'PASSPORT':
+      return _$kycStatusResponseIdDocumentTypeEnum_PASSPORT;
+    case 'DRIVING_LICENCE':
+      return _$kycStatusResponseIdDocumentTypeEnum_DRIVING_LICENCE;
+    case 'unknownDefaultOpenApi':
+      return _$kycStatusResponseIdDocumentTypeEnum_unknownDefaultOpenApi;
+    default:
+      return _$kycStatusResponseIdDocumentTypeEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<KycStatusResponseIdDocumentTypeEnum>
+_$kycStatusResponseIdDocumentTypeEnumValues =
+    BuiltSet<KycStatusResponseIdDocumentTypeEnum>(
+      const <KycStatusResponseIdDocumentTypeEnum>[
+        _$kycStatusResponseIdDocumentTypeEnum_CNI,
+        _$kycStatusResponseIdDocumentTypeEnum_PASSPORT,
+        _$kycStatusResponseIdDocumentTypeEnum_DRIVING_LICENCE,
+        _$kycStatusResponseIdDocumentTypeEnum_unknownDefaultOpenApi,
+      ],
+    );
+
+Serializer<KycStatusResponseIdDocumentTypeEnum>
+_$kycStatusResponseIdDocumentTypeEnumSerializer =
+    _$KycStatusResponseIdDocumentTypeEnumSerializer();
+
+class _$KycStatusResponseIdDocumentTypeEnumSerializer
+    implements PrimitiveSerializer<KycStatusResponseIdDocumentTypeEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'CNI': 'CNI',
+    'PASSPORT': 'PASSPORT',
+    'DRIVING_LICENCE': 'DRIVING_LICENCE',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'CNI': 'CNI',
+    'PASSPORT': 'PASSPORT',
+    'DRIVING_LICENCE': 'DRIVING_LICENCE',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[
+    KycStatusResponseIdDocumentTypeEnum,
+  ];
+  @override
+  final String wireName = 'KycStatusResponseIdDocumentTypeEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    KycStatusResponseIdDocumentTypeEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  KycStatusResponseIdDocumentTypeEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => KycStatusResponseIdDocumentTypeEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$KycStatusResponse extends KycStatusResponse {
   @override
   final String? status;
@@ -19,6 +102,16 @@ class _$KycStatusResponse extends KycStatusResponse {
   final String? nui;
   @override
   final KycAddress? address;
+  @override
+  final KycStatusResponseIdDocumentTypeEnum? idDocumentType;
+  @override
+  final String? idNumber;
+  @override
+  final Date? issuedOn;
+  @override
+  final Date? expiresOn;
+  @override
+  final String? issuedAt;
 
   factory _$KycStatusResponse([
     void Function(KycStatusResponseBuilder)? updates,
@@ -31,6 +124,11 @@ class _$KycStatusResponse extends KycStatusResponse {
     this.rejectionReason,
     this.nui,
     this.address,
+    this.idDocumentType,
+    this.idNumber,
+    this.issuedOn,
+    this.expiresOn,
+    this.issuedAt,
   }) : super._();
   @override
   KycStatusResponse rebuild(void Function(KycStatusResponseBuilder) updates) =>
@@ -49,7 +147,12 @@ class _$KycStatusResponse extends KycStatusResponse {
         reviewedAt == other.reviewedAt &&
         rejectionReason == other.rejectionReason &&
         nui == other.nui &&
-        address == other.address;
+        address == other.address &&
+        idDocumentType == other.idDocumentType &&
+        idNumber == other.idNumber &&
+        issuedOn == other.issuedOn &&
+        expiresOn == other.expiresOn &&
+        issuedAt == other.issuedAt;
   }
 
   @override
@@ -61,6 +164,11 @@ class _$KycStatusResponse extends KycStatusResponse {
     _$hash = $jc(_$hash, rejectionReason.hashCode);
     _$hash = $jc(_$hash, nui.hashCode);
     _$hash = $jc(_$hash, address.hashCode);
+    _$hash = $jc(_$hash, idDocumentType.hashCode);
+    _$hash = $jc(_$hash, idNumber.hashCode);
+    _$hash = $jc(_$hash, issuedOn.hashCode);
+    _$hash = $jc(_$hash, expiresOn.hashCode);
+    _$hash = $jc(_$hash, issuedAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -73,7 +181,12 @@ class _$KycStatusResponse extends KycStatusResponse {
           ..add('reviewedAt', reviewedAt)
           ..add('rejectionReason', rejectionReason)
           ..add('nui', nui)
-          ..add('address', address))
+          ..add('address', address)
+          ..add('idDocumentType', idDocumentType)
+          ..add('idNumber', idNumber)
+          ..add('issuedOn', issuedOn)
+          ..add('expiresOn', expiresOn)
+          ..add('issuedAt', issuedAt))
         .toString();
   }
 }
@@ -107,6 +220,28 @@ class KycStatusResponseBuilder
   KycAddressBuilder get address => _$this._address ??= KycAddressBuilder();
   set address(KycAddressBuilder? address) => _$this._address = address;
 
+  KycStatusResponseIdDocumentTypeEnum? _idDocumentType;
+  KycStatusResponseIdDocumentTypeEnum? get idDocumentType =>
+      _$this._idDocumentType;
+  set idDocumentType(KycStatusResponseIdDocumentTypeEnum? idDocumentType) =>
+      _$this._idDocumentType = idDocumentType;
+
+  String? _idNumber;
+  String? get idNumber => _$this._idNumber;
+  set idNumber(String? idNumber) => _$this._idNumber = idNumber;
+
+  Date? _issuedOn;
+  Date? get issuedOn => _$this._issuedOn;
+  set issuedOn(Date? issuedOn) => _$this._issuedOn = issuedOn;
+
+  Date? _expiresOn;
+  Date? get expiresOn => _$this._expiresOn;
+  set expiresOn(Date? expiresOn) => _$this._expiresOn = expiresOn;
+
+  String? _issuedAt;
+  String? get issuedAt => _$this._issuedAt;
+  set issuedAt(String? issuedAt) => _$this._issuedAt = issuedAt;
+
   KycStatusResponseBuilder() {
     KycStatusResponse._defaults(this);
   }
@@ -120,6 +255,11 @@ class KycStatusResponseBuilder
       _rejectionReason = $v.rejectionReason;
       _nui = $v.nui;
       _address = $v.address?.toBuilder();
+      _idDocumentType = $v.idDocumentType;
+      _idNumber = $v.idNumber;
+      _issuedOn = $v.issuedOn;
+      _expiresOn = $v.expiresOn;
+      _issuedAt = $v.issuedAt;
       _$v = null;
     }
     return this;
@@ -150,6 +290,11 @@ class KycStatusResponseBuilder
             rejectionReason: rejectionReason,
             nui: nui,
             address: _address?.build(),
+            idDocumentType: idDocumentType,
+            idNumber: idNumber,
+            issuedOn: issuedOn,
+            expiresOn: expiresOn,
+            issuedAt: issuedAt,
           );
     } catch (_) {
       late String _$failedField;

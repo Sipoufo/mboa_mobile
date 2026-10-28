@@ -2,16 +2,19 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mboa_core/mboa_core.dart';
-import 'package:mboa_shared/mboa_shared.dart';
 
+import '../../../api/api_error.dart';
+import '../../media/media_uploader.dart';
 import '../data/kyc_repository.dart';
+import '../models/document_identity.dart';
 import '../models/kyc_draft.dart';
 import '../models/kyc_status.dart';
 
 part 'kyc_state.dart';
 
-/// Drives the Certifications screen (CDC M01bis): loads the KYC status, collects
-/// the three document uploads into a [KycDraft], and submits them.
+/// Drives the identity screens of both apps (CDC M01bis, §39 C): loads the KYC
+/// status, collects the photos and what the document says into a [KycDraft],
+/// and submits them.
 class KycCubit extends Cubit<KycState> {
   KycCubit({required KycRepository repository, required MediaUploader uploader})
       : _repository = repository,
@@ -62,6 +65,28 @@ class KycCubit extends Cubit<KycState> {
     }
   }
 
+  /// §39 B — what is printed on the document, as typed.
+  void setIdentity(DocumentIdentity identity) {
+    final s = state;
+    if (s is KycReady) emit(s.copyWith(draft: s.draft.withIdentity(identity)));
+  }
+
+  /// Back to the grid of types; the photos and details stay until replaced.
+  void clearDocType() {
+    final s = state;
+    if (s is KycReady) {
+      final identity = s.draft.identity;
+      emit(s.copyWith(
+        draft: s.draft.withIdentity(DocumentIdentity(
+          number: identity.number,
+          issuedOn: identity.issuedOn,
+          expiresOn: identity.expiresOn,
+          issuedAt: identity.issuedAt,
+        )),
+      ));
+    }
+  }
+
   void selectDocType(KycDocType type) {
     final s = state;
     if (s is KycReady) emit(s.copyWith(draft: s.draft.withDocType(type)));
@@ -104,7 +129,9 @@ class KycCubit extends Cubit<KycState> {
       final status = await _repository.submit(
         selfieKey: start.draft.selfieKey!,
         idFrontKey: start.draft.idFrontKey!,
-        idBackKey: start.draft.idBackKey!,
+        // A passport has no back; one photographed for another type is dropped.
+        idBackKey: (start.draft.docType?.hasBack ?? true) ? start.draft.idBackKey : null,
+        identity: start.draft.identity,
         nui: KycDraft.normalizeNui(start.draft.nui),
         address: start.draft.address,
       );
@@ -120,6 +147,9 @@ class KycCubit extends Cubit<KycState> {
     if (api.hasCode('INVALID_NUI')) return KycError.invalidNui;
     if (api.hasCode('NUI_REQUIRED')) return KycError.nuiRequired;
     if (api.hasCode('UNKNOWN_DISTRICT')) return KycError.unknownDistrict;
+    if (api.hasCode('ID_DOCUMENT_EXPIRED')) return KycError.documentExpired;
+    if (api.hasCode('INVALID_ISSUE_DATE')) return KycError.issuedInFuture;
+    if (api.hasCode('ID_DOCUMENT_BACK_REQUIRED')) return KycError.backRequired;
     return KycError.submitFailed;
   }
 }

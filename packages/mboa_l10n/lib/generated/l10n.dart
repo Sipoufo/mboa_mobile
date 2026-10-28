@@ -17743,6 +17743,106 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Permis de conduire`
+  String get kycDocDrivingLicence {
+    return Intl.message(
+      'Permis de conduire',
+      name: 'kycDocDrivingLicence',
+      desc: '§39 B',
+      args: [],
+    );
+  }
+
+  /// `Les informations de la pièce`
+  String get kycDocumentDetails {
+    return Intl.message(
+      'Les informations de la pièce',
+      name: 'kycDocumentDetails',
+      desc: '§39 B',
+      args: [],
+    );
+  }
+
+  /// `Numéro de la pièce`
+  String get kycIdNumber {
+    return Intl.message(
+      'Numéro de la pièce',
+      name: 'kycIdNumber',
+      desc: '§39 B',
+      args: [],
+    );
+  }
+
+  /// `Délivrée le`
+  String get kycIssuedOn {
+    return Intl.message(
+      'Délivrée le',
+      name: 'kycIssuedOn',
+      desc: '§39 B',
+      args: [],
+    );
+  }
+
+  /// `Valable jusqu'au`
+  String get kycExpiresOn {
+    return Intl.message(
+      'Valable jusqu\'au',
+      name: 'kycExpiresOn',
+      desc: '§39 B',
+      args: [],
+    );
+  }
+
+  /// `Lieu de délivrance`
+  String get kycIssuedAt {
+    return Intl.message(
+      'Lieu de délivrance',
+      name: 'kycIssuedAt',
+      desc: '§39 B',
+      args: [],
+    );
+  }
+
+  /// `Pas après aujourd'hui.`
+  String get kycIssuedInFuture {
+    return Intl.message(
+      'Pas après aujourd\'hui.',
+      name: 'kycIssuedInFuture',
+      desc: '§39 B — INVALID_ISSUE_DATE',
+      args: [],
+    );
+  }
+
+  /// `Cette pièce a expiré.`
+  String get kycDocumentExpired {
+    return Intl.message(
+      'Cette pièce a expiré.',
+      name: 'kycDocumentExpired',
+      desc: '§39 B — ID_DOCUMENT_EXPIRED',
+      args: [],
+    );
+  }
+
+  /// `Photographie aussi le verso de la pièce.`
+  String get kycBackRequired {
+    return Intl.message(
+      'Photographie aussi le verso de la pièce.',
+      name: 'kycBackRequired',
+      desc: '§39 B — ID_DOCUMENT_BACK_REQUIRED',
+      args: [],
+    );
+  }
+
+  /// `Changer de pièce`
+  String get kycChangeDocument {
+    return Intl.message(
+      'Changer de pièce',
+      name: 'kycChangeDocument',
+      desc: '§39 B',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

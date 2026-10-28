@@ -1893,15 +1893,37 @@ class MessageLookup extends MessageLookupByLibrary {
       "Remove the address",
     ),
     "kycAddressTitle": MessageLookupByLibrary.simpleMessage("Your address"),
+    "kycBackRequired": MessageLookupByLibrary.simpleMessage(
+      "Photograph the back of the document too.",
+    ),
+    "kycChangeDocument": MessageLookupByLibrary.simpleMessage(
+      "Change document",
+    ),
     "kycDocCni": MessageLookupByLibrary.simpleMessage("ID card"),
+    "kycDocDrivingLicence": MessageLookupByLibrary.simpleMessage(
+      "Driving licence",
+    ),
     "kycDocPassport": MessageLookupByLibrary.simpleMessage("Passport"),
     "kycDocRecepisse": MessageLookupByLibrary.simpleMessage("Receipt"),
     "kycDocResidence": MessageLookupByLibrary.simpleMessage("Residence permit"),
+    "kycDocumentDetails": MessageLookupByLibrary.simpleMessage(
+      "What the document says",
+    ),
+    "kycDocumentExpired": MessageLookupByLibrary.simpleMessage(
+      "This document has expired.",
+    ),
     "kycDone": MessageLookupByLibrary.simpleMessage("Done"),
+    "kycExpiresOn": MessageLookupByLibrary.simpleMessage("Valid until"),
     "kycIdDocumentPrompt": MessageLookupByLibrary.simpleMessage(
       "Choose the type of document you want to use to verify your identity",
     ),
+    "kycIdNumber": MessageLookupByLibrary.simpleMessage("Document number"),
     "kycImport": MessageLookupByLibrary.simpleMessage("Import"),
+    "kycIssuedAt": MessageLookupByLibrary.simpleMessage("Place of issue"),
+    "kycIssuedInFuture": MessageLookupByLibrary.simpleMessage(
+      "Not after today.",
+    ),
+    "kycIssuedOn": MessageLookupByLibrary.simpleMessage("Issued on"),
     "kycItemAddress": MessageLookupByLibrary.simpleMessage("Address"),
     "kycItemIdDocument": MessageLookupByLibrary.simpleMessage("ID Document"),
     "kycItemNui": MessageLookupByLibrary.simpleMessage("NUI"),

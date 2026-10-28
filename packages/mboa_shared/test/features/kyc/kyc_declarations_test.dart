@@ -2,24 +2,35 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mboa_core/mboa_core.dart';
-import 'package:mboa_pro/features/kyc/data/kyc_repository.dart';
-import 'package:mboa_pro/features/kyc/logic/kyc_cubit.dart';
-import 'package:mboa_pro/features/kyc/models/kyc_draft.dart';
-import 'package:mboa_pro/features/kyc/models/kyc_status.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../_helpers/mocks/mocks.dart';
+import '../../_helpers/mocks/mocks.dart';
 
 class MockKycApi extends Mock implements KYCApi {}
+
+class MockKycRepository extends Mock implements KycRepository {}
+
+class MockMediaUploader extends Mock implements MediaUploader {}
 
 class _FakeSubmit extends Fake implements SubmitKycRequest {}
 
 /// §37 B — the NUI and the address, beside the documents (RM-M01bis-10/11).
 void main() {
   const akwa = DeclaredAddress(districtId: 'd-akwa', city: 'Douala', district: 'Akwa', details: 'Derrière la pharmacie');
-  const complete = KycDraft(selfieKey: 's', idFrontKey: 'f', idBackKey: 'b');
+  final doc = DocumentIdentity(
+    type: KycDocType.cni,
+    number: 'CM1234567',
+    issuedOn: DateTime(2020, 3, 1),
+    expiresOn: DateTime(2035, 3, 1),
+    issuedAt: 'Douala',
+  );
+  final complete = KycDraft(selfieKey: 's', idFrontKey: 'f', idBackKey: 'b', identity: doc);
 
-  setUpAll(() => registerFallbackValue(_FakeSubmit()));
+  setUpAll(() {
+    registerFallbackValue(_FakeSubmit());
+    registerFallbackValue(const DocumentIdentity());
+  });
 
   group('the NUI as typed', () {
     test('spaces dropped, letters upper-cased; 14 letters and digits', () {
@@ -48,6 +59,7 @@ void main() {
             selfieKey: any(named: 'selfieKey'),
             idFrontKey: any(named: 'idFrontKey'),
             idBackKey: any(named: 'idBackKey'),
+            identity: any(named: 'identity'),
             nui: any(named: 'nui'),
             address: any(named: 'address'),
           )).thenAnswer((_) async => const KycStatusData(status: KycStatus.pending, nui: 'M012345678901X', address: akwa));
@@ -77,6 +89,7 @@ void main() {
             selfieKey: 's',
             idFrontKey: 'f',
             idBackKey: 'b',
+            identity: doc,
             nui: 'M012345678901X',
             address: akwa,
           )).called(1),
@@ -94,6 +107,7 @@ void main() {
             selfieKey: any(named: 'selfieKey'),
             idFrontKey: any(named: 'idFrontKey'),
             idBackKey: any(named: 'idBackKey'),
+            identity: any(named: 'identity'),
             nui: any(named: 'nui'),
             address: any(named: 'address'),
           )),
@@ -105,6 +119,7 @@ void main() {
             selfieKey: any(named: 'selfieKey'),
             idFrontKey: any(named: 'idFrontKey'),
             idBackKey: any(named: 'idBackKey'),
+            identity: any(named: 'identity'),
             nui: any(named: 'nui'),
             address: any(named: 'address'),
           )).thenThrow(DioException(
@@ -112,7 +127,7 @@ void main() {
         response: Response(requestOptions: RequestOptions(path: '/kyc'), statusCode: 400, data: {'error': 'NUI_REQUIRED'}),
       )),
       build: build,
-      seed: () => const KycReady(KycStatusData(status: KycStatus.notSubmitted), complete),
+      seed: () => KycReady(const KycStatusData(status: KycStatus.notSubmitted), complete),
       act: (cubit) => cubit.submit(),
       verify: (cubit) => expect((cubit.state as KycReady).error, KycError.nuiRequired),
     );
@@ -156,6 +171,7 @@ void main() {
       selfieKey: 's',
       idFrontKey: 'f',
       idBackKey: 'b',
+      identity: doc,
       nui: 'M012345678901X',
       address: const DeclaredAddress(districtId: 'd-akwa', details: '  '),
     );
@@ -163,6 +179,11 @@ void main() {
     final sent = verify(() => api.submitKyc(submitKycRequest: captureAny(named: 'submitKycRequest'))).captured.single
         as SubmitKycRequest;
     expect((sent.nui, sent.address?.districtId, sent.address?.details), ('M012345678901X', 'd-akwa', null));
+    // §39 B — what the document says, as the server reads it.
+    expect(
+      (sent.idDocumentType, sent.idNumber, sent.issuedOn, sent.expiresOn, sent.issuedAt),
+      (SubmitKycRequestIdDocumentTypeEnum.CNI, 'CM1234567', Date(2020, 3, 1), Date(2035, 3, 1), 'Douala'),
+    );
     expect(status.address, const DeclaredAddress(districtId: 'd-akwa', city: 'Douala', district: 'Akwa'));
   });
 }

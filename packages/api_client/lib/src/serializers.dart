@@ -43,6 +43,7 @@ import 'package:api_client/src/model/agent_public_profile.dart';
 import 'package:api_client/src/model/agent_visite_detail.dart';
 import 'package:api_client/src/model/annonce_detail_response.dart';
 import 'package:api_client/src/model/annonce_response.dart';
+import 'package:api_client/src/model/approve_kyc_request.dart';
 import 'package:api_client/src/model/assign_agent_request.dart';
 import 'package:api_client/src/model/assignable_unit.dart';
 import 'package:api_client/src/model/assignment_item.dart';
@@ -123,6 +124,7 @@ import 'package:api_client/src/model/kpi_dashboard_response.dart';
 import 'package:api_client/src/model/kpi_day_response.dart';
 import 'package:api_client/src/model/kyc_address.dart';
 import 'package:api_client/src/model/kyc_address_request.dart';
+import 'package:api_client/src/model/kyc_corrections.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
 import 'package:api_client/src/model/ledger_entry_request.dart';
@@ -240,7 +242,9 @@ import 'package:api_client/src/model/service_provider_request.dart';
 import 'package:api_client/src/model/service_provider_response.dart';
 import 'package:api_client/src/model/sign_contract_request.dart';
 import 'package:api_client/src/model/signalement_response.dart';
+import 'package:api_client/src/model/signature_identity_response.dart';
 import 'package:api_client/src/model/signature_response.dart';
+import 'package:api_client/src/model/signing_identity_request.dart';
 import 'package:api_client/src/model/skipped_unit.dart';
 import 'package:api_client/src/model/social_login_request.dart';
 import 'package:api_client/src/model/start_conversation_request.dart';
@@ -323,6 +327,7 @@ part 'serializers.g.dart';
   AgentVisiteDetail,
   AnnonceDetailResponse,
   AnnonceResponse,
+  ApproveKycRequest,
   AssignAgentRequest,
   AssignableUnit,
   AssignmentItem,
@@ -403,6 +408,7 @@ part 'serializers.g.dart';
   KpiDayResponse,
   KycAddress,
   KycAddressRequest,
+  KycCorrections,
   KycReviewItem,
   KycStatusResponse,
   LedgerEntryRequest,
@@ -520,7 +526,9 @@ part 'serializers.g.dart';
   ServiceProviderResponse,
   SignContractRequest,
   SignalementResponse,
+  SignatureIdentityResponse,
   SignatureResponse,
+  SigningIdentityRequest,
   SkippedUnit,
   SocialLoginRequest,
   StartConversationRequest,

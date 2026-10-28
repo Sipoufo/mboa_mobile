@@ -49,7 +49,7 @@ part 'contract_response.g.dart';
 /// * [reservationRequestId] 
 /// * [canRateTenant] 
 /// * [tenantRating] 
-/// * [nuiRequired] 
+/// * [identityRequired] 
 @BuiltValue()
 abstract class ContractResponse implements Built<ContractResponse, ContractResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -151,8 +151,8 @@ abstract class ContractResponse implements Built<ContractResponse, ContractRespo
   @BuiltValueField(wireName: r'tenantRating')
   int? get tenantRating;
 
-  @BuiltValueField(wireName: r'nuiRequired')
-  bool? get nuiRequired;
+  @BuiltValueField(wireName: r'identityRequired')
+  bool? get identityRequired;
 
   ContractResponse._();
 
@@ -401,10 +401,10 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
         specifiedType: const FullType(int),
       );
     }
-    if (object.nuiRequired != null) {
-      yield r'nuiRequired';
+    if (object.identityRequired != null) {
+      yield r'identityRequired';
       yield serializers.serialize(
-        object.nuiRequired,
+        object.identityRequired,
         specifiedType: const FullType(bool),
       );
     }
@@ -687,13 +687,13 @@ class _$ContractResponseSerializer implements PrimitiveSerializer<ContractRespon
           if (valueDes == null) continue;
           result.tenantRating = valueDes;
           break;
-        case r'nuiRequired':
+        case r'identityRequired':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType.nullable(bool),
           ) as bool?;
           if (valueDes == null) continue;
-          result.nuiRequired = valueDes;
+          result.identityRequired = valueDes;
           break;
         default:
           unhandled.add(key);

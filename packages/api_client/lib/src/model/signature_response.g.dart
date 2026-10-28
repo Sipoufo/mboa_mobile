@@ -13,13 +13,19 @@ class _$SignatureResponse extends SignatureResponse {
   final DateTime? signedAt;
   @override
   final bool? current;
+  @override
+  final SignatureIdentityResponse? identity;
 
   factory _$SignatureResponse([
     void Function(SignatureResponseBuilder)? updates,
   ]) => (SignatureResponseBuilder()..update(updates))._build();
 
-  _$SignatureResponse._({this.signerAccountId, this.signedAt, this.current})
-    : super._();
+  _$SignatureResponse._({
+    this.signerAccountId,
+    this.signedAt,
+    this.current,
+    this.identity,
+  }) : super._();
   @override
   SignatureResponse rebuild(void Function(SignatureResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -34,7 +40,8 @@ class _$SignatureResponse extends SignatureResponse {
     return other is SignatureResponse &&
         signerAccountId == other.signerAccountId &&
         signedAt == other.signedAt &&
-        current == other.current;
+        current == other.current &&
+        identity == other.identity;
   }
 
   @override
@@ -43,6 +50,7 @@ class _$SignatureResponse extends SignatureResponse {
     _$hash = $jc(_$hash, signerAccountId.hashCode);
     _$hash = $jc(_$hash, signedAt.hashCode);
     _$hash = $jc(_$hash, current.hashCode);
+    _$hash = $jc(_$hash, identity.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -52,7 +60,8 @@ class _$SignatureResponse extends SignatureResponse {
     return (newBuiltValueToStringHelper(r'SignatureResponse')
           ..add('signerAccountId', signerAccountId)
           ..add('signedAt', signedAt)
-          ..add('current', current))
+          ..add('current', current)
+          ..add('identity', identity))
         .toString();
   }
 }
@@ -74,6 +83,12 @@ class SignatureResponseBuilder
   bool? get current => _$this._current;
   set current(bool? current) => _$this._current = current;
 
+  SignatureIdentityResponseBuilder? _identity;
+  SignatureIdentityResponseBuilder get identity =>
+      _$this._identity ??= SignatureIdentityResponseBuilder();
+  set identity(SignatureIdentityResponseBuilder? identity) =>
+      _$this._identity = identity;
+
   SignatureResponseBuilder() {
     SignatureResponse._defaults(this);
   }
@@ -84,6 +99,7 @@ class SignatureResponseBuilder
       _signerAccountId = $v.signerAccountId;
       _signedAt = $v.signedAt;
       _current = $v.current;
+      _identity = $v.identity?.toBuilder();
       _$v = null;
     }
     return this;
@@ -103,13 +119,30 @@ class SignatureResponseBuilder
   SignatureResponse build() => _build();
 
   _$SignatureResponse _build() {
-    final _$result =
-        _$v ??
-        _$SignatureResponse._(
-          signerAccountId: signerAccountId,
-          signedAt: signedAt,
-          current: current,
+    _$SignatureResponse _$result;
+    try {
+      _$result =
+          _$v ??
+          _$SignatureResponse._(
+            signerAccountId: signerAccountId,
+            signedAt: signedAt,
+            current: current,
+            identity: _identity?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'identity';
+        _identity?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'SignatureResponse',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

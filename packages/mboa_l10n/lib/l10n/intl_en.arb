@@ -7305,5 +7305,45 @@
   "kycUnknownDistrict": "This district is no longer listed. Pick another one.",
   "@kycUnknownDistrict": {
     "description": "§37 B — UNKNOWN_DISTRICT"
+  },
+  "kycDocDrivingLicence": "Driving licence",
+  "@kycDocDrivingLicence": {
+    "description": "§39 B"
+  },
+  "kycDocumentDetails": "What the document says",
+  "@kycDocumentDetails": {
+    "description": "§39 B"
+  },
+  "kycIdNumber": "Document number",
+  "@kycIdNumber": {
+    "description": "§39 B"
+  },
+  "kycIssuedOn": "Issued on",
+  "@kycIssuedOn": {
+    "description": "§39 B"
+  },
+  "kycExpiresOn": "Valid until",
+  "@kycExpiresOn": {
+    "description": "§39 B"
+  },
+  "kycIssuedAt": "Place of issue",
+  "@kycIssuedAt": {
+    "description": "§39 B"
+  },
+  "kycIssuedInFuture": "Not after today.",
+  "@kycIssuedInFuture": {
+    "description": "§39 B — INVALID_ISSUE_DATE"
+  },
+  "kycDocumentExpired": "This document has expired.",
+  "@kycDocumentExpired": {
+    "description": "§39 B — ID_DOCUMENT_EXPIRED"
+  },
+  "kycBackRequired": "Photograph the back of the document too.",
+  "@kycBackRequired": {
+    "description": "§39 B — ID_DOCUMENT_BACK_REQUIRED"
+  },
+  "kycChangeDocument": "Change document",
+  "@kycChangeDocument": {
+    "description": "§39 B"
   }
 }

@@ -1974,17 +1974,39 @@ class MessageLookup extends MessageLookupByLibrary {
       "Retirer l\'adresse",
     ),
     "kycAddressTitle": MessageLookupByLibrary.simpleMessage("Ton adresse"),
+    "kycBackRequired": MessageLookupByLibrary.simpleMessage(
+      "Photographie aussi le verso de la pièce.",
+    ),
+    "kycChangeDocument": MessageLookupByLibrary.simpleMessage(
+      "Changer de pièce",
+    ),
     "kycDocCni": MessageLookupByLibrary.simpleMessage("Carte d’identité"),
+    "kycDocDrivingLicence": MessageLookupByLibrary.simpleMessage(
+      "Permis de conduire",
+    ),
     "kycDocPassport": MessageLookupByLibrary.simpleMessage("Passeport"),
     "kycDocRecepisse": MessageLookupByLibrary.simpleMessage("Recépissé"),
     "kycDocResidence": MessageLookupByLibrary.simpleMessage(
       "Permis de residence",
     ),
+    "kycDocumentDetails": MessageLookupByLibrary.simpleMessage(
+      "Les informations de la pièce",
+    ),
+    "kycDocumentExpired": MessageLookupByLibrary.simpleMessage(
+      "Cette pièce a expiré.",
+    ),
     "kycDone": MessageLookupByLibrary.simpleMessage("Terminé"),
+    "kycExpiresOn": MessageLookupByLibrary.simpleMessage("Valable jusqu\'au"),
     "kycIdDocumentPrompt": MessageLookupByLibrary.simpleMessage(
       "Choisis le document avec lequel tu veux vérifier ton identité",
     ),
+    "kycIdNumber": MessageLookupByLibrary.simpleMessage("Numéro de la pièce"),
     "kycImport": MessageLookupByLibrary.simpleMessage("Importer"),
+    "kycIssuedAt": MessageLookupByLibrary.simpleMessage("Lieu de délivrance"),
+    "kycIssuedInFuture": MessageLookupByLibrary.simpleMessage(
+      "Pas après aujourd\'hui.",
+    ),
+    "kycIssuedOn": MessageLookupByLibrary.simpleMessage("Délivrée le"),
     "kycItemAddress": MessageLookupByLibrary.simpleMessage("Adresse"),
     "kycItemIdDocument": MessageLookupByLibrary.simpleMessage(
       "Pièce d\'identité",

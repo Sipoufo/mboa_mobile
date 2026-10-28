@@ -40,7 +40,7 @@ Name | Type | Description | Notes
 **reservationRequestId** | **String** |  | [optional] 
 **canRateTenant** | **bool** |  | [optional] 
 **tenantRating** | **int** |  | [optional] 
-**nuiRequired** | **bool** |  | [optional] 
+**identityRequired** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

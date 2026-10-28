@@ -3,7 +3,9 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:built_collection/built_collection.dart';
 import 'package:api_client/src/model/kyc_address.dart';
+import 'package:api_client/src/model/date.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -18,6 +20,11 @@ part 'kyc_status_response.g.dart';
 /// * [rejectionReason] 
 /// * [nui] 
 /// * [address] 
+/// * [idDocumentType] 
+/// * [idNumber] 
+/// * [issuedOn] 
+/// * [expiresOn] 
+/// * [issuedAt] 
 @BuiltValue()
 abstract class KycStatusResponse implements Built<KycStatusResponse, KycStatusResponseBuilder> {
   @BuiltValueField(wireName: r'status')
@@ -37,6 +44,22 @@ abstract class KycStatusResponse implements Built<KycStatusResponse, KycStatusRe
 
   @BuiltValueField(wireName: r'address')
   KycAddress? get address;
+
+  @BuiltValueField(wireName: r'idDocumentType')
+  KycStatusResponseIdDocumentTypeEnum? get idDocumentType;
+  // enum idDocumentTypeEnum {  CNI,  PASSPORT,  DRIVING_LICENCE,  };
+
+  @BuiltValueField(wireName: r'idNumber')
+  String? get idNumber;
+
+  @BuiltValueField(wireName: r'issuedOn')
+  Date? get issuedOn;
+
+  @BuiltValueField(wireName: r'expiresOn')
+  Date? get expiresOn;
+
+  @BuiltValueField(wireName: r'issuedAt')
+  String? get issuedAt;
 
   KycStatusResponse._();
 
@@ -101,6 +124,41 @@ class _$KycStatusResponseSerializer implements PrimitiveSerializer<KycStatusResp
       yield serializers.serialize(
         object.address,
         specifiedType: const FullType(KycAddress),
+      );
+    }
+    if (object.idDocumentType != null) {
+      yield r'idDocumentType';
+      yield serializers.serialize(
+        object.idDocumentType,
+        specifiedType: const FullType(KycStatusResponseIdDocumentTypeEnum),
+      );
+    }
+    if (object.idNumber != null) {
+      yield r'idNumber';
+      yield serializers.serialize(
+        object.idNumber,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.issuedOn != null) {
+      yield r'issuedOn';
+      yield serializers.serialize(
+        object.issuedOn,
+        specifiedType: const FullType(Date),
+      );
+    }
+    if (object.expiresOn != null) {
+      yield r'expiresOn';
+      yield serializers.serialize(
+        object.expiresOn,
+        specifiedType: const FullType(Date),
+      );
+    }
+    if (object.issuedAt != null) {
+      yield r'issuedAt';
+      yield serializers.serialize(
+        object.issuedAt,
+        specifiedType: const FullType(String),
       );
     }
   }
@@ -174,6 +232,46 @@ class _$KycStatusResponseSerializer implements PrimitiveSerializer<KycStatusResp
           if (valueDes == null) continue;
           result.address.replace(valueDes);
           break;
+        case r'idDocumentType':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(KycStatusResponseIdDocumentTypeEnum),
+          ) as KycStatusResponseIdDocumentTypeEnum?;
+          if (valueDes == null) continue;
+          result.idDocumentType = valueDes;
+          break;
+        case r'idNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.idNumber = valueDes;
+          break;
+        case r'issuedOn':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(Date),
+          ) as Date?;
+          if (valueDes == null) continue;
+          result.issuedOn = valueDes;
+          break;
+        case r'expiresOn':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(Date),
+          ) as Date?;
+          if (valueDes == null) continue;
+          result.expiresOn = valueDes;
+          break;
+        case r'issuedAt':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.issuedAt = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -201,5 +299,24 @@ class _$KycStatusResponseSerializer implements PrimitiveSerializer<KycStatusResp
     );
     return result.build();
   }
+}
+
+class KycStatusResponseIdDocumentTypeEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'CNI')
+  static const KycStatusResponseIdDocumentTypeEnum CNI = _$kycStatusResponseIdDocumentTypeEnum_CNI;
+  @BuiltValueEnumConst(wireName: r'PASSPORT')
+  static const KycStatusResponseIdDocumentTypeEnum PASSPORT = _$kycStatusResponseIdDocumentTypeEnum_PASSPORT;
+  @BuiltValueEnumConst(wireName: r'DRIVING_LICENCE')
+  static const KycStatusResponseIdDocumentTypeEnum DRIVING_LICENCE = _$kycStatusResponseIdDocumentTypeEnum_DRIVING_LICENCE;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const KycStatusResponseIdDocumentTypeEnum unknownDefaultOpenApi = _$kycStatusResponseIdDocumentTypeEnum_unknownDefaultOpenApi;
+
+  static Serializer<KycStatusResponseIdDocumentTypeEnum> get serializer => _$kycStatusResponseIdDocumentTypeEnumSerializer;
+
+  const KycStatusResponseIdDocumentTypeEnum._(String name): super(name);
+
+  static BuiltSet<KycStatusResponseIdDocumentTypeEnum> get values => _$kycStatusResponseIdDocumentTypeEnumValues;
+  static KycStatusResponseIdDocumentTypeEnum valueOf(String name) => _$kycStatusResponseIdDocumentTypeEnumValueOf(name);
 }
 

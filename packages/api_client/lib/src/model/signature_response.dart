@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:api_client/src/model/signature_identity_response.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -14,6 +15,7 @@ part 'signature_response.g.dart';
 /// * [signerAccountId] 
 /// * [signedAt] 
 /// * [current] 
+/// * [identity] 
 @BuiltValue()
 abstract class SignatureResponse implements Built<SignatureResponse, SignatureResponseBuilder> {
   @BuiltValueField(wireName: r'signerAccountId')
@@ -24,6 +26,9 @@ abstract class SignatureResponse implements Built<SignatureResponse, SignatureRe
 
   @BuiltValueField(wireName: r'current')
   bool? get current;
+
+  @BuiltValueField(wireName: r'identity')
+  SignatureIdentityResponse? get identity;
 
   SignatureResponse._();
 
@@ -67,6 +72,13 @@ class _$SignatureResponseSerializer implements PrimitiveSerializer<SignatureResp
       yield serializers.serialize(
         object.current,
         specifiedType: const FullType(bool),
+      );
+    }
+    if (object.identity != null) {
+      yield r'identity';
+      yield serializers.serialize(
+        object.identity,
+        specifiedType: const FullType(SignatureIdentityResponse),
       );
     }
   }
@@ -115,6 +127,14 @@ class _$SignatureResponseSerializer implements PrimitiveSerializer<SignatureResp
           ) as bool?;
           if (valueDes == null) continue;
           result.current = valueDes;
+          break;
+        case r'identity':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(SignatureIdentityResponse),
+          ) as SignatureIdentityResponse?;
+          if (valueDes == null) continue;
+          result.identity.replace(valueDes);
           break;
         default:
           unhandled.add(key);

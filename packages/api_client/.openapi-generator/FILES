@@ -46,6 +46,7 @@ doc/AgentVisitesApi.md
 doc/AnnonceDetailResponse.md
 doc/AnnonceResponse.md
 doc/AnnoncesApi.md
+doc/ApproveKycRequest.md
 doc/AssignAgentRequest.md
 doc/AssignableUnit.md
 doc/AssignationAgentApi.md
@@ -140,6 +141,7 @@ doc/KpiDashboardResponse.md
 doc/KpiDayResponse.md
 doc/KycAddress.md
 doc/KycAddressRequest.md
+doc/KycCorrections.md
 doc/KycReviewItem.md
 doc/KycStatusResponse.md
 doc/LedgerEntryRequest.md
@@ -277,7 +279,9 @@ doc/ServiceProviderResponse.md
 doc/SignContractRequest.md
 doc/SignalementResponse.md
 doc/SignalementsApi.md
+doc/SignatureIdentityResponse.md
 doc/SignatureResponse.md
+doc/SigningIdentityRequest.md
 doc/SkippedUnit.md
 doc/SocialLoginRequest.md
 doc/StartConversationRequest.md
@@ -428,6 +432,7 @@ lib/src/model/agent_public_profile.dart
 lib/src/model/agent_visite_detail.dart
 lib/src/model/annonce_detail_response.dart
 lib/src/model/annonce_response.dart
+lib/src/model/approve_kyc_request.dart
 lib/src/model/assign_agent_request.dart
 lib/src/model/assignable_unit.dart
 lib/src/model/assignment_item.dart
@@ -509,6 +514,7 @@ lib/src/model/kpi_dashboard_response.dart
 lib/src/model/kpi_day_response.dart
 lib/src/model/kyc_address.dart
 lib/src/model/kyc_address_request.dart
+lib/src/model/kyc_corrections.dart
 lib/src/model/kyc_review_item.dart
 lib/src/model/kyc_status_response.dart
 lib/src/model/ledger_entry_request.dart
@@ -626,7 +632,9 @@ lib/src/model/service_provider_request.dart
 lib/src/model/service_provider_response.dart
 lib/src/model/sign_contract_request.dart
 lib/src/model/signalement_response.dart
+lib/src/model/signature_identity_response.dart
 lib/src/model/signature_response.dart
+lib/src/model/signing_identity_request.dart
 lib/src/model/skipped_unit.dart
 lib/src/model/social_login_request.dart
 lib/src/model/start_conversation_request.dart
@@ -723,6 +731,7 @@ test/agent_visites_api_test.dart
 test/annonce_detail_response_test.dart
 test/annonce_response_test.dart
 test/annonces_api_test.dart
+test/approve_kyc_request_test.dart
 test/assign_agent_request_test.dart
 test/assignable_unit_test.dart
 test/assignation_agent_api_test.dart
@@ -817,6 +826,7 @@ test/kpi_day_response_test.dart
 test/kyc_address_request_test.dart
 test/kyc_address_test.dart
 test/kyc_api_test.dart
+test/kyc_corrections_test.dart
 test/kyc_review_item_test.dart
 test/kyc_status_response_test.dart
 test/ledger_entry_request_test.dart
@@ -954,7 +964,9 @@ test/service_provider_response_test.dart
 test/sign_contract_request_test.dart
 test/signalement_response_test.dart
 test/signalements_api_test.dart
+test/signature_identity_response_test.dart
 test/signature_response_test.dart
+test/signing_identity_request_test.dart
 test/skipped_unit_test.dart
 test/social_login_request_test.dart
 test/start_conversation_request_test.dart

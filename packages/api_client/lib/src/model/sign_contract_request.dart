@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:api_client/src/model/signing_identity_request.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -12,10 +13,14 @@ part 'sign_contract_request.g.dart';
 ///
 /// Properties:
 /// * [sessionId] 
+/// * [identity] 
 @BuiltValue()
 abstract class SignContractRequest implements Built<SignContractRequest, SignContractRequestBuilder> {
   @BuiltValueField(wireName: r'sessionId')
   String? get sessionId;
+
+  @BuiltValueField(wireName: r'identity')
+  SigningIdentityRequest? get identity;
 
   SignContractRequest._();
 
@@ -45,6 +50,13 @@ class _$SignContractRequestSerializer implements PrimitiveSerializer<SignContrac
       yield serializers.serialize(
         object.sessionId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.identity != null) {
+      yield r'identity';
+      yield serializers.serialize(
+        object.identity,
+        specifiedType: const FullType(SigningIdentityRequest),
       );
     }
   }
@@ -77,6 +89,14 @@ class _$SignContractRequestSerializer implements PrimitiveSerializer<SignContrac
           ) as String?;
           if (valueDes == null) continue;
           result.sessionId = valueDes;
+          break;
+        case r'identity':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(SigningIdentityRequest),
+          ) as SigningIdentityRequest?;
+          if (valueDes == null) continue;
+          result.identity.replace(valueDes);
           break;
         default:
           unhandled.add(key);

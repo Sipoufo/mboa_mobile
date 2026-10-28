@@ -344,7 +344,7 @@ class _$ContractResponse extends ContractResponse {
   @override
   final int? tenantRating;
   @override
-  final bool? nuiRequired;
+  final bool? identityRequired;
 
   factory _$ContractResponse([
     void Function(ContractResponseBuilder)? updates,
@@ -383,7 +383,7 @@ class _$ContractResponse extends ContractResponse {
     this.reservationRequestId,
     this.canRateTenant,
     this.tenantRating,
-    this.nuiRequired,
+    this.identityRequired,
   }) : super._();
   @override
   ContractResponse rebuild(void Function(ContractResponseBuilder) updates) =>
@@ -429,7 +429,7 @@ class _$ContractResponse extends ContractResponse {
         reservationRequestId == other.reservationRequestId &&
         canRateTenant == other.canRateTenant &&
         tenantRating == other.tenantRating &&
-        nuiRequired == other.nuiRequired;
+        identityRequired == other.identityRequired;
   }
 
   @override
@@ -467,7 +467,7 @@ class _$ContractResponse extends ContractResponse {
     _$hash = $jc(_$hash, reservationRequestId.hashCode);
     _$hash = $jc(_$hash, canRateTenant.hashCode);
     _$hash = $jc(_$hash, tenantRating.hashCode);
-    _$hash = $jc(_$hash, nuiRequired.hashCode);
+    _$hash = $jc(_$hash, identityRequired.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -507,7 +507,7 @@ class _$ContractResponse extends ContractResponse {
           ..add('reservationRequestId', reservationRequestId)
           ..add('canRateTenant', canRateTenant)
           ..add('tenantRating', tenantRating)
-          ..add('nuiRequired', nuiRequired))
+          ..add('identityRequired', identityRequired))
         .toString();
   }
 }
@@ -662,9 +662,10 @@ class ContractResponseBuilder
   int? get tenantRating => _$this._tenantRating;
   set tenantRating(int? tenantRating) => _$this._tenantRating = tenantRating;
 
-  bool? _nuiRequired;
-  bool? get nuiRequired => _$this._nuiRequired;
-  set nuiRequired(bool? nuiRequired) => _$this._nuiRequired = nuiRequired;
+  bool? _identityRequired;
+  bool? get identityRequired => _$this._identityRequired;
+  set identityRequired(bool? identityRequired) =>
+      _$this._identityRequired = identityRequired;
 
   ContractResponseBuilder() {
     ContractResponse._defaults(this);
@@ -705,7 +706,7 @@ class ContractResponseBuilder
       _reservationRequestId = $v.reservationRequestId;
       _canRateTenant = $v.canRateTenant;
       _tenantRating = $v.tenantRating;
-      _nuiRequired = $v.nuiRequired;
+      _identityRequired = $v.identityRequired;
       _$v = null;
     }
     return this;
@@ -762,7 +763,7 @@ class ContractResponseBuilder
             reservationRequestId: reservationRequestId,
             canRateTenant: canRateTenant,
             tenantRating: tenantRating,
-            nuiRequired: nuiRequired,
+            identityRequired: identityRequired,
           );
     } catch (_) {
       late String _$failedField;

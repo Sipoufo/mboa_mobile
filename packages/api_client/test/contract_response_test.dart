@@ -167,8 +167,8 @@ void main() {
       // TODO
     });
 
-    // bool nuiRequired
-    test('to test the property `nuiRequired`', () async {
+    // bool identityRequired
+    test('to test the property `identityRequired`', () async {
       // TODO
     });
 

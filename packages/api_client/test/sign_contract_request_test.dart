@@ -12,5 +12,10 @@ void main() {
       // TODO
     });
 
+    // SigningIdentityRequest identity
+    test('to test the property `identity`', () async {
+      // TODO
+    });
+
   });
 }

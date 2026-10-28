@@ -43,8 +43,51 @@ final BuiltSet<KycReviewItemRoleEnum> _$kycReviewItemRoleEnumValues =
       _$kycReviewItemRoleEnum_unknownDefaultOpenApi,
     ]);
 
+const KycReviewItemIdDocumentTypeEnum _$kycReviewItemIdDocumentTypeEnum_CNI =
+    const KycReviewItemIdDocumentTypeEnum._('CNI');
+const KycReviewItemIdDocumentTypeEnum
+_$kycReviewItemIdDocumentTypeEnum_PASSPORT =
+    const KycReviewItemIdDocumentTypeEnum._('PASSPORT');
+const KycReviewItemIdDocumentTypeEnum
+_$kycReviewItemIdDocumentTypeEnum_DRIVING_LICENCE =
+    const KycReviewItemIdDocumentTypeEnum._('DRIVING_LICENCE');
+const KycReviewItemIdDocumentTypeEnum
+_$kycReviewItemIdDocumentTypeEnum_unknownDefaultOpenApi =
+    const KycReviewItemIdDocumentTypeEnum._('unknownDefaultOpenApi');
+
+KycReviewItemIdDocumentTypeEnum _$kycReviewItemIdDocumentTypeEnumValueOf(
+  String name,
+) {
+  switch (name) {
+    case 'CNI':
+      return _$kycReviewItemIdDocumentTypeEnum_CNI;
+    case 'PASSPORT':
+      return _$kycReviewItemIdDocumentTypeEnum_PASSPORT;
+    case 'DRIVING_LICENCE':
+      return _$kycReviewItemIdDocumentTypeEnum_DRIVING_LICENCE;
+    case 'unknownDefaultOpenApi':
+      return _$kycReviewItemIdDocumentTypeEnum_unknownDefaultOpenApi;
+    default:
+      return _$kycReviewItemIdDocumentTypeEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<KycReviewItemIdDocumentTypeEnum>
+_$kycReviewItemIdDocumentTypeEnumValues =
+    BuiltSet<KycReviewItemIdDocumentTypeEnum>(
+      const <KycReviewItemIdDocumentTypeEnum>[
+        _$kycReviewItemIdDocumentTypeEnum_CNI,
+        _$kycReviewItemIdDocumentTypeEnum_PASSPORT,
+        _$kycReviewItemIdDocumentTypeEnum_DRIVING_LICENCE,
+        _$kycReviewItemIdDocumentTypeEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 Serializer<KycReviewItemRoleEnum> _$kycReviewItemRoleEnumSerializer =
     _$KycReviewItemRoleEnumSerializer();
+Serializer<KycReviewItemIdDocumentTypeEnum>
+_$kycReviewItemIdDocumentTypeEnumSerializer =
+    _$KycReviewItemIdDocumentTypeEnumSerializer();
 
 class _$KycReviewItemRoleEnumSerializer
     implements PrimitiveSerializer<KycReviewItemRoleEnum> {
@@ -85,6 +128,43 @@ class _$KycReviewItemRoleEnumSerializer
   );
 }
 
+class _$KycReviewItemIdDocumentTypeEnumSerializer
+    implements PrimitiveSerializer<KycReviewItemIdDocumentTypeEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'CNI': 'CNI',
+    'PASSPORT': 'PASSPORT',
+    'DRIVING_LICENCE': 'DRIVING_LICENCE',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'CNI': 'CNI',
+    'PASSPORT': 'PASSPORT',
+    'DRIVING_LICENCE': 'DRIVING_LICENCE',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[KycReviewItemIdDocumentTypeEnum];
+  @override
+  final String wireName = 'KycReviewItemIdDocumentTypeEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    KycReviewItemIdDocumentTypeEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  KycReviewItemIdDocumentTypeEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => KycReviewItemIdDocumentTypeEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$KycReviewItem extends KycReviewItem {
   @override
   final String? id;
@@ -112,6 +192,16 @@ class _$KycReviewItem extends KycReviewItem {
   final String? nui;
   @override
   final KycAddress? address;
+  @override
+  final KycReviewItemIdDocumentTypeEnum? idDocumentType;
+  @override
+  final String? idNumber;
+  @override
+  final Date? issuedOn;
+  @override
+  final Date? expiresOn;
+  @override
+  final String? issuedAt;
 
   factory _$KycReviewItem([void Function(KycReviewItemBuilder)? updates]) =>
       (KycReviewItemBuilder()..update(updates))._build();
@@ -130,6 +220,11 @@ class _$KycReviewItem extends KycReviewItem {
     this.overdue,
     this.nui,
     this.address,
+    this.idDocumentType,
+    this.idNumber,
+    this.issuedOn,
+    this.expiresOn,
+    this.issuedAt,
   }) : super._();
   @override
   KycReviewItem rebuild(void Function(KycReviewItemBuilder) updates) =>
@@ -154,7 +249,12 @@ class _$KycReviewItem extends KycReviewItem {
         dueAt == other.dueAt &&
         overdue == other.overdue &&
         nui == other.nui &&
-        address == other.address;
+        address == other.address &&
+        idDocumentType == other.idDocumentType &&
+        idNumber == other.idNumber &&
+        issuedOn == other.issuedOn &&
+        expiresOn == other.expiresOn &&
+        issuedAt == other.issuedAt;
   }
 
   @override
@@ -173,6 +273,11 @@ class _$KycReviewItem extends KycReviewItem {
     _$hash = $jc(_$hash, overdue.hashCode);
     _$hash = $jc(_$hash, nui.hashCode);
     _$hash = $jc(_$hash, address.hashCode);
+    _$hash = $jc(_$hash, idDocumentType.hashCode);
+    _$hash = $jc(_$hash, idNumber.hashCode);
+    _$hash = $jc(_$hash, issuedOn.hashCode);
+    _$hash = $jc(_$hash, expiresOn.hashCode);
+    _$hash = $jc(_$hash, issuedAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -192,7 +297,12 @@ class _$KycReviewItem extends KycReviewItem {
           ..add('dueAt', dueAt)
           ..add('overdue', overdue)
           ..add('nui', nui)
-          ..add('address', address))
+          ..add('address', address)
+          ..add('idDocumentType', idDocumentType)
+          ..add('idNumber', idNumber)
+          ..add('issuedOn', issuedOn)
+          ..add('expiresOn', expiresOn)
+          ..add('issuedAt', issuedAt))
         .toString();
   }
 }
@@ -255,6 +365,27 @@ class KycReviewItemBuilder
   KycAddressBuilder get address => _$this._address ??= KycAddressBuilder();
   set address(KycAddressBuilder? address) => _$this._address = address;
 
+  KycReviewItemIdDocumentTypeEnum? _idDocumentType;
+  KycReviewItemIdDocumentTypeEnum? get idDocumentType => _$this._idDocumentType;
+  set idDocumentType(KycReviewItemIdDocumentTypeEnum? idDocumentType) =>
+      _$this._idDocumentType = idDocumentType;
+
+  String? _idNumber;
+  String? get idNumber => _$this._idNumber;
+  set idNumber(String? idNumber) => _$this._idNumber = idNumber;
+
+  Date? _issuedOn;
+  Date? get issuedOn => _$this._issuedOn;
+  set issuedOn(Date? issuedOn) => _$this._issuedOn = issuedOn;
+
+  Date? _expiresOn;
+  Date? get expiresOn => _$this._expiresOn;
+  set expiresOn(Date? expiresOn) => _$this._expiresOn = expiresOn;
+
+  String? _issuedAt;
+  String? get issuedAt => _$this._issuedAt;
+  set issuedAt(String? issuedAt) => _$this._issuedAt = issuedAt;
+
   KycReviewItemBuilder() {
     KycReviewItem._defaults(this);
   }
@@ -275,6 +406,11 @@ class KycReviewItemBuilder
       _overdue = $v.overdue;
       _nui = $v.nui;
       _address = $v.address?.toBuilder();
+      _idDocumentType = $v.idDocumentType;
+      _idNumber = $v.idNumber;
+      _issuedOn = $v.issuedOn;
+      _expiresOn = $v.expiresOn;
+      _issuedAt = $v.issuedAt;
       _$v = null;
     }
     return this;
@@ -312,6 +448,11 @@ class KycReviewItemBuilder
             overdue: overdue,
             nui: nui,
             address: _address?.build(),
+            idDocumentType: idDocumentType,
+            idNumber: idNumber,
+            issuedOn: issuedOn,
+            expiresOn: expiresOn,
+            issuedAt: issuedAt,
           );
     } catch (_) {
       late String _$failedField;

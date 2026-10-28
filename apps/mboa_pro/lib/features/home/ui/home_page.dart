@@ -8,8 +8,6 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
-import '../../kyc/logic/kyc_cubit.dart';
-import '../../kyc/models/kyc_status.dart';
 import '../../profile/profile_types.dart';
 import '../../rents/bloc/waiting_declarations_bloc.dart';
 import '../../rents/ui/widgets/waiting_declarations_card.dart';
