@@ -1854,6 +1854,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeUserWelcome": MessageLookupByLibrary.simpleMessage(
       "Welcome to Mboa 👋",
     ),
+    "identityVerify": MessageLookupByLibrary.simpleMessage(
+      "Verify my identity",
+    ),
+    "identityVerifySubtitle": MessageLookupByLibrary.simpleMessage(
+      "Optional: you sign contracts without typing your document again, and +20 Mboa Score points.",
+    ),
     "invoiceConfirmedSoFar": m61,
     "invoiceDeclarations": MessageLookupByLibrary.simpleMessage("Declarations"),
     "invoiceDeclare": MessageLookupByLibrary.simpleMessage("Declare paid"),

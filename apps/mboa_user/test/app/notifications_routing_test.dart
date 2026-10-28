@@ -100,6 +100,12 @@ void main() {
     expect((child.args! as HomeRequestRouteArgs).requestId, 'hr-1');
   });
 
+  test('N-11 / N-12 — the identity verified or refused opens « Vérifier mon identité »', () {
+    routeNotificationTap(router, const PushMessage(type: PushType.kyc));
+
+    expect(pushed().initialChildren!.single.routeName, IdentityRoute.name);
+  });
+
   test('a type this build does not know lands on the shell', () {
     routeNotificationTap(router, const PushMessage(type: PushType.unknown));
 

@@ -17843,6 +17843,26 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Vérifier mon identité`
+  String get identityVerify {
+    return Intl.message(
+      'Vérifier mon identité',
+      name: 'identityVerify',
+      desc: '§39 C — Compte',
+      args: [],
+    );
+  }
+
+  /// `Facultatif : tes contrats se signent sans retaper ta pièce, et +20 points de Mboa Score.`
+  String get identityVerifySubtitle {
+    return Intl.message(
+      'Facultatif : tes contrats se signent sans retaper ta pièce, et +20 points de Mboa Score.',
+      name: 'identityVerifySubtitle',
+      desc: '§39 C — Compte',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

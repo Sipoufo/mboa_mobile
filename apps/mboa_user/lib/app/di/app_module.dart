@@ -107,6 +107,12 @@ void registerAppModule() {
   getIt.registerLazySingleton<HistoryRepository>(
     () => HistoryRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
   );
+  // §39 C — the tenant's optional KYC; one cubit shared by its two screens.
+  getIt.registerLazySingleton<KycRepository>(() => KycRepository(dioClient: getIt<DioClient>()));
+  getIt.registerLazySingleton<KycCubit>(
+    () => KycCubit(repository: getIt<KycRepository>(), uploader: getIt<MediaUploader>()),
+  );
+
   // §38 — the notifications page and the bell: one instance per session.
   getIt.registerLazySingleton<InboxRepository>(
     () => InboxRepository(dioClient: getIt<DioClient>(), cache: getIt<HiveCache>()),
@@ -394,5 +400,8 @@ Future<void> resetSessionScopedBlocs() async {
   );
   await getIt.resetLazySingleton<InboxBloc>(
     disposingFunction: (bloc) => bloc.close(),
+  );
+  await getIt.resetLazySingleton<KycCubit>(
+    disposingFunction: (cubit) => cubit.close(),
   );
 }

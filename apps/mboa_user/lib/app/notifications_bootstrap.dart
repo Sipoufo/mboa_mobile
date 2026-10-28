@@ -84,10 +84,12 @@ void routeNotificationTap(AppRouter router, PushMessage message) {
       router.push(const AuthenticatedRouter(children: [MyHomesRoute()]));
     case PushType.message:
       router.navigate(const UserShellRoute(children: [MessagesRoute()]));
+    // N-11 / N-12 (§39 C) — the identity verified, or refused with its reason.
+    case PushType.kyc:
+      router.push(const AuthenticatedRouter(children: [IdentityRoute()]));
     case PushType.annonce:
     case PushType.contract:
     case PushType.paymentConfirmed:
-    case PushType.kyc:
     case PushType.residence:
     // N-39 is the landlord's.
     case PushType.homeEvidence:

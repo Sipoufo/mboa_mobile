@@ -7345,5 +7345,13 @@
   "kycChangeDocument": "Change document",
   "@kycChangeDocument": {
     "description": "§39 B"
+  },
+  "identityVerify": "Verify my identity",
+  "@identityVerify": {
+    "description": "§39 C — Compte"
+  },
+  "identityVerifySubtitle": "Optional: you sign contracts without typing your document again, and +20 Mboa Score points.",
+  "@identityVerifySubtitle": {
+    "description": "§39 C — Compte"
   }
 }

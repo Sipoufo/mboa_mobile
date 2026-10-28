@@ -110,6 +110,16 @@ class _SignedInState extends State<_SignedIn> {
                     ),
                   ),
                   const SizedBox(height: Dimens.spacingMd),
+                  // §39 C — optional: what it brings is said on the tile.
+                  MboaTileCard(
+                    icon: LucideIcons.idCard,
+                    title: l10n.identityVerify,
+                    subtitle: l10n.identityVerifySubtitle,
+                    onTap: () => context.router.root.push(
+                      const AuthenticatedRouter(children: [IdentityRoute()]),
+                    ),
+                  ),
+                  const SizedBox(height: Dimens.spacingMd),
                   // RM-M04-07 — the searches N-01 watches.
                   MboaTileCard(
                     icon: LucideIcons.bookmark,

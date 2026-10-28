@@ -1933,6 +1933,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeUserWelcome": MessageLookupByLibrary.simpleMessage(
       "Bienvenue sur Mboa 👋",
     ),
+    "identityVerify": MessageLookupByLibrary.simpleMessage(
+      "Vérifier mon identité",
+    ),
+    "identityVerifySubtitle": MessageLookupByLibrary.simpleMessage(
+      "Facultatif : tes contrats se signent sans retaper ta pièce, et +20 points de Mboa Score.",
+    ),
     "invoiceConfirmedSoFar": m61,
     "invoiceDeclarations": MessageLookupByLibrary.simpleMessage("Déclarations"),
     "invoiceDeclare": MessageLookupByLibrary.simpleMessage("Déclarer payée"),

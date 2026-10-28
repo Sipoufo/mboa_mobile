@@ -7345,5 +7345,13 @@
   "kycChangeDocument": "Changer de pièce",
   "@kycChangeDocument": {
     "description": "§39 B"
+  },
+  "identityVerify": "Vérifier mon identité",
+  "@identityVerify": {
+    "description": "§39 C — Compte"
+  },
+  "identityVerifySubtitle": "Facultatif : tes contrats se signent sans retaper ta pièce, et +20 points de Mboa Score.",
+  "@identityVerifySubtitle": {
+    "description": "§39 C — Compte"
   }
 }

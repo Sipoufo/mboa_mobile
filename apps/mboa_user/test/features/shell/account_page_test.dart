@@ -82,6 +82,8 @@ void main() {
     expect(find.text('Profil'), findsOneWidget);
     // RM-M09-03 — the tenant's own score, private: here and nowhere public.
     expect(find.text('Mon Mboa Score'), findsOneWidget);
+    // §39 C — optional, and what it brings is said.
+    expect(find.text('Vérifier mon identité'), findsOneWidget);
     expect(find.text('Recherches sauvegardées'), findsOneWidget);
     expect(find.text('Mes visites'), findsOneWidget);
     // Below the fold on a test-sized screen: the list builds what it shows.

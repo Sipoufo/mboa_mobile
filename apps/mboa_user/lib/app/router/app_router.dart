@@ -74,6 +74,9 @@ class AppRouter extends RootStackRouter {
             // M07 — a visit belongs to an account, so it lives behind the
             // session guard with the rest of `/app`.
             AutoRoute(page: MyScoreRoute.page, path: 'score'),
+            // §39 C — the tenant's optional KYC.
+            AutoRoute(page: IdentityRoute.page, path: 'identity'),
+            AutoRoute(page: IdentityDocumentRoute.page, path: 'identity/document'),
             // §38 — what Mboa said, 30 days back.
             AutoRoute(page: NotificationsRoute.page, path: 'notifications'),
             AutoRoute(page: SavedSearchesRoute.page, path: 'saved-searches'),
