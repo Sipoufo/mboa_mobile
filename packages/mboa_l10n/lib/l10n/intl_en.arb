@@ -7353,5 +7353,21 @@
   "identityVerifySubtitle": "Optional: you sign contracts without typing your document again, and +20 Mboa Score points.",
   "@identityVerifySubtitle": {
     "description": "§39 C — Compte"
+  },
+  "contractSignIdentityTitle": "Your identity",
+  "@contractSignIdentityTitle": {
+    "description": "§39 D — signing without a verified identity"
+  },
+  "contractSignIdentityBody": "Your document is not verified by Mboa: enter it here. The contract will print it as declared.",
+  "@contractSignIdentityBody": {
+    "description": "§39 D"
+  },
+  "contractSignatureVerified": "Verified by Mboa",
+  "@contractSignatureVerified": {
+    "description": "§39 D — on a signature"
+  },
+  "contractSignatureDeclared": "Declared, not verified",
+  "@contractSignatureDeclared": {
+    "description": "§39 D — on a signature"
   }
 }

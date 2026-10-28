@@ -1266,11 +1266,20 @@ class MessageLookup extends MessageLookupByLibrary {
       "Envoyer au locataire",
     ),
     "contractSign": MessageLookupByLibrary.simpleMessage("Signer"),
+    "contractSignIdentityBody": MessageLookupByLibrary.simpleMessage(
+      "Ta pièce n\'est pas vérifiée par Mboa : indique-la ici. Le contrat l\'imprimera comme déclarée.",
+    ),
+    "contractSignIdentityTitle": MessageLookupByLibrary.simpleMessage(
+      "Ton identité",
+    ),
     "contractSignPrompt": m31,
     "contractSignWarning": MessageLookupByLibrary.simpleMessage(
       "Une fois les deux signatures apposées, le contrat est définitif : plus aucune modification n\'est possible.",
     ),
     "contractSignWord": MessageLookupByLibrary.simpleMessage("SIGNER"),
+    "contractSignatureDeclared": MessageLookupByLibrary.simpleMessage(
+      "Déclarée, non vérifiée",
+    ),
     "contractSignatureMine": MessageLookupByLibrary.simpleMessage(
       "Ta signature",
     ),
@@ -1282,6 +1291,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractSignatureSuperseded": MessageLookupByLibrary.simpleMessage(
       "Sur des termes modifiés depuis : elle ne compte plus.",
+    ),
+    "contractSignatureVerified": MessageLookupByLibrary.simpleMessage(
+      "Vérifiée par Mboa",
     ),
     "contractSignaturesTitle": MessageLookupByLibrary.simpleMessage(
       "Signatures",

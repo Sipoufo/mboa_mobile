@@ -4,6 +4,7 @@ import 'package:mboa_core/mboa_core.dart';
 
 import '../../../api/api_error.dart';
 import '../models/contract.dart';
+import '../../kyc/models/document_identity.dart';
 
 /// Why the server turned a termination down — the cases the screen words.
 enum TerminationRefusal {
@@ -126,14 +127,28 @@ class ContractRepository {
   /// [sessionId] is the only thing the request carries: the confirmation Doc 10
   /// asks for is a local gesture, and what reaches the server is the session it
   /// was made in.
-  Future<Contract> sign(String id, {String? sessionId}) async => _unwrap(
-        await _api.signContract(
-          id: id,
-          signContractRequest:
-              SignContractRequest((b) => b..sessionId = sessionId),
-        ),
-        'sign',
-      );
+  /// §39 D — with [identity] when the signer has no verified one; the
+  /// server ignores it otherwise.
+  Future<Contract> sign(String id, {String? sessionId, DocumentIdentity? identity}) async {
+    final document = identity?.wire;
+    return _unwrap(
+      await _api.signContract(
+        id: id,
+        signContractRequest: SignContractRequest((b) {
+          b.sessionId = sessionId;
+          if (document != null) {
+            b.identity
+              ..idDocumentType = SigningIdentityRequestIdDocumentTypeEnum.valueOf(document.type)
+              ..idNumber = document.number
+              ..issuedOn = document.issuedOn
+              ..expiresOn = document.expiresOn
+              ..issuedAt = document.issuedAt;
+          }
+        }),
+      ),
+      'sign',
+    );
+  }
 
   /// §37 A — the landlord rates the tenant once the tenancy has ended. The
   /// answer is the rating, so the contract is read again for the screen.

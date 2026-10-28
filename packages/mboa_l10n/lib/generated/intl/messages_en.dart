@@ -1213,11 +1213,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "contractSaved": MessageLookupByLibrary.simpleMessage("Contract saved"),
     "contractSend": MessageLookupByLibrary.simpleMessage("Send to the tenant"),
     "contractSign": MessageLookupByLibrary.simpleMessage("Sign"),
+    "contractSignIdentityBody": MessageLookupByLibrary.simpleMessage(
+      "Your document is not verified by Mboa: enter it here. The contract will print it as declared.",
+    ),
+    "contractSignIdentityTitle": MessageLookupByLibrary.simpleMessage(
+      "Your identity",
+    ),
     "contractSignPrompt": m31,
     "contractSignWarning": MessageLookupByLibrary.simpleMessage(
       "Once both signatures are in, the contract is final: no change is possible.",
     ),
     "contractSignWord": MessageLookupByLibrary.simpleMessage("SIGN"),
+    "contractSignatureDeclared": MessageLookupByLibrary.simpleMessage(
+      "Declared, not verified",
+    ),
     "contractSignatureMine": MessageLookupByLibrary.simpleMessage(
       "Your signature",
     ),
@@ -1229,6 +1238,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contractSignatureSuperseded": MessageLookupByLibrary.simpleMessage(
       "On terms changed since: it no longer counts.",
+    ),
+    "contractSignatureVerified": MessageLookupByLibrary.simpleMessage(
+      "Verified by Mboa",
     ),
     "contractSignaturesTitle": MessageLookupByLibrary.simpleMessage(
       "Signatures",

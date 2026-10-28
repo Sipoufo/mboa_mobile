@@ -94,9 +94,20 @@ class _DocumentIdentityFieldsState extends State<DocumentIdentityFields> {
             runSpacing: Dimens.spacingSm,
             children: [
               for (final type in types)
+                // The app's pills: the brand's green once chosen, a warm tint
+                // otherwise, no border.
                 ChoiceChip(
                   label: Text(kycDocTypeLabel(l10n, type)),
                   selected: value.type == type,
+                  showCheckmark: false,
+                  selectedColor: colors.primary,
+                  backgroundColor: colors.surfaceWarm,
+                  side: BorderSide.none,
+                  shape: const StadiumBorder(),
+                  labelStyle: context.mboaText.caption.copyWith(
+                    color: value.type == type ? colors.onBrand : colors.ink,
+                    fontWeight: value.type == type ? FontWeight.w700 : FontWeight.w500,
+                  ),
                   onSelected: (_) => widget.onChanged(value.copyWith(type: type)),
                 ),
             ],

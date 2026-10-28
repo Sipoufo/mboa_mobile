@@ -6,6 +6,8 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../listings/models/rental_period.dart';
+import '../../kyc/models/document_identity.dart';
+import '../../kyc/ui/document_identity_fields.dart';
 import '../bloc/contract_detail_bloc.dart';
 import '../data/contract_repository.dart';
 import '../models/contract.dart';
@@ -31,9 +33,14 @@ class ContractDetailView extends StatelessWidget {
     this.onAmend,
     this.onReview,
     this.viewer = ContractParty.unknown,
+    this.identityPrefill,
   });
 
   final String id;
+
+  /// §39 D — what the app knows of the reader's document, to start the
+  /// identity form from when they have to type it.
+  final DocumentIdentity? identityPrefill;
 
   /// Opens the amendment form. Null on the tenant's side.
   final void Function(Contract contract)? onAmend;
@@ -123,6 +130,7 @@ class ContractDetailView extends StatelessWidget {
                 onAmend: onAmend,
                 onReview: onReview,
                 viewer: viewer,
+                identityPrefill: identityPrefill,
               )
             : const SizedBox.shrink(),
       ),
@@ -636,6 +644,19 @@ class _Signatures extends StatelessWidget {
                           l10n.contractSignatureSuperseded,
                           style: context.mboaText.caption.copyWith(color: colors.warning),
                         ),
+                      // §39 D — the document signed with, and who vouches for
+                      // it. The other party's number comes masked.
+                      if (signature.identity case final identity?)
+                        Text(
+                          [
+                            if (identity.document.type case final type?) kycDocTypeLabel(l10n, type),
+                            identity.document.number,
+                            identity.verified ? l10n.contractSignatureVerified : l10n.contractSignatureDeclared,
+                          ].join(' · '),
+                          style: context.mboaText.caption.copyWith(
+                            color: identity.verified ? colors.success : colors.textSecondary,
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -660,12 +681,14 @@ class _ActionBar extends StatelessWidget {
     this.onAmend,
     this.onReview,
     this.viewer = ContractParty.unknown,
+    this.identityPrefill,
   });
 
   final ContractDetailReady state;
   final void Function(Contract contract)? onAmend;
   final void Function(Contract contract)? onReview;
   final ContractParty viewer;
+  final DocumentIdentity? identityPrefill;
 
   @override
   Widget build(BuildContext context) {
@@ -774,8 +797,14 @@ class _ActionBar extends StatelessWidget {
 
   Future<void> _sign(BuildContext context, Contract contract) async {
     final bloc = context.read<ContractDetailBloc>();
-    final confirmed = await showSignContractSheet(context, contract: contract);
-    if (confirmed ?? false) bloc.add(const ContractSigned());
+    final confirmed = await showSignContractSheet(
+      context,
+      contract: contract,
+      // The tenant app offers the CNI and the passport, as for its KYC.
+      identityTypes: viewer == ContractParty.tenant ? const [KycDocType.cni, KycDocType.passport] : KycDocType.values,
+      identityPrefill: identityPrefill,
+    );
+    if (confirmed != null) bloc.add(ContractSigned(identity: confirmed.identity));
   }
 
   /// CE-M08-03 / RM-M08-07 — contesting names the terms and says why.

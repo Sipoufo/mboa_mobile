@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
 
 import '../../listings/models/rental_period.dart';
+import '../../kyc/models/document_identity.dart';
 import '../../profile/models/base_profile.dart';
 
 /// Where a Contrat Mboa has got to (CDC M08).
@@ -160,21 +161,50 @@ class ChangeRequest extends Equatable {
 /// see "Tu as signé" the moment the first one signed, and they could not sign.
 /// Whose signature it is comes from [Contract.signerOf].
 class ContractSignature extends Equatable {
-  const ContractSignature({this.signerAccountId, this.signedAt, this.coversCurrentTerms = true});
+  const ContractSignature({this.signerAccountId, this.signedAt, this.coversCurrentTerms = true, this.identity});
 
   final String? signerAccountId;
   final DateTime? signedAt;
   final bool coversCurrentTerms;
+
+  /// §39 D — the document the signer signed with. The other party's number
+  /// comes masked but for its last 4 characters. Absent before 2026-10-28.
+  final SignatureIdentity? identity;
 
   static ContractSignature fromResponse(SignatureResponse response) =>
       ContractSignature(
         signerAccountId: response.signerAccountId,
         signedAt: response.signedAt?.toLocal(),
         coversCurrentTerms: response.current ?? true,
+        identity: switch (response.identity) {
+          final identity? => SignatureIdentity(
+              document: DocumentIdentity(
+                type: KycDocType.fromWire(identity.idDocumentType?.name),
+                number: identity.idNumber ?? '',
+                issuedOn: identity.issuedOn?.toDateTime(),
+                expiresOn: identity.expiresOn?.toDateTime(),
+                issuedAt: identity.issuedAt ?? '',
+              ),
+              verified: identity.verified ?? false,
+            ),
+          null => null,
+        },
       );
 
   @override
-  List<Object?> get props => [signerAccountId, signedAt, coversCurrentTerms];
+  List<Object?> get props => [signerAccountId, signedAt, coversCurrentTerms, identity];
+}
+
+/// §39 D — a signature's identity: the document, and whether Mboa verified
+/// it (an approved KYC) or the signer declared it.
+class SignatureIdentity extends Equatable {
+  const SignatureIdentity({required this.document, this.verified = false});
+
+  final DocumentIdentity document;
+  final bool verified;
+
+  @override
+  List<Object?> get props => [document, verified];
 }
 
 /// A party to the contract, as the other side sees them.
@@ -369,6 +399,7 @@ class Contract extends Equatable {
     this.residentReviewEligible = false,
     this.canRateTenant = false,
     this.tenantRating,
+    this.identityRequired = false,
     this.tenancy,
     this.reservationRequestId,
     this.lockedAt,
@@ -434,6 +465,10 @@ class Contract extends Equatable {
 
   /// §37 A — the stars the landlord gave, in their view only. Never revised.
   final int? tenantRating;
+
+  /// §39 D — server-computed, for the reader: no verified identity and yet to
+  /// sign, so they type their document before « Signer ».
+  final bool identityRequired;
 
   /// RM-M08-11 / RM-M08-12 — once signed: where the tenancy stands, and how
   /// it can end. Null before the signatures.
@@ -503,6 +538,7 @@ class Contract extends Equatable {
         residentReviewEligible: response.residentReviewEligible ?? false,
         canRateTenant: response.canRateTenant ?? false,
         tenantRating: response.tenantRating,
+        identityRequired: response.identityRequired ?? false,
         tenancy: response.tenancy == null ? null : Tenancy.fromResponse(response.tenancy!),
         reservationRequestId: response.reservationRequestId,
         lockedAt: response.lockedAt?.toLocal(),
@@ -541,6 +577,7 @@ class Contract extends Equatable {
         residentReviewEligible,
         canRateTenant,
         tenantRating,
+        identityRequired,
         tenancy,
         reservationRequestId,
         lockedAt,

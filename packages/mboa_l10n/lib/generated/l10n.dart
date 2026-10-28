@@ -17863,6 +17863,46 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ton identité`
+  String get contractSignIdentityTitle {
+    return Intl.message(
+      'Ton identité',
+      name: 'contractSignIdentityTitle',
+      desc: '§39 D — signing without a verified identity',
+      args: [],
+    );
+  }
+
+  /// `Ta pièce n'est pas vérifiée par Mboa : indique-la ici. Le contrat l'imprimera comme déclarée.`
+  String get contractSignIdentityBody {
+    return Intl.message(
+      'Ta pièce n\'est pas vérifiée par Mboa : indique-la ici. Le contrat l\'imprimera comme déclarée.',
+      name: 'contractSignIdentityBody',
+      desc: '§39 D',
+      args: [],
+    );
+  }
+
+  /// `Vérifiée par Mboa`
+  String get contractSignatureVerified {
+    return Intl.message(
+      'Vérifiée par Mboa',
+      name: 'contractSignatureVerified',
+      desc: '§39 D — on a signature',
+      args: [],
+    );
+  }
+
+  /// `Déclarée, non vérifiée`
+  String get contractSignatureDeclared {
+    return Intl.message(
+      'Déclarée, non vérifiée',
+      name: 'contractSignatureDeclared',
+      desc: '§39 D — on a signature',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

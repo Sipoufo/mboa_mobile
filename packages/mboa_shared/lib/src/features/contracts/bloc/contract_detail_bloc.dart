@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import '../../media/pdf_sharer.dart';
 import '../data/contract_repository.dart';
 import '../models/contract.dart';
+import '../../kyc/models/document_identity.dart';
 
 part 'contract_detail_event.dart';
 part 'contract_detail_state.dart';
@@ -92,7 +93,7 @@ class ContractDetailBloc
     ContractSigned event,
     Emitter<ContractDetailState> emit,
   ) =>
-      _run(emit, (contract) => _repository.sign(contract.id));
+      _run(emit, (contract) => _repository.sign(contract.id, identity: event.identity));
 
   /// CE-M08-03 — an answer per objection, whether or not the terms move.
   Future<void> _onChangeAnswered(

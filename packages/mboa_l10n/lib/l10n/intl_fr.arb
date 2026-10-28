@@ -7353,5 +7353,21 @@
   "identityVerifySubtitle": "Facultatif : tes contrats se signent sans retaper ta pièce, et +20 points de Mboa Score.",
   "@identityVerifySubtitle": {
     "description": "§39 C — Compte"
+  },
+  "contractSignIdentityTitle": "Ton identité",
+  "@contractSignIdentityTitle": {
+    "description": "§39 D — signing without a verified identity"
+  },
+  "contractSignIdentityBody": "Ta pièce n'est pas vérifiée par Mboa : indique-la ici. Le contrat l'imprimera comme déclarée.",
+  "@contractSignIdentityBody": {
+    "description": "§39 D"
+  },
+  "contractSignatureVerified": "Vérifiée par Mboa",
+  "@contractSignatureVerified": {
+    "description": "§39 D — on a signature"
+  },
+  "contractSignatureDeclared": "Déclarée, non vérifiée",
+  "@contractSignatureDeclared": {
+    "description": "§39 D — on a signature"
   }
 }

@@ -21,9 +21,15 @@ class ContractSent extends ContractDetailEvent {
   const ContractSent();
 }
 
-/// RM-M08-03.
+/// RM-M08-03 — with the identity typed when the signer has no verified one
+/// (§39 D).
 class ContractSigned extends ContractDetailEvent {
-  const ContractSigned();
+  const ContractSigned({this.identity});
+
+  final DocumentIdentity? identity;
+
+  @override
+  List<Object?> get props => [identity];
 }
 
 /// CE-M08-03 — answering one objection.
