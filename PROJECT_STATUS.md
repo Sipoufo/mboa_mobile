@@ -1310,9 +1310,19 @@ Done 2026-10-27 — §37 and §38 in the apps:
   per session), both apps; items open through each app's routeNotificationTap.
 - **§37 A tenant rating** (`7e1d1ef`): « Noter le locataire » on an ended
   contract (Pro), N-41 switch, the score's « Note des propriétaires » real.
-- **§37 B NUI + address** (`d39712d`): Pro KYC tiles. The « NUI required to
-  sign » part is corrected by §39 (identity at signing, tenant KYC) —
-  waiting for the backend.
+- **§37 B NUI + address** (`d39712d`): Pro KYC tiles.
+
+Done 2026-10-28 — §39, identity on both sides:
+- **The KYC is shared** (`cfb4af4`, mboa_shared/features/kyc): the document's
+  five fields (type, number, issued on / until, place), CNI · passport ·
+  licence, no back for a passport. Pro pages add the NUI and the address.
+- **Tenant KYC** (`2f8018d`): « Vérifier mon identité » in « Compte », CNI or
+  passport, N-11 / N-12 open it.
+- **Signing with one's identity** (`6fe7bb4`): the sign sheet asks for the
+  document when `identityRequired`; the « Signatures » card says « Vérifiée
+  par Mboa » or « Déclarée ». Not yet: pre-filling from the profile's CNI
+  number (the shared profile does not carry it), and the score's « Identité
+  vérifiée » line leading to the KYC.
 
 Found missing, 2026-10-26 (the founder's MVP check):
 - **Notifications page** (both apps): neither Doc 10 nor the API has an
