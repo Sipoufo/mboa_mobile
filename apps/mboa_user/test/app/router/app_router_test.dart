@@ -25,6 +25,15 @@ void main() {
       .where((r) => r is! RedirectRoute)
       .toList();
 
+  test('a cold start opens on the splash — the only place the session is restored', () {
+    // The platform hands over `/` at launch. When the shell owned `/`, it was
+    // opened directly and the splash's session check never ran: every restart
+    // looked signed out with the tokens still in the Keychain.
+    final match = router.matcher.match('/');
+    expect(match, isNotNull);
+    expect(match!.last.name, SplashRoute.name);
+  });
+
   test('the shell is reachable without a session', () {
     expect(routeNamed(UserShellRoute.name).guards, isEmpty);
   });

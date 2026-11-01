@@ -6,6 +6,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/di/app_module.dart';
 import '../../../app/notifications_bootstrap.dart';
 import '../../../app/router/app_router.dart';
 import '../../../app/router/app_router.gr.dart';
@@ -44,6 +45,9 @@ class SplashPage extends StatelessWidget implements AutoRouteWrapper {
               context: () => context,
             );
             context.router.replaceAll([const UserShellRoute()]);
+            // What a sign-in loads, a restored session needs too: without it
+            // a restart showed no rent banner, no hearts and no threads.
+            loadSessionScopedBlocs();
           case SplashUnauthenticated():
             getIt<SessionSnapshot>().markUnauthenticated();
             // Not /welcome: a visitor lands on the search, which is what the

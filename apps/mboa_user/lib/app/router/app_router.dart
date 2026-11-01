@@ -48,9 +48,14 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: ResidenceDetailRoute.page, path: '/residences/:id'),
 
         // Public: searching needs no account (CA-M04-04).
+        //
+        // Never `/`: that is the location iOS and Android hand over on a cold
+        // start, and a route sitting on it is opened *instead of* the splash —
+        // the session check never ran, and every restart looked signed out
+        // while the Keychain still held the tokens.
         AutoRoute(
           page: UserShellRoute.page,
-          path: '/',
+          path: '/explore',
           children: [
             AutoRoute(page: SearchRoute.page, path: '', initial: true),
             AutoRoute(page: FavoritesRoute.page, path: 'favorites'),
