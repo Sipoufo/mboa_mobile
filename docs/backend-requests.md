@@ -1646,3 +1646,194 @@ identity**:
 The apps then: the tenant's « Vérifier mon identité » in « Compte »; the
 identity sheet before « Signer » for whoever has no approved KYC; and the
 four fields added to the Pro KYC form.
+
+---
+
+## §40 — The founder's test round (2026-11-01): sign-in by email or WhatsApp, the landlord's view of agents' visits, and six smaller gaps
+
+The founder tested both apps end to end. Seven remarks need the API; the
+others are app-side and are being done. Rules marked *(to confirm)* are our
+proposal — the founder settles them and updates Doc 10.
+
+### A. M01 — tenants sign in with an email or a phone, and the phone's code goes by WhatsApp
+
+App Mboa is not for Cameroon only. The founder's choice (2026-11-01): **two
+ways in** — an email or a phone number from any country — and the phone's
+code is sent **by WhatsApp** instead of SMS (cheaper, and it reaches every
+country). Today App Mboa signs in by phone OTP only (`/auth/otp/request`,
+`/auth/otp/verify`, SMS), and only the Pro app knows email (with a
+password).
+
+Asked:
+1. `POST /auth/otp/request` takes **either** `phoneNumber` **or** `email`
+   (exactly one; `400 VALIDATION_ERROR` otherwise).
+   - Phone: the code goes **by WhatsApp** (an authentication template). If
+     the number cannot receive WhatsApp: `409 WHATSAPP_UNAVAILABLE`, so the
+     app can say so. *(to confirm: fall back to SMS by itself instead?)*
+   - Email: the code goes by email. Same rules as today's OTP: 6 digits, 5
+     minutes, 3 attempts, the same resend limits (`/auth/otp/resend` takes
+     the same one-of).
+   - The response says where it went: `{channel: WHATSAPP | SMS | EMAIL}`,
+     so the screen can say « Code envoyé sur WhatsApp ».
+2. `POST /auth/otp/verify` takes `{phoneNumber | email, code}`. As today, a
+   first verification creates the `USER` account, then the same tokens.
+3. An email belongs to **one account**, all roles together, like a phone
+   (RM-M01-04): `409 EMAIL_TAKEN` when another account holds it.
+4. `GET /me` returns `email` and `phoneNumber`, either possibly null.
+5. Adding or changing the other identifier, from the profile, verified the
+   same way: `POST /account/email/change` `{newEmail}` → a code to the new
+   address (and to the phone, if the account has one); `POST
+   /account/email/verify` `{newEmail, oldCode?, newCode}`. An email-only
+   account adds a phone through the existing phone-change routes, with no
+   « old » code.
+6. Every phone OTP in either app (sign-in, phone change, Pro registration)
+   uses the same channel, so a user meets one rule.
+
+Doc 10 RM-M01-02 (« OTP SMS ») changes — the founder's to edit. The apps
+then: « Téléphone | E-mail » on the sign-in screen, the country picker on
+the phone field (any country, Central Africa first), « Code envoyé sur
+WhatsApp », and the email in « Compte ».
+
+### B. M02 — RM-M02-02: the current number, typed before the new one
+
+The founder wants the person changing their number to type the **current**
+one first, then the new one. The app can compare it with `/me`, but the
+check belongs to the server, which already guards the change.
+
+Asked: `RequestPhoneChangeRequest` gains **`currentPhoneNumber`**
+(required). When it is not the account's: `400 CURRENT_PHONE_MISMATCH`,
+counted against the same attempt limit as a wrong code. Nothing else
+changes (two codes, both checked).
+
+### C. M02 — « Changer de profil »: one account, prestataire or agent
+
+The founder asks for a dedicated screen where a Pro account switches
+between **prestataire** and **agent** (not the prestataire's type, which
+RM-M02-03 already covers). Nothing in the API changes an account's role
+today.
+
+Rule *(to confirm)*:
+1. The switch is the account's own choice, from the app, and keeps the
+   account (same phone, email, profile, Mboa Score, messages).
+2. It is **refused while the old role still has commitments**, and the
+   server says which, so the screen can list them:
+   - prestataire → agent: published or reserved listings, a contract not
+     ended (signed or being negotiated), a paid subscription still
+     running;
+   - agent → prestataire: an accepted assignment, a visit to come.
+3. The KYC follows the person: an approved identity stays approved; what
+   the new role adds is asked for afterwards (the NUI of an agence, the
+   agent's selfie if it was never given).
+4. History is kept under the old role (past visits, past listings,
+   contracts), read only.
+
+Asked:
+1. `GET /me/role-switch` → `{target: AGENT | PRESTATAIRE, allowed,
+   blockers: [{code, count}]}` with `code` among `LIVE_LISTINGS`,
+   `OPEN_CONTRACTS`, `PAID_SUBSCRIPTION`, `ACCEPTED_ASSIGNMENTS`,
+   `UPCOMING_VISITS`.
+2. `POST /me/role-switch` `{target}` → the new tokens (the role is in the
+   JWT), or `409 ROLE_SWITCH_BLOCKED` with the same `blockers`.
+3. The admin sees the switch in the account's trace (date, from, to).
+
+### D. M07 — the landlord sees his agents' visits, and their reports
+
+The founder: « Le propriétaire doit pouvoir voir tout ce qui concerne les
+visites de ses agents, avec les rapports. » Today
+`GET /prestataires/me/visites` returns only the visits **he conducts
+himself**; a visit an agent conducts on his listing is invisible to him.
+The client's report is public (RM-M07bis-05), so reading it is not the
+problem — finding the visit is.
+
+Asked:
+1. `GET /prestataires/me/visites` gains **`conductedBy`**: `ME` (today's
+   behaviour, the default, so nothing breaks) · `AGENTS` · `ALL`. With
+   `AGENTS` or `ALL`, the visits **on his listings and residence units**
+   conducted by an agent, with the same status, date and listing filters.
+2. Each item says who conducts it: `visitor {kind: OWNER | AGENT,
+   agentId, displayName, photoKey}`.
+3. `GET /prestataires/me/visites/{id}` opens those too, **read only** for
+   him (no confirm, decline or cancel: the agent's), with what the agent's
+   own detail has: the two presence confirmations (RM-M07-05), the times,
+   the cancellation and its reason, whether a report exists
+   (`reviewId`), and the agent's comments on it (RM-M07bis-04). The
+   client's phone is **not** shown to him for an agent's visit — the agent
+   is the contact.
+4. The agent's service rating (RM-M07-07) stays the agent's: not shown.
+
+The apps then: « Mes visites » in Pro gets « Moi | Mes agents », and the
+visit detail opens the report.
+
+### E. M03 — a notification says which one it is (« Compte refusé » in red)
+
+The founder wants a refused account to read **in red** in the
+notifications page. `NotificationItem.type` is a family (`KYC`,
+`BADGE`…): an approval (N-11) and a refusal (N-12) are both `KYC`, so the
+app cannot tell them apart without reading the title.
+
+Asked: `NotificationItem` gains **`code`**, the Doc 10 catalogue id
+(`N-11`, `N-12`, `N-14`, `N-22`…), and **`outcome`**: `POSITIVE`,
+`NEGATIVE` or null when neither (a message, a reminder). The push's data
+payload carries the same two fields. The app paints `NEGATIVE` in red
+(KYC refused, badge refused or removed, payment failed, request declined)
+and needs no list of codes to do so.
+
+### F. M08 — an approved KYC from before §39 B has no document to sign with
+
+The founder's owner had an approved KYC and still had to type his identity
+at signing, with an empty form. Cause: the dev database has **5 approved
+KYCs without `idNumber`** — approved before §39 B made the KYC record the
+document. `identityRequired` is false only when the KYC holds the
+document, so these accounts type it, and there is nothing to pre-fill.
+
+Asked: as for the NUI (`PUT /kyc/me/nui`), **`PUT /kyc/me/document`**
+`{idDocumentType, idNumber, issuedOn, expiresOn, issuedAt}` on an approved
+KYC whose document details are missing, without a new review of the
+photos:
+- same validation as §39 B; `409 KYC_DOCUMENT_PRESENT` when they are
+  already there (a correction goes through the admin);
+- the admin checks the typed details against the stored photos when
+  convenient (the existing correction trace, `kyc_identity_correction`);
+  until then the contract's PDF says « déclarée », after it « vérifiée »;
+- `KycStatusResponse` gains `documentMissing: true` for those accounts, so
+  the app can ask once, on « Certifications », instead of at signing.
+
+### G. M10 — advance and deposit counted in the listing's rental period
+
+§37 C made them `advanceMonths` and `depositMonths`. The founder's rule
+(2026-11-01): they are counted in **the listing's own period** — weeks for
+a weekly rental, days for a daily one — on single listings and on
+residences' unit groups alike. « 2 mois » on a weekly studio reads wrong,
+and the landlord thinks in his period.
+
+Asked:
+1. **`advancePeriods`** and **`depositPeriods`** (0–24, optional) on
+   create / update, `UnitGroup`, `AnnonceResponse` and
+   `AnnonceDetailResponse`, in units of the listing's `rentalPeriod`.
+2. Existing values: for a `MONTH` listing they carry over as they are; for
+   another period, converted to the nearest whole period (rounded up).
+   `advanceMonths` / `depositMonths` stay readable one release, then go.
+3. The contract pre-fill (§37 C.3) becomes `depositAmount` =
+   `depositPeriods` × the rent.
+
+### H. Media — a cached host, thumbnails, and no key without its file
+
+Not from the founder's list, from the same tests. Photos come from the
+public `r2.dev` address, which Cloudflare rate-limits, does not cache, and
+documents as **not for production**: each photo takes 3 to 7 seconds and
+is downloaded again on every device, at full size, even for a 64 px
+thumbnail. While testing M07 we also found a profile whose photo key is
+recorded but **whose file is not in the bucket** (404).
+
+Asked:
+1. A **custom domain** on the bucket (e.g. a `media.` subdomain), served
+   with `Cache-Control: public, max-age=31536000, immutable` — object keys
+   are unique, a changed photo gets a new key — and `Environment` gets the
+   new base URL per environment.
+2. **Thumbnails**: either Cloudflare image transformations on that domain
+   (`width` = 200 / 400 / 1080), or a 400 px variant written beside each
+   upload under a predictable key. Tell us which; the apps ask for the
+   smallest size that fills the space.
+3. **A key is only recorded once its file exists**: whatever route records
+   an uploaded key (profile photo, listing photos, evidence…) checks the
+   object with a `HEAD` and answers `400 MEDIA_NOT_UPLOADED` otherwise.
