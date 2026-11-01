@@ -286,7 +286,7 @@ reaches for in a listener, where the compiler cannot see it. The three
 session-scoped blocs are getIt singletons precisely so a second provider is
 free.
 
-Every AppBar back button is `MboaHeaderBackButton` rather than auto_route's
+Every back arrow is `MboaHeaderBackButton` rather than auto_route's
 `AutoLeadingButton`: the latter's `AutoRouter.of` throws without a router,
 which makes every screen carrying it unpumpable — and unpumpable is how this
 bug keeps shipping.
@@ -297,9 +297,25 @@ stack, so `Navigator.of(context).canPop()` is false there and a back arrow
 guarded by it never appears — the Settings hub had no way out, and neither did
 Mes visites.
 
-An `AppBar` uses auto_route's `AutoLeadingButton`; a screen painting its own
-header uses `MboaHeaderBackButton`, which asks the **root** navigator and holds
-the space when there is nothing to pop, so a centred title stays centred.
+**One rule since 2026-11-01 (`54b6337`).** The arrow shows when the router
+that holds the page can go back, itself or through its parents
+(`StackRouterScope` → `canPop(ignoreChildRoutes: true)`), and goes back
+through that same router (`maybePop`, which hands over to the parent when its
+own stack is spent). A tab has nothing beneath it: no arrow. Before, the
+button asked the root navigator (closed the whole nested stack, or vanished)
+and Material's default asked the nearest one (missed every page alone in a
+nested router).
+- An `AppBar`: `automaticallyImplyLeading: false, leading:
+  MboaHeaderBackButton.leading(context)` — null when there is nothing to go
+  back to, so the title is not pushed right. **Every AppBar sets both**, or
+  Material adds its own arrow by the other rule.
+- A self-painted header: `MboaHeaderBackButton()`, which keeps its 48×48
+  footprint empty when there is no arrow.
+- A screen closing itself once done: `MboaHeaderBackButton.pop(context)` —
+  never `Navigator.of(context).maybePop()`, which does nothing on a page alone
+  in a nested router (the save went through, the screen stayed).
+- Without a router (tests, goldens) it falls back to the nearest navigator; a
+  test's `MockStackRouter` must answer `canPop`.
 
 `packages/mboa_ui` is now in `make test` — its 13 tests existed and had never
 run.
@@ -875,8 +891,11 @@ white cards with dark-green headings.
   status), then **Visites** (the RM-M11-10 switch + a row into the agent pool),
   **Caractéristiques** (type, dimensions, pièces, salles de bain, meublé,
   charges, disponibilité, description — the model carried all of it and the
-  screen showed none of it), the design's two empty cards, Équipements, and
-  Historique.
+  screen showed none of it), Statistiques, **Occupant**, Équipements and
+  **Historique**. Occupant and Historique (`4aa3d96`, RM-M31-09) read the homes
+  the listing's signed contracts opened (`listMyTenantHomes?annonceId`):
+  the running tenancy — or the next to begin — and the ended ones, latest
+  first; each row opens that tenancy's space (`ListingTenanciesBloc`).
 - **Détails de la résidence** — same header, then three count tiles (total /
   publiées / occupées, the last counted from the units since no field carries
   it), the units filter and rows with an icon chip.
@@ -1330,8 +1349,7 @@ Found missing, 2026-10-26 (the founder's MVP check):
 - **M01 Google / Apple sign-in**: buttons shown disabled; the API exists
   (`/auth/social/login`); needs the provider configuration.
 - **« Bientôt » left in Pro** (the four with a screen behind them are wired,
-  `f221b93`): a listing's « Historique », « En attente de validation »,
-  Prospections, the menu's Recherche / Explorer / Signets / Autres — none in
+  `f221b93`): « En attente de validation », Prospections, the menu's Recherche / Explorer / Signets / Autres — none in
   Doc 10 — and KYC NUI / adresse (backend).
 - **M04 neighbourhood filter**: `districtIds` exists in the API.
 - **M09 « Note des propriétaires »**: the server marks it unavailable.
