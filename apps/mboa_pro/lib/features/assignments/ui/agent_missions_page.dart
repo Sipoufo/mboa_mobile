@@ -32,7 +32,11 @@ class AgentMissionsPage extends StatelessWidget implements AutoRouteWrapper {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.agentNavMissions)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.agentNavMissions),
+      ),
       body: BlocConsumer<AgentMissionsBloc, AgentMissionsState>(
         listenWhen: (prev, curr) =>
             curr is MissionsReady && curr.lastActionFailed,

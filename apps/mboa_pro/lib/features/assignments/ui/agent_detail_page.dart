@@ -56,7 +56,11 @@ class _AgentDetailPageState extends State<AgentDetailPage> {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.agentDetailTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.agentDetailTitle),
+      ),
       body: BlocBuilder<MyAgentsBloc, MyAgentsState>(
         builder: (context, agentsState) {
           // Looked up by id rather than passed in, so a refresh behind this

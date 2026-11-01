@@ -37,7 +37,11 @@ class _MessagesPageState extends State<MessagesPage> {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.messagingTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.messagingTitle),
+      ),
       body: ConversationsView(
         emptyBody: l10n.messagingEmptyProvider,
         onOpen: (conversation) =>
@@ -68,6 +72,8 @@ class ThreadPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         actions: [
           // RM-M09-04 — a thread is the contact that opens the score; only a
           // prestataire may read it (agents get none), and only a person

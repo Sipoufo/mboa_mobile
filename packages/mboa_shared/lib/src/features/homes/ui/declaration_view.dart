@@ -79,7 +79,8 @@ class DeclarationView extends StatelessWidget {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(l10n.declarationTitle),
           actions: [
             if ((onDispute, state) case (final dispute?, DeclarationReady(:final declaration)))

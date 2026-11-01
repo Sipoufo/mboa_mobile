@@ -106,8 +106,9 @@ class AnnonceFormPage extends StatelessWidget implements AutoRouteWrapper {
           child: Scaffold(
             backgroundColor: colors.background,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               leading: previous == null
-                  ? null
+                  ? MboaHeaderBackButton.leading(context)
                   : IconButton(
                       icon: Icon(LucideIcons.arrowLeft, color: colors.ink),
                       onPressed: submitting ? null : () => goTo(previous),

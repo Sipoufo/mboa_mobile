@@ -40,7 +40,11 @@ class HomeContactsView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.contactsUsefulTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.contactsUsefulTitle),
+      ),
       body: BlocBuilder<HomeContactsBloc, HomeContactsState>(
         builder: (context, state) => switch (state) {
           HomeContactsLoading() => const Center(child: Loader()),

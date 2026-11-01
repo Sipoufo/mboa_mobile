@@ -60,6 +60,8 @@ class _AnnonceDetailPageState extends State<AnnonceDetailPage> {
         return Scaffold(
           backgroundColor: context.mboaColors.background,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: MboaHeaderBackButton.leading(context),
             title: Text(l10n.annonceDetailTitle),
             actions: [
               if (annonce != null && state is AnnoncesReady)

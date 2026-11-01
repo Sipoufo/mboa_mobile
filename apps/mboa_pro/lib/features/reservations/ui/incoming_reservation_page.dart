@@ -96,7 +96,11 @@ class IncomingReservationView extends StatelessWidget {
       },
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.proReservationDetailTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.proReservationDetailTitle),
+        ),
         body: switch (state) {
           IncomingReservationLoading() => const Center(child: Loader()),
           IncomingReservationFailure(:final id) => Center(

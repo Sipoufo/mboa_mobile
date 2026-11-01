@@ -59,7 +59,11 @@ class ContactsView extends StatelessWidget {
       listener: (context, _) => MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.commonError),
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.contactsUsefulTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.contactsUsefulTitle),
+        ),
         body: switch (state) {
           MyContactsLoading() => const Center(child: Loader()),
           MyContactsFailure() => Center(
@@ -296,7 +300,8 @@ class _ContactFormViewState extends State<ContactFormView> {
         return Scaffold(
           backgroundColor: colors.background,
           appBar: AppBar(
-            leading: const MboaHeaderBackButton(),
+            automaticallyImplyLeading: false,
+            leading: MboaHeaderBackButton.leading(context),
             title: Text(state.editing == null ? l10n.contactsAdd : l10n.contactsEdit),
           ),
           body: ListView(

@@ -27,7 +27,11 @@ class MesBiensPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.mesBiensTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.mesBiensTitle),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.router.push(
           AnnonceFormRoute(kind: AnnonceKind.single),

@@ -46,7 +46,11 @@ class AccountPage extends StatelessWidget implements AutoRouteWrapper {
     if (!getIt<SessionSnapshot>().hasSession) {
       return Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(title: Text(I18n.of(context).navAccount)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(I18n.of(context).navAccount),
+        ),
         body: const _SignInPrompt(),
       );
     }

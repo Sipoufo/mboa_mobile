@@ -51,7 +51,11 @@ class ListingDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.listingTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.listingTitle),
+      ),
       body: BlocBuilder<ListingDetailBloc, ListingDetailState>(
         builder: (context, state) => switch (state) {
           ListingDetailInitial() || ListingDetailLoadInProgress() =>

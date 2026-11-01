@@ -23,7 +23,11 @@ class EvidenceCompareView extends StatelessWidget {
     return BlocBuilder<EvidenceCompareBloc, EvidenceCompareState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.evidenceCompareTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.evidenceCompareTitle),
+        ),
         body: switch (state) {
           EvidenceCompareLoading() => const Center(child: Loader()),
           EvidenceCompareFailure(:final contractId) => Center(

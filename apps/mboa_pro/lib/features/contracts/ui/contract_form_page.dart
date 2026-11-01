@@ -149,6 +149,8 @@ class _ContractFormPageState extends State<ContractFormPage> {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(
           widget.contractId == null
               ? l10n.contractFormTitleNew

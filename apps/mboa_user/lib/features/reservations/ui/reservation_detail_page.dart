@@ -46,7 +46,11 @@ class ReservationDetailView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.reservationDetailTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.reservationDetailTitle),
+      ),
       body: BlocConsumer<ReservationBloc, ReservationState>(
         listenWhen: (previous, current) =>
             previous is ReservationReady && previous.isBusy && current is ReservationReady,

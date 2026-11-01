@@ -60,7 +60,11 @@ class AccessRestrictedPage extends StatelessWidget {
     };
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.accessRestrictedTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.accessRestrictedTitle),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(Dimens.spacingXl),

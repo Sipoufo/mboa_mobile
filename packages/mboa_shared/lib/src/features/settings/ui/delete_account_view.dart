@@ -76,6 +76,8 @@ class _DeleteAccountFormState extends State<_DeleteAccountForm> {
           child: Scaffold(
             backgroundColor: colors.surface,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: MboaHeaderBackButton.leading(context),
               backgroundColor: colors.surface,
               foregroundColor: colors.primary,
               title: Text(l10n.deleteAccountTitle, style: context.mboaText.h3.copyWith(color: colors.primary)),

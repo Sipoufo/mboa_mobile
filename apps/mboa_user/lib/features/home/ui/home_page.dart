@@ -18,6 +18,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.mboaColors.surface,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.appName),
         actions: [
           IconButton(

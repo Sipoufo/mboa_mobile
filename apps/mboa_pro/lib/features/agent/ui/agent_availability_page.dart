@@ -34,7 +34,11 @@ class AgentAvailabilityPage extends StatelessWidget implements AutoRouteWrapper 
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.agentAvailabilityTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.agentAvailabilityTitle),
+      ),
       body: BlocConsumer<AgentAvailabilityBloc, AgentAvailabilityState>(
         listenWhen: (prev, curr) =>
             curr is AvailabilityReady &&

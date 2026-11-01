@@ -33,7 +33,11 @@ class AgentVisitsPage extends StatelessWidget implements AutoRouteWrapper {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.visitsTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.visitsTitle),
+      ),
       body: BlocBuilder<AgentAgendaBloc, VisitsAgendaState>(
         builder: (context, state) => switch (state) {
           VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),

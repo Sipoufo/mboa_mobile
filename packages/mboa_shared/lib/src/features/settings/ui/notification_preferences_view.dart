@@ -41,6 +41,8 @@ class NotificationPreferencesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.surface,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         backgroundColor: colors.surface,
         foregroundColor: colors.primary,
         title: Text(l10n.notifPrefsTitle, style: context.mboaText.h3.copyWith(color: colors.primary)),

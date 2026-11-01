@@ -123,7 +123,11 @@ class LedgerView extends StatelessWidget {
       ),
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.financeLedgerTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.financeLedgerTitle),
+        ),
         body: switch (state) {
           LedgerLoading() => const Center(child: Loader()),
           LedgerFailure(:final planRequired) => FinanceLoadFailure(
@@ -563,7 +567,8 @@ class _LedgerEntryFormViewState extends State<LedgerEntryFormView> {
         return Scaffold(
           backgroundColor: colors.background,
           appBar: AppBar(
-            leading: const MboaHeaderBackButton(),
+            automaticallyImplyLeading: false,
+            leading: MboaHeaderBackButton.leading(context),
             title: Text(state.isEditing ? l10n.ledgerFormTitleEdit : l10n.ledgerFormTitleNew),
           ),
           body: ListView(

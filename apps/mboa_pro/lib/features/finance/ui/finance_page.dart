@@ -62,7 +62,11 @@ class FinanceView extends StatelessWidget {
     return BlocBuilder<FinanceAccessBloc, FinanceAccessState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.financeAddonName)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.financeAddonName),
+        ),
         body: switch (state) {
           FinanceAccessLoading() => const Center(child: Loader()),
           FinanceAccessFailure() => Center(

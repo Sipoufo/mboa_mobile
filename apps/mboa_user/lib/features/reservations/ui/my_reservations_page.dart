@@ -39,7 +39,11 @@ class MyReservationsView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.reservationsTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.reservationsTitle),
+      ),
       body: BlocBuilder<MyReservationsBloc, MyReservationsState>(
         builder: (context, state) => switch (state) {
           MyReservationsLoading() => const Center(child: Loader()),

@@ -62,7 +62,11 @@ class InvoiceView extends StatelessWidget {
     return BlocBuilder<InvoiceBloc, InvoiceState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.invoiceTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.invoiceTitle),
+        ),
         body: switch (state) {
           InvoiceLoading() => const Center(child: Loader()),
           InvoiceFailure(:final id) => Center(

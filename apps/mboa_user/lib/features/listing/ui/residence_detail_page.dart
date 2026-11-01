@@ -37,7 +37,11 @@ class ResidenceDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.residenceTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.residenceTitle),
+      ),
       body: BlocBuilder<ResidenceDetailBloc, ResidenceDetailState>(
         builder: (context, state) => switch (state) {
           ResidenceDetailInitial() || ResidenceDetailLoadInProgress() => const Center(child: Loader()),

@@ -39,7 +39,11 @@ class VisitDetailPage extends StatelessWidget implements AutoRouteWrapper {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.visitsDetailTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.visitsDetailTitle),
+      ),
       body: BlocConsumer<VisitDetailBloc, VisitDetailState>(
         listenWhen: (prev, curr) =>
             curr is VisitWasCancelled ||

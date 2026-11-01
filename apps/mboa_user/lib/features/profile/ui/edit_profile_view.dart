@@ -88,7 +88,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         if (state is! UserProfileReady) return;
         if (state.justSaved) {
           MboaToast.success(context: context, title: l10n.profileSaved);
-          Navigator.of(context).maybePop();
+          MboaHeaderBackButton.pop(context);
         } else if (state.saveFailed) {
           MboaToast.error(
             context: context,
@@ -188,10 +188,7 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: Dimens.spacingSm),
       child: Row(
         children: [
-          IconButton(
-            onPressed: () => Navigator.of(context).maybePop(),
-            icon: Icon(LucideIcons.arrowLeft, color: colors.primary),
-          ),
+          MboaHeaderBackButton(color: colors.primary),
           Expanded(
             child: Text(
               title,

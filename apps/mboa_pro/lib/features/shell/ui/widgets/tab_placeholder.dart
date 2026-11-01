@@ -19,7 +19,11 @@ class TabPlaceholder extends StatelessWidget {
     final colors = context.mboaColors;
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(title),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(Dimens.spacingXl),

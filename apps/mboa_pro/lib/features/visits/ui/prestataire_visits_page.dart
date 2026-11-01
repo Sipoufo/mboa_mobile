@@ -47,7 +47,11 @@ class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper 
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.visitsMineTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.visitsMineTitle),
+      ),
       body: BlocListener<PrestataireVisitsBloc, PrestataireVisitsState>(
         listener: (context, state) {
           switch (state) {

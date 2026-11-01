@@ -38,7 +38,7 @@ class _ChangePhoneScaffold extends StatelessWidget {
         switch (state) {
           case ChangePhoneSuccess():
             MboaToast.success(context: context, title: l10n.changePhoneSuccess);
-            Navigator.of(context).maybePop();
+            MboaHeaderBackButton.pop(context);
           case ChangePhoneEnterCodes(justResent: true):
             MboaToast.info(context: context, title: l10n.authOtpResent);
           case ChangePhoneEnterPhone(error: final e?):
@@ -57,6 +57,8 @@ class _ChangePhoneScaffold extends StatelessWidget {
           child: Scaffold(
             backgroundColor: colors.surface,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: MboaHeaderBackButton.leading(context),
               backgroundColor: colors.surface,
               foregroundColor: colors.primary,
               title: Text(l10n.settingsChangePhone, style: context.mboaText.h3.copyWith(color: colors.primary)),

@@ -93,7 +93,11 @@ class _AgentZonesPageState extends State<AgentZonesPage> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.agentZonesTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.agentZonesTitle),
+      ),
       body: BlocConsumer<AgentProfileBloc, AgentProfileState>(
         listenWhen: (prev, curr) => curr is AgentProfileReady && curr.justSaved,
         listener: (context, state) => context.router.maybePop(),

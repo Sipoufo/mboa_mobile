@@ -29,7 +29,8 @@ class ResidentReviewView extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: const MboaHeaderBackButton(),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.residentReviewTitle),
       ),
       body: BlocConsumer<ResidentReviewBloc, ResidentReviewState>(

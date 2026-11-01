@@ -118,7 +118,11 @@ class _RequestReservationFormState extends State<RequestReservationForm> {
 
         return Scaffold(
           backgroundColor: colors.background,
-          appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.reservationTitle)),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: MboaHeaderBackButton.leading(context),
+            title: Text(l10n.reservationTitle),
+          ),
           body: ListView(
             padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, Dimens.spacing, Dimens.screenMargin, Dimens.spacingXl),
             children: [

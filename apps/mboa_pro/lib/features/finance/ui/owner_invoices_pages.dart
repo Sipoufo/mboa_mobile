@@ -66,7 +66,11 @@ class OwnerInvoicesView extends StatelessWidget {
     return BlocBuilder<OwnerInvoicesBloc, OwnerInvoicesState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.invoicesTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.invoicesTitle),
+        ),
         body: switch (state) {
           OwnerInvoicesLoading() => const Center(child: Loader()),
           OwnerInvoicesFailure(:final planRequired) => FinanceLoadFailure(
@@ -238,7 +242,8 @@ class OwnerInvoiceView extends StatelessWidget {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(l10n.invoiceTitle),
           actions: [
             // Paid by hand: nothing expected, the withdrawal is rare — behind

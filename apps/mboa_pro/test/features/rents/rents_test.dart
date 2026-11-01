@@ -30,7 +30,12 @@ class MockWaitingDeclarationsBloc extends MockBloc<WaitingDeclarationsEvent, Wai
 
 class MockHomeSpaceBloc extends MockBloc<HomeSpaceEvent, HomeSpaceState> implements HomeSpaceBloc {}
 
-class MockStackRouter extends Mock implements StackRouter {}
+class MockStackRouter extends Mock implements StackRouter {
+  // The page is pumped alone: nothing under it, so no back arrow.
+  @override
+  bool canPop({bool ignoreChildRoutes = false, bool ignoreParentRoutes = false, bool ignorePagelessRoutes = false}) =>
+      false;
+}
 
 class MockAppRouter extends Mock implements AppRouter {}
 

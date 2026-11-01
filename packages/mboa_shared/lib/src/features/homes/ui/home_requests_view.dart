@@ -74,7 +74,11 @@ class HomeRequestsView extends StatelessWidget {
     return BlocBuilder<HomeRequestsBloc, HomeRequestsState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.requestsTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.requestsTitle),
+        ),
         body: switch (state) {
           HomeRequestsLoading() => const Center(child: Loader()),
           HomeRequestsFailure() => Center(
@@ -245,7 +249,11 @@ class _HomeRequestViewState extends State<HomeRequestView> {
       },
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.requestDetailTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.requestDetailTitle),
+        ),
         body: switch (state) {
           HomeRequestLoading() => const Center(child: Loader()),
           HomeRequestFailure(:final id) => Center(

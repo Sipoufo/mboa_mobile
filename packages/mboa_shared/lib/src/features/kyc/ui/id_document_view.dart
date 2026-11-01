@@ -211,7 +211,7 @@ class _SideCapture extends StatelessWidget {
           padding: const EdgeInsets.all(Dimens.spacingLg),
           child: Button.primary(
             title: l10n.kycDone,
-            onPressed: done ? () => Navigator.of(context).maybePop() : null,
+            onPressed: done ? () => MboaHeaderBackButton.pop(context) : null,
           ),
         ),
       ],
@@ -262,10 +262,7 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: Dimens.spacingSm),
       child: Row(
         children: [
-          IconButton(
-            onPressed: () => Navigator.of(context).maybePop(),
-            icon: Icon(LucideIcons.arrowLeft, color: colors.primary),
-          ),
+          MboaHeaderBackButton(color: colors.primary),
           Expanded(
             child: Text(
               title,

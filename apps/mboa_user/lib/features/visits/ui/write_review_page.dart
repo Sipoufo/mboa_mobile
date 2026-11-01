@@ -46,7 +46,8 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(
-        leading: const MboaHeaderBackButton(),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.reviewWriteTitle),
       ),
       body: BlocConsumer<WriteReviewBloc, WriteReviewState>(

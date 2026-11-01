@@ -21,7 +21,11 @@ class NotificationsPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.menuNotifications)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.menuNotifications),
+      ),
       body: BlocProvider<InboxBloc>.value(
         // The session's one instance: the bell reads it too.
         value: getIt<InboxBloc>()..add(const InboxRequested()),

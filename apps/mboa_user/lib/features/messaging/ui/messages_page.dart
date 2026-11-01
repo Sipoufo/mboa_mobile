@@ -45,7 +45,11 @@ class _MessagesPageState extends State<MessagesPage> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.messagingTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.messagingTitle),
+      ),
       body: !getIt<SessionSnapshot>().hasSession
           ? _SignInPrompt()
           : ConversationsView(
@@ -122,6 +126,8 @@ class ThreadPage extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

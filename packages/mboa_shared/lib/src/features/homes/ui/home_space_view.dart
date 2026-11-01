@@ -62,7 +62,8 @@ class HomeSpaceView extends StatelessWidget {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(
             state is HomeSpaceReady ? (state.home.annonceTitle ?? l10n.myHomeTitle) : l10n.myHomeTitle,
             maxLines: 1,

@@ -67,7 +67,11 @@ class EvidenceView extends StatelessWidget {
     return BlocBuilder<EvidenceBloc, EvidenceState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.evidenceTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.evidenceTitle),
+        ),
         body: switch (state) {
           EvidenceLoading() => const Center(child: Loader()),
           EvidenceFailure() => Center(
@@ -301,7 +305,8 @@ class EvidenceBatchView extends StatelessWidget {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(l10n.evidenceTitle),
           actions: [
             if ((onDispute, state) case (final dispute?, EvidenceBatchReady(:final batch)))

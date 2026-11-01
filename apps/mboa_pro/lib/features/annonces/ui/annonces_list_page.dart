@@ -38,7 +38,11 @@ class _AnnoncesListPageState extends State<AnnoncesListPage> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.annoncesSingleTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.annoncesSingleTitle),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.router.push(
           AnnonceFormRoute(kind: AnnonceKind.single),

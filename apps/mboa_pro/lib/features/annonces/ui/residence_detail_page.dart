@@ -91,7 +91,11 @@ class _ResidenceDetailPageState extends State<ResidenceDetailPage> {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.residenceDetailTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.residenceDetailTitle),
+      ),
       body: BlocBuilder<ResidencesBloc, ResidencesState>(
         builder: (context, state) {
           if (state is! ResidencesReady) {

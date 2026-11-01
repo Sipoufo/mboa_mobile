@@ -36,7 +36,11 @@ class _AgentProfilePageState extends State<AgentProfilePage> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.agentProfileTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.agentProfileTitle),
+      ),
       body: BlocConsumer<AgentProfileBloc, AgentProfileState>(
         listenWhen: (prev, curr) =>
             curr is AgentProfileReady &&

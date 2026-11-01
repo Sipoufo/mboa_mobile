@@ -84,7 +84,11 @@ class ProvidersView extends StatelessWidget {
     return BlocBuilder<ProvidersBloc, ProvidersState>(
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.financeProvidersTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.financeProvidersTitle),
+        ),
         body: switch (state) {
           ProvidersLoading() => const Center(child: Loader()),
           ProvidersFailure(:final planRequired) => FinanceLoadFailure(
@@ -325,7 +329,8 @@ class ProviderView extends StatelessWidget {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(state is ProviderReady ? state.provider.name : l10n.financeProvidersTitle),
         ),
         body: switch (state) {
@@ -549,7 +554,8 @@ class _ProviderFormViewState extends State<ProviderFormView> {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(state.isEditing ? l10n.providerFormTitleEdit : l10n.providerFormTitleNew),
         ),
         body: ListView(
@@ -747,7 +753,8 @@ class _ProviderPaymentFormViewState extends State<ProviderPaymentFormView> {
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(state.isEditing ? l10n.providerPaymentTitleEdit : l10n.providerPaymentTitleNew),
         ),
         body: ListView(

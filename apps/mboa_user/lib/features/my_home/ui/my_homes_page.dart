@@ -54,7 +54,8 @@ class MyHomesView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: colors.background,
         appBar: AppBar(
-          leading: const MboaHeaderBackButton(),
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
           title: Text(l10n.myHomesTitle),
           bottom: TabBar(
             labelColor: colors.primary,

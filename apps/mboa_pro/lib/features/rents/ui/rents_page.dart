@@ -57,7 +57,8 @@ class RentsView extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: const MboaHeaderBackButton(),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.proRentsTitle),
         actions: [
           // M24–M26 — next door to the rents: the invoices and the register.

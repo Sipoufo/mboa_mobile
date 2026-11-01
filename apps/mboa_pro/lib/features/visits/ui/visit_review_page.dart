@@ -52,6 +52,8 @@ class _VisitReviewPageState extends State<VisitReviewPage> {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.reviewTitle),
         actions: [
           BlocBuilder<VisitReviewBloc, VisitReviewState>(

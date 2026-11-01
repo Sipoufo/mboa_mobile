@@ -39,7 +39,11 @@ class _MesAgentsPageState extends State<MesAgentsPage> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.agentsMineTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.agentsMineTitle),
+      ),
       floatingActionButton: FloatingActionButton(
         // Assignment always starts from a property — an agent is assigned to a
         // bien, never to the prestataire in general.

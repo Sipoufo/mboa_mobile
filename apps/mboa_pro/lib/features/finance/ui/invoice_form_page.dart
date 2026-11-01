@@ -124,12 +124,13 @@ class _InvoiceFormViewState extends State<InvoiceFormView> {
           child: Scaffold(
             backgroundColor: colors.background,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               leading: ready && !state.isFirstStep
                   ? IconButton(
                       icon: Icon(LucideIcons.arrowLeft, color: colors.ink),
                       onPressed: state.isSubmitting ? null : () => _goTo(state.previousStep!),
                     )
-                  : const MboaHeaderBackButton(),
+                  : MboaHeaderBackButton.leading(context),
               title: Text(state.isEditing ? l10n.ownerInvoiceEdit : l10n.ownerInvoiceNew),
             ),
             body: state.isLoadingTenancies

@@ -120,7 +120,7 @@ class _OtpFormState extends State<_OtpForm> {
         return StackedLoaderView(
           isLoading: loading,
           child: AuthScaffold(
-            onBack: () => Navigator.of(context).maybePop(),
+            onBack: () => MboaHeaderBackButton.pop(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

@@ -100,7 +100,8 @@ class _ListingMapPageState extends State<ListingMapPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const MboaHeaderBackButton(),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(widget.title ?? l10n.listingMapTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
       ),
       body: Environment.hasMapTilerKey

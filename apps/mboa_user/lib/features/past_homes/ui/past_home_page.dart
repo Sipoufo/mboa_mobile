@@ -81,7 +81,11 @@ class PastHomeView extends StatelessWidget {
           MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.pastHomeStatementFailed),
       builder: (context, state) => Scaffold(
         backgroundColor: colors.background,
-        appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.pastHomeTitle)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.pastHomeTitle),
+        ),
         body: switch (state) {
           PastHomeLoading() => const Center(child: Loader()),
           PastHomeFailure(:final contractId) => Center(

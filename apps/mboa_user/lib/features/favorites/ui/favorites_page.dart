@@ -63,14 +63,22 @@ class _FavoritesPageState extends State<FavoritesPage> {
     if (!getIt<SessionSnapshot>().hasSession) {
       return Scaffold(
         backgroundColor: context.mboaColors.background,
-        appBar: AppBar(title: Text(l10n.navFavorites)),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: MboaHeaderBackButton.leading(context),
+          title: Text(l10n.navFavorites),
+        ),
         body: const _SignInPrompt(),
       );
     }
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.navFavorites)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.navFavorites),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

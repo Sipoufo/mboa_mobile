@@ -20,7 +20,12 @@ import '../../../_helpers/load_brand_fonts.dart';
 class MockAnnoncesBloc extends MockBloc<AnnoncesEvent, AnnoncesState>
     implements AnnoncesBloc {}
 
-class MockStackRouter extends Mock implements StackRouter {}
+class MockStackRouter extends Mock implements StackRouter {
+  // The page is pumped alone: nothing under it, so no back arrow.
+  @override
+  bool canPop({bool ignoreChildRoutes = false, bool ignoreParentRoutes = false, bool ignorePagelessRoutes = false}) =>
+      false;
+}
 
 class _FakeRoute extends Fake implements PageRouteInfo<dynamic> {}
 

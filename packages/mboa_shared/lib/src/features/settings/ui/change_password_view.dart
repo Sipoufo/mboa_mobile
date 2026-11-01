@@ -64,7 +64,7 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
         switch (state) {
           case ChangePasswordSuccess():
             MboaToast.success(context: context, title: l10n.changePasswordSuccess);
-            Navigator.of(context).maybePop();
+            MboaHeaderBackButton.pop(context);
           case ChangePasswordFailure():
             MboaToast.error(
               context: context,
@@ -82,6 +82,8 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
           child: Scaffold(
             backgroundColor: colors.surface,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: MboaHeaderBackButton.leading(context),
               backgroundColor: colors.surface,
               foregroundColor: colors.primary,
               title: Text(l10n.settingsChangePassword, style: context.mboaText.h3.copyWith(color: colors.primary)),

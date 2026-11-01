@@ -50,7 +50,11 @@ class _PlansPageState extends State<PlansPage> {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.plansTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.plansTitle),
+      ),
       body: FutureBuilder<List<TierOption>>(
         future: _tiers,
         builder: (context, snapshot) {

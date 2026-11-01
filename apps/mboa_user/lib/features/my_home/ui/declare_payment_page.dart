@@ -150,7 +150,8 @@ class _DeclarePaymentViewState extends State<DeclarePaymentView> {
         return Scaffold(
           backgroundColor: colors.background,
           appBar: AppBar(
-            leading: const MboaHeaderBackButton(),
+            automaticallyImplyLeading: false,
+            leading: MboaHeaderBackButton.leading(context),
             title: Text(switch (form.kind) {
               DeclarationKind.rent => l10n.declareTitle,
               DeclarationKind.deposit => l10n.declareDepositTitle,

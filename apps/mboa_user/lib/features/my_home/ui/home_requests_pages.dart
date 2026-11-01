@@ -127,7 +127,11 @@ class HomeRequestFormView extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: colors.background,
-          appBar: AppBar(leading: const MboaHeaderBackButton(), title: Text(l10n.requestNew)),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: MboaHeaderBackButton.leading(context),
+            title: Text(l10n.requestNew),
+          ),
           body: ListView(
             padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, 0, Dimens.screenMargin, Dimens.spacingXl),
             children: [

@@ -46,7 +46,11 @@ class SavedSearchResultsPage extends StatelessWidget implements AutoRouteWrapper
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
+      ),
       body: BlocConsumer<SavedSearchResultsBloc, SavedSearchResultsState>(
         // Reading the results reset the count on the server; the list follows.
         listenWhen: (prev, curr) =>

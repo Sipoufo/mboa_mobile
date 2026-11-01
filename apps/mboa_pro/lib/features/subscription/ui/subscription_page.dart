@@ -23,7 +23,11 @@ class SubscriptionPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(title: Text(l10n.subscriptionTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.subscriptionTitle),
+      ),
       body: RefreshIndicator(
         onRefresh: () async => context
             .read<SubscriptionBloc>()

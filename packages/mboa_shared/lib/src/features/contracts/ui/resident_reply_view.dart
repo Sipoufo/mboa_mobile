@@ -37,7 +37,8 @@ class ResidentReplyView extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        leading: const MboaHeaderBackButton(),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.residentReviewReadTitle),
       ),
       body: BlocConsumer<ResidentReplyBloc, ResidentReplyState>(
