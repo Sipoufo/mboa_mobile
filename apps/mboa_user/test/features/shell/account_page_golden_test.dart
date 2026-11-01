@@ -14,6 +14,14 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../_helpers/load_brand_fonts.dart';
 
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
+/// RM-M01bis-01 — the KYC « Compte » reads for its invitation banner.
+KycReady kycOf(KycStatus status) {
+  final data = KycStatusData(status: status);
+  return KycReady(data, KycDraft.of(data));
+}
+
 class MockUserProfileBloc extends MockBloc<ProfileEvent, ProfileState> implements UserProfileBloc {}
 
 class MockAuthBloc extends MockBloc<AuthEvent, AuthState> implements AuthBloc {}
@@ -35,6 +43,9 @@ void main() {
       getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
     }
     getIt<SessionSnapshot>().markAuthenticated();
+    final kyc = MockKycCubit();
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.approved));
+    getIt.registerSingleton<KycCubit>(kyc);
   });
 
   tearDown(getIt.reset);

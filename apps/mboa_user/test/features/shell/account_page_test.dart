@@ -13,6 +13,14 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../_helpers/load_brand_fonts.dart';
 
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
+/// RM-M01bis-01 — the KYC « Compte » reads for its invitation banner.
+KycReady kycOf(KycStatus status) {
+  final data = KycStatusData(status: status);
+  return KycReady(data, KycDraft.of(data));
+}
+
 class MockUserProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements UserProfileBloc {}
 
@@ -26,6 +34,7 @@ class MockAuthBloc extends MockBloc<AuthEvent, AuthState> implements AuthBloc {}
 void main() {
   late MockUserProfileBloc profile;
   late MockAuthBloc auth;
+  late MockKycCubit kyc;
 
   const me = BaseProfile(
     firstName: 'Awa',
@@ -44,6 +53,9 @@ void main() {
     if (!getIt.isRegistered<SessionSnapshot>()) {
       getIt.registerLazySingleton<SessionSnapshot>(SessionSnapshot.new);
     }
+    kyc = MockKycCubit();
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.approved));
+    getIt.registerSingleton<KycCubit>(kyc);
   });
 
   tearDown(getIt.reset);
@@ -66,6 +78,22 @@ void main() {
     );
     await tester.pumpAndSettle();
   }
+
+  testWidgets('RM-M01bis-01 — invited to the KYC until verified, optional as it is for a tenant', (tester) async {
+    getIt<SessionSnapshot>().markAuthenticated();
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.notSubmitted));
+    await pump(tester);
+
+    expect(find.text('Facultatif — +20 points à ton Mboa Score.'), findsOneWidget);
+  });
+
+  testWidgets('verified: no invitation', (tester) async {
+    getIt<SessionSnapshot>().markAuthenticated();
+    await pump(tester);
+
+    expect(find.byType(KycInviteBanner), findsOneWidget);
+    expect(find.text('Vérifie ton identité'), findsNothing);
+  });
 
   testWidgets('signed in, it says who you are', (tester) async {
     getIt<SessionSnapshot>().markAuthenticated();

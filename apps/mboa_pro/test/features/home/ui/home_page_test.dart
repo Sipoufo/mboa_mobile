@@ -136,6 +136,23 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('RM-M01bis-01 — until the KYC is approved, the home invites to it', (tester) async {
+    when(() => kycCubit.state).thenReturn(
+      const KycReady(KycStatusData(status: KycStatus.rejected, rejectionReason: 'Photo floue'), KycDraft()),
+    );
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.text('Vérification refusée'), findsOneWidget);
+    expect(find.text('Motif : Photo floue'), findsOneWidget);
+  });
+
+  testWidgets('approved: the home says nothing of it', (tester) async {
+    await pump(tester, const HomeReady(stats));
+
+    expect(find.text('Vérifie ton identité'), findsNothing);
+    expect(find.text('Vérification en cours'), findsNothing);
+  });
+
   testWidgets('M29 — waiting requests are said on the home, and opened from it', (tester) async {
     when(() => pendingBloc.state).thenReturn(const PendingReservationsCounted(3));
     await pump(tester, const HomeReady(stats));

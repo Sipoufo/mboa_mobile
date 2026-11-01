@@ -47,6 +47,13 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: Dimens.spacing),
                 child: HomeHeader(),
               ),
+              // RM-M01bis-01 — until the KYC is approved: « Mes biens » and
+              // « Mes agents » wait on it.
+              KycInviteBanner(
+                role: AccountRole.prestataire,
+                onOpen: () => context.router.push(CertificationsRoute(accountRole: AccountRole.prestataire)),
+                padding: const EdgeInsets.fromLTRB(Dimens.spacing, Dimens.spacing, Dimens.spacing, 0),
+              ),
               const SizedBox(height: Dimens.spacingLg),
               Padding(
                 padding: const EdgeInsets.symmetric(

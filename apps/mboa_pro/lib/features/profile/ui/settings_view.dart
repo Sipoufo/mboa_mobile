@@ -94,6 +94,14 @@ class _SettingsViewState extends State<SettingsView> {
                                       _Identity(data: data),
                                       const SizedBox(height: Dimens.spacingLg),
                                     ],
+                                    // RM-M01bis-01 — until the KYC is approved.
+                                    if (data != null)
+                                      KycInviteBanner(
+                                        role: data.role,
+                                        onOpen: () =>
+                                            context.router.push(CertificationsRoute(accountRole: data.role)),
+                                        padding: const EdgeInsets.only(bottom: Dimens.spacing),
+                                      ),
                                     // RM-M10-01 — the one thing that stops him
                                     // publishing, said here rather than only at
                                     // the moment publish is refused.

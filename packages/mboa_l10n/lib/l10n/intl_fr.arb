@@ -7428,5 +7428,45 @@
   "annonceDetailTenanciesOffline": "Hors ligne — tels que lus la dernière fois.",
   "@annonceDetailTenanciesOffline": {
     "description": "Occupant / History cards read from the cache."
+  },
+  "kycBannerTitle": "Vérifie ton identité",
+  "@kycBannerTitle": {
+    "description": "RM-M01bis-01 — the KYC invitation banner, not yet submitted."
+  },
+  "kycBannerBodyPrestataire": "Nécessaire pour gérer tes biens et tes agents.",
+  "@kycBannerBodyPrestataire": {
+    "description": "KYC banner, prestataire: what the verification opens."
+  },
+  "kycBannerBodyAgent": "Nécessaire pour accepter des missions et mener des visites.",
+  "@kycBannerBodyAgent": {
+    "description": "KYC banner, agent (RM-M01-06)."
+  },
+  "kycBannerBodyTenant": "Facultatif — +20 points à ton Mboa Score.",
+  "@kycBannerBodyTenant": {
+    "description": "KYC banner, tenant (RM-M01bis-13)."
+  },
+  "kycBannerStart": "Commencer",
+  "@kycBannerStart": {
+    "description": "KYC banner: opens the verification."
+  },
+  "kycBannerPendingTitle": "Vérification en cours",
+  "@kycBannerPendingTitle": {
+    "description": "KYC banner: submitted, under review."
+  },
+  "kycBannerPendingBody": "On te prévient dès que c'est fait.",
+  "@kycBannerPendingBody": {
+    "description": "KYC banner: under review."
+  },
+  "kycBannerRejectedTitle": "Vérification refusée",
+  "@kycBannerRejectedTitle": {
+    "description": "KYC banner: refused by the admin."
+  },
+  "kycBannerRejectedBody": "Regarde ce qui n'allait pas, puis reprends.",
+  "@kycBannerRejectedBody": {
+    "description": "KYC banner: refused, no reason given."
+  },
+  "kycBannerResume": "Reprendre",
+  "@kycBannerResume": {
+    "description": "KYC banner: takes the refused verification up again."
   }
 }

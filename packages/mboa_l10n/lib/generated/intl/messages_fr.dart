@@ -2019,6 +2019,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycBackRequired": MessageLookupByLibrary.simpleMessage(
       "Photographie aussi le verso de la pièce.",
     ),
+    "kycBannerBodyAgent": MessageLookupByLibrary.simpleMessage(
+      "Nécessaire pour accepter des missions et mener des visites.",
+    ),
+    "kycBannerBodyPrestataire": MessageLookupByLibrary.simpleMessage(
+      "Nécessaire pour gérer tes biens et tes agents.",
+    ),
+    "kycBannerBodyTenant": MessageLookupByLibrary.simpleMessage(
+      "Facultatif — +20 points à ton Mboa Score.",
+    ),
+    "kycBannerPendingBody": MessageLookupByLibrary.simpleMessage(
+      "On te prévient dès que c\'est fait.",
+    ),
+    "kycBannerPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "Vérification en cours",
+    ),
+    "kycBannerRejectedBody": MessageLookupByLibrary.simpleMessage(
+      "Regarde ce qui n\'allait pas, puis reprends.",
+    ),
+    "kycBannerRejectedTitle": MessageLookupByLibrary.simpleMessage(
+      "Vérification refusée",
+    ),
+    "kycBannerResume": MessageLookupByLibrary.simpleMessage("Reprendre"),
+    "kycBannerStart": MessageLookupByLibrary.simpleMessage("Commencer"),
+    "kycBannerTitle": MessageLookupByLibrary.simpleMessage(
+      "Vérifie ton identité",
+    ),
     "kycChangeDocument": MessageLookupByLibrary.simpleMessage(
       "Changer de pièce",
     ),

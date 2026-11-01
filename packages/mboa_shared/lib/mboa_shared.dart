@@ -137,6 +137,7 @@ export 'src/features/kyc/ui/certifications_view.dart';
 export 'src/features/kyc/ui/document_identity_fields.dart';
 export 'src/features/kyc/ui/id_document_view.dart';
 export 'src/features/kyc/ui/kyc_declarations.dart';
+export 'src/features/kyc/ui/kyc_invite_banner.dart';
 export 'src/features/location/data/location_repository.dart';
 export 'src/features/location/models/city_option.dart';
 export 'src/features/location/ui/city_picker_sheet.dart';

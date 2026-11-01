@@ -13,6 +13,14 @@ import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
+/// RM-M01bis-01 — the KYC a screen reads for its invitation banner.
+KycReady kycOf(KycStatus status) {
+  final data = KycStatusData(status: status);
+  return KycReady(data, KycDraft.of(data));
+}
+
 class MockAgentAgendaBloc extends MockBloc<VisitsAgendaEvent, VisitsAgendaState> implements AgentAgendaBloc {}
 
 class MockVisitDetailBloc extends MockBloc<VisitDetailEvent, VisitDetailState> implements VisitDetailBloc {}
@@ -54,7 +62,11 @@ void main() {
     canConfirm: canConfirm,
   );
 
+  late MockKycCubit kyc;
+
   setUp(() {
+    kyc = MockKycCubit();
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.approved));
     agenda = MockAgentAgendaBloc();
     detail = MockVisitDetailBloc();
 
@@ -76,7 +88,13 @@ void main() {
     when(() => detail.state).thenReturn(VisitDetailReady(detailFor()));
   });
 
-  Widget withAgenda(Widget child) => BlocProvider<AgentAgendaBloc>.value(value: agenda, child: child);
+  Widget withAgenda(Widget child) => MultiBlocProvider(
+        providers: [
+          BlocProvider<AgentAgendaBloc>.value(value: agenda),
+          BlocProvider<KycCubit>.value(value: kyc),
+        ],
+        child: child,
+      );
 
   Widget withDetail(Widget child) => BlocProvider<VisitDetailBloc>.value(value: detail, child: child);
 
@@ -94,6 +112,15 @@ void main() {
   }
 
   group('the agenda', () {
+    testWidgets('RM-M01bis-01 — the agent\'s home invites to the KYC until it is approved', (tester) async {
+      when(() => kyc.state).thenReturn(kycOf(KycStatus.pending));
+      await pump(tester, withAgenda(const AgentVisitsPage()));
+
+      expect(find.text('Vérification en cours'), findsOneWidget);
+      // The week is still there beneath it.
+      expect(find.text('Studio Bonapriso'), findsOneWidget);
+    });
+
     testWidgets('opens on today, with the day\'s visits under the strip', (tester) async {
       await pump(tester, withAgenda(const AgentVisitsPage()));
 

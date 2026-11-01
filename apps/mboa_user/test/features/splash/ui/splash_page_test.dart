@@ -31,6 +31,8 @@ class MockSavedSearchesBloc extends MockBloc<SavedSearchesEvent, SavedSearchesSt
 
 class MockMyHomesBloc extends MockBloc<MyHomesEvent, MyHomesState> implements MyHomesBloc {}
 
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
 /// **A restored session is a session.**
 ///
 /// A sign-in goes through `AuthBloc`, which loads what belongs to the account
@@ -44,6 +46,7 @@ void main() {
   late MockConversationsBloc conversations;
   late MockSavedSearchesBloc savedSearches;
   late MockMyHomesBloc homes;
+  late MockKycCubit kyc;
 
   setUpAll(() {
     registerFallbackValue(<PageRouteInfo>[]);
@@ -60,6 +63,8 @@ void main() {
     conversations = MockConversationsBloc();
     savedSearches = MockSavedSearchesBloc();
     homes = MockMyHomesBloc();
+    kyc = MockKycCubit();
+    when(kyc.load).thenAnswer((_) async {});
 
     when(() => router.root).thenReturn(router);
     when(() => router.replaceAll(any())).thenAnswer((_) async {});
@@ -79,7 +84,8 @@ void main() {
       ..registerSingleton<FavoritesBloc>(favorites)
       ..registerSingleton<ConversationsBloc>(conversations)
       ..registerSingleton<SavedSearchesBloc>(savedSearches)
-      ..registerSingleton<MyHomesBloc>(homes);
+      ..registerSingleton<MyHomesBloc>(homes)
+      ..registerSingleton<KycCubit>(kyc);
   });
 
   tearDown(getIt.reset);
@@ -114,6 +120,8 @@ void main() {
     verify(() => conversations.add(const ConversationsLoadRequested())).called(1);
     verify(() => savedSearches.add(const SavedSearchesRequested())).called(1);
     verify(() => homes.add(const MyHomesRequested())).called(1);
+    // RM-M01bis-01 — « Compte » knows whether to invite to the KYC.
+    verify(kyc.load).called(1);
   });
 
   testWidgets('a visitor loads nothing that belongs to an account', (tester) async {
@@ -122,5 +130,6 @@ void main() {
     expect(getIt<SessionSnapshot>().hasSession, isFalse);
     verifyNever(() => favorites.add(any()));
     verifyNever(() => homes.add(any()));
+    verifyNever(kyc.load);
   });
 }

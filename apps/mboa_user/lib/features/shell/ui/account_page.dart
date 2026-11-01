@@ -89,6 +89,18 @@ class _SignedInState extends State<_SignedIn> {
           children: [
             _Identity(data: data),
             const SizedBox(height: Dimens.spacingLg),
+            // RM-M01bis-01 / RM-M01bis-13 — optional for a tenant, but
+            // invited to until verified.
+            BlocProvider<KycCubit>.value(
+              value: getIt<KycCubit>(),
+              child: KycInviteBanner(
+                role: AccountRole.user,
+                onOpen: () => context.router.root.push(
+                  const AuthenticatedRouter(children: [IdentityRoute()]),
+                ),
+                padding: const EdgeInsets.fromLTRB(Dimens.screenMargin, 0, Dimens.screenMargin, Dimens.spacing),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: Dimens.screenMargin,

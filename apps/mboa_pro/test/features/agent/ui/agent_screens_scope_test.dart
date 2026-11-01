@@ -10,8 +10,17 @@ import 'package:mboa_pro/features/agent/models/agent_profile.dart';
 import 'package:mboa_pro/features/agent/models/availability.dart';
 import 'package:mboa_pro/features/agent/ui/agent_availability_page.dart';
 import 'package:mboa_pro/features/agent/ui/agent_profile_page.dart';
+import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 import 'package:mocktail/mocktail.dart';
+
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
+/// RM-M01bis-01 — the KYC a screen reads for its invitation banner.
+KycReady kycOf(KycStatus status) {
+  final data = KycStatusData(status: status);
+  return KycReady(data, KycDraft.of(data));
+}
 
 class MockAgentProfileBloc
     extends MockBloc<AgentProfileEvent, AgentProfileState>
@@ -46,7 +55,11 @@ void main() {
     profileComplete: true,
   );
 
+  late MockKycCubit kyc;
+
   setUp(() {
+    kyc = MockKycCubit();
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.approved));
     profile = MockAgentProfileBloc();
     availability = MockAgentAvailabilityBloc();
     auth = MockAuthBloc();
@@ -68,6 +81,7 @@ void main() {
             BlocProvider<AgentProfileBloc>.value(value: profile),
             BlocProvider<AgentAvailabilityBloc>.value(value: availability),
             BlocProvider<AuthBloc>.value(value: auth),
+            BlocProvider<KycCubit>.value(value: kyc),
           ],
           child: child,
         ),
@@ -75,6 +89,14 @@ void main() {
     );
     await tester.pump();
   }
+
+  testWidgets('RM-M01bis-01 — until the KYC is approved, the profile invites to it', (tester) async {
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.notSubmitted));
+    await pump(tester, const AgentProfilePage());
+
+    expect(find.byType(KycInviteBanner), findsOneWidget);
+    expect(find.text('Nécessaire pour accepter des missions et mener des visites.'), findsOneWidget);
+  });
 
   testWidgets('the profile screen opens and loads on entry', (tester) async {
     await pump(tester, const AgentProfilePage());

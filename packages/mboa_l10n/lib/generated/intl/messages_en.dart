@@ -1936,6 +1936,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycBackRequired": MessageLookupByLibrary.simpleMessage(
       "Photograph the back of the document too.",
     ),
+    "kycBannerBodyAgent": MessageLookupByLibrary.simpleMessage(
+      "Needed to accept assignments and conduct visits.",
+    ),
+    "kycBannerBodyPrestataire": MessageLookupByLibrary.simpleMessage(
+      "Needed to manage your properties and your agents.",
+    ),
+    "kycBannerBodyTenant": MessageLookupByLibrary.simpleMessage(
+      "Optional — +20 points on your Mboa Score.",
+    ),
+    "kycBannerPendingBody": MessageLookupByLibrary.simpleMessage(
+      "We\'ll let you know as soon as it\'s done.",
+    ),
+    "kycBannerPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "Verification in progress",
+    ),
+    "kycBannerRejectedBody": MessageLookupByLibrary.simpleMessage(
+      "See what went wrong, then try again.",
+    ),
+    "kycBannerRejectedTitle": MessageLookupByLibrary.simpleMessage(
+      "Verification refused",
+    ),
+    "kycBannerResume": MessageLookupByLibrary.simpleMessage("Try again"),
+    "kycBannerStart": MessageLookupByLibrary.simpleMessage("Start"),
+    "kycBannerTitle": MessageLookupByLibrary.simpleMessage(
+      "Verify your identity",
+    ),
     "kycChangeDocument": MessageLookupByLibrary.simpleMessage(
       "Change document",
     ),

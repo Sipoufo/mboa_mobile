@@ -15,6 +15,14 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../_helpers/load_brand_fonts.dart';
 
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
+/// RM-M01bis-01 — the KYC a screen reads for its invitation banner.
+KycReady kycOf(KycStatus status) {
+  final data = KycStatusData(status: status);
+  return KycReady(data, KycDraft.of(data));
+}
+
 class MockProProfileBloc extends MockBloc<ProfileEvent, ProfileState>
     implements ProProfileBloc {}
 
@@ -50,7 +58,11 @@ void main() {
 
   setUpAll(loadBrandFonts);
 
+  late MockKycCubit kyc;
+
   setUp(() {
+    kyc = MockKycCubit();
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.approved));
     profile = MockProProfileBloc();
     auth = MockAuthBloc();
     when(() => profile.state).thenReturn(const ProProfileReady(complete));
@@ -72,6 +84,7 @@ void main() {
           providers: [
             BlocProvider<ProProfileBloc>.value(value: profile),
             BlocProvider<AuthBloc>.value(value: auth),
+            BlocProvider<KycCubit>.value(value: kyc),
           ],
           child: child,
         ),
@@ -79,6 +92,14 @@ void main() {
     );
     await tester.pumpAndSettle();
   }
+
+  testWidgets('RM-M01bis-01 — until the KYC is approved, the hub invites to it', (tester) async {
+    when(() => kyc.state).thenReturn(kycOf(KycStatus.notSubmitted));
+    await pump(tester, const SettingsView());
+
+    expect(find.text('Nécessaire pour gérer tes biens et tes agents.'), findsOneWidget);
+    await expectLater(find.byType(SettingsView), matchesGoldenFile('goldens/profile_hub_kyc.png'));
+  });
 
   testWidgets('the profile hub', (tester) async {
     await pump(tester, const SettingsView());

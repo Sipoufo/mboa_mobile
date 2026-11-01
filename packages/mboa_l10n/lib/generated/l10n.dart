@@ -17993,6 +17993,106 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Vérifie ton identité`
+  String get kycBannerTitle {
+    return Intl.message(
+      'Vérifie ton identité',
+      name: 'kycBannerTitle',
+      desc: 'RM-M01bis-01 — the KYC invitation banner, not yet submitted.',
+      args: [],
+    );
+  }
+
+  /// `Nécessaire pour gérer tes biens et tes agents.`
+  String get kycBannerBodyPrestataire {
+    return Intl.message(
+      'Nécessaire pour gérer tes biens et tes agents.',
+      name: 'kycBannerBodyPrestataire',
+      desc: 'KYC banner, prestataire: what the verification opens.',
+      args: [],
+    );
+  }
+
+  /// `Nécessaire pour accepter des missions et mener des visites.`
+  String get kycBannerBodyAgent {
+    return Intl.message(
+      'Nécessaire pour accepter des missions et mener des visites.',
+      name: 'kycBannerBodyAgent',
+      desc: 'KYC banner, agent (RM-M01-06).',
+      args: [],
+    );
+  }
+
+  /// `Facultatif — +20 points à ton Mboa Score.`
+  String get kycBannerBodyTenant {
+    return Intl.message(
+      'Facultatif — +20 points à ton Mboa Score.',
+      name: 'kycBannerBodyTenant',
+      desc: 'KYC banner, tenant (RM-M01bis-13).',
+      args: [],
+    );
+  }
+
+  /// `Commencer`
+  String get kycBannerStart {
+    return Intl.message(
+      'Commencer',
+      name: 'kycBannerStart',
+      desc: 'KYC banner: opens the verification.',
+      args: [],
+    );
+  }
+
+  /// `Vérification en cours`
+  String get kycBannerPendingTitle {
+    return Intl.message(
+      'Vérification en cours',
+      name: 'kycBannerPendingTitle',
+      desc: 'KYC banner: submitted, under review.',
+      args: [],
+    );
+  }
+
+  /// `On te prévient dès que c'est fait.`
+  String get kycBannerPendingBody {
+    return Intl.message(
+      'On te prévient dès que c\'est fait.',
+      name: 'kycBannerPendingBody',
+      desc: 'KYC banner: under review.',
+      args: [],
+    );
+  }
+
+  /// `Vérification refusée`
+  String get kycBannerRejectedTitle {
+    return Intl.message(
+      'Vérification refusée',
+      name: 'kycBannerRejectedTitle',
+      desc: 'KYC banner: refused by the admin.',
+      args: [],
+    );
+  }
+
+  /// `Regarde ce qui n'allait pas, puis reprends.`
+  String get kycBannerRejectedBody {
+    return Intl.message(
+      'Regarde ce qui n\'allait pas, puis reprends.',
+      name: 'kycBannerRejectedBody',
+      desc: 'KYC banner: refused, no reason given.',
+      args: [],
+    );
+  }
+
+  /// `Reprendre`
+  String get kycBannerResume {
+    return Intl.message(
+      'Reprendre',
+      name: 'kycBannerResume',
+      desc: 'KYC banner: takes the refused verification up again.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

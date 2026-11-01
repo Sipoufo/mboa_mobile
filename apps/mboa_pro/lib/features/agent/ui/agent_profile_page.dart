@@ -78,6 +78,13 @@ class _AgentProfilePageState extends State<AgentProfilePage> {
                 padding: const EdgeInsets.all(Dimens.spacing),
                 children: [
                   _Header(profile: profile, isUploading: isUploadingPhoto),
+                  // RM-M01bis-01 — until the KYC is approved (RM-M01-06:
+                  // everything an agent does waits on it).
+                  KycInviteBanner(
+                    role: AccountRole.agent,
+                    onOpen: () => context.router.push(CertificationsRoute(accountRole: AccountRole.agent)),
+                    padding: const EdgeInsets.only(top: Dimens.spacing),
+                  ),
                   if (!profile.profileComplete) ...[
                     const SizedBox(height: Dimens.spacing),
                     _IncompleteBanner(),
@@ -115,7 +122,7 @@ class _AgentProfilePageState extends State<AgentProfilePage> {
                     icon: LucideIcons.badgeCheck,
                     title: l10n.settingsCertificationsTitle,
                     onTap: () =>
-                        context.router.push(CertificationsRoute()),
+                        context.router.push(CertificationsRoute(accountRole: AccountRole.agent)),
                   ),
                   const SizedBox(height: Dimens.spacingSm),
                   MboaTileCard(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
@@ -371,6 +373,8 @@ void loadSessionScopedBlocs() {
   getIt<ConversationsBloc>().add(const ConversationsLoadRequested());
   getIt<SavedSearchesBloc>().add(const SavedSearchesRequested());
   getIt<MyHomesBloc>().add(const MyHomesRequested());
+  // RM-M01bis-01 — « Compte » invites to the KYC until it is approved.
+  unawaited(getIt<KycCubit>().load());
 }
 
 /// Ends the session on this device: the account's blocs first, then the flip.

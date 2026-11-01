@@ -38,33 +38,46 @@ class AgentVisitsPage extends StatelessWidget implements AutoRouteWrapper {
         leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.visitsTitle),
       ),
-      body: BlocBuilder<AgentAgendaBloc, VisitsAgendaState>(
-        builder: (context, state) => switch (state) {
-          VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),
-          VisitsAgendaFailure() => Center(
-            child: TextButton(
-              onPressed: () => context.read<AgentAgendaBloc>().add(const AgendaRequested()),
-              child: Text(l10n.commonRetry),
-            ),
+      body: Column(
+        children: [
+          // RM-M01bis-01 — the agent's home: until the KYC is approved,
+          // nothing here can be accepted or started (RM-M01-06).
+          KycInviteBanner(
+            role: AccountRole.agent,
+            onOpen: () => context.router.push(CertificationsRoute(accountRole: AccountRole.agent)),
+            padding: const EdgeInsets.fromLTRB(Dimens.spacing, Dimens.spacing, Dimens.spacing, 0),
           ),
-          final VisitsAgendaReady ready => VisitsAgendaView(
-            state: ready,
-            onDaySelected: (day) => context.read<AgentAgendaBloc>().add(AgendaDaySelected(day)),
-            onWeekChanged: (day) => context.read<AgentAgendaBloc>().add(AgendaWeekChanged(day, selectedDay: day)),
-            onRefresh: () => context.read<AgentAgendaBloc>().add(const AgendaRefreshed()),
-            itemBuilder: (context, visit) => VisitRowTile(
-              visit: visit,
-              onTap: () async {
-                await context.router.push(VisitDetailRoute(id: visit.id));
-                // The detail can cancel or confirm; the week is re-read when
-                // it closes rather than second-guessing what it did.
-                if (context.mounted) {
-                  context.read<AgentAgendaBloc>().add(const AgendaRefreshed());
-                }
+          Expanded(
+            child: BlocBuilder<AgentAgendaBloc, VisitsAgendaState>(
+              builder: (context, state) => switch (state) {
+                VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),
+                VisitsAgendaFailure() => Center(
+                  child: TextButton(
+                    onPressed: () => context.read<AgentAgendaBloc>().add(const AgendaRequested()),
+                    child: Text(l10n.commonRetry),
+                  ),
+                ),
+                final VisitsAgendaReady ready => VisitsAgendaView(
+                  state: ready,
+                  onDaySelected: (day) => context.read<AgentAgendaBloc>().add(AgendaDaySelected(day)),
+                  onWeekChanged: (day) => context.read<AgentAgendaBloc>().add(AgendaWeekChanged(day, selectedDay: day)),
+                  onRefresh: () => context.read<AgentAgendaBloc>().add(const AgendaRefreshed()),
+                  itemBuilder: (context, visit) => VisitRowTile(
+                    visit: visit,
+                    onTap: () async {
+                      await context.router.push(VisitDetailRoute(id: visit.id));
+                      // The detail can cancel or confirm; the week is re-read when
+                      // it closes rather than second-guessing what it did.
+                      if (context.mounted) {
+                        context.read<AgentAgendaBloc>().add(const AgendaRefreshed());
+                      }
+                    },
+                  ),
+                ),
               },
             ),
           ),
-        },
+        ],
       ),
     );
   }
