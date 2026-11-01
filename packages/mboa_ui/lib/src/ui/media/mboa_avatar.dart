@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -85,7 +87,12 @@ class MboaAvatar extends StatelessWidget {
       child: text != null && text.isNotEmpty
           ? Text(
               text,
-              style: context.mboaText.h1.copyWith(color: colors.primary),
+              // The profile's heading size, shrunk with a small avatar: a
+              // list row's 36 px square cropped « JM » at full size.
+              style: context.mboaText.h1.copyWith(
+                color: colors.primary,
+                fontSize: math.min(context.mboaText.h1.fontSize ?? size, size * 0.4),
+              ),
             )
           : Icon(LucideIcons.user, color: colors.primary, size: size * 0.4),
     );
