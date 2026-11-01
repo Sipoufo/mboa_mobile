@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mboa_core/mboa_core.dart';
+import 'package:mboa_ui/mboa_ui.dart';
+
+import '../profile/models/base_profile.dart';
 
 /// Picks an image (camera/gallery), compresses it per the media rules
 /// (JPEG 85%, max 1920×1080) and uploads it to Cloudflare R2 via a per-request
@@ -17,13 +20,30 @@ class MediaUploader {
     required DioClient dioClient,
     Dio? uploadClient,
     ImagePicker? picker,
+    Future<Uint8List?> Function(String path)? compress,
+    Future<void> Function(String url, Uint8List bytes)? remember,
   })  : _dioClient = dioClient,
         _uploadClient = uploadClient ?? Dio(),
-        _picker = picker ?? ImagePicker();
+        _picker = picker ?? ImagePicker(),
+        _compress = compress ?? _compressForUpload,
+        _remember = remember ?? MboaNetworkImage.remember;
 
   final DioClient _dioClient;
   final Dio _uploadClient;
   final ImagePicker _picker;
+  final Future<Uint8List?> Function(String path) _compress;
+  final Future<void> Function(String url, Uint8List bytes) _remember;
+
+  /// Never kept on the phone beyond the upload: an identity document has no
+  /// business sitting in an image cache.
+  static const _notRemembered = {CreateUploadRequestCategoryEnum.KYC_DOCUMENT};
+
+  static Future<Uint8List?> _compressForUpload(String path) => FlutterImageCompress.compressWithFile(
+        path,
+        minWidth: 1920,
+        minHeight: 1080,
+        quality: 85,
+      );
 
   static const String _contentType = 'image/jpeg';
 
@@ -41,13 +61,7 @@ class MediaUploader {
     );
     if (picked == null) return null;
 
-    final Uint8List bytes = await FlutterImageCompress.compressWithFile(
-          picked.path,
-          minWidth: 1920,
-          minHeight: 1080,
-          quality: 85,
-        ) ??
-        await picked.readAsBytes();
+    final Uint8List bytes = await _compress(picked.path) ?? await picked.readAsBytes();
 
     final presigned = (await _dioClient.api.getMediaApi().createMediaUpload(
           createUploadRequest: CreateUploadRequest((b) => b
@@ -74,6 +88,16 @@ class MediaUploader {
         },
       ),
     );
+
+    // The thumbnail that follows asks for this very photo: hand it the bytes
+    // already here rather than a 5-second round trip to R2. A miss only costs
+    // that round trip, so it never fails the upload.
+    final url = BaseProfile.mediaUrl(objectKey);
+    if (url != null && !_notRemembered.contains(category)) {
+      try {
+        await _remember(url, bytes);
+      } catch (_) {}
+    }
 
     return objectKey;
   }

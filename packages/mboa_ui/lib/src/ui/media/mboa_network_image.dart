@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import 'package:mboa_ui/mboa_ui.dart';
@@ -32,6 +35,16 @@ class MboaNetworkImage extends StatelessWidget {
   /// Shown while loading, on failure, and when [url] is null or empty — one
   /// widget for the three, so the box never changes shape under the reader.
   final Widget? placeholder;
+
+  /// Files [bytes] as what [url] serves, in the cache every
+  /// [MboaNetworkImage] reads first.
+  ///
+  /// For a photo this phone has just uploaded: the public R2 host takes
+  /// seconds per image and is never cached at the edge, so fetching it back
+  /// left the thumbnail on its placeholder while the reader wondered whether
+  /// it had been sent at all.
+  static Future<void> remember(String url, Uint8List bytes) =>
+      DefaultCacheManager().putFile(url, bytes, fileExtension: 'jpg');
 
   @override
   Widget build(BuildContext context) {

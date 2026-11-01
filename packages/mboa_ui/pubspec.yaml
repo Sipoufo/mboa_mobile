@@ -19,6 +19,9 @@ dependencies:
   lucide_icons_flutter: ^3.1.10
   flutter_animate: ^4.5.2
   cached_network_image: ^3.4.1
+  # The cache CachedNetworkImage reads — written to directly by
+  # MboaNetworkImage.remember, so a photo just sent is not fetched back.
+  flutter_cache_manager: ^3.4.1
 
 dev_dependencies:
   flutter_test:

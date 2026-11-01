@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 
 part 'write_review_event.dart';
@@ -19,8 +21,10 @@ part 'write_review_state.dart';
 class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
   WriteReviewBloc({
     required VisitReviewRepository repository,
+    required MediaUploader uploader,
     ReviewPdfExporter exporter = const ReviewPdfExporter(),
   })  : _repository = repository,
+        _uploader = uploader,
         _exporter = exporter,
         super(const ReviewLoadInProgress()) {
     on<ReviewOpened>(_onOpened);
@@ -29,13 +33,14 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     on<ReviewCommentChanged>(_onCommentChanged);
     on<ReviewPointAdded>(_onPointAdded);
     on<ReviewPointRemoved>(_onPointRemoved);
-    on<ReviewPhotoAdded>(_onPhotoAdded);
+    on<ReviewPhotoRequested>(_onPhotoRequested);
     on<ReviewPhotoRemoved>(_onPhotoRemoved);
     on<ReviewSubmitted>(_onSubmitted);
     on<ReviewPdfRequested>(_onPdfRequested);
   }
 
   final VisitReviewRepository _repository;
+  final MediaUploader _uploader;
 
   /// Split out so the bloc stays testable without a device: the share sheet
   /// needs a file system and an OS.
@@ -117,11 +122,33 @@ class WriteReviewBloc extends Bloc<WriteReviewEvent, WriteReviewState> {
     }
   }
 
-  void _onPhotoAdded(ReviewPhotoAdded event, Emitter<WriteReviewState> emit) {
-    if (state case final ReviewDraft draft) {
-      if (draft.photoKeys.length >= maxPhotos) return;
-      emit(draft.copyWith(photoKeys: [...draft.photoKeys, event.objectKey]));
+  /// Picks, compresses and sends one photo. The upload takes seconds on a
+  /// phone line, so the draft says it is under way — the screen used to show
+  /// nothing at all until it finished, and nothing either when it failed.
+  Future<void> _onPhotoRequested(ReviewPhotoRequested event, Emitter<WriteReviewState> emit) async {
+    final draft = state;
+    if (draft is! ReviewDraft || !draft.canAddPhoto) return;
+
+    emit(draft.copyWith(isUploadingPhoto: true));
+    String? key;
+    var failed = false;
+    try {
+      key = await _uploader.captureAndUpload(
+        source: event.source,
+        category: CreateUploadRequestCategoryEnum.VISIT_REPORT,
+      );
+    } catch (_) {
+      failed = true;
     }
+
+    // Onto the draft as it is now: the tenant may have typed meanwhile.
+    final now = state;
+    if (now is! ReviewDraft) return;
+    emit(now.copyWith(
+      photoKeys: key == null ? null : [...now.photoKeys, key],
+      isUploadingPhoto: false,
+      photoUploadFailed: failed,
+    ));
   }
 
   void _onPhotoRemoved(

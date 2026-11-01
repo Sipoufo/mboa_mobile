@@ -7369,5 +7369,9 @@
   "contractSignatureDeclared": "Déclarée, non vérifiée",
   "@contractSignatureDeclared": {
     "description": "§39 D — on a signature"
+  },
+  "reviewPhotoUploadFailed": "La photo n'est pas partie. Réessaie.",
+  "@reviewPhotoUploadFailed": {
+    "description": "M07bis — a photo of the visit report did not upload."
   }
 }

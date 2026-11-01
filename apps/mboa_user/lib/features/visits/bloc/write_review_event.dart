@@ -66,14 +66,14 @@ final class ReviewPointRemoved extends WriteReviewEvent {
   List<Object?> get props => [value, isPro];
 }
 
-/// An uploaded photo's object key — the upload itself is the uploader's job.
-final class ReviewPhotoAdded extends WriteReviewEvent {
-  const ReviewPhotoAdded(this.objectKey);
+/// A photo to take or pick from [source], then send.
+final class ReviewPhotoRequested extends WriteReviewEvent {
+  const ReviewPhotoRequested(this.source);
 
-  final String objectKey;
+  final ImageSource source;
 
   @override
-  List<Object?> get props => [objectKey];
+  List<Object?> get props => [source];
 }
 
 final class ReviewPhotoRemoved extends WriteReviewEvent {

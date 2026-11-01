@@ -164,7 +164,7 @@ void registerAppModule() {
     () => VisitReviewRepository(dioClient: getIt<DioClient>()),
   );
   getIt.registerFactory<WriteReviewBloc>(
-    () => WriteReviewBloc(repository: getIt<VisitReviewRepository>()),
+    () => WriteReviewBloc(repository: getIt<VisitReviewRepository>(), uploader: getIt<MediaUploader>()),
   );
 
   // Contrat Mboa (M08) — repository, list and detail are shared with the pro

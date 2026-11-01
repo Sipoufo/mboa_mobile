@@ -3685,6 +3685,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewNotAllowed": MessageLookupByLibrary.simpleMessage(
       "Une visite confirmée est nécessaire pour laisser un avis sur ce bien.",
     ),
+    "reviewPhotoUploadFailed": MessageLookupByLibrary.simpleMessage(
+      "La photo n\'est pas partie. Réessaie.",
+    ),
     "reviewPhotosLabel": MessageLookupByLibrary.simpleMessage(
       "Photos prises sur place",
     ),

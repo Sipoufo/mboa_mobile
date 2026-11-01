@@ -78,6 +78,12 @@ class WriteReviewPage extends StatelessWidget implements AutoRouteWrapper {
                   ReviewRefusal.failed => l10n.commonError,
                 },
               );
+            case ReviewDraft(photoUploadFailed: true):
+              MboaToast.error(
+                context: context,
+                title: l10n.commonErrorTitle,
+                description: l10n.reviewPhotoUploadFailed,
+              );
             case ReviewDraft():
             case ReviewLoadInProgress():
             case ReviewLoadFailure():
@@ -474,12 +480,7 @@ class _Photos extends StatelessWidget {
 
     Future<void> add() async {
       final source = await showCaptureSourceSheet(context);
-      if (source == null) return;
-      final key = await getIt<MediaUploader>().captureAndUpload(
-        source: source,
-        category: CreateUploadRequestCategoryEnum.VISIT_REPORT,
-      );
-      if (key != null) bloc.add(ReviewPhotoAdded(key));
+      if (source != null) bloc.add(ReviewPhotoRequested(source));
     }
 
     return Column(
@@ -519,6 +520,21 @@ class _Photos extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            // Where the photo will land, so the seconds of upload read as
+            // « on its way » rather than « nothing happened ».
+            if (draft.isUploadingPhoto)
+              Container(
+                key: const Key('review-photo-uploading'),
+                width: 80,
+                height: 80,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: colors.surfaceWarm,
+                  borderRadius: BorderRadius.circular(Dimens.radius),
+                  border: Border.all(color: colors.border),
+                ),
+                child: const Loader(size: Dimens.loaderSizeXs),
               ),
             if (draft.canAddPhoto)
               GestureDetector(

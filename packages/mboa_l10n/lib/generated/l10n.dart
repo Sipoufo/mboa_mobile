@@ -17903,6 +17903,16 @@ class I18n {
       args: [],
     );
   }
+
+  /// `La photo n'est pas partie. Réessaie.`
+  String get reviewPhotoUploadFailed {
+    return Intl.message(
+      'La photo n\'est pas partie. Réessaie.',
+      name: 'reviewPhotoUploadFailed',
+      desc: 'M07bis — a photo of the visit report did not upload.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

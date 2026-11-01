@@ -37,6 +37,8 @@ final class ReviewDraft extends WriteReviewState {
     this.pros = const [],
     this.cons = const [],
     this.photoKeys = const [],
+    this.isUploadingPhoto = false,
+    this.photoUploadFailed = false,
     this.isSubmitting = false,
     this.refusal,
   });
@@ -50,12 +52,21 @@ final class ReviewDraft extends WriteReviewState {
   final List<String> pros;
   final List<String> cons;
   final List<String> photoKeys;
+
+  /// A photo is on its way to R2.
+  final bool isUploadingPhoto;
+
+  /// The last photo did not leave the phone; said once, cleared by the next
+  /// edit like [refusal].
+  final bool photoUploadFailed;
   final bool isSubmitting;
   final ReviewRefusal? refusal;
 
-  bool get canSubmit => rating != null && !isSubmitting;
+  /// Not while a photo is still uploading: it would be published without it.
+  bool get canSubmit => rating != null && !isSubmitting && !isUploadingPhoto;
 
-  bool get canAddPhoto => photoKeys.length < WriteReviewBloc.maxPhotos;
+  /// One at a time, and ten at most.
+  bool get canAddPhoto => !isUploadingPhoto && photoKeys.length < WriteReviewBloc.maxPhotos;
 
   ReviewDraft copyWith({
     int? rating,
@@ -64,6 +75,8 @@ final class ReviewDraft extends WriteReviewState {
     List<String>? pros,
     List<String>? cons,
     List<String>? photoKeys,
+    bool? isUploadingPhoto,
+    bool photoUploadFailed = false,
     bool isSubmitting = false,
     ReviewRefusal? refusal,
   }) =>
@@ -75,6 +88,9 @@ final class ReviewDraft extends WriteReviewState {
         pros: pros ?? this.pros,
         cons: cons ?? this.cons,
         photoKeys: photoKeys ?? this.photoKeys,
+        // Kept across edits: typing does not stop an upload.
+        isUploadingPhoto: isUploadingPhoto ?? this.isUploadingPhoto,
+        photoUploadFailed: photoUploadFailed,
         isSubmitting: isSubmitting,
         // Cleared on every edit: a refusal is about the attempt that produced
         // it, and typing again is a new attempt.
@@ -90,6 +106,8 @@ final class ReviewDraft extends WriteReviewState {
         pros,
         cons,
         photoKeys,
+        isUploadingPhoto,
+        photoUploadFailed,
         isSubmitting,
         refusal,
       ];
