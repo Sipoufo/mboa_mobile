@@ -24,6 +24,13 @@ class MboaUserApp extends StatefulWidget {
 class _MboaUserAppState extends State<MboaUserApp> {
   final _router = AppRouter();
 
+  /// Favourites and threads belong to an account, and the next person to open
+  /// the app must not see the last one's — see [endSession] for the order.
+  Future<void> _signedOut() async {
+    await endSession();
+    await _router.replaceAll([const UserShellRoute()]);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Startup routing is owned by the splash feature (SplashCubit). AuthBloc
@@ -52,13 +59,8 @@ class _MboaUserAppState extends State<MboaUserApp> {
               // would ask for the favourites and threads this account has.
               loadSessionScopedBlocs();
             case AuthUnauthenticated():
-              getIt<SessionSnapshot>().markUnauthenticated();
               getIt<SessionExpiryWatcher>().stop();
-              _router.replaceAll([const UserShellRoute()]);
-              // After navigating away, so the widgets holding them are gone:
-              // favourites and threads belong to an account, and the next
-              // person to open the app must not see the last one's.
-              unawaited(resetSessionScopedBlocs());
+              unawaited(_signedOut());
             default:
               break;
           }

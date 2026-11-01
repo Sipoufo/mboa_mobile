@@ -373,6 +373,16 @@ void loadSessionScopedBlocs() {
   getIt<MyHomesBloc>().add(const MyHomesRequested());
 }
 
+/// Ends the session on this device: the account's blocs first, then the flip.
+///
+/// The flip rebuilds the tab shell, which picks up whatever get_it holds at
+/// that moment — flipped first, the tabs bound to the old account's blocs
+/// while they were being closed, and kept its rent banner and greeting.
+Future<void> endSession() async {
+  await resetSessionScopedBlocs();
+  getIt<SessionSnapshot>().markUnauthenticated();
+}
+
 /// Drops the blocs that belong to a signed-in account.
 ///
 /// Favourites and conversations are lazy singletons so every heart and every
@@ -396,6 +406,11 @@ Future<void> resetSessionScopedBlocs() async {
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<HistoryBloc>(
+    disposingFunction: (bloc) => bloc.close(),
+  );
+  // The greeting and the Compte tab read it: the next account must not open
+  // on the last one's name and photo.
+  await getIt.resetLazySingleton<UserProfileBloc>(
     disposingFunction: (bloc) => bloc.close(),
   );
   await getIt.resetLazySingleton<InboxBloc>(

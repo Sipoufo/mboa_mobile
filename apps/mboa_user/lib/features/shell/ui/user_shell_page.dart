@@ -27,18 +27,7 @@ class UserShellPage extends StatelessWidget implements AutoRouteWrapper {
   /// them: the heart on a search card and the heart on that listing's fiche
   /// read the same state, or they end up disagreeing about the same property.
   @override
-  Widget wrappedRoute(BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider<FavoritesBloc>.value(value: getIt<FavoritesBloc>()),
-          // The search saves into it, the Compte tab's list reads it.
-          BlocProvider<SavedSearchesBloc>.value(value: getIt<SavedSearchesBloc>()),
-          // The unread badge on the tab and the list itself read one instance.
-          BlocProvider<ConversationsBloc>.value(
-            value: getIt<ConversationsBloc>(),
-          ),
-        ],
-        child: this,
-      );
+  Widget wrappedRoute(BuildContext context) => SessionScope(child: this);
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +61,41 @@ class UserShellPage extends StatelessWidget implements AutoRouteWrapper {
             label: l10n.navAccount,
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// The tabs, rebuilt from scratch whenever the session changes.
+///
+/// Signing in or out lands on this same shell route, so nothing would redraw
+/// it: the providers kept handing down the blocs of the account that had just
+/// left (closed by the sign-out), and every tab kept what it had read once —
+/// the greeting and its avatar, the rent banner, the search results. A new
+/// key per session makes them all start over on the current account, with the
+/// instances get_it holds *now*.
+class SessionScope extends StatelessWidget {
+  const SessionScope({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = getIt<SessionSnapshot>();
+    return ListenableBuilder(
+      listenable: snapshot,
+      builder: (context, _) => KeyedSubtree(
+        key: ValueKey(snapshot.hasSession),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<FavoritesBloc>.value(value: getIt<FavoritesBloc>()),
+            // The search saves into it, the Compte tab's list reads it.
+            BlocProvider<SavedSearchesBloc>.value(value: getIt<SavedSearchesBloc>()),
+            // The unread badge on the tab and the list itself read one instance.
+            BlocProvider<ConversationsBloc>.value(value: getIt<ConversationsBloc>()),
+          ],
+          child: child,
+        ),
       ),
     );
   }

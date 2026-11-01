@@ -71,11 +71,10 @@ class MboaAvatar extends StatelessWidget {
   Widget _buildImage(BuildContext context, MboaColorScheme colors) {
     final url = imageUrl;
     if (url != null && url.isNotEmpty) {
-      return Image.network(
-        url,
-        fit: BoxFit.cover,
-        errorBuilder: (context, _, _) => _placeholder(context, colors),
-      );
+      // Cached on disk, and the initials while it comes: the public R2 host
+      // takes seconds per photo, and `Image.network` fetched it again on
+      // every launch with an empty square meanwhile.
+      return MboaNetworkImage(url: url, placeholder: _placeholder(context, colors));
     }
     return _placeholder(context, colors);
   }
