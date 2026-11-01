@@ -38,21 +38,21 @@ class ContractsListView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.contractsTitle)),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.contractsTitle),
+      ),
       body: BlocBuilder<ContractsBloc, ContractsState>(
         builder: (context, state) => switch (state) {
-          ContractsInitial() || ContractsLoadInProgress() =>
-            const Center(child: Loader()),
+          ContractsInitial() || ContractsLoadInProgress() => const Center(child: Loader()),
           ContractsFailure() => Center(
-              child: TextButton(
-                onPressed: () => context
-                    .read<ContractsBloc>()
-                    .add(const ContractsLoadRequested()),
-                child: Text(l10n.commonRetry),
-              ),
+            child: TextButton(
+              onPressed: () => context.read<ContractsBloc>().add(const ContractsLoadRequested()),
+              child: Text(l10n.commonRetry),
             ),
-          final ContractsReady ready =>
-            _Body(state: ready, onOpen: onOpen, empty: empty),
+          ),
+          final ContractsReady ready => _Body(state: ready, onOpen: onOpen, empty: empty),
         },
       ),
     );
@@ -71,8 +71,7 @@ class _Body extends StatelessWidget {
     final visible = state.visible;
 
     return RefreshIndicator(
-      onRefresh: () async =>
-          context.read<ContractsBloc>().add(const ContractsRefreshRequested()),
+      onRefresh: () async => context.read<ContractsBloc>().add(const ContractsRefreshRequested()),
       child: ListView(
         padding: const EdgeInsets.all(Dimens.spacing),
         children: [
@@ -87,9 +86,7 @@ class _Body extends StatelessWidget {
                 onTap: () async {
                   await onOpen(contract.id);
                   if (context.mounted) {
-                    context
-                        .read<ContractsBloc>()
-                        .add(const ContractsRefreshRequested());
+                    context.read<ContractsBloc>().add(const ContractsRefreshRequested());
                   }
                 },
               ),
@@ -114,9 +111,7 @@ class _Filters extends StatelessWidget {
       runSpacing: Dimens.spacingSm,
       children: [
         _Chip(
-          label: count == 0
-              ? l10n.contractsFilterMine
-              : '${l10n.contractsFilterMine} ($count)',
+          label: count == 0 ? l10n.contractsFilterMine : '${l10n.contractsFilterMine} ($count)',
           selected: state.filter == const ContractFilter.awaitingMe(),
           filter: const ContractFilter.awaitingMe(),
         ),
@@ -127,8 +122,7 @@ class _Filters extends StatelessWidget {
         ),
         _Chip(
           label: l10n.contractStatusSigned,
-          selected: state.filter ==
-              const ContractFilter.status(ContractStatus.signed),
+          selected: state.filter == const ContractFilter.status(ContractStatus.signed),
           filter: const ContractFilter.status(ContractStatus.signed),
         ),
       ],
@@ -154,10 +148,8 @@ class _Chip extends StatelessWidget {
     return ChoiceChip(
       label: Text(label),
       selected: selected,
-      onSelected: (_) =>
-          context.read<ContractsBloc>().add(ContractsFilterChanged(filter)),
-      labelStyle: context.mboaText.caption
-          .copyWith(color: selected ? colors.onBrand : colors.textSecondary),
+      onSelected: (_) => context.read<ContractsBloc>().add(ContractsFilterChanged(filter)),
+      labelStyle: context.mboaText.caption.copyWith(color: selected ? colors.onBrand : colors.textSecondary),
       selectedColor: colors.primary,
       backgroundColor: colors.surface,
       side: BorderSide(color: colors.border),
@@ -196,8 +188,7 @@ class _ContractCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       contract.annonceTitle ?? '',
-                      style: context.mboaText.label
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: context.mboaText.label.copyWith(fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -208,8 +199,7 @@ class _ContractCard extends StatelessWidget {
               const SizedBox(height: Dimens.spacingXs),
               Text(
                 contract.tenant?.displayName ?? l10n.contractTenantPending,
-                style: context.mboaText.caption
-                    .copyWith(color: colors.textSecondary),
+                style: context.mboaText.caption.copyWith(color: colors.textSecondary),
               ),
               if (contract.price case final price?) ...[
                 const SizedBox(height: Dimens.spacingXs),

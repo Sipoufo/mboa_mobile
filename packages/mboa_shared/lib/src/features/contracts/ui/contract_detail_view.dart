@@ -64,7 +64,8 @@ class ContractDetailView extends StatelessWidget {
     return Scaffold(
       backgroundColor: context.mboaColors.background,
       appBar: AppBar(
-        leading: const MboaHeaderBackButton(),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.contractDetailTitle),
       ),
       body: BlocConsumer<ContractDetailBloc, ContractDetailState>(
@@ -76,7 +77,7 @@ class ContractDetailView extends StatelessWidget {
                     curr.terminationRefusal != null)),
         listener: (context, state) {
           if (state is ContractWasCancelled) {
-            Navigator.maybeOf(context, rootNavigator: true)?.maybePop();
+            MboaHeaderBackButton.pop(context);
             return;
           }
           final ready = state as ContractDetailReady;

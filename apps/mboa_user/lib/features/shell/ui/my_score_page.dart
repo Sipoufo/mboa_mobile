@@ -12,8 +12,12 @@ class MyScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: context.mboaColors.background,
-        appBar: AppBar(title: Text(I18n.of(context).scoreTitle)),
-        body: const MboaScoreView(source: OwnScore()),
-      );
+    backgroundColor: context.mboaColors.background,
+    appBar: AppBar(
+      title: Text(I18n.of(context).scoreTitle),
+      automaticallyImplyLeading: false,
+      leading: MboaHeaderBackButton.leading(context),
+    ),
+    body: const MboaScoreView(source: OwnScore()),
+  );
 }

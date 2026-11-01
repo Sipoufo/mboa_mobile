@@ -38,11 +38,11 @@ class SettingsMenuView extends StatelessWidget {
     final colors = context.mboaColors;
 
     return Scaffold(
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       appBar: AppBar(
-        backgroundColor: colors.surface,
-        foregroundColor: colors.primary,
-        title: Text(l10n.settingsMenuTitle, style: context.mboaText.h3.copyWith(color: colors.primary)),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+        title: Text(l10n.settingsMenuTitle),
       ),
       body: SafeArea(
         child: Column(

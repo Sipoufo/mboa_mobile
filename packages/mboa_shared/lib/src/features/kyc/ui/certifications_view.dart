@@ -49,7 +49,12 @@ class _CertificationsViewState extends State<CertificationsView> {
     final colors = context.mboaColors;
 
     return Scaffold(
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
+      appBar: AppBar(
+        title: Text(I18n.of(context).settingsCertificationsTitle),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+      ),
       body: SafeArea(
         child: BlocConsumer<KycCubit, KycState>(
           listenWhen: (prev, curr) =>
@@ -83,7 +88,7 @@ class _CertificationsViewState extends State<CertificationsView> {
               isLoading: loading,
               child: Column(
                 children: [
-                  _TopBar(title: l10n.settingsCertificationsTitle),
+                  const SizedBox(height: Dimens.spacing,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: Dimens.spacingLg),
                     child: MboaSegmentedControl<int>(
@@ -322,36 +327,6 @@ class _ErrorRetry extends StatelessWidget {
           Text(l10n.commonError, style: context.mboaText.body),
           const SizedBox(height: Dimens.spacingSm),
           TextButton(onPressed: onRetry, child: Text(l10n.commonRetry)),
-        ],
-      ),
-    );
-  }
-}
-
-class _TopBar extends StatelessWidget {
-  const _TopBar({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: Dimens.spacingSm),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () => Navigator.of(context).maybePop(),
-            icon: Icon(LucideIcons.arrowLeft, color: colors.primary),
-          ),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: context.mboaText.h3.copyWith(color: colors.primary),
-            ),
-          ),
-          const SizedBox(width: Dimens.iconLg),
         ],
       ),
     );

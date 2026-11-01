@@ -38,7 +38,11 @@ class _SavedSearchesPageState extends State<SavedSearchesPage> {
 
     return Scaffold(
       backgroundColor: context.mboaColors.background,
-      appBar: AppBar(title: Text(l10n.savedSearchesTitle)),
+      appBar: AppBar(
+        title: Text(l10n.savedSearchesTitle),
+        automaticallyImplyLeading: false,
+        leading: MboaHeaderBackButton.leading(context),
+      ),
       body: BlocConsumer<SavedSearchesBloc, SavedSearchesState>(
         // A save's outcome is the search screen's to say; this one says what
         // went wrong with a change made here.
@@ -54,11 +58,11 @@ class _SavedSearchesPageState extends State<SavedSearchesPage> {
         builder: (context, state) => switch (state) {
           SavedSearchesInitial() || SavedSearchesLoading() => const Center(child: Loader()),
           SavedSearchesFailure() => Center(
-              child: TextButton(
-                onPressed: () => context.read<SavedSearchesBloc>().add(const SavedSearchesRequested()),
-                child: Text(l10n.commonRetry),
-              ),
+            child: TextButton(
+              onPressed: () => context.read<SavedSearchesBloc>().add(const SavedSearchesRequested()),
+              child: Text(l10n.commonRetry),
             ),
+          ),
           final SavedSearchesReady ready => SavedSearchesList(state: ready),
         },
       ),
@@ -192,9 +196,7 @@ class _SavedSearchCard extends StatelessWidget {
                   ),
                   Switch(
                     value: search.alertsEnabled,
-                    onChanged: enabled
-                        ? (on) => bloc.add(SavedSearchAlertsToggled(search.id, enabled: on))
-                        : null,
+                    onChanged: enabled ? (on) => bloc.add(SavedSearchAlertsToggled(search.id, enabled: on)) : null,
                   ),
                 ],
               ),

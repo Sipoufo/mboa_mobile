@@ -70,7 +70,7 @@ class _SettingsViewState extends State<SettingsView> {
                     child: Column(
                       children: [
                         _Header(data: data, onEditPhoto: data == null ? null : _changePhoto),
-                        const SizedBox(height: Dimens.spacing),
+                        const SizedBox(height: Dimens.spacingLg),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(
                             Dimens.spacingLg,
@@ -143,6 +143,26 @@ class _Header extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
+        Positioned.fill(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(Dimens.radiusLg),
+            ),
+            // The splash's texture and the Pro home's discs, drawn rather than
+            // loaded: crisp at any width, and the same brand ground as the
+            // prestataire's cards.
+            child: ColoredBox(
+              color: colors.primary,
+              child: Stack(
+                children: [
+                  // Fainter than on the Pro cards: a short band with a name
+                  // on it, where the texture must stay behind the words.
+                  Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.06, scale: 0.65)),
+                ],
+              ),
+            ),
+          ),
+        ),
         // Green header + a transparent overhang; the Column sizes the Stack so
         // the bottom-aligned avatar stays within bounds (and hit-testable).
         Column(
@@ -150,7 +170,6 @@ class _Header extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              color: colors.primary,
               padding: const EdgeInsets.only(bottom: Dimens.spacingLg),
               child: SafeArea(
                 bottom: false,
@@ -181,7 +200,7 @@ class _Header extends StatelessWidget {
         Positioned(
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: -10,
           child: Center(
             child: MboaAvatar(
               imageUrl: data?.photoUrl,
