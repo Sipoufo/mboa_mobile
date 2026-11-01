@@ -7373,5 +7373,60 @@
   "reviewPhotoUploadFailed": "La photo n'est pas partie. Réessaie.",
   "@reviewPhotoUploadFailed": {
     "description": "M07bis — a photo of the visit report did not upload."
+  },
+  "annonceDetailVacant": "Libre pour le moment",
+  "@annonceDetailVacant": {
+    "description": "Occupant card on a Pro listing: no running or upcoming tenancy."
+  },
+  "annonceDetailOccupantSince": "Depuis le {date}",
+  "@annonceDetailOccupantSince": {
+    "description": "Occupant card: the running tenancy began on this date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceDetailOccupantFrom": "Entre le {date}",
+  "@annonceDetailOccupantFrom": {
+    "description": "Occupant card: the signed tenancy begins on this date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceDetailNextTenant": "Ensuite : {name}, le {date}",
+  "@annonceDetailNextTenant": {
+    "description": "Occupant card: a tenancy signed to follow the running one.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "annonceDetailNoPastTenant": "Aucun locataire avant celui-ci",
+  "@annonceDetailNoPastTenant": {
+    "description": "History card: the occupant is the first tenant."
+  },
+  "annonceDetailNoTenantYet": "Aucun locataire pour l'instant",
+  "@annonceDetailNoTenantYet": {
+    "description": "History card: the listing never had a tenant."
+  },
+  "annonceDetailHistorySeeAll": "Voir tout ({count})",
+  "@annonceDetailHistorySeeAll": {
+    "description": "History card: show every ended tenancy.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "annonceDetailTenanciesOffline": "Hors ligne — tels que lus la dernière fois.",
+  "@annonceDetailTenanciesOffline": {
+    "description": "Occupant / History cards read from the cache."
   }
 }

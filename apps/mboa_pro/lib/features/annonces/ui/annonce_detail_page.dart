@@ -14,6 +14,7 @@ import '../../home/models/dashboard_stats.dart' show DashboardFigure;
 import '../../home/ui/widgets/metric_tile.dart';
 import '../bloc/annonces_bloc.dart';
 import '../bloc/listing_stats_bloc.dart';
+import '../bloc/listing_tenancies_bloc.dart';
 import '../models/annonce.dart';
 import '../models/annonce_status.dart';
 import 'widgets/annonce_status_chip.dart';
@@ -23,9 +24,8 @@ import 'widgets/status_actions_menu.dart';
 /// "Details du bien" (CDC M10).
 ///
 /// Follows the design's shape: a photo header carrying price, title,
-/// characteristics and place, then cards. Statistiques, Occupant and
-/// Historique have no endpoints, so they render the "Aucune information
-/// disponible pour le moment" state the design itself specifies.
+/// characteristics and place, then cards. Occupant and Historique read the
+/// homes its signed contracts opened (RM-M31-09).
 ///
 /// Lifecycle actions live in the app bar's menu — the same [StatusActionsMenu]
 /// the lists and the residence use, so the publish gate (RM-M10-01 / RM-M10-02
@@ -102,92 +102,86 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
 
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(
-        Dimens.spacing,
-        Dimens.spacing,
-        Dimens.spacing,
-        Dimens.spacingXl,
-      ),
-      children: [
-        _Hero(annonce: annonce),
-        if (annonce.residenceId != null) ...[
-          const SizedBox(height: Dimens.spacingSm),
-          // A unit is deliberately absent from Biens Uniques, so the detail
-          // says what it belongs to rather than looking like a stray listing.
-          Align(
-            alignment: Alignment.centerLeft,
-            child: _Tag(label: l10n.annonceDetailUnitOfResidence),
-          ),
-        ],
-        // M29 / RM-M10-10 — reserved: for whom, until when, and the way out.
-        if (annonce.status == AnnonceStatus.reserved) ...[
-          const SizedBox(height: Dimens.spacing),
-          _ReservedNotice(annonce: annonce, isBusy: isBusy),
-        ],
-        ...switch (LifecycleNotice.of(annonce)) {
-          final notice? => [
-            const SizedBox(height: Dimens.spacing),
-            LifecycleNoticeCard(notice: notice, annonceId: annonce.id, isBusy: isBusy),
-          ],
-          null => const <Widget>[],
-        },
-        const SizedBox(height: Dimens.spacing),
-
-        // RM-M11-10 / RM-M11-01 — who can show this property. It belongs on the
-        // listing: the pool is a property's, not the portfolio's.
-        _VisitsCard(annonce: annonce),
-        const SizedBox(height: Dimens.spacing),
-
-        _FactsCard(annonce: annonce),
-        const SizedBox(height: Dimens.spacing),
-
-        // M29 — the requests on this listing, where they are answered.
-        _ReservationsCard(annonce: annonce),
-        const SizedBox(height: Dimens.spacing),
-
-        // M30 — the rents on this listing: what its tenants declared, and
-        // their spaces.
-        _RentsCard(annonce: annonce),
-        const SizedBox(height: Dimens.spacing),
-
-        // RM-M08-01 — only a prestataire initiates, and always from a bien:
-        // the contract copies the property it carries (RM-M08-05), so this is
-        // where one starts.
-        _ContractCard(annonce: annonce),
-        const SizedBox(height: Dimens.spacing),
-
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: _StatsCard(annonceId: annonce.id)),
-              const SizedBox(width: Dimens.spacingMd),
-              Expanded(child: _EmptyCard(title: l10n.annonceDetailOccupant)),
-            ],
-          ),
+    // Occupant and Historique share one read, set apart by the amenities.
+    return BlocProvider<ListingTenanciesBloc>(
+      create: (_) => getIt<ListingTenanciesBloc>()..add(ListingTenanciesRequested(annonce.id)),
+      child: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          Dimens.spacing,
+          Dimens.spacing,
+          Dimens.spacing,
+          Dimens.spacingXl,
         ),
-
-        if (annonce.amenities.isNotEmpty) ...[
-          const SizedBox(height: Dimens.spacing),
-          _SectionCard(
-            title: l10n.annonceDetailAmenities,
-            child: Wrap(
-              spacing: Dimens.spacingSm,
-              runSpacing: Dimens.spacingSm,
-              children: [
-                for (final amenity in annonce.amenities) _Tag(label: amenity.label(l10n)),
-              ],
+        children: [
+          _Hero(annonce: annonce),
+          if (annonce.residenceId != null) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            // A unit is deliberately absent from Biens Uniques, so the detail
+            // says what it belongs to rather than looking like a stray listing.
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _Tag(label: l10n.annonceDetailUnitOfResidence),
             ),
-          ),
-        ],
+          ],
+          // M29 / RM-M10-10 — reserved: for whom, until when, and the way out.
+          if (annonce.status == AnnonceStatus.reserved) ...[
+            const SizedBox(height: Dimens.spacing),
+            _ReservedNotice(annonce: annonce, isBusy: isBusy),
+          ],
+          ...switch (LifecycleNotice.of(annonce)) {
+            final notice? => [
+              const SizedBox(height: Dimens.spacing),
+              LifecycleNoticeCard(notice: notice, annonceId: annonce.id, isBusy: isBusy),
+            ],
+            null => const <Widget>[],
+          },
+          const SizedBox(height: Dimens.spacing),
 
-        const SizedBox(height: Dimens.spacing),
-        _SectionCard(
-          title: l10n.annonceDetailHistory,
-          child: _NoInfo(),
-        ),
-      ],
+          // RM-M11-10 / RM-M11-01 — who can show this property. It belongs on the
+          // listing: the pool is a property's, not the portfolio's.
+          _VisitsCard(annonce: annonce),
+          const SizedBox(height: Dimens.spacing),
+
+          _FactsCard(annonce: annonce),
+          const SizedBox(height: Dimens.spacing),
+
+          // M29 — the requests on this listing, where they are answered.
+          _ReservationsCard(annonce: annonce),
+          const SizedBox(height: Dimens.spacing),
+
+          // M30 — the rents on this listing: what its tenants declared, and
+          // their spaces.
+          _RentsCard(annonce: annonce),
+          const SizedBox(height: Dimens.spacing),
+
+          // RM-M08-01 — only a prestataire initiates, and always from a bien:
+          // the contract copies the property it carries (RM-M08-05), so this is
+          // where one starts.
+          _ContractCard(annonce: annonce),
+          const SizedBox(height: Dimens.spacing),
+
+          _StatsCard(annonceId: annonce.id),
+          const SizedBox(height: Dimens.spacing),
+          _OccupantCard(annonceId: annonce.id),
+
+          if (annonce.amenities.isNotEmpty) ...[
+            const SizedBox(height: Dimens.spacing),
+            _SectionCard(
+              title: l10n.annonceDetailAmenities,
+              child: Wrap(
+                spacing: Dimens.spacingSm,
+                runSpacing: Dimens.spacingSm,
+                children: [
+                  for (final amenity in annonce.amenities) _Tag(label: amenity.label(l10n)),
+                ],
+              ),
+            ),
+          ],
+
+          const SizedBox(height: Dimens.spacing),
+          const _HistoryCard(),
+        ],
+      ),
     );
   }
 }
@@ -549,8 +543,8 @@ class _ReservedNotice extends StatelessWidget {
               title: l10n.annonceActionUnreserve,
               isLoading: isBusy,
               onPressed: () => context.read<AnnoncesBloc>().add(
-                    AnnonceStatusChangeRequested(annonce.id, AnnonceTransition.unreserve),
-                  ),
+                AnnonceStatusChangeRequested(annonce.id, AnnonceTransition.unreserve),
+              ),
             ),
           );
 
@@ -735,39 +729,30 @@ class _StatsCard extends StatelessWidget {
           title: l10n.annonceDetailStats,
           child: switch (state) {
             ListingStatsLoading() => const Padding(
-                padding: EdgeInsets.symmetric(vertical: Dimens.spacing),
-                child: Center(child: Loader()),
-              ),
+              padding: EdgeInsets.symmetric(vertical: Dimens.spacing),
+              child: Center(child: Loader()),
+            ),
             ListingStatsReady(:final figures?) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MetricTile(label: l10n.homeStatsViews, figure: figures.views, format: MetricFormats.count),
-                  if (figures.viewsLast7Days case DashboardFigure(locked: false, value: final week?))
-                    Text(
-                      l10n.annonceStatsViewsWeek(week.toInt()),
-                      style: context.mboaText.micro.copyWith(color: colors.textTertiary),
-                    ),
-                  const SizedBox(height: Dimens.spacingMd),
-                  MetricTile(label: l10n.homeStatsContacts, figure: figures.contacts, format: MetricFormats.count),
-                  const SizedBox(height: Dimens.spacingMd),
-                  MetricTile(label: l10n.homeStatsRank, figure: figures.averagePosition, format: MetricFormats.rank),
-                ],
-              ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MetricTile(label: l10n.homeStatsViews, figure: figures.views, format: MetricFormats.count),
+                if (figures.viewsLast7Days case DashboardFigure(locked: false, value: final week?))
+                  Text(
+                    l10n.annonceStatsViewsWeek(week.toInt()),
+                    style: context.mboaText.micro.copyWith(color: colors.textTertiary),
+                  ),
+                const SizedBox(height: Dimens.spacingMd),
+                MetricTile(label: l10n.homeStatsContacts, figure: figures.contacts, format: MetricFormats.count),
+                const SizedBox(height: Dimens.spacingMd),
+                MetricTile(label: l10n.homeStatsRank, figure: figures.averagePosition, format: MetricFormats.rank),
+              ],
+            ),
             _ => _NoInfo(),
           },
         ),
       ),
     );
   }
-}
-
-class _EmptyCard extends StatelessWidget {
-  const _EmptyCard({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) => _SectionCard(title: title, child: _NoInfo());
 }
 
 class _NoInfo extends StatelessWidget {
@@ -790,4 +775,236 @@ class _NoInfo extends StatelessWidget {
       ],
     );
   }
+}
+
+/// « Occupant » (RM-M31-09): the tenant living there — or moving in next —
+/// with where their rent stands; their space a tap away.
+class _OccupantCard extends StatelessWidget {
+  const _OccupantCard({required this.annonceId});
+
+  final String annonceId;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final locale = Localizations.localeOf(context).toLanguageTag();
+
+    return BlocBuilder<ListingTenanciesBloc, ListingTenanciesState>(
+      builder: (context, state) => _SectionCard(
+        title: l10n.annonceDetailOccupant,
+        child: switch (state) {
+          ListingTenanciesLoading() => const _CardLoader(),
+          ListingTenanciesFailure() => _Retry(
+            onRetry: () => context.read<ListingTenanciesBloc>().add(ListingTenanciesRequested(annonceId)),
+          ),
+          ListingTenanciesReady(occupant: null) => _Quiet(icon: LucideIcons.doorOpen, text: l10n.annonceDetailVacant),
+          ListingTenanciesReady(occupant: final occupant?, :final next, :final isOffline) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _TenancyRow(home: occupant, current: true),
+              if (next != null) ...[
+                Divider(height: Dimens.spacingLg, color: context.mboaColors.border),
+                Text(
+                  l10n.annonceDetailNextTenant(
+                    next.tenant?.displayName ?? l10n.declarationTenant,
+                    next.startDate == null ? '—' : DateFormat.yMMMd(locale).format(next.startDate!),
+                  ),
+                  style: context.mboaText.caption.copyWith(color: context.mboaColors.textSecondary),
+                ),
+              ],
+              if (isOffline) const _OfflineNote(),
+            ],
+          ),
+        },
+      ),
+    );
+  }
+}
+
+/// « Historique » (RM-M31-09): the tenants who lived there before, the
+/// latest gone first; each one's space, read only, a tap away.
+class _HistoryCard extends StatelessWidget {
+  const _HistoryCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return BlocBuilder<ListingTenanciesBloc, ListingTenanciesState>(
+      builder: (context, state) => _SectionCard(
+        title: l10n.annonceDetailHistory,
+        child: switch (state) {
+          ListingTenanciesLoading() => const _CardLoader(),
+          // The retry is on the occupant's card, just above.
+          ListingTenanciesFailure() => Text(
+            l10n.commonError,
+            style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+          ),
+          ListingTenanciesReady(past: []) && final ready => _Quiet(
+            icon: LucideIcons.history,
+            text: ready.occupant == null ? l10n.annonceDetailNoTenantYet : l10n.annonceDetailNoPastTenant,
+          ),
+          final ListingTenanciesReady ready => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (final (index, home) in ready.visiblePast.indexed) ...[
+                if (index > 0) Divider(height: Dimens.spacingMd, color: colors.border),
+                _TenancyRow(home: home),
+              ],
+              if (ready.hasMorePast)
+                TextButton(
+                  onPressed: () => context.read<ListingTenanciesBloc>().add(const ListingTenanciesHistoryExpanded()),
+                  child: Text(l10n.annonceDetailHistorySeeAll(ready.past.length)),
+                ),
+              if (ready.isOffline) const _OfflineNote(),
+            ],
+          ),
+        },
+      ),
+    );
+  }
+}
+
+/// One tenancy: who, for how much, since or between when — and, for the
+/// occupant, where the rent stands.
+class _TenancyRow extends StatelessWidget {
+  const _TenancyRow({required this.home, this.current = false});
+
+  final Home home;
+  final bool current;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final name = home.tenant?.displayName ?? l10n.declarationTenant;
+    final start = home.startDate;
+    final end = home.endDate;
+
+    final when = switch ((current, home.state)) {
+      (true, HomeStage.upcoming) when start != null => l10n.annonceDetailOccupantFrom(
+        DateFormat.yMMMd(locale).format(start),
+      ),
+      (true, _) when start != null => l10n.annonceDetailOccupantSince(DateFormat.yMMMd(locale).format(start)),
+      (false, _) => [start, end].nonNulls.map(DateFormat.yMMM(locale).format).join(' – '),
+      _ => '',
+    };
+    final standing = current ? homeStanding(context, home) : null;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(Dimens.radius),
+      onTap: () => context.router.push(TenantHomeRoute(contractId: home.contractId)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Dimens.spacingXs),
+        child: Row(
+          children: [
+            MboaAvatar(
+              imageUrl: home.tenant?.photoUrl,
+              initials: initialsFromFullName(home.tenant?.displayName),
+              size: current ? 44 : 36,
+            ),
+            const SizedBox(width: Dimens.spacingMd),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.mboaText.label.copyWith(color: colors.ink),
+                  ),
+                  if (when.isNotEmpty)
+                    Text(when, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
+                  Text(
+                    home.rentalPeriod.priceLabel(l10n, home.rent),
+                    style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                  ),
+                  if (standing case (final line, final tone)) ...[
+                    const SizedBox(height: Dimens.spacingXs),
+                    Text(
+                      line,
+                      style: context.mboaText.caption.copyWith(color: tone, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// An empty card's one line, under its icon.
+class _Quiet extends StatelessWidget {
+  const _Quiet({required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Row(
+      children: [
+        Icon(icon, size: Dimens.icon, color: colors.textTertiary),
+        const SizedBox(width: Dimens.spacingMd),
+        Expanded(
+          child: Text(text, style: context.mboaText.body.copyWith(color: colors.textSecondary)),
+        ),
+      ],
+    );
+  }
+}
+
+class _CardLoader extends StatelessWidget {
+  const _CardLoader();
+
+  @override
+  Widget build(BuildContext context) => const Padding(
+    padding: EdgeInsets.symmetric(vertical: Dimens.spacing),
+    child: Center(child: Loader()),
+  );
+}
+
+class _Retry extends StatelessWidget {
+  const _Retry({required this.onRetry});
+
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            l10n.commonError,
+            style: context.mboaText.caption.copyWith(color: context.mboaColors.textSecondary),
+          ),
+        ),
+        TextButton(onPressed: onRetry, child: Text(l10n.commonRetry)),
+      ],
+    );
+  }
+}
+
+class _OfflineNote extends StatelessWidget {
+  const _OfflineNote();
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: Dimens.spacingSm),
+    child: Text(
+      I18n.of(context).annonceDetailTenanciesOffline,
+      style: context.mboaText.micro.copyWith(color: context.mboaColors.textTertiary),
+    ),
+  );
 }

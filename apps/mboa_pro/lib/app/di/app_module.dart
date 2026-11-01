@@ -17,6 +17,7 @@ import '../../features/finance/data/owner_invoices_repository.dart';
 import '../../features/finance/bloc/finance_access_bloc.dart';
 import '../../features/finance/data/finance_access_repository.dart';
 import '../../features/annonces/bloc/listing_stats_bloc.dart';
+import '../../features/annonces/bloc/listing_tenancies_bloc.dart';
 import '../../features/password_reset/bloc/password_reset_bloc.dart';
 import '../../features/password_reset/data/password_reset_repository.dart';
 import '../../features/agent/bloc/agent_availability_bloc.dart';
@@ -206,6 +207,7 @@ void registerAppModule() {
   );
   // M14 — a listing's own figures, on its detail.
   getIt.registerFactory<ListingStatsBloc>(() => ListingStatsBloc(repository: getIt<ProDashboardRepository>()));
+  getIt.registerFactory<ListingTenanciesBloc>(() => ListingTenanciesBloc(repository: getIt<HomesRepository>()));
 
   // Listings (M10). The list blocs are factories — each list screen owns one,
   // and the detail reads the list bloc it was pushed from.

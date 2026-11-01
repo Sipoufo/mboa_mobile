@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -23,21 +22,7 @@ class HomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final next = home.nextDue;
-
-    final (String line, Color tone) = switch (home) {
-      _ when home.state == HomeStage.readOnly => (
-          home.endDate == null ? l10n.myHomeEnded : l10n.myHomeEndedOn(DateFormat.yMMMd(locale).format(home.endDate!)),
-          colors.textSecondary,
-        ),
-      _ when home.isOverdue => (l10n.myHomeOverdueCount(home.overdueCount), colors.error),
-      _ when next?.dueDate != null => (
-          '${l10n.myHomeNextRent} · ${fcfaOf(context, next!.remaining)} · ${DateFormat.MMMd(locale).format(next.dueDate!)}',
-          colors.primary,
-        ),
-      _ => (l10n.myHomeUpToDate, colors.success),
-    };
+    final (line, tone) = homeStanding(context, home);
 
     return Material(
       color: colors.surface,

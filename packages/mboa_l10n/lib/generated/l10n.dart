@@ -17913,6 +17913,86 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Libre pour le moment`
+  String get annonceDetailVacant {
+    return Intl.message(
+      'Libre pour le moment',
+      name: 'annonceDetailVacant',
+      desc: 'Occupant card on a Pro listing: no running or upcoming tenancy.',
+      args: [],
+    );
+  }
+
+  /// `Depuis le {date}`
+  String annonceDetailOccupantSince(String date) {
+    return Intl.message(
+      'Depuis le $date',
+      name: 'annonceDetailOccupantSince',
+      desc: 'Occupant card: the running tenancy began on this date.',
+      args: [date],
+    );
+  }
+
+  /// `Entre le {date}`
+  String annonceDetailOccupantFrom(String date) {
+    return Intl.message(
+      'Entre le $date',
+      name: 'annonceDetailOccupantFrom',
+      desc: 'Occupant card: the signed tenancy begins on this date.',
+      args: [date],
+    );
+  }
+
+  /// `Ensuite : {name}, le {date}`
+  String annonceDetailNextTenant(String name, String date) {
+    return Intl.message(
+      'Ensuite : $name, le $date',
+      name: 'annonceDetailNextTenant',
+      desc: 'Occupant card: a tenancy signed to follow the running one.',
+      args: [name, date],
+    );
+  }
+
+  /// `Aucun locataire avant celui-ci`
+  String get annonceDetailNoPastTenant {
+    return Intl.message(
+      'Aucun locataire avant celui-ci',
+      name: 'annonceDetailNoPastTenant',
+      desc: 'History card: the occupant is the first tenant.',
+      args: [],
+    );
+  }
+
+  /// `Aucun locataire pour l'instant`
+  String get annonceDetailNoTenantYet {
+    return Intl.message(
+      'Aucun locataire pour l\'instant',
+      name: 'annonceDetailNoTenantYet',
+      desc: 'History card: the listing never had a tenant.',
+      args: [],
+    );
+  }
+
+  /// `Voir tout ({count})`
+  String annonceDetailHistorySeeAll(int count) {
+    return Intl.message(
+      'Voir tout ($count)',
+      name: 'annonceDetailHistorySeeAll',
+      desc: 'History card: show every ended tenancy.',
+      args: [count],
+    );
+  }
+
+  /// `Hors ligne — tels que lus la dernière fois.`
+  String get annonceDetailTenanciesOffline {
+    return Intl.message(
+      'Hors ligne — tels que lus la dernière fois.',
+      name: 'annonceDetailTenanciesOffline',
+      desc: 'Occupant / History cards read from the cache.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

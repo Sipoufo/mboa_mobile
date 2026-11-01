@@ -47,6 +47,28 @@ class HomeMoreButton extends StatelessWidget {
 }
 
 /// "150 000 FCFA", in the reader's locale.
+/// Where a space stands, in one line and its tone: ended, late, the next
+/// rent, or up to date — a space's card, and a listing's occupant.
+(String, Color) homeStanding(BuildContext context, Home home) {
+  final l10n = I18n.of(context);
+  final colors = context.mboaColors;
+  final locale = Localizations.localeOf(context).toLanguageTag();
+  final next = home.nextDue;
+
+  return switch (home) {
+    _ when home.state == HomeStage.readOnly => (
+        home.endDate == null ? l10n.myHomeEnded : l10n.myHomeEndedOn(DateFormat.yMMMd(locale).format(home.endDate!)),
+        colors.textSecondary,
+      ),
+    _ when home.isOverdue => (l10n.myHomeOverdueCount(home.overdueCount), colors.error),
+    _ when next?.dueDate != null => (
+        '${l10n.myHomeNextRent} · ${fcfaOf(context, next!.remaining)} · ${DateFormat.MMMd(locale).format(next.dueDate!)}',
+        colors.primary,
+      ),
+    _ => (l10n.myHomeUpToDate, colors.success),
+  };
+}
+
 String fcfaOf(BuildContext context, int amount) =>
     '${NumberFormat.decimalPattern(Localizations.localeOf(context).toLanguageTag()).format(amount)} '
     '${I18n.of(context).annonceFormCurrency}';
