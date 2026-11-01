@@ -67,14 +67,13 @@ class ContractDetailView extends StatelessWidget {
         automaticallyImplyLeading: false,
         leading: MboaHeaderBackButton.leading(context),
         title: Text(l10n.contractDetailTitle),
+        actions: [_PendingMoreButton(onAmend: onAmend)],
       ),
       body: BlocConsumer<ContractDetailBloc, ContractDetailState>(
         listenWhen: (prev, curr) =>
             curr is ContractWasCancelled ||
             (curr is ContractDetailReady &&
-                (curr.lastActionFailed ||
-                    curr.justActed ||
-                    curr.terminationRefusal != null)),
+                (curr.lastActionFailed || curr.justActed || curr.terminationRefusal != null)),
         listener: (context, state) {
           if (state is ContractWasCancelled) {
             MboaHeaderBackButton.pop(context);
@@ -110,17 +109,14 @@ class ContractDetailView extends StatelessWidget {
           }
         },
         builder: (context, state) => switch (state) {
-          ContractDetailInitial() || ContractDetailLoadInProgress() =>
-            const Center(child: Loader()),
+          ContractDetailInitial() || ContractDetailLoadInProgress() => const Center(child: Loader()),
           ContractWasCancelled() => const Center(child: Loader()),
           ContractDetailFailure() => Center(
-              child: TextButton(
-                onPressed: () => context
-                    .read<ContractDetailBloc>()
-                    .add(ContractRequested(id)),
-                child: Text(l10n.commonRetry),
-              ),
+            child: TextButton(
+              onPressed: () => context.read<ContractDetailBloc>().add(ContractRequested(id)),
+              child: Text(l10n.commonRetry),
             ),
+          ),
           final ContractDetailReady ready => _Body(state: ready, viewer: viewer),
         },
       ),
@@ -171,10 +167,16 @@ class _Body extends StatelessWidget {
         // §37 A — the landlord's own rating of the tenant, once given. The
         // server sends it to the landlord only.
         if (contract.tenantRating case final stars?) ...[
-          _Card(title: l10n.contractTenantRatingTitle, child: TenantStars(stars: stars)),
+          _Card(
+            title: l10n.contractTenantRatingTitle,
+            child: TenantStars(stars: stars),
+          ),
           const SizedBox(height: Dimens.spacing),
         ],
-        _Card(title: l10n.contractTermsTitle, child: _Terms(contract: contract)),
+        _Card(
+          title: l10n.contractTermsTitle,
+          child: _Terms(contract: contract),
+        ),
         const SizedBox(height: Dimens.spacing),
         _Card(
           title: l10n.contractPartiesTitle,
@@ -245,8 +247,7 @@ class _HeaderCard extends StatelessWidget {
             // CA-M08-02 — the exact address is withheld until both signatures
             // are in; until then the contract shows the quartier, like the
             // listing does.
-            contract.exactAddress ??
-                [contract.district, contract.city].nonNulls.join(' · '),
+            contract.exactAddress ?? [contract.district, contract.city].nonNulls.join(' · '),
             style: context.mboaText.body.copyWith(color: colors.primaryDark),
           ),
           // RM-M08-09 speaks of the signing; once signed it can only say
@@ -265,8 +266,7 @@ class _HeaderCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     l10n.contractLocked,
-                    style: context.mboaText.caption
-                        .copyWith(color: colors.primaryDark),
+                    style: context.mboaText.caption.copyWith(color: colors.primaryDark),
                   ),
                 ),
               ],
@@ -288,25 +288,19 @@ class _Terms extends StatelessWidget {
     final l10n = I18n.of(context);
 
     final rows = <(String, String)>[
-      if (contract.price case final price?)
-        (l10n.contractTermPrice, contract.rentalPeriod.priceLabel(l10n, price)),
-      if (contract.depositAmount case final deposit?)
-        (l10n.contractTermDeposit, moneyLabel(l10n, deposit)),
+      if (contract.price case final price?) (l10n.contractTermPrice, contract.rentalPeriod.priceLabel(l10n, price)),
+      if (contract.depositAmount case final deposit?) (l10n.contractTermDeposit, moneyLabel(l10n, deposit)),
       (
         l10n.contractTermCharges,
-        (contract.chargesIncluded ?? false)
-            ? l10n.annonceDetailChargesIncluded
-            : l10n.annonceDetailChargesExtra,
+        (contract.chargesIncluded ?? false) ? l10n.annonceDetailChargesIncluded : l10n.annonceDetailChargesExtra,
       ),
-      if (contract.startDate case final start?)
-        (l10n.contractTermStart, DateFormat.yMMMMd().format(start)),
+      if (contract.startDate case final start?) (l10n.contractTermStart, DateFormat.yMMMMd().format(start)),
       if (contract.durationUnits case final units?)
         (
           l10n.contractTermDuration,
           durationLabel(l10n, units, contract.rentalPeriod),
         ),
-      if (contract.endDate case final end?)
-        (l10n.contractTermEnd, DateFormat.yMMMMd().format(end)),
+      if (contract.endDate case final end?) (l10n.contractTermEnd, DateFormat.yMMMMd().format(end)),
       (
         l10n.contractTermTacit,
         (contract.tacitRenewal ?? false) ? l10n.commonYes : l10n.commonNo,
@@ -324,14 +318,12 @@ class _Terms extends StatelessWidget {
                 Expanded(
                   child: Text(
                     label,
-                    style: context.mboaText.body
-                        .copyWith(color: context.mboaColors.textSecondary),
+                    style: context.mboaText.body.copyWith(color: context.mboaColors.textSecondary),
                   ),
                 ),
                 Text(
                   value,
-                  style: context.mboaText.label
-                      .copyWith(color: context.mboaColors.ink),
+                  style: context.mboaText.label.copyWith(color: context.mboaColors.ink),
                 ),
               ],
             ),
@@ -403,8 +395,7 @@ class _Party extends StatelessWidget {
               ),
               Text(
                 role,
-                style: context.mboaText.caption
-                    .copyWith(color: colors.textTertiary),
+                style: context.mboaText.caption.copyWith(color: colors.textTertiary),
               ),
             ],
           ),
@@ -441,20 +432,17 @@ class _Changes extends StatelessWidget {
                         change.isWithdrawn
                             ? l10n.contractChangeWithdrawn
                             : change.pending
-                                ? l10n.contractChangePending
-                                : l10n.contractChangeAnswered,
+                            ? l10n.contractChangePending
+                            : l10n.contractChangeAnswered,
                         style: context.mboaText.label.copyWith(
-                          color: change.pending && !change.isWithdrawn
-                              ? colors.warning
-                              : colors.textSecondary,
+                          color: change.pending && !change.isWithdrawn ? colors.warning : colors.textSecondary,
                         ),
                       ),
                     ),
                     if (change.createdAt case final at?)
                       Text(
                         DateFormat.yMMMd().format(at),
-                        style: context.mboaText.caption
-                            .copyWith(color: colors.textTertiary),
+                        style: context.mboaText.caption.copyWith(color: colors.textTertiary),
                       ),
                   ],
                 ),
@@ -472,13 +460,11 @@ class _Changes extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: colors.warning.withValues(alpha: 0.12),
-                            borderRadius:
-                                BorderRadius.circular(Dimens.radiusFull),
+                            borderRadius: BorderRadius.circular(Dimens.radiusFull),
                           ),
                           child: Text(
                             _termLabel(l10n, term),
-                            style: context.mboaText.caption
-                                .copyWith(color: colors.warning),
+                            style: context.mboaText.caption.copyWith(color: colors.warning),
                           ),
                         ),
                     ],
@@ -501,8 +487,7 @@ class _Changes extends StatelessWidget {
                     ),
                     child: Text(
                       response,
-                      style: context.mboaText.body
-                          .copyWith(color: colors.textSecondary),
+                      style: context.mboaText.body.copyWith(color: colors.textSecondary),
                     ),
                   ),
                 ],
@@ -510,9 +495,7 @@ class _Changes extends StatelessWidget {
                   const SizedBox(height: Dimens.spacingSm),
                   Button.outline(
                     title: l10n.contractChangeAnswer,
-                    onPressed: state.isBusy
-                        ? null
-                        : () => _answer(context, change),
+                    onPressed: state.isBusy ? null : () => _answer(context, change),
                   ),
                 ],
               ],
@@ -536,14 +519,14 @@ class _Changes extends StatelessWidget {
   }
 
   static String _termLabel(I18n l10n, ContestedTerm term) => switch (term) {
-        ContestedTerm.price => l10n.contractTermPrice,
-        ContestedTerm.rentalPeriod => l10n.contractTermPeriod,
-        ContestedTerm.depositAmount => l10n.contractTermDeposit,
-        ContestedTerm.chargesIncluded => l10n.contractTermCharges,
-        ContestedTerm.startDate => l10n.contractTermStart,
-        ContestedTerm.durationUnits => l10n.contractTermDuration,
-        ContestedTerm.tacitRenewal => l10n.contractTermTacit,
-      };
+    ContestedTerm.price => l10n.contractTermPrice,
+    ContestedTerm.rentalPeriod => l10n.contractTermPeriod,
+    ContestedTerm.depositAmount => l10n.contractTermDeposit,
+    ContestedTerm.chargesIncluded => l10n.contractTermCharges,
+    ContestedTerm.startDate => l10n.contractTermStart,
+    ContestedTerm.durationUnits => l10n.contractTermDuration,
+    ContestedTerm.tacitRenewal => l10n.contractTermTacit,
+  };
 }
 
 /// Owns its controller, so the framework disposes it once the dialog is gone.
@@ -664,8 +647,7 @@ class _Signatures extends StatelessWidget {
                 if (signature.signedAt case final at?)
                   Text(
                     DateFormat.yMMMd().add_Hm().format(at),
-                    style: context.mboaText.caption
-                        .copyWith(color: colors.textTertiary),
+                    style: context.mboaText.caption.copyWith(color: colors.textTertiary),
                   ),
               ],
             ),
@@ -697,103 +679,69 @@ class _ActionBar extends StatelessWidget {
     final colors = context.mboaColors;
     final contract = state.contract;
 
-    final children = <Widget>[];
+    if (_PendingActions.of(contract, canAmend: onAmend != null) case final pending?) {
+      final main = pending.main;
+      // Nothing expected of the reader: no bar; the rare actions wait behind
+      // the app bar's "⋯" ([_PendingMoreButton]).
+      if (main == null) return const SizedBox.shrink();
 
-    // RM-M08-02 / CE-M08-03 — the tenant takes the terms or contests them,
-    // while the ball is theirs. `canAccept` is the server's verdict for
-    // exactly that window (tenant, SENT or CHANGES_REQUESTED), so the two
-    // actions ride on it and nothing here re-derives who may act — the one
-    // derivation M08 used to carry is gone. It is inherently tenant-scoped:
-    // the server never sets it for the landlord.
-    if (contract.canAccept) {
-      children.add(
-        Button.primary(
-          title: l10n.contractAccept,
-          isLoading: state.isBusy,
-          onPressed: state.isBusy
-              ? null
-              : () => context
-                  .read<ContractDetailBloc>()
-                  .add(const ContractAccepted()),
-        ),
-      );
-      children.add(
-        Button.outline(
-          title: l10n.contractContest,
-          onPressed: state.isBusy ? null : () => _contest(context),
-        ),
-      );
-    }
+      void act(_Pending action) => switch (action) {
+        _Pending.accept => context.read<ContractDetailBloc>().add(const ContractAccepted()),
+        _Pending.send => context.read<ContractDetailBloc>().add(const ContractSent()),
+        _Pending.sign => _sign(context, contract),
+        _Pending.amend => onAmend!(contract),
+        _Pending.contest => _contest(context),
+        _Pending.cancel => _cancelContract(context),
+      };
 
-    if (contract.status == ContractStatus.draft) {
-      children.add(
-        Button.primary(
-          title: l10n.contractSend,
-          isLoading: state.isBusy,
-          onPressed: state.isBusy
-              ? null
-              : () => context.read<ContractDetailBloc>().add(const ContractSent()),
+      return Container(
+        decoration: BoxDecoration(
+          color: colors.surface,
+          border: Border(top: BorderSide(color: colors.border)),
         ),
-      );
-    } else if (contract.canSign) {
-      // `canSign` is the server's verdict for this reader: the contract is
-      // accepted and they have not signed it yet. Once they have, it is false
-      // and the button goes — the header says who is still awaited.
-      children.add(
-        Button.primary(
-          title: l10n.contractSign,
-          isLoading: state.isBusy,
-          onPressed: state.isBusy ? null : () => _sign(context, contract),
-        ),
-      );
-    } else if (contract.isSigned) {
-      // Signed: one main action — the PDF — and "⋯" for the review and the
-      // termination (the founder's call: never a column of buttons).
-      return _SignedBar(state: state, onReview: onReview, viewer: viewer);
-    }
-
-    // RM-M08-08 — amendable only while nobody has accepted, and only by the
-    // party who drew it up: [onAmend] is null on the tenant's side, so the
-    // button is absent rather than present and refused.
-    if (contract.status.isAmendable && onAmend != null) {
-      children.add(
-        Button.outline(
-          title: l10n.contractAmend,
-          onPressed: state.isBusy ? null : () => onAmend!(contract),
-        ),
-      );
-    }
-
-    if (contract.status.isOpen && !contract.isLocked) {
-      children.add(
-        TextButton(
-          onPressed: state.isBusy ? null : () => _cancel(context),
-          style: TextButton.styleFrom(foregroundColor: colors.error),
-          child: Text(l10n.contractCancel),
-        ),
-      );
-    }
-
-    if (children.isEmpty) return const SizedBox.shrink();
-
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        border: Border(top: BorderSide(color: colors.border)),
-      ),
-      child: SafeArea(
-        minimum: const EdgeInsets.all(Dimens.spacing),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (final child in children) ...[
-              child,
-              if (child != children.last) const SizedBox(height: Dimens.spacingSm),
+        child: SafeArea(
+          minimum: const EdgeInsets.all(Dimens.spacing),
+          child: Row(
+            children: [
+              Expanded(
+                child: Button.primary(
+                  title: main.label(l10n),
+                  isLoading: state.isBusy,
+                  onPressed: state.isBusy ? null : () => act(main),
+                ),
+              ),
+              if (pending.more.isNotEmpty) ...[
+                const SizedBox(width: Dimens.spacingSm),
+                SizedBox.square(
+                  dimension: Dimens.buttonHeight,
+                  child: IconButton(
+                    tooltip: l10n.listingMoreActions,
+                    onPressed: state.isBusy
+                        ? null
+                        : () async {
+                            final choice = await _showPendingMore(context, pending.more);
+                            if (choice != null && context.mounted) act(choice);
+                          },
+                    style: IconButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimens.radius),
+                        side: BorderSide(color: colors.primary),
+                      ),
+                    ),
+                    icon: Icon(LucideIcons.ellipsis, color: colors.primary),
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    // Signed: one main action — the PDF — and "⋯" for the review and the
+    // termination (the founder's call: never a column of buttons).
+    if (contract.isSigned) return _SignedBar(state: state, onReview: onReview, viewer: viewer);
+    return const SizedBox.shrink();
   }
 
   Future<void> _sign(BuildContext context, Contract contract) async {
@@ -829,33 +777,178 @@ class _ActionBar extends StatelessWidget {
       );
     }
   }
+}
 
-  Future<void> _cancel(BuildContext context) async {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-    final bloc = context.read<ContractDetailBloc>();
+/// What a contract not yet signed can ask of its reader.
+enum _Pending {
+  accept,
+  send,
+  sign,
+  amend,
+  contest,
+  cancel
+  ;
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.contractCancel),
-        content: Text(l10n.contractCancelConfirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(l10n.commonCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: colors.error),
-            child: Text(l10n.contractCancel),
-          ),
-        ],
-      ),
+  String label(I18n l10n) => switch (this) {
+    _Pending.accept => l10n.contractAccept,
+    _Pending.send => l10n.contractSend,
+    _Pending.sign => l10n.contractSign,
+    _Pending.amend => l10n.contractAmend,
+    _Pending.contest => l10n.contractContest,
+    _Pending.cancel => l10n.contractCancel,
+  };
+
+  IconData get icon => switch (this) {
+    _Pending.accept => LucideIcons.check,
+    _Pending.send => LucideIcons.send,
+    _Pending.sign => LucideIcons.penLine,
+    _Pending.amend => LucideIcons.pencil,
+    _Pending.contest => LucideIcons.messageSquareWarning,
+    _Pending.cancel => LucideIcons.circleX,
+  };
+}
+
+/// Before signature, the one action the screen expects of its reader — and
+/// the others behind "⋯", cancelling in red (Doc05 §6.1: never a column of
+/// buttons). Who may do what is the server's (`canAccept`, `canSign`); the
+/// only thing read here is the status, as before.
+class _PendingActions {
+  const _PendingActions({required this.main, required this.more});
+
+  /// Null for a signed contract, which has its own bar ([_SignedBar]).
+  static _PendingActions? of(Contract contract, {required bool canAmend}) {
+    final draft = contract.status == ContractStatus.draft;
+    if (contract.isSigned && !contract.canAccept && !draft && !contract.canSign) return null;
+
+    // RM-M08-08 — amendable only while nobody has accepted, and only by the
+    // party who drew it up: [canAmend] is false on the tenant's side.
+    final amend = contract.status.isAmendable && canAmend;
+    final main = switch (contract) {
+      // RM-M08-02 / CE-M08-03 — the tenant takes the terms or contests them,
+      // while the ball is theirs (`canAccept`).
+      Contract(canAccept: true) => _Pending.accept,
+      _ when draft => _Pending.send,
+      // Accepted, and this reader has not signed yet.
+      Contract(canSign: true) => _Pending.sign,
+      // CE-M08-03 — an objection to answer: redrafting is what is expected.
+      // Sent and unanswered, it is only possible: the landlord waits.
+      _ when amend && contract.status == ContractStatus.changesRequested => _Pending.amend,
+      _ => null,
+    };
+
+    return _PendingActions(
+      main: main,
+      more: [
+        if (contract.canAccept) _Pending.contest,
+        if (amend && main != _Pending.amend) _Pending.amend,
+        if (contract.status.isOpen && !contract.isLocked) _Pending.cancel,
+      ],
     );
-
-    if (confirmed ?? false) bloc.add(const ContractCancelled());
   }
+
+  /// Null: the screen expects nothing of its reader — no bar at all.
+  final _Pending? main;
+  final List<_Pending> more;
+}
+
+Future<_Pending?> _showPendingMore(BuildContext context, List<_Pending> actions) {
+  final colors = context.mboaColors;
+
+  return showModalBottomSheet<_Pending>(
+    context: context,
+    backgroundColor: colors.surface,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl)),
+    ),
+    builder: (sheetContext) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Dimens.spacing),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final action in actions)
+              ListTile(
+                leading: Icon(action.icon, color: action == _Pending.cancel ? colors.error : colors.primary),
+                title: Text(
+                  action.label(I18n.of(context)),
+                  style: context.mboaText.label.copyWith(
+                    color: action == _Pending.cancel ? colors.error : colors.ink,
+                  ),
+                ),
+                onTap: () => Navigator.of(sheetContext).pop(action),
+              ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+/// "⋯" in the app bar when the screen expects nothing of its reader but the
+/// contract can still be cancelled — the landlord waiting on the tenant, say.
+class _PendingMoreButton extends StatelessWidget {
+  const _PendingMoreButton({this.onAmend});
+
+  final void Function(Contract contract)? onAmend;
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<ContractDetailBloc, ContractDetailState>(
+    builder: (context, state) {
+      if (state is! ContractDetailReady) return const SizedBox.shrink();
+      final pending = _PendingActions.of(state.contract, canAmend: onAmend != null);
+      if (pending == null || pending.main != null || pending.more.isEmpty) return const SizedBox.shrink();
+
+      return IconButton(
+        tooltip: I18n.of(context).listingMoreActions,
+        icon: Icon(LucideIcons.ellipsis, color: context.mboaColors.primary),
+        onPressed: state.isBusy
+            ? null
+            : () async {
+                final choice = await _showPendingMore(context, pending.more);
+                if (!context.mounted) return;
+                // With nothing expected, only redrafting and cancelling
+                // can be left: accepting, sending and signing are always
+                // the main button.
+                switch (choice) {
+                  case _Pending.amend:
+                    onAmend!(state.contract);
+                  case _Pending.cancel:
+                    await _cancelContract(context);
+                  default:
+                    break;
+                }
+              },
+      );
+    },
+  );
+}
+
+/// Asked once more, in red: cancelling cannot be undone.
+Future<void> _cancelContract(BuildContext context) async {
+  final l10n = I18n.of(context);
+  final colors = context.mboaColors;
+  final bloc = context.read<ContractDetailBloc>();
+
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(l10n.contractCancel),
+      content: Text(l10n.contractCancelConfirm),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(false),
+          child: Text(l10n.commonCancel),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(true),
+          style: TextButton.styleFrom(foregroundColor: colors.error),
+          child: Text(l10n.contractCancel),
+        ),
+      ],
+    ),
+  );
+
+  if (confirmed ?? false) bloc.add(const ContractCancelled());
 }
 
 enum _SignedMore { pdf, review, terminate }
@@ -897,8 +990,8 @@ class _SignedBar extends StatelessWidget {
     final hasMore = rate || reviewLabel != null || canTerminate;
 
     void pdf() => context.read<ContractDetailBloc>().add(
-          ContractPdfRequested(name: [l10n.contractPdfFileName, ?contract.annonceTitle].join(' — ')),
-        );
+      ContractPdfRequested(name: [l10n.contractPdfFileName, ?contract.annonceTitle].join(' — ')),
+    );
 
     Future<void> rateTenant() async {
       final bloc = context.read<ContractDetailBloc>();
@@ -1050,14 +1143,14 @@ class _ContestSheetState extends State<_ContestSheet> {
   }
 
   String _label(I18n l10n, ContestedTerm term) => switch (term) {
-        ContestedTerm.price => l10n.contractTermPrice,
-        ContestedTerm.rentalPeriod => l10n.contractTermPeriod,
-        ContestedTerm.depositAmount => l10n.contractTermDeposit,
-        ContestedTerm.chargesIncluded => l10n.contractTermCharges,
-        ContestedTerm.startDate => l10n.contractTermStart,
-        ContestedTerm.durationUnits => l10n.contractTermDuration,
-        ContestedTerm.tacitRenewal => l10n.contractTermTacit,
-      };
+    ContestedTerm.price => l10n.contractTermPrice,
+    ContestedTerm.rentalPeriod => l10n.contractTermPeriod,
+    ContestedTerm.depositAmount => l10n.contractTermDeposit,
+    ContestedTerm.chargesIncluded => l10n.contractTermCharges,
+    ContestedTerm.startDate => l10n.contractTermStart,
+    ContestedTerm.durationUnits => l10n.contractTermDuration,
+    ContestedTerm.tacitRenewal => l10n.contractTermTacit,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -1123,11 +1216,11 @@ class _ContestSheetState extends State<_ContestSheet> {
                 title: l10n.contractContestSend,
                 onPressed: canSend
                     ? () => Navigator.of(context).pop(
-                          (
-                            comment: _controller.text.trim(),
-                            terms: _terms.toList(),
-                          ),
-                        )
+                        (
+                          comment: _controller.text.trim(),
+                          terms: _terms.toList(),
+                        ),
+                      )
                     : null,
               ),
             ),
