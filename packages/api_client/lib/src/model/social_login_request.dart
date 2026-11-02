@@ -18,7 +18,7 @@ part 'social_login_request.g.dart';
 abstract class SocialLoginRequest implements Built<SocialLoginRequest, SocialLoginRequestBuilder> {
   @BuiltValueField(wireName: r'provider')
   SocialLoginRequestProviderEnum get provider;
-  // enum providerEnum {  PHONE,  GOOGLE,  APPLE,  };
+  // enum providerEnum {  PHONE,  GOOGLE,  APPLE,  EMAIL,  };
 
   @BuiltValueField(wireName: r'idToken')
   String get idToken;
@@ -130,6 +130,8 @@ class SocialLoginRequestProviderEnum extends EnumClass {
   static const SocialLoginRequestProviderEnum GOOGLE = _$socialLoginRequestProviderEnum_GOOGLE;
   @BuiltValueEnumConst(wireName: r'APPLE')
   static const SocialLoginRequestProviderEnum APPLE = _$socialLoginRequestProviderEnum_APPLE;
+  @BuiltValueEnumConst(wireName: r'EMAIL')
+  static const SocialLoginRequestProviderEnum EMAIL = _$socialLoginRequestProviderEnum_EMAIL;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const SocialLoginRequestProviderEnum unknownDefaultOpenApi = _$socialLoginRequestProviderEnum_unknownDefaultOpenApi;
 

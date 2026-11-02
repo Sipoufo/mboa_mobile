@@ -112,6 +112,8 @@ class _$KycStatusResponse extends KycStatusResponse {
   final Date? expiresOn;
   @override
   final String? issuedAt;
+  @override
+  final bool? documentMissing;
 
   factory _$KycStatusResponse([
     void Function(KycStatusResponseBuilder)? updates,
@@ -129,6 +131,7 @@ class _$KycStatusResponse extends KycStatusResponse {
     this.issuedOn,
     this.expiresOn,
     this.issuedAt,
+    this.documentMissing,
   }) : super._();
   @override
   KycStatusResponse rebuild(void Function(KycStatusResponseBuilder) updates) =>
@@ -152,7 +155,8 @@ class _$KycStatusResponse extends KycStatusResponse {
         idNumber == other.idNumber &&
         issuedOn == other.issuedOn &&
         expiresOn == other.expiresOn &&
-        issuedAt == other.issuedAt;
+        issuedAt == other.issuedAt &&
+        documentMissing == other.documentMissing;
   }
 
   @override
@@ -169,6 +173,7 @@ class _$KycStatusResponse extends KycStatusResponse {
     _$hash = $jc(_$hash, issuedOn.hashCode);
     _$hash = $jc(_$hash, expiresOn.hashCode);
     _$hash = $jc(_$hash, issuedAt.hashCode);
+    _$hash = $jc(_$hash, documentMissing.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -186,7 +191,8 @@ class _$KycStatusResponse extends KycStatusResponse {
           ..add('idNumber', idNumber)
           ..add('issuedOn', issuedOn)
           ..add('expiresOn', expiresOn)
-          ..add('issuedAt', issuedAt))
+          ..add('issuedAt', issuedAt)
+          ..add('documentMissing', documentMissing))
         .toString();
   }
 }
@@ -242,6 +248,11 @@ class KycStatusResponseBuilder
   String? get issuedAt => _$this._issuedAt;
   set issuedAt(String? issuedAt) => _$this._issuedAt = issuedAt;
 
+  bool? _documentMissing;
+  bool? get documentMissing => _$this._documentMissing;
+  set documentMissing(bool? documentMissing) =>
+      _$this._documentMissing = documentMissing;
+
   KycStatusResponseBuilder() {
     KycStatusResponse._defaults(this);
   }
@@ -260,6 +271,7 @@ class KycStatusResponseBuilder
       _issuedOn = $v.issuedOn;
       _expiresOn = $v.expiresOn;
       _issuedAt = $v.issuedAt;
+      _documentMissing = $v.documentMissing;
       _$v = null;
     }
     return this;
@@ -295,6 +307,7 @@ class KycStatusResponseBuilder
             issuedOn: issuedOn,
             expiresOn: expiresOn,
             issuedAt: issuedAt,
+            documentMissing: documentMissing,
           );
     } catch (_) {
       late String _$failedField;

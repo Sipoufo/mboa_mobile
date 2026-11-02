@@ -8,7 +8,9 @@ part of 'verify_otp_request.dart';
 
 class _$VerifyOtpRequest extends VerifyOtpRequest {
   @override
-  final String phoneNumber;
+  final String? phoneNumber;
+  @override
+  final String? email;
   @override
   final String code;
 
@@ -16,7 +18,7 @@ class _$VerifyOtpRequest extends VerifyOtpRequest {
     void Function(VerifyOtpRequestBuilder)? updates,
   ]) => (VerifyOtpRequestBuilder()..update(updates))._build();
 
-  _$VerifyOtpRequest._({required this.phoneNumber, required this.code})
+  _$VerifyOtpRequest._({this.phoneNumber, this.email, required this.code})
     : super._();
   @override
   VerifyOtpRequest rebuild(void Function(VerifyOtpRequestBuilder) updates) =>
@@ -31,6 +33,7 @@ class _$VerifyOtpRequest extends VerifyOtpRequest {
     if (identical(other, this)) return true;
     return other is VerifyOtpRequest &&
         phoneNumber == other.phoneNumber &&
+        email == other.email &&
         code == other.code;
   }
 
@@ -38,6 +41,7 @@ class _$VerifyOtpRequest extends VerifyOtpRequest {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
     _$hash = $jc(_$hash, code.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -47,6 +51,7 @@ class _$VerifyOtpRequest extends VerifyOtpRequest {
   String toString() {
     return (newBuiltValueToStringHelper(r'VerifyOtpRequest')
           ..add('phoneNumber', phoneNumber)
+          ..add('email', email)
           ..add('code', code))
         .toString();
   }
@@ -60,6 +65,10 @@ class VerifyOtpRequestBuilder
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
+  String? _email;
+  String? get email => _$this._email;
+  set email(String? email) => _$this._email = email;
+
   String? _code;
   String? get code => _$this._code;
   set code(String? code) => _$this._code = code;
@@ -72,6 +81,7 @@ class VerifyOtpRequestBuilder
     final $v = _$v;
     if ($v != null) {
       _phoneNumber = $v.phoneNumber;
+      _email = $v.email;
       _code = $v.code;
       _$v = null;
     }
@@ -95,11 +105,8 @@ class VerifyOtpRequestBuilder
     final _$result =
         _$v ??
         _$VerifyOtpRequest._(
-          phoneNumber: BuiltValueNullFieldError.checkNotNull(
-            phoneNumber,
-            r'VerifyOtpRequest',
-            'phoneNumber',
-          ),
+          phoneNumber: phoneNumber,
+          email: email,
           code: BuiltValueNullFieldError.checkNotNull(
             code,
             r'VerifyOtpRequest',

@@ -43,9 +43,13 @@ void main() {
   });
 
   test('requestOtp sends the OTP and returns a session for the phone number', () async {
-    // The endpoint returns 202 Accepted with no body.
-    when(() => authApi.requestOtp(sendOtpRequest: any(named: 'sendOtpRequest')))
-        .thenAnswer((_) async => _response<void>('/auth/otp/request'));
+    // 202 Accepted, saying where the code went (§40 A).
+    when(() => authApi.requestOtp(sendOtpRequest: any(named: 'sendOtpRequest'))).thenAnswer(
+      (_) async => _response<OtpSentResponse>(
+        '/auth/otp/request',
+        data: OtpSentResponse((b) => b..channel = OtpSentResponseChannelEnum.SMS),
+      ),
+    );
 
     final session = await repository.requestOtp('+237690000000');
 

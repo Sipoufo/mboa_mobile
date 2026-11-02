@@ -239,7 +239,7 @@ class PrestataireVisitesApi {
     );
   }
 
-  /// One visit the prestataire carries out: the client&#39;s name and phone (RM-M16-01)
+  /// One visit on the prestataire&#39;s listing: theirs, or an agent&#39;s read only (mobile §40 D)
   /// 
   ///
   /// Parameters:
@@ -320,11 +320,13 @@ class PrestataireVisitesApi {
     );
   }
 
-  /// Visits the prestataire carries out themselves, newest first
+  /// Visits on the prestataire&#39;s listings — theirs (default), their agents&#39;, or both — newest first
   /// 
   ///
   /// Parameters:
   /// * [pageable] 
+  /// * [conductedBy] 
+  /// * [annonceId] 
   /// * [status] 
   /// * [from] 
   /// * [to] 
@@ -339,6 +341,8 @@ class PrestataireVisitesApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<PageResponseVisiteResponse>> listMyOwnerVisites({ 
     required Pageable pageable,
+    String? conductedBy,
+    String? annonceId,
     BuiltList<String>? status,
     DateTime? from,
     DateTime? to,
@@ -369,6 +373,8 @@ class PrestataireVisitesApi {
     );
 
     final _queryParameters = <String, dynamic>{
+      if (conductedBy != null) r'conductedBy': encodeQueryParameter(_serializers, conductedBy, const FullType(String)),
+      if (annonceId != null) r'annonceId': encodeQueryParameter(_serializers, annonceId, const FullType(String)),
       if (status != null) r'status': encodeCollectionQueryParameter<String>(_serializers, status, const FullType(BuiltList, [FullType(String)]), format: ListFormat.multi,),
       if (from != null) r'from': encodeQueryParameter(_serializers, from, const FullType(DateTime)),
       if (to != null) r'to': encodeQueryParameter(_serializers, to, const FullType(DateTime)),

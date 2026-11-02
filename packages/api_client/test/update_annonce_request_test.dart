@@ -117,5 +117,15 @@ void main() {
       // TODO
     });
 
+    // int advancePeriods
+    test('to test the property `advancePeriods`', () async {
+      // TODO
+    });
+
+    // int depositPeriods
+    test('to test the property `depositPeriods`', () async {
+      // TODO
+    });
+
   });
 }

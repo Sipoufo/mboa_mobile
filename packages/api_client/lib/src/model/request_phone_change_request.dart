@@ -11,9 +11,13 @@ part 'request_phone_change_request.g.dart';
 /// RequestPhoneChangeRequest
 ///
 /// Properties:
+/// * [currentPhoneNumber] 
 /// * [newPhoneNumber] 
 @BuiltValue()
 abstract class RequestPhoneChangeRequest implements Built<RequestPhoneChangeRequest, RequestPhoneChangeRequestBuilder> {
+  @BuiltValueField(wireName: r'currentPhoneNumber')
+  String? get currentPhoneNumber;
+
   @BuiltValueField(wireName: r'newPhoneNumber')
   String get newPhoneNumber;
 
@@ -40,6 +44,13 @@ class _$RequestPhoneChangeRequestSerializer implements PrimitiveSerializer<Reque
     RequestPhoneChangeRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.currentPhoneNumber != null) {
+      yield r'currentPhoneNumber';
+      yield serializers.serialize(
+        object.currentPhoneNumber,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'newPhoneNumber';
     yield serializers.serialize(
       object.newPhoneNumber,
@@ -68,6 +79,14 @@ class _$RequestPhoneChangeRequestSerializer implements PrimitiveSerializer<Reque
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'currentPhoneNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.currentPhoneNumber = valueDes;
+          break;
         case r'newPhoneNumber':
           final valueDes = serializers.deserialize(
             value,

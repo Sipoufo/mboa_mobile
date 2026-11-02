@@ -42,16 +42,16 @@ void main() {
       // TODO
     });
 
-    // Request an OTP for a phone number
+    // Request an OTP for a phone number (WhatsApp or SMS) or an email address; says where it went
     //
-    //Future requestOtp(SendOtpRequest sendOtpRequest) async
+    //Future<OtpSentResponse> requestOtp(SendOtpRequest sendOtpRequest) async
     test('test requestOtp', () async {
       // TODO
     });
 
-    // Resend the OTP to a phone that has a pending verification
+    // Resend the OTP to a phone or an email address that has a pending verification
     //
-    //Future resendOtp(SendOtpRequest sendOtpRequest) async
+    //Future<OtpSentResponse> resendOtp(SendOtpRequest sendOtpRequest) async
     test('test resendOtp', () async {
       // TODO
     });

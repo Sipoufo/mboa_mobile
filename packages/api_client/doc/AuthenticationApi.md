@@ -14,8 +14,8 @@ Method | HTTP request | Description
 [**logout**](AuthenticationApi.md#logout) | **POST** /api/v1/auth/logout | Revoke a refresh token (logout)
 [**refreshToken**](AuthenticationApi.md#refreshtoken) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
 [**registerProfessional**](AuthenticationApi.md#registerprofessional) | **POST** /api/v1/auth/register/professional | Register a professional (AGENT or PRESTATAIRE); sends an OTP to verify the phone
-[**requestOtp**](AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number
-[**resendOtp**](AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone that has a pending verification
+[**requestOtp**](AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number (WhatsApp or SMS) or an email address; says where it went
+[**resendOtp**](AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone or an email address that has a pending verification
 [**resetPassword**](AuthenticationApi.md#resetpassword) | **POST** /api/v1/auth/password/reset | Complete a password reset with the OTP received on the phone
 [**socialLogin**](AuthenticationApi.md#sociallogin) | **POST** /api/v1/auth/social/login | Log in with a Google or Apple ID token
 [**verifyLoginOtp**](AuthenticationApi.md#verifyloginotp) | **POST** /api/v1/auth/login/verify | Credential login step 2: verify the OTP and obtain access + refresh tokens
@@ -224,9 +224,9 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **requestOtp**
-> requestOtp(sendOtpRequest)
+> OtpSentResponse requestOtp(sendOtpRequest)
 
-Request an OTP for a phone number
+Request an OTP for a phone number (WhatsApp or SMS) or an email address; says where it went
 
 ### Example
 ```dart
@@ -236,7 +236,8 @@ final api = ApiClient().getAuthenticationApi();
 final SendOtpRequest sendOtpRequest = ; // SendOtpRequest | 
 
 try {
-    api.requestOtp(sendOtpRequest);
+    final response = api.requestOtp(sendOtpRequest);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AuthenticationApi->requestOtp: $e\n');
 }
@@ -250,7 +251,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**OtpSentResponse**](OtpSentResponse.md)
 
 ### Authorization
 
@@ -259,14 +260,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resendOtp**
-> resendOtp(sendOtpRequest)
+> OtpSentResponse resendOtp(sendOtpRequest)
 
-Resend the OTP to a phone that has a pending verification
+Resend the OTP to a phone or an email address that has a pending verification
 
 ### Example
 ```dart
@@ -276,7 +277,8 @@ final api = ApiClient().getAuthenticationApi();
 final SendOtpRequest sendOtpRequest = ; // SendOtpRequest | 
 
 try {
-    api.resendOtp(sendOtpRequest);
+    final response = api.resendOtp(sendOtpRequest);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AuthenticationApi->resendOtp: $e\n');
 }
@@ -290,7 +292,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**OtpSentResponse**](OtpSentResponse.md)
 
 ### Authorization
 
@@ -299,7 +301,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: */*, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

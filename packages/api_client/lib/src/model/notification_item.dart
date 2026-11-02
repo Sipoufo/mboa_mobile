@@ -14,6 +14,8 @@ part 'notification_item.g.dart';
 /// Properties:
 /// * [id] 
 /// * [type] 
+/// * [code] 
+/// * [outcome] 
 /// * [title] 
 /// * [body] 
 /// * [entityId] 
@@ -28,6 +30,13 @@ abstract class NotificationItem implements Built<NotificationItem, NotificationI
   @BuiltValueField(wireName: r'type')
   NotificationItemTypeEnum? get type;
   // enum typeEnum {  PAYMENT_CONFIRMED,  MESSAGE,  ANNONCE,  VISIT,  KYC,  RESIDENCE,  CONTRACT,  BADGE,  SAVED_SEARCH,  FINANCE_ADDON,  INVOICE,  RESERVATION,  HOME,  HOME_REQUEST,  HOME_EVIDENCE,  };
+
+  @BuiltValueField(wireName: r'code')
+  String? get code;
+
+  @BuiltValueField(wireName: r'outcome')
+  NotificationItemOutcomeEnum? get outcome;
+  // enum outcomeEnum {  POSITIVE,  NEGATIVE,  };
 
   @BuiltValueField(wireName: r'title')
   String? get title;
@@ -82,6 +91,20 @@ class _$NotificationItemSerializer implements PrimitiveSerializer<NotificationIt
       yield serializers.serialize(
         object.type,
         specifiedType: const FullType(NotificationItemTypeEnum),
+      );
+    }
+    if (object.code != null) {
+      yield r'code';
+      yield serializers.serialize(
+        object.code,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.outcome != null) {
+      yield r'outcome';
+      yield serializers.serialize(
+        object.outcome,
+        specifiedType: const FullType(NotificationItemOutcomeEnum),
       );
     }
     if (object.title != null) {
@@ -164,6 +187,22 @@ class _$NotificationItemSerializer implements PrimitiveSerializer<NotificationIt
           ) as NotificationItemTypeEnum?;
           if (valueDes == null) continue;
           result.type = valueDes;
+          break;
+        case r'code':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.code = valueDes;
+          break;
+        case r'outcome':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(NotificationItemOutcomeEnum),
+          ) as NotificationItemOutcomeEnum?;
+          if (valueDes == null) continue;
+          result.outcome = valueDes;
           break;
         case r'title':
           final valueDes = serializers.deserialize(
@@ -283,5 +322,22 @@ class NotificationItemTypeEnum extends EnumClass {
 
   static BuiltSet<NotificationItemTypeEnum> get values => _$notificationItemTypeEnumValues;
   static NotificationItemTypeEnum valueOf(String name) => _$notificationItemTypeEnumValueOf(name);
+}
+
+class NotificationItemOutcomeEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'POSITIVE')
+  static const NotificationItemOutcomeEnum POSITIVE = _$notificationItemOutcomeEnum_POSITIVE;
+  @BuiltValueEnumConst(wireName: r'NEGATIVE')
+  static const NotificationItemOutcomeEnum NEGATIVE = _$notificationItemOutcomeEnum_NEGATIVE;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const NotificationItemOutcomeEnum unknownDefaultOpenApi = _$notificationItemOutcomeEnum_unknownDefaultOpenApi;
+
+  static Serializer<NotificationItemOutcomeEnum> get serializer => _$notificationItemOutcomeEnumSerializer;
+
+  const NotificationItemOutcomeEnum._(String name): super(name);
+
+  static BuiltSet<NotificationItemOutcomeEnum> get values => _$notificationItemOutcomeEnumValues;
+  static NotificationItemOutcomeEnum valueOf(String name) => _$notificationItemOutcomeEnumValueOf(name);
 }
 

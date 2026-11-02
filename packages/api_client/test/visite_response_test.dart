@@ -77,5 +77,10 @@ void main() {
       // TODO
     });
 
+    // VisitorSummary visitor
+    test('to test the property `visitor`', () async {
+      // TODO
+    });
+
   });
 }

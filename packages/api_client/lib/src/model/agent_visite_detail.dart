@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/visitor_summary.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -28,6 +29,10 @@ part 'agent_visite_detail.g.dart';
 /// * [clientConfirmedAt] 
 /// * [canConfirm] 
 /// * [userAccountId] 
+/// * [visitor] 
+/// * [cancellationReason] 
+/// * [reviewId] 
+/// * [readOnly] 
 @BuiltValue()
 abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisiteDetailBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -78,6 +83,19 @@ abstract class AgentVisiteDetail implements Built<AgentVisiteDetail, AgentVisite
 
   @BuiltValueField(wireName: r'userAccountId')
   String? get userAccountId;
+
+  @BuiltValueField(wireName: r'visitor')
+  VisitorSummary? get visitor;
+
+  @BuiltValueField(wireName: r'cancellationReason')
+  AgentVisiteDetailCancellationReasonEnum? get cancellationReason;
+  // enum cancellationReasonEnum {  BY_USER,  BY_AGENT,  AGENT_UNAVAILABLE,  AGENT_REMOVED,  LISTING_UNAVAILABLE,  };
+
+  @BuiltValueField(wireName: r'reviewId')
+  String? get reviewId;
+
+  @BuiltValueField(wireName: r'readOnly')
+  bool? get readOnly;
 
   AgentVisiteDetail._();
 
@@ -212,6 +230,34 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
       yield serializers.serialize(
         object.userAccountId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.visitor != null) {
+      yield r'visitor';
+      yield serializers.serialize(
+        object.visitor,
+        specifiedType: const FullType(VisitorSummary),
+      );
+    }
+    if (object.cancellationReason != null) {
+      yield r'cancellationReason';
+      yield serializers.serialize(
+        object.cancellationReason,
+        specifiedType: const FullType(AgentVisiteDetailCancellationReasonEnum),
+      );
+    }
+    if (object.reviewId != null) {
+      yield r'reviewId';
+      yield serializers.serialize(
+        object.reviewId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.readOnly != null) {
+      yield r'readOnly';
+      yield serializers.serialize(
+        object.readOnly,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -365,6 +411,38 @@ class _$AgentVisiteDetailSerializer implements PrimitiveSerializer<AgentVisiteDe
           if (valueDes == null) continue;
           result.userAccountId = valueDes;
           break;
+        case r'visitor':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(VisitorSummary),
+          ) as VisitorSummary?;
+          if (valueDes == null) continue;
+          result.visitor.replace(valueDes);
+          break;
+        case r'cancellationReason':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(AgentVisiteDetailCancellationReasonEnum),
+          ) as AgentVisiteDetailCancellationReasonEnum?;
+          if (valueDes == null) continue;
+          result.cancellationReason = valueDes;
+          break;
+        case r'reviewId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.reviewId = valueDes;
+          break;
+        case r'readOnly':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.readOnly = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -415,5 +493,28 @@ class AgentVisiteDetailStatusEnum extends EnumClass {
 
   static BuiltSet<AgentVisiteDetailStatusEnum> get values => _$agentVisiteDetailStatusEnumValues;
   static AgentVisiteDetailStatusEnum valueOf(String name) => _$agentVisiteDetailStatusEnumValueOf(name);
+}
+
+class AgentVisiteDetailCancellationReasonEnum extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: r'BY_USER')
+  static const AgentVisiteDetailCancellationReasonEnum BY_USER = _$agentVisiteDetailCancellationReasonEnum_BY_USER;
+  @BuiltValueEnumConst(wireName: r'BY_AGENT')
+  static const AgentVisiteDetailCancellationReasonEnum BY_AGENT = _$agentVisiteDetailCancellationReasonEnum_BY_AGENT;
+  @BuiltValueEnumConst(wireName: r'AGENT_UNAVAILABLE')
+  static const AgentVisiteDetailCancellationReasonEnum AGENT_UNAVAILABLE = _$agentVisiteDetailCancellationReasonEnum_AGENT_UNAVAILABLE;
+  @BuiltValueEnumConst(wireName: r'AGENT_REMOVED')
+  static const AgentVisiteDetailCancellationReasonEnum AGENT_REMOVED = _$agentVisiteDetailCancellationReasonEnum_AGENT_REMOVED;
+  @BuiltValueEnumConst(wireName: r'LISTING_UNAVAILABLE')
+  static const AgentVisiteDetailCancellationReasonEnum LISTING_UNAVAILABLE = _$agentVisiteDetailCancellationReasonEnum_LISTING_UNAVAILABLE;
+  @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
+  static const AgentVisiteDetailCancellationReasonEnum unknownDefaultOpenApi = _$agentVisiteDetailCancellationReasonEnum_unknownDefaultOpenApi;
+
+  static Serializer<AgentVisiteDetailCancellationReasonEnum> get serializer => _$agentVisiteDetailCancellationReasonEnumSerializer;
+
+  const AgentVisiteDetailCancellationReasonEnum._(String name): super(name);
+
+  static BuiltSet<AgentVisiteDetailCancellationReasonEnum> get values => _$agentVisiteDetailCancellationReasonEnumValues;
+  static AgentVisiteDetailCancellationReasonEnum valueOf(String name) => _$agentVisiteDetailCancellationReasonEnumValueOf(name);
 }
 

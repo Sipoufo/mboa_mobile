@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
+import 'package:api_client/src/model/visitor_summary.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -26,6 +27,7 @@ part 'visite_response.g.dart';
 /// * [agentRating] 
 /// * [visitorPhone] 
 /// * [userAccountId] 
+/// * [visitor] 
 @BuiltValue()
 abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -72,6 +74,9 @@ abstract class VisiteResponse implements Built<VisiteResponse, VisiteResponseBui
 
   @BuiltValueField(wireName: r'userAccountId')
   String? get userAccountId;
+
+  @BuiltValueField(wireName: r'visitor')
+  VisitorSummary? get visitor;
 
   VisiteResponse._();
 
@@ -192,6 +197,13 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
       yield serializers.serialize(
         object.userAccountId,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.visitor != null) {
+      yield r'visitor';
+      yield serializers.serialize(
+        object.visitor,
+        specifiedType: const FullType(VisitorSummary),
       );
     }
   }
@@ -328,6 +340,14 @@ class _$VisiteResponseSerializer implements PrimitiveSerializer<VisiteResponse> 
           ) as String?;
           if (valueDes == null) continue;
           result.userAccountId = valueDes;
+          break;
+        case r'visitor':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(VisitorSummary),
+          ) as VisitorSummary?;
+          if (valueDes == null) continue;
+          result.visitor.replace(valueDes);
           break;
         default:
           unhandled.add(key);

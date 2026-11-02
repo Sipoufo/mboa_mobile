@@ -87,6 +87,8 @@ const MeResponseAuthProviderEnum _$meResponseAuthProviderEnum_GOOGLE =
     const MeResponseAuthProviderEnum._('GOOGLE');
 const MeResponseAuthProviderEnum _$meResponseAuthProviderEnum_APPLE =
     const MeResponseAuthProviderEnum._('APPLE');
+const MeResponseAuthProviderEnum _$meResponseAuthProviderEnum_EMAIL =
+    const MeResponseAuthProviderEnum._('EMAIL');
 const MeResponseAuthProviderEnum
 _$meResponseAuthProviderEnum_unknownDefaultOpenApi =
     const MeResponseAuthProviderEnum._('unknownDefaultOpenApi');
@@ -99,6 +101,8 @@ MeResponseAuthProviderEnum _$meResponseAuthProviderEnumValueOf(String name) {
       return _$meResponseAuthProviderEnum_GOOGLE;
     case 'APPLE':
       return _$meResponseAuthProviderEnum_APPLE;
+    case 'EMAIL':
+      return _$meResponseAuthProviderEnum_EMAIL;
     case 'unknownDefaultOpenApi':
       return _$meResponseAuthProviderEnum_unknownDefaultOpenApi;
     default:
@@ -111,6 +115,7 @@ final BuiltSet<MeResponseAuthProviderEnum> _$meResponseAuthProviderEnumValues =
       _$meResponseAuthProviderEnum_PHONE,
       _$meResponseAuthProviderEnum_GOOGLE,
       _$meResponseAuthProviderEnum_APPLE,
+      _$meResponseAuthProviderEnum_EMAIL,
       _$meResponseAuthProviderEnum_unknownDefaultOpenApi,
     ]);
 
@@ -246,12 +251,14 @@ class _$MeResponseAuthProviderEnumSerializer
     'PHONE': 'PHONE',
     'GOOGLE': 'GOOGLE',
     'APPLE': 'APPLE',
+    'EMAIL': 'EMAIL',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'PHONE': 'PHONE',
     'GOOGLE': 'GOOGLE',
     'APPLE': 'APPLE',
+    'EMAIL': 'EMAIL',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

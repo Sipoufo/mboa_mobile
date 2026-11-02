@@ -42,7 +42,7 @@ abstract class MeResponse implements Built<MeResponse, MeResponseBuilder> {
 
   @BuiltValueField(wireName: r'authProvider')
   MeResponseAuthProviderEnum? get authProvider;
-  // enum authProviderEnum {  PHONE,  GOOGLE,  APPLE,  };
+  // enum authProviderEnum {  PHONE,  GOOGLE,  APPLE,  EMAIL,  };
 
   @BuiltValueField(wireName: r'emailVerified')
   bool? get emailVerified;
@@ -314,6 +314,8 @@ class MeResponseAuthProviderEnum extends EnumClass {
   static const MeResponseAuthProviderEnum GOOGLE = _$meResponseAuthProviderEnum_GOOGLE;
   @BuiltValueEnumConst(wireName: r'APPLE')
   static const MeResponseAuthProviderEnum APPLE = _$meResponseAuthProviderEnum_APPLE;
+  @BuiltValueEnumConst(wireName: r'EMAIL')
+  static const MeResponseAuthProviderEnum EMAIL = _$meResponseAuthProviderEnum_EMAIL;
   @BuiltValueEnumConst(wireName: r'unknown_default_open_api', fallback: true)
   static const MeResponseAuthProviderEnum unknownDefaultOpenApi = _$meResponseAuthProviderEnum_unknownDefaultOpenApi;
 

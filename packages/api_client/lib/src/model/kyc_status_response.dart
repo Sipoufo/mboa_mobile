@@ -25,6 +25,7 @@ part 'kyc_status_response.g.dart';
 /// * [issuedOn] 
 /// * [expiresOn] 
 /// * [issuedAt] 
+/// * [documentMissing] 
 @BuiltValue()
 abstract class KycStatusResponse implements Built<KycStatusResponse, KycStatusResponseBuilder> {
   @BuiltValueField(wireName: r'status')
@@ -60,6 +61,9 @@ abstract class KycStatusResponse implements Built<KycStatusResponse, KycStatusRe
 
   @BuiltValueField(wireName: r'issuedAt')
   String? get issuedAt;
+
+  @BuiltValueField(wireName: r'documentMissing')
+  bool? get documentMissing;
 
   KycStatusResponse._();
 
@@ -159,6 +163,13 @@ class _$KycStatusResponseSerializer implements PrimitiveSerializer<KycStatusResp
       yield serializers.serialize(
         object.issuedAt,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.documentMissing != null) {
+      yield r'documentMissing';
+      yield serializers.serialize(
+        object.documentMissing,
+        specifiedType: const FullType(bool),
       );
     }
   }
@@ -271,6 +282,14 @@ class _$KycStatusResponseSerializer implements PrimitiveSerializer<KycStatusResp
           ) as String?;
           if (valueDes == null) continue;
           result.issuedAt = valueDes;
+          break;
+        case r'documentMissing':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.documentMissing = valueDes;
           break;
         default:
           unhandled.add(key);

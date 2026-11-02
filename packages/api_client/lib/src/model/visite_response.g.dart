@@ -290,6 +290,8 @@ class _$VisiteResponse extends VisiteResponse {
   final String? visitorPhone;
   @override
   final String? userAccountId;
+  @override
+  final VisitorSummary? visitor;
 
   factory _$VisiteResponse([void Function(VisiteResponseBuilder)? updates]) =>
       (VisiteResponseBuilder()..update(updates))._build();
@@ -309,6 +311,7 @@ class _$VisiteResponse extends VisiteResponse {
     this.agentRating,
     this.visitorPhone,
     this.userAccountId,
+    this.visitor,
   }) : super._();
   @override
   VisiteResponse rebuild(void Function(VisiteResponseBuilder) updates) =>
@@ -334,7 +337,8 @@ class _$VisiteResponse extends VisiteResponse {
         createdAt == other.createdAt &&
         agentRating == other.agentRating &&
         visitorPhone == other.visitorPhone &&
-        userAccountId == other.userAccountId;
+        userAccountId == other.userAccountId &&
+        visitor == other.visitor;
   }
 
   @override
@@ -354,6 +358,7 @@ class _$VisiteResponse extends VisiteResponse {
     _$hash = $jc(_$hash, agentRating.hashCode);
     _$hash = $jc(_$hash, visitorPhone.hashCode);
     _$hash = $jc(_$hash, userAccountId.hashCode);
+    _$hash = $jc(_$hash, visitor.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -374,7 +379,8 @@ class _$VisiteResponse extends VisiteResponse {
           ..add('createdAt', createdAt)
           ..add('agentRating', agentRating)
           ..add('visitorPhone', visitorPhone)
-          ..add('userAccountId', userAccountId))
+          ..add('userAccountId', userAccountId)
+          ..add('visitor', visitor))
         .toString();
   }
 }
@@ -447,6 +453,11 @@ class VisiteResponseBuilder
   set userAccountId(String? userAccountId) =>
       _$this._userAccountId = userAccountId;
 
+  VisitorSummaryBuilder? _visitor;
+  VisitorSummaryBuilder get visitor =>
+      _$this._visitor ??= VisitorSummaryBuilder();
+  set visitor(VisitorSummaryBuilder? visitor) => _$this._visitor = visitor;
+
   VisiteResponseBuilder() {
     VisiteResponse._defaults(this);
   }
@@ -468,6 +479,7 @@ class VisiteResponseBuilder
       _agentRating = $v.agentRating;
       _visitorPhone = $v.visitorPhone;
       _userAccountId = $v.userAccountId;
+      _visitor = $v.visitor?.toBuilder();
       _$v = null;
     }
     return this;
@@ -487,24 +499,41 @@ class VisiteResponseBuilder
   VisiteResponse build() => _build();
 
   _$VisiteResponse _build() {
-    final _$result =
-        _$v ??
-        _$VisiteResponse._(
-          id: id,
-          annonceId: annonceId,
-          annonceTitle: annonceTitle,
-          visitorAccountId: visitorAccountId,
-          visitorKind: visitorKind,
-          scheduledAt: scheduledAt,
-          status: status,
-          visitorConfirmedAt: visitorConfirmedAt,
-          clientConfirmedAt: clientConfirmedAt,
-          cancellationReason: cancellationReason,
-          createdAt: createdAt,
-          agentRating: agentRating,
-          visitorPhone: visitorPhone,
-          userAccountId: userAccountId,
+    _$VisiteResponse _$result;
+    try {
+      _$result =
+          _$v ??
+          _$VisiteResponse._(
+            id: id,
+            annonceId: annonceId,
+            annonceTitle: annonceTitle,
+            visitorAccountId: visitorAccountId,
+            visitorKind: visitorKind,
+            scheduledAt: scheduledAt,
+            status: status,
+            visitorConfirmedAt: visitorConfirmedAt,
+            clientConfirmedAt: clientConfirmedAt,
+            cancellationReason: cancellationReason,
+            createdAt: createdAt,
+            agentRating: agentRating,
+            visitorPhone: visitorPhone,
+            userAccountId: userAccountId,
+            visitor: _visitor?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'visitor';
+        _visitor?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'VisiteResponse',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

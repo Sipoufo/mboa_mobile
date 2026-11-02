@@ -359,6 +359,10 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
   final int? advanceMonths;
   @override
   final int? depositMonths;
+  @override
+  final int? advancePeriods;
+  @override
+  final int? depositPeriods;
 
   factory _$CreateAnnonceRequest([
     void Function(CreateAnnonceRequestBuilder)? updates,
@@ -386,6 +390,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     this.amenities,
     this.advanceMonths,
     this.depositMonths,
+    this.advancePeriods,
+    this.depositPeriods,
   }) : super._();
   @override
   CreateAnnonceRequest rebuild(
@@ -420,7 +426,9 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
         photoKeys == other.photoKeys &&
         amenities == other.amenities &&
         advanceMonths == other.advanceMonths &&
-        depositMonths == other.depositMonths;
+        depositMonths == other.depositMonths &&
+        advancePeriods == other.advancePeriods &&
+        depositPeriods == other.depositPeriods;
   }
 
   @override
@@ -447,6 +455,8 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
     _$hash = $jc(_$hash, amenities.hashCode);
     _$hash = $jc(_$hash, advanceMonths.hashCode);
     _$hash = $jc(_$hash, depositMonths.hashCode);
+    _$hash = $jc(_$hash, advancePeriods.hashCode);
+    _$hash = $jc(_$hash, depositPeriods.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -474,7 +484,9 @@ class _$CreateAnnonceRequest extends CreateAnnonceRequest {
           ..add('photoKeys', photoKeys)
           ..add('amenities', amenities)
           ..add('advanceMonths', advanceMonths)
-          ..add('depositMonths', depositMonths))
+          ..add('depositMonths', depositMonths)
+          ..add('advancePeriods', advancePeriods)
+          ..add('depositPeriods', depositPeriods))
         .toString();
   }
 }
@@ -581,6 +593,16 @@ class CreateAnnonceRequestBuilder
   set depositMonths(int? depositMonths) =>
       _$this._depositMonths = depositMonths;
 
+  int? _advancePeriods;
+  int? get advancePeriods => _$this._advancePeriods;
+  set advancePeriods(int? advancePeriods) =>
+      _$this._advancePeriods = advancePeriods;
+
+  int? _depositPeriods;
+  int? get depositPeriods => _$this._depositPeriods;
+  set depositPeriods(int? depositPeriods) =>
+      _$this._depositPeriods = depositPeriods;
+
   CreateAnnonceRequestBuilder() {
     CreateAnnonceRequest._defaults(this);
   }
@@ -609,6 +631,8 @@ class CreateAnnonceRequestBuilder
       _amenities = $v.amenities?.toBuilder();
       _advanceMonths = $v.advanceMonths;
       _depositMonths = $v.depositMonths;
+      _advancePeriods = $v.advancePeriods;
+      _depositPeriods = $v.depositPeriods;
       _$v = null;
     }
     return this;
@@ -682,6 +706,8 @@ class CreateAnnonceRequestBuilder
             amenities: _amenities?.build(),
             advanceMonths: advanceMonths,
             depositMonths: depositMonths,
+            advancePeriods: advancePeriods,
+            depositPeriods: depositPeriods,
           );
     } catch (_) {
       late String _$failedField;

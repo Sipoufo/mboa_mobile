@@ -99,8 +99,40 @@ final BuiltSet<NotificationItemTypeEnum> _$notificationItemTypeEnumValues =
       _$notificationItemTypeEnum_unknownDefaultOpenApi,
     ]);
 
+const NotificationItemOutcomeEnum _$notificationItemOutcomeEnum_POSITIVE =
+    const NotificationItemOutcomeEnum._('POSITIVE');
+const NotificationItemOutcomeEnum _$notificationItemOutcomeEnum_NEGATIVE =
+    const NotificationItemOutcomeEnum._('NEGATIVE');
+const NotificationItemOutcomeEnum
+_$notificationItemOutcomeEnum_unknownDefaultOpenApi =
+    const NotificationItemOutcomeEnum._('unknownDefaultOpenApi');
+
+NotificationItemOutcomeEnum _$notificationItemOutcomeEnumValueOf(String name) {
+  switch (name) {
+    case 'POSITIVE':
+      return _$notificationItemOutcomeEnum_POSITIVE;
+    case 'NEGATIVE':
+      return _$notificationItemOutcomeEnum_NEGATIVE;
+    case 'unknownDefaultOpenApi':
+      return _$notificationItemOutcomeEnum_unknownDefaultOpenApi;
+    default:
+      return _$notificationItemOutcomeEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<NotificationItemOutcomeEnum>
+_$notificationItemOutcomeEnumValues =
+    BuiltSet<NotificationItemOutcomeEnum>(const <NotificationItemOutcomeEnum>[
+      _$notificationItemOutcomeEnum_POSITIVE,
+      _$notificationItemOutcomeEnum_NEGATIVE,
+      _$notificationItemOutcomeEnum_unknownDefaultOpenApi,
+    ]);
+
 Serializer<NotificationItemTypeEnum> _$notificationItemTypeEnumSerializer =
     _$NotificationItemTypeEnumSerializer();
+Serializer<NotificationItemOutcomeEnum>
+_$notificationItemOutcomeEnumSerializer =
+    _$NotificationItemOutcomeEnumSerializer();
 
 class _$NotificationItemTypeEnumSerializer
     implements PrimitiveSerializer<NotificationItemTypeEnum> {
@@ -163,11 +195,50 @@ class _$NotificationItemTypeEnumSerializer
   );
 }
 
+class _$NotificationItemOutcomeEnumSerializer
+    implements PrimitiveSerializer<NotificationItemOutcomeEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'POSITIVE': 'POSITIVE',
+    'NEGATIVE': 'NEGATIVE',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'POSITIVE': 'POSITIVE',
+    'NEGATIVE': 'NEGATIVE',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[NotificationItemOutcomeEnum];
+  @override
+  final String wireName = 'NotificationItemOutcomeEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    NotificationItemOutcomeEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  NotificationItemOutcomeEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => NotificationItemOutcomeEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$NotificationItem extends NotificationItem {
   @override
   final String? id;
   @override
   final NotificationItemTypeEnum? type;
+  @override
+  final String? code;
+  @override
+  final NotificationItemOutcomeEnum? outcome;
   @override
   final String? title;
   @override
@@ -188,6 +259,8 @@ class _$NotificationItem extends NotificationItem {
   _$NotificationItem._({
     this.id,
     this.type,
+    this.code,
+    this.outcome,
     this.title,
     this.body,
     this.entityId,
@@ -209,6 +282,8 @@ class _$NotificationItem extends NotificationItem {
     return other is NotificationItem &&
         id == other.id &&
         type == other.type &&
+        code == other.code &&
+        outcome == other.outcome &&
         title == other.title &&
         body == other.body &&
         entityId == other.entityId &&
@@ -222,6 +297,8 @@ class _$NotificationItem extends NotificationItem {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, outcome.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, body.hashCode);
     _$hash = $jc(_$hash, entityId.hashCode);
@@ -237,6 +314,8 @@ class _$NotificationItem extends NotificationItem {
     return (newBuiltValueToStringHelper(r'NotificationItem')
           ..add('id', id)
           ..add('type', type)
+          ..add('code', code)
+          ..add('outcome', outcome)
           ..add('title', title)
           ..add('body', body)
           ..add('entityId', entityId)
@@ -258,6 +337,15 @@ class NotificationItemBuilder
   NotificationItemTypeEnum? _type;
   NotificationItemTypeEnum? get type => _$this._type;
   set type(NotificationItemTypeEnum? type) => _$this._type = type;
+
+  String? _code;
+  String? get code => _$this._code;
+  set code(String? code) => _$this._code = code;
+
+  NotificationItemOutcomeEnum? _outcome;
+  NotificationItemOutcomeEnum? get outcome => _$this._outcome;
+  set outcome(NotificationItemOutcomeEnum? outcome) =>
+      _$this._outcome = outcome;
 
   String? _title;
   String? get title => _$this._title;
@@ -292,6 +380,8 @@ class NotificationItemBuilder
     if ($v != null) {
       _id = $v.id;
       _type = $v.type;
+      _code = $v.code;
+      _outcome = $v.outcome;
       _title = $v.title;
       _body = $v.body;
       _entityId = $v.entityId;
@@ -322,6 +412,8 @@ class NotificationItemBuilder
         _$NotificationItem._(
           id: id,
           type: type,
+          code: code,
+          outcome: outcome,
           title: title,
           body: body,
           entityId: entityId,

@@ -50,6 +50,8 @@ part 'annonce_response.g.dart';
 /// * [reservedUntil] 
 /// * [advanceMonths] 
 /// * [depositMonths] 
+/// * [advancePeriods] 
+/// * [depositPeriods] 
 @BuiltValue()
 abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponseBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -167,6 +169,12 @@ abstract class AnnonceResponse implements Built<AnnonceResponse, AnnonceResponse
 
   @BuiltValueField(wireName: r'depositMonths')
   int? get depositMonths;
+
+  @BuiltValueField(wireName: r'advancePeriods')
+  int? get advancePeriods;
+
+  @BuiltValueField(wireName: r'depositPeriods')
+  int? get depositPeriods;
 
   AnnonceResponse._();
 
@@ -447,6 +455,20 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
       yield r'depositMonths';
       yield serializers.serialize(
         object.depositMonths,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.advancePeriods != null) {
+      yield r'advancePeriods';
+      yield serializers.serialize(
+        object.advancePeriods,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.depositPeriods != null) {
+      yield r'depositPeriods';
+      yield serializers.serialize(
+        object.depositPeriods,
         specifiedType: const FullType(int),
       );
     }
@@ -768,6 +790,22 @@ class _$AnnonceResponseSerializer implements PrimitiveSerializer<AnnonceResponse
           ) as int?;
           if (valueDes == null) continue;
           result.depositMonths = valueDes;
+          break;
+        case r'advancePeriods':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.advancePeriods = valueDes;
+          break;
+        case r'depositPeriods':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.depositPeriods = valueDes;
           break;
         default:
           unhandled.add(key);

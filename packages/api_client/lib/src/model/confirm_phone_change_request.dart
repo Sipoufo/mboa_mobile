@@ -20,7 +20,7 @@ abstract class ConfirmPhoneChangeRequest implements Built<ConfirmPhoneChangeRequ
   String get newPhoneNumber;
 
   @BuiltValueField(wireName: r'oldCode')
-  String get oldCode;
+  String? get oldCode;
 
   @BuiltValueField(wireName: r'newCode')
   String get newCode;
@@ -53,11 +53,13 @@ class _$ConfirmPhoneChangeRequestSerializer implements PrimitiveSerializer<Confi
       object.newPhoneNumber,
       specifiedType: const FullType(String),
     );
-    yield r'oldCode';
-    yield serializers.serialize(
-      object.oldCode,
-      specifiedType: const FullType(String),
-    );
+    if (object.oldCode != null) {
+      yield r'oldCode';
+      yield serializers.serialize(
+        object.oldCode,
+        specifiedType: const FullType(String),
+      );
+    }
     yield r'newCode';
     yield serializers.serialize(
       object.newCode,
@@ -96,8 +98,9 @@ class _$ConfirmPhoneChangeRequestSerializer implements PrimitiveSerializer<Confi
         case r'oldCode':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
           result.oldCode = valueDes;
           break;
         case r'newCode':

@@ -17,6 +17,16 @@ void main() {
       // TODO
     });
 
+    // String code
+    test('to test the property `code`', () async {
+      // TODO
+    });
+
+    // String outcome
+    test('to test the property `outcome`', () async {
+      // TODO
+    });
+
     // String title
     test('to test the property `title`', () async {
       // TODO

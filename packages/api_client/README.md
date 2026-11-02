@@ -85,6 +85,8 @@ Class | Method | HTTP request | Description
 [*AdminKPIsApi*](doc/AdminKPIsApi.md) | [**getAdminKpis**](doc/AdminKPIsApi.md#getadminkpis) | **GET** /api/v1/admin/kpis | The KPI dashboard as of now: each figure with its 7/30-day windows and its target
 [*AdminKPIsApi*](doc/AdminKPIsApi.md) | [**listAdminKpiDays**](doc/AdminKPIsApi.md#listadminkpidays) | **GET** /api/v1/admin/kpis/days | One row per day (Africa/Douala), oldest first; at most 366 days, today provisional
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**approveKycSubmission**](doc/AdminKYCApi.md#approvekycsubmission) | **POST** /api/v1/admin/kyc/{id}/approve | Approve a KYC submission and activate the account
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**confirmKycDocument**](doc/AdminKYCApi.md#confirmkycdocument) | **POST** /api/v1/admin/kyc/{id}/document/confirm | Confirm document details added after approval, fixing typos if needed
+[*AdminKYCApi*](doc/AdminKYCApi.md) | [**listKycDocumentsToCheck**](doc/AdminKYCApi.md#listkycdocumentstocheck) | **GET** /api/v1/admin/kyc/documents | Approved KYCs whose document details were added afterwards, awaiting a check
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**listPendingKycSubmissions**](doc/AdminKYCApi.md#listpendingkycsubmissions) | **GET** /api/v1/admin/kyc | List pending KYC submissions (with pre-signed document URLs)
 [*AdminKYCApi*](doc/AdminKYCApi.md) | [**rejectKycSubmission**](doc/AdminKYCApi.md#rejectkycsubmission) | **POST** /api/v1/admin/kyc/{id}/reject | Reject a KYC submission with a reason
 [*AdminMboaScoreApi*](doc/AdminMboaScoreApi.md) | [**adjustMboaScore**](doc/AdminMboaScoreApi.md#adjustmboascore) | **POST** /api/v1/admin/users/{userId}/score/adjustments | Adjust a user&#39;s Mboa Score by hand, with a mandatory reason (RM-M18-05)
@@ -171,8 +173,8 @@ Class | Method | HTTP request | Description
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**logout**](doc/AuthenticationApi.md#logout) | **POST** /api/v1/auth/logout | Revoke a refresh token (logout)
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**refreshToken**](doc/AuthenticationApi.md#refreshtoken) | **POST** /api/v1/auth/token/refresh | Exchange a refresh token for a new token pair
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**registerProfessional**](doc/AuthenticationApi.md#registerprofessional) | **POST** /api/v1/auth/register/professional | Register a professional (AGENT or PRESTATAIRE); sends an OTP to verify the phone
-[*AuthenticationApi*](doc/AuthenticationApi.md) | [**requestOtp**](doc/AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number
-[*AuthenticationApi*](doc/AuthenticationApi.md) | [**resendOtp**](doc/AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone that has a pending verification
+[*AuthenticationApi*](doc/AuthenticationApi.md) | [**requestOtp**](doc/AuthenticationApi.md#requestotp) | **POST** /api/v1/auth/otp/request | Request an OTP for a phone number (WhatsApp or SMS) or an email address; says where it went
+[*AuthenticationApi*](doc/AuthenticationApi.md) | [**resendOtp**](doc/AuthenticationApi.md#resendotp) | **POST** /api/v1/auth/otp/resend | Resend the OTP to a phone or an email address that has a pending verification
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**resetPassword**](doc/AuthenticationApi.md#resetpassword) | **POST** /api/v1/auth/password/reset | Complete a password reset with the OTP received on the phone
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**socialLogin**](doc/AuthenticationApi.md#sociallogin) | **POST** /api/v1/auth/social/login | Log in with a Google or Apple ID token
 [*AuthenticationApi*](doc/AuthenticationApi.md) | [**verifyLoginOtp**](doc/AuthenticationApi.md#verifyloginotp) | **POST** /api/v1/auth/login/verify | Credential login step 2: verify the OTP and obtain access + refresh tokens
@@ -206,6 +208,8 @@ Class | Method | HTTP request | Description
 [*ContratsApi*](doc/ContratsApi.md) | [**withdrawContractChange**](doc/ContratsApi.md#withdrawcontractchange) | **DELETE** /api/v1/contracts/{id}/changes/{changeId} | Take your objection back; the last one returns the contract to you
 [*ContratsApi*](doc/ContratsApi.md) | [**withdrawContractTermination**](doc/ContratsApi.md#withdrawcontracttermination) | **DELETE** /api/v1/contracts/{id}/termination | Withdraw your own proposed termination before it is answered (one notified alone is final)
 [*CurrentUserApi*](doc/CurrentUserApi.md) | [**getMe**](doc/CurrentUserApi.md#getme) | **GET** /api/v1/me | Get the currently authenticated account
+[*EmailChangeApi*](doc/EmailChangeApi.md) | [**confirmEmailChange**](doc/EmailChangeApi.md#confirmemailchange) | **POST** /api/v1/account/email/verify | Step 2: verify the codes and switch the email
+[*EmailChangeApi*](doc/EmailChangeApi.md) | [**requestEmailChange**](doc/EmailChangeApi.md#requestemailchange) | **POST** /api/v1/account/email/change | Step 1: codes to the new address and to the phone
 [*FavorisApi*](doc/FavorisApi.md) | [**addFavori**](doc/FavorisApi.md#addfavori) | **POST** /api/v1/favoris | Save a listing (max 50 — RM-M06-02); saving one twice is a no-op
 [*FavorisApi*](doc/FavorisApi.md) | [**listMyFavoris**](doc/FavorisApi.md#listmyfavoris) | **GET** /api/v1/favoris | List saved listings; unavailable ones stay for 30 days flagged available&#x3D;false
 [*FavorisApi*](doc/FavorisApi.md) | [**removeFavori**](doc/FavorisApi.md#removefavori) | **DELETE** /api/v1/favoris/{annonceId} | Unsave a listing; unsaving one that is not saved is not an error
@@ -239,6 +243,7 @@ Class | Method | HTTP request | Description
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**getMyInvoice**](doc/InvoicesTenantApi.md#getmyinvoice) | **GET** /api/v1/invoices/{id} | One of my invoices
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**listMyInvoices**](doc/InvoicesTenantApi.md#listmyinvoices) | **GET** /api/v1/invoices | My invoices, current and past, latest due first (RM-M24-06)
 [*InvoicesTenantApi*](doc/InvoicesTenantApi.md) | [**payInvoice**](doc/InvoicesTenantApi.md#payinvoice) | **POST** /api/v1/invoices/{id}/pay | Pay an invoice in the app (RM-M24-04) — 409 INVOICE_IN_APP_DISABLED while that is shut, as at the MVP
+[*KYCApi*](doc/KYCApi.md) | [**addMyKycDocument**](doc/KYCApi.md#addmykycdocument) | **PUT** /api/v1/kyc/me/document | Add the document&#39;s details to a KYC approved before they were asked, without a new review
 [*KYCApi*](doc/KYCApi.md) | [**addMyNui**](doc/KYCApi.md#addmynui) | **PUT** /api/v1/kyc/me/nui | Add the NUI to an approved KYC, without a new review
 [*KYCApi*](doc/KYCApi.md) | [**getMyKycStatus**](doc/KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
 [*KYCApi*](doc/KYCApi.md) | [**submitKyc**](doc/KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
@@ -308,8 +313,8 @@ Class | Method | HTTP request | Description
 [*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**cancelMyOwnerVisite**](doc/PrestataireVisitesApi.md#cancelmyownervisite) | **POST** /api/v1/prestataires/me/visites/{id}/cancel | Cancel a visit up to one hour before the slot; the client is told (N-05)
 [*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**confirmVisiteRequest**](doc/PrestataireVisitesApi.md#confirmvisiterequest) | **POST** /api/v1/prestataires/me/visites/{id}/confirm | Confirm a proposed time; the visit becomes scheduled (RM-M15-06)
 [*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**declineVisiteRequest**](doc/PrestataireVisitesApi.md#declinevisiterequest) | **POST** /api/v1/prestataires/me/visites/{id}/decline | Turn a proposed time down; the client may propose another
-[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**getMyOwnerVisite**](doc/PrestataireVisitesApi.md#getmyownervisite) | **GET** /api/v1/prestataires/me/visites/{id} | One visit the prestataire carries out: the client&#39;s name and phone (RM-M16-01)
-[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**listMyOwnerVisites**](doc/PrestataireVisitesApi.md#listmyownervisites) | **GET** /api/v1/prestataires/me/visites | Visits the prestataire carries out themselves, newest first
+[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**getMyOwnerVisite**](doc/PrestataireVisitesApi.md#getmyownervisite) | **GET** /api/v1/prestataires/me/visites/{id} | One visit on the prestataire&#39;s listing: theirs, or an agent&#39;s read only (mobile §40 D)
+[*PrestataireVisitesApi*](doc/PrestataireVisitesApi.md) | [**listMyOwnerVisites**](doc/PrestataireVisitesApi.md#listmyownervisites) | **GET** /api/v1/prestataires/me/visites | Visits on the prestataire&#39;s listings — theirs (default), their agents&#39;, or both — newest first
 [*QuittancesApi*](doc/QuittancesApi.md) | [**getReceiptPdf**](doc/QuittancesApi.md#getreceiptpdf) | **GET** /api/v1/receipts/{receiptId}/pdf | A short-lived link to a receipt&#39;s PDF — 409 RECEIPT_NOT_READY while it is prepared (CA-M30-02)
 [*QuittancesApi*](doc/QuittancesApi.md) | [**verifyReceipt**](doc/QuittancesApi.md#verifyreceipt) | **GET** /api/v1/receipts/verify/{receiptId} | Public: check a receipt with its number and code — amount and period, no names (RM-M30-05)
 [*ResidencesApi*](doc/ResidencesApi.md) | [**archiveResidenceUnits**](doc/ResidencesApi.md#archiveresidenceunits) | **POST** /api/v1/residences/{id}/archive | Archive all units at once
@@ -421,6 +426,8 @@ Class | Method | HTTP request | Description
  - [Churn](doc/Churn.md)
  - [Cohort](doc/Cohort.md)
  - [Comment](doc/Comment.md)
+ - [ConfirmEmailChangeRequest](doc/ConfirmEmailChangeRequest.md)
+ - [ConfirmKycDocumentRequest](doc/ConfirmKycDocumentRequest.md)
  - [ConfirmPhoneChangeRequest](doc/ConfirmPhoneChangeRequest.md)
  - [ContestDeclarationRequest](doc/ContestDeclarationRequest.md)
  - [ContractPdfResponse](doc/ContractPdfResponse.md)
@@ -449,6 +456,7 @@ Class | Method | HTTP request | Description
  - [DeletionChallengeResponse](doc/DeletionChallengeResponse.md)
  - [DisputeDossier](doc/DisputeDossier.md)
  - [Due](doc/Due.md)
+ - [EmailChangeResponse](doc/EmailChangeResponse.md)
  - [ErrorResponse](doc/ErrorResponse.md)
  - [EvidenceBatchResponse](doc/EvidenceBatchResponse.md)
  - [EvidenceFileRequest](doc/EvidenceFileRequest.md)
@@ -483,6 +491,7 @@ Class | Method | HTTP request | Description
  - [KycAddress](doc/KycAddress.md)
  - [KycAddressRequest](doc/KycAddressRequest.md)
  - [KycCorrections](doc/KycCorrections.md)
+ - [KycDocumentRequest](doc/KycDocumentRequest.md)
  - [KycReviewItem](doc/KycReviewItem.md)
  - [KycStatusResponse](doc/KycStatusResponse.md)
  - [LedgerEntryRequest](doc/LedgerEntryRequest.md)
@@ -502,6 +511,7 @@ Class | Method | HTTP request | Description
  - [NotificationItem](doc/NotificationItem.md)
  - [NotificationSetting](doc/NotificationSetting.md)
  - [OpportunityItem](doc/OpportunityItem.md)
+ - [OtpSentResponse](doc/OtpSentResponse.md)
  - [OwnerDecisionRequest](doc/OwnerDecisionRequest.md)
  - [PageResponseAdminPaymentItem](doc/PageResponseAdminPaymentItem.md)
  - [PageResponseAdminPhotoVerificationItem](doc/PageResponseAdminPhotoVerificationItem.md)
@@ -567,6 +577,7 @@ Class | Method | HTTP request | Description
  - [Reply](doc/Reply.md)
  - [ReplyRequest](doc/ReplyRequest.md)
  - [RequestChangesRequest](doc/RequestChangesRequest.md)
+ - [RequestEmailChangeRequest](doc/RequestEmailChangeRequest.md)
  - [RequestPhoneChangeRequest](doc/RequestPhoneChangeRequest.md)
  - [RequestTypeChangeRequest](doc/RequestTypeChangeRequest.md)
  - [ReservationRequestSnapshot](doc/ReservationRequestSnapshot.md)
@@ -648,6 +659,7 @@ Class | Method | HTTP request | Description
  - [VerifyOtpRequest](doc/VerifyOtpRequest.md)
  - [VisiteResponse](doc/VisiteResponse.md)
  - [VisitorSlots](doc/VisitorSlots.md)
+ - [VisitorSummary](doc/VisitorSummary.md)
  - [Window](doc/Window.md)
  - [YearTotal](doc/YearTotal.md)
  - [Zone](doc/Zone.md)

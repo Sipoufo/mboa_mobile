@@ -50,9 +50,64 @@ _$agentVisiteDetailStatusEnumValues =
       _$agentVisiteDetailStatusEnum_unknownDefaultOpenApi,
     ]);
 
+const AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnum_BY_USER =
+    const AgentVisiteDetailCancellationReasonEnum._('BY_USER');
+const AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnum_BY_AGENT =
+    const AgentVisiteDetailCancellationReasonEnum._('BY_AGENT');
+const AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnum_AGENT_UNAVAILABLE =
+    const AgentVisiteDetailCancellationReasonEnum._('AGENT_UNAVAILABLE');
+const AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnum_AGENT_REMOVED =
+    const AgentVisiteDetailCancellationReasonEnum._('AGENT_REMOVED');
+const AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnum_LISTING_UNAVAILABLE =
+    const AgentVisiteDetailCancellationReasonEnum._('LISTING_UNAVAILABLE');
+const AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnum_unknownDefaultOpenApi =
+    const AgentVisiteDetailCancellationReasonEnum._('unknownDefaultOpenApi');
+
+AgentVisiteDetailCancellationReasonEnum
+_$agentVisiteDetailCancellationReasonEnumValueOf(String name) {
+  switch (name) {
+    case 'BY_USER':
+      return _$agentVisiteDetailCancellationReasonEnum_BY_USER;
+    case 'BY_AGENT':
+      return _$agentVisiteDetailCancellationReasonEnum_BY_AGENT;
+    case 'AGENT_UNAVAILABLE':
+      return _$agentVisiteDetailCancellationReasonEnum_AGENT_UNAVAILABLE;
+    case 'AGENT_REMOVED':
+      return _$agentVisiteDetailCancellationReasonEnum_AGENT_REMOVED;
+    case 'LISTING_UNAVAILABLE':
+      return _$agentVisiteDetailCancellationReasonEnum_LISTING_UNAVAILABLE;
+    case 'unknownDefaultOpenApi':
+      return _$agentVisiteDetailCancellationReasonEnum_unknownDefaultOpenApi;
+    default:
+      return _$agentVisiteDetailCancellationReasonEnum_unknownDefaultOpenApi;
+  }
+}
+
+final BuiltSet<AgentVisiteDetailCancellationReasonEnum>
+_$agentVisiteDetailCancellationReasonEnumValues =
+    BuiltSet<AgentVisiteDetailCancellationReasonEnum>(
+      const <AgentVisiteDetailCancellationReasonEnum>[
+        _$agentVisiteDetailCancellationReasonEnum_BY_USER,
+        _$agentVisiteDetailCancellationReasonEnum_BY_AGENT,
+        _$agentVisiteDetailCancellationReasonEnum_AGENT_UNAVAILABLE,
+        _$agentVisiteDetailCancellationReasonEnum_AGENT_REMOVED,
+        _$agentVisiteDetailCancellationReasonEnum_LISTING_UNAVAILABLE,
+        _$agentVisiteDetailCancellationReasonEnum_unknownDefaultOpenApi,
+      ],
+    );
+
 Serializer<AgentVisiteDetailStatusEnum>
 _$agentVisiteDetailStatusEnumSerializer =
     _$AgentVisiteDetailStatusEnumSerializer();
+Serializer<AgentVisiteDetailCancellationReasonEnum>
+_$agentVisiteDetailCancellationReasonEnumSerializer =
+    _$AgentVisiteDetailCancellationReasonEnumSerializer();
 
 class _$AgentVisiteDetailStatusEnumSerializer
     implements PrimitiveSerializer<AgentVisiteDetailStatusEnum> {
@@ -95,6 +150,49 @@ class _$AgentVisiteDetailStatusEnumSerializer
   );
 }
 
+class _$AgentVisiteDetailCancellationReasonEnumSerializer
+    implements PrimitiveSerializer<AgentVisiteDetailCancellationReasonEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'BY_USER': 'BY_USER',
+    'BY_AGENT': 'BY_AGENT',
+    'AGENT_UNAVAILABLE': 'AGENT_UNAVAILABLE',
+    'AGENT_REMOVED': 'AGENT_REMOVED',
+    'LISTING_UNAVAILABLE': 'LISTING_UNAVAILABLE',
+    'unknownDefaultOpenApi': 'unknown_default_open_api',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'BY_USER': 'BY_USER',
+    'BY_AGENT': 'BY_AGENT',
+    'AGENT_UNAVAILABLE': 'AGENT_UNAVAILABLE',
+    'AGENT_REMOVED': 'AGENT_REMOVED',
+    'LISTING_UNAVAILABLE': 'LISTING_UNAVAILABLE',
+    'unknown_default_open_api': 'unknownDefaultOpenApi',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[
+    AgentVisiteDetailCancellationReasonEnum,
+  ];
+  @override
+  final String wireName = 'AgentVisiteDetailCancellationReasonEnum';
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AgentVisiteDetailCancellationReasonEnum object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => _toWire[object.name] ?? object.name;
+
+  @override
+  AgentVisiteDetailCancellationReasonEnum deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AgentVisiteDetailCancellationReasonEnum.valueOf(
+    _fromWire[serialized] ?? (serialized is String ? serialized : ''),
+  );
+}
+
 class _$AgentVisiteDetail extends AgentVisiteDetail {
   @override
   final String? id;
@@ -128,6 +226,14 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
   final bool? canConfirm;
   @override
   final String? userAccountId;
+  @override
+  final VisitorSummary? visitor;
+  @override
+  final AgentVisiteDetailCancellationReasonEnum? cancellationReason;
+  @override
+  final String? reviewId;
+  @override
+  final bool? readOnly;
 
   factory _$AgentVisiteDetail([
     void Function(AgentVisiteDetailBuilder)? updates,
@@ -150,6 +256,10 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
     this.clientConfirmedAt,
     this.canConfirm,
     this.userAccountId,
+    this.visitor,
+    this.cancellationReason,
+    this.reviewId,
+    this.readOnly,
   }) : super._();
   @override
   AgentVisiteDetail rebuild(void Function(AgentVisiteDetailBuilder) updates) =>
@@ -178,7 +288,11 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
         visitorConfirmedAt == other.visitorConfirmedAt &&
         clientConfirmedAt == other.clientConfirmedAt &&
         canConfirm == other.canConfirm &&
-        userAccountId == other.userAccountId;
+        userAccountId == other.userAccountId &&
+        visitor == other.visitor &&
+        cancellationReason == other.cancellationReason &&
+        reviewId == other.reviewId &&
+        readOnly == other.readOnly;
   }
 
   @override
@@ -200,6 +314,10 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
     _$hash = $jc(_$hash, clientConfirmedAt.hashCode);
     _$hash = $jc(_$hash, canConfirm.hashCode);
     _$hash = $jc(_$hash, userAccountId.hashCode);
+    _$hash = $jc(_$hash, visitor.hashCode);
+    _$hash = $jc(_$hash, cancellationReason.hashCode);
+    _$hash = $jc(_$hash, reviewId.hashCode);
+    _$hash = $jc(_$hash, readOnly.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -222,7 +340,11 @@ class _$AgentVisiteDetail extends AgentVisiteDetail {
           ..add('visitorConfirmedAt', visitorConfirmedAt)
           ..add('clientConfirmedAt', clientConfirmedAt)
           ..add('canConfirm', canConfirm)
-          ..add('userAccountId', userAccountId))
+          ..add('userAccountId', userAccountId)
+          ..add('visitor', visitor)
+          ..add('cancellationReason', cancellationReason)
+          ..add('reviewId', reviewId)
+          ..add('readOnly', readOnly))
         .toString();
   }
 }
@@ -300,6 +422,26 @@ class AgentVisiteDetailBuilder
   set userAccountId(String? userAccountId) =>
       _$this._userAccountId = userAccountId;
 
+  VisitorSummaryBuilder? _visitor;
+  VisitorSummaryBuilder get visitor =>
+      _$this._visitor ??= VisitorSummaryBuilder();
+  set visitor(VisitorSummaryBuilder? visitor) => _$this._visitor = visitor;
+
+  AgentVisiteDetailCancellationReasonEnum? _cancellationReason;
+  AgentVisiteDetailCancellationReasonEnum? get cancellationReason =>
+      _$this._cancellationReason;
+  set cancellationReason(
+    AgentVisiteDetailCancellationReasonEnum? cancellationReason,
+  ) => _$this._cancellationReason = cancellationReason;
+
+  String? _reviewId;
+  String? get reviewId => _$this._reviewId;
+  set reviewId(String? reviewId) => _$this._reviewId = reviewId;
+
+  bool? _readOnly;
+  bool? get readOnly => _$this._readOnly;
+  set readOnly(bool? readOnly) => _$this._readOnly = readOnly;
+
   AgentVisiteDetailBuilder() {
     AgentVisiteDetail._defaults(this);
   }
@@ -323,6 +465,10 @@ class AgentVisiteDetailBuilder
       _clientConfirmedAt = $v.clientConfirmedAt;
       _canConfirm = $v.canConfirm;
       _userAccountId = $v.userAccountId;
+      _visitor = $v.visitor?.toBuilder();
+      _cancellationReason = $v.cancellationReason;
+      _reviewId = $v.reviewId;
+      _readOnly = $v.readOnly;
       _$v = null;
     }
     return this;
@@ -342,26 +488,46 @@ class AgentVisiteDetailBuilder
   AgentVisiteDetail build() => _build();
 
   _$AgentVisiteDetail _build() {
-    final _$result =
-        _$v ??
-        _$AgentVisiteDetail._(
-          id: id,
-          annonceId: annonceId,
-          annonceTitle: annonceTitle,
-          exactAddress: exactAddress,
-          latitude: latitude,
-          longitude: longitude,
-          scheduledAt: scheduledAt,
-          status: status,
-          userName: userName,
-          userPhone: userPhone,
-          prestataireName: prestataireName,
-          prestatairePhone: prestatairePhone,
-          visitorConfirmedAt: visitorConfirmedAt,
-          clientConfirmedAt: clientConfirmedAt,
-          canConfirm: canConfirm,
-          userAccountId: userAccountId,
+    _$AgentVisiteDetail _$result;
+    try {
+      _$result =
+          _$v ??
+          _$AgentVisiteDetail._(
+            id: id,
+            annonceId: annonceId,
+            annonceTitle: annonceTitle,
+            exactAddress: exactAddress,
+            latitude: latitude,
+            longitude: longitude,
+            scheduledAt: scheduledAt,
+            status: status,
+            userName: userName,
+            userPhone: userPhone,
+            prestataireName: prestataireName,
+            prestatairePhone: prestatairePhone,
+            visitorConfirmedAt: visitorConfirmedAt,
+            clientConfirmedAt: clientConfirmedAt,
+            canConfirm: canConfirm,
+            userAccountId: userAccountId,
+            visitor: _visitor?.build(),
+            cancellationReason: cancellationReason,
+            reviewId: reviewId,
+            readOnly: readOnly,
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'visitor';
+        _visitor?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+          r'AgentVisiteDetail',
+          _$failedField,
+          e.toString(),
         );
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

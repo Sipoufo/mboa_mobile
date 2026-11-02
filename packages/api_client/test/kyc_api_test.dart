@@ -7,6 +7,13 @@ void main() {
   final instance = ApiClient().getKYCApi();
 
   group(KYCApi, () {
+    // Add the document's details to a KYC approved before they were asked, without a new review
+    //
+    //Future<KycStatusResponse> addMyKycDocument(KycDocumentRequest kycDocumentRequest) async
+    test('test addMyKycDocument', () async {
+      // TODO
+    });
+
     // Add the NUI to an approved KYC, without a new review
     //
     //Future<KycStatusResponse> addMyNui(AddNuiRequest addNuiRequest) async

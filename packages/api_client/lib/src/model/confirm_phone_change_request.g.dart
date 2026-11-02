@@ -10,7 +10,7 @@ class _$ConfirmPhoneChangeRequest extends ConfirmPhoneChangeRequest {
   @override
   final String newPhoneNumber;
   @override
-  final String oldCode;
+  final String? oldCode;
   @override
   final String newCode;
 
@@ -20,7 +20,7 @@ class _$ConfirmPhoneChangeRequest extends ConfirmPhoneChangeRequest {
 
   _$ConfirmPhoneChangeRequest._({
     required this.newPhoneNumber,
-    required this.oldCode,
+    this.oldCode,
     required this.newCode,
   }) : super._();
   @override
@@ -116,11 +116,7 @@ class ConfirmPhoneChangeRequestBuilder
             r'ConfirmPhoneChangeRequest',
             'newPhoneNumber',
           ),
-          oldCode: BuiltValueNullFieldError.checkNotNull(
-            oldCode,
-            r'ConfirmPhoneChangeRequest',
-            'oldCode',
-          ),
+          oldCode: oldCode,
           newCode: BuiltValueNullFieldError.checkNotNull(
             newCode,
             r'ConfirmPhoneChangeRequest',

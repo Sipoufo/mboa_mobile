@@ -14,6 +14,7 @@ import 'package:api_client/src/model/forgot_password_request.dart';
 import 'package:api_client/src/model/login_otp_request.dart';
 import 'package:api_client/src/model/login_request.dart';
 import 'package:api_client/src/model/logout_request.dart';
+import 'package:api_client/src/model/otp_sent_response.dart';
 import 'package:api_client/src/model/refresh_token_request.dart';
 import 'package:api_client/src/model/register_professional_request.dart';
 import 'package:api_client/src/model/reset_password_request.dart';
@@ -422,7 +423,7 @@ class AuthenticationApi {
     return _response;
   }
 
-  /// Request an OTP for a phone number
+  /// Request an OTP for a phone number (WhatsApp or SMS) or an email address; says where it went
   /// 
   ///
   /// Parameters:
@@ -434,9 +435,9 @@ class AuthenticationApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [OtpSentResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> requestOtp({ 
+  Future<Response<OtpSentResponse>> requestOtp({ 
     required SendOtpRequest sendOtpRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -492,10 +493,38 @@ class AuthenticationApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    OtpSentResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(OtpSentResponse),
+      ) as OtpSentResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OtpSentResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
-  /// Resend the OTP to a phone that has a pending verification
+  /// Resend the OTP to a phone or an email address that has a pending verification
   /// 
   ///
   /// Parameters:
@@ -507,9 +536,9 @@ class AuthenticationApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [OtpSentResponse] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> resendOtp({ 
+  Future<Response<OtpSentResponse>> resendOtp({ 
     required SendOtpRequest sendOtpRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -565,7 +594,35 @@ class AuthenticationApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    OtpSentResponse? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(OtpSentResponse),
+      ) as OtpSentResponse;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OtpSentResponse>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// Complete a password reset with the OTP received on the phone

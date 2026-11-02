@@ -12,6 +12,8 @@ const SocialLoginRequestProviderEnum _$socialLoginRequestProviderEnum_GOOGLE =
     const SocialLoginRequestProviderEnum._('GOOGLE');
 const SocialLoginRequestProviderEnum _$socialLoginRequestProviderEnum_APPLE =
     const SocialLoginRequestProviderEnum._('APPLE');
+const SocialLoginRequestProviderEnum _$socialLoginRequestProviderEnum_EMAIL =
+    const SocialLoginRequestProviderEnum._('EMAIL');
 const SocialLoginRequestProviderEnum
 _$socialLoginRequestProviderEnum_unknownDefaultOpenApi =
     const SocialLoginRequestProviderEnum._('unknownDefaultOpenApi');
@@ -26,6 +28,8 @@ SocialLoginRequestProviderEnum _$socialLoginRequestProviderEnumValueOf(
       return _$socialLoginRequestProviderEnum_GOOGLE;
     case 'APPLE':
       return _$socialLoginRequestProviderEnum_APPLE;
+    case 'EMAIL':
+      return _$socialLoginRequestProviderEnum_EMAIL;
     case 'unknownDefaultOpenApi':
       return _$socialLoginRequestProviderEnum_unknownDefaultOpenApi;
     default:
@@ -40,6 +44,7 @@ _$socialLoginRequestProviderEnumValues =
         _$socialLoginRequestProviderEnum_PHONE,
         _$socialLoginRequestProviderEnum_GOOGLE,
         _$socialLoginRequestProviderEnum_APPLE,
+        _$socialLoginRequestProviderEnum_EMAIL,
         _$socialLoginRequestProviderEnum_unknownDefaultOpenApi,
       ],
     );
@@ -54,12 +59,14 @@ class _$SocialLoginRequestProviderEnumSerializer
     'PHONE': 'PHONE',
     'GOOGLE': 'GOOGLE',
     'APPLE': 'APPLE',
+    'EMAIL': 'EMAIL',
     'unknownDefaultOpenApi': 'unknown_default_open_api',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'PHONE': 'PHONE',
     'GOOGLE': 'GOOGLE',
     'APPLE': 'APPLE',
+    'EMAIL': 'EMAIL',
     'unknown_default_open_api': 'unknownDefaultOpenApi',
   };
 

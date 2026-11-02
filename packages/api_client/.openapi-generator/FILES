@@ -71,6 +71,8 @@ doc/ChangeRequestResponse.md
 doc/Churn.md
 doc/Cohort.md
 doc/Comment.md
+doc/ConfirmEmailChangeRequest.md
+doc/ConfirmKycDocumentRequest.md
 doc/ConfirmPhoneChangeRequest.md
 doc/ContestDeclarationRequest.md
 doc/ContractPdfResponse.md
@@ -101,6 +103,8 @@ doc/DeleteAccountRequest.md
 doc/DeletionChallengeResponse.md
 doc/DisputeDossier.md
 doc/Due.md
+doc/EmailChangeApi.md
+doc/EmailChangeResponse.md
 doc/ErrorResponse.md
 doc/EvidenceBatchResponse.md
 doc/EvidenceFileRequest.md
@@ -142,6 +146,7 @@ doc/KpiDayResponse.md
 doc/KycAddress.md
 doc/KycAddressRequest.md
 doc/KycCorrections.md
+doc/KycDocumentRequest.md
 doc/KycReviewItem.md
 doc/KycStatusResponse.md
 doc/LedgerEntryRequest.md
@@ -169,6 +174,7 @@ doc/NotificationItem.md
 doc/NotificationSetting.md
 doc/NotificationsApi.md
 doc/OpportunityItem.md
+doc/OtpSentResponse.md
 doc/OwnerDecisionRequest.md
 doc/PageResponseAdminPaymentItem.md
 doc/PageResponseAdminPhotoVerificationItem.md
@@ -240,6 +246,7 @@ doc/RejectTypeChangeRequest.md
 doc/Reply.md
 doc/ReplyRequest.md
 doc/RequestChangesRequest.md
+doc/RequestEmailChangeRequest.md
 doc/RequestPhoneChangeRequest.md
 doc/RequestTypeChangeRequest.md
 doc/ReservationRequestSnapshot.md
@@ -333,6 +340,7 @@ doc/VisitesApi.md
 doc/VisitesAvisApi.md
 doc/VisitesPrsenceApi.md
 doc/VisitorSlots.md
+doc/VisitorSummary.md
 doc/Window.md
 doc/YearTotal.md
 doc/Zone.md
@@ -363,6 +371,7 @@ lib/src/api/avis_rsident_api.dart
 lib/src/api/badges_api.dart
 lib/src/api/contrats_api.dart
 lib/src/api/current_user_api.dart
+lib/src/api/email_change_api.dart
 lib/src/api/favoris_api.dart
 lib/src/api/finance_invoices_owner_api.dart
 lib/src/api/finance_ledger_api.dart
@@ -452,6 +461,8 @@ lib/src/model/change_request_response.dart
 lib/src/model/churn.dart
 lib/src/model/cohort.dart
 lib/src/model/comment.dart
+lib/src/model/confirm_email_change_request.dart
+lib/src/model/confirm_kyc_document_request.dart
 lib/src/model/confirm_phone_change_request.dart
 lib/src/model/contest_declaration_request.dart
 lib/src/model/contract_pdf_response.dart
@@ -481,6 +492,7 @@ lib/src/model/delete_account_request.dart
 lib/src/model/deletion_challenge_response.dart
 lib/src/model/dispute_dossier.dart
 lib/src/model/due.dart
+lib/src/model/email_change_response.dart
 lib/src/model/error_response.dart
 lib/src/model/evidence_batch_response.dart
 lib/src/model/evidence_file_request.dart
@@ -515,6 +527,7 @@ lib/src/model/kpi_day_response.dart
 lib/src/model/kyc_address.dart
 lib/src/model/kyc_address_request.dart
 lib/src/model/kyc_corrections.dart
+lib/src/model/kyc_document_request.dart
 lib/src/model/kyc_review_item.dart
 lib/src/model/kyc_status_response.dart
 lib/src/model/ledger_entry_request.dart
@@ -534,6 +547,7 @@ lib/src/model/my_badges_response.dart
 lib/src/model/notification_item.dart
 lib/src/model/notification_setting.dart
 lib/src/model/opportunity_item.dart
+lib/src/model/otp_sent_response.dart
 lib/src/model/owner_decision_request.dart
 lib/src/model/page_response_admin_payment_item.dart
 lib/src/model/page_response_admin_photo_verification_item.dart
@@ -599,6 +613,7 @@ lib/src/model/reject_type_change_request.dart
 lib/src/model/reply.dart
 lib/src/model/reply_request.dart
 lib/src/model/request_changes_request.dart
+lib/src/model/request_email_change_request.dart
 lib/src/model/request_phone_change_request.dart
 lib/src/model/request_type_change_request.dart
 lib/src/model/reservation_request_snapshot.dart
@@ -680,6 +695,7 @@ lib/src/model/user_settings_response.dart
 lib/src/model/verify_otp_request.dart
 lib/src/model/visite_response.dart
 lib/src/model/visitor_slots.dart
+lib/src/model/visitor_summary.dart
 lib/src/model/window.dart
 lib/src/model/year_total.dart
 lib/src/model/zone.dart
@@ -756,6 +772,8 @@ test/change_request_response_test.dart
 test/churn_test.dart
 test/cohort_test.dart
 test/comment_test.dart
+test/confirm_email_change_request_test.dart
+test/confirm_kyc_document_request_test.dart
 test/confirm_phone_change_request_test.dart
 test/contest_declaration_request_test.dart
 test/contract_pdf_response_test.dart
@@ -786,6 +804,8 @@ test/delete_account_request_test.dart
 test/deletion_challenge_response_test.dart
 test/dispute_dossier_test.dart
 test/due_test.dart
+test/email_change_api_test.dart
+test/email_change_response_test.dart
 test/error_response_test.dart
 test/evidence_batch_response_test.dart
 test/evidence_file_request_test.dart
@@ -827,6 +847,7 @@ test/kyc_address_request_test.dart
 test/kyc_address_test.dart
 test/kyc_api_test.dart
 test/kyc_corrections_test.dart
+test/kyc_document_request_test.dart
 test/kyc_review_item_test.dart
 test/kyc_status_response_test.dart
 test/ledger_entry_request_test.dart
@@ -854,6 +875,7 @@ test/notification_item_test.dart
 test/notification_setting_test.dart
 test/notifications_api_test.dart
 test/opportunity_item_test.dart
+test/otp_sent_response_test.dart
 test/owner_decision_request_test.dart
 test/page_response_admin_payment_item_test.dart
 test/page_response_admin_photo_verification_item_test.dart
@@ -925,6 +947,7 @@ test/reject_type_change_request_test.dart
 test/reply_request_test.dart
 test/reply_test.dart
 test/request_changes_request_test.dart
+test/request_email_change_request_test.dart
 test/request_phone_change_request_test.dart
 test/request_type_change_request_test.dart
 test/reservation_request_snapshot_test.dart
@@ -1018,6 +1041,7 @@ test/visites_api_test.dart
 test/visites_avis_api_test.dart
 test/visites_prsence_api_test.dart
 test/visitor_slots_test.dart
+test/visitor_summary_test.dart
 test/window_test.dart
 test/year_total_test.dart
 test/zone_response_test.dart

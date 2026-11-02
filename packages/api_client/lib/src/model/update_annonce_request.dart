@@ -35,6 +35,8 @@ part 'update_annonce_request.g.dart';
 /// * [ownerVisitsEnabled] 
 /// * [advanceMonths] 
 /// * [depositMonths] 
+/// * [advancePeriods] 
+/// * [depositPeriods] 
 @BuiltValue()
 abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, UpdateAnnonceRequestBuilder> {
   @BuiltValueField(wireName: r'propertyType')
@@ -105,6 +107,12 @@ abstract class UpdateAnnonceRequest implements Built<UpdateAnnonceRequest, Updat
 
   @BuiltValueField(wireName: r'depositMonths')
   int? get depositMonths;
+
+  @BuiltValueField(wireName: r'advancePeriods')
+  int? get advancePeriods;
+
+  @BuiltValueField(wireName: r'depositPeriods')
+  int? get depositPeriods;
 
   UpdateAnnonceRequest._();
 
@@ -280,6 +288,20 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
       yield r'depositMonths';
       yield serializers.serialize(
         object.depositMonths,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.advancePeriods != null) {
+      yield r'advancePeriods';
+      yield serializers.serialize(
+        object.advancePeriods,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.depositPeriods != null) {
+      yield r'depositPeriods';
+      yield serializers.serialize(
+        object.depositPeriods,
         specifiedType: const FullType(int),
       );
     }
@@ -481,6 +503,22 @@ class _$UpdateAnnonceRequestSerializer implements PrimitiveSerializer<UpdateAnno
           ) as int?;
           if (valueDes == null) continue;
           result.depositMonths = valueDes;
+          break;
+        case r'advancePeriods':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.advancePeriods = valueDes;
+          break;
+        case r'depositPeriods':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(int),
+          ) as int?;
+          if (valueDes == null) continue;
+          result.depositPeriods = valueDes;
           break;
         default:
           unhandled.add(key);

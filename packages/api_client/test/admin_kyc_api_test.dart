@@ -14,6 +14,20 @@ void main() {
       // TODO
     });
 
+    // Confirm document details added after approval, fixing typos if needed
+    //
+    //Future<KycStatusResponse> confirmKycDocument(String id, { ConfirmKycDocumentRequest confirmKycDocumentRequest }) async
+    test('test confirmKycDocument', () async {
+      // TODO
+    });
+
+    // Approved KYCs whose document details were added afterwards, awaiting a check
+    //
+    //Future<PageResponseKycReviewItem> listKycDocumentsToCheck(Pageable pageable) async
+    test('test listKycDocumentsToCheck', () async {
+      // TODO
+    });
+
     // List pending KYC submissions (with pre-signed document URLs)
     //
     //Future<PageResponseKycReviewItem> listPendingKycSubmissions(Pageable pageable, { String role }) async

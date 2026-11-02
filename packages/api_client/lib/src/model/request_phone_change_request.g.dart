@@ -8,13 +8,18 @@ part of 'request_phone_change_request.dart';
 
 class _$RequestPhoneChangeRequest extends RequestPhoneChangeRequest {
   @override
+  final String? currentPhoneNumber;
+  @override
   final String newPhoneNumber;
 
   factory _$RequestPhoneChangeRequest([
     void Function(RequestPhoneChangeRequestBuilder)? updates,
   ]) => (RequestPhoneChangeRequestBuilder()..update(updates))._build();
 
-  _$RequestPhoneChangeRequest._({required this.newPhoneNumber}) : super._();
+  _$RequestPhoneChangeRequest._({
+    this.currentPhoneNumber,
+    required this.newPhoneNumber,
+  }) : super._();
   @override
   RequestPhoneChangeRequest rebuild(
     void Function(RequestPhoneChangeRequestBuilder) updates,
@@ -28,12 +33,14 @@ class _$RequestPhoneChangeRequest extends RequestPhoneChangeRequest {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is RequestPhoneChangeRequest &&
+        currentPhoneNumber == other.currentPhoneNumber &&
         newPhoneNumber == other.newPhoneNumber;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, currentPhoneNumber.hashCode);
     _$hash = $jc(_$hash, newPhoneNumber.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -41,9 +48,10 @@ class _$RequestPhoneChangeRequest extends RequestPhoneChangeRequest {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(
-      r'RequestPhoneChangeRequest',
-    )..add('newPhoneNumber', newPhoneNumber)).toString();
+    return (newBuiltValueToStringHelper(r'RequestPhoneChangeRequest')
+          ..add('currentPhoneNumber', currentPhoneNumber)
+          ..add('newPhoneNumber', newPhoneNumber))
+        .toString();
   }
 }
 
@@ -51,6 +59,11 @@ class RequestPhoneChangeRequestBuilder
     implements
         Builder<RequestPhoneChangeRequest, RequestPhoneChangeRequestBuilder> {
   _$RequestPhoneChangeRequest? _$v;
+
+  String? _currentPhoneNumber;
+  String? get currentPhoneNumber => _$this._currentPhoneNumber;
+  set currentPhoneNumber(String? currentPhoneNumber) =>
+      _$this._currentPhoneNumber = currentPhoneNumber;
 
   String? _newPhoneNumber;
   String? get newPhoneNumber => _$this._newPhoneNumber;
@@ -64,6 +77,7 @@ class RequestPhoneChangeRequestBuilder
   RequestPhoneChangeRequestBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _currentPhoneNumber = $v.currentPhoneNumber;
       _newPhoneNumber = $v.newPhoneNumber;
       _$v = null;
     }
@@ -87,6 +101,7 @@ class RequestPhoneChangeRequestBuilder
     final _$result =
         _$v ??
         _$RequestPhoneChangeRequest._(
+          currentPhoneNumber: currentPhoneNumber,
           newPhoneNumber: BuiltValueNullFieldError.checkNotNull(
             newPhoneNumber,
             r'RequestPhoneChangeRequest',

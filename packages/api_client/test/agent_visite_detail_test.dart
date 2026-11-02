@@ -87,5 +87,25 @@ void main() {
       // TODO
     });
 
+    // VisitorSummary visitor
+    test('to test the property `visitor`', () async {
+      // TODO
+    });
+
+    // String cancellationReason
+    test('to test the property `cancellationReason`', () async {
+      // TODO
+    });
+
+    // String reviewId
+    test('to test the property `reviewId`', () async {
+      // TODO
+    });
+
+    // bool readOnly
+    test('to test the property `readOnly`', () async {
+      // TODO
+    });
+
   });
 }

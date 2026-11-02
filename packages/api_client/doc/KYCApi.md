@@ -9,10 +9,52 @@ All URIs are relative to *https://api.mboa.cm/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**addMyKycDocument**](KYCApi.md#addmykycdocument) | **PUT** /api/v1/kyc/me/document | Add the document&#39;s details to a KYC approved before they were asked, without a new review
 [**addMyNui**](KYCApi.md#addmynui) | **PUT** /api/v1/kyc/me/nui | Add the NUI to an approved KYC, without a new review
 [**getMyKycStatus**](KYCApi.md#getmykycstatus) | **GET** /api/v1/kyc/me | Get the authenticated account&#39;s KYC status
 [**submitKyc**](KYCApi.md#submitkyc) | **POST** /api/v1/kyc | Submit KYC documents (R2 object keys) for verification
 
+
+# **addMyKycDocument**
+> KycStatusResponse addMyKycDocument(kycDocumentRequest)
+
+Add the document's details to a KYC approved before they were asked, without a new review
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getKYCApi();
+final KycDocumentRequest kycDocumentRequest = ; // KycDocumentRequest | 
+
+try {
+    final response = api.addMyKycDocument(kycDocumentRequest);
+    print(response);
+} on DioException catch (e) {
+    print('Exception when calling KYCApi->addMyKycDocument: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **kycDocumentRequest** | [**KycDocumentRequest**](KycDocumentRequest.md)|  | 
+
+### Return type
+
+[**KycStatusResponse**](KycStatusResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **addMyNui**
 > KycStatusResponse addMyNui(addNuiRequest)

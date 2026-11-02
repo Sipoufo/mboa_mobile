@@ -25,6 +25,8 @@ Name | Type | Description | Notes
 **photoKeys** | **BuiltList&lt;String&gt;** |  | [optional] 
 **advanceMonths** | **int** |  | [optional] 
 **depositMonths** | **int** |  | [optional] 
+**advancePeriods** | **int** |  | [optional] 
+**depositPeriods** | **int** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -28,16 +28,16 @@ void main() {
       // TODO
     });
 
-    // One visit the prestataire carries out: the client's name and phone (RM-M16-01)
+    // One visit on the prestataire's listing: theirs, or an agent's read only (mobile §40 D)
     //
     //Future<AgentVisiteDetail> getMyOwnerVisite(String id) async
     test('test getMyOwnerVisite', () async {
       // TODO
     });
 
-    // Visits the prestataire carries out themselves, newest first
+    // Visits on the prestataire's listings — theirs (default), their agents', or both — newest first
     //
-    //Future<PageResponseVisiteResponse> listMyOwnerVisites(Pageable pageable, { BuiltList<String> status, DateTime from, DateTime to }) async
+    //Future<PageResponseVisiteResponse> listMyOwnerVisites(Pageable pageable, { String conductedBy, String annonceId, BuiltList<String> status, DateTime from, DateTime to }) async
     test('test listMyOwnerVisites', () async {
       // TODO
     });

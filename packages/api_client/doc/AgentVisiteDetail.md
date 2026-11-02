@@ -24,6 +24,10 @@ Name | Type | Description | Notes
 **clientConfirmedAt** | [**DateTime**](DateTime.md) |  | [optional] 
 **canConfirm** | **bool** |  | [optional] 
 **userAccountId** | **String** |  | [optional] 
+**visitor** | [**VisitorSummary**](VisitorSummary.md) |  | [optional] 
+**cancellationReason** | **String** |  | [optional] 
+**reviewId** | **String** |  | [optional] 
+**readOnly** | **bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

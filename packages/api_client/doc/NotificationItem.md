@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | [optional] 
 **type** | **String** |  | [optional] 
+**code** | **String** |  | [optional] 
+**outcome** | **String** |  | [optional] 
 **title** | **String** |  | [optional] 
 **body** | **String** |  | [optional] 
 **entityId** | **String** |  | [optional] 

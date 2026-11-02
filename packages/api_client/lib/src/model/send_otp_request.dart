@@ -12,10 +12,14 @@ part 'send_otp_request.g.dart';
 ///
 /// Properties:
 /// * [phoneNumber] 
+/// * [email] 
 @BuiltValue()
 abstract class SendOtpRequest implements Built<SendOtpRequest, SendOtpRequestBuilder> {
   @BuiltValueField(wireName: r'phoneNumber')
-  String get phoneNumber;
+  String? get phoneNumber;
+
+  @BuiltValueField(wireName: r'email')
+  String? get email;
 
   SendOtpRequest._();
 
@@ -40,11 +44,20 @@ class _$SendOtpRequestSerializer implements PrimitiveSerializer<SendOtpRequest> 
     SendOtpRequest object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    yield r'phoneNumber';
-    yield serializers.serialize(
-      object.phoneNumber,
-      specifiedType: const FullType(String),
-    );
+    if (object.phoneNumber != null) {
+      yield r'phoneNumber';
+      yield serializers.serialize(
+        object.phoneNumber,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.email != null) {
+      yield r'email';
+      yield serializers.serialize(
+        object.email,
+        specifiedType: const FullType(String),
+      );
+    }
   }
 
   @override
@@ -71,9 +84,18 @@ class _$SendOtpRequestSerializer implements PrimitiveSerializer<SendOtpRequest> 
         case r'phoneNumber':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
           result.phoneNumber = valueDes;
+          break;
+        case r'email':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.email = valueDes;
           break;
         default:
           unhandled.add(key);

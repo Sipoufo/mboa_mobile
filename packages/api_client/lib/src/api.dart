@@ -33,6 +33,7 @@ import 'package:api_client/src/api/avis_rsident_api.dart';
 import 'package:api_client/src/api/badges_api.dart';
 import 'package:api_client/src/api/contrats_api.dart';
 import 'package:api_client/src/api/current_user_api.dart';
+import 'package:api_client/src/api/email_change_api.dart';
 import 'package:api_client/src/api/favoris_api.dart';
 import 'package:api_client/src/api/finance_invoices_owner_api.dart';
 import 'package:api_client/src/api/finance_ledger_api.dart';
@@ -303,6 +304,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   CurrentUserApi getCurrentUserApi() {
     return CurrentUserApi(dio, serializers);
+  }
+
+  /// Get EmailChangeApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  EmailChangeApi getEmailChangeApi() {
+    return EmailChangeApi(dio, serializers);
   }
 
   /// Get FavorisApi instance, base route and serializer can be overridden by a given but be careful,

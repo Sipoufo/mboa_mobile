@@ -63,6 +63,8 @@ import 'package:api_client/src/model/change_request_response.dart';
 import 'package:api_client/src/model/churn.dart';
 import 'package:api_client/src/model/cohort.dart';
 import 'package:api_client/src/model/comment.dart';
+import 'package:api_client/src/model/confirm_email_change_request.dart';
+import 'package:api_client/src/model/confirm_kyc_document_request.dart';
 import 'package:api_client/src/model/confirm_phone_change_request.dart';
 import 'package:api_client/src/model/contest_declaration_request.dart';
 import 'package:api_client/src/model/contract_pdf_response.dart';
@@ -91,6 +93,7 @@ import 'package:api_client/src/model/delete_account_request.dart';
 import 'package:api_client/src/model/deletion_challenge_response.dart';
 import 'package:api_client/src/model/dispute_dossier.dart';
 import 'package:api_client/src/model/due.dart';
+import 'package:api_client/src/model/email_change_response.dart';
 import 'package:api_client/src/model/error_response.dart';
 import 'package:api_client/src/model/evidence_batch_response.dart';
 import 'package:api_client/src/model/evidence_file_request.dart';
@@ -125,6 +128,7 @@ import 'package:api_client/src/model/kpi_day_response.dart';
 import 'package:api_client/src/model/kyc_address.dart';
 import 'package:api_client/src/model/kyc_address_request.dart';
 import 'package:api_client/src/model/kyc_corrections.dart';
+import 'package:api_client/src/model/kyc_document_request.dart';
 import 'package:api_client/src/model/kyc_review_item.dart';
 import 'package:api_client/src/model/kyc_status_response.dart';
 import 'package:api_client/src/model/ledger_entry_request.dart';
@@ -144,6 +148,7 @@ import 'package:api_client/src/model/my_badges_response.dart';
 import 'package:api_client/src/model/notification_item.dart';
 import 'package:api_client/src/model/notification_setting.dart';
 import 'package:api_client/src/model/opportunity_item.dart';
+import 'package:api_client/src/model/otp_sent_response.dart';
 import 'package:api_client/src/model/owner_decision_request.dart';
 import 'package:api_client/src/model/page_response_admin_payment_item.dart';
 import 'package:api_client/src/model/page_response_admin_photo_verification_item.dart';
@@ -209,6 +214,7 @@ import 'package:api_client/src/model/reject_type_change_request.dart';
 import 'package:api_client/src/model/reply.dart';
 import 'package:api_client/src/model/reply_request.dart';
 import 'package:api_client/src/model/request_changes_request.dart';
+import 'package:api_client/src/model/request_email_change_request.dart';
 import 'package:api_client/src/model/request_phone_change_request.dart';
 import 'package:api_client/src/model/request_type_change_request.dart';
 import 'package:api_client/src/model/reservation_request_snapshot.dart';
@@ -290,6 +296,7 @@ import 'package:api_client/src/model/user_settings_response.dart';
 import 'package:api_client/src/model/verify_otp_request.dart';
 import 'package:api_client/src/model/visite_response.dart';
 import 'package:api_client/src/model/visitor_slots.dart';
+import 'package:api_client/src/model/visitor_summary.dart';
 import 'package:api_client/src/model/window.dart';
 import 'package:api_client/src/model/year_total.dart';
 import 'package:api_client/src/model/zone.dart';
@@ -347,6 +354,8 @@ part 'serializers.g.dart';
   Churn,
   Cohort,
   Comment,
+  ConfirmEmailChangeRequest,
+  ConfirmKycDocumentRequest,
   ConfirmPhoneChangeRequest,
   ContestDeclarationRequest,
   ContractPdfResponse,
@@ -375,6 +384,7 @@ part 'serializers.g.dart';
   DeletionChallengeResponse,
   DisputeDossier,
   Due,
+  EmailChangeResponse,
   ErrorResponse,
   EvidenceBatchResponse,
   EvidenceFileRequest,
@@ -409,6 +419,7 @@ part 'serializers.g.dart';
   KycAddress,
   KycAddressRequest,
   KycCorrections,
+  KycDocumentRequest,
   KycReviewItem,
   KycStatusResponse,
   LedgerEntryRequest,
@@ -428,6 +439,7 @@ part 'serializers.g.dart';
   NotificationItem,
   NotificationSetting,
   OpportunityItem,
+  OtpSentResponse,
   OwnerDecisionRequest,
   PageResponseAdminPaymentItem,
   PageResponseAdminPhotoVerificationItem,
@@ -493,6 +505,7 @@ part 'serializers.g.dart';
   Reply,
   ReplyRequest,
   RequestChangesRequest,
+  RequestEmailChangeRequest,
   RequestPhoneChangeRequest,
   RequestTypeChangeRequest,
   ReservationRequestSnapshot,
@@ -574,6 +587,7 @@ part 'serializers.g.dart';
   VerifyOtpRequest,
   VisiteResponse,
   VisitorSlots,
+  VisitorSummary,
   Window,
   YearTotal,
   Zone,
