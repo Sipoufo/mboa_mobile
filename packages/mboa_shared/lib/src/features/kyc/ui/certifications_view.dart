@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
@@ -161,21 +162,33 @@ class _StatutTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final chip = _statusChip(context, l10n, state.status.status);
-    final verified = state.status.status == KycStatus.approved;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: Dimens.spacingLg),
-      child: MboaTileCard(
-        icon: LucideIcons.userRound,
-        title: _accountLabel(l10n),
-        subtitle: chip.label,
-        subtitleColor: chip.color,
-        enabled: true,
-        trailing: Icon(
-          verified ? LucideIcons.badgeCheck : LucideIcons.clock,
-          color: chip.color,
-          size: Dimens.iconLg,
-        ),
+      child: Column(
+        children: [
+          if (state.status.status == KycStatus.rejected) ...[
+            _RefusalCard(status: state.status),
+            const SizedBox(height: Dimens.spacing),
+          ],
+          MboaTileCard(
+            icon: LucideIcons.userRound,
+            title: _accountLabel(l10n),
+            subtitle: chip.label,
+            subtitleColor: chip.color,
+            enabled: true,
+            trailing: Icon(
+              switch (state.status.status) {
+                KycStatus.approved => LucideIcons.badgeCheck,
+                // A refusal is not a wait: it used to show the same clock.
+                KycStatus.rejected => LucideIcons.shieldX,
+                _ => LucideIcons.clock,
+              },
+              color: chip.color,
+              size: Dimens.iconLg,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -203,9 +216,13 @@ class _IdentificationTab extends StatelessWidget {
     // Editable only before submission (or after a rejection).
     final editable = status == KycStatus.notSubmitted || status == KycStatus.rejected;
 
-    ({String label, Color color}) rowChip(bool captured) => captured
-        ? (label: l10n.kycAdded, color: colors.success)
-        : chip;
+    // After a refusal every piece is taken again — « À reprendre », not a
+    // « Refusé » on each, when the admin may have pointed at one.
+    ({String label, Color color}) rowChip(bool captured) => switch ((captured, status)) {
+          (true, _) => (label: l10n.kycAdded, color: colors.success),
+          (false, KycStatus.rejected) => (label: l10n.kycToRedo, color: colors.warning),
+          _ => chip,
+        };
 
     final selfie = rowChip(state.draft.has(KycSlot.selfie));
     // Photographed, and what it says filled in (§39 B).
@@ -246,11 +263,8 @@ class _IdentificationTab extends StatelessWidget {
               Dimens.spacingLg,
             ),
             children: [
-              if (status == KycStatus.rejected && (state.status.rejectionReason?.isNotEmpty ?? false)) ...[
-                Text(
-                  l10n.kycRejectionReason(state.status.rejectionReason!),
-                  style: context.mboaText.body.copyWith(color: colors.error),
-                ),
+              if (status == KycStatus.rejected) ...[
+                _RefusalCard(status: state.status),
                 const SizedBox(height: Dimens.spacing),
               ],
               MboaTileCard(
@@ -300,7 +314,7 @@ class _IdentificationTab extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(Dimens.spacingLg),
             child: Button.primary(
-              title: l10n.kycSubmit,
+              title: status == KycStatus.rejected ? l10n.kycResubmit : l10n.kycSubmit,
               isLoading: state.submitting,
               onPressed: state.draft.canSubmit(nuiRequired: withDeclarations && nuiRequired) && !state.busy
                   ? () => context.read<KycCubit>().submit()
@@ -308,6 +322,72 @@ class _IdentificationTab extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// A refused KYC, said once at the top of either tab — in the invitation
+/// banner's shape: when, the admin's reason in full, and what to do.
+class _RefusalCard extends StatelessWidget {
+  const _RefusalCard({required this.status});
+
+  final KycStatusData status;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final reason = status.rejectionReason?.trim();
+    final on = status.reviewedAt;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(Dimens.spacing),
+      decoration: BoxDecoration(
+        color: colors.error.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(Dimens.radiusLg),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(LucideIcons.shieldX, color: colors.error),
+              const SizedBox(width: Dimens.spacingMd),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l10n.kycRefusalTitle, style: context.mboaText.label.copyWith(color: colors.error)),
+                    if (on != null)
+                      Text(
+                        l10n.kycRefusalOn(DateFormat.yMMMMd(locale).format(on.toLocal())),
+                        style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (reason != null && reason.isNotEmpty) ...[
+            const SizedBox(height: Dimens.spacingMd),
+            // The admin's words, quoted whole: they say what to fix.
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(Dimens.spacingMd, Dimens.spacingSm, Dimens.spacingSm, Dimens.spacingSm),
+              decoration: BoxDecoration(
+                color: colors.surface,
+                borderRadius: BorderRadius.circular(Dimens.radiusSm),
+                border: Border(left: BorderSide(color: colors.error, width: 3)),
+              ),
+              child: Text(reason, style: context.mboaText.body.copyWith(color: colors.ink)),
+            ),
+          ],
+          const SizedBox(height: Dimens.spacingMd),
+          Text(l10n.kycRefusalHelp, style: context.mboaText.caption.copyWith(color: colors.ink)),
+        ],
+      ),
     );
   }
 }

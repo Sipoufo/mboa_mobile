@@ -18093,6 +18093,56 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ta vérification a été refusée`
+  String get kycRefusalTitle {
+    return Intl.message(
+      'Ta vérification a été refusée',
+      name: 'kycRefusalTitle',
+      desc: 'KYC refusal card, Certifications / Identité.',
+      args: [],
+    );
+  }
+
+  /// `Le {date}`
+  String kycRefusalOn(String date) {
+    return Intl.message(
+      'Le $date',
+      name: 'kycRefusalOn',
+      desc: 'KYC refusal card: when the admin refused it.',
+      args: [date],
+    );
+  }
+
+  /// `Corrige ce qui est indiqué, reprends les photos si besoin, puis soumets à nouveau.`
+  String get kycRefusalHelp {
+    return Intl.message(
+      'Corrige ce qui est indiqué, reprends les photos si besoin, puis soumets à nouveau.',
+      name: 'kycRefusalHelp',
+      desc: 'KYC refusal card: what to do.',
+      args: [],
+    );
+  }
+
+  /// `À reprendre`
+  String get kycToRedo {
+    return Intl.message(
+      'À reprendre',
+      name: 'kycToRedo',
+      desc: 'KYC row after a refusal, not yet captured again.',
+      args: [],
+    );
+  }
+
+  /// `Soumettre à nouveau`
+  String get kycResubmit {
+    return Intl.message(
+      'Soumettre à nouveau',
+      name: 'kycResubmit',
+      desc: 'KYC submit button after a refusal.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

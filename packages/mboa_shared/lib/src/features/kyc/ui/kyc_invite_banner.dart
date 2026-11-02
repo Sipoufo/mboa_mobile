@@ -127,7 +127,7 @@ class _Rejected extends StatelessWidget {
     return _Shape(
       color: colors.error.withValues(alpha: 0.1),
       onTap: onOpen,
-      icon: Icon(LucideIcons.shieldAlert, color: colors.error),
+      icon: Icon(LucideIcons.shieldX, color: colors.error),
       title: Text(l10n.kycBannerRejectedTitle, style: context.mboaText.label.copyWith(color: colors.error)),
       body: Text(
         why == null || why.isEmpty ? l10n.kycBannerRejectedBody : l10n.kycRejectionReason(why),

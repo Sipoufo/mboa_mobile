@@ -7468,5 +7468,30 @@
   "kycBannerResume": "Try again",
   "@kycBannerResume": {
     "description": "KYC banner: takes the refused verification up again."
+  },
+  "kycRefusalTitle": "Your verification was refused",
+  "@kycRefusalTitle": {
+    "description": "KYC refusal card, Certifications / Identité."
+  },
+  "kycRefusalOn": "On {date}",
+  "@kycRefusalOn": {
+    "description": "KYC refusal card: when the admin refused it.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "kycRefusalHelp": "Fix what is pointed out, retake the photos if needed, then submit again.",
+  "@kycRefusalHelp": {
+    "description": "KYC refusal card: what to do."
+  },
+  "kycToRedo": "To redo",
+  "@kycToRedo": {
+    "description": "KYC row after a refusal, not yet captured again."
+  },
+  "kycResubmit": "Submit again",
+  "@kycResubmit": {
+    "description": "KYC submit button after a refusal."
   }
 }
