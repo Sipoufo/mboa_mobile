@@ -178,6 +178,8 @@ void main() {
     expect(find.text('Paramètres'), findsOneWidget);
     expect(find.text('Certifications'), findsOneWidget);
     expect(find.text('Notifications'), findsOneWidget);
+    // The founder: an agent edits their personal information.
+    expect(find.text('Informations personnelles'), findsOneWidget);
   });
 
   testWidgets('the availability screen renders every day of the week',

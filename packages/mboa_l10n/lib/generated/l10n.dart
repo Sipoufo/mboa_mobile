@@ -18193,6 +18193,26 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Informations personnelles`
+  String get agentPersonalInfo {
+    return Intl.message(
+      'Informations personnelles',
+      name: 'agentPersonalInfo',
+      desc: 'Agent profile: opens the personal info form.',
+      args: [],
+    );
+  }
+
+  /// `Nom, ville et numéro de téléphone`
+  String get agentPersonalInfoBody {
+    return Intl.message(
+      'Nom, ville et numéro de téléphone',
+      name: 'agentPersonalInfoBody',
+      desc: 'Agent profile: what the personal info form holds.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -6,12 +7,14 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../models/prestataire_type.dart';
 import '../models/profile_data.dart';
 import '../profile_types.dart';
 
 /// Edit Profile (CDC M02): base user fields plus, for prestataires, the
-/// business fields. Email is read-only (not updatable via the API).
+/// business fields — the agent's « Informations personnelles » too. Email is
+/// read-only; the phone opens its own change (RM-M02-02: never edited here).
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
 
@@ -24,6 +27,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _email = TextEditingController();
+  final _phone = TextEditingController();
   final _searchCity = TextEditingController();
   final _displayName = TextEditingController();
   final _mainCity = TextEditingController();
@@ -35,6 +39,9 @@ class _EditProfileViewState extends State<EditProfileView> {
   bool _isPrestataire = false;
   bool _isAgent = false;
 
+  /// What was read, so « Enregistrer » waits for a change.
+  ProfileData? _initial;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +50,8 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   void _hydrate(ProfileData data) {
+    _initial = data;
+    _phone.text = data.phoneNumber ?? '';
     _firstName.text = data.firstName ?? '';
     _lastName.text = data.lastName ?? '';
     _email.text = data.email ?? '';
@@ -82,6 +91,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _firstName.dispose();
     _lastName.dispose();
     _email.dispose();
+    _phone.dispose();
     _searchCity.dispose();
     _displayName.dispose();
     _mainCity.dispose();
@@ -114,6 +124,27 @@ class _EditProfileViewState extends State<EditProfileView> {
         );
   }
 
+  /// Anything changed since it was read: the save has something to send.
+  bool get _dirty {
+    final initial = _initial;
+    if (initial == null) return true;
+    String text(TextEditingController c) => c.text.trim();
+    return text(_firstName) != (initial.firstName ?? '') ||
+        text(_lastName) != (initial.lastName ?? '') ||
+        _searchCityId != initial.searchCityId ||
+        (_isPrestataire &&
+            (text(_displayName) != (initial.displayName ?? '') ||
+                _mainCityId != initial.mainCityId ||
+                text(_registrationNumber) != (initial.registrationNumber ?? '') ||
+                _type != (initial.type ?? PrestataireType.agence)));
+  }
+
+  /// RM-M02-02 — its own two-code change; the number read again on return.
+  Future<void> _changePhone() async {
+    await context.router.push(const ChangePhoneRoute());
+    if (mounted) context.read<ProProfileBloc>().add(const ProfileLoadRequested());
+  }
+
   String? _required(String? value) =>
       (value == null || value.trim().isEmpty) ? I18n.of(context).commonError : null;
 
@@ -123,10 +154,11 @@ class _EditProfileViewState extends State<EditProfileView> {
     final colors = context.mboaColors;
 
     return BlocConsumer<ProProfileBloc, ProfileState>(
-      listenWhen: (prev, curr) =>
-          curr is ProProfileReady && (curr.justSaved || curr.saveFailed),
+      listenWhen: (prev, curr) => curr is ProProfileReady,
       listener: (context, state) {
         if (state is! ProProfileReady) return;
+        // The number changed on its own screen: shown as it now is.
+        _phone.text = state.data.phoneNumber ?? '';
         if (state.justSaved) {
           MboaToast.success(context: context, title: l10n.profileSaved);
           MboaHeaderBackButton.pop(context);
@@ -178,6 +210,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                               readOnly: true,
                               labelText: l10n.authEmailLabel,
                               variant: InputVariant.underline,
+                            ),
+                            const SizedBox(height: Dimens.spacingLg),
+                            Input(
+                              controller: _phone,
+                              readOnly: true,
+                              enabled: !saving,
+                              onTap: _changePhone,
+                              labelText: l10n.loginPhoneLabel,
+                              variant: InputVariant.underline,
+                              suffixIcon: Icon(LucideIcons.chevronRight, color: colors.textSecondary),
                             ),
                             // Doc 10 gives a prestataire "Ville principale"
                             // only; "Ville de recherche" belongs to the
@@ -269,13 +311,17 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(Dimens.spacingLg),
-                    child: Button.primary(
-                      title: l10n.profileSave,
-                      icon: Icon(LucideIcons.save, size: Dimens.icon, color: context.mboaColors.surface,),
-                      iconAlignment: IconAlignment.start,
-                      isCenter: true,
-                      isLoading: saving,
-                      onPressed: saving ? null : _save,
+                    // Nothing changed, nothing to save.
+                    child: ListenableBuilder(
+                      listenable: Listenable.merge([_firstName, _lastName, _displayName, _registrationNumber]),
+                      builder: (context, _) => Button.primary(
+                        title: l10n.profileSave,
+                        icon: Icon(LucideIcons.save, size: Dimens.icon, color: context.mboaColors.surface,),
+                        iconAlignment: IconAlignment.start,
+                        isCenter: true,
+                        isLoading: saving,
+                        onPressed: saving || !_dirty ? null : _save,
+                      ),
                     ),
                   ),
                 ],

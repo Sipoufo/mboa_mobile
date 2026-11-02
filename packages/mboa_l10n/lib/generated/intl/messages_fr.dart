@@ -553,6 +553,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentNoSlots": MessageLookupByLibrary.simpleMessage(
       "Aucun créneau défini",
     ),
+    "agentPersonalInfo": MessageLookupByLibrary.simpleMessage(
+      "Informations personnelles",
+    ),
+    "agentPersonalInfoBody": MessageLookupByLibrary.simpleMessage(
+      "Nom, ville et numéro de téléphone",
+    ),
     "agentProfileTitle": MessageLookupByLibrary.simpleMessage(
       "Mon profil agent",
     ),

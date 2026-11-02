@@ -7513,5 +7513,13 @@
   "changePhoneTaken": "Ce numéro est déjà utilisé par un autre compte.",
   "@changePhoneTaken": {
     "description": "PHONE_ALREADY_USED, under the new number."
+  },
+  "agentPersonalInfo": "Informations personnelles",
+  "@agentPersonalInfo": {
+    "description": "Agent profile: opens the personal info form."
+  },
+  "agentPersonalInfoBody": "Nom, ville et numéro de téléphone",
+  "@agentPersonalInfoBody": {
+    "description": "Agent profile: what the personal info form holds."
   }
 }

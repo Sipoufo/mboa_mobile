@@ -90,6 +90,21 @@ class _AgentProfilePageState extends State<AgentProfilePage> {
                     _IncompleteBanner(),
                   ],
                   const SizedBox(height: Dimens.spacingLg),
+                  // Names and city through the profile form, the phone through
+                  // its own change; the photo stays on the header above.
+                  MboaTileCard(
+                    icon: LucideIcons.squareUserRound,
+                    title: l10n.agentPersonalInfo,
+                    subtitle: l10n.agentPersonalInfoBody,
+                    onTap: () async {
+                      await context.router.push(const EditProfileRoute());
+                      // The name above is the agent record's: read again.
+                      if (context.mounted) {
+                        context.read<AgentProfileBloc>().add(const AgentProfileLoadRequested());
+                      }
+                    },
+                  ),
+                  const SizedBox(height: Dimens.spacingLg),
                   _Stats(profile: profile),
                   const SizedBox(height: Dimens.spacingLg),
                   _AcceptingCard(profile: profile),

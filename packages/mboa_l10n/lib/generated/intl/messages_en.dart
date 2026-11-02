@@ -540,6 +540,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "agentNavProfile": MessageLookupByLibrary.simpleMessage("My profile"),
     "agentNavVisits": MessageLookupByLibrary.simpleMessage("My visits"),
     "agentNoSlots": MessageLookupByLibrary.simpleMessage("No slots set"),
+    "agentPersonalInfo": MessageLookupByLibrary.simpleMessage(
+      "Personal information",
+    ),
+    "agentPersonalInfoBody": MessageLookupByLibrary.simpleMessage(
+      "Name, city and phone number",
+    ),
     "agentProfileTitle": MessageLookupByLibrary.simpleMessage(
       "My agent profile",
     ),
