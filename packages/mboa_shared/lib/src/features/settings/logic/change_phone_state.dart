@@ -2,6 +2,16 @@ part of 'change_phone_bloc.dart';
 
 enum ChangePhoneError {
   requestFailed,
+
+  /// `CURRENT_PHONE_MISMATCH` — not the account's number; said under it.
+  currentMismatch,
+
+  /// `PHONE_UNCHANGED` — the new number is the current one.
+  unchanged,
+
+  /// `PHONE_ALREADY_USED` — another account holds the new number.
+  alreadyUsed,
+
   invalidCode,
 
   /// Three wrong tries, or expired: only new codes help.
@@ -26,22 +36,24 @@ final class ChangePhoneEnterPhone extends ChangePhoneState {
   List<Object?> get props => [loading, error];
 }
 
-/// Step 2 — entering the two OTP codes for [newPhoneNumber].
+/// Step 2 — entering the two OTP codes, one per number.
 final class ChangePhoneEnterCodes extends ChangePhoneState {
   const ChangePhoneEnterCodes({
+    required this.currentPhoneNumber,
     required this.newPhoneNumber,
     this.loading = false,
     this.error,
     this.justResent = false,
   });
 
+  final String currentPhoneNumber;
   final String newPhoneNumber;
   final bool loading;
   final ChangePhoneError? error;
   final bool justResent;
 
   @override
-  List<Object?> get props => [newPhoneNumber, loading, error, justResent];
+  List<Object?> get props => [currentPhoneNumber, newPhoneNumber, loading, error, justResent];
 }
 
 final class ChangePhoneSuccess extends ChangePhoneState {

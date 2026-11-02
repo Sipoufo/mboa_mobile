@@ -7493,5 +7493,25 @@
   "kycResubmit": "Soumettre à nouveau",
   "@kycResubmit": {
     "description": "KYC submit button after a refusal."
+  },
+  "changePhoneCurrentLabel": "Ton numéro actuel",
+  "@changePhoneCurrentLabel": {
+    "description": "RM-M02-02 — typed first, before the new one."
+  },
+  "changePhoneNewLabel": "Ton nouveau numéro",
+  "@changePhoneNewLabel": {
+    "description": "RM-M02-02 — the number the account moves to."
+  },
+  "changePhoneCurrentMismatch": "Ce n'est pas ton numéro actuel.",
+  "@changePhoneCurrentMismatch": {
+    "description": "CURRENT_PHONE_MISMATCH, under the current number."
+  },
+  "changePhoneSameNumber": "C'est déjà ton numéro.",
+  "@changePhoneSameNumber": {
+    "description": "PHONE_UNCHANGED, or both fields alike, under the new number."
+  },
+  "changePhoneTaken": "Ce numéro est déjà utilisé par un autre compte.",
+  "@changePhoneTaken": {
+    "description": "PHONE_ALREADY_USED, under the new number."
   }
 }

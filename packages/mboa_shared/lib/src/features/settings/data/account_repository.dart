@@ -12,12 +12,14 @@ class AccountRepository {
   /// Permanently deletes the account (RGPD anonymisation server-side).
   Future<void> deleteAccount() => _dioClient.api.getAccountApi().deleteMyAccount();
 
-  /// Requests a phone-number change; the backend sends an OTP to both the old
-  /// and the new number (RM-M02-02).
-  Future<void> requestPhoneChange(String newPhoneNumber) {
+  /// Requests a phone-number change; the backend checks [currentPhoneNumber]
+  /// is the account's, then sends an OTP to both the old and the new number
+  /// (RM-M02-02).
+  Future<void> requestPhoneChange({required String currentPhoneNumber, required String newPhoneNumber}) {
     return _dioClient.api.getPhoneChangeApi().requestPhoneChange(
-          requestPhoneChangeRequest:
-              RequestPhoneChangeRequest((b) => b..newPhoneNumber = newPhoneNumber),
+          requestPhoneChangeRequest: RequestPhoneChangeRequest((b) => b
+            ..currentPhoneNumber = currentPhoneNumber
+            ..newPhoneNumber = newPhoneNumber),
         );
   }
 

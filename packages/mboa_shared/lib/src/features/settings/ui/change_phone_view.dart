@@ -41,8 +41,9 @@ class _ChangePhoneScaffold extends StatelessWidget {
             MboaHeaderBackButton.pop(context);
           case ChangePhoneEnterCodes(justResent: true):
             MboaToast.info(context: context, title: l10n.authOtpResent);
-          case ChangePhoneEnterPhone(error: final e?):
-            MboaToast.error(context: context, title: l10n.commonErrorTitle, description: _err(l10n, e));
+          // The refusals about a number are said under it, not in a toast.
+          case ChangePhoneEnterPhone(error: ChangePhoneError.requestFailed):
+            MboaToast.error(context: context, title: l10n.commonErrorTitle, description: l10n.commonError);
           case ChangePhoneEnterCodes(error: final e?):
             MboaToast.error(context: context, title: l10n.commonErrorTitle, description: _err(l10n, e));
           default:
@@ -67,11 +68,13 @@ class _ChangePhoneScaffold extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(Dimens.spacingLg),
                 child: switch (state) {
-                  ChangePhoneEnterCodes(:final newPhoneNumber, :final error) => _CodesStep(
+                  ChangePhoneEnterCodes(:final currentPhoneNumber, :final newPhoneNumber, :final error) => _CodesStep(
+                      currentPhoneNumber: currentPhoneNumber,
                       newPhoneNumber: newPhoneNumber,
                       loading: loading,
                       burnt: error == ChangePhoneError.codeBurnt,
                     ),
+                  ChangePhoneEnterPhone(:final error) => _PhoneStep(loading: loading, error: error),
                   _ => _PhoneStep(loading: loading),
                 },
               ),
@@ -85,14 +88,17 @@ class _ChangePhoneScaffold extends StatelessWidget {
   String _err(I18n l10n, ChangePhoneError e) => switch (e) {
         ChangePhoneError.invalidCode => l10n.otpInvalidCode,
         ChangePhoneError.codeBurnt => l10n.otpCodeBurnt,
-        ChangePhoneError.requestFailed => l10n.commonError,
+        _ => l10n.commonError,
       };
 }
 
+/// RM-M02-02 — the current number first, then the new one. A refusal about
+/// either is said under it, and goes as soon as that number is edited.
 class _PhoneStep extends StatefulWidget {
-  const _PhoneStep({required this.loading});
+  const _PhoneStep({required this.loading, this.error});
 
   final bool loading;
+  final ChangePhoneError? error;
 
   @override
   State<_PhoneStep> createState() => _PhoneStepState();
@@ -100,45 +106,92 @@ class _PhoneStep extends StatefulWidget {
 
 class _PhoneStepState extends State<_PhoneStep> {
   final _formKey = GlobalKey<FormState>();
-  final _controller = TextEditingController();
+  final _current = TextEditingController();
+  final _next = TextEditingController();
+
+  /// What was sent, so a refusal sticks to that number and not to its edit.
+  String? _sentCurrent;
+  String? _sentNext;
+
+  @override
+  void didUpdateWidget(_PhoneStep oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.error != null && widget.error != oldWidget.error) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _formKey.currentState?.validate());
+    }
+  }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _current.dispose();
+    _next.dispose();
     super.dispose();
   }
 
+  static bool _complete(String text) => text.trim().length == PhoneField.nationalDigits;
+
+  bool get _ready => _complete(_current.text) && _complete(_next.text) && _current.text.trim() != _next.text.trim();
+
   void _submit() {
     FocusScope.of(context).unfocus();
-    if (_formKey.currentState?.validate() ?? false) {
-      context.read<ChangePhoneBloc>().add(
-            ChangePhoneRequested('${PhoneField.defaultDialCode}${_controller.text.trim()}'),
-          );
-    }
+    if (!(_formKey.currentState?.validate() ?? false) || !_ready) return;
+    _sentCurrent = _current.text.trim();
+    _sentNext = _next.text.trim();
+    context.read<ChangePhoneBloc>().add(
+          ChangePhoneRequested(
+            currentPhoneNumber: '${PhoneField.defaultDialCode}$_sentCurrent',
+            newPhoneNumber: '${PhoneField.defaultDialCode}$_sentNext',
+          ),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
+    final error = widget.error;
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           PhoneField(
-            controller: _controller,
+            controller: _current,
             enabled: !widget.loading,
-            labelText: l10n.loginPhoneLabel,
+            labelText: l10n.changePhoneCurrentLabel,
             hintText: l10n.loginPhoneHintLocal,
-            onSubmitted: (_) => _submit(),
-            validator: (v) =>
-                (v?.trim().length ?? 0) == PhoneField.nationalDigits ? null : l10n.loginPhoneInvalid,
+            textInputAction: TextInputAction.next,
+            validator: (v) => switch (v?.trim()) {
+              final text? when !_complete(text) => l10n.loginPhoneInvalid,
+              final text when error == ChangePhoneError.currentMismatch && text == _sentCurrent =>
+                l10n.changePhoneCurrentMismatch,
+              _ => null,
+            },
           ),
           const SizedBox(height: Dimens.spacingLg),
-          Button.primary(
-            title: l10n.loginRequestCode,
-            isLoading: widget.loading,
-            onPressed: widget.loading ? null : _submit,
+          PhoneField(
+            controller: _next,
+            enabled: !widget.loading,
+            labelText: l10n.changePhoneNewLabel,
+            hintText: l10n.loginPhoneHintLocal,
+            onSubmitted: (_) => _submit(),
+            validator: (v) => switch (v?.trim()) {
+              final text? when !_complete(text) => l10n.loginPhoneInvalid,
+              final text when text == _current.text.trim() => l10n.changePhoneSameNumber,
+              final text when error == ChangePhoneError.unchanged && text == _sentNext => l10n.changePhoneSameNumber,
+              final text when error == ChangePhoneError.alreadyUsed && text == _sentNext => l10n.changePhoneTaken,
+              _ => null,
+            },
+          ),
+          const SizedBox(height: Dimens.spacingLg),
+          // Both complete and different before the codes can be asked for.
+          ListenableBuilder(
+            listenable: Listenable.merge([_current, _next]),
+            builder: (context, _) => Button.primary(
+              title: l10n.loginRequestCode,
+              isLoading: widget.loading,
+              onPressed: widget.loading || !_ready ? null : _submit,
+            ),
           ),
         ],
       ),
@@ -147,8 +200,14 @@ class _PhoneStepState extends State<_PhoneStep> {
 }
 
 class _CodesStep extends StatefulWidget {
-  const _CodesStep({required this.newPhoneNumber, required this.loading, this.burnt = false});
+  const _CodesStep({
+    required this.currentPhoneNumber,
+    required this.newPhoneNumber,
+    required this.loading,
+    this.burnt = false,
+  });
 
+  final String currentPhoneNumber;
   final String newPhoneNumber;
   final bool loading;
 
@@ -195,7 +254,11 @@ class _CodesStepState extends State<_CodesStep> {
     final colors = context.mboaColors;
     return ListView(
       children: [
-        Text(l10n.changePhoneOldCodeLabel, style: context.mboaText.label.copyWith(color: colors.textSecondary)),
+        // Each code names its number.
+        Text(
+          l10n.changePhoneNewCodeLabel(widget.currentPhoneNumber),
+          style: context.mboaText.label.copyWith(color: colors.textSecondary),
+        ),
         const SizedBox(height: Dimens.spacingSm),
         OtpField(controller: _oldCode, length: _codeLength, enabled: !widget.loading && !widget.burnt, autofocus: true),
         const SizedBox(height: Dimens.spacingLg),

@@ -7,14 +7,16 @@ sealed class ChangePhoneEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Step 1 — request a change to [newPhoneNumber] (OTP sent to old + new).
+/// Step 1 — the number the account has now, then the one it moves to (OTP
+/// sent to both). RM-M02-02: the current one is typed first.
 final class ChangePhoneRequested extends ChangePhoneEvent {
-  const ChangePhoneRequested(this.newPhoneNumber);
+  const ChangePhoneRequested({required this.currentPhoneNumber, required this.newPhoneNumber});
 
+  final String currentPhoneNumber;
   final String newPhoneNumber;
 
   @override
-  List<Object?> get props => [newPhoneNumber];
+  List<Object?> get props => [currentPhoneNumber, newPhoneNumber];
 }
 
 /// Re-send both codes.

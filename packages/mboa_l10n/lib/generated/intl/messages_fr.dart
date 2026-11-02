@@ -1080,12 +1080,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirmer le changement",
     ),
+    "changePhoneCurrentLabel": MessageLookupByLibrary.simpleMessage(
+      "Ton numéro actuel",
+    ),
+    "changePhoneCurrentMismatch": MessageLookupByLibrary.simpleMessage(
+      "Ce n\'est pas ton numéro actuel.",
+    ),
     "changePhoneNewCodeLabel": m30,
+    "changePhoneNewLabel": MessageLookupByLibrary.simpleMessage(
+      "Ton nouveau numéro",
+    ),
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code reçu sur l’ancien numéro",
     ),
+    "changePhoneSameNumber": MessageLookupByLibrary.simpleMessage(
+      "C\'est déjà ton numéro.",
+    ),
     "changePhoneSuccess": MessageLookupByLibrary.simpleMessage(
       "Numéro mis à jour",
+    ),
+    "changePhoneTaken": MessageLookupByLibrary.simpleMessage(
+      "Ce numéro est déjà utilisé par un autre compte.",
     ),
     "cityPickerEmpty": MessageLookupByLibrary.simpleMessage(
       "Aucune ville trouvée",

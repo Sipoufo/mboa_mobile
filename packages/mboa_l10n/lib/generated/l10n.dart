@@ -18143,6 +18143,56 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ton numéro actuel`
+  String get changePhoneCurrentLabel {
+    return Intl.message(
+      'Ton numéro actuel',
+      name: 'changePhoneCurrentLabel',
+      desc: 'RM-M02-02 — typed first, before the new one.',
+      args: [],
+    );
+  }
+
+  /// `Ton nouveau numéro`
+  String get changePhoneNewLabel {
+    return Intl.message(
+      'Ton nouveau numéro',
+      name: 'changePhoneNewLabel',
+      desc: 'RM-M02-02 — the number the account moves to.',
+      args: [],
+    );
+  }
+
+  /// `Ce n'est pas ton numéro actuel.`
+  String get changePhoneCurrentMismatch {
+    return Intl.message(
+      'Ce n\'est pas ton numéro actuel.',
+      name: 'changePhoneCurrentMismatch',
+      desc: 'CURRENT_PHONE_MISMATCH, under the current number.',
+      args: [],
+    );
+  }
+
+  /// `C'est déjà ton numéro.`
+  String get changePhoneSameNumber {
+    return Intl.message(
+      'C\'est déjà ton numéro.',
+      name: 'changePhoneSameNumber',
+      desc: 'PHONE_UNCHANGED, or both fields alike, under the new number.',
+      args: [],
+    );
+  }
+
+  /// `Ce numéro est déjà utilisé par un autre compte.`
+  String get changePhoneTaken {
+    return Intl.message(
+      'Ce numéro est déjà utilisé par un autre compte.',
+      name: 'changePhoneTaken',
+      desc: 'PHONE_ALREADY_USED, under the new number.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

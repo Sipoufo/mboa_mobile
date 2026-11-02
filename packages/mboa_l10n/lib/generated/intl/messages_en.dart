@@ -1035,12 +1035,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm change",
     ),
+    "changePhoneCurrentLabel": MessageLookupByLibrary.simpleMessage(
+      "Your current number",
+    ),
+    "changePhoneCurrentMismatch": MessageLookupByLibrary.simpleMessage(
+      "This is not your current number.",
+    ),
     "changePhoneNewCodeLabel": m30,
+    "changePhoneNewLabel": MessageLookupByLibrary.simpleMessage(
+      "Your new number",
+    ),
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code sent to your old number",
     ),
+    "changePhoneSameNumber": MessageLookupByLibrary.simpleMessage(
+      "This is already your number.",
+    ),
     "changePhoneSuccess": MessageLookupByLibrary.simpleMessage(
       "Number updated",
+    ),
+    "changePhoneTaken": MessageLookupByLibrary.simpleMessage(
+      "This number is already used by another account.",
     ),
     "cityPickerEmpty": MessageLookupByLibrary.simpleMessage("No city found"),
     "cityPickerSearchHint": MessageLookupByLibrary.simpleMessage(
