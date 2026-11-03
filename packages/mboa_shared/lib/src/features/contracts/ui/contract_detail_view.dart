@@ -34,6 +34,7 @@ class ContractDetailView extends StatelessWidget {
     this.onReview,
     this.viewer = ContractParty.unknown,
     this.identityPrefill,
+    this.documentMissing = false,
   });
 
   final String id;
@@ -41,6 +42,9 @@ class ContractDetailView extends StatelessWidget {
   /// §39 D — what the app knows of the reader's document, to start the
   /// identity form from when they have to type it.
   final DocumentIdentity? identityPrefill;
+
+  /// §40 F — the reader's approved KYC lacks the document's details.
+  final bool documentMissing;
 
   /// Opens the amendment form. Null on the tenant's side.
   final void Function(Contract contract)? onAmend;
@@ -128,6 +132,7 @@ class ContractDetailView extends StatelessWidget {
                 onReview: onReview,
                 viewer: viewer,
                 identityPrefill: identityPrefill,
+                documentMissing: documentMissing,
               )
             : const SizedBox.shrink(),
       ),
@@ -665,6 +670,7 @@ class _ActionBar extends StatelessWidget {
     this.onReview,
     this.viewer = ContractParty.unknown,
     this.identityPrefill,
+    this.documentMissing = false,
   });
 
   final ContractDetailReady state;
@@ -672,6 +678,7 @@ class _ActionBar extends StatelessWidget {
   final void Function(Contract contract)? onReview;
   final ContractParty viewer;
   final DocumentIdentity? identityPrefill;
+  final bool documentMissing;
 
   @override
   Widget build(BuildContext context) {
@@ -752,6 +759,7 @@ class _ActionBar extends StatelessWidget {
       // The tenant app offers the CNI and the passport, as for its KYC.
       identityTypes: viewer == ContractParty.tenant ? const [KycDocType.cni, KycDocType.passport] : KycDocType.values,
       identityPrefill: identityPrefill,
+      documentMissing: documentMissing,
     );
     if (confirmed != null) bloc.add(ContractSigned(identity: confirmed.identity));
   }

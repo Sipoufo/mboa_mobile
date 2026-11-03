@@ -1347,6 +1347,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Envoyer au locataire",
     ),
     "contractSign": MessageLookupByLibrary.simpleMessage("Signer"),
+    "contractSignAddDocumentHint": MessageLookupByLibrary.simpleMessage(
+      "Ajoute ta pièce à tes certifications pour ne plus la retaper.",
+    ),
     "contractSignIdentityBody": MessageLookupByLibrary.simpleMessage(
       "Ta pièce n\'est pas vérifiée par Mboa : indique-la ici. Le contrat l\'imprimera comme déclarée.",
     ),
@@ -2085,6 +2088,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycBannerBodyTenant": MessageLookupByLibrary.simpleMessage(
       "Facultatif — +20 points à ton Mboa Score.",
     ),
+    "kycBannerDocumentBody": MessageLookupByLibrary.simpleMessage(
+      "Ajoute-la une fois : elle remplira tes contrats à ta place.",
+    ),
     "kycBannerPendingBody": MessageLookupByLibrary.simpleMessage(
       "On te prévient dès que c\'est fait.",
     ),
@@ -2114,11 +2120,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycDocResidence": MessageLookupByLibrary.simpleMessage(
       "Permis de residence",
     ),
+    "kycDocumentAdded": MessageLookupByLibrary.simpleMessage("Pièce ajoutée"),
     "kycDocumentDetails": MessageLookupByLibrary.simpleMessage(
       "Les informations de la pièce",
     ),
     "kycDocumentExpired": MessageLookupByLibrary.simpleMessage(
       "Cette pièce a expiré.",
+    ),
+    "kycDocumentMissingAction": MessageLookupByLibrary.simpleMessage(
+      "Compléter",
+    ),
+    "kycDocumentMissingBody": MessageLookupByLibrary.simpleMessage(
+      "Ton identité est vérifiée, mais Mboa n\'a pas les informations de ta pièce. Ajoute-les une fois : elles rempliront tes contrats à ta place.",
+    ),
+    "kycDocumentMissingTitle": MessageLookupByLibrary.simpleMessage(
+      "Complète ta pièce d\'identité",
+    ),
+    "kycDocumentSheetBody": MessageLookupByLibrary.simpleMessage(
+      "Tape-la comme sur ta pièce : Mboa la comparera aux photos déjà vérifiées.",
+    ),
+    "kycDocumentSheetTitle": MessageLookupByLibrary.simpleMessage(
+      "Ta pièce d\'identité",
     ),
     "kycDone": MessageLookupByLibrary.simpleMessage("Terminé"),
     "kycExpiresOn": MessageLookupByLibrary.simpleMessage("Valable jusqu\'au"),
@@ -2180,6 +2202,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycTabStatut": MessageLookupByLibrary.simpleMessage("Statut"),
     "kycTakePhoto": MessageLookupByLibrary.simpleMessage("Prendre une photo"),
+    "kycToComplete": MessageLookupByLibrary.simpleMessage("À compléter"),
     "kycToRedo": MessageLookupByLibrary.simpleMessage("À reprendre"),
     "kycUnknownDistrict": MessageLookupByLibrary.simpleMessage(
       "Ce quartier n\'est plus au catalogue. Choisis-en un autre.",

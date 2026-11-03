@@ -18383,6 +18383,98 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Complète ta pièce d'identité`
+  String get kycDocumentMissingTitle {
+    return Intl.message(
+      'Complète ta pièce d\'identité',
+      name: 'kycDocumentMissingTitle',
+      desc: '§40 F — an approved KYC without its document\'s details.',
+      args: [],
+    );
+  }
+
+  /// `Ton identité est vérifiée, mais Mboa n'a pas les informations de ta pièce. Ajoute-les une fois : elles rempliront tes contrats à ta place.`
+  String get kycDocumentMissingBody {
+    return Intl.message(
+      'Ton identité est vérifiée, mais Mboa n\'a pas les informations de ta pièce. Ajoute-les une fois : elles rempliront tes contrats à ta place.',
+      name: 'kycDocumentMissingBody',
+      desc: '§40 F — why, on Certifications.',
+      args: [],
+    );
+  }
+
+  /// `Compléter`
+  String get kycDocumentMissingAction {
+    return Intl.message(
+      'Compléter',
+      name: 'kycDocumentMissingAction',
+      desc: '§40 F — opens the document\'s details.',
+      args: [],
+    );
+  }
+
+  /// `Ajoute-la une fois : elle remplira tes contrats à ta place.`
+  String get kycBannerDocumentBody {
+    return Intl.message(
+      'Ajoute-la une fois : elle remplira tes contrats à ta place.',
+      name: 'kycBannerDocumentBody',
+      desc: '§40 F — the invitation banner\'s face.',
+      args: [],
+    );
+  }
+
+  /// `Ta pièce d'identité`
+  String get kycDocumentSheetTitle {
+    return Intl.message(
+      'Ta pièce d\'identité',
+      name: 'kycDocumentSheetTitle',
+      desc: '§40 F — the sheet\'s title.',
+      args: [],
+    );
+  }
+
+  /// `Tape-la comme sur ta pièce : Mboa la comparera aux photos déjà vérifiées.`
+  String get kycDocumentSheetBody {
+    return Intl.message(
+      'Tape-la comme sur ta pièce : Mboa la comparera aux photos déjà vérifiées.',
+      name: 'kycDocumentSheetBody',
+      desc: '§40 F — the sheet\'s help.',
+      args: [],
+    );
+  }
+
+  /// `Pièce ajoutée`
+  String get kycDocumentAdded {
+    return Intl.message(
+      'Pièce ajoutée',
+      name: 'kycDocumentAdded',
+      desc: '§40 F — the details were saved.',
+      args: [],
+    );
+  }
+
+  /// `À compléter`
+  String get kycToComplete {
+    return Intl.message(
+      'À compléter',
+      name: 'kycToComplete',
+      desc:
+          '§40 F — the document\'s row on an approved KYC without its details.',
+      args: [],
+    );
+  }
+
+  /// `Ajoute ta pièce à tes certifications pour ne plus la retaper.`
+  String get contractSignAddDocumentHint {
+    return Intl.message(
+      'Ajoute ta pièce à tes certifications pour ne plus la retaper.',
+      name: 'contractSignAddDocumentHint',
+      desc:
+          '§40 F — under the identity form at signing, for an approved KYC without its document.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

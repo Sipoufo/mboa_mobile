@@ -1293,6 +1293,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "contractSaved": MessageLookupByLibrary.simpleMessage("Contract saved"),
     "contractSend": MessageLookupByLibrary.simpleMessage("Send to the tenant"),
     "contractSign": MessageLookupByLibrary.simpleMessage("Sign"),
+    "contractSignAddDocumentHint": MessageLookupByLibrary.simpleMessage(
+      "Add your document to your certifications so you never type it again.",
+    ),
     "contractSignIdentityBody": MessageLookupByLibrary.simpleMessage(
       "Your document is not verified by Mboa: enter it here. The contract will print it as declared.",
     ),
@@ -2003,6 +2006,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycBannerBodyTenant": MessageLookupByLibrary.simpleMessage(
       "Optional — +20 points on your Mboa Score.",
     ),
+    "kycBannerDocumentBody": MessageLookupByLibrary.simpleMessage(
+      "Add it once: it will fill in your contracts for you.",
+    ),
     "kycBannerPendingBody": MessageLookupByLibrary.simpleMessage(
       "We\'ll let you know as soon as it\'s done.",
     ),
@@ -2030,11 +2036,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "kycDocPassport": MessageLookupByLibrary.simpleMessage("Passport"),
     "kycDocRecepisse": MessageLookupByLibrary.simpleMessage("Receipt"),
     "kycDocResidence": MessageLookupByLibrary.simpleMessage("Residence permit"),
+    "kycDocumentAdded": MessageLookupByLibrary.simpleMessage("Document added"),
     "kycDocumentDetails": MessageLookupByLibrary.simpleMessage(
       "What the document says",
     ),
     "kycDocumentExpired": MessageLookupByLibrary.simpleMessage(
       "This document has expired.",
+    ),
+    "kycDocumentMissingAction": MessageLookupByLibrary.simpleMessage(
+      "Complete",
+    ),
+    "kycDocumentMissingBody": MessageLookupByLibrary.simpleMessage(
+      "Your identity is verified, but Mboa does not have your document\'s details. Add them once: they will fill in your contracts for you.",
+    ),
+    "kycDocumentMissingTitle": MessageLookupByLibrary.simpleMessage(
+      "Complete your ID document",
+    ),
+    "kycDocumentSheetBody": MessageLookupByLibrary.simpleMessage(
+      "Type it as it reads on your document: Mboa will compare it with the photos already verified.",
+    ),
+    "kycDocumentSheetTitle": MessageLookupByLibrary.simpleMessage(
+      "Your ID document",
     ),
     "kycDone": MessageLookupByLibrary.simpleMessage("Done"),
     "kycExpiresOn": MessageLookupByLibrary.simpleMessage("Valid until"),
@@ -2092,6 +2114,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kycTabStatut": MessageLookupByLibrary.simpleMessage("Status"),
     "kycTakePhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
+    "kycToComplete": MessageLookupByLibrary.simpleMessage("To complete"),
     "kycToRedo": MessageLookupByLibrary.simpleMessage("To redo"),
     "kycUnknownDistrict": MessageLookupByLibrary.simpleMessage(
       "This district is no longer listed. Pick another one.",

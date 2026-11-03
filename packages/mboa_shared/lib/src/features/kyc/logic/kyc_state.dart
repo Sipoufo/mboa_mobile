@@ -55,6 +55,7 @@ final class KycReady extends KycState {
     this.submitting = false,
     this.error,
     this.justSubmitted = false,
+    this.addedDocument = false,
   });
 
   final KycStatusData status;
@@ -63,6 +64,9 @@ final class KycReady extends KycState {
   final bool submitting;
   final KycError? error;
   final bool justSubmitted;
+
+  /// §40 F — one-shot: the document's details were just added.
+  final bool addedDocument;
 
   bool get busy => uploading != null || submitting;
 
@@ -85,5 +89,5 @@ final class KycReady extends KycState {
   }
 
   @override
-  List<Object?> get props => [status, draft, uploading, submitting, error, justSubmitted];
+  List<Object?> get props => [status, draft, uploading, submitting, error, justSubmitted, addedDocument];
 }

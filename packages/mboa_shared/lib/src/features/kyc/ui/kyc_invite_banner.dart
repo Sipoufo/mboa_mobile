@@ -11,8 +11,9 @@ import '../models/kyc_status.dart';
 /// RM-M01bis-01 — the invitation to verify one's identity, on the profile of
 /// both apps and on the Pro home, for as long as the KYC is not approved.
 ///
-/// Three faces, from the session's [KycCubit]: to do (on the brand ground),
-/// under review, refused (with the reason). Approved, it draws nothing — the
+/// Four faces, from the session's [KycCubit]: to do (on the brand ground),
+/// under review, refused (with the reason), and — approved before §39 B —
+/// the document's details to complete (§40 F). Approved, it draws nothing — the
 /// « Certifications » or « Identité » tile stays for reading. A status never
 /// read (offline at start) draws nothing either, rather than a guess.
 ///
@@ -36,6 +37,8 @@ class KycInviteBanner extends StatelessWidget {
           final banner = switch (_shown(state)) {
             null => null,
             (KycStatus.pending, _) => _Pending(onOpen: onOpen),
+            // §40 F — approved, its document's details still missing.
+            (KycStatus.approved, _) => _CompleteDocument(onOpen: onOpen),
             (KycStatus.rejected, final reason) => _Rejected(reason: reason, onOpen: onOpen),
             _ => _ToDo(role: role, onOpen: onOpen),
           };
@@ -47,6 +50,7 @@ class KycInviteBanner extends StatelessWidget {
   /// What the banner shows of [state]: the status and the refusal's reason,
   /// or null when it shows nothing.
   static (KycStatus, String?)? _shown(KycState state) => switch (state) {
+        KycReady(:final status) when status.canAddDocument => (KycStatus.approved, null),
         KycReady(:final status) when status.status != KycStatus.approved => (
             status.status,
             status.rejectionReason,
@@ -107,6 +111,32 @@ class _Pending extends StatelessWidget {
         style: context.mboaText.caption.copyWith(color: colors.textSecondary),
       ),
       action: Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+    );
+  }
+}
+
+/// §40 F — approved before the document's details were asked: typed once,
+/// they fill every contract after.
+class _CompleteDocument extends StatelessWidget {
+  const _CompleteDocument({required this.onOpen});
+
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return _Shape(
+      color: colors.primaryPale,
+      onTap: onOpen,
+      icon: Icon(LucideIcons.idCard, color: colors.primary),
+      title: Text(l10n.kycDocumentMissingTitle, style: context.mboaText.label.copyWith(color: colors.ink)),
+      body: Text(
+        l10n.kycBannerDocumentBody,
+        style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+      ),
+      action: Text(l10n.kycDocumentMissingAction, style: context.mboaText.label.copyWith(color: colors.primary)),
     );
   }
 }

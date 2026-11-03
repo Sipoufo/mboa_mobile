@@ -26,6 +26,7 @@ Future<SignConfirmation?> showSignContractSheet(
   required Contract contract,
   List<KycDocType> identityTypes = KycDocType.values,
   DocumentIdentity? identityPrefill,
+  bool documentMissing = false,
 }) {
   final colors = context.mboaColors;
 
@@ -37,7 +38,12 @@ Future<SignConfirmation?> showSignContractSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusLg)),
     ),
-    builder: (_) => SignContractSheet(contract: contract, identityTypes: identityTypes, identityPrefill: identityPrefill),
+    builder: (_) => SignContractSheet(
+      contract: contract,
+      identityTypes: identityTypes,
+      identityPrefill: identityPrefill,
+      documentMissing: documentMissing,
+    ),
   );
 }
 
@@ -48,6 +54,7 @@ class SignContractSheet extends StatefulWidget {
     required this.contract,
     this.identityTypes = KycDocType.values,
     this.identityPrefill,
+    this.documentMissing = false,
     this.today,
   });
 
@@ -58,6 +65,10 @@ class SignContractSheet extends StatefulWidget {
 
   /// What the app already knows of the signer's document, to start from.
   final DocumentIdentity? identityPrefill;
+
+  /// §40 F — the signer's KYC is approved but lacks the document's details:
+  /// said under the form, so they add them once rather than at each signature.
+  final bool documentMissing;
 
   /// Injected by tests; the clock otherwise.
   final DateTime? today;
@@ -138,6 +149,13 @@ class _SignContractSheetState extends State<SignContractSheet> {
                 today: widget.today,
                 onChanged: (identity) => setState(() => _identity = identity),
               ),
+              if (widget.documentMissing) ...[
+                const SizedBox(height: Dimens.spacingSm),
+                Text(
+                  l10n.contractSignAddDocumentHint,
+                  style: context.mboaText.caption.copyWith(color: colors.primary),
+                ),
+              ],
             ],
             const SizedBox(height: Dimens.spacing),
             Text(

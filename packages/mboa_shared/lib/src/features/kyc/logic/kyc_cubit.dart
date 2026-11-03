@@ -65,6 +65,26 @@ class KycCubit extends Cubit<KycState> {
     }
   }
 
+  /// §40 F — the document's details added to a KYC approved without them;
+  /// the status read back. Already there, or no longer approved: read again.
+  Future<void> addDocument(DocumentIdentity identity) async {
+    final start = state;
+    if (start is! KycReady || start.busy || !identity.isValidOn(DateTime.now())) return;
+    emit(start.copyWith(submitting: true));
+    try {
+      final status = await _repository.addDocument(identity);
+      emit(KycReady(status, KycDraft.of(status), addedDocument: true));
+    } catch (error) {
+      final api = ApiError.from(error);
+      if (api.hasCode('KYC_DOCUMENT_PRESENT') || api.hasCode('KYC_NOT_APPROVED')) {
+        await load();
+        return;
+      }
+      final s = state;
+      if (s is KycReady) emit(s.copyWith(submitting: false, error: _errorOf(error)));
+    }
+  }
+
   /// §39 B — what is printed on the document, as typed.
   void setIdentity(DocumentIdentity identity) {
     final s = state;

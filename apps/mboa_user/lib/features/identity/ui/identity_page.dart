@@ -19,6 +19,7 @@ class IdentityPage extends StatelessWidget {
         value: getIt<KycCubit>()..load(),
         child: CertificationsView(
           onOpenIdDocument: () => context.router.push(const IdentityDocumentRoute()),
+          documentTypes: const [KycDocType.cni, KycDocType.passport],
         ),
       );
 }

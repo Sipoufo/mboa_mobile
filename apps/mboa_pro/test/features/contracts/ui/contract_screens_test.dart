@@ -18,16 +18,20 @@ class MockContractDetailBloc
     extends MockBloc<ContractDetailEvent, ContractDetailState>
     implements ContractDetailBloc {}
 
+class MockKycCubit extends MockCubit<KycState> implements KycCubit {}
+
 /// The M08 screens, each pumped with only the bloc its own route provides.
 void main() {
   late MockContractsBloc contracts;
   late MockContractDetailBloc detail;
+  late MockKycCubit kyc;
 
   Contract contract({
     ContractStatus status = ContractStatus.sent,
     ContractParty awaiting = ContractParty.tenant,
     bool canSign = false,
     bool signed = false,
+    bool identityRequired = false,
     List<ChangeRequest> changes = const [],
   }) =>
       Contract(
@@ -47,6 +51,7 @@ void main() {
         tacitRenewal: true,
         awaiting: awaiting,
         canSign: canSign,
+        identityRequired: identityRequired,
         changeRequests: changes,
         lockedAt: signed ? DateTime(2026, 8, 25) : null,
       );
@@ -60,6 +65,8 @@ void main() {
       ContractsReady(items: [contract(awaiting: ContractParty.prestataire)]),
     );
     when(() => detail.state).thenReturn(ContractDetailReady(contract()));
+    kyc = MockKycCubit();
+    when(() => kyc.state).thenReturn(const KycReady(KycStatusData(status: KycStatus.approved), KycDraft()));
   });
 
   Future<void> pump(WidgetTester tester, Widget child) async {
@@ -83,8 +90,14 @@ void main() {
   Widget withList(Widget child) =>
       BlocProvider<ContractsBloc>.value(value: contracts, child: child);
 
-  Widget withDetail(Widget child) =>
-      BlocProvider<ContractDetailBloc>.value(value: detail, child: child);
+  // The KYC is the session's, provided above every Pro screen.
+  Widget withDetail(Widget child) => MultiBlocProvider(
+        providers: [
+          BlocProvider<ContractDetailBloc>.value(value: detail),
+          BlocProvider<KycCubit>.value(value: kyc),
+        ],
+        child: child,
+      );
 
   group('the list', () {
     testWidgets('leads with what is waiting on him', (tester) async {
@@ -214,6 +227,45 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(() => detail.add(const ContractSigned())).called(1);
+    });
+
+    testWidgets('§40 F — his KYC approved without its document: the form says how to stop typing it',
+        (tester) async {
+      when(() => kyc.state).thenReturn(
+        const KycReady(KycStatusData(status: KycStatus.approved, documentMissing: true), KycDraft()),
+      );
+      when(() => detail.state).thenReturn(ContractDetailReady(contract(canSign: true, identityRequired: true)));
+      await pump(tester, withDetail(const ContractDetailPage(id: 'c-1')));
+
+      await tester.tap(find.text('Signer'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Ajoute ta pièce à tes certifications pour ne plus la retaper.'), findsOneWidget);
+    });
+
+    testWidgets('§39 D — what his KYC holds of the document starts the form', (tester) async {
+      when(() => kyc.state).thenReturn(
+        KycReady(
+          KycStatusData(
+            status: KycStatus.pending,
+            identity: DocumentIdentity(
+              type: KycDocType.cni,
+              number: 'CM7654321',
+              issuedOn: DateTime(2022, 5, 2),
+              expiresOn: DateTime(DateTime.now().year + 5, 5, 1),
+              issuedAt: 'Douala',
+            ),
+          ),
+          const KycDraft(),
+        ),
+      );
+      when(() => detail.state).thenReturn(ContractDetailReady(contract(canSign: true, identityRequired: true)));
+      await pump(tester, withDetail(const ContractDetailPage(id: 'c-1')));
+
+      await tester.tap(find.text('Signer'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('CM7654321'), findsOneWidget);
     });
 
     testWidgets('the detail', (tester) async {

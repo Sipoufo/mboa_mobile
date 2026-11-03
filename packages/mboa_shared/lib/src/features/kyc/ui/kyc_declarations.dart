@@ -8,8 +8,10 @@ import '../../location/data/location_repository.dart';
 import '../../location/ui/city_picker_sheet.dart';
 import '../../location/ui/option_picker_sheet.dart';
 
+import '../models/document_identity.dart';
 import '../models/kyc_draft.dart';
 import '../models/kyc_status.dart';
+import 'document_identity_fields.dart';
 
 /// RM-M01bis-10 — the NUI, typed as printed. Answers the text (empty to
 /// remove it from a draft), or null when dismissed.
@@ -200,6 +202,76 @@ class _AddressSheetState extends State<AddressSheet> {
                   onPressed: () => Navigator.of(context).pop((address: null)),
                   child: Text(l10n.kycAddressRemove, style: TextStyle(color: colors.error)),
                 ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// §40 F — the document's details, for a KYC approved before §39 B asked for
+/// them: typed once, they fill every contract after. Null if dismissed.
+Future<DocumentIdentity?> showDocumentSheet(
+  BuildContext context, {
+  List<KycDocType> types = KycDocType.values,
+  DocumentIdentity? initial,
+}) =>
+    showModalBottomSheet<DocumentIdentity>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: context.mboaColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(Dimens.radiusXl))),
+      builder: (_) => DocumentSheet(types: types, initial: initial),
+    );
+
+/// Public so it can be pumped on its own.
+class DocumentSheet extends StatefulWidget {
+  const DocumentSheet({super.key, this.types = KycDocType.values, this.initial, this.today});
+
+  final List<KycDocType> types;
+  final DocumentIdentity? initial;
+
+  /// Injected by tests; the clock otherwise.
+  final DateTime? today;
+
+  @override
+  State<DocumentSheet> createState() => _DocumentSheetState();
+}
+
+class _DocumentSheetState extends State<DocumentSheet> {
+  late DocumentIdentity _identity = widget.initial ?? DocumentIdentity(type: widget.types.firstOrNull);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+    final ready = _identity.isValidOn(widget.today ?? DateTime.now());
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(Dimens.spacingLg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l10n.kycDocumentSheetTitle, style: context.mboaText.h3.copyWith(color: colors.ink)),
+              const SizedBox(height: Dimens.spacingXs),
+              Text(l10n.kycDocumentSheetBody, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
+              const SizedBox(height: Dimens.spacing),
+              DocumentIdentityFields(
+                value: _identity,
+                types: widget.types,
+                today: widget.today,
+                onChanged: (identity) => setState(() => _identity = identity),
+              ),
+              const SizedBox(height: Dimens.spacingLg),
+              Button.primary(
+                title: l10n.commonSave,
+                onPressed: ready ? () => Navigator.of(context).pop(_identity) : null,
+              ),
             ],
           ),
         ),

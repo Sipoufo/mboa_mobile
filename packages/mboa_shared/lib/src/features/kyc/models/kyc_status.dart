@@ -59,6 +59,7 @@ class KycStatusData extends Equatable {
     this.nui,
     this.address,
     this.identity,
+    this.documentMissing = false,
   });
 
   final KycStatus status;
@@ -74,10 +75,18 @@ class KycStatusData extends Equatable {
   /// admin when approving). Absent on a KYC submitted before 2026-10-28.
   final DocumentIdentity? identity;
 
+  /// §40 F — approved before §39 B asked for the document's details: the
+  /// account types them at every signature until it adds them, once
+  /// (`PUT /kyc/me/document`, without a new review of the photos).
+  final bool documentMissing;
+
   /// An approved KYC without a NUI may still receive one, without a new
   /// review (`PUT /kyc/me/nui`).
   bool get canAddNui => status == KycStatus.approved && nui == null;
 
+  /// §40 F — the document's details can be added to this approved KYC.
+  bool get canAddDocument => status == KycStatus.approved && documentMissing;
+
   @override
-  List<Object?> get props => [status, submittedAt, reviewedAt, rejectionReason, nui, address, identity];
+  List<Object?> get props => [status, submittedAt, reviewedAt, rejectionReason, nui, address, identity, documentMissing];
 }

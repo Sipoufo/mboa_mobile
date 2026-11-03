@@ -21,10 +21,18 @@ class ContractDetailPage extends StatelessWidget implements AutoRouteWrapper {
         child: this,
       );
 
+  /// §39 D / §40 F — what the KYC knows of the document starts the identity
+  /// form at signing; an approved KYC without it is told how to add it.
   @override
-  Widget build(BuildContext context) => ContractDetailView(
+  Widget build(BuildContext context) => BlocBuilder<KycCubit, KycState>(
+        builder: (context, kyc) => _view(context, kyc is KycReady ? kyc.status : null),
+      );
+
+  Widget _view(BuildContext context, KycStatusData? kyc) => ContractDetailView(
         id: id,
         viewer: ContractParty.prestataire,
+        identityPrefill: kyc?.identity,
+        documentMissing: kyc?.canAddDocument ?? false,
         onReview: (contract) =>
             context.router.push(ResidentReplyRoute(contractId: contract.id)),
         onAmend: (contract) => context.router.push(

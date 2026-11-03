@@ -7620,5 +7620,41 @@
   "changePhoneResendCodes": "Renvoyer les codes",
   "@changePhoneResendCodes": {
     "description": "Phone change: resends both codes."
+  },
+  "kycDocumentMissingTitle": "Complète ta pièce d'identité",
+  "@kycDocumentMissingTitle": {
+    "description": "§40 F — an approved KYC without its document's details."
+  },
+  "kycDocumentMissingBody": "Ton identité est vérifiée, mais Mboa n'a pas les informations de ta pièce. Ajoute-les une fois : elles rempliront tes contrats à ta place.",
+  "@kycDocumentMissingBody": {
+    "description": "§40 F — why, on Certifications."
+  },
+  "kycDocumentMissingAction": "Compléter",
+  "@kycDocumentMissingAction": {
+    "description": "§40 F — opens the document's details."
+  },
+  "kycBannerDocumentBody": "Ajoute-la une fois : elle remplira tes contrats à ta place.",
+  "@kycBannerDocumentBody": {
+    "description": "§40 F — the invitation banner's face."
+  },
+  "kycDocumentSheetTitle": "Ta pièce d'identité",
+  "@kycDocumentSheetTitle": {
+    "description": "§40 F — the sheet's title."
+  },
+  "kycDocumentSheetBody": "Tape-la comme sur ta pièce : Mboa la comparera aux photos déjà vérifiées.",
+  "@kycDocumentSheetBody": {
+    "description": "§40 F — the sheet's help."
+  },
+  "kycDocumentAdded": "Pièce ajoutée",
+  "@kycDocumentAdded": {
+    "description": "§40 F — the details were saved."
+  },
+  "kycToComplete": "À compléter",
+  "@kycToComplete": {
+    "description": "§40 F — the document's row on an approved KYC without its details."
+  },
+  "contractSignAddDocumentHint": "Ajoute ta pièce à tes certifications pour ne plus la retaper.",
+  "@contractSignAddDocumentHint": {
+    "description": "§40 F — under the identity form at signing, for an approved KYC without its document."
   }
 }

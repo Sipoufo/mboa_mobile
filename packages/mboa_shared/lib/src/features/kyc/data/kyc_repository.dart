@@ -58,6 +58,21 @@ class KycRepository {
     return _map(response.data);
   }
 
+  /// §40 F — the document's details added to a KYC approved before they were
+  /// asked, without a new review of the photos.
+  Future<KycStatusData> addDocument(DocumentIdentity identity) async {
+    final document = identity.wire;
+    final response = await _api.addMyKycDocument(
+      kycDocumentRequest: KycDocumentRequest((b) => b
+        ..idDocumentType = KycDocumentRequestIdDocumentTypeEnum.valueOf(document.type)
+        ..idNumber = document.number
+        ..issuedOn = document.issuedOn
+        ..expiresOn = document.expiresOn
+        ..issuedAt = document.issuedAt),
+    );
+    return _map(response.data);
+  }
+
   KycStatusData _map(KycStatusResponse? data) => KycStatusData(
         status: KycStatusX.parse(data?.status),
         submittedAt: data?.submittedAt,
@@ -83,5 +98,6 @@ class KycRepository {
             ),
           _ => null,
         },
+        documentMissing: data?.documentMissing ?? false,
       );
 }

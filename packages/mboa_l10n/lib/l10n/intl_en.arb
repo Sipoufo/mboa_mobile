@@ -7620,5 +7620,41 @@
   "changePhoneResendCodes": "Send the codes again",
   "@changePhoneResendCodes": {
     "description": "Phone change: resends both codes."
+  },
+  "kycDocumentMissingTitle": "Complete your ID document",
+  "@kycDocumentMissingTitle": {
+    "description": "§40 F — an approved KYC without its document's details."
+  },
+  "kycDocumentMissingBody": "Your identity is verified, but Mboa does not have your document's details. Add them once: they will fill in your contracts for you.",
+  "@kycDocumentMissingBody": {
+    "description": "§40 F — why, on Certifications."
+  },
+  "kycDocumentMissingAction": "Complete",
+  "@kycDocumentMissingAction": {
+    "description": "§40 F — opens the document's details."
+  },
+  "kycBannerDocumentBody": "Add it once: it will fill in your contracts for you.",
+  "@kycBannerDocumentBody": {
+    "description": "§40 F — the invitation banner's face."
+  },
+  "kycDocumentSheetTitle": "Your ID document",
+  "@kycDocumentSheetTitle": {
+    "description": "§40 F — the sheet's title."
+  },
+  "kycDocumentSheetBody": "Type it as it reads on your document: Mboa will compare it with the photos already verified.",
+  "@kycDocumentSheetBody": {
+    "description": "§40 F — the sheet's help."
+  },
+  "kycDocumentAdded": "Document added",
+  "@kycDocumentAdded": {
+    "description": "§40 F — the details were saved."
+  },
+  "kycToComplete": "To complete",
+  "@kycToComplete": {
+    "description": "§40 F — the document's row on an approved KYC without its details."
+  },
+  "contractSignAddDocumentHint": "Add your document to your certifications so you never type it again.",
+  "@contractSignAddDocumentHint": {
+    "description": "§40 F — under the identity form at signing, for an approved KYC without its document."
   }
 }

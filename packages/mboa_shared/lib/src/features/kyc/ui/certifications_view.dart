@@ -8,6 +8,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../media/capture_source_sheet.dart';
 import '../../profile/models/account_role.dart';
 import '../logic/kyc_cubit.dart';
+import '../models/document_identity.dart';
 import '../models/kyc_draft.dart';
 import '../models/kyc_status.dart';
 import 'kyc_declarations.dart';
@@ -25,6 +26,7 @@ class CertificationsView extends StatefulWidget {
     required this.onOpenIdDocument,
     this.withDeclarations = false,
     this.nuiRequired = false,
+    this.documentTypes = KycDocType.values,
   });
 
   final AccountRole accountRole;
@@ -37,12 +39,22 @@ class CertificationsView extends StatefulWidget {
   /// it is. The server holds the rule (`NUI_REQUIRED`) either way.
   final bool nuiRequired;
 
+  /// What this app offers as a document (the tenant's: CNI and passport).
+  final List<KycDocType> documentTypes;
+
   @override
   State<CertificationsView> createState() => _CertificationsViewState();
 }
 
 class _CertificationsViewState extends State<CertificationsView> {
   int _tab = 1; // Identification, matching the design's default.
+
+  /// §40 F — the document's details, typed once on an approved KYC.
+  Future<void> _addDocument(BuildContext context, KycReady state) async {
+    final cubit = context.read<KycCubit>();
+    final identity = await showDocumentSheet(context, types: widget.documentTypes, initial: state.status.identity);
+    if (identity != null) await cubit.addDocument(identity);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +71,12 @@ class _CertificationsViewState extends State<CertificationsView> {
       body: SafeArea(
         child: BlocConsumer<KycCubit, KycState>(
           listenWhen: (prev, curr) =>
-              curr is KycReady && (curr.error != null || curr.justSubmitted),
+              curr is KycReady && (curr.error != null || curr.justSubmitted || curr.addedDocument),
           listener: (context, state) {
             if (state is! KycReady) return;
-            if (state.justSubmitted) {
+            if (state.addedDocument) {
+              MboaToast.success(context: context, title: l10n.kycDocumentAdded);
+            } else if (state.justSubmitted) {
               MboaToast.success(context: context, title: l10n.kycSubmitted);
             } else if (state.error != null) {
               MboaToast.error(
@@ -112,10 +126,15 @@ class _CertificationsViewState extends State<CertificationsView> {
                           index: _tab,
                           sizing: StackFit.expand,
                           children: [
-                            _StatutTab(state: state, accountRole: widget.accountRole),
+                            _StatutTab(
+                              state: state,
+                              accountRole: widget.accountRole,
+                              onAddDocument: () => _addDocument(context, state),
+                            ),
                             _IdentificationTab(
                               state: state,
                               onOpenIdDocument: widget.onOpenIdDocument,
+                              onAddDocument: () => _addDocument(context, state),
                               withDeclarations: widget.withDeclarations,
                               nuiRequired: widget.nuiRequired,
                             ),
@@ -147,10 +166,11 @@ class _CertificationsViewState extends State<CertificationsView> {
 }
 
 class _StatutTab extends StatelessWidget {
-  const _StatutTab({required this.state, required this.accountRole});
+  const _StatutTab({required this.state, required this.accountRole, required this.onAddDocument});
 
   final KycReady state;
   final AccountRole accountRole;
+  final VoidCallback onAddDocument;
 
   String _accountLabel(I18n l10n) => switch (accountRole) {
         AccountRole.agent => l10n.kycAccountAgent,
@@ -169,6 +189,10 @@ class _StatutTab extends StatelessWidget {
         children: [
           if (state.status.status == KycStatus.rejected) ...[
             _RefusalCard(status: state.status),
+            const SizedBox(height: Dimens.spacing),
+          ],
+          if (state.status.canAddDocument) ...[
+            _DocumentMissingCard(onComplete: onAddDocument),
             const SizedBox(height: Dimens.spacing),
           ],
           MboaTileCard(
@@ -198,12 +222,14 @@ class _IdentificationTab extends StatelessWidget {
   const _IdentificationTab({
     required this.state,
     required this.onOpenIdDocument,
+    required this.onAddDocument,
     required this.withDeclarations,
     required this.nuiRequired,
   });
 
   final KycReady state;
   final VoidCallback onOpenIdDocument;
+  final VoidCallback onAddDocument;
   final bool withDeclarations;
   final bool nuiRequired;
 
@@ -267,6 +293,10 @@ class _IdentificationTab extends StatelessWidget {
                 _RefusalCard(status: state.status),
                 const SizedBox(height: Dimens.spacing),
               ],
+              if (state.status.canAddDocument) ...[
+                _DocumentMissingCard(onComplete: onAddDocument),
+                const SizedBox(height: Dimens.spacing),
+              ],
               MboaTileCard(
                 icon: LucideIcons.smile,
                 title: l10n.kycItemSelfie,
@@ -277,14 +307,26 @@ class _IdentificationTab extends StatelessWidget {
                 onTap: captureSelfie,
               ),
               const SizedBox(height: Dimens.spacing),
-              MboaTileCard(
-                icon: LucideIcons.fileCheck,
-                title: l10n.kycItemIdDocument,
-                subtitle: idChip.label,
-                subtitleColor: idChip.color,
-                enabled: editable && !state.busy,
-                onTap: onOpenIdDocument,
-              ),
+              // §40 F — approved without its details: they are added here,
+              // the photos stay as verified.
+              if (state.status.canAddDocument)
+                MboaTileCard(
+                  icon: LucideIcons.fileCheck,
+                  title: l10n.kycItemIdDocument,
+                  subtitle: l10n.kycToComplete,
+                  subtitleColor: colors.warning,
+                  enabled: !state.busy,
+                  onTap: onAddDocument,
+                )
+              else
+                MboaTileCard(
+                  icon: LucideIcons.fileCheck,
+                  title: l10n.kycItemIdDocument,
+                  subtitle: idChip.label,
+                  subtitleColor: idChip.color,
+                  enabled: editable && !state.busy,
+                  onTap: onOpenIdDocument,
+                ),
               // §37 B — declared beside the documents, seen by the admin alone.
               if (withDeclarations) ...[
               const SizedBox(height: Dimens.spacing),
@@ -322,6 +364,59 @@ class _IdentificationTab extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// §40 F — approved before the document's details were asked: say so, and
+/// the way to add them, in the invitation banner's pale face.
+class _DocumentMissingCard extends StatelessWidget {
+  const _DocumentMissingCard({required this.onComplete});
+
+  final VoidCallback onComplete;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Material(
+      color: colors.primaryPale,
+      borderRadius: BorderRadius.circular(Dimens.radiusLg),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onComplete,
+        child: Padding(
+          padding: const EdgeInsets.all(Dimens.spacing),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(LucideIcons.idCard, color: colors.primary),
+                  const SizedBox(width: Dimens.spacingMd),
+                  Expanded(
+                    child: Text(
+                      l10n.kycDocumentMissingTitle,
+                      style: context.mboaText.label.copyWith(color: colors.primaryDark),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: Dimens.spacingSm),
+              Text(l10n.kycDocumentMissingBody, style: context.mboaText.caption.copyWith(color: colors.ink)),
+              const SizedBox(height: Dimens.spacingSm),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  l10n.kycDocumentMissingAction,
+                  style: context.mboaText.label.copyWith(color: colors.primary),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
