@@ -22,12 +22,25 @@ class PrestataireVisitRepository implements VisitsSource, VisitDetailSource, Vis
 
   VisitesPrsenceApi get _presenceApi => _dioClient.api.getVisitesPrsenceApi();
 
+  /// His own visits: what the agenda of « Mes visites » shows.
   @override
   Future<List<Visit>> range({
     required DateTime from,
     required DateTime to,
+  }) =>
+      rangeOf(from: from, to: to);
+
+  /// §40 D — his own, his agents' on his properties, or both; one listing's
+  /// with [annonceId]. Each visit says who carries it out.
+  Future<List<Visit>> rangeOf({
+    required DateTime from,
+    required DateTime to,
+    VisitsConductedBy conductedBy = VisitsConductedBy.me,
+    String? annonceId,
   }) async {
     final response = await _api.listMyOwnerVisites(
+      conductedBy: conductedBy.wire,
+      annonceId: annonceId,
       // **UTC or nothing**: built_value's DateTime serializer throws
       // "Must be in utc for serialization" on a local one, and the agenda's
       // week boundaries are local days. The throw happened inside the
@@ -89,4 +102,32 @@ class PrestataireVisitRepository implements VisitsSource, VisitDetailSource, Vis
   /// (N-05).
   @override
   Future<void> cancel(String id) => _api.cancelMyOwnerVisite(id: id);
+}
+
+/// §40 D — whose visits the landlord reads.
+enum VisitsConductedBy {
+  me,
+  agents,
+  all;
+
+  String get wire => switch (this) {
+        VisitsConductedBy.me => 'ME',
+        VisitsConductedBy.agents => 'AGENTS',
+        VisitsConductedBy.all => 'ALL',
+      };
+}
+
+/// §40 D — an agenda over the landlord's other visits: his agents', or one
+/// listing's whoever carries them out. Read only: he answers and confirms
+/// only his own, on « Mes visites ».
+class OwnerVisitsView implements VisitsSource {
+  const OwnerVisitsView(this._repository, {required this.conductedBy, this.annonceId});
+
+  final PrestataireVisitRepository _repository;
+  final VisitsConductedBy conductedBy;
+  final String? annonceId;
+
+  @override
+  Future<List<Visit>> range({required DateTime from, required DateTime to}) =>
+      _repository.rangeOf(from: from, to: to, conductedBy: conductedBy, annonceId: annonceId);
 }

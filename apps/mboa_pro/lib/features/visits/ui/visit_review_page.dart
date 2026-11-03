@@ -18,9 +18,13 @@ import '../bloc/visit_review_bloc.dart';
 /// screen is built so that asymmetry is visible rather than merely enforced.
 @RoutePage()
 class VisitReviewPage extends StatefulWidget implements AutoRouteWrapper {
-  const VisitReviewPage({super.key, required this.id, this.propertyTitle});
+  const VisitReviewPage({super.key, required this.id, this.propertyTitle, this.readOnly = false});
 
   final String id;
+
+  /// §40 D — the landlord reading the report of a visit his agent carried
+  /// out: only the visitor comments (RM-M07bis-04), so no composer.
+  final bool readOnly;
 
   /// Names the exported file, so it reads as the property rather than an id.
   final String? propertyTitle;
@@ -117,6 +121,7 @@ class _VisitReviewPageState extends State<VisitReviewPage> {
               : _Review(
                   state: ready,
                   controller: _comment,
+                  readOnly: widget.readOnly,
                 ),
         },
       ),
@@ -173,7 +178,9 @@ class _NotYet extends StatelessWidget {
 }
 
 class _Review extends StatelessWidget {
-  const _Review({required this.state, required this.controller});
+  const _Review({required this.state, required this.controller, this.readOnly = false});
+
+  final bool readOnly;
 
   final VisitReviewReady state;
   final TextEditingController controller;
@@ -202,7 +209,7 @@ class _Review extends StatelessWidget {
         const SizedBox(height: Dimens.spacing),
         _Card(
           title: l10n.reviewCommentsTitle,
-          child: _Comments(state: state, controller: controller),
+          child: _Comments(state: state, controller: controller, readOnly: readOnly),
         ),
       ],
     );
@@ -408,7 +415,9 @@ class _Points extends StatelessWidget {
 
 /// RM-M07bis-04 — the visitor's replies, and the box to add one.
 class _Comments extends StatelessWidget {
-  const _Comments({required this.state, required this.controller});
+  const _Comments({required this.state, required this.controller, this.readOnly = false});
+
+  final bool readOnly;
 
   final VisitReviewReady state;
   final TextEditingController controller;
@@ -459,6 +468,7 @@ class _Comments extends StatelessWidget {
                 ],
               ),
             ),
+        if (!readOnly) ...[
         const SizedBox(height: Dimens.spacingSm),
         Input(
           controller: controller,
@@ -484,6 +494,7 @@ class _Comments extends StatelessWidget {
                   .read<VisitReviewBloc>()
                   .add(VisitReviewCommented(controller.text)),
         ),
+        ],
       ],
     );
   }

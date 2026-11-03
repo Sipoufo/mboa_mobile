@@ -7656,5 +7656,63 @@
   "contractSignAddDocumentHint": "Ajoute ta pièce à tes certifications pour ne plus la retaper.",
   "@contractSignAddDocumentHint": {
     "description": "§40 F — under the identity form at signing, for an approved KYC without its document."
+  },
+  "visitsTabMine": "Mes visites",
+  "@visitsTabMine": {
+    "description": "§40 D — the landlord's own visits."
+  },
+  "visitsTabAgents": "Celles de mes agents",
+  "@visitsTabAgents": {
+    "description": "§40 D — his agents' visits on his properties."
+  },
+  "visitsConductedByTitle": "Menée par",
+  "@visitsConductedByTitle": {
+    "description": "§40 D — the visit sheet's card: who carries it out."
+  },
+  "visitsByAgent": "Menée par {name}",
+  "@visitsByAgent": {
+    "description": "§40 D — an agenda row: the agent.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "visitsByMe": "Menée par toi",
+  "@visitsByMe": {
+    "description": "§40 D — an agenda row: the landlord himself."
+  },
+  "visitsAgentRole": "Ton agent",
+  "@visitsAgentRole": {
+    "description": "§40 D — under the agent's name on the visit sheet."
+  },
+  "visitsAgentLeadsTitle": "C'est ton agent qui la mène",
+  "@visitsAgentLeadsTitle": {
+    "description": "§40 D — a read-only visit's state, for the landlord."
+  },
+  "visitsAgentLeadsBody": "Il confirme sa présence sur place et peut l'annuler. Tu suis ici où elle en est.",
+  "@visitsAgentLeadsBody": {
+    "description": "§40 D — why there is nothing to do."
+  },
+  "visitsCancelledLine": "Annulée : {reason}",
+  "@visitsCancelledLine": {
+    "description": "§40 D — why a visit fell through, on its sheet.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "listingVisitsTitle": "Visites de ce bien",
+  "@listingVisitsTitle": {
+    "description": "§40 D — one listing's visits, his and his agents'."
+  },
+  "listingVisitsOpen": "Voir les visites de ce bien",
+  "@listingVisitsOpen": {
+    "description": "§40 D — from the listing's detail."
+  },
+  "visitsPageTitle": "Visites",
+  "@visitsPageTitle": {
+    "description": "\u00a740 D \u2014 the landlord's visits page, above its two tabs."
   }
 }

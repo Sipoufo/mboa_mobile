@@ -459,9 +459,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m182(from, to) => "${from} to ${to}";
 
-  static String m183(time) => "Confirmed at ${time}";
+  static String m183(name) => "Carried out by ${name}";
 
-  static String m184(distance) =>
+  static String m184(reason) => "Cancelled: ${reason}";
+
+  static String m185(time) => "Confirmed at ${time}";
+
+  static String m186(distance) =>
       "You are about ${distance} m away. Explain why you are confirming your presence from there.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -2292,6 +2296,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "listingReviewsCount": m82,
     "listingReviewsTitle": MessageLookupByLibrary.simpleMessage("Reviews"),
     "listingTitle": MessageLookupByLibrary.simpleMessage("Property details"),
+    "listingVisitsOpen": MessageLookupByLibrary.simpleMessage(
+      "See this property\'s visits",
+    ),
+    "listingVisitsTitle": MessageLookupByLibrary.simpleMessage(
+      "Visits of this property",
+    ),
     "loadingDialog_content": MessageLookupByLibrary.simpleMessage(
       "One moment…",
     ),
@@ -4182,12 +4192,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "Previous week",
     ),
     "visitsAgendaToday": MessageLookupByLibrary.simpleMessage("Today"),
+    "visitsAgentLeadsBody": MessageLookupByLibrary.simpleMessage(
+      "They confirm being there and may cancel it. You follow where it stands here.",
+    ),
+    "visitsAgentLeadsTitle": MessageLookupByLibrary.simpleMessage(
+      "Your agent carries it out",
+    ),
+    "visitsAgentRole": MessageLookupByLibrary.simpleMessage("Your agent"),
     "visitsAwaitingClientBody": MessageLookupByLibrary.simpleMessage(
       "Waiting for the tenant to confirm. The visit is validated as soon as they do.",
     ),
     "visitsAwaitingClientTitle": MessageLookupByLibrary.simpleMessage(
       "Presence confirmed",
     ),
+    "visitsByAgent": m183,
+    "visitsByMe": MessageLookupByLibrary.simpleMessage("Carried out by you"),
     "visitsCall": MessageLookupByLibrary.simpleMessage("Call"),
     "visitsCancel": MessageLookupByLibrary.simpleMessage("Cancel the visit"),
     "visitsCancelConfirm": MessageLookupByLibrary.simpleMessage(
@@ -4205,6 +4224,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitsCancelledByVisitor": MessageLookupByLibrary.simpleMessage(
       "Cancelled by the visitor",
     ),
+    "visitsCancelledLine": m184,
     "visitsCancelledListingUnavailable": MessageLookupByLibrary.simpleMessage(
       "Listing taken off the market",
     ),
@@ -4213,6 +4233,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitsCompletedTitle": MessageLookupByLibrary.simpleMessage(
       "Visit completed",
+    ),
+    "visitsConductedByTitle": MessageLookupByLibrary.simpleMessage(
+      "Carried out by",
     ),
     "visitsConfirmNotYet": MessageLookupByLibrary.simpleMessage(
       "Available on the day of the visit",
@@ -4260,10 +4283,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Offline visits — what is coming, as last saved.",
     ),
     "visitsOwner": MessageLookupByLibrary.simpleMessage("Owner"),
+    "visitsPageTitle": MessageLookupByLibrary.simpleMessage("Visits"),
     "visitsPast": MessageLookupByLibrary.simpleMessage("Past"),
     "visitsPhoneCopied": MessageLookupByLibrary.simpleMessage("Number copied"),
     "visitsPresenceClient": MessageLookupByLibrary.simpleMessage("Tenant"),
-    "visitsPresenceConfirmedAt": m183,
+    "visitsPresenceConfirmedAt": m185,
     "visitsPresenceExplain": MessageLookupByLibrary.simpleMessage(
       "The visit is only validated once both presences are confirmed.",
     ),
@@ -4293,12 +4317,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "visitsStatusRequested": MessageLookupByLibrary.simpleMessage("Requested"),
     "visitsStatusScheduled": MessageLookupByLibrary.simpleMessage("Scheduled"),
+    "visitsTabAgents": MessageLookupByLibrary.simpleMessage(
+      "My agents\' visits",
+    ),
+    "visitsTabMine": MessageLookupByLibrary.simpleMessage("My visits"),
     "visitsTabPast": MessageLookupByLibrary.simpleMessage("Past"),
     "visitsTabToday": MessageLookupByLibrary.simpleMessage("Today"),
     "visitsTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "visitsTenant": MessageLookupByLibrary.simpleMessage("Tenant"),
     "visitsTitle": MessageLookupByLibrary.simpleMessage("My visits"),
-    "visitsTooFarBody": m184,
+    "visitsTooFarBody": m186,
     "visitsTooFarConfirm": MessageLookupByLibrary.simpleMessage(
       "Confirm anyway",
     ),

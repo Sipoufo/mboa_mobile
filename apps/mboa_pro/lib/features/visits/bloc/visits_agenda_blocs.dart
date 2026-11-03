@@ -14,3 +14,14 @@ class AgentAgendaBloc extends VisitsAgendaBloc {
 class PrestataireAgendaBloc extends VisitsAgendaBloc {
   PrestataireAgendaBloc({required super.source, super.today});
 }
+
+/// §40 D — the week of his agents' visits on his properties (« Celles de mes
+/// agents »).
+class AgentsVisitsAgendaBloc extends VisitsAgendaBloc {
+  AgentsVisitsAgendaBloc({required super.source, super.today});
+}
+
+/// §40 D — one listing's visits, his and his agents'.
+class ListingVisitsAgendaBloc extends VisitsAgendaBloc {
+  ListingVisitsAgendaBloc({required super.source, super.today});
+}

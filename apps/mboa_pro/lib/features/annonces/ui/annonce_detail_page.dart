@@ -388,6 +388,27 @@ class _VisitsCard extends StatelessWidget {
               ],
             ),
           ),
+          const Divider(height: Dimens.spacingLg),
+          // §40 D — every visit of this property, his and his agents'.
+          InkWell(
+            borderRadius: BorderRadius.circular(Dimens.radius),
+            onTap: () => context.router.push(
+              ListingVisitsRoute(annonceId: annonce.id, annonceTitle: annonce.title),
+            ),
+            child: Row(
+              children: [
+                Icon(LucideIcons.calendarCheck, size: Dimens.icon, color: colors.primary),
+                const SizedBox(width: Dimens.spacingMd),
+                Expanded(
+                  child: Text(
+                    l10n.listingVisitsOpen,
+                    style: context.mboaText.label.copyWith(color: colors.ink),
+                  ),
+                ),
+                Icon(LucideIcons.chevronRight, size: Dimens.icon, color: colors.textTertiary),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -109,6 +109,8 @@ void main() {
     when(
       () => prestataireApi.listMyOwnerVisites(
         pageable: any(named: 'pageable'),
+        conductedBy: any(named: 'conductedBy'),
+        annonceId: any(named: 'annonceId'),
         from: any(named: 'from'),
         to: any(named: 'to'),
       ),
@@ -119,6 +121,8 @@ void main() {
     final call = verify(
       () => prestataireApi.listMyOwnerVisites(
         pageable: any(named: 'pageable'),
+        conductedBy: any(named: 'conductedBy'),
+        annonceId: any(named: 'annonceId'),
         from: captureAny(named: 'from'),
         to: captureAny(named: 'to'),
       ),
@@ -126,5 +130,73 @@ void main() {
 
     expect((call[0] as DateTime).isUtc, isTrue);
     expectSerialisable(call[1] as DateTime);
+  });
+
+  group('§40 D — the landlord\'s other visits', () {
+    void stub(Response<PageResponseVisiteResponse> Function() page) => when(
+          () => prestataireApi.listMyOwnerVisites(
+            pageable: any(named: 'pageable'),
+            conductedBy: any(named: 'conductedBy'),
+            annonceId: any(named: 'annonceId'),
+            from: any(named: 'from'),
+            to: any(named: 'to'),
+          ),
+        ).thenAnswer((_) async => page());
+
+    (String?, String?) sent() {
+      final call = verify(
+        () => prestataireApi.listMyOwnerVisites(
+          pageable: any(named: 'pageable'),
+          conductedBy: captureAny(named: 'conductedBy'),
+          annonceId: captureAny(named: 'annonceId'),
+          from: any(named: 'from'),
+          to: any(named: 'to'),
+        ),
+      ).captured;
+      return (call[0] as String?, call[1] as String?);
+    }
+
+    test('« Mes visites » stays his own', () async {
+      stub(emptyPage);
+      await PrestataireVisitRepository(dioClient: dioClient).range(from: from, to: to);
+
+      expect(sent(), ('ME', null));
+    });
+
+    test('« Celles de mes agents » asks for his agents\' — and says who carries each out', () async {
+      stub(
+        () => Response<PageResponseVisiteResponse>(
+          data: PageResponseVisiteResponse(
+            (b) => b.content.add(
+              VisiteResponse(
+                (v) => v
+                  ..id = 'v-1'
+                  ..status = VisiteResponseStatusEnum.SCHEDULED
+                  ..visitor.kind = VisitorSummaryKindEnum.AGENT
+                  ..visitor.agentId = 'ag-1'
+                  ..visitor.displayName = 'Paul Essomba',
+              ),
+            ),
+          ),
+          requestOptions: RequestOptions(),
+        ),
+      );
+      final repository = PrestataireVisitRepository(dioClient: dioClient);
+
+      final visits = await OwnerVisitsView(repository, conductedBy: VisitsConductedBy.agents).range(from: from, to: to);
+
+      expect(sent(), ('AGENTS', null));
+      expect(visits.single.conductor?.isAgent, isTrue);
+      expect(visits.single.conductor?.displayName, 'Paul Essomba');
+    });
+
+    test('one listing\'s: his and his agents\'', () async {
+      stub(emptyPage);
+      final repository = PrestataireVisitRepository(dioClient: dioClient);
+
+      await OwnerVisitsView(repository, conductedBy: VisitsConductedBy.all, annonceId: 'a-1').range(from: from, to: to);
+
+      expect(sent(), ('ALL', 'a-1'));
+    });
   });
 }

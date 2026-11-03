@@ -276,6 +276,20 @@ void registerAppModule() {
   getIt.registerFactory<PrestataireAgendaBloc>(
     () => PrestataireAgendaBloc(source: getIt<PrestataireVisitRepository>()),
   );
+  getIt.registerFactory<AgentsVisitsAgendaBloc>(
+    () => AgentsVisitsAgendaBloc(
+      source: OwnerVisitsView(getIt<PrestataireVisitRepository>(), conductedBy: VisitsConductedBy.agents),
+    ),
+  );
+  getIt.registerFactoryParam<ListingVisitsAgendaBloc, String, void>(
+    (annonceId, _) => ListingVisitsAgendaBloc(
+      source: OwnerVisitsView(
+        getIt<PrestataireVisitRepository>(),
+        conductedBy: VisitsConductedBy.all,
+        annonceId: annonceId,
+      ),
+    ),
+  );
   // --- Messagerie (M12) ---
   // Repository, list and thread are shared with the tenant app; the pro side
   // can only answer (RM-M12-01).

@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:mboa_core/mboa_core.dart';
 
+import '../../profile/models/base_profile.dart';
+
 /// Who carries the visit out (Doc 10 M07, revised 2026-08-13).
 ///
 /// A visit is no longer always an agent's: a prestataire can enable personal
@@ -61,6 +63,18 @@ enum VisitCancellationReason {
   listingUnavailable,
   unknown;
 
+  /// The same reasons, as any response spells them (the agent's sheet has
+  /// its own enum type).
+  static VisitCancellationReason? fromWire(String? value) => switch (value) {
+        null => null,
+        'BY_USER' => VisitCancellationReason.byClient,
+        'BY_AGENT' => VisitCancellationReason.byVisitor,
+        'AGENT_UNAVAILABLE' => VisitCancellationReason.agentUnavailable,
+        'AGENT_REMOVED' => VisitCancellationReason.agentRemoved,
+        'LISTING_UNAVAILABLE' => VisitCancellationReason.listingUnavailable,
+        _ => VisitCancellationReason.unknown,
+      };
+
   static VisitCancellationReason? fromResponse(
     VisiteResponseCancellationReasonEnum? value,
   ) =>
@@ -81,6 +95,32 @@ enum VisitCancellationReason {
 /// agent (`GET /agents/me/visites`) and the prestataire visiting his own
 /// property (`GET /prestataires/me/visites`), so this model is shared by both
 /// apps. What each app *does* with it — and the detail behind it — is theirs.
+/// §40 D — who carries a visit out, as the landlord's lists say it: himself,
+/// or one of his agents, named and pictured.
+class VisitConductor extends Equatable {
+  const VisitConductor({required this.isAgent, this.agentId, this.displayName, this.photoKey});
+
+  final bool isAgent;
+  final String? agentId;
+  final String? displayName;
+  final String? photoKey;
+
+  String? get photoUrl => BaseProfile.mediaUrl(photoKey);
+
+  static VisitConductor? fromResponse(VisitorSummary? summary) => switch (summary) {
+        null => null,
+        final summary => VisitConductor(
+            isAgent: summary.kind == VisitorSummaryKindEnum.AGENT,
+            agentId: summary.agentId,
+            displayName: summary.displayName,
+            photoKey: summary.photoKey,
+          ),
+      };
+
+  @override
+  List<Object?> get props => [isAgent, agentId, displayName, photoKey];
+}
+
 class Visit extends Equatable {
   const Visit({
     required this.id,
@@ -94,6 +134,7 @@ class Visit extends Equatable {
     this.clientConfirmedAt,
     this.agentRating,
     this.visitorPhone,
+    this.conductor,
     this.cancellationReason,
     this.clientAccountId,
   });
@@ -127,6 +168,9 @@ class Visit extends Equatable {
   /// Null unless [status] is cancelled — and on a visit cancelled before the
   /// server recorded reasons.
   final VisitCancellationReason? cancellationReason;
+
+  /// §40 D — on the landlord's lists only: he, or which of his agents.
+  final VisitConductor? conductor;
 
   /// §26 — the client's account, sent only to the owner showing their own
   /// property: what opens the client's Mboa Score from a request to confirm
@@ -167,6 +211,7 @@ class Visit extends Equatable {
             : response.visitorPhone!.trim(),
         cancellationReason: VisitCancellationReason.fromResponse(response.cancellationReason),
         clientAccountId: response.userAccountId,
+        conductor: VisitConductor.fromResponse(response.visitor),
       );
 
   @override
@@ -184,5 +229,6 @@ class Visit extends Equatable {
         visitorPhone,
         cancellationReason,
         clientAccountId,
+        conductor,
       ];
 }

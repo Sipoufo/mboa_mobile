@@ -13,6 +13,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
 import '../bloc/visit_detail_bloc.dart';
 import '../data/visit_detail_source.dart';
+import '../../assignments/models/assignment.dart';
 import '../models/agent_visit.dart';
 import 'widgets/visit_row_tile.dart';
 
@@ -194,6 +195,21 @@ class _Body extends StatelessWidget {
       ),
       children: [
         _WhenCard(visit: visit),
+        // §40 D — why it fell through, when the server kept a reason.
+        if (visit.status == VisitStatus.cancelled)
+          if (cancellationLabel(I18n.of(context), visit.cancellationReason) case final reason?) ...[
+            const SizedBox(height: Dimens.spacingSm),
+            Text(
+              I18n.of(context).visitsCancelledLine(reason),
+              style: context.mboaText.body.copyWith(color: context.mboaColors.error),
+            ),
+          ],
+        // §40 D — his agent's visit: who carries it out, where the client's
+        // phone would be (the agent is the contact).
+        if (visit.conductor case final conductor? when conductor.isAgent) ...[
+          const SizedBox(height: Dimens.spacing),
+          _ConductorCard(conductor: conductor),
+        ],
         const SizedBox(height: Dimens.spacing),
         _PresenceCard(visit: visit),
         if (visit.exactAddress != null) ...[
@@ -207,7 +223,7 @@ class _Body extends StatelessWidget {
         // M07bis — the report is the client's to write; the agent reads it and
         // may answer beside it. Only once the visit is over: there is nothing
         // to read before that, and RM-M07bis-01 needs both confirmations.
-        if (visit.status == VisitStatus.completed) ...[
+        if (visit.status == VisitStatus.completed || visit.reviewId != null) ...[
           const SizedBox(height: Dimens.spacing),
           _ReviewCard(visit: visit),
         ],
@@ -299,7 +315,10 @@ class _PresenceCard extends StatelessWidget {
       child: Column(
         children: [
           _PresenceRow(
-            label: l10n.visitsPresenceYou,
+            // §40 D — on his agent's visit, the visitor is the agent.
+            label: visit.readOnly
+                ? (visit.conductor?.displayName ?? l10n.visitsAgentRole)
+                : l10n.visitsPresenceYou,
             at: visit.visitorConfirmedAt,
           ),
           const SizedBox(height: Dimens.spacingMd),
@@ -555,8 +574,9 @@ class _ReviewCard extends StatelessWidget {
       title: l10n.visitsReviewCta,
       child: InkWell(
         borderRadius: BorderRadius.circular(Dimens.radius),
+        // §40 D — only the visitor answers it: read only for his agent's.
         onTap: () => context.router.push(
-          VisitReviewRoute(id: visit.id, propertyTitle: visit.annonceTitle),
+          VisitReviewRoute(id: visit.id, propertyTitle: visit.annonceTitle, readOnly: visit.readOnly),
         ),
         child: Row(
           children: [
@@ -581,6 +601,42 @@ class _ReviewCard extends StatelessWidget {
 }
 
 /// A white block with a heading — the shape every section here takes.
+/// §40 D — the agent who carries out the landlord's visit.
+class _ConductorCard extends StatelessWidget {
+  const _ConductorCard({required this.conductor});
+
+  final VisitConductor conductor;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return _Card(
+      title: l10n.visitsConductedByTitle,
+      child: Row(
+        children: [
+          MboaAvatar(
+            imageUrl: conductor.photoUrl,
+            initials: initialsFromFullName(conductor.displayName),
+            size: 44,
+          ),
+          const SizedBox(width: Dimens.spacingMd),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(conductor.displayName ?? '', style: context.mboaText.label.copyWith(color: colors.ink)),
+                Text(l10n.visitsAgentRole, style: context.mboaText.caption.copyWith(color: colors.textSecondary)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _Card extends StatelessWidget {
   const _Card({required this.title, required this.child});
 
@@ -663,6 +719,14 @@ class _ActionBar extends StatelessWidget {
         title: l10n.visitsNotFulfilledTitle,
         body: l10n.visitsNotFulfilledBody,
         color: colors.error,
+      );
+    } else if (visit.readOnly) {
+      // §40 D — his agent's visit: he follows it, the agent acts on it.
+      content = _Outcome(
+        icon: LucideIcons.userRound,
+        title: visit.isAwaitingClient ? l10n.visitsAwaitingClientTitle : l10n.visitsAgentLeadsTitle,
+        body: visit.isAwaitingClient ? l10n.visitsAwaitingClientBody : l10n.visitsAgentLeadsBody,
+        color: colors.primary,
       );
     } else if (visit.status == VisitStatus.requested) {
       // RM-M15-06 — a proposed time (an owner's visit only). Answered here,

@@ -84,6 +84,7 @@ class AppRouter extends RootStackRouter {
             // M07bis — one review screen for both personas; the agent opens it
             // from his visit detail, the prestataire from his own agenda.
             AutoRoute(page: VisitReviewRoute.page, path: 'visits/:id/review'),
+            AutoRoute(page: ListingVisitsRoute.page, path: 'annonces/:annonceId/visits'),
 
             // Messagerie (M12) — reached from the slide menu; a prestataire
             // cannot start a thread, only answer one.

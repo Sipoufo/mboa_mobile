@@ -26,6 +26,10 @@ class AgentVisitDetail extends Equatable {
     this.clientConfirmedAt,
     this.canConfirm = false,
     this.userAccountId,
+    this.readOnly = false,
+    this.conductor,
+    this.cancellationReason,
+    this.reviewId,
   });
 
   final String id;
@@ -56,6 +60,17 @@ class AgentVisitDetail extends Equatable {
   /// property: what opens the client's Mboa Score (RM-M09-04). Null for an
   /// agent, whom the score route refuses anyway.
   final String? userAccountId;
+
+  /// §40 D — the landlord reading his agent's visit: nothing to do on it,
+  /// the agent confirms and cancels. Server-set.
+  final bool readOnly;
+
+  /// §40 D — who carries it out: the landlord, or which agent.
+  final VisitConductor? conductor;
+  final VisitCancellationReason? cancellationReason;
+
+  /// §40 D — the client's published report, when there is one.
+  final String? reviewId;
 
   bool get hasConfirmed => visitorConfirmedAt != null;
 
@@ -91,6 +106,10 @@ class AgentVisitDetail extends Equatable {
     clientConfirmedAt: response.clientConfirmedAt?.toLocal(),
     canConfirm: response.canConfirm ?? false,
     userAccountId: response.userAccountId,
+    readOnly: response.readOnly ?? false,
+    conductor: VisitConductor.fromResponse(response.visitor),
+    cancellationReason: VisitCancellationReason.fromWire(response.cancellationReason?.name),
+    reviewId: response.reviewId,
   );
 
   @override
@@ -111,6 +130,10 @@ class AgentVisitDetail extends Equatable {
     clientConfirmedAt,
     canConfirm,
     userAccountId,
+    readOnly,
+    conductor,
+    cancellationReason,
+    reviewId,
   ];
 }
 

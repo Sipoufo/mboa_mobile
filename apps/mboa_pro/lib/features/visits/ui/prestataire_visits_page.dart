@@ -11,6 +11,7 @@ import '../../../app/router/app_router.gr.dart';
 import '../../annonces/data/location_capture.dart';
 import '../bloc/prestataire_visits_bloc.dart';
 import '../bloc/visits_agenda_blocs.dart';
+import 'widgets/owner_visits_agenda.dart';
 import 'widgets/visit_row_tile.dart';
 
 /// The visits a prestataire carries out himself (RM-M11-10 / RM-M15-06).
@@ -20,10 +21,8 @@ import 'widgets/visit_row_tile.dart';
 /// above the day's list because they are answered whenever he opens the app,
 /// not on the day they fall.
 ///
-/// **He gets no detail screen**: `GET /prestataires/me/visites` is the only
-/// read there is, and it carries no client name, no phone and no address
-/// (`backend-requests.md` §14). Everything shown here is everything the API
-/// gives.
+/// §40 D — a second tab, « Celles de mes agents »: the visits his agents
+/// carry out on his properties, read only, each with its report.
 @RoutePage()
 class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper {
   const PrestataireVisitsPage({super.key});
@@ -36,6 +35,10 @@ class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper 
       ),
       BlocProvider<PrestataireVisitsBloc>(
         create: (_) => getIt<PrestataireVisitsBloc>(),
+      ),
+      // §40 D — read the first time « Celles de mes agents » is opened.
+      BlocProvider<AgentsVisitsAgendaBloc>(
+        create: (_) => getIt<AgentsVisitsAgendaBloc>()..add(const AgendaRequested()),
       ),
     ],
     child: this,
@@ -50,48 +53,99 @@ class PrestataireVisitsPage extends StatelessWidget implements AutoRouteWrapper 
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: MboaHeaderBackButton.leading(context),
-        title: Text(l10n.visitsMineTitle),
+        title: Text(l10n.visitsPageTitle),
       ),
-      body: BlocListener<PrestataireVisitsBloc, PrestataireVisitsState>(
-        listener: (context, state) {
-          switch (state) {
-            case PrestataireVisitsDone():
-              // The server owns what the answer did to the visit, so the week
-              // is re-read rather than patched here.
-              context.read<PrestataireAgendaBloc>().add(const AgendaRefreshed());
-            case PrestataireVisitsFailed():
-              MboaToast.error(
-                context: context,
-                title: l10n.commonErrorTitle,
-                description: l10n.visitsActionFailed,
-              );
-            case PrestataireVisitsLocationFailed(:final failure):
-              MboaToast.error(
-                context: context,
-                title: l10n.commonErrorTitle,
-                description: switch (failure) {
-                  LocationFailure.denied => l10n.visitsLocationDenied,
-                  LocationFailure.deniedForever => l10n.visitsLocationDeniedForever,
-                  LocationFailure.disabled => l10n.visitsLocationDisabled,
-                  LocationFailure.unavailable => l10n.visitsLocationUnavailable,
-                },
-              );
-            case PrestataireVisitsIdle() || PrestataireVisitsBusy():
-              break;
-          }
-        },
-        child: BlocBuilder<PrestataireAgendaBloc, VisitsAgendaState>(
-          builder: (context, state) => switch (state) {
-            VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),
-            VisitsAgendaFailure() => Center(
-              child: TextButton(
-                onPressed: () => context.read<PrestataireAgendaBloc>().add(const AgendaRequested()),
-                child: Text(l10n.commonRetry),
-              ),
-            ),
-            final VisitsAgendaReady ready => _Agenda(state: ready),
-          },
+      body: const _Tabs(),
+    );
+  }
+}
+
+/// §40 D — his own visits, and his agents' on his properties.
+class _Tabs extends StatefulWidget {
+  const _Tabs();
+
+  @override
+  State<_Tabs> createState() => _TabsState();
+}
+
+class _TabsState extends State<_Tabs> {
+  bool _agents = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(Dimens.spacing, Dimens.spacing, Dimens.spacing, 0),
+          child: MboaSegmentedControl<bool>(
+            value: _agents,
+            backgroundColor: colors.primaryLight2,
+            selectedColor: colors.surface,
+            selectedTextColor: colors.primaryDark,
+            unselectedTextColor: colors.primaryDark,
+            onChanged: (agents) => setState(() => _agents = agents),
+            segments: [
+              MboaSegment(value: false, label: l10n.visitsTabMine),
+              MboaSegment(value: true, label: l10n.visitsTabAgents),
+            ],
+          ),
         ),
+        Expanded(child: _agents ? const OwnerVisitsAgenda<AgentsVisitsAgendaBloc>() : const _Mine()),
+      ],
+    );
+  }
+}
+
+/// The visits he carries out himself: what he answers and confirms.
+class _Mine extends StatelessWidget {
+  const _Mine();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+
+    return BlocListener<PrestataireVisitsBloc, PrestataireVisitsState>(
+      listener: (context, state) {
+        switch (state) {
+          case PrestataireVisitsDone():
+            // The server owns what the answer did to the visit, so the week
+            // is re-read rather than patched here.
+            context.read<PrestataireAgendaBloc>().add(const AgendaRefreshed());
+          case PrestataireVisitsFailed():
+            MboaToast.error(
+              context: context,
+              title: l10n.commonErrorTitle,
+              description: l10n.visitsActionFailed,
+            );
+          case PrestataireVisitsLocationFailed(:final failure):
+            MboaToast.error(
+              context: context,
+              title: l10n.commonErrorTitle,
+              description: switch (failure) {
+                LocationFailure.denied => l10n.visitsLocationDenied,
+                LocationFailure.deniedForever => l10n.visitsLocationDeniedForever,
+                LocationFailure.disabled => l10n.visitsLocationDisabled,
+                LocationFailure.unavailable => l10n.visitsLocationUnavailable,
+              },
+            );
+          case PrestataireVisitsIdle() || PrestataireVisitsBusy():
+            break;
+        }
+      },
+      child: BlocBuilder<PrestataireAgendaBloc, VisitsAgendaState>(
+        builder: (context, state) => switch (state) {
+          VisitsAgendaInitial() || VisitsAgendaLoadInProgress() => const Center(child: Loader()),
+          VisitsAgendaFailure() => Center(
+            child: TextButton(
+              onPressed: () => context.read<PrestataireAgendaBloc>().add(const AgendaRequested()),
+              child: Text(l10n.commonRetry),
+            ),
+          ),
+          final VisitsAgendaReady ready => _Agenda(state: ready),
+        },
       ),
     );
   }

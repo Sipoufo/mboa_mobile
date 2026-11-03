@@ -18475,6 +18475,126 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Mes visites`
+  String get visitsTabMine {
+    return Intl.message(
+      'Mes visites',
+      name: 'visitsTabMine',
+      desc: '§40 D — the landlord\'s own visits.',
+      args: [],
+    );
+  }
+
+  /// `Celles de mes agents`
+  String get visitsTabAgents {
+    return Intl.message(
+      'Celles de mes agents',
+      name: 'visitsTabAgents',
+      desc: '§40 D — his agents\' visits on his properties.',
+      args: [],
+    );
+  }
+
+  /// `Menée par`
+  String get visitsConductedByTitle {
+    return Intl.message(
+      'Menée par',
+      name: 'visitsConductedByTitle',
+      desc: '§40 D — the visit sheet\'s card: who carries it out.',
+      args: [],
+    );
+  }
+
+  /// `Menée par {name}`
+  String visitsByAgent(String name) {
+    return Intl.message(
+      'Menée par $name',
+      name: 'visitsByAgent',
+      desc: '§40 D — an agenda row: the agent.',
+      args: [name],
+    );
+  }
+
+  /// `Menée par toi`
+  String get visitsByMe {
+    return Intl.message(
+      'Menée par toi',
+      name: 'visitsByMe',
+      desc: '§40 D — an agenda row: the landlord himself.',
+      args: [],
+    );
+  }
+
+  /// `Ton agent`
+  String get visitsAgentRole {
+    return Intl.message(
+      'Ton agent',
+      name: 'visitsAgentRole',
+      desc: '§40 D — under the agent\'s name on the visit sheet.',
+      args: [],
+    );
+  }
+
+  /// `C'est ton agent qui la mène`
+  String get visitsAgentLeadsTitle {
+    return Intl.message(
+      'C\'est ton agent qui la mène',
+      name: 'visitsAgentLeadsTitle',
+      desc: '§40 D — a read-only visit\'s state, for the landlord.',
+      args: [],
+    );
+  }
+
+  /// `Il confirme sa présence sur place et peut l'annuler. Tu suis ici où elle en est.`
+  String get visitsAgentLeadsBody {
+    return Intl.message(
+      'Il confirme sa présence sur place et peut l\'annuler. Tu suis ici où elle en est.',
+      name: 'visitsAgentLeadsBody',
+      desc: '§40 D — why there is nothing to do.',
+      args: [],
+    );
+  }
+
+  /// `Annulée : {reason}`
+  String visitsCancelledLine(String reason) {
+    return Intl.message(
+      'Annulée : $reason',
+      name: 'visitsCancelledLine',
+      desc: '§40 D — why a visit fell through, on its sheet.',
+      args: [reason],
+    );
+  }
+
+  /// `Visites de ce bien`
+  String get listingVisitsTitle {
+    return Intl.message(
+      'Visites de ce bien',
+      name: 'listingVisitsTitle',
+      desc: '§40 D — one listing\'s visits, his and his agents\'.',
+      args: [],
+    );
+  }
+
+  /// `Voir les visites de ce bien`
+  String get listingVisitsOpen {
+    return Intl.message(
+      'Voir les visites de ce bien',
+      name: 'listingVisitsOpen',
+      desc: '§40 D — from the listing\'s detail.',
+      args: [],
+    );
+  }
+
+  /// `Visites`
+  String get visitsPageTitle {
+    return Intl.message(
+      'Visites',
+      name: 'visitsPageTitle',
+      desc: '§40 D — the landlord\'s visits page, above its two tabs.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

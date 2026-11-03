@@ -5,6 +5,8 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../assignments/models/assignment.dart';
+
 /// One visit in an agenda day: the hour, the property, its status, and
 /// whatever the persona may do about it.
 class VisitRowTile extends StatelessWidget {
@@ -14,6 +16,7 @@ class VisitRowTile extends StatelessWidget {
     this.onTap,
     this.actions,
     this.isBusy = false,
+    this.showConductor = false,
   });
 
   final Visit visit;
@@ -21,10 +24,16 @@ class VisitRowTile extends StatelessWidget {
   final Widget? actions;
   final bool isBusy;
 
+  /// §40 D — on the landlord's lists of his agents' or a listing's visits:
+  /// who carries each out, the agent's face first.
+  final bool showConductor;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.mboaColors;
+    final l10n = I18n.of(context);
     final at = visit.scheduledAt;
+    final conductor = showConductor ? visit.conductor : null;
 
     return Opacity(
       opacity: isBusy ? 0.5 : 1,
@@ -39,7 +48,13 @@ class VisitRowTile extends StatelessWidget {
           children: [
             ListTile(
               contentPadding: const EdgeInsets.all(Dimens.spacing),
-              leading: Icon(LucideIcons.calendarCheck, color: colors.primary),
+              leading: conductor != null && conductor.isAgent
+                  ? MboaAvatar(
+                      imageUrl: conductor.photoUrl,
+                      initials: initialsFromFullName(conductor.displayName),
+                      size: 40,
+                    )
+                  : Icon(LucideIcons.calendarCheck, color: colors.primary),
               title: Text(
                 visit.annonceTitle ?? '',
                 style: context.mboaText.label.copyWith(fontWeight: FontWeight.w600),
@@ -47,7 +62,9 @@ class VisitRowTile extends StatelessWidget {
               subtitle: Text(
                 [
                   if (at != null) DateFormat.Hm().format(at),
-                  ?_cancellation(I18n.of(context)),
+                  if (conductor != null)
+                    conductor.isAgent ? l10n.visitsByAgent(conductor.displayName ?? '') : l10n.visitsByMe,
+                  ?_cancellation(l10n),
                 ].join(' · '),
               ),
               trailing: VisitStatusChip(status: visit.status),
@@ -73,15 +90,21 @@ class VisitRowTile extends StatelessWidget {
   /// a cancellation recorded before the server kept reasons.
   String? _cancellation(I18n l10n) {
     if (visit.status != VisitStatus.cancelled) return null;
-    return switch (visit.cancellationReason) {
-      VisitCancellationReason.byClient => l10n.visitsCancelledByClient,
-      VisitCancellationReason.byVisitor => l10n.visitsCancelledByVisitor,
-      VisitCancellationReason.agentUnavailable => l10n.visitsCancelledAgentUnavailable,
-      VisitCancellationReason.agentRemoved => l10n.visitsCancelledAgentRemoved,
-      VisitCancellationReason.listingUnavailable => l10n.visitsCancelledListingUnavailable,
-      VisitCancellationReason.unknown || null => null,
-    };
+    return cancellationLabel(l10n, visit.cancellationReason);
   }
+}
+
+/// Why a visit fell through, as a row or a sheet says it; null for a
+/// cancellation recorded before the server kept reasons.
+String? cancellationLabel(I18n l10n, VisitCancellationReason? reason) {
+  return switch (reason) {
+    VisitCancellationReason.byClient => l10n.visitsCancelledByClient,
+    VisitCancellationReason.byVisitor => l10n.visitsCancelledByVisitor,
+    VisitCancellationReason.agentUnavailable => l10n.visitsCancelledAgentUnavailable,
+    VisitCancellationReason.agentRemoved => l10n.visitsCancelledAgentRemoved,
+    VisitCancellationReason.listingUnavailable => l10n.visitsCancelledListingUnavailable,
+    VisitCancellationReason.unknown || null => null,
+  };
 }
 
 /// The visit's state, in one word and one colour.
