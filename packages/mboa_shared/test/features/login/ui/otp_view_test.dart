@@ -68,7 +68,7 @@ void main() {
         code: any(named: 'code'),
       ),
     ).thenThrow(const OtpCodeBurnt());
-    when(() => repository.resendOtp(any())).thenAnswer((_) async {});
+    when(() => repository.resendOtp(any())).thenAnswer((_) async => session);
 
     await pumpOtp(tester);
     await tester.enterText(find.byType(TextField), '123456');
@@ -83,7 +83,7 @@ void main() {
     await tester.ensureVisible(find.text('Renvoyer le code'));
     await tester.tap(find.text('Renvoyer le code'));
     await tester.pump();
-    verify(() => repository.resendOtp(session.phoneNumber)).called(1);
+    verify(() => repository.resendOtp(session)).called(1);
     await tester.pumpAndSettle(const Duration(seconds: 5));
     expect(tester.widget<TextField>(find.byType(TextField)).enabled, isTrue);
   });

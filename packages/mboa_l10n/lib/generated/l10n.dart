@@ -18595,6 +18595,76 @@ class I18n {
       args: [],
     );
   }
+
+  /// `toi@exemple.com`
+  String get loginEmailHint {
+    return Intl.message(
+      'toi@exemple.com',
+      name: 'loginEmailHint',
+      desc: '§40 A — the sign-in email field\'s hint.',
+      args: [],
+    );
+  }
+
+  /// `Adresse e-mail invalide`
+  String get loginEmailInvalid {
+    return Intl.message(
+      'Adresse e-mail invalide',
+      name: 'loginEmailInvalid',
+      desc: '§40 A — the sign-in email field.',
+      args: [],
+    );
+  }
+
+  /// `Ce numéro n'a pas WhatsApp. Connecte-toi avec ton e-mail.`
+  String get loginWhatsappUnavailable {
+    return Intl.message(
+      'Ce numéro n\'a pas WhatsApp. Connecte-toi avec ton e-mail.',
+      name: 'loginWhatsappUnavailable',
+      desc: '§40 A — WHATSAPP_UNAVAILABLE; the screen switches to the email.',
+      args: [],
+    );
+  }
+
+  /// `Cette adresse est celle d'un compte Pro : connecte-toi dans l'app Mboa Pro.`
+  String get loginUsePasswordLogin {
+    return Intl.message(
+      'Cette adresse est celle d\'un compte Pro : connecte-toi dans l\'app Mboa Pro.',
+      name: 'loginUsePasswordLogin',
+      desc: '§40 A — USE_PASSWORD_LOGIN.',
+      args: [],
+    );
+  }
+
+  /// `Code envoyé sur WhatsApp au {phone}`
+  String otpSentWhatsapp(String phone) {
+    return Intl.message(
+      'Code envoyé sur WhatsApp au $phone',
+      name: 'otpSentWhatsapp',
+      desc: '§40 A — the code went by WhatsApp.',
+      args: [phone],
+    );
+  }
+
+  /// `Code envoyé par SMS au {phone}`
+  String otpSentSms(String phone) {
+    return Intl.message(
+      'Code envoyé par SMS au $phone',
+      name: 'otpSentSms',
+      desc: '§40 A — the code went by SMS.',
+      args: [phone],
+    );
+  }
+
+  /// `Code envoyé par e-mail à {email}`
+  String otpSentEmail(String email) {
+    return Intl.message(
+      'Code envoyé par e-mail à $email',
+      name: 'otpSentEmail',
+      desc: '§40 A — the code went by email.',
+      args: [email],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

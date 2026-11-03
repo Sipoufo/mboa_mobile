@@ -8,10 +8,12 @@ import '../bloc/login_bloc.dart';
 import '../login_flow_controller.dart';
 
 /// Whether the entry screen presents itself as sign-in or sign-up. The
-/// mechanics are identical (phone + SMS OTP); only the copy differs.
+/// mechanics are identical (a phone or an email, then a code); only the copy
+/// differs.
 enum AuthMode { login, register }
 
-/// Phone-number entry — the shared entry point of the SMS OTP flow.
+/// The entry of the code sign-in: a phone number or, since §40 A, an email —
+/// App Mboa is not for Cameroon alone.
 ///
 /// This is a plain widget (no routing annotations): each app embeds it in its
 /// own `@RoutePage` adapter, so routing stays app-specific while the flow's UI
@@ -41,22 +43,36 @@ class _LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<_LoginForm> {
   final _controller = TextEditingController();
+  final _email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late AuthMode _mode = widget.mode;
+
+  /// §40 A — « Téléphone | E-mail ».
+  bool _byEmail = false;
+
+  /// What counts as an address here; the server has the last word.
+  static final _emailPattern = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
 
   @override
   void dispose() {
     _controller.dispose();
+    _email.dispose();
     super.dispose();
   }
 
   void _submit() {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState?.validate() ?? false) {
-      final phoneNumber = '${PhoneField.defaultDialCode}${_controller.text.trim()}';
-      context.read<LoginBloc>().add(LoginOtpRequested(phoneNumber));
+      context.read<LoginBloc>().add(
+            _byEmail
+                ? LoginOtpRequested(email: _email.text.trim())
+                : LoginOtpRequested(phoneNumber: '${PhoneField.defaultDialCode}${_controller.text.trim()}'),
+          );
     }
   }
+
+  String? _validateEmail(I18n l10n, String? value) =>
+      _emailPattern.hasMatch(value?.trim() ?? '') ? null : l10n.loginEmailInvalid;
 
   void _toggleMode() {
     setState(() {
@@ -81,6 +97,9 @@ class _LoginFormState extends State<_LoginForm> {
           case LoginOtpSent(:final session):
             GetIt.I<LoginFlowController>().openOtp(context, session);
           case LoginFailure(:final error):
+            // No WhatsApp on that number, and no SMS instead: the email is
+            // the way in, so the screen turns to it.
+            if (error == LoginError.whatsappUnavailable) setState(() => _byEmail = true);
             MboaToast.error(
               context: context,
               title: l10n.commonErrorTitle,
@@ -107,14 +126,41 @@ class _LoginFormState extends State<_LoginForm> {
                     style: context.mboaText.h1.copyWith(color: context.mboaColors.primary),
                   ),
                   const SizedBox(height: Dimens.spacingXl),
-                  PhoneField(
-                    controller: _controller,
+                  MboaSegmentedControl<bool>(
+                    value: _byEmail,
                     enabled: !loading,
-                    labelText: l10n.loginPhoneLabel,
-                    hintText: l10n.loginPhoneHintLocal,
-                    onSubmitted: (_) => _submit(),
-                    validator: (value) => _validatePhone(l10n, value),
+                    backgroundColor: context.mboaColors.primaryLight2,
+                    selectedColor: context.mboaColors.surface,
+                    selectedTextColor: context.mboaColors.primaryDark,
+                    unselectedTextColor: context.mboaColors.primaryDark,
+                    onChanged: (byEmail) => setState(() => _byEmail = byEmail),
+                    segments: [
+                      MboaSegment(value: false, label: l10n.loginPhoneLabel),
+                      MboaSegment(value: true, label: l10n.authEmailLabel),
+                    ],
                   ),
+                  const SizedBox(height: Dimens.spacingLg),
+                  if (_byEmail)
+                    Input(
+                      controller: _email,
+                      enabled: !loading,
+                      labelText: l10n.authEmailLabel,
+                      hintText: l10n.loginEmailHint,
+                      variant: InputVariant.underline,
+                      keyboardType: TextInputType.emailAddress,
+                      autofillHints: const [AutofillHints.email],
+                      onSubmitted: (_) => _submit(),
+                      validator: (value) => _validateEmail(l10n, value),
+                    )
+                  else
+                    PhoneField(
+                      controller: _controller,
+                      enabled: !loading,
+                      labelText: l10n.loginPhoneLabel,
+                      hintText: l10n.loginPhoneHintLocal,
+                      onSubmitted: (_) => _submit(),
+                      validator: (value) => _validatePhone(l10n, value),
+                    ),
                   const SizedBox(height: Dimens.spacingLg),
                   Button.primary(
                     title: l10n.loginRequestCode,
@@ -140,6 +186,8 @@ class _LoginFormState extends State<_LoginForm> {
         LoginError.otpRequestFailed => l10n.loginOtpSendError,
         LoginError.invalidCode => l10n.otpInvalidCode,
         LoginError.codeBurnt => l10n.otpCodeBurnt,
+        LoginError.whatsappUnavailable => l10n.loginWhatsappUnavailable,
+        LoginError.usePasswordLogin => l10n.loginUsePasswordLogin,
       };
 }
 

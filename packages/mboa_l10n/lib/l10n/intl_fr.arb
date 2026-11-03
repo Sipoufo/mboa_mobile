@@ -7714,5 +7714,48 @@
   "visitsPageTitle": "Visites",
   "@visitsPageTitle": {
     "description": "\u00a740 D \u2014 the landlord's visits page, above its two tabs."
+  },
+  "loginEmailHint": "toi@exemple.com",
+  "@loginEmailHint": {
+    "description": "§40 A — the sign-in email field's hint."
+  },
+  "loginEmailInvalid": "Adresse e-mail invalide",
+  "@loginEmailInvalid": {
+    "description": "§40 A — the sign-in email field."
+  },
+  "loginWhatsappUnavailable": "Ce numéro n'a pas WhatsApp. Connecte-toi avec ton e-mail.",
+  "@loginWhatsappUnavailable": {
+    "description": "§40 A — WHATSAPP_UNAVAILABLE; the screen switches to the email."
+  },
+  "loginUsePasswordLogin": "Cette adresse est celle d'un compte Pro : connecte-toi dans l'app Mboa Pro.",
+  "@loginUsePasswordLogin": {
+    "description": "§40 A — USE_PASSWORD_LOGIN."
+  },
+  "otpSentWhatsapp": "Code envoyé sur WhatsApp au {phone}",
+  "@otpSentWhatsapp": {
+    "description": "§40 A — the code went by WhatsApp.",
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpSentSms": "Code envoyé par SMS au {phone}",
+  "@otpSentSms": {
+    "description": "§40 A — the code went by SMS.",
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpSentEmail": "Code envoyé par e-mail à {email}",
+  "@otpSentEmail": {
+    "description": "§40 A — the code went by email.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
   }
 }

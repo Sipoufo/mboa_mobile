@@ -81,7 +81,7 @@ class _OtpFormState extends State<_OtpForm> {
 
   void _resend() {
     _controller.clear();
-    context.read<LoginBloc>().add(LoginOtpResendRequested(widget.session.phoneNumber));
+    context.read<LoginBloc>().add(LoginOtpResendRequested(widget.session));
     _startCooldown();
   }
 
@@ -108,7 +108,11 @@ class _OtpFormState extends State<_OtpForm> {
             MboaToast.error(
               context: context,
               title: l10n.commonErrorTitle,
-              description: error == LoginError.invalidCode ? l10n.otpInvalidCode : l10n.commonError,
+              description: switch (error) {
+                LoginError.invalidCode => l10n.otpInvalidCode,
+                LoginError.whatsappUnavailable => l10n.loginWhatsappUnavailable,
+                _ => l10n.commonError,
+              },
             );
           default:
             break;
@@ -132,7 +136,7 @@ class _OtpFormState extends State<_OtpForm> {
                 ),
                 const SizedBox(height: Dimens.spacingSm),
                 Text(
-                  l10n.otpCodeSentTo(widget.session.phoneNumber),
+                  _sentTo(l10n, widget.session),
                   textAlign: TextAlign.center,
                   style: context.mboaText.body.copyWith(color: context.mboaColors.textSecondary),
                 ),
@@ -201,3 +205,11 @@ class _ResendRow extends StatelessWidget {
     );
   }
 }
+
+/// §40 A — where the code went, so the reader knows where to look.
+String _sentTo(I18n l10n, OtpSession session) => switch (session.channel) {
+      OtpChannel.whatsapp => l10n.otpSentWhatsapp(session.recipient),
+      OtpChannel.sms => l10n.otpSentSms(session.recipient),
+      OtpChannel.email => l10n.otpSentEmail(session.recipient),
+      OtpChannel.unknown => l10n.otpCodeSentTo(session.recipient),
+    };

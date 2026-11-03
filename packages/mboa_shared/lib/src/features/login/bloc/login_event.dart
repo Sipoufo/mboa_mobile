@@ -8,24 +8,25 @@ sealed class LoginEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// User asked for an OTP to be sent to [phoneNumber].
+/// User asked for a code, sent to [phoneNumber] or, since §40 A, [email].
 final class LoginOtpRequested extends LoginEvent {
-  const LoginOtpRequested(this.phoneNumber);
+  const LoginOtpRequested({this.phoneNumber, this.email});
 
-  final String phoneNumber;
+  final String? phoneNumber;
+  final String? email;
 
   @override
-  List<Object?> get props => [phoneNumber];
+  List<Object?> get props => [phoneNumber, email];
 }
 
-/// User asked to re-send the OTP for an already-pending [phoneNumber].
+/// User asked to re-send the code for the pending [session].
 final class LoginOtpResendRequested extends LoginEvent {
-  const LoginOtpResendRequested(this.phoneNumber);
+  const LoginOtpResendRequested(this.session);
 
-  final String phoneNumber;
+  final OtpSession session;
 
   @override
-  List<Object?> get props => [phoneNumber];
+  List<Object?> get props => [session];
 }
 
 /// User submitted [code] for the pending [session].

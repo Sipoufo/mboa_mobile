@@ -8,6 +8,14 @@ enum LoginError {
 
   /// Three wrong tries, or expired: only a new code helps.
   codeBurnt,
+
+  /// §40 A — `WHATSAPP_UNAVAILABLE`: the number cannot receive WhatsApp, and
+  /// no SMS goes instead (the founder's call); the email is the way in.
+  whatsappUnavailable,
+
+  /// §40 A — `USE_PASSWORD_LOGIN`: a Pro account's address; it signs in with
+  /// its password, in the Pro app.
+  usePasswordLogin,
 }
 
 /// Observable states of the shared login flow.

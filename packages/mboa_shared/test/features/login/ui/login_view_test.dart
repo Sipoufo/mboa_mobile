@@ -38,7 +38,7 @@ void main() {
   }
 
   testWidgets('composes the E.164 number with the +237 dial code', (tester) async {
-    when(() => repository.requestOtp(any()))
+    when(() => repository.requestOtp(phoneNumber: any(named: 'phoneNumber'), email: any(named: 'email')))
         .thenAnswer((_) async => buildOtpSession());
 
     await pumpLogin(tester);
@@ -47,7 +47,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
-    verify(() => repository.requestOtp('+237690000000')).called(1);
+    verify(() => repository.requestOtp(phoneNumber: '+237690000000')).called(1);
   });
 
   testWidgets('rejects a number that is not 9 digits', (tester) async {
@@ -56,7 +56,7 @@ void main() {
     await tester.tap(find.text('Recevoir le code'));
     await tester.pump();
 
-    verifyNever(() => repository.requestOtp(any()));
+    verifyNever(() => repository.requestOtp(phoneNumber: any(named: 'phoneNumber'), email: any(named: 'email')));
     expect(find.text('Numéro invalide'), findsOneWidget);
   });
 
