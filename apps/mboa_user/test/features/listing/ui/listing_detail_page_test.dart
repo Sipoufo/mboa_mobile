@@ -37,15 +37,17 @@ void main() {
     List<String> photoKeys = const ['p1', 'p2', 'p3', 'p4'],
     double? latitude,
     double? longitude,
-    int? advanceMonths,
-    int? depositMonths,
+    int? advancePeriods,
+    int? depositPeriods,
+    int price = 110000,
+    RentalPeriod rentalPeriod = RentalPeriod.month,
   }) =>
       ListingDetail(
         id: 'a-1',
         title: 'Studio meublé — Bonapriso',
         propertyType: PropertyType.studio,
-        price: 110000,
-        rentalPeriod: RentalPeriod.month,
+        price: price,
+        rentalPeriod: rentalPeriod,
         city: 'Douala',
         district: 'Bonapriso',
         surfaceArea: 45,
@@ -58,8 +60,8 @@ void main() {
         photoKeys: photoKeys,
         latitude: latitude,
         longitude: longitude,
-        advanceMonths: advanceMonths,
-        depositMonths: depositMonths,
+        advancePeriods: advancePeriods,
+        depositPeriods: depositPeriods,
         provider: const ProviderSummary(
           displayName: 'Agence Deido',
           type: PrestataireKind.agence,
@@ -515,19 +517,41 @@ void main() {
 
   testWidgets('§37 C — the landlord\'s conditions, and that they never go through Mboa', (tester) async {
     when(() => bloc.state)
-        .thenReturn(ListingDetailReady(detail: detail(advanceMonths: 3, depositMonths: 2, photoKeys: const [])));
+        .thenReturn(ListingDetailReady(detail: detail(advancePeriods: 3, depositPeriods: 2, photoKeys: const [])));
     await pump(tester);
     await scrollTo(tester, find.text('Réservable sous condition'));
 
-    expect(find.text('Avance de 3 mois · Caution de 2 mois'), findsOneWidget);
+    // §40 G — each with what it comes to.
+    expect(find.textContaining(RegExp(r'^Avance : 3 mois · 330.000 FCFA$')), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Caution : 2 mois · 220.000 FCFA$')), findsOneWidget);
     expect(find.textContaining('jamais via Mboa'), findsOneWidget);
     await tester.drag(pageList(), const Offset(0, -200));
     await tester.pumpAndSettle();
     await expectLater(find.byType(ListingDetailPage), matchesGoldenFile('goldens/listing_detail_conditions.png'));
   });
 
+  testWidgets('§40 G — counted in the listing\'s period: weeks on a weekly studio, not months', (tester) async {
+    when(() => bloc.state).thenReturn(
+      ListingDetailReady(
+        detail: detail(
+          advancePeriods: 1,
+          depositPeriods: 3,
+          price: 25000,
+          rentalPeriod: RentalPeriod.week,
+          photoKeys: const [],
+        ),
+      ),
+    );
+    await pump(tester);
+    await scrollTo(tester, find.text('Réservable sous condition'));
+
+    expect(find.textContaining(RegExp(r'^Avance : 1 semaine · 25.000 FCFA$')), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^Caution : 3 semaines · 75.000 FCFA$')), findsOneWidget);
+    expect(find.textContaining('mois'), findsNothing);
+  });
+
   testWidgets('§37 C — « 0 » is said as none, and only what was said is shown', (tester) async {
-    when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail(depositMonths: 0)));
+    when(() => bloc.state).thenReturn(ListingDetailReady(detail: detail(depositPeriods: 0)));
     await pump(tester);
     await scrollTo(tester, find.text('Réservable sous condition'));
 

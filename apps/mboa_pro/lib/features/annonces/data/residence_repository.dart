@@ -96,8 +96,8 @@ class ResidenceRepository {
     ..rentalPeriod = draft.rentalPeriod.asUnitGroup
     ..chargesIncluded = draft.chargesIncluded
     ..chargesAmount = draft.chargesAmount
-    ..advanceMonths = draft.advanceMonths
-    ..depositMonths = draft.depositMonths
+    ..advancePeriods = draft.advancePeriods
+    ..depositPeriods = draft.depositPeriods
     ..surfaceArea = draft.surfaceArea
     ..roomCount = draft.roomCount
     ..bathroomCount = draft.bathroomCount

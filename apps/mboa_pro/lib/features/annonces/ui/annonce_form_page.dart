@@ -441,15 +441,16 @@ class _StepBody extends StatelessWidget {
       ],
       const SizedBox(height: Dimens.spacing),
       RentConditionsFields(
-        advanceMonths: draft.advanceMonths,
-        depositMonths: draft.depositMonths,
-        onAdvanceChanged: (months) => _change(
+        advancePeriods: draft.advancePeriods,
+        depositPeriods: draft.depositPeriods,
+        period: draft.rentalPeriod,
+        onAdvanceChanged: (count) => _change(
           context,
-          (d) => months == null ? d.copyWith(clearAdvance: true) : d.copyWith(advanceMonths: months),
+          (d) => count == null ? d.copyWith(clearAdvance: true) : d.copyWith(advancePeriods: count),
         ),
-        onDepositChanged: (months) => _change(
+        onDepositChanged: (count) => _change(
           context,
-          (d) => months == null ? d.copyWith(clearDeposit: true) : d.copyWith(depositMonths: months),
+          (d) => count == null ? d.copyWith(clearDeposit: true) : d.copyWith(depositPeriods: count),
         ),
       ),
       const SizedBox(height: Dimens.spacing),

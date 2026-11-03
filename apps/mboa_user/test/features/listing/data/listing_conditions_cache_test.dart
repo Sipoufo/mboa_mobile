@@ -12,8 +12,11 @@ class MockSearchApi extends Mock implements SearchApi {}
 
 /// §37 C — a fiche read offline still says the landlord's conditions.
 void main() {
-  test('the advance and the deposit survive the 24h cache', () async {
-    final stored = <String, Map<String, dynamic>>{};
+  late Map<String, Map<String, dynamic>> stored;
+  late ListingRepository repository;
+
+  setUp(() {
+    stored = <String, Map<String, dynamic>>{};
     final dioClient = MockDioClient();
     final apiClient = MockApiClient();
     final cache = MockHiveCache();
@@ -31,17 +34,34 @@ void main() {
         data: AnnonceDetailResponse((b) => b
           ..id = 'a-1'
           ..title = 'Studio Akwa'
-          ..advanceMonths = 3
-          ..depositMonths = 0),
+          ..advancePeriods = 3
+          ..depositPeriods = 0),
         requestOptions: RequestOptions(path: '/search/annonces/a-1'),
         statusCode: 200,
       ),
     );
-    final repository = ListingRepository(dioClient: dioClient, cache: cache);
+    repository = ListingRepository(dioClient: dioClient, cache: cache);
+  });
 
+  test('the advance and the deposit survive the 24h cache', () async {
     await repository.one('a-1');
     final cached = repository.cached('a-1')!;
 
-    expect((cached.advanceMonths, cached.depositMonths), (3, 0));
+    expect((cached.advancePeriods, cached.depositPeriods), (3, 0));
+  });
+
+  // §40 G — they used to be months whatever the period: a fiche cached then
+  // must not read its months as weeks.
+  test('a fiche cached in months says nothing of them until read again', () async {
+    await repository.one('a-1');
+    for (final entry in stored.values) {
+      entry
+        ..['advance'] = entry.remove('advancePeriods')
+        ..['deposit'] = entry.remove('depositPeriods');
+    }
+
+    final cached = repository.cached('a-1')!;
+
+    expect((cached.advancePeriods, cached.depositPeriods), (null, null));
   });
 }

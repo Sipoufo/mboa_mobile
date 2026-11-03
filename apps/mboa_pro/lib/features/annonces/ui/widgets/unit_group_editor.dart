@@ -264,13 +264,14 @@ class _UnitGroupRow extends StatelessWidget {
           ],
           const SizedBox(height: Dimens.spacingSm),
           RentConditionsFields(
-            advanceMonths: group.advanceMonths,
-            depositMonths: group.depositMonths,
-            onAdvanceChanged: (months) => onChanged(
-              months == null ? group.copyWith(clearAdvance: true) : group.copyWith(advanceMonths: months),
+            advancePeriods: group.advancePeriods,
+            depositPeriods: group.depositPeriods,
+            period: group.rentalPeriod,
+            onAdvanceChanged: (count) => onChanged(
+              count == null ? group.copyWith(clearAdvance: true) : group.copyWith(advancePeriods: count),
             ),
-            onDepositChanged: (months) => onChanged(
-              months == null ? group.copyWith(clearDeposit: true) : group.copyWith(depositMonths: months),
+            onDepositChanged: (count) => onChanged(
+              count == null ? group.copyWith(clearDeposit: true) : group.copyWith(depositPeriods: count),
             ),
           ),
           if (withPhotos) ...[

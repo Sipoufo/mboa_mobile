@@ -402,19 +402,41 @@ class FichePill extends StatelessWidget {
 /// §37 C — « Réservable sous condition »: the advance and the deposit the
 /// landlord asks, and who they are paid to. RM-M29-09: never through Mboa,
 /// and the block says so in as many words.
+///
+/// §40 G — counted in the listing's own [period] (« 2 semaines » on a weekly
+/// studio, not « 2 mois »), with what that comes to when the rent is known.
 class ListingConditions extends StatelessWidget {
-  const ListingConditions({super.key, this.advanceMonths, this.depositMonths});
+  const ListingConditions({
+    super.key,
+    this.advancePeriods,
+    this.depositPeriods,
+    this.period = RentalPeriod.month,
+    this.price,
+  });
 
-  final int? advanceMonths;
-  final int? depositMonths;
+  final int? advancePeriods;
+  final int? depositPeriods;
+  final RentalPeriod period;
+
+  /// The rent per [period]; null, the amounts are left out.
+  final int? price;
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
+
+    String term(int count, String Function(int) none, String Function(String) some) {
+      if (count == 0) return none(0);
+      final amount = price == null ? '' : ' · ${fcfaOf(context, count * price!)}';
+      return '${some(period.countLabel(l10n, count))}$amount';
+    }
+
     final terms = [
-      if (advanceMonths case final months?) l10n.listingConditionAdvance(months),
-      if (depositMonths case final months?) l10n.listingConditionDeposit(months),
+      if (advancePeriods case final count?)
+        term(count, l10n.listingConditionAdvance, l10n.listingConditionAdvanceOf),
+      if (depositPeriods case final count?)
+        term(count, l10n.listingConditionDeposit, l10n.listingConditionDepositOf),
     ];
 
     return Container(
@@ -435,7 +457,8 @@ class ListingConditions extends StatelessWidget {
                   style: context.mboaText.label.copyWith(color: colors.primaryDark, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 2),
-                Text(terms.join(' · '), style: context.mboaText.body.copyWith(color: colors.ink)),
+                // One per line: each may carry its amount.
+                for (final term in terms) Text(term, style: context.mboaText.body.copyWith(color: colors.ink)),
                 const SizedBox(height: Dimens.spacingXs),
                 Text(
                   l10n.listingConditionsNote,

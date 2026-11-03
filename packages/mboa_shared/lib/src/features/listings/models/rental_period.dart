@@ -214,6 +214,18 @@ extension RentalPeriodLabel on RentalPeriod {
         RentalPeriod.year => l10n.annoncePeriodYearInline,
       };
 
+  /// The unit agreed with [count]: « semaine », « semaines ».
+  String unitLabel(I18n l10n, int count) => switch (this) {
+        RentalPeriod.day => l10n.periodUnitDay(count),
+        RentalPeriod.week => l10n.periodUnitWeek(count),
+        RentalPeriod.month => l10n.periodUnitMonth(count),
+        RentalPeriod.quarter => l10n.periodUnitQuarter(count),
+        RentalPeriod.year => l10n.periodUnitYear(count),
+      };
+
+  /// « 3 semaines », « 1 mois » — a count of this period (§40 G, RM-M08-08).
+  String countLabel(I18n l10n, int count) => '$count ${unitLabel(l10n, count)}';
+
   /// "75 000 FCFA / mois".
   String priceLabel(I18n l10n, int price) => l10n.annoncePricePerPeriod(
         NumberFormat.decimalPattern().format(price),

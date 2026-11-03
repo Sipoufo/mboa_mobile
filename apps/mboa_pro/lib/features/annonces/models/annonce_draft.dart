@@ -67,8 +67,8 @@ class UnitGroupDraft extends Equatable {
     this.furnished,
     this.chargesIncluded,
     this.chargesAmount,
-    this.advanceMonths,
-    this.depositMonths,
+    this.advancePeriods,
+    this.depositPeriods,
     this.description,
     this.photoKeys = const [],
   });
@@ -86,8 +86,8 @@ class UnitGroupDraft extends Equatable {
   final int? chargesAmount;
 
   /// §37 C — as on a single listing, copied onto each unit.
-  final int? advanceMonths;
-  final int? depositMonths;
+  final int? advancePeriods;
+  final int? depositPeriods;
   final String? description;
 
   /// RM-M10bis-13 — entered once for the group, uploaded once; the server
@@ -111,8 +111,8 @@ class UnitGroupDraft extends Equatable {
     bool? furnished,
     bool? chargesIncluded,
     int? chargesAmount,
-    int? advanceMonths,
-    int? depositMonths,
+    int? advancePeriods,
+    int? depositPeriods,
     bool clearAdvance = false,
     bool clearDeposit = false,
     String? description,
@@ -130,15 +130,15 @@ class UnitGroupDraft extends Equatable {
         furnished: furnished ?? this.furnished,
         chargesIncluded: chargesIncluded ?? this.chargesIncluded,
         chargesAmount: chargesAmount ?? this.chargesAmount,
-        advanceMonths: clearAdvance ? null : (advanceMonths ?? this.advanceMonths),
-        depositMonths: clearDeposit ? null : (depositMonths ?? this.depositMonths),
+        advancePeriods: clearAdvance ? null : (advancePeriods ?? this.advancePeriods),
+        depositPeriods: clearDeposit ? null : (depositPeriods ?? this.depositPeriods),
         description: description ?? this.description,
         photoKeys: photoKeys ?? this.photoKeys,
       );
 
   @override
   List<Object?> get props =>
-      [propertyType, count, namePrefix, price, rentalPeriod, surfaceArea, roomCount, advanceMonths, depositMonths, photoKeys];
+      [propertyType, count, namePrefix, price, rentalPeriod, surfaceArea, roomCount, advancePeriods, depositPeriods, photoKeys];
 }
 
 /// The in-progress listing the form edits, for either kind.
@@ -152,8 +152,8 @@ class AnnonceDraft extends Equatable {
     this.rentalPeriod = RentalPeriod.fallback,
     this.chargesIncluded,
     this.chargesAmount,
-    this.advanceMonths,
-    this.depositMonths,
+    this.advancePeriods,
+    this.depositPeriods,
     this.surfaceArea,
     this.roomCount,
     this.bathroomCount,
@@ -186,11 +186,11 @@ class AnnonceDraft extends Equatable {
   final bool? chargesIncluded;
   final int? chargesAmount;
 
-  /// §37 C — the landlord's conditions, in months of rent (0–24). An update
+  /// §37 C — the landlord's conditions, counted in [rentalPeriod] (0–24, §40 G). An update
   /// replaces the listing wholesale, so an emptied field must reach the
   /// server as null — hence the `clear…` flags on [copyWith].
-  final int? advanceMonths;
-  final int? depositMonths;
+  final int? advancePeriods;
+  final int? depositPeriods;
   final int? surfaceArea;
   final int? roomCount;
   final int? bathroomCount;
@@ -261,8 +261,8 @@ class AnnonceDraft extends Equatable {
     RentalPeriod? rentalPeriod,
     bool? chargesIncluded,
     int? chargesAmount,
-    int? advanceMonths,
-    int? depositMonths,
+    int? advancePeriods,
+    int? depositPeriods,
     bool clearAdvance = false,
     bool clearDeposit = false,
     int? surfaceArea,
@@ -286,8 +286,8 @@ class AnnonceDraft extends Equatable {
         rentalPeriod: rentalPeriod ?? this.rentalPeriod,
         chargesIncluded: chargesIncluded ?? this.chargesIncluded,
         chargesAmount: chargesAmount ?? this.chargesAmount,
-        advanceMonths: clearAdvance ? null : (advanceMonths ?? this.advanceMonths),
-        depositMonths: clearDeposit ? null : (depositMonths ?? this.depositMonths),
+        advancePeriods: clearAdvance ? null : (advancePeriods ?? this.advancePeriods),
+        depositPeriods: clearDeposit ? null : (depositPeriods ?? this.depositPeriods),
         surfaceArea: surfaceArea ?? this.surfaceArea,
         roomCount: roomCount ?? this.roomCount,
         bathroomCount: bathroomCount ?? this.bathroomCount,
@@ -315,8 +315,8 @@ class AnnonceDraft extends Equatable {
         rentalPeriod: annonce.rentalPeriod,
         chargesIncluded: annonce.chargesIncluded,
         chargesAmount: annonce.chargesAmount,
-        advanceMonths: annonce.advanceMonths,
-        depositMonths: annonce.depositMonths,
+        advancePeriods: annonce.advancePeriods,
+        depositPeriods: annonce.depositPeriods,
         surfaceArea: annonce.surfaceArea,
         roomCount: annonce.roomCount,
         bathroomCount: annonce.bathroomCount,
@@ -354,8 +354,8 @@ class AnnonceDraft extends Equatable {
         rentalPeriod,
         chargesIncluded,
         chargesAmount,
-        advanceMonths,
-        depositMonths,
+        advancePeriods,
+        depositPeriods,
         surfaceArea,
         roomCount,
         bathroomCount,

@@ -23,8 +23,8 @@ class Annonce extends Equatable {
     this.monthlyRent,
     this.chargesIncluded,
     this.chargesAmount,
-    this.advanceMonths,
-    this.depositMonths,
+    this.advancePeriods,
+    this.depositPeriods,
     this.surfaceArea,
     this.roomCount,
     this.bathroomCount,
@@ -69,10 +69,10 @@ class Annonce extends Equatable {
   final bool? chargesIncluded;
   final int? chargesAmount;
 
-  /// §37 C — what the landlord asks at entry, in months of rent: declared,
+  /// §37 C — what the landlord asks at entry, counted in [rentalPeriod] (§40 G): declared,
   /// and paid to them after the contract, never through Mboa (RM-M29-09).
-  final int? advanceMonths;
-  final int? depositMonths;
+  final int? advancePeriods;
+  final int? depositPeriods;
   final int? surfaceArea;
   final int? roomCount;
   final int? bathroomCount;
@@ -156,8 +156,8 @@ class Annonce extends Equatable {
     monthlyRent: response.monthlyRent,
     chargesIncluded: response.chargesIncluded,
     chargesAmount: response.chargesAmount,
-    advanceMonths: response.advanceMonths,
-    depositMonths: response.depositMonths,
+    advancePeriods: response.advancePeriods,
+    depositPeriods: response.depositPeriods,
     surfaceArea: response.surfaceArea,
     roomCount: response.roomCount,
     bathroomCount: response.bathroomCount,
@@ -197,8 +197,8 @@ class Annonce extends Equatable {
     ownerVisitsEnabled,
     chargesIncluded,
     chargesAmount,
-    advanceMonths,
-    depositMonths,
+    advancePeriods,
+    depositPeriods,
     surfaceArea,
     roomCount,
     bathroomCount,

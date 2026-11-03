@@ -103,8 +103,10 @@ class ListingRepository {
         bathroomCount: raw['bathrooms'] as int?,
         surfaceArea: raw['surface'] as int?,
         furnished: raw['furnished'] as bool?,
-        advanceMonths: raw['advance'] as int?,
-        depositMonths: raw['deposit'] as int?,
+        // §40 G — new keys: a fiche cached in months reads « not said » until
+        // it is read again, rather than its months as weeks.
+        advancePeriods: raw['advancePeriods'] as int?,
+        depositPeriods: raw['depositPeriods'] as int?,
         description: raw['description'] as String?,
         photoKeys:
             (raw['photos'] as List?)?.whereType<String>().toList() ?? const [],
@@ -243,8 +245,8 @@ class ListingRepository {
           'bathrooms': detail.bathroomCount,
           'surface': detail.surfaceArea,
           'furnished': detail.furnished,
-          'advance': detail.advanceMonths,
-          'deposit': detail.depositMonths,
+          'advancePeriods': detail.advancePeriods,
+          'depositPeriods': detail.depositPeriods,
           'description': detail.description,
           'photos': detail.photoKeys,
         },

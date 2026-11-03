@@ -7521,5 +7521,68 @@
   "agentPersonalInfoBody": "Name, city and phone number",
   "@agentPersonalInfoBody": {
     "description": "Agent profile: what the personal info form holds."
+  },
+  "periodUnitDay": "{count, plural, =1{day} other{days}}",
+  "@periodUnitDay": {
+    "description": "A count of rental periods: the unit, agreed with the count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodUnitWeek": "{count, plural, =1{week} other{weeks}}",
+  "@periodUnitWeek": {
+    "description": "A count of rental periods: the unit.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodUnitMonth": "{count, plural, =1{month} other{months}}",
+  "@periodUnitMonth": {
+    "description": "A count of rental periods: the unit.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodUnitQuarter": "{count, plural, =1{quarter} other{quarters}}",
+  "@periodUnitQuarter": {
+    "description": "A count of rental periods: the unit.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodUnitYear": "{count, plural, =1{year} other{years}}",
+  "@periodUnitYear": {
+    "description": "A count of rental periods: the unit.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingConditionAdvanceOf": "Advance: {duration}",
+  "@listingConditionAdvanceOf": {
+    "description": "§40 G — the advance, counted in the listing's period.",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "listingConditionDepositOf": "Deposit: {duration}",
+  "@listingConditionDepositOf": {
+    "description": "§40 G — the deposit, counted in the listing's period.",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   }
 }

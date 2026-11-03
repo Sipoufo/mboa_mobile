@@ -84,9 +84,9 @@ class AwaitingLine extends StatelessWidget {
   }
 }
 
-/// "12 mois", in the contract's own periodicity (RM-M08-08).
-String durationLabel(I18n l10n, int units, RentalPeriod period) =>
-    l10n.contractDurationValue(units, period.inlineLabel(l10n));
+/// "12 mois", "3 semaines", in the contract's own periodicity (RM-M08-08).
+/// The unit agrees with the count — it read « 3 semaine ».
+String durationLabel(I18n l10n, int units, RentalPeriod period) => period.countLabel(l10n, units);
 
 String moneyLabel(I18n l10n, int amount) =>
     '${NumberFormat.decimalPattern().format(amount)} ${l10n.annonceFormCurrency}';

@@ -18213,6 +18213,86 @@ class I18n {
       args: [],
     );
   }
+
+  /// `{count, plural, =1{jour} other{jours}}`
+  String periodUnitDay(int count) {
+    return Intl.plural(
+      count,
+      one: 'jour',
+      other: 'jours',
+      name: 'periodUnitDay',
+      desc: 'A count of rental periods: the unit, agreed with the count.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{semaine} other{semaines}}`
+  String periodUnitWeek(int count) {
+    return Intl.plural(
+      count,
+      one: 'semaine',
+      other: 'semaines',
+      name: 'periodUnitWeek',
+      desc: 'A count of rental periods: the unit.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{mois} other{mois}}`
+  String periodUnitMonth(int count) {
+    return Intl.plural(
+      count,
+      one: 'mois',
+      other: 'mois',
+      name: 'periodUnitMonth',
+      desc: 'A count of rental periods: the unit.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{trimestre} other{trimestres}}`
+  String periodUnitQuarter(int count) {
+    return Intl.plural(
+      count,
+      one: 'trimestre',
+      other: 'trimestres',
+      name: 'periodUnitQuarter',
+      desc: 'A count of rental periods: the unit.',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{an} other{ans}}`
+  String periodUnitYear(int count) {
+    return Intl.plural(
+      count,
+      one: 'an',
+      other: 'ans',
+      name: 'periodUnitYear',
+      desc: 'A count of rental periods: the unit.',
+      args: [count],
+    );
+  }
+
+  /// `Avance : {duration}`
+  String listingConditionAdvanceOf(String duration) {
+    return Intl.message(
+      'Avance : $duration',
+      name: 'listingConditionAdvanceOf',
+      desc: '§40 G — the advance, counted in the listing\'s period.',
+      args: [duration],
+    );
+  }
+
+  /// `Caution : {duration}`
+  String listingConditionDepositOf(String duration) {
+    return Intl.message(
+      'Caution : $duration',
+      name: 'listingConditionDepositOf',
+      desc: '§40 G — the deposit, counted in the listing\'s period.',
+      args: [duration],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

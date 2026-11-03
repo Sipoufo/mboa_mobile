@@ -234,8 +234,8 @@ void main() {
           rentalPeriod: RentalPeriod.month,
           location: location,
           availableFrom: availableFrom,
-          advanceMonths: 3,
-          depositMonths: 2,
+          advancePeriods: 3,
+          depositPeriods: 2,
         );
 
     test('a listing says them on creation', () async {
@@ -244,8 +244,8 @@ void main() {
       final sent = verify(() => annoncesApi.createAnnonce(
                 createAnnonceRequest: captureAny(named: 'createAnnonceRequest'),
               )).captured.single as CreateAnnonceRequest;
-      expect(sent.advanceMonths, 3);
-      expect(sent.depositMonths, 2);
+      expect(sent.advancePeriods, 3);
+      expect(sent.depositPeriods, 2);
     });
 
     test('an emptied field reaches the server as null — an update replaces the listing', () async {
@@ -256,8 +256,8 @@ void main() {
                 id: 'a1',
                 updateAnnonceRequest: captureAny(named: 'updateAnnonceRequest'),
               )).captured.single as UpdateAnnonceRequest;
-      expect(sent.advanceMonths, isNull);
-      expect(sent.depositMonths, 2);
+      expect(sent.advancePeriods, isNull);
+      expect(sent.depositPeriods, 2);
     });
 
     test('a unit group says them for each unit it creates', () async {
@@ -268,7 +268,7 @@ void main() {
           location: location,
           availableFrom: availableFrom,
           units: const [
-            UnitGroupDraft(count: 4, namePrefix: 'Chambre', price: 45000, advanceMonths: 1, depositMonths: 1),
+            UnitGroupDraft(count: 4, namePrefix: 'Chambre', price: 45000, advancePeriods: 1, depositPeriods: 1),
           ],
         ),
       );
@@ -276,8 +276,8 @@ void main() {
       final sent = verify(() => residencesApi.createResidence(
                 createResidenceRequest: captureAny(named: 'createResidenceRequest'),
               )).captured.single as CreateResidenceRequest;
-      expect(sent.units.single.advanceMonths, 1);
-      expect(sent.units.single.depositMonths, 1);
+      expect(sent.units.single.advancePeriods, 1);
+      expect(sent.units.single.depositPeriods, 1);
     });
   });
 }
