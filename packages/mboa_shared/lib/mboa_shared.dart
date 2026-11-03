@@ -22,6 +22,7 @@ export 'src/features/notifications/data/inbox_repository.dart';
 export 'src/features/notifications/data/notifications_repository.dart';
 export 'src/features/notifications/models/inbox_item.dart';
 export 'src/features/notifications/models/push_message.dart';
+export 'src/features/notifications/ui/foreground_push.dart';
 export 'src/features/notifications/notifications_background.dart';
 export 'src/features/notifications/ui/notification_bell.dart';
 export 'src/features/notifications/ui/notifications_view.dart';

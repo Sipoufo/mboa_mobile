@@ -123,6 +123,12 @@ class _Tile extends StatelessWidget {
     final colors = context.mboaColors;
     final at = item.createdAt;
     final unread = !item.isRead;
+    // §40 E — a refusal reads red, an approval green; the rest as before.
+    final (Color? tone, Color disc) = switch (item.outcome) {
+      NotificationOutcome.negative => (colors.error, colors.error.withValues(alpha: 0.12)),
+      NotificationOutcome.positive => (colors.success, colors.success.withValues(alpha: 0.12)),
+      NotificationOutcome.none => (null, unread ? colors.surface : colors.surfaceWarm),
+    };
 
     return Container(
       margin: const EdgeInsets.only(bottom: Dimens.spacingSm),
@@ -140,11 +146,8 @@ class _Tile extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(Dimens.spacingSm),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: unread ? colors.surface : colors.surfaceWarm,
-                ),
-                child: Icon(_icon(item.type), size: Dimens.icon, color: colors.primary),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: disc),
+                child: Icon(_icon(item), size: Dimens.icon, color: tone ?? colors.primary),
               ),
               const SizedBox(width: Dimens.spacingMd),
               Expanded(
@@ -154,7 +157,8 @@ class _Tile extends StatelessWidget {
                     Text(
                       item.title ?? '',
                       style: context.mboaText.label.copyWith(
-                        color: colors.ink,
+                        // The founder: « Compte refusé » in red.
+                        color: item.outcome == NotificationOutcome.negative ? colors.error : colors.ink,
                         fontWeight: unread ? FontWeight.w700 : FontWeight.w500,
                       ),
                     ),
@@ -196,7 +200,7 @@ class _Tile extends StatelessWidget {
     );
   }
 
-  static IconData _icon(PushType type) => switch (type) {
+  static IconData _icon(InboxItem item) => switch (item.type) {
         PushType.message => LucideIcons.messageCircle,
         PushType.visit => LucideIcons.calendarCheck,
         PushType.contract => LucideIcons.fileSignature,
@@ -206,6 +210,8 @@ class _Tile extends StatelessWidget {
         PushType.home || PushType.homeRequest || PushType.homeEvidence => LucideIcons.keyRound,
         PushType.invoice => LucideIcons.receipt,
         PushType.paymentConfirmed || PushType.financeAddon => LucideIcons.wallet,
+        // §40 E — refused (N-12) as on Certifications, approved otherwise.
+        PushType.kyc when item.code == 'N-12' || item.outcome == NotificationOutcome.negative => LucideIcons.shieldX,
         PushType.kyc => LucideIcons.badgeCheck,
         PushType.unknown => LucideIcons.bell,
       };

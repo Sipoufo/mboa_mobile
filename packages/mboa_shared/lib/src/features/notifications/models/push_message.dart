@@ -13,6 +13,8 @@ class PushMessage extends Equatable {
     this.entityId,
     this.title,
     this.body,
+    this.code,
+    this.outcome = NotificationOutcome.none,
     this.raw = const {},
   });
 
@@ -20,6 +22,12 @@ class PushMessage extends Equatable {
   final String? entityId;
   final String? title;
   final String? body;
+
+  /// §40 E — the Doc 10 catalogue id: `N-11`, `N-12`…
+  final String? code;
+
+  /// §40 E — good news, bad news, or neither.
+  final NotificationOutcome outcome;
 
   /// The untouched data map, so a handler can read a field the domain model
   /// doesn't model yet.
@@ -41,12 +49,30 @@ class PushMessage extends Equatable {
       entityId: raw['entityId'] ?? raw['entity_id'] ?? raw['id'],
       title: title,
       body: body,
+      code: raw['code'],
+      outcome: NotificationOutcome.parse(raw['outcome']),
       raw: raw,
     );
   }
 
   @override
-  List<Object?> get props => [type, entityId, title, body, raw];
+  List<Object?> get props => [type, entityId, title, body, code, outcome, raw];
+}
+
+/// §40 E — what a notification says for its reader, so the app can paint a
+/// refusal red and an approval green without reading its words. Absent — on
+/// an item kept from before, or a value this build does not know — is
+/// [none], which shows as every notification did.
+enum NotificationOutcome {
+  positive,
+  negative,
+  none;
+
+  static NotificationOutcome parse(String? raw) => switch ((raw ?? '').toUpperCase().trim()) {
+        'POSITIVE' => NotificationOutcome.positive,
+        'NEGATIVE' => NotificationOutcome.negative,
+        _ => NotificationOutcome.none,
+      };
 }
 
 /// What a notification is about — the backend's `PushTarget`.

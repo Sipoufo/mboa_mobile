@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
-import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/rents/bloc/waiting_declarations_bloc.dart';
 import '../features/tenant_requests/bloc/open_requests_bloc.dart';
@@ -41,14 +42,11 @@ void _showInApp(BuildContext context, PushMessage message) {
     getIt<WaitingDeclarationsBloc>().add(const WaitingDeclarationsRequested());
   }
 
-  final title = message.title;
-  if (title == null || title.isEmpty) return;
+  // §40 E — approved or refused: the banner, the refusal card and the gates
+  // follow at once, not at the next launch.
+  if (message.type == PushType.kyc && getIt.isRegistered<KycCubit>()) unawaited(getIt<KycCubit>().load());
 
-  MboaToast.info(
-    context: context,
-    title: title,
-    description: message.body,
-  );
+  showForegroundPush(context, message);
 }
 
 /// CA-M03-02: a tap opens the screen the notification is about, not just home.

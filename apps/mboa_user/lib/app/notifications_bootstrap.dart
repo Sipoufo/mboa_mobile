@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:mboa_core/mboa_core.dart';
 import 'package:mboa_shared/mboa_shared.dart';
-import 'package:mboa_ui/mboa_ui.dart';
 
 import '../features/my_home/bloc/my_homes_bloc.dart';
 import 'router/app_router.dart';
@@ -32,10 +33,11 @@ void _showInApp(BuildContext context, PushMessage message) {
     getIt<MyHomesBloc>().add(const MyHomesRequested());
   }
 
-  final title = message.title;
-  if (title == null || title.isEmpty) return;
+  // §40 E — verified or refused: « Compte » and the identity screen follow
+  // at once, not at the next launch.
+  if (message.type == PushType.kyc && getIt.isRegistered<KycCubit>()) unawaited(getIt<KycCubit>().load());
 
-  MboaToast.info(context: context, title: title, description: message.body);
+  showForegroundPush(context, message);
 }
 
 /// CA-M03-02: a tap opens the screen the notification is about.

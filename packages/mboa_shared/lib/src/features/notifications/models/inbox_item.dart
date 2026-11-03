@@ -13,6 +13,8 @@ class InboxItem extends Equatable {
     this.entityId,
     this.createdAt,
     this.readAt,
+    this.code,
+    this.outcome = NotificationOutcome.none,
   });
 
   final String id;
@@ -25,10 +27,15 @@ class InboxItem extends Equatable {
   final DateTime? createdAt;
   final DateTime? readAt;
 
+  /// §40 E — the Doc 10 catalogue id, and good or bad news.
+  final String? code;
+  final NotificationOutcome outcome;
+
   bool get isRead => readAt != null;
 
   /// The same message a tap on the push would hand the app's router.
-  PushMessage get asPush => PushMessage(type: type, entityId: entityId, title: title, body: body);
+  PushMessage get asPush =>
+      PushMessage(type: type, entityId: entityId, title: title, body: body, code: code, outcome: outcome);
 
   InboxItem readOn(DateTime at) => InboxItem(
         id: id,
@@ -38,6 +45,8 @@ class InboxItem extends Equatable {
         entityId: entityId,
         createdAt: createdAt,
         readAt: readAt ?? at,
+        code: code,
+        outcome: outcome,
       );
 
   static InboxItem fromResponse(NotificationItem response) => InboxItem(
@@ -49,6 +58,8 @@ class InboxItem extends Equatable {
         entityId: response.entityId,
         createdAt: response.createdAt?.toLocal(),
         readAt: response.readAt?.toLocal(),
+        code: response.code,
+        outcome: NotificationOutcome.parse(response.outcome?.name),
       );
 
   Map<String, Object?> toCache() => {
@@ -59,6 +70,8 @@ class InboxItem extends Equatable {
         'entityId': entityId,
         'createdAt': createdAt?.toIso8601String(),
         'readAt': readAt?.toIso8601String(),
+        'code': code,
+        'outcome': outcome.name,
       };
 
   static InboxItem? fromCache(Object? raw) {
@@ -73,9 +86,11 @@ class InboxItem extends Equatable {
       entityId: raw['entityId'] as String?,
       createdAt: DateTime.tryParse(raw['createdAt'] as String? ?? ''),
       readAt: DateTime.tryParse(raw['readAt'] as String? ?? ''),
+      code: raw['code'] as String?,
+      outcome: NotificationOutcome.parse(raw['outcome'] as String?),
     );
   }
 
   @override
-  List<Object?> get props => [id, type, title, body, entityId, createdAt, readAt];
+  List<Object?> get props => [id, type, title, body, entityId, createdAt, readAt, code, outcome];
 }
