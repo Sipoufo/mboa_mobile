@@ -1110,6 +1110,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneCurrentMismatch": MessageLookupByLibrary.simpleMessage(
       "Ce n\'est pas ton numéro actuel.",
     ),
+    "changePhoneIntroBody": MessageLookupByLibrary.simpleMessage(
+      "On envoie un code à chacun de tes deux numéros, pour vérifier que c\'est bien toi.",
+    ),
+    "changePhoneIntroTitle": MessageLookupByLibrary.simpleMessage(
+      "Change ton numéro",
+    ),
     "changePhoneNewCodeLabel": m30,
     "changePhoneNewLabel": MessageLookupByLibrary.simpleMessage(
       "Ton nouveau numéro",
@@ -1117,8 +1123,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code reçu sur l’ancien numéro",
     ),
+    "changePhoneRequestCodes": MessageLookupByLibrary.simpleMessage(
+      "Recevoir les codes",
+    ),
+    "changePhoneResendCodes": MessageLookupByLibrary.simpleMessage(
+      "Renvoyer les codes",
+    ),
     "changePhoneSameNumber": MessageLookupByLibrary.simpleMessage(
       "C\'est déjà ton numéro.",
+    ),
+    "changePhoneStepCodes": MessageLookupByLibrary.simpleMessage("Les codes"),
+    "changePhoneStepNumbers": MessageLookupByLibrary.simpleMessage(
+      "Tes numéros",
     ),
     "changePhoneSuccess": MessageLookupByLibrary.simpleMessage(
       "Numéro mis à jour",
@@ -1709,7 +1725,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dueUntracked": MessageLookupByLibrary.simpleMessage("Avant le suivi Mboa"),
     "dueUpcoming": MessageLookupByLibrary.simpleMessage("À venir"),
     "editProfileTitle": MessageLookupByLibrary.simpleMessage(
-      "Editer le Profil",
+      "Modifier mon profil",
     ),
     "errorAccessDenied": MessageLookupByLibrary.simpleMessage(
       "Ton compte n’a pas les droits pour cette action.",
@@ -3079,7 +3095,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileBusinessTitle": MessageLookupByLibrary.simpleMessage(
       "Mon activité",
     ),
+    "profileChange": MessageLookupByLibrary.simpleMessage("Changer"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Nom affiché"),
+    "profileEmailLocked": MessageLookupByLibrary.simpleMessage(
+      "Ton e-mail sert à te connecter : il ne se modifie pas ici.",
+    ),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("Prénom"),
     "profileIncompleteAction": MessageLookupByLibrary.simpleMessage(
       "Compléter",
@@ -3111,6 +3131,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileSave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
     "profileSaved": MessageLookupByLibrary.simpleMessage("Profil mis à jour"),
     "profileSectionBusiness": MessageLookupByLibrary.simpleMessage("Activité"),
+    "profileSectionContact": MessageLookupByLibrary.simpleMessage(
+      "Coordonnées",
+    ),
     "profileSectionIdentity": MessageLookupByLibrary.simpleMessage("Identité"),
     "profileType": MessageLookupByLibrary.simpleMessage("Type"),
     "profileTypeAgence": MessageLookupByLibrary.simpleMessage("Agence"),

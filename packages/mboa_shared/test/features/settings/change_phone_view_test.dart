@@ -52,7 +52,7 @@ void main() {
 
   // The current number's field comes first (the order is tested below).
   Finder field(String label) => find.byType(TextField).at(label == 'Ton numéro actuel' ? 0 : 1);
-  Button send(WidgetTester tester) => tester.widget<Button>(find.widgetWithText(Button, 'Recevoir le code'));
+  Button send(WidgetTester tester) => tester.widget<Button>(find.widgetWithText(Button, 'Recevoir les codes'));
 
   Future<void> type(WidgetTester tester, {required String current, required String next}) async {
     await tester.enterText(field('Ton numéro actuel'), current);
@@ -61,7 +61,7 @@ void main() {
   }
 
   Future<void> refuse(WidgetTester tester, ChangePhoneError error) async {
-    await tester.tap(find.widgetWithText(Button, 'Recevoir le code'));
+    await tester.tap(find.widgetWithText(Button, 'Recevoir les codes'));
     await tester.pump();
     states.add(ChangePhoneEnterPhone(error: error));
     await tester.pump();
@@ -96,7 +96,7 @@ void main() {
     await pump(tester);
     await type(tester, current: '690000014', next: '690000000');
 
-    await tester.tap(find.widgetWithText(Button, 'Recevoir le code'));
+    await tester.tap(find.widgetWithText(Button, 'Recevoir les codes'));
     await tester.pump();
 
     verify(
@@ -115,7 +115,7 @@ void main() {
     await expectLater(find.byType(ChangePhoneView), matchesGoldenFile('goldens/change_phone_mismatch.png'));
 
     await tester.enterText(field('Ton numéro actuel'), '690000014');
-    await tester.tap(find.widgetWithText(Button, 'Recevoir le code'));
+    await tester.tap(find.widgetWithText(Button, 'Recevoir les codes'));
     await tester.pump();
     expect(find.text("Ce n'est pas ton numéro actuel."), findsNothing);
   });
@@ -146,5 +146,7 @@ void main() {
 
     expect(find.text('Code reçu sur +237690000014'), findsOneWidget);
     expect(find.text('Code reçu sur +237690000000'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 300));
+    await expectLater(find.byType(ChangePhoneView), matchesGoldenFile('goldens/change_phone_codes.png'));
   });
 }

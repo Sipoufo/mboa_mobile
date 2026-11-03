@@ -7584,5 +7584,41 @@
         "type": "String"
       }
     }
+  },
+  "profileSectionContact": "Contact details",
+  "@profileSectionContact": {
+    "description": "Profile form: the email and the phone."
+  },
+  "profileChange": "Change",
+  "@profileChange": {
+    "description": "Profile form: opens the phone change."
+  },
+  "profileEmailLocked": "Your email signs you in: it is not changed here.",
+  "@profileEmailLocked": {
+    "description": "Profile form: why the email is locked."
+  },
+  "changePhoneIntroTitle": "Change your number",
+  "@changePhoneIntroTitle": {
+    "description": "Phone change: the intro's title."
+  },
+  "changePhoneIntroBody": "We send a code to each of your two numbers, to check it is really you.",
+  "@changePhoneIntroBody": {
+    "description": "Phone change: why two codes."
+  },
+  "changePhoneStepNumbers": "Your numbers",
+  "@changePhoneStepNumbers": {
+    "description": "Phone change, step 1."
+  },
+  "changePhoneStepCodes": "The codes",
+  "@changePhoneStepCodes": {
+    "description": "Phone change, step 2."
+  },
+  "changePhoneRequestCodes": "Get the codes",
+  "@changePhoneRequestCodes": {
+    "description": "Phone change: sends a code to each number."
+  },
+  "changePhoneResendCodes": "Send the codes again",
+  "@changePhoneResendCodes": {
+    "description": "Phone change: resends both codes."
   }
 }

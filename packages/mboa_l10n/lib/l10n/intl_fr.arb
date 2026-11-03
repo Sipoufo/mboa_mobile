@@ -1289,7 +1289,7 @@
     }
   },
   "deleteAccountButton": "Supprimer définitivement",
-  "editProfileTitle": "Editer le Profil",
+  "editProfileTitle": "Modifier mon profil",
   "profileFirstName": "Prénom",
   "profileLastName": "Nom",
   "profileLocation": "Localisation",
@@ -7584,5 +7584,41 @@
         "type": "String"
       }
     }
+  },
+  "profileSectionContact": "Coordonnées",
+  "@profileSectionContact": {
+    "description": "Profile form: the email and the phone."
+  },
+  "profileChange": "Changer",
+  "@profileChange": {
+    "description": "Profile form: opens the phone change."
+  },
+  "profileEmailLocked": "Ton e-mail sert à te connecter : il ne se modifie pas ici.",
+  "@profileEmailLocked": {
+    "description": "Profile form: why the email is locked."
+  },
+  "changePhoneIntroTitle": "Change ton numéro",
+  "@changePhoneIntroTitle": {
+    "description": "Phone change: the intro's title."
+  },
+  "changePhoneIntroBody": "On envoie un code à chacun de tes deux numéros, pour vérifier que c'est bien toi.",
+  "@changePhoneIntroBody": {
+    "description": "Phone change: why two codes."
+  },
+  "changePhoneStepNumbers": "Tes numéros",
+  "@changePhoneStepNumbers": {
+    "description": "Phone change, step 1."
+  },
+  "changePhoneStepCodes": "Les codes",
+  "@changePhoneStepCodes": {
+    "description": "Phone change, step 2."
+  },
+  "changePhoneRequestCodes": "Recevoir les codes",
+  "@changePhoneRequestCodes": {
+    "description": "Phone change: sends a code to each number."
+  },
+  "changePhoneResendCodes": "Renvoyer les codes",
+  "@changePhoneResendCodes": {
+    "description": "Phone change: resends both codes."
   }
 }

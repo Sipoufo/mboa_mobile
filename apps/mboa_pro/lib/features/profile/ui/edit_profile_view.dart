@@ -103,25 +103,24 @@ class _EditProfileViewState extends State<EditProfileView> {
     FocusScope.of(context).unfocus();
     if (!(_formKey.currentState?.validate() ?? false)) return;
     context.read<ProProfileBloc>().add(
-          ProfileSaveRequested(
-            ProfileEdit(
-              firstName: _firstName.text.trim(),
-              lastName: _lastName.text.trim(),
-              searchCityId: _searchCityId,
-              isPrestataire: _isPrestataire,
-              isAgent: _isAgent,
-              displayName: _isPrestataire ? _displayName.text.trim() : null,
-              mainCityId: _isPrestataire ? _mainCityId : null,
-              type: _isPrestataire ? _type : null,
-              // Empty means "not given" rather than an empty string on the
-              // contract's identity line.
-              registrationNumber: _isPrestataire &&
-                      _registrationNumber.text.trim().isNotEmpty
-                  ? _registrationNumber.text.trim()
-                  : null,
-            ),
-          ),
-        );
+      ProfileSaveRequested(
+        ProfileEdit(
+          firstName: _firstName.text.trim(),
+          lastName: _lastName.text.trim(),
+          searchCityId: _searchCityId,
+          isPrestataire: _isPrestataire,
+          isAgent: _isAgent,
+          displayName: _isPrestataire ? _displayName.text.trim() : null,
+          mainCityId: _isPrestataire ? _mainCityId : null,
+          type: _isPrestataire ? _type : null,
+          // Empty means "not given" rather than an empty string on the
+          // contract's identity line.
+          registrationNumber: _isPrestataire && _registrationNumber.text.trim().isNotEmpty
+              ? _registrationNumber.text.trim()
+              : null,
+        ),
+      ),
+    );
   }
 
   /// Anything changed since it was read: the save has something to send.
@@ -145,8 +144,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (mounted) context.read<ProProfileBloc>().add(const ProfileLoadRequested());
   }
 
-  String? _required(String? value) =>
-      (value == null || value.trim().isEmpty) ? I18n.of(context).commonError : null;
+  String? _required(String? value) => (value == null || value.trim().isEmpty) ? I18n.of(context).commonError : null;
 
   @override
   Widget build(BuildContext context) {
@@ -168,164 +166,170 @@ class _EditProfileViewState extends State<EditProfileView> {
       },
       builder: (context, state) {
         final saving = state is ProProfileReady && state.saving;
+        final data = state is ProProfileReady ? state.data : _initial;
 
         return StackedLoaderView(
           isLoading: saving,
           child: Scaffold(
-            backgroundColor: colors.surface,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  _TopBar(title: l10n.editProfileTitle),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(Dimens.spacingLg),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _SectionLabel(l10n.profileSectionIdentity),
-                            const SizedBox(height: Dimens.spacing),
-                            Input(
-                              controller: _firstName,
-                              enabled: !saving,
-                              labelText: l10n.profileFirstName,
-                              variant: InputVariant.underline,
-                              textInputAction: TextInputAction.next,
-                              validator: _required,
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _lastName,
-                              enabled: !saving,
-                              labelText: l10n.profileLastName,
-                              variant: InputVariant.underline,
-                              textInputAction: TextInputAction.next,
-                              validator: _required,
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _email,
-                              readOnly: true,
-                              labelText: l10n.authEmailLabel,
-                              variant: InputVariant.underline,
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _phone,
-                              readOnly: true,
-                              enabled: !saving,
-                              onTap: _changePhone,
-                              labelText: l10n.loginPhoneLabel,
-                              variant: InputVariant.underline,
-                              suffixIcon: Icon(LucideIcons.chevronRight, color: colors.textSecondary),
-                            ),
-                            // Doc 10 gives a prestataire "Ville principale"
-                            // only; "Ville de recherche" belongs to the
-                            // Utilisateur profile. Showing both here read as
-                            // two fields doing the same thing.
-                            //
-                            // An agent's real field is "Zone d'intervention"
-                            // (villes/quartiers, M15) — unmodelled in the API,
-                            // so the single city stands in until it exists.
-                            if (!_isPrestataire) ...[
-                              const SizedBox(height: Dimens.spacingLg),
+            backgroundColor: colors.background,
+            body: Column(
+              children: [
+                _Header(title: l10n.editProfileTitle, data: data),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(Dimens.spacing),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _Section(
+                            title: l10n.profileSectionIdentity,
+                            children: [
                               Input(
-                                controller: _searchCity,
-                                readOnly: true,
+                                controller: _firstName,
                                 enabled: !saving,
-                                onTap: _pickSearchCity,
-                                labelText: l10n.profileLocation,
-                                hintText: l10n.cityPickerSearchHint,
-                                variant: InputVariant.underline,
-                                suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
-                              ),
-                            ],
-                            if (_isPrestataire) ...[
-                              const SizedBox(height: Dimens.spacingXl),
-                              _SectionLabel(l10n.profileSectionBusiness),
-                              const SizedBox(height: Dimens.spacing),
-                              Input(
-                                controller: _displayName,
-                                enabled: !saving,
-                                labelText: l10n.profileDisplayName,
-                                variant: InputVariant.underline,
+                                labelText: l10n.profileFirstName,
                                 textInputAction: TextInputAction.next,
                                 validator: _required,
                               ),
-                              const SizedBox(height: Dimens.spacingLg),
                               Input(
-                                controller: _mainCity,
-                                readOnly: true,
+                                controller: _lastName,
                                 enabled: !saving,
-                                onTap: _pickMainCity,
-                                labelText: l10n.profileMainCity,
-                                hintText: l10n.cityPickerSearchHint,
-                                variant: InputVariant.underline,
-                                suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
-                              ),
-                              const SizedBox(height: Dimens.spacingLg),
-                              Input(
-                                controller: _registrationNumber,
-                                enabled: !saving,
-                                labelText: l10n.profileRegistrationNumber,
-                                hintText: l10n.profileRegistrationNumberHint,
-                                variant: InputVariant.underline,
+                                labelText: l10n.profileLastName,
                                 textInputAction: TextInputAction.next,
-                              ),
-                              const SizedBox(height: Dimens.spacingXs),
-                              // M08 prints it on the contract next to the
-                              // tenant's CNI; without it no Contrat Mboa is
-                              // compliant, which is worth saying here rather
-                              // than failing later.
-                              Text(
-                                l10n.profileRegistrationNumberHelp,
-                                style: context.mboaText.caption
-                                    .copyWith(color: colors.textTertiary),
-                              ),
-                              const SizedBox(height: Dimens.spacingLg),
-                              Text(
-                                l10n.profileType,
-                                style: context.mboaText.label.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: colors.primaryDark,
-                                ),
-                              ),
-                              const SizedBox(height: Dimens.spacingXs),
-                              MboaSegmentedControl<PrestataireType>(
-                                value: _type,
-                                enabled: !saving,
-                                onChanged: (type) => setState(() => _type = type),
-                                segments: [
-                                  MboaSegment(value: PrestataireType.particulier, label: l10n.profileTypeParticulier),
-                                  MboaSegment(value: PrestataireType.agence, label: l10n.profileTypeAgence),
-                                  MboaSegment(value: PrestataireType.promoteur, label: l10n.profileTypePromoteur),
-                                ],
+                                validator: _required,
                               ),
                             ],
-                          ],
-                        ),
+                          ),
+                          _Section(
+                            title: l10n.profileSectionContact,
+                            children: [
+                              Input(
+                                controller: _email,
+                                readOnly: true,
+                                labelText: l10n.authEmailLabel,
+                                suffixIcon: Icon(LucideIcons.lock, size: Dimens.icon, color: colors.textTertiary),
+                              ),
+                              Text(
+                                l10n.profileEmailLocked,
+                                style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                              ),
+                              // RM-M02-02 — never edited here: its own two-code
+                              // change, one tap away.
+                              Input(
+                                controller: _phone,
+                                readOnly: true,
+                                enabled: !saving,
+                                onTap: _changePhone,
+                                labelText: l10n.loginPhoneLabel,
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing),
+                                  child: Center(
+                                    widthFactor: 1,
+                                    child: Text(
+                                      l10n.profileChange,
+                                      style: context.mboaText.label.copyWith(color: colors.primary),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Doc 10 gives a prestataire "Ville principale"
+                          // only; "Ville de recherche" belongs to the
+                          // Utilisateur profile. Showing both here read as
+                          // two fields doing the same thing.
+                          //
+                          // An agent's real field is "Zone d'intervention"
+                          // (villes/quartiers, M15) — unmodelled in the API,
+                          // so the single city stands in until it exists.
+                          if (!_isPrestataire)
+                            _Section(
+                              title: l10n.profileLocation,
+                              children: [
+                                Input(
+                                  controller: _searchCity,
+                                  readOnly: true,
+                                  enabled: !saving,
+                                  onTap: _pickSearchCity,
+                                  hintText: l10n.cityPickerSearchHint,
+                                  suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
+                                ),
+                              ],
+                            ),
+                          if (_isPrestataire)
+                            _Section(
+                              title: l10n.profileSectionBusiness,
+                              children: [
+                                Input(
+                                  controller: _displayName,
+                                  enabled: !saving,
+                                  labelText: l10n.profileDisplayName,
+                                  textInputAction: TextInputAction.next,
+                                  validator: _required,
+                                ),
+                                Input(
+                                  controller: _mainCity,
+                                  readOnly: true,
+                                  enabled: !saving,
+                                  onTap: _pickMainCity,
+                                  labelText: l10n.profileMainCity,
+                                  hintText: l10n.cityPickerSearchHint,
+                                  suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
+                                ),
+                                Input(
+                                  controller: _registrationNumber,
+                                  enabled: !saving,
+                                  labelText: l10n.profileRegistrationNumber,
+                                  hintText: l10n.profileRegistrationNumberHint,
+                                  textInputAction: TextInputAction.next,
+                                ),
+                                // M08 prints it on the contract next to the
+                                // tenant's CNI; without it no Contrat Mboa is
+                                // compliant, which is worth saying here rather
+                                // than failing later.
+                                Text(
+                                  l10n.profileRegistrationNumberHelp,
+                                  style: context.mboaText.caption.copyWith(color: colors.textSecondary),
+                                ),
+                                Text(
+                                  l10n.profileType,
+                                  style: context.mboaText.label.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: colors.primaryDark,
+                                  ),
+                                ),
+                                MboaSegmentedControl<PrestataireType>(
+                                  value: _type,
+                                  enabled: !saving,
+                                  onChanged: (type) => setState(() => _type = type),
+                                  segments: [
+                                    MboaSegment(value: PrestataireType.particulier, label: l10n.profileTypeParticulier),
+                                    MboaSegment(value: PrestataireType.agence, label: l10n.profileTypeAgence),
+                                    MboaSegment(value: PrestataireType.promoteur, label: l10n.profileTypePromoteur),
+                                  ],
+                                ),
+                              ],
+                            ),
+                        ],
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(Dimens.spacingLg),
+                ),
+                // Doc05 §6.1 — the one thing the screen expects.
+                _ActionBar(
+                  child: ListenableBuilder(
                     // Nothing changed, nothing to save.
-                    child: ListenableBuilder(
-                      listenable: Listenable.merge([_firstName, _lastName, _displayName, _registrationNumber]),
-                      builder: (context, _) => Button.primary(
-                        title: l10n.profileSave,
-                        icon: Icon(LucideIcons.save, size: Dimens.icon, color: context.mboaColors.surface,),
-                        iconAlignment: IconAlignment.start,
-                        isCenter: true,
-                        isLoading: saving,
-                        onPressed: saving || !_dirty ? null : _save,
-                      ),
+                    listenable: Listenable.merge([_firstName, _lastName, _displayName, _registrationNumber]),
+                    builder: (context, _) => Button.primary(
+                      title: l10n.profileSave,
+                      isLoading: saving,
+                      onPressed: saving || !_dirty ? null : _save,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
@@ -334,47 +338,110 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 }
 
-class _TopBar extends StatelessWidget {
-  const _TopBar({required this.title});
+/// The profile's brand band, as on « Profil »: back, the title, and whose
+/// profile it is — the face and the name.
+class _Header extends StatelessWidget {
+  const _Header({required this.title, this.data});
 
   final String title;
+  final ProfileData? data;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.mboaColors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: Dimens.spacingSm),
-      child: Row(
-        children: [
-          MboaHeaderBackButton(color: colors.primary),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: context.mboaText.h3.copyWith(color: colors.primary),
+    final name = data?.fullName ?? '';
+
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(Dimens.radiusLg)),
+      child: ColoredBox(
+        color: colors.primary,
+        child: Stack(
+          children: [
+            // Doc05 §5.3 — the brand ground only, faint.
+            Positioned.fill(child: MboaBrandPattern(color: colors.onBrand, opacity: 0.06, scale: 0.65)),
+            SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  Dimens.spacingSm,
+                  Dimens.spacingSm,
+                  Dimens.spacingSm,
+                  Dimens.spacingLg,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        MboaHeaderBackButton(color: colors.onBrand),
+                        Expanded(
+                          child: Text(
+                            title,
+                            textAlign: TextAlign.center,
+                            style: context.mboaText.h3.copyWith(color: colors.onBrand),
+                          ),
+                        ),
+                        const SizedBox.square(dimension: kMinInteractiveDimension),
+                      ],
+                    ),
+                    const SizedBox(height: Dimens.spacingSm),
+                    MboaAvatar(imageUrl: data?.avatarUrl, initials: data?.initials, size: 72),
+                    if (name.isNotEmpty) ...[
+                      const SizedBox(height: Dimens.spacingSm),
+                      Text(name, style: context.mboaText.h3.copyWith(color: colors.onBrand)),
+                    ],
+                  ],
+                ),
+              ),
             ),
-          ),
-          const SizedBox(width: Dimens.iconLg),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One group of the form, on its white card.
+class _Section extends StatelessWidget {
+  const _Section({required this.title, required this.children});
+
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: Dimens.spacing),
+      padding: const EdgeInsets.all(Dimens.spacing),
+      decoration: BoxDecoration(color: colors.surface, borderRadius: BorderRadius.circular(Dimens.radiusLg)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(title, style: context.mboaText.h3.copyWith(color: colors.primaryDark)),
+          for (final child in children) ...[const SizedBox(height: Dimens.spacingMd), child],
         ],
       ),
     );
   }
 }
 
-/// A group heading in the form — a prestataire fills two distinct things here,
-/// himself and his business, and the list ran on without saying so.
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.title);
+/// The bar at the foot: one main button (Doc05 §6.1).
+class _ActionBar extends StatelessWidget {
+  const _ActionBar({required this.child});
 
-  final String title;
+  final Widget child;
 
   @override
-  Widget build(BuildContext context) => Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title,
-          style: context.mboaText.h3
-              .copyWith(color: context.mboaColors.primaryDark),
-        ),
-      );
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.surface,
+        border: Border(top: BorderSide(color: colors.border)),
+      ),
+      child: SafeArea(minimum: const EdgeInsets.all(Dimens.spacing), child: child),
+    );
+  }
 }

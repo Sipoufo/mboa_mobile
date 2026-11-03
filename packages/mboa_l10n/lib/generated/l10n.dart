@@ -3480,10 +3480,10 @@ class I18n {
     );
   }
 
-  /// `Editer le Profil`
+  /// `Modifier mon profil`
   String get editProfileTitle {
     return Intl.message(
-      'Editer le Profil',
+      'Modifier mon profil',
       name: 'editProfileTitle',
       desc: '',
       args: [],
@@ -18291,6 +18291,96 @@ class I18n {
       name: 'listingConditionDepositOf',
       desc: '§40 G — the deposit, counted in the listing\'s period.',
       args: [duration],
+    );
+  }
+
+  /// `Coordonnées`
+  String get profileSectionContact {
+    return Intl.message(
+      'Coordonnées',
+      name: 'profileSectionContact',
+      desc: 'Profile form: the email and the phone.',
+      args: [],
+    );
+  }
+
+  /// `Changer`
+  String get profileChange {
+    return Intl.message(
+      'Changer',
+      name: 'profileChange',
+      desc: 'Profile form: opens the phone change.',
+      args: [],
+    );
+  }
+
+  /// `Ton e-mail sert à te connecter : il ne se modifie pas ici.`
+  String get profileEmailLocked {
+    return Intl.message(
+      'Ton e-mail sert à te connecter : il ne se modifie pas ici.',
+      name: 'profileEmailLocked',
+      desc: 'Profile form: why the email is locked.',
+      args: [],
+    );
+  }
+
+  /// `Change ton numéro`
+  String get changePhoneIntroTitle {
+    return Intl.message(
+      'Change ton numéro',
+      name: 'changePhoneIntroTitle',
+      desc: 'Phone change: the intro\'s title.',
+      args: [],
+    );
+  }
+
+  /// `On envoie un code à chacun de tes deux numéros, pour vérifier que c'est bien toi.`
+  String get changePhoneIntroBody {
+    return Intl.message(
+      'On envoie un code à chacun de tes deux numéros, pour vérifier que c\'est bien toi.',
+      name: 'changePhoneIntroBody',
+      desc: 'Phone change: why two codes.',
+      args: [],
+    );
+  }
+
+  /// `Tes numéros`
+  String get changePhoneStepNumbers {
+    return Intl.message(
+      'Tes numéros',
+      name: 'changePhoneStepNumbers',
+      desc: 'Phone change, step 1.',
+      args: [],
+    );
+  }
+
+  /// `Les codes`
+  String get changePhoneStepCodes {
+    return Intl.message(
+      'Les codes',
+      name: 'changePhoneStepCodes',
+      desc: 'Phone change, step 2.',
+      args: [],
+    );
+  }
+
+  /// `Recevoir les codes`
+  String get changePhoneRequestCodes {
+    return Intl.message(
+      'Recevoir les codes',
+      name: 'changePhoneRequestCodes',
+      desc: 'Phone change: sends a code to each number.',
+      args: [],
+    );
+  }
+
+  /// `Renvoyer les codes`
+  String get changePhoneResendCodes {
+    return Intl.message(
+      'Renvoyer les codes',
+      name: 'changePhoneResendCodes',
+      desc: 'Phone change: resends both codes.',
+      args: [],
     );
   }
 }

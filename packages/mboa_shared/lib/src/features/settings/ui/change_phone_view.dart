@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
@@ -51,33 +52,28 @@ class _ChangePhoneScaffold extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final loading = (state is ChangePhoneEnterPhone && state.loading) ||
-            (state is ChangePhoneEnterCodes && state.loading);
+        final loading =
+            (state is ChangePhoneEnterPhone && state.loading) || (state is ChangePhoneEnterCodes && state.loading);
         return StackedLoaderView(
           isLoading: loading,
           child: Scaffold(
-            backgroundColor: colors.surface,
+            backgroundColor: colors.background,
             appBar: AppBar(
               automaticallyImplyLeading: false,
               leading: MboaHeaderBackButton.leading(context),
-              backgroundColor: colors.surface,
-              foregroundColor: colors.primary,
-              title: Text(l10n.settingsChangePhone, style: context.mboaText.h3.copyWith(color: colors.primary)),
+              title: Text(l10n.settingsChangePhone),
             ),
             body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(Dimens.spacingLg),
-                child: switch (state) {
-                  ChangePhoneEnterCodes(:final currentPhoneNumber, :final newPhoneNumber, :final error) => _CodesStep(
-                      currentPhoneNumber: currentPhoneNumber,
-                      newPhoneNumber: newPhoneNumber,
-                      loading: loading,
-                      burnt: error == ChangePhoneError.codeBurnt,
-                    ),
-                  ChangePhoneEnterPhone(:final error) => _PhoneStep(loading: loading, error: error),
-                  _ => _PhoneStep(loading: loading),
-                },
-              ),
+              child: switch (state) {
+                ChangePhoneEnterCodes(:final currentPhoneNumber, :final newPhoneNumber, :final error) => _CodesStep(
+                  currentPhoneNumber: currentPhoneNumber,
+                  newPhoneNumber: newPhoneNumber,
+                  loading: loading,
+                  burnt: error == ChangePhoneError.codeBurnt,
+                ),
+                ChangePhoneEnterPhone(:final error) => _PhoneStep(loading: loading, error: error),
+                _ => _PhoneStep(loading: loading),
+              },
             ),
           ),
         );
@@ -86,10 +82,10 @@ class _ChangePhoneScaffold extends StatelessWidget {
   }
 
   String _err(I18n l10n, ChangePhoneError e) => switch (e) {
-        ChangePhoneError.invalidCode => l10n.otpInvalidCode,
-        ChangePhoneError.codeBurnt => l10n.otpCodeBurnt,
-        _ => l10n.commonError,
-      };
+    ChangePhoneError.invalidCode => l10n.otpInvalidCode,
+    ChangePhoneError.codeBurnt => l10n.otpCodeBurnt,
+    _ => l10n.commonError,
+  };
 }
 
 /// RM-M02-02 — the current number first, then the new one. A refusal about
@@ -138,59 +134,80 @@ class _PhoneStepState extends State<_PhoneStep> {
     _sentCurrent = _current.text.trim();
     _sentNext = _next.text.trim();
     context.read<ChangePhoneBloc>().add(
-          ChangePhoneRequested(
-            currentPhoneNumber: '${PhoneField.defaultDialCode}$_sentCurrent',
-            newPhoneNumber: '${PhoneField.defaultDialCode}$_sentNext',
-          ),
-        );
+      ChangePhoneRequested(
+        currentPhoneNumber: '${PhoneField.defaultDialCode}$_sentCurrent',
+        newPhoneNumber: '${PhoneField.defaultDialCode}$_sentNext',
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
+    final colors = context.mboaColors;
     final error = widget.error;
 
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PhoneField(
-            controller: _current,
-            enabled: !widget.loading,
-            labelText: l10n.changePhoneCurrentLabel,
-            hintText: l10n.loginPhoneHintLocal,
-            textInputAction: TextInputAction.next,
-            validator: (v) => switch (v?.trim()) {
-              final text? when !_complete(text) => l10n.loginPhoneInvalid,
-              final text when error == ChangePhoneError.currentMismatch && text == _sentCurrent =>
-                l10n.changePhoneCurrentMismatch,
-              _ => null,
-            },
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(Dimens.spacing),
+              children: [
+                const _Intro(),
+                const SizedBox(height: Dimens.spacingLg),
+                MboaStepHeader(current: 1, total: 2, title: l10n.changePhoneStepNumbers),
+                const SizedBox(height: Dimens.spacing),
+                _Card(
+                  children: [
+                    PhoneField(
+                      controller: _current,
+                      enabled: !widget.loading,
+                      variant: InputVariant.outlined,
+                      labelText: l10n.changePhoneCurrentLabel,
+                      hintText: l10n.loginPhoneHintLocal,
+                      textInputAction: TextInputAction.next,
+                      validator: (v) => switch (v?.trim()) {
+                        final text? when !_complete(text) => l10n.loginPhoneInvalid,
+                        final text when error == ChangePhoneError.currentMismatch && text == _sentCurrent =>
+                          l10n.changePhoneCurrentMismatch,
+                        _ => null,
+                      },
+                    ),
+                    // From the one to the other.
+                    Icon(LucideIcons.arrowDown, color: colors.textTertiary),
+                    PhoneField(
+                      controller: _next,
+                      enabled: !widget.loading,
+                      variant: InputVariant.outlined,
+                      labelText: l10n.changePhoneNewLabel,
+                      hintText: l10n.loginPhoneHintLocal,
+                      onSubmitted: (_) => _submit(),
+                      validator: (v) => switch (v?.trim()) {
+                        final text? when !_complete(text) => l10n.loginPhoneInvalid,
+                        final text when text == _current.text.trim() => l10n.changePhoneSameNumber,
+                        final text when error == ChangePhoneError.unchanged && text == _sentNext =>
+                          l10n.changePhoneSameNumber,
+                        final text when error == ChangePhoneError.alreadyUsed && text == _sentNext =>
+                          l10n.changePhoneTaken,
+                        _ => null,
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: Dimens.spacingLg),
-          PhoneField(
-            controller: _next,
-            enabled: !widget.loading,
-            labelText: l10n.changePhoneNewLabel,
-            hintText: l10n.loginPhoneHintLocal,
-            onSubmitted: (_) => _submit(),
-            validator: (v) => switch (v?.trim()) {
-              final text? when !_complete(text) => l10n.loginPhoneInvalid,
-              final text when text == _current.text.trim() => l10n.changePhoneSameNumber,
-              final text when error == ChangePhoneError.unchanged && text == _sentNext => l10n.changePhoneSameNumber,
-              final text when error == ChangePhoneError.alreadyUsed && text == _sentNext => l10n.changePhoneTaken,
-              _ => null,
-            },
-          ),
-          const SizedBox(height: Dimens.spacingLg),
-          // Both complete and different before the codes can be asked for.
-          ListenableBuilder(
-            listenable: Listenable.merge([_current, _next]),
-            builder: (context, _) => Button.primary(
-              title: l10n.loginRequestCode,
-              isLoading: widget.loading,
-              onPressed: widget.loading || !_ready ? null : _submit,
+          _ActionBar(
+            // Both complete and different before the codes can be asked for.
+            child: ListenableBuilder(
+              listenable: Listenable.merge([_current, _next]),
+              builder: (context, _) => Button.primary(
+                title: l10n.changePhoneRequestCodes,
+                isLoading: widget.loading,
+                onPressed: widget.loading || !_ready ? null : _submit,
+              ),
             ),
           ),
         ],
@@ -243,8 +260,8 @@ class _CodesStepState extends State<_CodesStep> {
     if (_oldCode.text.trim().length == _codeLength && _newCode.text.trim().length == _codeLength) {
       FocusScope.of(context).unfocus();
       context.read<ChangePhoneBloc>().add(
-            ChangePhoneConfirmed(oldCode: _oldCode.text.trim(), newCode: _newCode.text.trim()),
-          );
+        ChangePhoneConfirmed(oldCode: _oldCode.text.trim(), newCode: _newCode.text.trim()),
+      );
     }
   }
 
@@ -252,39 +269,121 @@ class _CodesStepState extends State<_CodesStep> {
   Widget build(BuildContext context) {
     final l10n = I18n.of(context);
     final colors = context.mboaColors;
-    return ListView(
+    final enabled = !widget.loading && !widget.burnt;
+
+    Widget code(String phone, TextEditingController controller, {bool autofocus = false}) => _Card(
       children: [
         // Each code names its number.
         Text(
-          l10n.changePhoneNewCodeLabel(widget.currentPhoneNumber),
-          style: context.mboaText.label.copyWith(color: colors.textSecondary),
+          l10n.changePhoneNewCodeLabel(phone),
+          style: context.mboaText.label.copyWith(color: colors.ink),
         ),
-        const SizedBox(height: Dimens.spacingSm),
-        OtpField(controller: _oldCode, length: _codeLength, enabled: !widget.loading && !widget.burnt, autofocus: true),
-        const SizedBox(height: Dimens.spacingLg),
-        Text(
-          l10n.changePhoneNewCodeLabel(widget.newPhoneNumber),
-          style: context.mboaText.label.copyWith(color: colors.textSecondary),
+        OtpField(controller: controller, length: _codeLength, enabled: enabled, autofocus: autofocus),
+      ],
+    );
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(Dimens.spacing),
+            children: [
+              MboaStepHeader(current: 2, total: 2, title: l10n.changePhoneStepCodes),
+              const SizedBox(height: Dimens.spacing),
+              code(widget.currentPhoneNumber, _oldCode, autofocus: true),
+              const SizedBox(height: Dimens.spacing),
+              code(widget.newPhoneNumber, _newCode),
+              const SizedBox(height: Dimens.spacingSm),
+              TextButton(
+                onPressed: widget.loading ? null : () => context.read<ChangePhoneBloc>().add(const ChangePhoneResent()),
+                child: Text(l10n.changePhoneResendCodes),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: Dimens.spacingSm),
-        OtpField(
-          controller: _newCode,
-          length: _codeLength,
-          enabled: !widget.loading && !widget.burnt,
-          autofocus: false,
-        ),
-        const SizedBox(height: Dimens.spacingLg),
-        Button.primary(
-          title: l10n.changePhoneConfirm,
-          isLoading: widget.loading,
-          onPressed: widget.loading || widget.burnt ? null : _submit,
-        ),
-        const SizedBox(height: Dimens.spacingSm),
-        TextButton(
-          onPressed: widget.loading ? null : () => context.read<ChangePhoneBloc>().add(const ChangePhoneResent()),
-          child: Text(l10n.otpResend),
+        _ActionBar(
+          child: Button.primary(
+            title: l10n.changePhoneConfirm,
+            isLoading: widget.loading,
+            onPressed: widget.loading || widget.burnt ? null : _submit,
+          ),
         ),
       ],
+    );
+  }
+}
+
+/// Why two codes, said once at the top of the first step.
+class _Intro extends StatelessWidget {
+  const _Intro();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = I18n.of(context);
+    final colors = context.mboaColors;
+
+    return Column(
+      children: [
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(color: colors.primaryPale, shape: BoxShape.circle),
+          child: Icon(LucideIcons.smartphone, color: colors.primary, size: Dimens.iconLg),
+        ),
+        const SizedBox(height: Dimens.spacingMd),
+        Text(l10n.changePhoneIntroTitle, style: context.mboaText.h2.copyWith(color: colors.ink)),
+        const SizedBox(height: Dimens.spacingXs),
+        Text(
+          l10n.changePhoneIntroBody,
+          textAlign: TextAlign.center,
+          style: context.mboaText.body.copyWith(color: colors.textSecondary),
+        ),
+      ],
+    );
+  }
+}
+
+/// A white card on the page's ground, its children spaced.
+class _Card extends StatelessWidget {
+  const _Card({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(Dimens.spacing),
+    decoration: BoxDecoration(
+      color: context.mboaColors.surface,
+      borderRadius: BorderRadius.circular(Dimens.radiusLg),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final (index, child) in children.indexed) ...[
+          if (index > 0) const SizedBox(height: Dimens.spacingMd),
+          child,
+        ],
+      ],
+    ),
+  );
+}
+
+/// The bar at the foot: one main button (Doc05 §6.1).
+class _ActionBar extends StatelessWidget {
+  const _ActionBar({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.mboaColors;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.surface,
+        border: Border(top: BorderSide(color: colors.border)),
+      ),
+      child: SafeArea(minimum: const EdgeInsets.all(Dimens.spacing), child: child),
     );
   }
 }

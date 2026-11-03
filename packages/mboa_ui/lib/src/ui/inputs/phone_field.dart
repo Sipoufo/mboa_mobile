@@ -18,6 +18,7 @@ class PhoneField extends StatelessWidget {
     this.validator,
     this.onSubmitted,
     this.textInputAction = TextInputAction.done,
+    this.variant = InputVariant.underline,
   });
 
   /// Cameroon dial code — the MVP default.
@@ -35,6 +36,9 @@ class PhoneField extends StatelessWidget {
   final ValueChanged<String>? onSubmitted;
   final TextInputAction textInputAction;
 
+  /// Underlined on the auth screens; outlined inside a card.
+  final InputVariant variant;
+
   @override
   Widget build(BuildContext context) {
     return Input(
@@ -42,7 +46,7 @@ class PhoneField extends StatelessWidget {
       enabled: enabled,
       labelText: labelText,
       hintText: hintText,
-      variant: InputVariant.underline,
+      variant: variant,
       keyboardType: TextInputType.phone,
       textInputAction: textInputAction,
       showCounter: false,
@@ -54,7 +58,12 @@ class PhoneField extends StatelessWidget {
       validator: validator,
       onSubmitted: onSubmitted,
       prefixIcon: Padding(
-        padding: const EdgeInsets.only(right: Dimens.spacingSm),
+        // Inside a box the code needs the box's inset; on a rule it starts at
+        // the edge.
+        padding: EdgeInsets.only(
+          left: variant == InputVariant.outlined ? Dimens.spacing : 0,
+          right: Dimens.spacingSm,
+        ),
         child: Center(
           widthFactor: 1,
           child: Text(

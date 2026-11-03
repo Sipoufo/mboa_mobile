@@ -1066,6 +1066,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneCurrentMismatch": MessageLookupByLibrary.simpleMessage(
       "This is not your current number.",
     ),
+    "changePhoneIntroBody": MessageLookupByLibrary.simpleMessage(
+      "We send a code to each of your two numbers, to check it is really you.",
+    ),
+    "changePhoneIntroTitle": MessageLookupByLibrary.simpleMessage(
+      "Change your number",
+    ),
     "changePhoneNewCodeLabel": m30,
     "changePhoneNewLabel": MessageLookupByLibrary.simpleMessage(
       "Your new number",
@@ -1073,8 +1079,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "changePhoneOldCodeLabel": MessageLookupByLibrary.simpleMessage(
       "Code sent to your old number",
     ),
+    "changePhoneRequestCodes": MessageLookupByLibrary.simpleMessage(
+      "Get the codes",
+    ),
+    "changePhoneResendCodes": MessageLookupByLibrary.simpleMessage(
+      "Send the codes again",
+    ),
     "changePhoneSameNumber": MessageLookupByLibrary.simpleMessage(
       "This is already your number.",
+    ),
+    "changePhoneStepCodes": MessageLookupByLibrary.simpleMessage("The codes"),
+    "changePhoneStepNumbers": MessageLookupByLibrary.simpleMessage(
+      "Your numbers",
     ),
     "changePhoneSuccess": MessageLookupByLibrary.simpleMessage(
       "Number updated",
@@ -2949,7 +2965,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "To be filled in",
     ),
     "profileBusinessTitle": MessageLookupByLibrary.simpleMessage("My business"),
+    "profileChange": MessageLookupByLibrary.simpleMessage("Change"),
     "profileDisplayName": MessageLookupByLibrary.simpleMessage("Display name"),
+    "profileEmailLocked": MessageLookupByLibrary.simpleMessage(
+      "Your email signs you in: it is not changed here.",
+    ),
     "profileFirstName": MessageLookupByLibrary.simpleMessage("First name"),
     "profileIncompleteAction": MessageLookupByLibrary.simpleMessage("Complete"),
     "profileIncompleteBody": MessageLookupByLibrary.simpleMessage(
@@ -2979,6 +2999,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileSave": MessageLookupByLibrary.simpleMessage("Save"),
     "profileSaved": MessageLookupByLibrary.simpleMessage("Profile updated"),
     "profileSectionBusiness": MessageLookupByLibrary.simpleMessage("Business"),
+    "profileSectionContact": MessageLookupByLibrary.simpleMessage(
+      "Contact details",
+    ),
     "profileSectionIdentity": MessageLookupByLibrary.simpleMessage("Identity"),
     "profileType": MessageLookupByLibrary.simpleMessage("Type"),
     "profileTypeAgence": MessageLookupByLibrary.simpleMessage("Agency"),
