@@ -11,6 +11,8 @@ import 'package:mboa_user/features/profile/profile_types.dart';
 import 'package:mboa_user/features/profile/ui/edit_profile_view.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../_helpers/load_brand_fonts.dart';
+
 class MockUserProfileBloc extends MockBloc<ProfileEvent, ProfileState> implements UserProfileBloc {}
 
 class MockStackRouter extends Mock implements StackRouter {
@@ -27,7 +29,8 @@ void main() {
   late MockUserProfileBloc profile;
   late MockStackRouter router;
 
-  setUpAll(() {
+  setUpAll(() async {
+    await loadBrandFonts();
     registerFallbackValue(_FakeRoute());
     registerFallbackValue(const ProfileLoadRequested());
   });
@@ -39,6 +42,10 @@ void main() {
   });
 
   Future<void> pump(WidgetTester tester, BaseProfile data) async {
+    tester.view.physicalSize = const Size(390 * 3, 844 * 3);
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     when(() => profile.state).thenReturn(UserProfileReady(data));
     await tester.pumpWidget(
       MaterialApp(
@@ -69,6 +76,21 @@ void main() {
     final pushed = verify(() => router.push<Object?>(captureAny())).captured.single as ChangeEmailRoute;
     expect((pushed.args?.currentEmail, pushed.args?.phoneNumber), (null, '+237690000000'));
     verify(() => profile.add(const ProfileLoadRequested())).called(1);
+  });
+
+  testWidgets('« Mon profil », in the Pro\'s look; nothing changed, nothing to save', (tester) async {
+    await pump(
+      tester,
+      const BaseProfile(firstName: 'Awa', lastName: 'Nkeng', phoneNumber: '+237690000000', searchCity: 'Douala'),
+    );
+
+    Button save() => tester.widget<Button>(find.widgetWithText(Button, 'Enregistrer'));
+    expect(save().onPressed, isNull);
+    await expectLater(find.byType(EditProfileView), matchesGoldenFile('goldens/edit_profile_user.png'));
+
+    await tester.enterText(find.widgetWithText(TextField, 'Nkeng'), 'Nkeng Ngo');
+    await tester.pump();
+    expect(save().onPressed, isNotNull);
   });
 
   testWidgets('an email account: « Ajouter » a number — its first, one code', (tester) async {

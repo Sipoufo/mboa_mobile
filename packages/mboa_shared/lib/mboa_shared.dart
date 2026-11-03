@@ -153,6 +153,7 @@ export 'src/features/media/pdf_sharer.dart';
 export 'src/features/media/photo_preparer.dart';
 
 // Profile / Settings base (M02) — shared base model, repository and bloc.
+export 'src/features/profile/ui/profile_form_bits.dart';
 export 'src/features/profile/bloc/profile_bloc.dart';
 export 'src/features/profile/data/base_profile_repository.dart';
 export 'src/features/profile/data/profile_repository.dart';

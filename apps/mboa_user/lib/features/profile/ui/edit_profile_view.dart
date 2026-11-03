@@ -10,8 +10,9 @@ import 'package:mboa_ui/mboa_ui.dart';
 import '../../../app/router/app_router.gr.dart';
 import '../profile_types.dart';
 
-/// Edit Profile (CDC M02) for App Mboa users: base fields only. Email is
-/// read-only (not updatable via the API).
+/// « Mon profil » (CDC M02) for App Mboa users: the name, the email and the
+/// phone (§40 A — each added or changed on its own code-verified screen),
+/// the city. Built from the same pieces as the Pro's form.
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
 
@@ -35,7 +36,11 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (state is UserProfileReady) _hydrate(state.data);
   }
 
+  /// What was read, so « Enregistrer » waits for a change.
+  BaseProfile? _initial;
+
   void _hydrate(BaseProfile data) {
+    _initial = data;
     _firstName.text = data.firstName ?? '';
     _lastName.text = data.lastName ?? '';
     _email.text = data.email ?? '';
@@ -68,14 +73,14 @@ class _EditProfileViewState extends State<EditProfileView> {
     FocusScope.of(context).unfocus();
     if (!(_formKey.currentState?.validate() ?? false)) return;
     context.read<UserProfileBloc>().add(
-          ProfileSaveRequested(
-            BaseProfileEdit(
-              firstName: _firstName.text.trim(),
-              lastName: _lastName.text.trim(),
-              searchCityId: _searchCityId,
-            ),
-          ),
-        );
+      ProfileSaveRequested(
+        BaseProfileEdit(
+          firstName: _firstName.text.trim(),
+          lastName: _lastName.text.trim(),
+          searchCityId: _searchCityId,
+        ),
+      ),
+    );
   }
 
   /// §40 A — the email added or changed, the number added or changed: each
@@ -92,10 +97,17 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (mounted) context.read<UserProfileBloc>().add(const ProfileLoadRequested());
   }
 
+  bool get _dirty {
+    final initial = _initial;
+    if (initial == null) return true;
+    return _firstName.text.trim() != (initial.firstName ?? '') ||
+        _lastName.text.trim() != (initial.lastName ?? '') ||
+        _searchCityId != initial.searchCityId;
+  }
+
   static String? _blank(String text) => text.trim().isEmpty ? null : text.trim();
 
-  String? _required(String? value) =>
-      (value == null || value.trim().isEmpty) ? I18n.of(context).commonError : null;
+  String? _required(String? value) => (value == null || value.trim().isEmpty) ? I18n.of(context).commonError : null;
 
   @override
   Widget build(BuildContext context) {
@@ -122,119 +134,105 @@ class _EditProfileViewState extends State<EditProfileView> {
       },
       builder: (context, state) {
         final saving = state is UserProfileReady && state.saving;
+        final data = state is UserProfileReady ? state.data : _initial;
 
         return StackedLoaderView(
           isLoading: saving,
           child: Scaffold(
-            backgroundColor: colors.surface,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  _TopBar(title: l10n.editProfileTitle),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(Dimens.spacingLg),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Input(
-                              controller: _firstName,
-                              enabled: !saving,
-                              labelText: l10n.profileFirstName,
-                              variant: InputVariant.underline,
-                              textInputAction: TextInputAction.next,
-                              validator: _required,
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _lastName,
-                              enabled: !saving,
-                              labelText: l10n.profileLastName,
-                              variant: InputVariant.underline,
-                              textInputAction: TextInputAction.next,
-                              validator: _required,
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _email,
-                              readOnly: true,
-                              enabled: !saving,
-                              onTap: _changeEmail,
-                              labelText: l10n.authEmailLabel,
-                              variant: InputVariant.underline,
-                              suffixIcon: _Action(label: _email.text.isEmpty ? l10n.profileAdd : l10n.profileChange),
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _phone,
-                              readOnly: true,
-                              enabled: !saving,
-                              onTap: _changePhone,
-                              labelText: l10n.loginPhoneLabel,
-                              variant: InputVariant.underline,
-                              suffixIcon: _Action(label: _phone.text.isEmpty ? l10n.profileAdd : l10n.profileChange),
-                            ),
-                            const SizedBox(height: Dimens.spacingLg),
-                            Input(
-                              controller: _searchCity,
-                              readOnly: true,
-                              enabled: !saving,
-                              onTap: _pickCity,
-                              labelText: l10n.profileLocation,
-                              hintText: l10n.cityPickerSearchHint,
-                              variant: InputVariant.underline,
-                              suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
-                            ),
-                          ],
-                        ),
+            backgroundColor: colors.background,
+            body: Column(
+              children: [
+                ProfileFormHeader(
+                  title: l10n.editProfileTitle,
+                  name: data?.fullName,
+                  avatarUrl: data?.avatarUrl,
+                  initials: data?.initials,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(Dimens.spacing),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ProfileFormSection(
+                            title: l10n.profileSectionIdentity,
+                            children: [
+                              Input(
+                                controller: _firstName,
+                                enabled: !saving,
+                                labelText: l10n.profileFirstName,
+                                textInputAction: TextInputAction.next,
+                                validator: _required,
+                              ),
+                              Input(
+                                controller: _lastName,
+                                enabled: !saving,
+                                labelText: l10n.profileLastName,
+                                textInputAction: TextInputAction.next,
+                                validator: _required,
+                              ),
+                            ],
+                          ),
+                          // §40 A — each added or changed on its own
+                          // code-verified screen.
+                          ProfileFormSection(
+                            title: l10n.profileSectionContact,
+                            children: [
+                              Input(
+                                controller: _email,
+                                readOnly: true,
+                                enabled: !saving,
+                                onTap: _changeEmail,
+                                labelText: l10n.authEmailLabel,
+                                suffixIcon: _Action(label: _email.text.isEmpty ? l10n.profileAdd : l10n.profileChange),
+                              ),
+                              Input(
+                                controller: _phone,
+                                readOnly: true,
+                                enabled: !saving,
+                                onTap: _changePhone,
+                                labelText: l10n.loginPhoneLabel,
+                                suffixIcon: _Action(label: _phone.text.isEmpty ? l10n.profileAdd : l10n.profileChange),
+                              ),
+                            ],
+                          ),
+                          ProfileFormSection(
+                            title: l10n.profileLocation,
+                            children: [
+                              Input(
+                                controller: _searchCity,
+                                readOnly: true,
+                                enabled: !saving,
+                                onTap: _pickCity,
+                                hintText: l10n.cityPickerSearchHint,
+                                suffixIcon: Icon(LucideIcons.chevronDown, color: colors.textSecondary),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(Dimens.spacingLg),
-                    child: Button.primary(
+                ),
+                // Doc05 §6.1 — the one thing the screen expects.
+                ProfileFormActionBar(
+                  child: ListenableBuilder(
+                    // Nothing changed, nothing to save.
+                    listenable: Listenable.merge([_firstName, _lastName]),
+                    builder: (context, _) => Button.primary(
                       title: l10n.profileSave,
-                      icon: const Icon(LucideIcons.save, size: Dimens.icon),
-                      iconAlignment: IconAlignment.start,
                       isLoading: saving,
-                      onPressed: saving ? null : _save,
+                      onPressed: saving || !_dirty ? null : _save,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
       },
-    );
-  }
-}
-
-class _TopBar extends StatelessWidget {
-  const _TopBar({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing, vertical: Dimens.spacingSm),
-      child: Row(
-        children: [
-          MboaHeaderBackButton(color: colors.primary),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: context.mboaText.h3.copyWith(color: colors.primary),
-            ),
-          ),
-          const SizedBox(width: Dimens.iconLg),
-        ],
-      ),
     );
   }
 }
@@ -247,10 +245,10 @@ class _Action extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(left: Dimens.spacingSm),
-        child: Center(
-          widthFactor: 1,
-          child: Text(label, style: context.mboaText.label.copyWith(color: context.mboaColors.primary)),
-        ),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: Dimens.spacing),
+    child: Center(
+      widthFactor: 1,
+      child: Text(label, style: context.mboaText.label.copyWith(color: context.mboaColors.primary)),
+    ),
+  );
 }
