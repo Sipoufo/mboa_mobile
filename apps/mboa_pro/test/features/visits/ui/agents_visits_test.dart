@@ -144,11 +144,10 @@ void main() {
       await tester.tap(find.text("Voir l'avis du locataire"));
       await tester.pumpAndSettle();
 
-      verify(
-        () => router.push<Object?>(
-          VisitReviewRoute(id: 'v-done', propertyTitle: 'Studio Bonapriso', readOnly: true),
-        ),
-      ).called(1);
+      // A route's equality ignores its arguments: they are read off the push.
+      final pushed = verify(() => router.push<Object?>(captureAny())).captured.single as VisitReviewRoute;
+      expect(pushed.args?.id, 'v-done');
+      expect(pushed.args?.readOnly, isTrue);
     });
   });
 

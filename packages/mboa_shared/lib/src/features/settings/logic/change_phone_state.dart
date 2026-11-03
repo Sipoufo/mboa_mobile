@@ -39,14 +39,15 @@ final class ChangePhoneEnterPhone extends ChangePhoneState {
 /// Step 2 — entering the two OTP codes, one per number.
 final class ChangePhoneEnterCodes extends ChangePhoneState {
   const ChangePhoneEnterCodes({
-    required this.currentPhoneNumber,
+    this.currentPhoneNumber,
     required this.newPhoneNumber,
     this.loading = false,
     this.error,
     this.justResent = false,
   });
 
-  final String currentPhoneNumber;
+  /// Null when the account adds its first number: one code then.
+  final String? currentPhoneNumber;
   final String newPhoneNumber;
   final bool loading;
   final ChangePhoneError? error;

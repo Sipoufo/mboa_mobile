@@ -330,6 +330,9 @@ void registerAppModule() {
   getIt.registerFactory<ChangePhoneBloc>(
     () => ChangePhoneBloc(repository: getIt<AccountRepository>()),
   );
+  getIt.registerFactory<ChangeEmailBloc>(
+    () => ChangeEmailBloc(repository: getIt<AccountRepository>()),
+  );
   getIt.registerLazySingleton<AppSettingsRepository>(
     () => AppSettingsRepository(dioClient: getIt<DioClient>()),
   );

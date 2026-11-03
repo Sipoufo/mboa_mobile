@@ -18705,6 +18705,256 @@ class I18n {
       args: [],
     );
   }
+
+  /// `Ajouter un numéro`
+  String get addPhoneTitle {
+    return Intl.message(
+      'Ajouter un numéro',
+      name: 'addPhoneTitle',
+      desc: '§40 A — an account made by email adds its first number.',
+      args: [],
+    );
+  }
+
+  /// `Ajoute ton numéro`
+  String get addPhoneIntroTitle {
+    return Intl.message(
+      'Ajoute ton numéro',
+      name: 'addPhoneIntroTitle',
+      desc: '§40 A — the add-a-number intro.',
+      args: [],
+    );
+  }
+
+  /// `On envoie un code à ce numéro, pour vérifier que c'est bien le tien.`
+  String get addPhoneIntroBody {
+    return Intl.message(
+      'On envoie un code à ce numéro, pour vérifier que c\'est bien le tien.',
+      name: 'addPhoneIntroBody',
+      desc: '§40 A — why one code.',
+      args: [],
+    );
+  }
+
+  /// `Ton numéro`
+  String get addPhoneStepNumber {
+    return Intl.message(
+      'Ton numéro',
+      name: 'addPhoneStepNumber',
+      desc: '§40 A — add a number, step 1.',
+      args: [],
+    );
+  }
+
+  /// `Ton numéro`
+  String get addPhoneLabel {
+    return Intl.message(
+      'Ton numéro',
+      name: 'addPhoneLabel',
+      desc: '§40 A — the add-a-number field.',
+      args: [],
+    );
+  }
+
+  /// `Le code`
+  String get addPhoneStepCode {
+    return Intl.message(
+      'Le code',
+      name: 'addPhoneStepCode',
+      desc: '§40 A — add a number, step 2.',
+      args: [],
+    );
+  }
+
+  /// `Recevoir le code`
+  String get addPhoneRequestCode {
+    return Intl.message(
+      'Recevoir le code',
+      name: 'addPhoneRequestCode',
+      desc: '§40 A — add a number: sends one code.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter ce numéro`
+  String get addPhoneConfirm {
+    return Intl.message(
+      'Ajouter ce numéro',
+      name: 'addPhoneConfirm',
+      desc: '§40 A — add a number: confirm.',
+      args: [],
+    );
+  }
+
+  /// `Numéro ajouté`
+  String get addPhoneSuccess {
+    return Intl.message(
+      'Numéro ajouté',
+      name: 'addPhoneSuccess',
+      desc: '§40 A — added.',
+      args: [],
+    );
+  }
+
+  /// `Changer d'e-mail`
+  String get changeEmailTitle {
+    return Intl.message(
+      'Changer d\'e-mail',
+      name: 'changeEmailTitle',
+      desc: '§40 A — App Mboa: the email change.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter un e-mail`
+  String get addEmailTitle {
+    return Intl.message(
+      'Ajouter un e-mail',
+      name: 'addEmailTitle',
+      desc: '§40 A — App Mboa: an account without an email adds one.',
+      args: [],
+    );
+  }
+
+  /// `Change ton e-mail`
+  String get changeEmailIntroTitle {
+    return Intl.message(
+      'Change ton e-mail',
+      name: 'changeEmailIntroTitle',
+      desc: '§40 A — the intro.',
+      args: [],
+    );
+  }
+
+  /// `Ajoute ton e-mail`
+  String get addEmailIntroTitle {
+    return Intl.message(
+      'Ajoute ton e-mail',
+      name: 'addEmailIntroTitle',
+      desc: '§40 A — the intro.',
+      args: [],
+    );
+  }
+
+  /// `On envoie un code à cette adresse, et un à ton téléphone, pour vérifier que c'est bien toi.`
+  String get changeEmailIntroBodyWithPhone {
+    return Intl.message(
+      'On envoie un code à cette adresse, et un à ton téléphone, pour vérifier que c\'est bien toi.',
+      name: 'changeEmailIntroBodyWithPhone',
+      desc: '§40 A — why two codes.',
+      args: [],
+    );
+  }
+
+  /// `On envoie un code à cette adresse, pour vérifier qu'elle est bien à toi.`
+  String get changeEmailIntroBody {
+    return Intl.message(
+      'On envoie un code à cette adresse, pour vérifier qu\'elle est bien à toi.',
+      name: 'changeEmailIntroBody',
+      desc: '§40 A — why one code.',
+      args: [],
+    );
+  }
+
+  /// `Ton adresse`
+  String get changeEmailStepAddress {
+    return Intl.message(
+      'Ton adresse',
+      name: 'changeEmailStepAddress',
+      desc: '§40 A — step 1.',
+      args: [],
+    );
+  }
+
+  /// `Adresse actuelle : {email}`
+  String changeEmailCurrent(String email) {
+    return Intl.message(
+      'Adresse actuelle : $email',
+      name: 'changeEmailCurrent',
+      desc: '§40 A — the address the account has.',
+      args: [email],
+    );
+  }
+
+  /// `Ta nouvelle adresse`
+  String get changeEmailNewLabel {
+    return Intl.message(
+      'Ta nouvelle adresse',
+      name: 'changeEmailNewLabel',
+      desc: '§40 A — the field.',
+      args: [],
+    );
+  }
+
+  /// `Ton adresse e-mail`
+  String get addEmailLabel {
+    return Intl.message(
+      'Ton adresse e-mail',
+      name: 'addEmailLabel',
+      desc: '§40 A — the field, adding.',
+      args: [],
+    );
+  }
+
+  /// `C'est déjà ton adresse.`
+  String get changeEmailUnchanged {
+    return Intl.message(
+      'C\'est déjà ton adresse.',
+      name: 'changeEmailUnchanged',
+      desc: '§40 A — EMAIL_UNCHANGED, under the field.',
+      args: [],
+    );
+  }
+
+  /// `Cette adresse est déjà utilisée par un autre compte.`
+  String get changeEmailTaken {
+    return Intl.message(
+      'Cette adresse est déjà utilisée par un autre compte.',
+      name: 'changeEmailTaken',
+      desc: '§40 A — EMAIL_ALREADY_USED, under the field.',
+      args: [],
+    );
+  }
+
+  /// `E-mail mis à jour`
+  String get changeEmailSuccess {
+    return Intl.message(
+      'E-mail mis à jour',
+      name: 'changeEmailSuccess',
+      desc: '§40 A — changed.',
+      args: [],
+    );
+  }
+
+  /// `E-mail ajouté`
+  String get addEmailSuccess {
+    return Intl.message(
+      'E-mail ajouté',
+      name: 'addEmailSuccess',
+      desc: '§40 A — added.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter cette adresse`
+  String get addEmailConfirm {
+    return Intl.message(
+      'Ajouter cette adresse',
+      name: 'addEmailConfirm',
+      desc: '§40 A — adding: confirm.',
+      args: [],
+    );
+  }
+
+  /// `Ajouter`
+  String get profileAdd {
+    return Intl.message(
+      'Ajouter',
+      name: 'profileAdd',
+      desc: '§40 A — the profile\'s email or phone, when the account has none.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

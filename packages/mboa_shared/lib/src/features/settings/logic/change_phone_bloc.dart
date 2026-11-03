@@ -42,7 +42,7 @@ class ChangePhoneBloc extends Bloc<ChangePhoneEvent, ChangePhoneState> {
 
   Future<void> _onResent(ChangePhoneResent event, Emitter<ChangePhoneState> emit) async {
     final (current, phone) = (_currentPhone, _newPhone);
-    if (current == null || phone == null) return;
+    if (phone == null) return;
     emit(ChangePhoneEnterCodes(currentPhoneNumber: current, newPhoneNumber: phone, loading: true));
     try {
       await _repository.requestPhoneChange(currentPhoneNumber: current, newPhoneNumber: phone);
@@ -58,7 +58,7 @@ class ChangePhoneBloc extends Bloc<ChangePhoneEvent, ChangePhoneState> {
 
   Future<void> _onConfirmed(ChangePhoneConfirmed event, Emitter<ChangePhoneState> emit) async {
     final (current, phone) = (_currentPhone, _newPhone);
-    if (current == null || phone == null) return;
+    if (phone == null) return;
     emit(ChangePhoneEnterCodes(currentPhoneNumber: current, newPhoneNumber: phone, loading: true));
     try {
       await _repository.confirmPhoneChange(

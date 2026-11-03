@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -6,6 +7,7 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_shared/mboa_shared.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
+import '../../../app/router/app_router.gr.dart';
 import '../profile_types.dart';
 
 /// Edit Profile (CDC M02) for App Mboa users: base fields only. Email is
@@ -22,6 +24,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
   final _email = TextEditingController();
+  final _phone = TextEditingController();
   final _searchCity = TextEditingController();
   String? _searchCityId;
 
@@ -36,6 +39,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _firstName.text = data.firstName ?? '';
     _lastName.text = data.lastName ?? '';
     _email.text = data.email ?? '';
+    _phone.text = data.phoneNumber ?? '';
     _searchCity.text = data.searchCity ?? '';
     _searchCityId = data.searchCityId;
   }
@@ -55,6 +59,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _firstName.dispose();
     _lastName.dispose();
     _email.dispose();
+    _phone.dispose();
     _searchCity.dispose();
     super.dispose();
   }
@@ -73,6 +78,22 @@ class _EditProfileViewState extends State<EditProfileView> {
         );
   }
 
+  /// §40 A — the email added or changed, the number added or changed: each
+  /// on its own code-verified screen, the profile read again on return.
+  Future<void> _changeEmail() async {
+    await context.router.push(
+      ChangeEmailRoute(currentEmail: _blank(_email.text), phoneNumber: _blank(_phone.text)),
+    );
+    if (mounted) context.read<UserProfileBloc>().add(const ProfileLoadRequested());
+  }
+
+  Future<void> _changePhone() async {
+    await context.router.push(ChangePhoneRoute(adding: _blank(_phone.text) == null));
+    if (mounted) context.read<UserProfileBloc>().add(const ProfileLoadRequested());
+  }
+
+  static String? _blank(String text) => text.trim().isEmpty ? null : text.trim();
+
   String? _required(String? value) =>
       (value == null || value.trim().isEmpty) ? I18n.of(context).commonError : null;
 
@@ -82,10 +103,12 @@ class _EditProfileViewState extends State<EditProfileView> {
     final colors = context.mboaColors;
 
     return BlocConsumer<UserProfileBloc, ProfileState>(
-      listenWhen: (prev, curr) =>
-          curr is UserProfileReady && (curr.justSaved || curr.saveFailed),
+      listenWhen: (prev, curr) => curr is UserProfileReady,
       listener: (context, state) {
         if (state is! UserProfileReady) return;
+        // Changed on their own screens: shown as they now are.
+        _email.text = state.data.email ?? '';
+        _phone.text = state.data.phoneNumber ?? '';
         if (state.justSaved) {
           MboaToast.success(context: context, title: l10n.profileSaved);
           MboaHeaderBackButton.pop(context);
@@ -137,8 +160,21 @@ class _EditProfileViewState extends State<EditProfileView> {
                             Input(
                               controller: _email,
                               readOnly: true,
+                              enabled: !saving,
+                              onTap: _changeEmail,
                               labelText: l10n.authEmailLabel,
                               variant: InputVariant.underline,
+                              suffixIcon: _Action(label: _email.text.isEmpty ? l10n.profileAdd : l10n.profileChange),
+                            ),
+                            const SizedBox(height: Dimens.spacingLg),
+                            Input(
+                              controller: _phone,
+                              readOnly: true,
+                              enabled: !saving,
+                              onTap: _changePhone,
+                              labelText: l10n.loginPhoneLabel,
+                              variant: InputVariant.underline,
+                              suffixIcon: _Action(label: _phone.text.isEmpty ? l10n.profileAdd : l10n.profileChange),
                             ),
                             const SizedBox(height: Dimens.spacingLg),
                             Input(
@@ -201,4 +237,20 @@ class _TopBar extends StatelessWidget {
       ),
     );
   }
+}
+
+/// « Ajouter » or « Changer », at the end of the email's or the phone's row.
+class _Action extends StatelessWidget {
+  const _Action({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: Dimens.spacingSm),
+        child: Center(
+          widthFactor: 1,
+          child: Text(label, style: context.mboaText.label.copyWith(color: context.mboaColors.primary)),
+        ),
+      );
 }

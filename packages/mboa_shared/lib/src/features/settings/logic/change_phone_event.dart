@@ -10,9 +10,10 @@ sealed class ChangePhoneEvent extends Equatable {
 /// Step 1 — the number the account has now, then the one it moves to (OTP
 /// sent to both). RM-M02-02: the current one is typed first.
 final class ChangePhoneRequested extends ChangePhoneEvent {
-  const ChangePhoneRequested({required this.currentPhoneNumber, required this.newPhoneNumber});
+  const ChangePhoneRequested({this.currentPhoneNumber, required this.newPhoneNumber});
 
-  final String currentPhoneNumber;
+  /// Null: §40 A — an account made by email adds its first number.
+  final String? currentPhoneNumber;
   final String newPhoneNumber;
 
   @override
@@ -26,9 +27,10 @@ final class ChangePhoneResent extends ChangePhoneEvent {
 
 /// Step 2 — confirm with the code from the old number and the new number.
 final class ChangePhoneConfirmed extends ChangePhoneEvent {
-  const ChangePhoneConfirmed({required this.oldCode, required this.newCode});
+  const ChangePhoneConfirmed({this.oldCode, required this.newCode});
 
-  final String oldCode;
+  /// Null when there was no number before.
+  final String? oldCode;
   final String newCode;
 
   @override

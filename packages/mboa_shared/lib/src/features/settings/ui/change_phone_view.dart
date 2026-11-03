@@ -6,24 +6,31 @@ import 'package:mboa_l10n/mboa_l10n.dart';
 import 'package:mboa_ui/mboa_ui.dart';
 
 import '../logic/change_phone_bloc.dart';
+import 'widgets/verify_flow_bits.dart';
 
 /// Two-step phone-number change screen: enter the new number, then confirm with
 /// the codes sent to the old and new numbers. Plain widget embedded by each
 /// app's `@RoutePage` adapter.
 class ChangePhoneView extends StatelessWidget {
-  const ChangePhoneView({super.key});
+  const ChangePhoneView({super.key, this.adding = false});
+
+  /// §40 A — an account made by email adds its first number: no current
+  /// number to type, one code.
+  final bool adding;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ChangePhoneBloc>(
       create: (_) => GetIt.I<ChangePhoneBloc>(),
-      child: const _ChangePhoneScaffold(),
+      child: _ChangePhoneScaffold(adding: adding),
     );
   }
 }
 
 class _ChangePhoneScaffold extends StatelessWidget {
-  const _ChangePhoneScaffold();
+  const _ChangePhoneScaffold({required this.adding});
+
+  final bool adding;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,7 @@ class _ChangePhoneScaffold extends StatelessWidget {
       listener: (context, state) {
         switch (state) {
           case ChangePhoneSuccess():
-            MboaToast.success(context: context, title: l10n.changePhoneSuccess);
+            MboaToast.success(context: context, title: adding ? l10n.addPhoneSuccess : l10n.changePhoneSuccess);
             MboaHeaderBackButton.pop(context);
           case ChangePhoneEnterCodes(justResent: true):
             MboaToast.info(context: context, title: l10n.authOtpResent);
@@ -61,7 +68,7 @@ class _ChangePhoneScaffold extends StatelessWidget {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               leading: MboaHeaderBackButton.leading(context),
-              title: Text(l10n.settingsChangePhone),
+              title: Text(adding ? l10n.addPhoneTitle : l10n.settingsChangePhone),
             ),
             body: SafeArea(
               child: switch (state) {
@@ -71,8 +78,8 @@ class _ChangePhoneScaffold extends StatelessWidget {
                   loading: loading,
                   burnt: error == ChangePhoneError.codeBurnt,
                 ),
-                ChangePhoneEnterPhone(:final error) => _PhoneStep(loading: loading, error: error),
-                _ => _PhoneStep(loading: loading),
+                ChangePhoneEnterPhone(:final error) => _PhoneStep(loading: loading, error: error, adding: adding),
+                _ => _PhoneStep(loading: loading, adding: adding),
               },
             ),
           ),
@@ -91,10 +98,11 @@ class _ChangePhoneScaffold extends StatelessWidget {
 /// RM-M02-02 — the current number first, then the new one. A refusal about
 /// either is said under it, and goes as soon as that number is edited.
 class _PhoneStep extends StatefulWidget {
-  const _PhoneStep({required this.loading, this.error});
+  const _PhoneStep({required this.loading, this.error, this.adding = false});
 
   final bool loading;
   final ChangePhoneError? error;
+  final bool adding;
 
   @override
   State<_PhoneStep> createState() => _PhoneStepState();
@@ -134,15 +142,16 @@ class _PhoneStepState extends State<_PhoneStep> {
   static String? _hint(I18n l10n, MboaCountry country) =>
       country == MboaCountry.cameroon ? l10n.loginPhoneHintLocal : country.example;
 
-  bool get _ready => _currentE164 != null && _nextE164 != null && _currentE164 != _nextE164;
+  bool get _ready =>
+      widget.adding ? _nextE164 != null : _currentE164 != null && _nextE164 != null && _currentE164 != _nextE164;
 
   void _submit() {
     FocusScope.of(context).unfocus();
     if (!(_formKey.currentState?.validate() ?? false) || !_ready) return;
-    _sentCurrent = _currentE164;
+    _sentCurrent = widget.adding ? null : _currentE164;
     _sentNext = _nextE164;
     context.read<ChangePhoneBloc>().add(
-      ChangePhoneRequested(currentPhoneNumber: _sentCurrent!, newPhoneNumber: _sentNext!),
+      ChangePhoneRequested(currentPhoneNumber: _sentCurrent, newPhoneNumber: _sentNext!),
     );
   }
 
@@ -160,44 +169,55 @@ class _PhoneStepState extends State<_PhoneStep> {
             child: ListView(
               padding: const EdgeInsets.all(Dimens.spacing),
               children: [
-                const _Intro(),
+                VerifyIntro(
+                  icon: LucideIcons.smartphone,
+                  title: widget.adding ? l10n.addPhoneIntroTitle : l10n.changePhoneIntroTitle,
+                  body: widget.adding ? l10n.addPhoneIntroBody : l10n.changePhoneIntroBody,
+                ),
                 const SizedBox(height: Dimens.spacingLg),
-                MboaStepHeader(current: 1, total: 2, title: l10n.changePhoneStepNumbers),
+                MboaStepHeader(
+                  current: 1,
+                  total: 2,
+                  title: widget.adding ? l10n.addPhoneStepNumber : l10n.changePhoneStepNumbers,
+                ),
                 const SizedBox(height: Dimens.spacing),
-                _Card(
+                VerifyCard(
                   children: [
-                    PhoneField(
-                      controller: _current,
-                      enabled: !widget.loading,
-                      variant: InputVariant.outlined,
-                      country: _currentCountry,
-                      onCountryChanged: (country) => setState(() => _currentCountry = country),
-                      labelText: l10n.changePhoneCurrentLabel,
-                      hintText: _hint(l10n, _currentCountry),
-                      textInputAction: TextInputAction.next,
-                      validator: (v) => switch (v?.trim()) {
-                        final text? when !_currentCountry.accepts(text) => l10n.loginPhoneInvalid,
-                        final text?
-                            when error == ChangePhoneError.currentMismatch &&
-                                _currentCountry.e164(text) == _sentCurrent =>
-                          l10n.changePhoneCurrentMismatch,
-                        _ => null,
-                      },
-                    ),
-                    // From the one to the other.
-                    Icon(LucideIcons.arrowDown, color: colors.textTertiary),
+                    if (!widget.adding) ...[
+                      PhoneField(
+                        controller: _current,
+                        enabled: !widget.loading,
+                        variant: InputVariant.outlined,
+                        country: _currentCountry,
+                        onCountryChanged: (country) => setState(() => _currentCountry = country),
+                        labelText: l10n.changePhoneCurrentLabel,
+                        hintText: _hint(l10n, _currentCountry),
+                        textInputAction: TextInputAction.next,
+                        validator: (v) => switch (v?.trim()) {
+                          final text? when !_currentCountry.accepts(text) => l10n.loginPhoneInvalid,
+                          final text?
+                              when error == ChangePhoneError.currentMismatch &&
+                                  _currentCountry.e164(text) == _sentCurrent =>
+                            l10n.changePhoneCurrentMismatch,
+                          _ => null,
+                        },
+                      ),
+                      // From the one to the other.
+                      Icon(LucideIcons.arrowDown, color: colors.textTertiary),
+                    ],
                     PhoneField(
                       controller: _next,
                       enabled: !widget.loading,
                       variant: InputVariant.outlined,
                       country: _nextCountry,
                       onCountryChanged: (country) => setState(() => _nextCountry = country),
-                      labelText: l10n.changePhoneNewLabel,
+                      labelText: widget.adding ? l10n.addPhoneLabel : l10n.changePhoneNewLabel,
                       hintText: _hint(l10n, _nextCountry),
                       onSubmitted: (_) => _submit(),
                       validator: (v) => switch (v?.trim()) {
                         final text? when !_nextCountry.accepts(text) => l10n.loginPhoneInvalid,
-                        final text? when _nextCountry.e164(text) == _currentE164 => l10n.changePhoneSameNumber,
+                        final text? when !widget.adding && _nextCountry.e164(text) == _currentE164 =>
+                          l10n.changePhoneSameNumber,
                         final text? when error == ChangePhoneError.unchanged && _nextCountry.e164(text) == _sentNext =>
                           l10n.changePhoneSameNumber,
                         final text?
@@ -211,12 +231,12 @@ class _PhoneStepState extends State<_PhoneStep> {
               ],
             ),
           ),
-          _ActionBar(
+          VerifyActionBar(
             // Both complete and different before the codes can be asked for.
             child: ListenableBuilder(
               listenable: Listenable.merge([_current, _next]),
               builder: (context, _) => Button.primary(
-                title: l10n.changePhoneRequestCodes,
+                title: widget.adding ? l10n.addPhoneRequestCode : l10n.changePhoneRequestCodes,
                 isLoading: widget.loading,
                 onPressed: widget.loading || !_ready ? null : _submit,
               ),
@@ -230,13 +250,14 @@ class _PhoneStepState extends State<_PhoneStep> {
 
 class _CodesStep extends StatefulWidget {
   const _CodesStep({
-    required this.currentPhoneNumber,
+    this.currentPhoneNumber,
     required this.newPhoneNumber,
     required this.loading,
     this.burnt = false,
   });
 
-  final String currentPhoneNumber;
+  /// Null when the account adds its first number: one code.
+  final String? currentPhoneNumber;
   final String newPhoneNumber;
   final bool loading;
 
@@ -269,10 +290,11 @@ class _CodesStepState extends State<_CodesStep> {
   }
 
   void _submit() {
-    if (_oldCode.text.trim().length == _codeLength && _newCode.text.trim().length == _codeLength) {
+    final adding = widget.currentPhoneNumber == null;
+    if ((adding || _oldCode.text.trim().length == _codeLength) && _newCode.text.trim().length == _codeLength) {
       FocusScope.of(context).unfocus();
       context.read<ChangePhoneBloc>().add(
-        ChangePhoneConfirmed(oldCode: _oldCode.text.trim(), newCode: _newCode.text.trim()),
+        ChangePhoneConfirmed(oldCode: adding ? null : _oldCode.text.trim(), newCode: _newCode.text.trim()),
       );
     }
   }
@@ -283,7 +305,7 @@ class _CodesStepState extends State<_CodesStep> {
     final colors = context.mboaColors;
     final enabled = !widget.loading && !widget.burnt;
 
-    Widget code(String phone, TextEditingController controller, {bool autofocus = false}) => _Card(
+    Widget code(String phone, TextEditingController controller, {bool autofocus = false}) => VerifyCard(
       children: [
         // Each code names its number.
         Text(
@@ -300,11 +322,17 @@ class _CodesStepState extends State<_CodesStep> {
           child: ListView(
             padding: const EdgeInsets.all(Dimens.spacing),
             children: [
-              MboaStepHeader(current: 2, total: 2, title: l10n.changePhoneStepCodes),
+              MboaStepHeader(
+                current: 2,
+                total: 2,
+                title: widget.currentPhoneNumber == null ? l10n.addPhoneStepCode : l10n.changePhoneStepCodes,
+              ),
               const SizedBox(height: Dimens.spacing),
-              code(widget.currentPhoneNumber, _oldCode, autofocus: true),
-              const SizedBox(height: Dimens.spacing),
-              code(widget.newPhoneNumber, _newCode),
+              if (widget.currentPhoneNumber case final current?) ...[
+                code(current, _oldCode, autofocus: true),
+                const SizedBox(height: Dimens.spacing),
+              ],
+              code(widget.newPhoneNumber, _newCode, autofocus: widget.currentPhoneNumber == null),
               const SizedBox(height: Dimens.spacingSm),
               TextButton(
                 onPressed: widget.loading ? null : () => context.read<ChangePhoneBloc>().add(const ChangePhoneResent()),
@@ -313,9 +341,9 @@ class _CodesStepState extends State<_CodesStep> {
             ],
           ),
         ),
-        _ActionBar(
+        VerifyActionBar(
           child: Button.primary(
-            title: l10n.changePhoneConfirm,
+            title: widget.currentPhoneNumber == null ? l10n.addPhoneConfirm : l10n.changePhoneConfirm,
             isLoading: widget.loading,
             onPressed: widget.loading || widget.burnt ? null : _submit,
           ),
@@ -325,77 +353,4 @@ class _CodesStepState extends State<_CodesStep> {
   }
 }
 
-/// Why two codes, said once at the top of the first step.
-class _Intro extends StatelessWidget {
-  const _Intro();
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = I18n.of(context);
-    final colors = context.mboaColors;
-
-    return Column(
-      children: [
-        Container(
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(color: colors.primaryPale, shape: BoxShape.circle),
-          child: Icon(LucideIcons.smartphone, color: colors.primary, size: Dimens.iconLg),
-        ),
-        const SizedBox(height: Dimens.spacingMd),
-        Text(l10n.changePhoneIntroTitle, style: context.mboaText.h2.copyWith(color: colors.ink)),
-        const SizedBox(height: Dimens.spacingXs),
-        Text(
-          l10n.changePhoneIntroBody,
-          textAlign: TextAlign.center,
-          style: context.mboaText.body.copyWith(color: colors.textSecondary),
-        ),
-      ],
-    );
-  }
-}
-
-/// A white card on the page's ground, its children spaced.
-class _Card extends StatelessWidget {
-  const _Card({required this.children});
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(Dimens.spacing),
-    decoration: BoxDecoration(
-      color: context.mboaColors.surface,
-      borderRadius: BorderRadius.circular(Dimens.radiusLg),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (final (index, child) in children.indexed) ...[
-          if (index > 0) const SizedBox(height: Dimens.spacingMd),
-          child,
-        ],
-      ],
-    ),
-  );
-}
-
-/// The bar at the foot: one main button (Doc05 §6.1).
-class _ActionBar extends StatelessWidget {
-  const _ActionBar({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.mboaColors;
-
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        border: Border(top: BorderSide(color: colors.border)),
-      ),
-      child: SafeArea(minimum: const EdgeInsets.all(Dimens.spacing), child: child),
-    );
-  }
-}

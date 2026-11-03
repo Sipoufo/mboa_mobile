@@ -8,6 +8,7 @@ import 'package:mboa_ui/mboa_ui.dart';
 
 import '../../../app/router/app_router.gr.dart';
 import '../../history/bloc/history_bloc.dart';
+import '../profile_types.dart';
 
 /// Route adapter for the shared "Paramètres" menu. App Mboa users have no
 /// password, so only language + delete are offered (phone change to follow).
@@ -32,7 +33,13 @@ class SettingsMenuPage extends StatelessWidget {
       child: SettingsMenuView(
         localeController: getIt<LocaleController>(),
         onNotifications: () => context.router.push(const NotificationPreferencesRoute()),
-        onChangePhone: () => context.router.push(const ChangePhoneRoute()),
+        // §40 A — an account made by email has no number yet: it adds one.
+        onChangePhone: () => context.router.push(
+          ChangePhoneRoute(adding: switch (getIt<UserProfileBloc>().state) {
+            UserProfileReady(:final data) => data.phoneNumber == null,
+            _ => false,
+          }),
+        ),
         onClearHistory: () async {
           final yes = await showDialog<bool>(
             context: context,

@@ -14,8 +14,9 @@ class AccountRepository {
 
   /// Requests a phone-number change; the backend checks [currentPhoneNumber]
   /// is the account's, then sends an OTP to both the old and the new number
-  /// (RM-M02-02).
-  Future<void> requestPhoneChange({required String currentPhoneNumber, required String newPhoneNumber}) {
+  /// (RM-M02-02). §40 A — an account made by email has none: no current
+  /// number, one code, on the new one.
+  Future<void> requestPhoneChange({String? currentPhoneNumber, required String newPhoneNumber}) {
     return _dioClient.api.getPhoneChangeApi().requestPhoneChange(
           requestPhoneChangeRequest: RequestPhoneChangeRequest((b) => b
             ..currentPhoneNumber = currentPhoneNumber
@@ -27,7 +28,7 @@ class AccountRepository {
   /// Throws [OtpCodeBurnt] once the codes can no longer be accepted.
   Future<void> confirmPhoneChange({
     required String newPhoneNumber,
-    required String oldCode,
+    String? oldCode,
     required String newCode,
   }) async {
     await guardOtp(
@@ -47,5 +48,26 @@ class AccountRepository {
             ..currentPassword = currentPassword
             ..newPassword = newPassword),
         );
+  }
+
+  /// §40 A — a code to [newEmail], and one to the phone when the account has
+  /// one.
+  Future<void> requestEmailChange(String newEmail) =>
+      _dioClient.api.getEmailChangeApi().requestEmailChange(
+            requestEmailChangeRequest: RequestEmailChangeRequest((b) => b..newEmail = newEmail),
+          );
+
+  /// §40 A — both codes (the phone's only when the account has one); the
+  /// address now verified. Throws [OtpCodeBurnt] once the codes are dead.
+  Future<String?> confirmEmailChange({required String newEmail, String? oldCode, required String newCode}) async {
+    final response = await guardOtp(
+      () => _dioClient.api.getEmailChangeApi().confirmEmailChange(
+            confirmEmailChangeRequest: ConfirmEmailChangeRequest((b) => b
+              ..newEmail = newEmail
+              ..oldCode = oldCode
+              ..newCode = newCode),
+          ),
+    );
+    return response.data?.email;
   }
 }

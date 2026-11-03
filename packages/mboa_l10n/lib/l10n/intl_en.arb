@@ -7773,5 +7773,110 @@
   "countryPickerOpen": "Choose the country",
   "@countryPickerOpen": {
     "description": "§40 A — the dial code's tooltip."
+  },
+  "addPhoneTitle": "Add a number",
+  "@addPhoneTitle": {
+    "description": "§40 A — an account made by email adds its first number."
+  },
+  "addPhoneIntroTitle": "Add your number",
+  "@addPhoneIntroTitle": {
+    "description": "§40 A — the add-a-number intro."
+  },
+  "addPhoneIntroBody": "We send a code to this number, to check it is yours.",
+  "@addPhoneIntroBody": {
+    "description": "§40 A — why one code."
+  },
+  "addPhoneStepNumber": "Your number",
+  "@addPhoneStepNumber": {
+    "description": "§40 A — add a number, step 1."
+  },
+  "addPhoneLabel": "Your number",
+  "@addPhoneLabel": {
+    "description": "§40 A — the add-a-number field."
+  },
+  "addPhoneStepCode": "The code",
+  "@addPhoneStepCode": {
+    "description": "§40 A — add a number, step 2."
+  },
+  "addPhoneRequestCode": "Get the code",
+  "@addPhoneRequestCode": {
+    "description": "§40 A — add a number: sends one code."
+  },
+  "addPhoneConfirm": "Add this number",
+  "@addPhoneConfirm": {
+    "description": "§40 A — add a number: confirm."
+  },
+  "addPhoneSuccess": "Number added",
+  "@addPhoneSuccess": {
+    "description": "§40 A — added."
+  },
+  "changeEmailTitle": "Change email",
+  "@changeEmailTitle": {
+    "description": "§40 A — App Mboa: the email change."
+  },
+  "addEmailTitle": "Add an email",
+  "@addEmailTitle": {
+    "description": "§40 A — App Mboa: an account without an email adds one."
+  },
+  "changeEmailIntroTitle": "Change your email",
+  "@changeEmailIntroTitle": {
+    "description": "§40 A — the intro."
+  },
+  "addEmailIntroTitle": "Add your email",
+  "@addEmailIntroTitle": {
+    "description": "§40 A — the intro."
+  },
+  "changeEmailIntroBodyWithPhone": "We send a code to this address, and one to your phone, to check it is really you.",
+  "@changeEmailIntroBodyWithPhone": {
+    "description": "§40 A — why two codes."
+  },
+  "changeEmailIntroBody": "We send a code to this address, to check it is yours.",
+  "@changeEmailIntroBody": {
+    "description": "§40 A — why one code."
+  },
+  "changeEmailStepAddress": "Your address",
+  "@changeEmailStepAddress": {
+    "description": "§40 A — step 1."
+  },
+  "changeEmailCurrent": "Current address: {email}",
+  "@changeEmailCurrent": {
+    "description": "§40 A — the address the account has.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "changeEmailNewLabel": "Your new address",
+  "@changeEmailNewLabel": {
+    "description": "§40 A — the field."
+  },
+  "addEmailLabel": "Your email address",
+  "@addEmailLabel": {
+    "description": "§40 A — the field, adding."
+  },
+  "changeEmailUnchanged": "This is already your address.",
+  "@changeEmailUnchanged": {
+    "description": "§40 A — EMAIL_UNCHANGED, under the field."
+  },
+  "changeEmailTaken": "This address is already used by another account.",
+  "@changeEmailTaken": {
+    "description": "§40 A — EMAIL_ALREADY_USED, under the field."
+  },
+  "changeEmailSuccess": "Email updated",
+  "@changeEmailSuccess": {
+    "description": "§40 A — changed."
+  },
+  "addEmailSuccess": "Email added",
+  "@addEmailSuccess": {
+    "description": "§40 A — added."
+  },
+  "addEmailConfirm": "Add this address",
+  "@addEmailConfirm": {
+    "description": "§40 A — adding: confirm."
+  },
+  "profileAdd": "Add",
+  "@profileAdd": {
+    "description": "§40 A — the profile's email or phone, when the account has none."
   }
 }
