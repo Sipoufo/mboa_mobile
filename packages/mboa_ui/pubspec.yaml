@@ -24,6 +24,9 @@ dependencies:
   # The cache CachedNetworkImage reads — written to directly by
   # MboaNetworkImage.remember, so a photo just sent is not fetched back.
   flutter_cache_manager: ^3.4.1
+  # §40 A — every country's dial code and number lengths (Google's
+  # libphonenumber metadata, MIT): the sign-in is not for Cameroon alone.
+  phone_numbers_parser: 9.0.28
 
 dev_dependencies:
   flutter_test:

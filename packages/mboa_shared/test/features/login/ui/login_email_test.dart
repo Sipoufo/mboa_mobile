@@ -77,6 +77,25 @@ void main() {
     await tester.pump(const Duration(seconds: 5));
   });
 
+  testWidgets('another country: chosen from the dial code, and the number sent in its format', (tester) async {
+    when(() => repository.requestOtp(phoneNumber: any(named: 'phoneNumber'), email: any(named: 'email')))
+        .thenAnswer((_) async => buildOtpSession(phoneNumber: '+33612345678'));
+    await pump(tester, const LoginView());
+
+    await tester.tap(find.text('+237'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).last, 'France');
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'France'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextFormField), '612345678');
+    await send(tester);
+
+    verify(() => repository.requestOtp(phoneNumber: '+33612345678')).called(1);
+    await tester.pump(const Duration(seconds: 5));
+  });
+
   testWidgets('not an address: nothing is sent', (tester) async {
     await pump(tester, const LoginView());
     await toEmail(tester);

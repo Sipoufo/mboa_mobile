@@ -18665,6 +18665,46 @@ class I18n {
       args: [email],
     );
   }
+
+  /// `Rechercher un pays`
+  String get countryPickerSearch {
+    return Intl.message(
+      'Rechercher un pays',
+      name: 'countryPickerSearch',
+      desc: '§40 A — the country picker\'s search.',
+      args: [],
+    );
+  }
+
+  /// `Afrique centrale`
+  String get countryPickerCentralAfrica {
+    return Intl.message(
+      'Afrique centrale',
+      name: 'countryPickerCentralAfrica',
+      desc: '§40 A — the countries offered first.',
+      args: [],
+    );
+  }
+
+  /// `Tous les pays`
+  String get countryPickerAll {
+    return Intl.message(
+      'Tous les pays',
+      name: 'countryPickerAll',
+      desc: '§40 A — the rest, A to Z.',
+      args: [],
+    );
+  }
+
+  /// `Choisir le pays`
+  String get countryPickerOpen {
+    return Intl.message(
+      'Choisir le pays',
+      name: 'countryPickerOpen',
+      desc: '§40 A — the dial code\'s tooltip.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

@@ -124,20 +124,25 @@ class _PhoneStepState extends State<_PhoneStep> {
     super.dispose();
   }
 
-  static bool _complete(String text) => text.trim().length == PhoneField.nationalDigits;
+  /// §40 A — each number in its own country.
+  MboaCountry _currentCountry = MboaCountry.cameroon;
+  MboaCountry _nextCountry = MboaCountry.cameroon;
 
-  bool get _ready => _complete(_current.text) && _complete(_next.text) && _current.text.trim() != _next.text.trim();
+  String? get _currentE164 => _currentCountry.e164(_current.text);
+  String? get _nextE164 => _nextCountry.e164(_next.text);
+
+  static String? _hint(I18n l10n, MboaCountry country) =>
+      country == MboaCountry.cameroon ? l10n.loginPhoneHintLocal : country.example;
+
+  bool get _ready => _currentE164 != null && _nextE164 != null && _currentE164 != _nextE164;
 
   void _submit() {
     FocusScope.of(context).unfocus();
     if (!(_formKey.currentState?.validate() ?? false) || !_ready) return;
-    _sentCurrent = _current.text.trim();
-    _sentNext = _next.text.trim();
+    _sentCurrent = _currentE164;
+    _sentNext = _nextE164;
     context.read<ChangePhoneBloc>().add(
-      ChangePhoneRequested(
-        currentPhoneNumber: '${PhoneField.defaultDialCode}$_sentCurrent',
-        newPhoneNumber: '${PhoneField.defaultDialCode}$_sentNext',
-      ),
+      ChangePhoneRequested(currentPhoneNumber: _sentCurrent!, newPhoneNumber: _sentNext!),
     );
   }
 
@@ -165,12 +170,16 @@ class _PhoneStepState extends State<_PhoneStep> {
                       controller: _current,
                       enabled: !widget.loading,
                       variant: InputVariant.outlined,
+                      country: _currentCountry,
+                      onCountryChanged: (country) => setState(() => _currentCountry = country),
                       labelText: l10n.changePhoneCurrentLabel,
-                      hintText: l10n.loginPhoneHintLocal,
+                      hintText: _hint(l10n, _currentCountry),
                       textInputAction: TextInputAction.next,
                       validator: (v) => switch (v?.trim()) {
-                        final text? when !_complete(text) => l10n.loginPhoneInvalid,
-                        final text when error == ChangePhoneError.currentMismatch && text == _sentCurrent =>
+                        final text? when !_currentCountry.accepts(text) => l10n.loginPhoneInvalid,
+                        final text?
+                            when error == ChangePhoneError.currentMismatch &&
+                                _currentCountry.e164(text) == _sentCurrent =>
                           l10n.changePhoneCurrentMismatch,
                         _ => null,
                       },
@@ -181,15 +190,18 @@ class _PhoneStepState extends State<_PhoneStep> {
                       controller: _next,
                       enabled: !widget.loading,
                       variant: InputVariant.outlined,
+                      country: _nextCountry,
+                      onCountryChanged: (country) => setState(() => _nextCountry = country),
                       labelText: l10n.changePhoneNewLabel,
-                      hintText: l10n.loginPhoneHintLocal,
+                      hintText: _hint(l10n, _nextCountry),
                       onSubmitted: (_) => _submit(),
                       validator: (v) => switch (v?.trim()) {
-                        final text? when !_complete(text) => l10n.loginPhoneInvalid,
-                        final text when text == _current.text.trim() => l10n.changePhoneSameNumber,
-                        final text when error == ChangePhoneError.unchanged && text == _sentNext =>
+                        final text? when !_nextCountry.accepts(text) => l10n.loginPhoneInvalid,
+                        final text? when _nextCountry.e164(text) == _currentE164 => l10n.changePhoneSameNumber,
+                        final text? when error == ChangePhoneError.unchanged && _nextCountry.e164(text) == _sentNext =>
                           l10n.changePhoneSameNumber,
-                        final text when error == ChangePhoneError.alreadyUsed && text == _sentNext =>
+                        final text?
+                            when error == ChangePhoneError.alreadyUsed && _nextCountry.e164(text) == _sentNext =>
                           l10n.changePhoneTaken,
                         _ => null,
                       },

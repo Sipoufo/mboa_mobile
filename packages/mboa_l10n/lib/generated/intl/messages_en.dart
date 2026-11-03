@@ -1468,6 +1468,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "contractsFilterAll": MessageLookupByLibrary.simpleMessage("All"),
     "contractsFilterMine": MessageLookupByLibrary.simpleMessage("Your move"),
     "contractsTitle": MessageLookupByLibrary.simpleMessage("Mboa contracts"),
+    "countryPickerAll": MessageLookupByLibrary.simpleMessage("All countries"),
+    "countryPickerCentralAfrica": MessageLookupByLibrary.simpleMessage(
+      "Central Africa",
+    ),
+    "countryPickerOpen": MessageLookupByLibrary.simpleMessage(
+      "Choose the country",
+    ),
+    "countryPickerSearch": MessageLookupByLibrary.simpleMessage(
+      "Search for a country",
+    ),
     "dayFriday": MessageLookupByLibrary.simpleMessage("Friday"),
     "dayMonday": MessageLookupByLibrary.simpleMessage("Monday"),
     "daySaturday": MessageLookupByLibrary.simpleMessage("Saturday"),

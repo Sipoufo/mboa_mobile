@@ -50,6 +50,9 @@ class _LoginFormState extends State<_LoginForm> {
   /// §40 A — « Téléphone | E-mail ».
   bool _byEmail = false;
 
+  /// §40 A — any country, Cameroon to start with.
+  MboaCountry _country = MboaCountry.cameroon;
+
   /// What counts as an address here; the server has the last word.
   static final _emailPattern = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
 
@@ -64,10 +67,10 @@ class _LoginFormState extends State<_LoginForm> {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState?.validate() ?? false) {
       context.read<LoginBloc>().add(
-            _byEmail
-                ? LoginOtpRequested(email: _email.text.trim())
-                : LoginOtpRequested(phoneNumber: '${PhoneField.defaultDialCode}${_controller.text.trim()}'),
-          );
+        _byEmail
+            ? LoginOtpRequested(email: _email.text.trim())
+            : LoginOtpRequested(phoneNumber: _country.e164(_controller.text)),
+      );
     }
   }
 
@@ -81,9 +84,8 @@ class _LoginFormState extends State<_LoginForm> {
   }
 
   String? _validatePhone(I18n l10n, String? value) {
-    final digits = value?.trim() ?? '';
-    if (digits.length != PhoneField.nationalDigits) return l10n.loginPhoneInvalid;
-    return null;
+    // The country's own lengths and ranges (libphonenumber), not Cameroon's.
+    return _country.accepts(value ?? '') ? null : l10n.loginPhoneInvalid;
   }
 
   @override
@@ -156,8 +158,10 @@ class _LoginFormState extends State<_LoginForm> {
                     PhoneField(
                       controller: _controller,
                       enabled: !loading,
+                      country: _country,
+                      onCountryChanged: (country) => setState(() => _country = country),
                       labelText: l10n.loginPhoneLabel,
-                      hintText: l10n.loginPhoneHintLocal,
+                      hintText: _country == MboaCountry.cameroon ? l10n.loginPhoneHintLocal : _country.example,
                       onSubmitted: (_) => _submit(),
                       validator: (value) => _validatePhone(l10n, value),
                     ),
@@ -183,12 +187,12 @@ class _LoginFormState extends State<_LoginForm> {
   }
 
   String _errorText(I18n l10n, LoginError error) => switch (error) {
-        LoginError.otpRequestFailed => l10n.loginOtpSendError,
-        LoginError.invalidCode => l10n.otpInvalidCode,
-        LoginError.codeBurnt => l10n.otpCodeBurnt,
-        LoginError.whatsappUnavailable => l10n.loginWhatsappUnavailable,
-        LoginError.usePasswordLogin => l10n.loginUsePasswordLogin,
-      };
+    LoginError.otpRequestFailed => l10n.loginOtpSendError,
+    LoginError.invalidCode => l10n.otpInvalidCode,
+    LoginError.codeBurnt => l10n.otpCodeBurnt,
+    LoginError.whatsappUnavailable => l10n.loginWhatsappUnavailable,
+    LoginError.usePasswordLogin => l10n.loginUsePasswordLogin,
+  };
 }
 
 /// Google + Apple sign-in. Rendered but disabled: the provider SDKs are wired

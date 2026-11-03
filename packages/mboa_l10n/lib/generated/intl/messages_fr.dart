@@ -1526,6 +1526,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "À toi de jouer",
     ),
     "contractsTitle": MessageLookupByLibrary.simpleMessage("Contrats Mboa"),
+    "countryPickerAll": MessageLookupByLibrary.simpleMessage("Tous les pays"),
+    "countryPickerCentralAfrica": MessageLookupByLibrary.simpleMessage(
+      "Afrique centrale",
+    ),
+    "countryPickerOpen": MessageLookupByLibrary.simpleMessage(
+      "Choisir le pays",
+    ),
+    "countryPickerSearch": MessageLookupByLibrary.simpleMessage(
+      "Rechercher un pays",
+    ),
     "dayFriday": MessageLookupByLibrary.simpleMessage("Vendredi"),
     "dayMonday": MessageLookupByLibrary.simpleMessage("Lundi"),
     "daySaturday": MessageLookupByLibrary.simpleMessage("Samedi"),

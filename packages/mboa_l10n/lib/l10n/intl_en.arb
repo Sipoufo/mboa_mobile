@@ -7757,5 +7757,21 @@
         "type": "String"
       }
     }
+  },
+  "countryPickerSearch": "Search for a country",
+  "@countryPickerSearch": {
+    "description": "§40 A — the country picker's search."
+  },
+  "countryPickerCentralAfrica": "Central Africa",
+  "@countryPickerCentralAfrica": {
+    "description": "§40 A — the countries offered first."
+  },
+  "countryPickerAll": "All countries",
+  "@countryPickerAll": {
+    "description": "§40 A — the rest, A to Z."
+  },
+  "countryPickerOpen": "Choose the country",
+  "@countryPickerOpen": {
+    "description": "§40 A — the dial code's tooltip."
   }
 }
